@@ -1,0 +1,8 @@
+C:\Users\MrBlackRose\documents\visual studio 2010\Projects\RentalHouseFinding\RentalHouseFinding.Tests\bin\Debug\RentalHouseFinding.Tests.dll.config
+C:\Users\MrBlackRose\documents\visual studio 2010\Projects\RentalHouseFinding\RentalHouseFinding.Tests\bin\Debug\RentalHouseFinding.Tests.dll
+C:\Users\MrBlackRose\documents\visual studio 2010\Projects\RentalHouseFinding\RentalHouseFinding.Tests\bin\Debug\RentalHouseFinding.Tests.pdb
+C:\Users\MrBlackRose\documents\visual studio 2010\Projects\RentalHouseFinding\RentalHouseFinding.Tests\bin\Debug\RentalHouseFinding.dll
+C:\Users\MrBlackRose\documents\visual studio 2010\Projects\RentalHouseFinding\RentalHouseFinding.Tests\bin\Debug\RentalHouseFinding.pdb
+C:\Users\MrBlackRose\documents\visual studio 2010\Projects\RentalHouseFinding\RentalHouseFinding.Tests\obj\Debug\ResolveAssemblyReference.cache
+C:\Users\MrBlackRose\documents\visual studio 2010\Projects\RentalHouseFinding\RentalHouseFinding.Tests\obj\Debug\RentalHouseFinding.Tests.dll
+C:\Users\MrBlackRose\documents\visual studio 2010\Projects\RentalHouseFinding\RentalHouseFinding.Tests\obj\Debug\RentalHouseFinding.Tests.pdb
