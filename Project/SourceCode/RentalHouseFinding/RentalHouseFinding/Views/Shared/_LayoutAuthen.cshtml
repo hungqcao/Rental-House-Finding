@@ -1,0 +1,71 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+    <meta charset="utf-8" />
+    <meta name="description" content="">
+    <meta name="author" content="">
+    <title>@ViewBag.Title</title>
+    <script type="text/javascript" src="@Url.Content("~/Content/Css18-8/scripts/jquery-1.4.1.min.js")"></script>
+    <script type="text/javascript" src="@Url.Content("~/Content/Css18-8/scripts/jquery.slidepanel.setup.js")"></script>
+    <script type="text/javascript" src="@Url.Content("~/Content/Css18-8/scripts/jquery-ui-1.7.2.custom.min.js")"></script>
+    <script type="text/javascript" src="@Url.Content("~/Content/Css18-8/scripts/jquery.tabs.setup.js")"></script>
+    <link href="@Url.Content("~/Content/Site.css")" rel="stylesheet" type="text/css" />
+</head>
+<body>
+    <div class="page">
+        <header>
+            <div id="title">
+                <h1>My MVC Application</h1>
+            </div>
+            <div id="logindisplay">
+                @Html.Partial("_LogOnPartial")
+            </div>
+            <div id="topbar">
+            <div id="loginpanel">
+                <ul>
+                    @if (Request.IsAuthenticated && HttpContext.Current.User.IsInRole("Admin"))
+                    {   
+                        <table style="border: 0; padding-left: 20px">
+                            <tr style="text-align: right">
+                                <td style="border: 0">
+                                    Xin chào
+                                </td>
+                                <td style="text-align: center; border: 0">
+                                    <strong>@Html.ActionLink(@User.Identity.Name + "!", "AdminInformation", "Admin")</strong>
+                                </td>
+                                <td style="text-align: right; border: 0">@Html.ActionLink("[Thoát]", "LogOff", "Authencation")
+                                </td>
+                            </tr>
+                        </table>
+                    }
+                    else if (Request.IsAuthenticated && HttpContext.Current.User.IsInRole("Parent"))
+                    {
+                        <table style="border: 0; padding-left: 20px">
+                            <tr style="text-align: right">
+                                <td style="border: 0">
+                                    Xin chào
+                                </td>
+                                <td style="text-align: center; border: 0">
+                                    <strong>@Html.ActionLink(@User.Identity.Name + "!", "StudentInformation", "ParentPage")</strong>
+                                </td>
+                                <td style="text-align: right; border: 0">@Html.ActionLink("[Thoát]", "LogOff", "Authencation")
+                                </td>
+                            </tr>
+                        </table>
+                    }
+                </ul>
+            </div>
+        </div>
+            <nav>
+                @RenderSection("current")
+            </nav>
+        </header>
+        <section id="main">
+            @RenderBody()
+        </section>
+        <footer>
+        </footer>
+    </div>
+</body>
+</html>
