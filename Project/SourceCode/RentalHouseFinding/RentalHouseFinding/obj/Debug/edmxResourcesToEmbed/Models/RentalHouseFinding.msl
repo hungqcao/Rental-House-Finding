@@ -18,6 +18,7 @@
           <ScalarProperty Name="IsDeleted" ColumnName="IsDeleted" />
           <ScalarProperty Name="OpenIdURL" ColumnName="OpenIdURL" />
           <ScalarProperty Name="RoleId" ColumnName="RoleId" />
+          <ScalarProperty Name="Sex" ColumnName="Sex" />
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>
@@ -48,7 +49,6 @@
       <EntityTypeMapping TypeName="IsTypeOf(RentalHouseFinding.Posts)">
         <MappingFragment StoreEntitySet="Posts">
           <ScalarProperty Name="Id" ColumnName="Id" />
-          <ScalarProperty Name="UserId" ColumnName="UserId" />
           <ScalarProperty Name="Title" ColumnName="Title" />
           <ScalarProperty Name="CategoryId" ColumnName="CategoryId" />
           <ScalarProperty Name="StatusId" ColumnName="StatusId" />
@@ -61,22 +61,11 @@
           <ScalarProperty Name="Address" ColumnName="Address" />
           <ScalarProperty Name="Price" ColumnName="Price" />
           <ScalarProperty Name="Area" ColumnName="Area" />
-          <ScalarProperty Name="Contact" ColumnName="Contact" />
-          <ScalarProperty Name="Phone" ColumnName="Phone" />
-          <ScalarProperty Name="Email" ColumnName="Email" />
+          <ScalarProperty Name="PhoneActive" ColumnName="PhoneActive" />
           <ScalarProperty Name="Description" ColumnName="Description" />
           <ScalarProperty Name="Lat" ColumnName="Lat" />
           <ScalarProperty Name="Lon" ColumnName="Lon" />
-          <ScalarProperty Name="WaterFee" ColumnName="WaterFee" />
-          <ScalarProperty Name="ElectricityFee" ColumnName="ElectricityFee" />
-          <ScalarProperty Name="InternetFee" ColumnName="InternetFee" />
-          <ScalarProperty Name="IsStayWithOwner" ColumnName="IsStayWithOwner" />
-          <ScalarProperty Name="RestrictHours" ColumnName="RestrictHours" />
-          <ScalarProperty Name="IsParkingLot" ColumnName="IsParkingLot" />
-          <ScalarProperty Name="ParkingFee" ColumnName="ParkingFee" />
-          <ScalarProperty Name="IsAllowCooking" ColumnName="IsAllowCooking" />
-          <ScalarProperty Name="VideoLink" ColumnName="VideoLink" />
-          <ScalarProperty Name="Direction" ColumnName="Direction" />
+          <ScalarProperty Name="UserId" ColumnName="UserId" />
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>
@@ -110,9 +99,9 @@
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>
-    <EntitySetMapping Name="PostStatus">
-      <EntityTypeMapping TypeName="IsTypeOf(RentalHouseFinding.PostStatus)">
-        <MappingFragment StoreEntitySet="PostStatus">
+    <EntitySetMapping Name="PostStatuses">
+      <EntityTypeMapping TypeName="IsTypeOf(RentalHouseFinding.PostStatuses)">
+        <MappingFragment StoreEntitySet="PostStatuses">
           <ScalarProperty Name="Id" ColumnName="Id" />
           <ScalarProperty Name="Name" ColumnName="Name" />
           <ScalarProperty Name="Description" ColumnName="Description" />
@@ -151,29 +140,48 @@
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>
-    <AssociationSetMapping Name="DistrictsPosts" TypeName="RentalHouseFinding.DistrictsPosts" StoreEntitySet="Posts">
-      <EndProperty Name="Districts">
-        <ScalarProperty Name="Id" ColumnName="District_Id" />
-      </EndProperty>
-      <EndProperty Name="Posts">
-        <ScalarProperty Name="Id" ColumnName="Id" />
-      </EndProperty>
-    </AssociationSetMapping>
-    <AssociationSetMapping Name="CategoriesPosts" TypeName="RentalHouseFinding.CategoriesPosts" StoreEntitySet="Posts">
-      <EndProperty Name="Categories">
-        <ScalarProperty Name="Id" ColumnName="Category_Id" />
-      </EndProperty>
-      <EndProperty Name="Posts">
-        <ScalarProperty Name="Id" ColumnName="Id" />
-      </EndProperty>
-    </AssociationSetMapping>
-    <AssociationSetMapping Name="UsersFavorites" TypeName="RentalHouseFinding.UsersFavorites" StoreEntitySet="Favorites">
-      <EndProperty Name="Users">
-        <ScalarProperty Name="Id" ColumnName="User_Id" />
-      </EndProperty>
-      <EndProperty Name="Favorites">
-        <ScalarProperty Name="Id" ColumnName="Id" />
-      </EndProperty>
-    </AssociationSetMapping>
+    <EntitySetMapping Name="Facilities">
+      <EntityTypeMapping TypeName="IsTypeOf(RentalHouseFinding.Facilities)">
+        <MappingFragment StoreEntitySet="Facilities">
+          <ScalarProperty Name="PostIdFacilities" ColumnName="PostIdFacilities" />
+          <ScalarProperty Name="HasInternet" ColumnName="HasInternet" />
+          <ScalarProperty Name="ElectricityFee" ColumnName="ElectricityFee" />
+          <ScalarProperty Name="WaterFee" ColumnName="WaterFee" />
+          <ScalarProperty Name="HasTVCable" ColumnName="HasTVCable" />
+          <ScalarProperty Name="HasBed" ColumnName="HasBed" />
+          <ScalarProperty Name="HasWaterHeater" ColumnName="HasWaterHeater" />
+          <ScalarProperty Name="IsAllowCooking" ColumnName="IsAllowCooking" />
+          <ScalarProperty Name="HasMotorParkingLot" ColumnName="HasMotorParkingLot" />
+          <ScalarProperty Name="HasToilet" ColumnName="HasToilet" />
+          <ScalarProperty Name="HasAirConditioner" ColumnName="HasAirConditioner" />
+          <ScalarProperty Name="HasGarage" ColumnName="HasGarage" />
+          <ScalarProperty Name="IsStayWithOwner" ColumnName="IsStayWithOwner" />
+          <ScalarProperty Name="RestrictHours" ColumnName="RestrictHours" />
+          <ScalarProperty Name="HasSecurity" ColumnName="HasSecurity" />
+          <ScalarProperty Name="Direction" ColumnName="Direction" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Contacts">
+      <EntityTypeMapping TypeName="IsTypeOf(RentalHouseFinding.Contacts)">
+        <MappingFragment StoreEntitySet="Contacts">
+          <ScalarProperty Name="PostIdContacts" ColumnName="PostIdContacts" />
+          <ScalarProperty Name="Phone" ColumnName="Phone" />
+          <ScalarProperty Name="Email" ColumnName="Email" />
+          <ScalarProperty Name="Yahoo" ColumnName="Yahoo" />
+          <ScalarProperty Name="Skype" ColumnName="Skype" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="PostVideos">
+      <EntityTypeMapping TypeName="IsTypeOf(RentalHouseFinding.PostVideos)">
+        <MappingFragment StoreEntitySet="PostVideos">
+          <ScalarProperty Name="Id" ColumnName="Id" />
+          <ScalarProperty Name="PostId" ColumnName="PostId" />
+          <ScalarProperty Name="Path" ColumnName="Path" />
+          <ScalarProperty Name="IsDeleted" ColumnName="IsDeleted" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
   </EntityContainerMapping>
 </Mapping>

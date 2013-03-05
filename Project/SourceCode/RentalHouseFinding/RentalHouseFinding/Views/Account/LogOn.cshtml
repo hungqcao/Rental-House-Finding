@@ -1,0 +1,52 @@
+﻿@model RentalHouseFinding.Models.LogOnModel
+@{  
+    ViewBag.Title = "Đăng nhập";
+    Layout = "~/Views/Shared/_LayoutAuthen.cshtml";
+}
+@section current
+{
+    <ul id="menu">
+        <li class="active"><a href="/Home">Trang chủ</a></li>
+        <li><a href="/Home">Liên hệ</a></li>
+    </ul>
+}
+<div id="container">
+    <h2>
+        Đăng nhập</h2>
+    <p>
+        <b>Xin vui lòng điền tên tài khoản và mật khẩu:</b>
+    </p>
+    <p>
+    Please enter your user name and password. @Html.ActionLink("Register", "Register") if you don't have an account.
+    </p>
+    <script src="@Url.Content("~/Scripts/jquery.validate.min.js")" type="text/javascript"></script>
+    <script src="@Url.Content("~/Scripts/jquery.validate.unobtrusive.min.js")" type="text/javascript"></script>
+    @Html.ValidationSummary(true, "Tài khoản hoặc mật khẩu không đúng, xin vui lòng nhập lại!", new { style = "color:red" })
+    @using (Html.BeginForm())
+    {
+        <p>
+            <b>@Html.Label("Tên tài khoản:")</b>
+        </p>
+        <p>
+            @Html.TextBoxFor(m => m.UserName)
+            @Html.ValidationMessageFor(m => m.UserName)
+        </p>
+        <p>
+            <b>@Html.Label("Mật khẩu:")</b>
+        </p>
+        <p>
+            @Html.PasswordFor(m => m.Password)
+            @Html.ValidationMessageFor(m => m.Password)
+        </p>
+        <p>
+            <b>@Html.Label("Nhớ mật khẩu?")</b>
+            @Html.CheckBoxFor(m => m.RememberMe)
+        </p>
+        <p>
+            <div class="editor-label">
+                <button type="submit" class="t-button t-state-default">
+                    Đăng nhập</button>
+            </div>
+        </p>
+    }
+</div>

@@ -13,20 +13,19 @@
     <EntitySet Name="Roles" EntityType="RentalHouseFinding.Store.Roles" store:Type="Tables" Schema="dbo" />
     <EntitySet Name="Categories" EntityType="RentalHouseFinding.Store.Categories" store:Type="Tables" Schema="dbo" />
     <EntitySet Name="PostImages" EntityType="RentalHouseFinding.Store.PostImages" store:Type="Tables" Schema="dbo" />
-    <EntitySet Name="PostStatus" EntityType="RentalHouseFinding.Store.PostStatus" store:Type="Tables" Schema="dbo" />
+    <EntitySet Name="PostStatuses" EntityType="RentalHouseFinding.Store.PostStatuses" store:Type="Tables" Schema="dbo" />
     <EntitySet Name="Favorites" EntityType="RentalHouseFinding.Store.Favorites" store:Type="Tables" Schema="dbo" />
     <EntitySet Name="ReportedPosts" EntityType="RentalHouseFinding.Store.ReportedPosts" store:Type="Tables" Schema="dbo" />
     <EntitySet Name="BadWords" EntityType="RentalHouseFinding.Store.BadWords" store:Type="Tables" Schema="dbo" />
+    <EntitySet Name="Facilities" EntityType="RentalHouseFinding.Store.Facilities" store:Type="Tables" Schema="dbo" />
+    <EntitySet Name="Contacts" EntityType="RentalHouseFinding.Store.Contacts" store:Type="Tables" Schema="dbo" />
+    <EntitySet Name="PostVideos" EntityType="RentalHouseFinding.Store.PostVideos" store:Type="Tables" Schema="dbo" />
     <AssociationSet Name="ProvincesDistricts" Association="RentalHouseFinding.Store.ProvincesDistricts">
       <End Role="Provinces" EntitySet="Provinces" />
       <End Role="Districts" EntitySet="Districts" />
     </AssociationSet>
     <AssociationSet Name="DistrictsPosts" Association="RentalHouseFinding.Store.DistrictsPosts">
       <End Role="Districts" EntitySet="Districts" />
-      <End Role="Posts" EntitySet="Posts" />
-    </AssociationSet>
-    <AssociationSet Name="UsersPosts" Association="RentalHouseFinding.Store.UsersPosts">
-      <End Role="Users" EntitySet="Users" />
       <End Role="Posts" EntitySet="Posts" />
     </AssociationSet>
     <AssociationSet Name="CategoriesPosts" Association="RentalHouseFinding.Store.CategoriesPosts">
@@ -36,10 +35,6 @@
     <AssociationSet Name="PostsPostImages" Association="RentalHouseFinding.Store.PostsPostImages">
       <End Role="Posts" EntitySet="Posts" />
       <End Role="PostImages" EntitySet="PostImages" />
-    </AssociationSet>
-    <AssociationSet Name="PostStatusPosts" Association="RentalHouseFinding.Store.PostStatusPosts">
-      <End Role="PostStatus" EntitySet="PostStatus" />
-      <End Role="Posts" EntitySet="Posts" />
     </AssociationSet>
     <AssociationSet Name="UsersFavorites" Association="RentalHouseFinding.Store.UsersFavorites">
       <End Role="Users" EntitySet="Users" />
@@ -61,14 +56,34 @@
       <End Role="Roles" EntitySet="Roles" />
       <End Role="Users" EntitySet="Users" />
     </AssociationSet>
+    <AssociationSet Name="PostsFacilities" Association="RentalHouseFinding.Store.PostsFacilities">
+      <End Role="Posts" EntitySet="Posts" />
+      <End Role="Facilities" EntitySet="Facilities" />
+    </AssociationSet>
+    <AssociationSet Name="PostsContacts" Association="RentalHouseFinding.Store.PostsContacts">
+      <End Role="Posts" EntitySet="Posts" />
+      <End Role="Contacts" EntitySet="Contacts" />
+    </AssociationSet>
+    <AssociationSet Name="PostsPostVideos" Association="RentalHouseFinding.Store.PostsPostVideos">
+      <End Role="Posts" EntitySet="Posts" />
+      <End Role="PostVideos" EntitySet="PostVideos" />
+    </AssociationSet>
+    <AssociationSet Name="PostStatusesPosts" Association="RentalHouseFinding.Store.PostStatusesPosts">
+      <End Role="PostStatuses" EntitySet="PostStatuses" />
+      <End Role="Posts" EntitySet="Posts" />
+    </AssociationSet>
+    <AssociationSet Name="UsersPosts" Association="RentalHouseFinding.Store.UsersPosts">
+      <End Role="Users" EntitySet="Users" />
+      <End Role="Posts" EntitySet="Posts" />
+    </AssociationSet>
   </EntityContainer>
   <EntityType Name="Users">
     <Key>
       <PropertyRef Name="Id" />
     </Key>
     <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
-    <Property Name="Username" Type="nvarchar" Nullable="false" MaxLength="20" />
-    <Property Name="Password" Type="nvarchar" Nullable="false" MaxLength="20" />
+    <Property Name="Username" Type="nvarchar" Nullable="false" MaxLength="50" />
+    <Property Name="Password" Type="nvarchar(max)" Nullable="false" />
     <Property Name="Email" Type="nvarchar" Nullable="false" MaxLength="50" />
     <Property Name="PhoneNumber" Type="nvarchar" Nullable="true" MaxLength="15" />
     <Property Name="Address" Type="nvarchar(max)" Nullable="true" />
@@ -78,8 +93,9 @@
     <Property Name="CreatedDate" Type="datetime" Nullable="false" />
     <Property Name="LastUpdate" Type="datetime" Nullable="false" />
     <Property Name="IsDeleted" Type="bit" Nullable="false" />
-    <Property Name="OpenIdURL" Type="nvarchar(max)" Nullable="false" />
+    <Property Name="OpenIdURL" Type="nvarchar(max)" Nullable="true" />
     <Property Name="RoleId" Type="int" Nullable="false" />
+    <Property Name="Sex" Type="nvarchar" Nullable="true" MaxLength="10" />
   </EntityType>
   <EntityType Name="Provinces">
     <Key>
@@ -107,7 +123,6 @@
       <PropertyRef Name="Id" />
     </Key>
     <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
-    <Property Name="UserId" Type="int" Nullable="false" />
     <Property Name="Title" Type="nvarchar(max)" Nullable="false" />
     <Property Name="CategoryId" Type="int" Nullable="false" />
     <Property Name="StatusId" Type="int" Nullable="false" />
@@ -120,24 +135,11 @@
     <Property Name="Address" Type="nvarchar(max)" Nullable="false" />
     <Property Name="Price" Type="float" Nullable="false" />
     <Property Name="Area" Type="float" Nullable="false" />
-    <Property Name="Contact" Type="nvarchar(max)" Nullable="true" />
-    <Property Name="Phone" Type="nvarchar" Nullable="false" MaxLength="20" />
-    <Property Name="Email" Type="nvarchar" Nullable="false" MaxLength="50" />
-    <Property Name="Description" Type="nvarchar(max)" Nullable="false" />
+    <Property Name="PhoneActive" Type="nvarchar" Nullable="false" MaxLength="20" />
+    <Property Name="Description" Type="nvarchar(max)" Nullable="true" />
     <Property Name="Lat" Type="float" Nullable="false" />
     <Property Name="Lon" Type="float" Nullable="false" />
-    <Property Name="WaterFee" Type="float" Nullable="true" />
-    <Property Name="ElectricityFee" Type="float" Nullable="true" />
-    <Property Name="InternetFee" Type="float" Nullable="true" />
-    <Property Name="IsStayWithOwner" Type="bit" Nullable="true" />
-    <Property Name="RestrictHours" Type="int" Nullable="true" />
-    <Property Name="IsParkingLot" Type="bit" Nullable="true" />
-    <Property Name="ParkingFee" Type="float" Nullable="true" />
-    <Property Name="IsAllowCooking" Type="bit" Nullable="true" />
-    <Property Name="VideoLink" Type="nvarchar(max)" Nullable="true" />
-    <Property Name="Direction" Type="nvarchar(max)" Nullable="true" />
-    <Property Name="District_Id" Type="int" Nullable="false" />
-    <Property Name="Category_Id" Type="int" Nullable="false" />
+    <Property Name="UserId" Type="int" Nullable="true" />
   </EntityType>
   <EntityType Name="Roles">
     <Key>
@@ -166,7 +168,7 @@
     <Property Name="Path" Type="nvarchar(max)" Nullable="false" />
     <Property Name="IsDeleted" Type="bit" Nullable="false" />
   </EntityType>
-  <EntityType Name="PostStatus">
+  <EntityType Name="PostStatuses">
     <Key>
       <PropertyRef Name="Id" />
     </Key>
@@ -184,7 +186,6 @@
     <Property Name="PostId" Type="int" Nullable="false" />
     <Property Name="AddedDate" Type="datetime" Nullable="false" />
     <Property Name="IsDeleted" Type="bit" Nullable="false" />
-    <Property Name="User_Id" Type="int" Nullable="false" />
   </EntityType>
   <EntityType Name="ReportedPosts">
     <Key>
@@ -203,6 +204,46 @@
     </Key>
     <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
     <Property Name="Word" Type="nvarchar(max)" Nullable="false" />
+  </EntityType>
+  <EntityType Name="Facilities">
+    <Key>
+      <PropertyRef Name="PostIdFacilities" />
+    </Key>
+    <Property Name="HasInternet" Type="bit" Nullable="false" />
+    <Property Name="ElectricityFee" Type="float" Nullable="true" />
+    <Property Name="WaterFee" Type="float" Nullable="true" />
+    <Property Name="HasTVCable" Type="bit" Nullable="false" />
+    <Property Name="HasBed" Type="bit" Nullable="false" />
+    <Property Name="HasWaterHeater" Type="bit" Nullable="false" />
+    <Property Name="IsAllowCooking" Type="bit" Nullable="false" />
+    <Property Name="HasMotorParkingLot" Type="bit" Nullable="false" />
+    <Property Name="HasToilet" Type="bit" Nullable="false" />
+    <Property Name="HasAirConditioner" Type="bit" Nullable="false" />
+    <Property Name="HasGarage" Type="bit" Nullable="false" />
+    <Property Name="IsStayWithOwner" Type="bit" Nullable="false" />
+    <Property Name="RestrictHours" Type="float" Nullable="true" />
+    <Property Name="HasSecurity" Type="bit" Nullable="false" />
+    <Property Name="Direction" Type="nvarchar(max)" Nullable="true" />
+    <Property Name="PostIdFacilities" Type="int" Nullable="false" />
+  </EntityType>
+  <EntityType Name="Contacts">
+    <Key>
+      <PropertyRef Name="PostIdContacts" />
+    </Key>
+    <Property Name="Phone" Type="nvarchar(max)" Nullable="false" />
+    <Property Name="Email" Type="nvarchar(max)" Nullable="true" />
+    <Property Name="Yahoo" Type="nvarchar(max)" Nullable="true" />
+    <Property Name="Skype" Type="nvarchar(max)" Nullable="true" />
+    <Property Name="PostIdContacts" Type="int" Nullable="false" />
+  </EntityType>
+  <EntityType Name="PostVideos">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="PostId" Type="int" Nullable="false" />
+    <Property Name="Path" Type="nvarchar(max)" Nullable="false" />
+    <Property Name="IsDeleted" Type="bit" Nullable="false" />
   </EntityType>
   <Association Name="ProvincesDistricts">
     <End Role="Provinces" Type="RentalHouseFinding.Store.Provinces" Multiplicity="1" />
@@ -224,19 +265,7 @@
         <PropertyRef Name="Id" />
       </Principal>
       <Dependent Role="Posts">
-        <PropertyRef Name="District_Id" />
-      </Dependent>
-    </ReferentialConstraint>
-  </Association>
-  <Association Name="UsersPosts">
-    <End Role="Users" Type="RentalHouseFinding.Store.Users" Multiplicity="1" />
-    <End Role="Posts" Type="RentalHouseFinding.Store.Posts" Multiplicity="*" />
-    <ReferentialConstraint>
-      <Principal Role="Users">
-        <PropertyRef Name="Id" />
-      </Principal>
-      <Dependent Role="Posts">
-        <PropertyRef Name="UserId" />
+        <PropertyRef Name="DistrictId" />
       </Dependent>
     </ReferentialConstraint>
   </Association>
@@ -248,7 +277,7 @@
         <PropertyRef Name="Id" />
       </Principal>
       <Dependent Role="Posts">
-        <PropertyRef Name="Category_Id" />
+        <PropertyRef Name="CategoryId" />
       </Dependent>
     </ReferentialConstraint>
   </Association>
@@ -264,18 +293,6 @@
       </Dependent>
     </ReferentialConstraint>
   </Association>
-  <Association Name="PostStatusPosts">
-    <End Role="PostStatus" Type="RentalHouseFinding.Store.PostStatus" Multiplicity="1" />
-    <End Role="Posts" Type="RentalHouseFinding.Store.Posts" Multiplicity="*" />
-    <ReferentialConstraint>
-      <Principal Role="PostStatus">
-        <PropertyRef Name="Id" />
-      </Principal>
-      <Dependent Role="Posts">
-        <PropertyRef Name="StatusId" />
-      </Dependent>
-    </ReferentialConstraint>
-  </Association>
   <Association Name="UsersFavorites">
     <End Role="Users" Type="RentalHouseFinding.Store.Users" Multiplicity="1" />
     <End Role="Favorites" Type="RentalHouseFinding.Store.Favorites" Multiplicity="*" />
@@ -284,7 +301,7 @@
         <PropertyRef Name="Id" />
       </Principal>
       <Dependent Role="Favorites">
-        <PropertyRef Name="User_Id" />
+        <PropertyRef Name="UserId" />
       </Dependent>
     </ReferentialConstraint>
   </Association>
@@ -336,6 +353,66 @@
       </Dependent>
     </ReferentialConstraint>
   </Association>
+  <Association Name="PostsFacilities">
+    <End Role="Posts" Type="RentalHouseFinding.Store.Posts" Multiplicity="1" />
+    <End Role="Facilities" Type="RentalHouseFinding.Store.Facilities" Multiplicity="0..1" />
+    <ReferentialConstraint>
+      <Principal Role="Posts">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="Facilities">
+        <PropertyRef Name="PostIdFacilities" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="PostsContacts">
+    <End Role="Posts" Type="RentalHouseFinding.Store.Posts" Multiplicity="1" />
+    <End Role="Contacts" Type="RentalHouseFinding.Store.Contacts" Multiplicity="0..1" />
+    <ReferentialConstraint>
+      <Principal Role="Posts">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="Contacts">
+        <PropertyRef Name="PostIdContacts" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="PostsPostVideos">
+    <End Role="Posts" Type="RentalHouseFinding.Store.Posts" Multiplicity="1" />
+    <End Role="PostVideos" Type="RentalHouseFinding.Store.PostVideos" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Posts">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="PostVideos">
+        <PropertyRef Name="PostId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="PostStatusesPosts">
+    <End Role="PostStatuses" Type="RentalHouseFinding.Store.PostStatuses" Multiplicity="1" />
+    <End Role="Posts" Type="RentalHouseFinding.Store.Posts" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="PostStatuses">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="Posts">
+        <PropertyRef Name="StatusId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="UsersPosts">
+    <End Role="Users" Type="RentalHouseFinding.Store.Users" Multiplicity="0..1" />
+    <End Role="Posts" Type="RentalHouseFinding.Store.Posts" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Users">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="Posts">
+        <PropertyRef Name="UserId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
 </Schema></edmx:StorageModels>
     <!-- CSDL content -->
     <edmx:ConceptualModels>
@@ -345,108 +422,124 @@
           <EntitySet Name="Provinces" EntityType="RentalHouseFinding.Provinces" />
           <EntitySet Name="Districts" EntityType="RentalHouseFinding.Districts" />
           <AssociationSet Name="ProvincesDistricts" Association="RentalHouseFinding.ProvincesDistricts">
-            <End Role="Provinces" EntitySet="Provinces" />
-            <End Role="Districts" EntitySet="Districts" />
+            <End EntitySet="Provinces" Role="Provinces" />
+            <End EntitySet="Districts" Role="Districts" />
           </AssociationSet>
           <EntitySet Name="Posts" EntityType="RentalHouseFinding.Posts" />
           <AssociationSet Name="DistrictsPosts" Association="RentalHouseFinding.DistrictsPosts">
-            <End Role="Districts" EntitySet="Districts" />
+            <End EntitySet="Districts" Role="Districts" />
+            <End EntitySet="Posts" Role="Posts" />
+          </AssociationSet>
+          <EntitySet Name="Roles" EntityType="RentalHouseFinding.Roles" />
+          <EntitySet Name="Categories" EntityType="RentalHouseFinding.Categories" />
+          <AssociationSet Name="CategoriesPosts" Association="RentalHouseFinding.CategoriesPosts">
+            <End EntitySet="Categories" Role="Categories" />
+            <End EntitySet="Posts" Role="Posts" />
+          </AssociationSet>
+          <EntitySet Name="PostImages" EntityType="RentalHouseFinding.PostImages" />
+          <AssociationSet Name="PostsPostImages" Association="RentalHouseFinding.PostsPostImages">
+            <End EntitySet="Posts" Role="Posts" />
+            <End EntitySet="PostImages" Role="PostImages" />
+          </AssociationSet>
+          <EntitySet Name="PostStatuses" EntityType="RentalHouseFinding.PostStatuses" />
+          <EntitySet Name="Favorites" EntityType="RentalHouseFinding.Favorites" />
+          <AssociationSet Name="UsersFavorites" Association="RentalHouseFinding.UsersFavorites">
+            <End EntitySet="Users" Role="Users" />
+            <End EntitySet="Favorites" Role="Favorites" />
+          </AssociationSet>
+          <AssociationSet Name="PostsFavorites" Association="RentalHouseFinding.PostsFavorites">
+            <End EntitySet="Posts" Role="Posts" />
+            <End EntitySet="Favorites" Role="Favorites" />
+          </AssociationSet>
+          <EntitySet Name="ReportedPosts" EntityType="RentalHouseFinding.ReportedPosts" />
+          <AssociationSet Name="PostsReportedPosts" Association="RentalHouseFinding.PostsReportedPosts">
+            <End EntitySet="Posts" Role="Posts" />
+            <End EntitySet="ReportedPosts" Role="ReportedPosts" />
+          </AssociationSet>
+          <AssociationSet Name="UsersReportedPosts" Association="RentalHouseFinding.UsersReportedPosts">
+            <End EntitySet="Users" Role="Users" />
+            <End EntitySet="ReportedPosts" Role="ReportedPosts" />
+          </AssociationSet>
+          <EntitySet Name="BadWords" EntityType="RentalHouseFinding.BadWords" />
+          <AssociationSet Name="RolesUsers" Association="RentalHouseFinding.RolesUsers">
+            <End EntitySet="Roles" Role="Roles" />
+            <End EntitySet="Users" Role="Users" />
+          </AssociationSet>
+          <EntitySet Name="Facilities" EntityType="RentalHouseFinding.Facilities" />
+          <EntitySet Name="Contacts" EntityType="RentalHouseFinding.Contacts" />
+          <EntitySet Name="PostVideos" EntityType="RentalHouseFinding.PostVideos" />
+          <AssociationSet Name="PostsFacilities" Association="RentalHouseFinding.PostsFacilities">
+            <End EntitySet="Posts" Role="Posts" />
+            <End EntitySet="Facilities" Role="Facilities" />
+          </AssociationSet>
+          <AssociationSet Name="PostsContacts" Association="RentalHouseFinding.PostsContacts">
+            <End EntitySet="Posts" Role="Posts" />
+            <End EntitySet="Contacts" Role="Contacts" />
+          </AssociationSet>
+          <AssociationSet Name="PostsPostVideos" Association="RentalHouseFinding.PostsPostVideos">
+            <End EntitySet="Posts" Role="Posts" />
+            <End EntitySet="PostVideos" Role="PostVideos" />
+          </AssociationSet>
+          <AssociationSet Name="PostStatusesPosts" Association="RentalHouseFinding.PostStatusesPosts">
+            <End Role="PostStatuses" EntitySet="PostStatuses" />
             <End Role="Posts" EntitySet="Posts" />
           </AssociationSet>
           <AssociationSet Name="UsersPosts" Association="RentalHouseFinding.UsersPosts">
             <End Role="Users" EntitySet="Users" />
             <End Role="Posts" EntitySet="Posts" />
           </AssociationSet>
-          <EntitySet Name="Roles" EntityType="RentalHouseFinding.Roles" />
-          <EntitySet Name="Categories" EntityType="RentalHouseFinding.Categories" />
-          <AssociationSet Name="CategoriesPosts" Association="RentalHouseFinding.CategoriesPosts">
-            <End Role="Categories" EntitySet="Categories" />
-            <End Role="Posts" EntitySet="Posts" />
-          </AssociationSet>
-          <EntitySet Name="PostImages" EntityType="RentalHouseFinding.PostImages" />
-          <AssociationSet Name="PostsPostImages" Association="RentalHouseFinding.PostsPostImages">
-            <End Role="Posts" EntitySet="Posts" />
-            <End Role="PostImages" EntitySet="PostImages" />
-          </AssociationSet>
-          <EntitySet Name="PostStatus" EntityType="RentalHouseFinding.PostStatus" />
-          <AssociationSet Name="PostStatusPosts" Association="RentalHouseFinding.PostStatusPosts">
-            <End Role="PostStatus" EntitySet="PostStatus" />
-            <End Role="Posts" EntitySet="Posts" />
-          </AssociationSet>
-          <EntitySet Name="Favorites" EntityType="RentalHouseFinding.Favorites" />
-          <AssociationSet Name="UsersFavorites" Association="RentalHouseFinding.UsersFavorites">
-            <End Role="Users" EntitySet="Users" />
-            <End Role="Favorites" EntitySet="Favorites" />
-          </AssociationSet>
-          <AssociationSet Name="PostsFavorites" Association="RentalHouseFinding.PostsFavorites">
-            <End Role="Posts" EntitySet="Posts" />
-            <End Role="Favorites" EntitySet="Favorites" />
-          </AssociationSet>
-          <EntitySet Name="ReportedPosts" EntityType="RentalHouseFinding.ReportedPosts" />
-          <AssociationSet Name="PostsReportedPosts" Association="RentalHouseFinding.PostsReportedPosts">
-            <End Role="Posts" EntitySet="Posts" />
-            <End Role="ReportedPosts" EntitySet="ReportedPosts" />
-          </AssociationSet>
-          <AssociationSet Name="UsersReportedPosts" Association="RentalHouseFinding.UsersReportedPosts">
-            <End Role="Users" EntitySet="Users" />
-            <End Role="ReportedPosts" EntitySet="ReportedPosts" />
-          </AssociationSet>
-          <EntitySet Name="BadWords" EntityType="RentalHouseFinding.BadWords" />
-          <AssociationSet Name="RolesUsers" Association="RentalHouseFinding.RolesUsers">
-            <End Role="Roles" EntitySet="Roles" />
-            <End Role="Users" EntitySet="Users" />
-          </AssociationSet>
-        </EntityContainer>
+          </EntityContainer>
         <EntityType Name="Users">
           <Key>
             <PropertyRef Name="Id" />
           </Key>
-          <Property Type="Int32" Name="Id" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Type="String" Name="Username" Nullable="false" MaxLength="20" />
-          <Property Type="String" Name="Password" Nullable="false" MaxLength="20" />
-          <Property Type="String" Name="Email" Nullable="false" MaxLength="50" />
-          <Property Type="String" Name="PhoneNumber" Nullable="true" MaxLength="15" />
-          <Property Type="String" Name="Address" Nullable="true" MaxLength="Max" Unicode="true" />
-          <Property Type="String" Name="Name" Nullable="true" MaxLength="Max" Unicode="true" />
-          <Property Type="DateTime" Name="DOB" Nullable="true" />
-          <Property Type="String" Name="Avatar" Nullable="true" MaxLength="Max" />
-          <Property Type="DateTime" Name="CreatedDate" Nullable="false" />
-          <Property Type="DateTime" Name="LastUpdate" Nullable="false" />
-          <NavigationProperty Name="Posts" Relationship="RentalHouseFinding.UsersPosts" FromRole="Users" ToRole="Posts" />
+          <Property Name="Id" Nullable="false" annotation:StoreGeneratedPattern="Identity" Type="Int32" />
+          <Property Name="Username" Nullable="false" MaxLength="50" Type="String" />
+          <Property Name="Password" Nullable="false" MaxLength="Max" Type="String" />
+          <Property Name="Email" Nullable="false" MaxLength="50" Type="String" />
+          <Property Name="PhoneNumber" Nullable="true" MaxLength="15" Type="String" />
+          <Property Name="Address" Nullable="true" MaxLength="Max" Unicode="true" Type="String" />
+          <Property Name="Name" Nullable="true" MaxLength="Max" Unicode="true" Type="String" />
+          <Property Name="DOB" Nullable="true" Type="DateTime" />
+          <Property Name="Avatar" Nullable="true" MaxLength="Max" Type="String" />
+          <Property Name="CreatedDate" Nullable="false" Type="DateTime" />
+          <Property Name="LastUpdate" Nullable="false" Type="DateTime" />
           <NavigationProperty Name="Favorites" Relationship="RentalHouseFinding.UsersFavorites" FromRole="Users" ToRole="Favorites" />
           <NavigationProperty Name="ReportedPosts" Relationship="RentalHouseFinding.UsersReportedPosts" FromRole="Users" ToRole="ReportedPosts" />
-          <Property Type="Boolean" Name="IsDeleted" Nullable="false" />
-          <Property Type="String" Name="OpenIdURL" Nullable="false" MaxLength="Max" />
-          <Property Type="Int32" Name="RoleId" Nullable="false" />
+          <Property Name="IsDeleted" Nullable="false" Type="Boolean" />
+          <Property Name="OpenIdURL" Nullable="true" MaxLength="Max" Type="String" />
+          <Property Name="RoleId" Nullable="false" Type="Int32" />
           <NavigationProperty Name="Role" Relationship="RentalHouseFinding.RolesUsers" FromRole="Users" ToRole="Roles" />
+          <Property Name="Sex" Nullable="true" MaxLength="10" Type="String" />
+          <NavigationProperty Name="Posts" Relationship="RentalHouseFinding.UsersPosts" FromRole="Users" ToRole="Posts" />
         </EntityType>
         <EntityType Name="Provinces">
           <Key>
             <PropertyRef Name="Id" />
           </Key>
-          <Property Type="Int32" Name="Id" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Type="String" Name="Name" Nullable="false" MaxLength="Max" Unicode="true" />
-          <Property Type="Double" Name="Lat" Nullable="false" />
-          <Property Type="Double" Name="Lon" Nullable="false" />
+          <Property Name="Id" Nullable="false" annotation:StoreGeneratedPattern="Identity" Type="Int32" />
+          <Property Name="Name" Nullable="false" MaxLength="Max" Unicode="true" Type="String" />
+          <Property Name="Lat" Nullable="false" Type="Double" />
+          <Property Name="Lon" Nullable="false" Type="Double" />
           <NavigationProperty Name="Districts" Relationship="RentalHouseFinding.ProvincesDistricts" FromRole="Provinces" ToRole="Districts" />
-          <Property Type="Boolean" Name="IsDeleted" Nullable="false" />
+          <Property Name="IsDeleted" Nullable="false" Type="Boolean" />
         </EntityType>
         <EntityType Name="Districts">
           <Key>
             <PropertyRef Name="Id" />
           </Key>
-          <Property Type="Int32" Name="Id" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Type="String" Name="Name" Nullable="false" MaxLength="Max" Unicode="true" />
-          <Property Type="Double" Name="Lat" Nullable="false" />
-          <Property Type="Double" Name="Lon" Nullable="false" />
-          <Property Type="Int32" Name="ProvinceId" Nullable="false" />
+          <Property Name="Id" Nullable="false" annotation:StoreGeneratedPattern="Identity" Type="Int32" />
+          <Property Name="Name" Nullable="false" MaxLength="Max" Unicode="true" Type="String" />
+          <Property Name="Lat" Nullable="false" Type="Double" />
+          <Property Name="Lon" Nullable="false" Type="Double" />
+          <Property Name="ProvinceId" Nullable="false" Type="Int32" />
           <NavigationProperty Name="Province" Relationship="RentalHouseFinding.ProvincesDistricts" FromRole="Districts" ToRole="Provinces" />
           <NavigationProperty Name="Posts" Relationship="RentalHouseFinding.DistrictsPosts" FromRole="Districts" ToRole="Posts" />
-          <Property Type="Boolean" Name="IsDeleted" Nullable="false" />
+          <Property Name="IsDeleted" Nullable="false" Type="Boolean" />
         </EntityType>
         <Association Name="ProvincesDistricts">
-          <End Type="RentalHouseFinding.Provinces" Role="Provinces" Multiplicity="1" />
-          <End Type="RentalHouseFinding.Districts" Role="Districts" Multiplicity="*" />
+          <End Type="RentalHouseFinding.Provinces" Multiplicity="1" Role="Provinces" />
+          <End Type="RentalHouseFinding.Districts" Multiplicity="*" Role="Districts" />
           <ReferentialConstraint>
             <Principal Role="Provinces">
               <PropertyRef Name="Id" />
@@ -461,56 +554,43 @@
             <PropertyRef Name="Id" />
           </Key>
           <Property Type="Int32" Name="Id" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Type="Int32" Name="UserId" Nullable="false" />
-          <Property Type="String" Name="Title" Nullable="false" MaxLength="Max" Unicode="true" />
-          <Property Type="Int32" Name="CategoryId" Nullable="false" />
-          <Property Type="Int32" Name="StatusId" Nullable="false" />
-          <Property Type="Boolean" Name="IsDeleted" Nullable="false" />
-          <Property Type="Int32" Name="Views" Nullable="false" />
-          <Property Type="DateTime" Name="CreatedDate" Nullable="false" />
-          <Property Type="DateTime" Name="EditedDate" Nullable="false" />
-          <Property Type="DateTime" Name="RenewDate" Nullable="true" />
-          <Property Type="Int32" Name="DistrictId" Nullable="false" />
-          <Property Type="String" Name="Address" Nullable="false" MaxLength="Max" Unicode="true" />
-          <Property Type="Double" Name="Price" Nullable="false" />
-          <Property Type="Double" Name="Area" Nullable="false" />
-          <Property Type="String" Name="Contact" Nullable="true" Unicode="true" MaxLength="Max" />
-          <Property Type="String" Name="Phone" Nullable="false" MaxLength="20" />
-          <Property Type="String" Name="Email" Nullable="false" MaxLength="50" />
-          <Property Type="String" Name="Description" Nullable="false" MaxLength="Max" Unicode="true" />
-          <Property Type="Double" Name="Lat" Nullable="false" />
-          <Property Type="Double" Name="Lon" Nullable="false" />
-          <Property Type="Double" Name="WaterFee" Nullable="true" />
-          <Property Type="Double" Name="ElectricityFee" Nullable="true" />
-          <Property Type="Double" Name="InternetFee" Nullable="true" />
-          <Property Type="Boolean" Name="IsStayWithOwner" Nullable="true" />
-          <Property Type="Int32" Name="RestrictHours" Nullable="true" />
-          <Property Type="Boolean" Name="IsParkingLot" Nullable="true" />
-          <Property Type="Double" Name="ParkingFee" Nullable="true" />
-          <Property Type="Boolean" Name="IsAllowCooking" Nullable="true" />
-          <Property Type="String" Name="VideoLink" Nullable="true" MaxLength="Max" />
+          <Property Name="Title" Nullable="false" MaxLength="Max" Unicode="true" Type="String" />
+          <Property Name="CategoryId" Nullable="false" Type="Int32" />
+          <Property Name="StatusId" Nullable="false" Type="Int32" />
+          <Property Name="IsDeleted" Nullable="false" Type="Boolean" />
+          <Property Name="Views" Nullable="false" Type="Int32" />
+          <Property Name="CreatedDate" Nullable="false" Type="DateTime" />
+          <Property Name="EditedDate" Nullable="false" Type="DateTime" />
+          <Property Name="RenewDate" Nullable="true" Type="DateTime" />
+          <Property Name="DistrictId" Nullable="false" Type="Int32" />
+          <Property Name="Address" Nullable="false" MaxLength="Max" Unicode="true" Type="String" />
+          <Property Name="Price" Nullable="false" Type="Double" />
+          <Property Name="Area" Nullable="false" Type="Double" />
+          <Property Name="PhoneActive" Nullable="false" MaxLength="20" Type="String" />
+          <Property Name="Description" Nullable="true" MaxLength="Max" Unicode="true" Type="String" />
+          <Property Name="Lat" Nullable="false" Type="Double" />
+          <Property Name="Lon" Nullable="false" Type="Double" />
           <NavigationProperty Name="District" Relationship="RentalHouseFinding.DistrictsPosts" FromRole="Posts" ToRole="Districts" />
-          <NavigationProperty Name="User" Relationship="RentalHouseFinding.UsersPosts" FromRole="Posts" ToRole="Users" />
-          <Property Type="String" Name="Direction" Nullable="true" Unicode="true" MaxLength="Max" />
           <NavigationProperty Name="Category" Relationship="RentalHouseFinding.CategoriesPosts" FromRole="Posts" ToRole="Categories" />
           <NavigationProperty Name="PostImages" Relationship="RentalHouseFinding.PostsPostImages" FromRole="Posts" ToRole="PostImages" />
-          <NavigationProperty Name="PostStatu" Relationship="RentalHouseFinding.PostStatusPosts" FromRole="Posts" ToRole="PostStatus" />
           <NavigationProperty Name="Favorites" Relationship="RentalHouseFinding.PostsFavorites" FromRole="Posts" ToRole="Favorites" />
           <NavigationProperty Name="ReportedPosts" Relationship="RentalHouseFinding.PostsReportedPosts" FromRole="Posts" ToRole="ReportedPosts" />
+          <NavigationProperty Name="Facilities" Relationship="RentalHouseFinding.PostsFacilities" FromRole="Posts" ToRole="Facilities" />
+          <NavigationProperty Name="Contacts" Relationship="RentalHouseFinding.PostsContacts" FromRole="Posts" ToRole="Contacts" />
+          <NavigationProperty Name="PostVideos" Relationship="RentalHouseFinding.PostsPostVideos" FromRole="Posts" ToRole="PostVideos" />
+          <NavigationProperty Name="PostStatus" Relationship="RentalHouseFinding.PostStatusesPosts" FromRole="Posts" ToRole="PostStatuses" />
+          <Property Type="Int32" Name="UserId" Nullable="true" />
+          <NavigationProperty Name="User" Relationship="RentalHouseFinding.UsersPosts" FromRole="Posts" ToRole="Users" />
         </EntityType>
         <Association Name="DistrictsPosts">
-          <End Type="RentalHouseFinding.Districts" Role="Districts" Multiplicity="1" />
-          <End Type="RentalHouseFinding.Posts" Role="Posts" Multiplicity="*" />
-        </Association>
-        <Association Name="UsersPosts">
-          <End Type="RentalHouseFinding.Users" Role="Users" Multiplicity="1" />
-          <End Type="RentalHouseFinding.Posts" Role="Posts" Multiplicity="*" />
+          <End Type="RentalHouseFinding.Districts" Multiplicity="1" Role="Districts" />
+          <End Type="RentalHouseFinding.Posts" Multiplicity="*" Role="Posts" />
           <ReferentialConstraint>
-            <Principal Role="Users">
+            <Principal Role="Districts">
               <PropertyRef Name="Id" />
             </Principal>
             <Dependent Role="Posts">
-              <PropertyRef Name="UserId" />
+              <PropertyRef Name="DistrictId" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -518,39 +598,47 @@
           <Key>
             <PropertyRef Name="Id" />
           </Key>
-          <Property Type="Int32" Name="Id" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Type="String" Name="Name" Nullable="false" MaxLength="20" Unicode="true" />
-          <Property Type="String" Name="Description" Nullable="true" MaxLength="Max" Unicode="true" />
-          <Property Type="Boolean" Name="IsDeleted" Nullable="false" />
+          <Property Name="Id" Nullable="false" annotation:StoreGeneratedPattern="Identity" Type="Int32" />
+          <Property Name="Name" Nullable="false" MaxLength="20" Unicode="true" Type="String" />
+          <Property Name="Description" Nullable="true" MaxLength="Max" Unicode="true" Type="String" />
+          <Property Name="IsDeleted" Nullable="false" Type="Boolean" />
           <NavigationProperty Name="Users" Relationship="RentalHouseFinding.RolesUsers" FromRole="Roles" ToRole="Users" />
         </EntityType>
         <EntityType Name="Categories">
           <Key>
             <PropertyRef Name="Id" />
           </Key>
-          <Property Type="Int32" Name="Id" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Type="String" Name="Name" Nullable="false" MaxLength="50" Unicode="true" />
-          <Property Type="String" Name="Description" Nullable="true" MaxLength="Max" Unicode="true" />
+          <Property Name="Id" Nullable="false" annotation:StoreGeneratedPattern="Identity" Type="Int32" />
+          <Property Name="Name" Nullable="false" MaxLength="50" Unicode="true" Type="String" />
+          <Property Name="Description" Nullable="true" MaxLength="Max" Unicode="true" Type="String" />
           <NavigationProperty Name="Posts" Relationship="RentalHouseFinding.CategoriesPosts" FromRole="Categories" ToRole="Posts" />
-          <Property Type="Boolean" Name="IsDeleted" Nullable="false" />
+          <Property Name="IsDeleted" Nullable="false" Type="Boolean" />
         </EntityType>
         <Association Name="CategoriesPosts">
-          <End Type="RentalHouseFinding.Categories" Role="Categories" Multiplicity="1" />
-          <End Type="RentalHouseFinding.Posts" Role="Posts" Multiplicity="*" />
+          <End Type="RentalHouseFinding.Categories" Multiplicity="1" Role="Categories" />
+          <End Type="RentalHouseFinding.Posts" Multiplicity="*" Role="Posts" />
+          <ReferentialConstraint>
+            <Principal Role="Categories">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Posts">
+              <PropertyRef Name="CategoryId" />
+            </Dependent>
+          </ReferentialConstraint>
         </Association>
         <EntityType Name="PostImages">
           <Key>
             <PropertyRef Name="Id" />
           </Key>
-          <Property Type="Int32" Name="Id" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Type="Int32" Name="PostId" Nullable="false" />
-          <Property Type="String" Name="Path" Nullable="false" MaxLength="Max" />
+          <Property Name="Id" Nullable="false" annotation:StoreGeneratedPattern="Identity" Type="Int32" />
+          <Property Name="PostId" Nullable="false" Type="Int32" />
+          <Property Name="Path" Nullable="false" MaxLength="Max" Type="String" />
           <NavigationProperty Name="Post" Relationship="RentalHouseFinding.PostsPostImages" FromRole="PostImages" ToRole="Posts" />
-          <Property Type="Boolean" Name="IsDeleted" Nullable="false" />
+          <Property Name="IsDeleted" Nullable="false" Type="Boolean" />
         </EntityType>
         <Association Name="PostsPostImages">
-          <End Type="RentalHouseFinding.Posts" Role="Posts" Multiplicity="1" />
-          <End Type="RentalHouseFinding.PostImages" Role="PostImages" Multiplicity="*" />
+          <End Type="RentalHouseFinding.Posts" Multiplicity="1" Role="Posts" />
+          <End Type="RentalHouseFinding.PostImages" Multiplicity="*" Role="PostImages" />
           <ReferentialConstraint>
             <Principal Role="Posts">
               <PropertyRef Name="Id" />
@@ -560,47 +648,43 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <EntityType Name="PostStatus">
+        <EntityType Name="PostStatuses">
           <Key>
             <PropertyRef Name="Id" />
           </Key>
-          <Property Type="Int32" Name="Id" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Type="String" Name="Name" Nullable="true" MaxLength="Max" Unicode="true" />
-          <Property Type="String" Name="Description" Nullable="true" MaxLength="Max" Unicode="true" />
-          <NavigationProperty Name="Posts" Relationship="RentalHouseFinding.PostStatusPosts" FromRole="PostStatus" ToRole="Posts" />
-          <Property Type="Boolean" Name="IsDeleted" Nullable="false" />
+          <Property Name="Id" Nullable="false" annotation:StoreGeneratedPattern="Identity" Type="Int32" />
+          <Property Name="Name" Nullable="true" MaxLength="Max" Unicode="true" Type="String" />
+          <Property Name="Description" Nullable="true" MaxLength="Max" Unicode="true" Type="String" />
+          <Property Name="IsDeleted" Nullable="false" Type="Boolean" />
+          <NavigationProperty Name="Posts" Relationship="RentalHouseFinding.PostStatusesPosts" FromRole="PostStatuses" ToRole="Posts" />
         </EntityType>
-        <Association Name="PostStatusPosts">
-          <End Type="RentalHouseFinding.PostStatus" Role="PostStatus" Multiplicity="1" />
-          <End Type="RentalHouseFinding.Posts" Role="Posts" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="PostStatus">
-              <PropertyRef Name="Id" />
-            </Principal>
-            <Dependent Role="Posts">
-              <PropertyRef Name="StatusId" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
         <EntityType Name="Favorites">
           <Key>
             <PropertyRef Name="Id" />
           </Key>
-          <Property Type="Int32" Name="Id" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Type="Int32" Name="UserId" Nullable="false" />
-          <Property Type="Int32" Name="PostId" Nullable="false" />
-          <Property Type="DateTime" Name="AddedDate" Nullable="false" />
+          <Property Name="Id" Nullable="false" annotation:StoreGeneratedPattern="Identity" Type="Int32" />
+          <Property Name="UserId" Nullable="false" Type="Int32" />
+          <Property Name="PostId" Nullable="false" Type="Int32" />
+          <Property Name="AddedDate" Nullable="false" Type="DateTime" />
           <NavigationProperty Name="User" Relationship="RentalHouseFinding.UsersFavorites" FromRole="Favorites" ToRole="Users" />
           <NavigationProperty Name="Post" Relationship="RentalHouseFinding.PostsFavorites" FromRole="Favorites" ToRole="Posts" />
-          <Property Type="Boolean" Name="IsDeleted" Nullable="false" />
+          <Property Name="IsDeleted" Nullable="false" Type="Boolean" />
         </EntityType>
         <Association Name="UsersFavorites">
-          <End Type="RentalHouseFinding.Users" Role="Users" Multiplicity="1" />
-          <End Type="RentalHouseFinding.Favorites" Role="Favorites" Multiplicity="*" />
+          <End Type="RentalHouseFinding.Users" Multiplicity="1" Role="Users" />
+          <End Type="RentalHouseFinding.Favorites" Multiplicity="*" Role="Favorites" />
+          <ReferentialConstraint>
+            <Principal Role="Users">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Favorites">
+              <PropertyRef Name="UserId" />
+            </Dependent>
+          </ReferentialConstraint>
         </Association>
         <Association Name="PostsFavorites">
-          <End Type="RentalHouseFinding.Posts" Role="Posts" Multiplicity="1" />
-          <End Type="RentalHouseFinding.Favorites" Role="Favorites" Multiplicity="*" />
+          <End Type="RentalHouseFinding.Posts" Multiplicity="1" Role="Posts" />
+          <End Type="RentalHouseFinding.Favorites" Multiplicity="*" Role="Favorites" />
           <ReferentialConstraint>
             <Principal Role="Posts">
               <PropertyRef Name="Id" />
@@ -614,18 +698,18 @@
           <Key>
             <PropertyRef Name="Id" />
           </Key>
-          <Property Type="Int32" Name="Id" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Type="Int32" Name="PostId" Nullable="false" />
-          <Property Type="Int32" Name="ReportedBy" Nullable="false" />
-          <Property Type="DateTime" Name="ReportedDate" Nullable="false" />
-          <Property Type="String" Name="Reason" Nullable="false" MaxLength="Max" Unicode="true" />
-          <Property Type="Boolean" Name="IsIgnored" Nullable="false" />
+          <Property Name="Id" Nullable="false" annotation:StoreGeneratedPattern="Identity" Type="Int32" />
+          <Property Name="PostId" Nullable="false" Type="Int32" />
+          <Property Name="ReportedBy" Nullable="false" Type="Int32" />
+          <Property Name="ReportedDate" Nullable="false" Type="DateTime" />
+          <Property Name="Reason" Nullable="false" MaxLength="Max" Unicode="true" Type="String" />
+          <Property Name="IsIgnored" Nullable="false" Type="Boolean" />
           <NavigationProperty Name="Post" Relationship="RentalHouseFinding.PostsReportedPosts" FromRole="ReportedPosts" ToRole="Posts" />
           <NavigationProperty Name="User" Relationship="RentalHouseFinding.UsersReportedPosts" FromRole="ReportedPosts" ToRole="Users" />
         </EntityType>
         <Association Name="PostsReportedPosts">
-          <End Type="RentalHouseFinding.Posts" Role="Posts" Multiplicity="1" />
-          <End Type="RentalHouseFinding.ReportedPosts" Role="ReportedPosts" Multiplicity="*" />
+          <End Type="RentalHouseFinding.Posts" Multiplicity="1" Role="Posts" />
+          <End Type="RentalHouseFinding.ReportedPosts" Multiplicity="*" Role="ReportedPosts" />
           <ReferentialConstraint>
             <Principal Role="Posts">
               <PropertyRef Name="Id" />
@@ -636,8 +720,8 @@
           </ReferentialConstraint>
         </Association>
         <Association Name="UsersReportedPosts">
-          <End Type="RentalHouseFinding.Users" Role="Users" Multiplicity="1" />
-          <End Type="RentalHouseFinding.ReportedPosts" Role="ReportedPosts" Multiplicity="*" />
+          <End Type="RentalHouseFinding.Users" Multiplicity="1" Role="Users" />
+          <End Type="RentalHouseFinding.ReportedPosts" Multiplicity="*" Role="ReportedPosts" />
           <ReferentialConstraint>
             <Principal Role="Users">
               <PropertyRef Name="Id" />
@@ -651,12 +735,12 @@
           <Key>
             <PropertyRef Name="Id" />
           </Key>
-          <Property Type="Int32" Name="Id" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Type="String" Name="Word" Nullable="false" />
+          <Property Name="Id" Nullable="false" annotation:StoreGeneratedPattern="Identity" Type="Int32" />
+          <Property Name="Word" Nullable="false" Type="String" />
         </EntityType>
         <Association Name="RolesUsers">
-          <End Type="RentalHouseFinding.Roles" Role="Roles" Multiplicity="1" />
-          <End Type="RentalHouseFinding.Users" Role="Users" Multiplicity="*" />
+          <End Type="RentalHouseFinding.Roles" Multiplicity="1" Role="Roles" />
+          <End Type="RentalHouseFinding.Users" Multiplicity="*" Role="Users" />
           <ReferentialConstraint>
             <Principal Role="Roles">
               <PropertyRef Name="Id" />
@@ -666,7 +750,110 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-      </Schema>
+        <EntityType Name="Facilities">
+          <Key>
+            <PropertyRef Name="PostIdFacilities" />
+          </Key>
+          <Property Name="HasInternet" Nullable="false" Type="Boolean" />
+          <Property Name="ElectricityFee" Nullable="false" Type="Double" />
+          <Property Name="WaterFee" Nullable="false" Type="Double" />
+          <Property Name="HasTVCable" Nullable="false" Type="Boolean" />
+          <Property Name="HasBed" Nullable="false" Type="Boolean" />
+          <Property Name="HasWaterHeater" Nullable="false" Type="Boolean" />
+          <Property Name="IsAllowCooking" Nullable="false" Type="Boolean" />
+          <Property Name="HasMotorParkingLot" Nullable="false" Type="Boolean" />
+          <Property Name="HasToilet" Nullable="false" Type="Boolean" />
+          <Property Name="HasAirConditioner" Nullable="false" Type="Boolean" />
+          <Property Name="HasGarage" Nullable="false" Type="Boolean" />
+          <Property Name="IsStayWithOwner" Nullable="false" Type="Boolean" />
+          <Property Name="RestrictHours" Nullable="false" Type="Double" />
+          <Property Name="HasSecurity" Nullable="false" Type="Boolean" />
+          <Property Name="Direction" Nullable="true" Type="String" />
+          <Property Name="PostIdFacilities" Nullable="false" Type="Int32" />
+          <NavigationProperty Name="Post" Relationship="RentalHouseFinding.PostsFacilities" FromRole="Facilities" ToRole="Posts" />
+        </EntityType>
+        <EntityType Name="Contacts">
+          <Key>
+            <PropertyRef Name="PostIdContacts" />
+          </Key>
+          <Property Name="Phone" Nullable="false" Type="String" />
+          <Property Name="Email" Nullable="true" Type="String" />
+          <Property Name="Yahoo" Nullable="true" Type="String" />
+          <Property Name="Skype" Nullable="true" Type="String" />
+          <Property Name="PostIdContacts" Nullable="false" Type="Int32" />
+          <NavigationProperty Name="Post" Relationship="RentalHouseFinding.PostsContacts" FromRole="Contacts" ToRole="Posts" />
+        </EntityType>
+        <EntityType Name="PostVideos">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Nullable="false" annotation:StoreGeneratedPattern="Identity" Type="Int32" />
+          <Property Name="PostId" Nullable="false" Type="Int32" />
+          <Property Name="Path" Nullable="false" MaxLength="Max" Type="String" />
+          <Property Name="IsDeleted" Nullable="false" Type="Boolean" />
+          <NavigationProperty Name="Post" Relationship="RentalHouseFinding.PostsPostVideos" FromRole="PostVideos" ToRole="Posts" />
+        </EntityType>
+        <Association Name="PostsFacilities">
+          <End Type="RentalHouseFinding.Posts" Multiplicity="1" Role="Posts" />
+          <End Type="RentalHouseFinding.Facilities" Multiplicity="1" Role="Facilities" />
+          <ReferentialConstraint>
+            <Principal Role="Posts">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Facilities">
+              <PropertyRef Name="PostIdFacilities" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="PostsContacts">
+          <End Type="RentalHouseFinding.Posts" Multiplicity="1" Role="Posts" />
+          <End Type="RentalHouseFinding.Contacts" Multiplicity="1" Role="Contacts" />
+          <ReferentialConstraint>
+            <Principal Role="Posts">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Contacts">
+              <PropertyRef Name="PostIdContacts" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="PostsPostVideos">
+          <End Type="RentalHouseFinding.Posts" Multiplicity="1" Role="Posts" />
+          <End Type="RentalHouseFinding.PostVideos" Multiplicity="*" Role="PostVideos" />
+          <ReferentialConstraint>
+            <Principal Role="Posts">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="PostVideos">
+              <PropertyRef Name="PostId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="PostStatusesPosts">
+          <End Type="RentalHouseFinding.PostStatuses" Role="PostStatuses" Multiplicity="1" />
+          <End Type="RentalHouseFinding.Posts" Role="Posts" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="PostStatuses">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Posts">
+              <PropertyRef Name="StatusId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="UsersPosts">
+          <End Type="RentalHouseFinding.Users" Role="Users" Multiplicity="0..1" />
+          <End Type="RentalHouseFinding.Posts" Role="Posts" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Users">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Posts">
+              <PropertyRef Name="UserId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
     <edmx:Mappings>
@@ -689,6 +876,7 @@
           <ScalarProperty Name="IsDeleted" ColumnName="IsDeleted" />
           <ScalarProperty Name="OpenIdURL" ColumnName="OpenIdURL" />
           <ScalarProperty Name="RoleId" ColumnName="RoleId" />
+          <ScalarProperty Name="Sex" ColumnName="Sex" />
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>
@@ -719,7 +907,6 @@
       <EntityTypeMapping TypeName="IsTypeOf(RentalHouseFinding.Posts)">
         <MappingFragment StoreEntitySet="Posts">
           <ScalarProperty Name="Id" ColumnName="Id" />
-          <ScalarProperty Name="UserId" ColumnName="UserId" />
           <ScalarProperty Name="Title" ColumnName="Title" />
           <ScalarProperty Name="CategoryId" ColumnName="CategoryId" />
           <ScalarProperty Name="StatusId" ColumnName="StatusId" />
@@ -732,22 +919,11 @@
           <ScalarProperty Name="Address" ColumnName="Address" />
           <ScalarProperty Name="Price" ColumnName="Price" />
           <ScalarProperty Name="Area" ColumnName="Area" />
-          <ScalarProperty Name="Contact" ColumnName="Contact" />
-          <ScalarProperty Name="Phone" ColumnName="Phone" />
-          <ScalarProperty Name="Email" ColumnName="Email" />
+          <ScalarProperty Name="PhoneActive" ColumnName="PhoneActive" />
           <ScalarProperty Name="Description" ColumnName="Description" />
           <ScalarProperty Name="Lat" ColumnName="Lat" />
           <ScalarProperty Name="Lon" ColumnName="Lon" />
-          <ScalarProperty Name="WaterFee" ColumnName="WaterFee" />
-          <ScalarProperty Name="ElectricityFee" ColumnName="ElectricityFee" />
-          <ScalarProperty Name="InternetFee" ColumnName="InternetFee" />
-          <ScalarProperty Name="IsStayWithOwner" ColumnName="IsStayWithOwner" />
-          <ScalarProperty Name="RestrictHours" ColumnName="RestrictHours" />
-          <ScalarProperty Name="IsParkingLot" ColumnName="IsParkingLot" />
-          <ScalarProperty Name="ParkingFee" ColumnName="ParkingFee" />
-          <ScalarProperty Name="IsAllowCooking" ColumnName="IsAllowCooking" />
-          <ScalarProperty Name="VideoLink" ColumnName="VideoLink" />
-          <ScalarProperty Name="Direction" ColumnName="Direction" />
+          <ScalarProperty Name="UserId" ColumnName="UserId" />
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>
@@ -781,9 +957,9 @@
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>
-    <EntitySetMapping Name="PostStatus">
-      <EntityTypeMapping TypeName="IsTypeOf(RentalHouseFinding.PostStatus)">
-        <MappingFragment StoreEntitySet="PostStatus">
+    <EntitySetMapping Name="PostStatuses">
+      <EntityTypeMapping TypeName="IsTypeOf(RentalHouseFinding.PostStatuses)">
+        <MappingFragment StoreEntitySet="PostStatuses">
           <ScalarProperty Name="Id" ColumnName="Id" />
           <ScalarProperty Name="Name" ColumnName="Name" />
           <ScalarProperty Name="Description" ColumnName="Description" />
@@ -822,30 +998,49 @@
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>
-    <AssociationSetMapping Name="DistrictsPosts" TypeName="RentalHouseFinding.DistrictsPosts" StoreEntitySet="Posts">
-      <EndProperty Name="Districts">
-        <ScalarProperty Name="Id" ColumnName="District_Id" />
-      </EndProperty>
-      <EndProperty Name="Posts">
-        <ScalarProperty Name="Id" ColumnName="Id" />
-      </EndProperty>
-    </AssociationSetMapping>
-    <AssociationSetMapping Name="CategoriesPosts" TypeName="RentalHouseFinding.CategoriesPosts" StoreEntitySet="Posts">
-      <EndProperty Name="Categories">
-        <ScalarProperty Name="Id" ColumnName="Category_Id" />
-      </EndProperty>
-      <EndProperty Name="Posts">
-        <ScalarProperty Name="Id" ColumnName="Id" />
-      </EndProperty>
-    </AssociationSetMapping>
-    <AssociationSetMapping Name="UsersFavorites" TypeName="RentalHouseFinding.UsersFavorites" StoreEntitySet="Favorites">
-      <EndProperty Name="Users">
-        <ScalarProperty Name="Id" ColumnName="User_Id" />
-      </EndProperty>
-      <EndProperty Name="Favorites">
-        <ScalarProperty Name="Id" ColumnName="Id" />
-      </EndProperty>
-    </AssociationSetMapping>
+    <EntitySetMapping Name="Facilities">
+      <EntityTypeMapping TypeName="IsTypeOf(RentalHouseFinding.Facilities)">
+        <MappingFragment StoreEntitySet="Facilities">
+          <ScalarProperty Name="PostIdFacilities" ColumnName="PostIdFacilities" />
+          <ScalarProperty Name="HasInternet" ColumnName="HasInternet" />
+          <ScalarProperty Name="ElectricityFee" ColumnName="ElectricityFee" />
+          <ScalarProperty Name="WaterFee" ColumnName="WaterFee" />
+          <ScalarProperty Name="HasTVCable" ColumnName="HasTVCable" />
+          <ScalarProperty Name="HasBed" ColumnName="HasBed" />
+          <ScalarProperty Name="HasWaterHeater" ColumnName="HasWaterHeater" />
+          <ScalarProperty Name="IsAllowCooking" ColumnName="IsAllowCooking" />
+          <ScalarProperty Name="HasMotorParkingLot" ColumnName="HasMotorParkingLot" />
+          <ScalarProperty Name="HasToilet" ColumnName="HasToilet" />
+          <ScalarProperty Name="HasAirConditioner" ColumnName="HasAirConditioner" />
+          <ScalarProperty Name="HasGarage" ColumnName="HasGarage" />
+          <ScalarProperty Name="IsStayWithOwner" ColumnName="IsStayWithOwner" />
+          <ScalarProperty Name="RestrictHours" ColumnName="RestrictHours" />
+          <ScalarProperty Name="HasSecurity" ColumnName="HasSecurity" />
+          <ScalarProperty Name="Direction" ColumnName="Direction" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Contacts">
+      <EntityTypeMapping TypeName="IsTypeOf(RentalHouseFinding.Contacts)">
+        <MappingFragment StoreEntitySet="Contacts">
+          <ScalarProperty Name="PostIdContacts" ColumnName="PostIdContacts" />
+          <ScalarProperty Name="Phone" ColumnName="Phone" />
+          <ScalarProperty Name="Email" ColumnName="Email" />
+          <ScalarProperty Name="Yahoo" ColumnName="Yahoo" />
+          <ScalarProperty Name="Skype" ColumnName="Skype" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="PostVideos">
+      <EntityTypeMapping TypeName="IsTypeOf(RentalHouseFinding.PostVideos)">
+        <MappingFragment StoreEntitySet="PostVideos">
+          <ScalarProperty Name="Id" ColumnName="Id" />
+          <ScalarProperty Name="PostId" ColumnName="PostId" />
+          <ScalarProperty Name="Path" ColumnName="Path" />
+          <ScalarProperty Name="IsDeleted" ColumnName="IsDeleted" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
   </EntityContainerMapping>
 </Mapping></edmx:Mappings>
   </edmx:Runtime>
@@ -864,62 +1059,78 @@
     </edmx:Options>
     <!-- Diagram content (shape and connector positions) -->
     <edmx:Diagrams>
-      <Diagram Name="RentalHouseFinding" ZoomLevel="83" >
-        <EntityTypeShape EntityType="RentalHouseFinding.Users" Width="1.5" PointX="3.75" PointY="1.25" Height="4.2879036458333326" IsExpanded="true" />
-        <EntityTypeShape EntityType="RentalHouseFinding.Provinces" Width="1.5" PointX="5.75" PointY="4.25" Height="2.1725878906249996" />
-        <EntityTypeShape EntityType="RentalHouseFinding.Districts" Width="1.5" PointX="7.75" PointY="4.25" Height="2.5571907552083326" />
+      <Diagram Name="RentalHouseFinding" ZoomLevel="81" >
+        <EntityTypeShape EntityType="RentalHouseFinding.Users" PointX="3.125" PointY="1.25" Width="1.5" Height="4.6725065104166656" IsExpanded="true" />
+        <EntityTypeShape EntityType="RentalHouseFinding.Provinces" PointX="5.75" PointY="4.25" Width="1.5" Height="2.1725878906249996" />
+        <EntityTypeShape EntityType="RentalHouseFinding.Districts" PointX="7.75" PointY="4.25" Width="1.5" Height="2.5571907552083326" />
         <AssociationConnector Association="RentalHouseFinding.ProvincesDistricts">
           <ConnectorPoint PointX="7.25" PointY="5.3362939453125" />
           <ConnectorPoint PointX="7.75" PointY="5.3362939453125" />
         </AssociationConnector>
-        <EntityTypeShape EntityType="RentalHouseFinding.Posts" Width="1.5" PointX="11" PointY="0.75" Height="8.1339322916666639" />
+        <EntityTypeShape EntityType="RentalHouseFinding.Posts" Width="1.5" PointX="11" PointY="0.75" Height="6.21091796875" />
         <AssociationConnector Association="RentalHouseFinding.DistrictsPosts">
           <ConnectorPoint PointX="9.25" PointY="5.5285953776041659" />
           <ConnectorPoint PointX="11" PointY="5.5285953776041659" />
         </AssociationConnector>
-        <AssociationConnector Association="RentalHouseFinding.UsersPosts">
-          <ConnectorPoint PointX="5.25" PointY="3.9035953776041659" />
-          <ConnectorPoint PointX="11" PointY="3.9035953776041659" />
-        </AssociationConnector>
-        <EntityTypeShape EntityType="RentalHouseFinding.Roles" Width="1.5" PointX="1.875" PointY="0.5" Height="1.9802864583333335" />
-        <EntityTypeShape EntityType="RentalHouseFinding.Categories" Width="1.5" PointX="12.875" PointY="1" Height="1.9802864583333339" />
+        <EntityTypeShape EntityType="RentalHouseFinding.Roles" PointX="0.875" PointY="0.5" Width="1.5" Height="1.9802864583333335" />
+        <EntityTypeShape EntityType="RentalHouseFinding.Categories" PointX="13" PointY="1" Width="1.5" Height="1.9802864583333339" />
         <AssociationConnector Association="RentalHouseFinding.CategoriesPosts">
-          <ConnectorPoint PointX="12.875" PointY="1.9901432291666668" />
-          <ConnectorPoint PointX="12.5" PointY="1.9901432291666668" />
+          <ConnectorPoint PointX="13" PointY="1.9901432291666672" />
+          <ConnectorPoint PointX="12.5" PointY="1.9901432291666672" />
         </AssociationConnector>
-        <EntityTypeShape EntityType="RentalHouseFinding.PostImages" Width="1.5" PointX="12.875" PointY="5.625" Height="1.9802864583333335" />
+        <EntityTypeShape EntityType="RentalHouseFinding.PostImages" PointX="15.25" PointY="5.25" Width="1.5" Height="1.9802864583333335" />
         <AssociationConnector Association="RentalHouseFinding.PostsPostImages">
-          <ConnectorPoint PointX="12.5" PointY="6.6151432291666667" />
-          <ConnectorPoint PointX="12.875" PointY="6.6151432291666667" />
+          <ConnectorPoint PointX="12.5" PointY="5.53125" />
+          <ConnectorPoint PointX="15.25" PointY="5.53125" />
         </AssociationConnector>
-        <EntityTypeShape EntityType="RentalHouseFinding.PostStatus" Width="1.5" PointX="12.875" PointY="3.25" Height="1.9802864583333335" />
-        <AssociationConnector Association="RentalHouseFinding.PostStatusPosts">
+        <EntityTypeShape EntityType="RentalHouseFinding.PostStatuses" PointX="12.875" PointY="3.25" Width="1.5" Height="1.9802864583333335" />
+        <EntityTypeShape EntityType="RentalHouseFinding.Favorites" PointX="0.75" PointY="5.875" Width="1.5" Height="2.3648893229166656" />
+        <AssociationConnector Association="RentalHouseFinding.UsersFavorites">
+          <ConnectorPoint PointX="3.125" PointY="4.2088927291666671" />
+          <ConnectorPoint PointX="0.78125" PointY="4.2088927291666671" />
+          <ConnectorPoint PointX="0.78125" PointY="5.875" />
+        </AssociationConnector>
+        <AssociationConnector Association="RentalHouseFinding.PostsFavorites">
+          <ConnectorPoint PointX="11" PointY="6.9153043619791656" />
+          <ConnectorPoint PointX="2.25" PointY="6.9153043619791656" />
+        </AssociationConnector>
+        <EntityTypeShape EntityType="RentalHouseFinding.ReportedPosts" PointX="7.125" PointY="1" Width="1.5" Height="2.5571907552083326" />
+        <AssociationConnector Association="RentalHouseFinding.PostsReportedPosts">
+          <ConnectorPoint PointX="11" PointY="2.7615364583333335" />
+          <ConnectorPoint PointX="8.625" PointY="2.7615364583333335" />
+        </AssociationConnector>
+        <AssociationConnector Association="RentalHouseFinding.UsersReportedPosts">
+          <ConnectorPoint PointX="4.625" PointY="2.4035953776041667" />
+          <ConnectorPoint PointX="7.125" PointY="2.4035953776041667" />
+        </AssociationConnector>
+        <EntityTypeShape EntityType="RentalHouseFinding.BadWords" PointX="9.25" PointY="0.5" Width="1.5" Height="1.4033821614583331" />
+        <AssociationConnector Association="RentalHouseFinding.RolesUsers">
+          <ConnectorPoint PointX="2.375" PointY="1.8651432291666668" />
+          <ConnectorPoint PointX="3.125" PointY="1.8651432291666668" />
+        </AssociationConnector>
+        <EntityTypeShape EntityType="RentalHouseFinding.Facilities" PointX="15" PointY="0.5" Width="1.5" Height="4.2879036458333317" />
+        <EntityTypeShape EntityType="RentalHouseFinding.Contacts" PointX="13.25" PointY="5.875" Width="1.5" Height="2.1725878906249996" />
+        <EntityTypeShape EntityType="RentalHouseFinding.PostVideos" PointX="8.125" PointY="7.5" Width="1.5" Height="1.9802864583333317" />
+        <AssociationConnector Association="RentalHouseFinding.PostsFacilities">
+          <ConnectorPoint PointX="12.5" PointY="0.84375" />
+          <ConnectorPoint PointX="15" PointY="0.84375" />
+        </AssociationConnector>
+        <AssociationConnector Association="RentalHouseFinding.PostsContacts">
+          <ConnectorPoint PointX="12.5" PointY="6.417958984375" />
+          <ConnectorPoint PointX="13.25" PointY="6.417958984375" />
+        </AssociationConnector>
+        <AssociationConnector Association="RentalHouseFinding.PostsPostVideos">
+          <ConnectorPoint PointX="11.75" PointY="6.96091796875" />
+          <ConnectorPoint PointX="11.75" PointY="8.4901432291666659" />
+          <ConnectorPoint PointX="9.625" PointY="8.4901432291666659" />
+        </AssociationConnector>
+        <AssociationConnector Association="RentalHouseFinding.PostStatusesPosts">
           <ConnectorPoint PointX="12.875" PointY="4.2401432291666667" />
           <ConnectorPoint PointX="12.5" PointY="4.2401432291666667" />
         </AssociationConnector>
-        <EntityTypeShape EntityType="RentalHouseFinding.Favorites" Width="1.5" PointX="0.75" PointY="5.875" Height="2.3648893229166656" />
-        <AssociationConnector Association="RentalHouseFinding.UsersFavorites">
-          <ConnectorPoint PointX="3.75" PointY="4.1364957682291665" />
-          <ConnectorPoint PointX="1.28125" PointY="4.1364957682291665" />
-          <ConnectorPoint PointX="1.28125" PointY="5.875" />
-        </AssociationConnector>
-        <AssociationConnector Association="RentalHouseFinding.PostsFavorites">
-          <ConnectorPoint PointX="11" PointY="7.5547900390624987" />
-          <ConnectorPoint PointX="2.25" PointY="7.5547900390624987" />
-        </AssociationConnector>
-        <EntityTypeShape EntityType="RentalHouseFinding.ReportedPosts" Width="1.5" PointX="7.125" PointY="1" Height="2.5571907552083326" />
-        <AssociationConnector Association="RentalHouseFinding.PostsReportedPosts">
-          <ConnectorPoint PointX="11" PointY="2.7615364583333322" />
-          <ConnectorPoint PointX="8.625" PointY="2.7615364583333322" />
-        </AssociationConnector>
-        <AssociationConnector Association="RentalHouseFinding.UsersReportedPosts">
-          <ConnectorPoint PointX="5.25" PointY="2.4035953776041659" />
-          <ConnectorPoint PointX="7.125" PointY="2.4035953776041659" />
-        </AssociationConnector>
-        <EntityTypeShape EntityType="RentalHouseFinding.BadWords" Width="1.5" PointX="9.25" PointY="0.5" Height="1.4033821614583331" />
-        <AssociationConnector Association="RentalHouseFinding.RolesUsers">
-          <ConnectorPoint PointX="3.375" PointY="1.8651432291666668" />
-          <ConnectorPoint PointX="3.75" PointY="1.8651432291666668" />
+        <AssociationConnector Association="RentalHouseFinding.UsersPosts">
+          <ConnectorPoint PointX="4.625" PointY="3.9035953776041667" />
+          <ConnectorPoint PointX="11" PointY="3.9035953776041667" />
         </AssociationConnector>
       </Diagram>
     </edmx:Diagrams>
