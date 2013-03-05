@@ -1,11 +1,124 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Web;
+using System.ComponentModel.DataAnnotations;
+using System.Globalization;
+using System.Web.Mvc;
+using System.Web.Security;
+using DataAnnotationsExtensions;
 
 namespace RentalHouseFinding.Models
 {
     public class PostViewModel
     {
+        [Required(ErrorMessage = "Vui lòng nhập tiêu đề")]
+        [Display(Name = "Tiêu đề")]
+        [MaxLength(100, ErrorMessage = "Không được vượt quá 100 ký tự, xin vui lòng nhập lại.")]
+        public string Title { get; set; }
+
+        [Required(ErrorMessage = "Vui lòng chọn thể loại")]
+        [Display(Name = "Thể loại")]
+        public int CategoryId { get; set; }
+
+        [Required(ErrorMessage = "Vui lòng chọn tỉnh thành phố")]
+        [Display(Name = "Tỉnh, thành phố")]
+        public int ProvinceId { get; set; }
+
+        [Required(ErrorMessage = "Vui lòng chọn quận, huyện")]
+        [Display(Name = "Quận, huyện")]
+        public int DistrictId { get; set; }
+
+        [Display(Name = "Địa chỉ cụ thể")]
+        public string NumberHouse { get; set; }
+
+        [Display(Name = "Đường phố")]
+        public string Street { get; set; }
+
+        [Min(0, ErrorMessage = "Giá tiền phải lớn hơn hoặc bằng 0")]
+        [Required(ErrorMessage = "Xin vui lòng nhập giá tiền.")]
+        [Display(Name = "Giá tiền")]
+        public double Price { get; set; }
+
+        [Min(0, ErrorMessage = "Diện tích phải lớn hơn 0")]
+        [Required(ErrorMessage = "Xin vui lòng nhập diện tích.")]
+        [Display(Name = "Diện tích")]
+        public double Area { get; set; }
+
+        [Required(ErrorMessage = "Xin vui lòng nhập số điện thoại.")]
+        [Display(Name = "Số điện thoại để kích hoạt bài đăng")]
+        [MaxLength(15, ErrorMessage = "Không được vượt quá 15 ký tự, xin vui lòng nhập lại.")]
+        [RegularExpression("(([0+])([0-9]+))", ErrorMessage = "Sai định dạng,xin vui lòng nhập lại")]
+        public string PhoneActive { get; set; }
+
+        [Display(Name = "Mô tả cụ thể")]
+        public string Description { get; set; }
+
+        public double Lat { get; set; }
+        public double Lon { get; set; }
+
+        [Display(Name = "Có Internet?")]
+        public Boolean HasInternet { get; set; }
+
+        [Display(Name = "Giá Internet")]
+        [Min(0, ErrorMessage = "Giá tiền phải lớn hơn hoặc bằng 0")]
+        public double ElectricityFee { get; set; }
+
+        [Display(Name = "Giá tiền nước")]
+        [Min(0, ErrorMessage = "Giá tiền phải lớn hơn hoặc bằng 0")]
+        public double WaterFee { get; set; }
+
+        [Display(Name = "Có truyền hình cáp?")]
+        public Boolean HasTVCable { get; set; }
+
+        [Display(Name = "Có giường đi kèm?")]
+        public Boolean HasBed { get; set; }
+
+        [Display(Name = "Có bình nóng lạnh?")]
+        public Boolean HasWaterHeater { get; set; }
+
+        [Display(Name = "Cho phép nấu ăn trong nhà?")]
+        public Boolean IsAllowCooking { get; set; }
+
+        [Display(Name = "Có chỗ để xe máy, xe đạp?")]
+        public Boolean HasMotorParking { get; set; }
+
+        [Display(Name = "Có phòng vệ sinh khép kín?")]
+        public Boolean HasToilet { get; set; }
+
+        [Display(Name = "Có điều hòa?")]
+        public Boolean HasAirConditioner { get; set; }
+
+        [Display(Name = "Có gara để ô tô?")]
+        public Boolean HasGarage { get; set; }
+
+        [Display(Name = "Ở cùng với chủ?")]
+        public Boolean IsStayWithOwner { get; set; }
+
+        [Display(Name = "Giờ đóng cửa")]
+        public double RestrictHours { get; set; }
+
+        [Display(Name = "Hướng nhà")]
+        public string Direction { get; set; }
+
+        [Display(Name = "Có bảo vệ?")]
+        public Boolean HasSecurity { get; set; }
+
+        [Required(ErrorMessage = "Xin vui lòng nhập số điện thoại.")]
+        [Display(Name = "Số điện thoại")]
+        [MaxLength(15, ErrorMessage = "Không được vượt quá 15 ký tự, xin vui lòng nhập lại.")]
+        [RegularExpression("(([0+])([0-9]+))", ErrorMessage = "Sai định dạng,xin vui lòng nhập lại")]
+        public string PhoneContact { get; set; }
+
+        [Display(Name = "Email liên lạc")]
+        [MaxLength(50, ErrorMessage = "Không được vượt quá 50 ký tự, xin vui lòng nhập lại.")]
+        [Required(ErrorMessage = "Xin vui lòng nhập email.")]
+        [RegularExpression(@"\w+([-+.']\w+)*@\w+([-.]\w+)*\.\w+([-.]\w+)*", ErrorMessage = "Email không hợp lệ.")]
+        public string Email { get; set; }
+
+        [Display(Name = "Tài khoản Yahoo")]
+        public string Yahoo { get; set; }
+
+        [Display(Name = "Tài khoản skype")]
+        public string Skype { get; set; }
+
     }
 }

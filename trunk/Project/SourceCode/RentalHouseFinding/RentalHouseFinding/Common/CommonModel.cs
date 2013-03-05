@@ -24,6 +24,14 @@ namespace RentalHouseFinding.Common
             }
             return sBuilder.ToString();
         }
+        public static Guid StringToGUID(string value)
+        {
+            // Create a new instance of the MD5CryptoServiceProvider object.
+            MD5 md5Hasher = MD5.Create();
+            // Convert the input string to a byte array and compute the hash.
+            byte[] data = md5Hasher.ComputeHash(Encoding.Default.GetBytes(value));
+            return new Guid(data);
+        }
         public static string ConvertUnicodeToAscii(string words)
         {
             var regex = new Regex(@"\p{IsCombiningDiacriticalMarks}+");
@@ -76,6 +84,133 @@ namespace RentalHouseFinding.Common
                 Password = GetMD5Hash("12345678"),
                 IsDeleted = false
             };
+        }
+
+        public static Posts ConvertPostViewModelToPost(PostViewModel model, DateTime createdDate, DateTime editedDate, DateTime renewDate)
+        {
+            string newAddress = string.Empty;
+            if (!string.IsNullOrEmpty(model.NumberHouse))
+            {
+                newAddress += model.NumberHouse.Trim();
+                newAddress += " ";
+            }
+
+            if (!string.IsNullOrEmpty(model.Street))
+            {
+                newAddress += model.Street.Trim();
+            }
+
+            if (!string.IsNullOrEmpty(newAddress))
+            {
+                newAddress = newAddress.Trim();
+            }
+
+            return new Posts
+            {
+                Address = newAddress,
+                Area = model.Area,
+                CategoryId = model.CategoryId,
+                Contacts = new Contacts()
+                {
+                    Email = model.Email,
+                    Phone = model.PhoneContact,
+                    Skype = model.Skype,
+                    Yahoo = model.Yahoo
+                },
+                CreatedDate = createdDate,
+                Description = model.Description,
+                DistrictId = model.DistrictId,
+                EditedDate = editedDate,
+                Facilities = new Facilities()
+                {
+                    Direction = model.Direction,
+                    ElectricityFee = model.ElectricityFee,
+                    HasAirConditioner = model.HasAirConditioner,
+                    HasBed = model.HasBed,
+                    HasGarage = model.HasGarage,
+                    HasInternet = model.HasInternet,
+                    HasMotorParkingLot = model.HasMotorParking,
+                    HasSecurity = model.HasSecurity,
+                    HasToilet = model.HasToilet,
+                    HasTVCable = model.HasTVCable,
+                    HasWaterHeater = model.HasWaterHeater,
+                    IsAllowCooking = model.IsAllowCooking,
+                    IsStayWithOwner = model.IsStayWithOwner,
+                    RestrictHours = model.RestrictHours,
+                    WaterFee = model.WaterFee
+                },
+                Lat = model.Lat,
+                Lon = model.Lon,
+                PhoneActive = model.PhoneActive,
+                Price = model.Price,
+                RenewDate = renewDate,
+                Title = model.Title,
+                Views = 0,
+                IsDeleted = false
+            };
+        }
+
+        public static PostViewModel ConvertPostToPostViewModel(Posts model)
+        {
+            return new PostViewModel
+            {
+                NumberHouse = model.Address,
+                Street = model.Address,
+                Area = model.Area,
+                CategoryId = model.CategoryId,
+                Email = model.Contacts.Email,
+                PhoneContact = model.Contacts.Phone,
+                Skype = model.Contacts.Skype,
+                Yahoo = model.Contacts.Yahoo,
+                Description = model.Description,
+                DistrictId = model.DistrictId,
+                Direction = model.Facilities.Direction,
+                ElectricityFee = model.Facilities.ElectricityFee,
+                HasAirConditioner = model.Facilities.HasAirConditioner,
+                HasBed = model.Facilities.HasBed,
+                HasGarage = model.Facilities.HasGarage,
+                HasInternet = model.Facilities.HasInternet,
+                HasMotorParking = model.Facilities.HasMotorParkingLot,
+                HasSecurity = model.Facilities.HasSecurity,
+                HasToilet = model.Facilities.HasToilet,
+                HasTVCable = model.Facilities.HasTVCable,
+                HasWaterHeater = model.Facilities.HasWaterHeater,
+                IsAllowCooking = model.Facilities.IsAllowCooking,
+                IsStayWithOwner = model.Facilities.IsStayWithOwner,
+                RestrictHours = model.Facilities.RestrictHours,
+                WaterFee = model.Facilities.WaterFee,
+                Lat = model.Lat,
+                Lon = model.Lon,
+                PhoneActive = model.PhoneActive,
+                Price = model.Price,
+                Title = model.Title
+            };
+        }
+
+        public static int GetUserIdByUsername(string userName)
+        {
+            var user = (from u in _db.Users
+                        where u.Username.Equals(userName, StringComparison.CurrentCultureIgnoreCase) && !u.IsDeleted select u).FirstOrDefault();
+            if (user != null)
+            {
+                return user.Id;
+            }
+            else
+            {
+                //Error
+                return -1;
+            }
+        }
+
+        /// <summary>
+        /// Filter whether it contains bad words
+        /// </summary>
+        /// <param name="model"></param>
+        /// <returns>false for it doesnt have bad word</returns>
+        public static bool FilterHasBadContent(PostViewModel model)
+        {
+            //Filter bad content
+            return false;
         }
 
         #endregion

@@ -1,0 +1,311 @@
+﻿@model RentalHouseFinding.Models.PostViewModel
+@{
+    ViewBag.Title = "Index";
+}
+
+<h2>View a post</h2>
+
+<script src="@Url.Content("~/Scripts/jquery.validate.min.js")" type="text/javascript"></script>
+<script src="@Url.Content("~/Scripts/jquery.validate.unobtrusive.min.js")" type="text/javascript"></script>
+<script src="http://maps.googleapis.com/maps/api/js?key=AIzaSyDY0kkJiTPVd2U7aTOAwhc9ySH6oHxOIYM&sensor=false" type="text/javascript"></script>
+
+        <script type="text/javascript">
+            $(document).ready(function () {
+
+                if (navigator.geolocation) {
+                    function initializeGeo() {
+                        navigator.geolocation.getCurrentPosition(function (position) {
+                            var latitude = position.coords.latitude;
+                            var longitude = position.coords.longitude;
+                            var coords = new google.maps.LatLng(latitude, longitude);
+                            var mapOptions = {
+                                zoom: 15,
+                                center: coords,
+                                mapTypeControl: true,
+                                navigationControlOptions: {
+                                    style: google.maps.NavigationControlStyle.SMALL
+                                },
+                                mapTypeId: google.maps.MapTypeId.ROADMAP
+                            };
+                            map = new google.maps.Map(
+                          document.getElementById("mapContainer"), mapOptions
+                        );
+                            google.maps.event.addListener(map, 'click', function (event) { $("#Lat").val(event.latLng.lat()); $("#Lon").val(event.latLng.lng()); });
+                            var marker = new google.maps.Marker({
+                                position: coords,
+                                map: map,
+                                title: "Your current location!"
+                            });
+
+                        });
+                    }
+                    initializeGeo();
+                    google.maps.event.addDomListener(window, 'load', initializeGeo);
+                    google.setOnLoadCallback(initializeGeo);
+                } else {
+                    function initialize() {
+                        var mapProp = {
+                            center: new google.maps.LatLng(14.058324, 108.277199),
+                            zoom: 5,
+                            mapTypeId: google.maps.MapTypeId.ROADMAP
+                        };
+                        var map = new google.maps.Map(document.getElementById("mapContainer")
+            , mapProp);
+                        google.maps.event.addListener(map, 'click', function (event) { alert('Lat: ' + event.latLng.lat() + ' Lng: ' + event.latLng.lng()) });
+                    }
+
+                    google.maps.event.addDomListener(window, 'load', initialize);
+                    google.setOnLoadCallback(initialize);
+                }
+            });
+</script>
+
+@using (Html.BeginForm()) {
+    @Html.ValidationSummary(true, "Có lỗi xảy ra, vui lòng thông báo cho chúng tôi!", new { style = "color:red" })
+    <div id= "create-post-page">
+        <div class = "content" style="float:left;" >
+            <div class="success-mess">
+                @TempData["MessageSuccessPostNew"]
+                @ViewBag.Id @ViewBag.mess
+            </div>
+            <div class="editor-label">
+                @Html.LabelFor(model => model.Title)
+            </div>
+            <div class="editor-field">
+                @Html.EditorFor(model => model.Title)
+                @Html.ValidationMessageFor(model => model.Title)
+            </div>
+
+            <div class="editor-label">
+                @Html.LabelFor(model => model.PhoneActive)
+            </div>
+            <div class="editor-field">
+                @Html.EditorFor(model => model.PhoneActive)
+                @Html.ValidationMessageFor(model => model.PhoneActive)
+            </div>
+
+            <div class="editor-label">
+                @Html.LabelFor(model => model.CategoryId)
+            </div>
+            <div class="editor-field">
+                @Html.EditorFor(model => model.CategoryId)
+                @Html.ValidationMessageFor(model => model.CategoryId)
+            </div>
+
+            <div class="editor-label">
+                @Html.LabelFor(model => model.ProvinceId)
+            </div>
+            <div class="editor-field">
+                @Html.EditorFor(model => model.ProvinceId)
+                @Html.ValidationMessageFor(model => model.ProvinceId)
+            </div>
+
+            <div class="editor-label">
+                @Html.LabelFor(model => model.DistrictId)
+            </div>
+            <div class="editor-field">
+                @Html.EditorFor(model => model.DistrictId)
+                @Html.ValidationMessageFor(model => model.DistrictId)
+            </div>
+
+            <div class="editor-label">
+                @Html.LabelFor(model => model.NumberHouse)
+            </div>
+            <div class="editor-field">
+                @Html.EditorFor(model => model.NumberHouse)
+                @Html.ValidationMessageFor(model => model.NumberHouse)
+            </div>
+
+            <div class="editor-label">
+                @Html.LabelFor(model => model.Street)
+            </div>
+            <div class="editor-field">
+                @Html.EditorFor(model => model.Street)
+                @Html.ValidationMessageFor(model => model.Street)
+            </div>
+
+            <div class="editor-label">
+                @Html.LabelFor(model => model.Price)
+            </div>
+            <div class="editor-field">
+                @Html.EditorFor(model => model.Price)
+                @Html.ValidationMessageFor(model => model.Price)
+            </div>
+
+            <div class="editor-label">
+                @Html.LabelFor(model => model.Area)
+            </div>
+            <div class="editor-field">
+                @Html.EditorFor(model => model.Area)
+                @Html.ValidationMessageFor(model => model.Area)
+            </div>
+
+            <div class="editor-label">
+                @Html.LabelFor(model => model.Description)
+            </div>
+            <div class="editor-field">
+                @Html.EditorFor(model => model.Description)
+                @Html.ValidationMessageFor(model => model.Description)
+            </div>
+
+            <div class="editor-label">
+                @Html.LabelFor(model => model.HasInternet)
+            </div>
+            <div class="editor-field">
+                @Html.EditorFor(model => model.HasInternet)
+                @Html.ValidationMessageFor(model => model.HasInternet)
+            </div>
+
+            <div class="editor-label">
+                @Html.LabelFor(model => model.ElectricityFee)
+            </div>
+            <div class="editor-field">
+                @Html.EditorFor(model => model.ElectricityFee)
+                @Html.ValidationMessageFor(model => model.ElectricityFee)
+            </div>
+
+            <div class="editor-label">
+                @Html.LabelFor(model => model.WaterFee)
+            </div>
+            <div class="editor-field">
+                @Html.EditorFor(model => model.WaterFee)
+                @Html.ValidationMessageFor(model => model.WaterFee)
+            </div>
+
+            <div class="editor-label">
+                @Html.LabelFor(model => model.HasTVCable)
+            </div>
+            <div class="editor-field">
+                @Html.EditorFor(model => model.HasTVCable)
+                @Html.ValidationMessageFor(model => model.HasTVCable)
+            </div>
+
+            <div class="editor-label">
+                @Html.LabelFor(model => model.HasBed)
+            </div>
+            <div class="editor-field">
+                @Html.EditorFor(model => model.HasWaterHeater)
+                @Html.ValidationMessageFor(model => model.HasWaterHeater)
+            </div>
+
+            <div class="editor-label">
+                @Html.LabelFor(model => model.IsAllowCooking)
+            </div>
+            <div class="editor-field">
+                @Html.EditorFor(model => model.IsAllowCooking)
+                @Html.ValidationMessageFor(model => model.IsAllowCooking)
+            </div>
+
+            <div class="editor-label">
+                @Html.LabelFor(model => model.HasMotorParking)
+            </div>
+            <div class="editor-field">
+                @Html.EditorFor(model => model.HasMotorParking)
+                @Html.ValidationMessageFor(model => model.HasMotorParking)
+            </div>
+
+            <div class="editor-label">
+                @Html.LabelFor(model => model.HasToilet)
+            </div>
+            <div class="editor-field">
+                @Html.EditorFor(model => model.HasToilet)
+                @Html.ValidationMessageFor(model => model.HasToilet)
+            </div>
+
+            <div class="editor-label">
+                @Html.LabelFor(model => model.HasAirConditioner)
+            </div>
+            <div class="editor-field">
+                @Html.EditorFor(model => model.HasAirConditioner)
+                @Html.ValidationMessageFor(model => model.HasAirConditioner)
+            </div>
+
+            <div class="editor-label">
+                @Html.LabelFor(model => model.HasGarage)
+            </div>
+            <div class="editor-field">
+                @Html.EditorFor(model => model.HasGarage)
+                @Html.ValidationMessageFor(model => model.HasGarage)
+            </div>
+
+            <div class="editor-label">
+                @Html.LabelFor(model => model.IsStayWithOwner)
+            </div>
+            <div class="editor-field">
+                @Html.EditorFor(model => model.IsStayWithOwner)
+                @Html.ValidationMessageFor(model => model.IsStayWithOwner)
+            </div>
+
+            <div class="editor-label">
+                @Html.LabelFor(model => model.RestrictHours)
+            </div>
+            <div class="editor-field">
+                @Html.EditorFor(model => model.RestrictHours)
+                @Html.ValidationMessageFor(model => model.RestrictHours)
+            </div>
+
+            <div class="editor-label">
+                @Html.LabelFor(model => model.Direction)
+            </div>
+            <div class="editor-field">
+                @Html.EditorFor(model => model.Direction)
+                @Html.ValidationMessageFor(model => model.Direction)
+            </div>
+
+            <div class="editor-label">
+                @Html.LabelFor(model => model.HasSecurity)
+            </div>
+            <div class="editor-field">
+                @Html.EditorFor(model => model.HasSecurity)
+                @Html.ValidationMessageFor(model => model.HasSecurity)
+            </div>
+
+            <div class="editor-label">
+                @Html.LabelFor(model => model.PhoneContact)
+            </div>
+            <div class="editor-field">
+                @Html.EditorFor(model => model.PhoneContact)
+                @Html.ValidationMessageFor(model => model.PhoneContact)
+            </div>
+
+            <div class="editor-label">
+                @Html.LabelFor(model => model.Email)
+            </div>
+            <div class="editor-field">
+                @Html.EditorFor(model => model.Email)
+                @Html.ValidationMessageFor(model => model.Email)
+            </div>
+
+            <div class="editor-label">
+                @Html.LabelFor(model => model.Yahoo)
+            </div>
+            <div class="editor-field">
+                @Html.EditorFor(model => model.Yahoo)
+                @Html.ValidationMessageFor(model => model.Yahoo)
+            </div>
+
+            <div class="editor-label">
+                @Html.LabelFor(model => model.Skype)
+            </div>
+            <div class="editor-field">
+                @Html.EditorFor(model => model.Skype)
+                @Html.ValidationMessageFor(model => model.Skype)
+            </div>
+
+            <p>
+                <input type="submit" value="Create" />
+            </p>
+        </div>
+        <div class = "map" style="float:right;">
+            <div id="mapContainer" style="width:700px;height:480px;"></div>
+            <div class="editor-field">
+                @Html.EditorFor(model => model.Lat)
+            </div>
+            <div class="editor-field">
+                @Html.EditorFor(model => model.Lon)
+            </div>
+        </div>
+        <div class = "clear" style="clear:both;">
+        </div>
+    </div>
+}

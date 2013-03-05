@@ -6,3 +6,8 @@ C:\Users\MrBlackRose\documents\visual studio 2010\Projects\RentalHouseFinding\Re
 C:\Users\MrBlackRose\documents\visual studio 2010\Projects\RentalHouseFinding\RentalHouseFinding.Tests\obj\Debug\ResolveAssemblyReference.cache
 C:\Users\MrBlackRose\documents\visual studio 2010\Projects\RentalHouseFinding\RentalHouseFinding.Tests\obj\Debug\RentalHouseFinding.Tests.dll
 C:\Users\MrBlackRose\documents\visual studio 2010\Projects\RentalHouseFinding\RentalHouseFinding.Tests\obj\Debug\RentalHouseFinding.Tests.pdb
+C:\Users\MrBlackRose\documents\visual studio 2010\Projects\RentalHouseFinding\RentalHouseFinding.Tests\bin\Debug\EntityFramework.dll
+C:\Users\MrBlackRose\documents\visual studio 2010\Projects\RentalHouseFinding\RentalHouseFinding.Tests\bin\Debug\EntityFramework.xml
+C:\Users\MrBlackRose\Documents\Visual Studio 2010\Projects\RentalHouseFinding\RentalHouseFinding.Tests\bin\Debug\WebActivator.dll
+C:\Users\MrBlackRose\Documents\Visual Studio 2010\Projects\RentalHouseFinding\RentalHouseFinding.Tests\bin\Debug\DataAnnotationsExtensions.dll
+C:\Users\MrBlackRose\Documents\Visual Studio 2010\Projects\RentalHouseFinding\RentalHouseFinding.Tests\bin\Debug\DataAnnotationsExtensions.ClientValidation.dll

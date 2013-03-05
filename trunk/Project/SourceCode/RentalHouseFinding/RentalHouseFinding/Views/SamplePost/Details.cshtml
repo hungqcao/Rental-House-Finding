@@ -1,0 +1,100 @@
+﻿@model RentalHouseFinding.Models.Posts
+
+@{
+    ViewBag.Title = "Details";
+}
+
+<h2>Details</h2>
+
+<fieldset>
+    <legend>Posts</legend>
+
+    <div class="display-label">Title</div>
+    <div class="display-field">
+        @Html.DisplayFor(model => model.Title)
+    </div>
+
+    <div class="display-label">Category</div>
+    <div class="display-field">
+        @Html.DisplayFor(model => model.Category.Name)
+    </div>
+
+    <div class="display-label">PostStatus</div>
+    <div class="display-field">
+        @Html.DisplayFor(model => model.PostStatus.Name)
+    </div>
+
+    <div class="display-label">IsDeleted</div>
+    <div class="display-field">
+        @Html.DisplayFor(model => model.IsDeleted)
+    </div>
+
+    <div class="display-label">Views</div>
+    <div class="display-field">
+        @Html.DisplayFor(model => model.Views)
+    </div>
+
+    <div class="display-label">CreatedDate</div>
+    <div class="display-field">
+        @Html.DisplayFor(model => model.CreatedDate)
+    </div>
+
+    <div class="display-label">EditedDate</div>
+    <div class="display-field">
+        @Html.DisplayFor(model => model.EditedDate)
+    </div>
+
+    <div class="display-label">RenewDate</div>
+    <div class="display-field">
+        @Html.DisplayFor(model => model.RenewDate)
+    </div>
+
+    <div class="display-label">District</div>
+    <div class="display-field">
+        @Html.DisplayFor(model => model.District.Name)
+    </div>
+
+    <div class="display-label">Address</div>
+    <div class="display-field">
+        @Html.DisplayFor(model => model.Address)
+    </div>
+
+    <div class="display-label">Price</div>
+    <div class="display-field">
+        @Html.DisplayFor(model => model.Price)
+    </div>
+
+    <div class="display-label">Area</div>
+    <div class="display-field">
+        @Html.DisplayFor(model => model.Area)
+    </div>
+
+    <div class="display-label">PhoneActive</div>
+    <div class="display-field">
+        @Html.DisplayFor(model => model.PhoneActive)
+    </div>
+
+    <div class="display-label">Description</div>
+    <div class="display-field">
+        @Html.DisplayFor(model => model.Description)
+    </div>
+
+    <div class="display-label">Lat</div>
+    <div class="display-field">
+        @Html.DisplayFor(model => model.Lat)
+    </div>
+
+    <div class="display-label">Lon</div>
+    <div class="display-field">
+        @Html.DisplayFor(model => model.Lon)
+    </div>
+
+    <div class="display-label">User</div>
+    <div class="display-field">
+        @Html.DisplayFor(model => model.User.Username)
+    </div>
+</fieldset>
+<p>
+    @Html.ActionLink("Edit", "Edit", new { id=Model.Id }) |
+    @Html.ActionLink("Back to List", "Index")
+</p>

@@ -1,22 +1,25 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Security.Cryptography;
+using System.Text;
 using System.Web;
 using System.Web.Mvc;
-using System.Web.Routing;
 using System.Web.Security;
+using RentalHouseFinding.Common;
 using RentalHouseFinding.Models;
+using RentalHouseFinding.Sercurity;
 
 namespace RentalHouseFinding.Controllers
 {
     public class AccountController : Controller
     {
-
         //
         // GET: /Account/LogOn
-
+        private RentalHouseFindingEntities _db = new RentalHouseFindingEntities();
         public ActionResult LogOn()
         {
+
             return View();
         }
 
@@ -24,9 +27,18 @@ namespace RentalHouseFinding.Controllers
         // POST: /Account/LogOn
 
         [HttpPost]
-        public ActionResult LogOn(LogOnModel model, string returnUrl)
+        public ActionResult LogOn(LogOnModel model, string returnUrl, bool? status)
         {
+            if (model.Password != null)
+            {
+                if (status == false || status == null)
+                {
+                    model.Password = GetMD5Hash(model.Password);
+                }
+            }
+
             if (ModelState.IsValid)
+           
             {
                 if (Membership.ValidateUser(model.UserName, model.Password))
                 {
@@ -36,6 +48,11 @@ namespace RentalHouseFinding.Controllers
                     {
                         return Redirect(returnUrl);
                     }
+                    int accountType = (from p in _db.Users where p.Username == model.UserName select p.RoleId).FirstOrDefault();
+                    if (accountType == 1)
+                    {
+                        return RedirectToAction("Index", "Admin");
+                    }
                     else
                     {
                         return RedirectToAction("Index", "Home");
@@ -43,14 +60,12 @@ namespace RentalHouseFinding.Controllers
                 }
                 else
                 {
-                    ModelState.AddModelError("", "The user name or password provided is incorrect.");
+                    ModelState.AddModelError("", "");
                 }
             }
-
-            // If we got this far, something failed, redisplay form
             return View(model);
         }
-
+        
         //
         // GET: /Account/LogOff
 
@@ -79,8 +94,8 @@ namespace RentalHouseFinding.Controllers
             {
                 // Attempt to register the user
                 MembershipCreateStatus createStatus;
-                Membership.CreateUser(model.UserName, model.Password, model.Email, null, null, true, null, out createStatus);
-
+                CustomMembershipProvider customMP = new CustomMembershipProvider();
+                customMP.CreateUser(model, out createStatus);
                 if (createStatus == MembershipCreateStatus.Success)
                 {
                     FormsAuthentication.SetAuthCookie(model.UserName, false /* createPersistentCookie */);
@@ -112,6 +127,8 @@ namespace RentalHouseFinding.Controllers
         [HttpPost]
         public ActionResult ChangePassword(ChangePasswordModel model)
         {
+            string success = "";
+            string error = "";
             if (ModelState.IsValid)
             {
 
@@ -120,12 +137,27 @@ namespace RentalHouseFinding.Controllers
                 bool changePasswordSucceeded;
                 try
                 {
-                    MembershipUser currentUser = Membership.GetUser(User.Identity.Name, true /* userIsOnline */);
-                    changePasswordSucceeded = currentUser.ChangePassword(model.OldPassword, model.NewPassword);
+                    var oldPassword = CommonController.GetMD5Hash(model.OldPassword);
+                    //MembershipUser currentUser = Membership.GetUser(User.Identity.Name, true /* userIsOnline */);
+                    //changePasswordSucceeded = currentUser.ChangePassword(model.OldPassword, model.NewPassword);
+                    var account = (from a in _db.Users
+                                    where
+                                        a.Username.Equals(User.Identity.Name) &&
+                                        a.Password.Equals(oldPassword)
+                                    select a).FirstOrDefault();
+                    if (account == null) changePasswordSucceeded = false;
+                    else
+                    {
+                        account.Password = CommonController.GetMD5Hash(model.NewPassword);
+                        _db.SaveChanges();
+                        changePasswordSucceeded = true;
+                        success = "Thay đổi mật khẩu thành công";
+                    }
                 }
                 catch (Exception)
                 {
                     changePasswordSucceeded = false;
+                    error = "Thay đổi mật khẩu không thành công";
                 }
 
                 if (changePasswordSucceeded)
@@ -134,11 +166,13 @@ namespace RentalHouseFinding.Controllers
                 }
                 else
                 {
-                    ModelState.AddModelError("", "The current password is incorrect or the new password is invalid.");
+                    ModelState.AddModelError("", @"Mật khẩu cung cấp không phù hợp hoặc mật khẩu mới không đúng");
                 }
             }
 
             // If we got this far, something failed, redisplay form
+            @ViewBag.success = success;
+            @ViewBag.error = error;
             return View(model);
         }
 
@@ -148,6 +182,17 @@ namespace RentalHouseFinding.Controllers
         public ActionResult ChangePasswordSuccess()
         {
             return View();
+        }
+        public string GetMD5Hash(string value)
+        {
+            MD5 md5Hasher = MD5.Create();
+            byte[] data = md5Hasher.ComputeHash(Encoding.Default.GetBytes(value));
+            var sBuilder = new StringBuilder();
+            for (int i = 0; i < data.Length; i++)
+            {
+                sBuilder.Append(data[i].ToString("x2"));
+            }
+            return sBuilder.ToString();
         }
 
         #region Status Codes

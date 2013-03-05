@@ -1,12 +1,12 @@
 ﻿using System;
 using System.Web.Security;
+using System.Linq;
+using RentalHouseFinding.Models;
 
 namespace RentalHouseFinding.Sercurity
 {
     public class CustomRoleProvider : RoleProvider 
     {
-        private readonly AccountHelper _accountHelper = new AccountHelper();
-
         public override void AddUsersToRoles(string[] usernames, string[] roleNames)
         {
             throw new NotImplementedException();
@@ -46,9 +46,27 @@ namespace RentalHouseFinding.Sercurity
 
         public override string[] GetRolesForUser(string username)
         {
-                
-            return _accountHelper.GetUserRoleByAccountName(username);
+            try
+            {
+                using (RentalHouseFindingEntities _db = new RentalHouseFindingEntities())
+                {
+                    var accountType = from u in _db.Users
+                                      where u.Username.Equals(username, StringComparison.CurrentCultureIgnoreCase)
+                                      select u.RoleId;
+                    var accountRole = from a in _db.Roles
+                                      where a.Id == accountType.FirstOrDefault()
+                                      select a.Name;
 
+
+                    //verify exception here, cannot get database from internet
+                    if (!accountRole.Any()) return new[] { "" };
+                    return accountRole.ToArray();
+                }
+            }
+            catch (Exception)
+            {
+                return new[] { "" };
+            }
         }
 
         public override string[] GetUsersInRole(string roleName)
@@ -58,8 +76,21 @@ namespace RentalHouseFinding.Sercurity
 
         public override bool IsUserInRole(string username, string roleName)
         {
+            try
+            {
+                using (RentalHouseFindingEntities _db = new RentalHouseFindingEntities())
+                {
+                    var accountTypes = from a in _db.Users where a.Username.Equals(username, StringComparison.CurrentCultureIgnoreCase) select a.RoleId;
 
-            return _accountHelper.CheckUserInRole(username, roleName);
+                    var roles = from r in _db.Roles select r.Name;
+                    if (roles.First().ToLower().Equals(roleName.ToLower(), StringComparison.CurrentCultureIgnoreCase)) return true;
+                    return false;
+                }
+            }
+            catch
+            {
+                return false;
+            }
         }
 
         public override void RemoveUsersFromRoles(string[] usernames, string[] roleNames)
