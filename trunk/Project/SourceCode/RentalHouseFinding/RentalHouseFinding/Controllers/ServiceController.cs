@@ -4,6 +4,8 @@ using System.Linq;
 using System.Web;
 using System.Web.Mvc;
 using RentalHouseFinding.Models;
+using System.Net;
+using System.IO;
 
 namespace RentalHouseFinding.Controllers
 {
@@ -24,7 +26,7 @@ namespace RentalHouseFinding.Controllers
 
             return Json(myData, JsonRequestBehavior.AllowGet);
         }
-
+        
         /// <summary>
         /// type = "province, district
         /// </summary>
