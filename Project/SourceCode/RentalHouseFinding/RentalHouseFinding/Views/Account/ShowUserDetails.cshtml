@@ -1,0 +1,30 @@
+﻿@model RentalHouseFinding.Models.UserDetailsModel
+@{
+    ViewBag.Title = "Show User Details";
+}
+
+<h2> Welcome @Model.FirstName Your Details are as follows: </h2>
+<table style="border:1">
+ <tr>
+    <td> OpenID / FaceBook ID  </td>
+    <td> @Model.OpenID </td>
+ </tr>
+  
+  <tr>
+    <td> First Name  </td>
+    <td> @Model.FirstName </td>
+ </tr>
+  <tr>
+    <td> Last Name  </td>
+    <td> @Model.LastName </td>
+ </tr>
+ 
+  <tr>
+    <td> Gender  </td>
+    <td> @Model.Gender </td>
+ </tr>
+   <tr>
+    <td> Email  </td>
+    <td> @Model.Email </td>
+ </tr>
+</table>

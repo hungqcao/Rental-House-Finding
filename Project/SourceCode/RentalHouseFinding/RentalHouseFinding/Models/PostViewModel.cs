@@ -5,6 +5,9 @@ using System.Globalization;
 using System.Web.Mvc;
 using System.Web.Security;
 using DataAnnotationsExtensions;
+using System.Runtime.Serialization.Json;
+using System.IO;
+using System.Text;
 
 namespace RentalHouseFinding.Models
 {
@@ -120,5 +123,6 @@ namespace RentalHouseFinding.Models
         [Display(Name = "Tài khoản skype")]
         public string Skype { get; set; }
 
-    }
+    } 
+   
 }

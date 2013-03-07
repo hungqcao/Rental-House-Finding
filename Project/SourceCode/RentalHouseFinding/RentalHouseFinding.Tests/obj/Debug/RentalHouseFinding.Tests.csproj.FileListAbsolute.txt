@@ -11,3 +11,17 @@ C:\Users\MrBlackRose\documents\visual studio 2010\Projects\RentalHouseFinding\Re
 C:\Users\MrBlackRose\Documents\Visual Studio 2010\Projects\RentalHouseFinding\RentalHouseFinding.Tests\bin\Debug\WebActivator.dll
 C:\Users\MrBlackRose\Documents\Visual Studio 2010\Projects\RentalHouseFinding\RentalHouseFinding.Tests\bin\Debug\DataAnnotationsExtensions.dll
 C:\Users\MrBlackRose\Documents\Visual Studio 2010\Projects\RentalHouseFinding\RentalHouseFinding.Tests\bin\Debug\DataAnnotationsExtensions.ClientValidation.dll
+E:\DO AN\RFS\Project\SourceCode\RentalHouseFinding\RentalHouseFinding.Tests\bin\Debug\RentalHouseFinding.Tests.dll.config
+E:\DO AN\RFS\Project\SourceCode\RentalHouseFinding\RentalHouseFinding.Tests\bin\Debug\RentalHouseFinding.Tests.dll
+E:\DO AN\RFS\Project\SourceCode\RentalHouseFinding\RentalHouseFinding.Tests\bin\Debug\RentalHouseFinding.Tests.pdb
+E:\DO AN\RFS\Project\SourceCode\RentalHouseFinding\RentalHouseFinding.Tests\bin\Debug\RentalHouseFinding.dll
+E:\DO AN\RFS\Project\SourceCode\RentalHouseFinding\RentalHouseFinding.Tests\bin\Debug\DotNetOpenAuth.dll
+E:\DO AN\RFS\Project\SourceCode\RentalHouseFinding\RentalHouseFinding.Tests\bin\Debug\WebActivator.dll
+E:\DO AN\RFS\Project\SourceCode\RentalHouseFinding\RentalHouseFinding.Tests\bin\Debug\EntityFramework.dll
+E:\DO AN\RFS\Project\SourceCode\RentalHouseFinding\RentalHouseFinding.Tests\bin\Debug\DataAnnotationsExtensions.ClientValidation.dll
+E:\DO AN\RFS\Project\SourceCode\RentalHouseFinding\RentalHouseFinding.Tests\bin\Debug\DataAnnotationsExtensions.dll
+E:\DO AN\RFS\Project\SourceCode\RentalHouseFinding\RentalHouseFinding.Tests\bin\Debug\RentalHouseFinding.pdb
+E:\DO AN\RFS\Project\SourceCode\RentalHouseFinding\RentalHouseFinding.Tests\bin\Debug\EntityFramework.xml
+E:\DO AN\RFS\Project\SourceCode\RentalHouseFinding\RentalHouseFinding.Tests\obj\Debug\ResolveAssemblyReference.cache
+E:\DO AN\RFS\Project\SourceCode\RentalHouseFinding\RentalHouseFinding.Tests\obj\Debug\RentalHouseFinding.Tests.dll
+E:\DO AN\RFS\Project\SourceCode\RentalHouseFinding\RentalHouseFinding.Tests\obj\Debug\RentalHouseFinding.Tests.pdb

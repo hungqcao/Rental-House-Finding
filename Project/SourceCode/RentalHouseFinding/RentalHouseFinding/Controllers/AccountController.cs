@@ -9,11 +9,116 @@ using System.Web.Security;
 using RentalHouseFinding.Common;
 using RentalHouseFinding.Models;
 using RentalHouseFinding.Sercurity;
+using DotNetOpenAuth.Messaging;
+using DotNetOpenAuth.OpenId;
+using DotNetOpenAuth.OpenId.RelyingParty;
+using DotNetOpenAuth.OpenId.Extensions.AttributeExchange;
+
 
 namespace RentalHouseFinding.Controllers
 {
     public class AccountController : Controller
     {
+        //
+        //Logon by Openid
+        private static OpenIdRelyingParty openid = new OpenIdRelyingParty();
+        public ActionResult Authenticate(string returnUrl)
+        {
+
+            var response = openid.GetResponse();
+
+            if (response == null)
+            {
+                //Let us submit the request to OpenID provider
+                Identifier id;
+                if (Identifier.TryParse(Request.Form["openid_identifier"], out id))
+                {
+                    try
+                    {
+                        var request = openid.CreateRequest(Request.Form["openid_identifier"]);
+                        var fetch = new FetchRequest();
+                        fetch.Attributes.Add(new AttributeRequest(WellKnownAttributes.Contact.Email, true));
+                        fetch.Attributes.Add(new AttributeRequest(WellKnownAttributes.BirthDate.WholeBirthDate, true));
+                        fetch.Attributes.Add(new AttributeRequest(WellKnownAttributes.Person.Gender, true));
+                        fetch.Attributes.Add(new AttributeRequest(WellKnownAttributes.Name.First, true));
+                        fetch.Attributes.Add(new AttributeRequest(WellKnownAttributes.Name.Last, true));
+                        request.AddExtension(fetch);
+                        return request.RedirectingResponse.AsActionResult();
+                    }
+                    catch (ProtocolException ex)
+                    {
+                        ViewBag.Message = ex.Message;
+                        return View("LogOn");
+                    }
+                }
+
+                ViewBag.Message = "Invalid identifier";
+                return View("LogOn");
+            }
+
+            //Let us check the response
+            switch (response.Status)
+            {
+
+                case AuthenticationStatus.Authenticated:
+                    var fetch = response.GetExtension<FetchResponse>();
+                    var sFirstName = "";
+                    var sEmail = "";
+                    var sLastName = "";
+                    var sGender = "";
+                    var sDob = "";
+                    if (fetch != null)
+                    {
+                        foreach (var vAtrrib in fetch.Attributes)
+                        {
+                            switch (vAtrrib.TypeUri)
+                            {
+                                case WellKnownAttributes.Name.First:
+                                    var firstNames = fetch.Attributes[WellKnownAttributes.Name.First].Values;
+                                    sFirstName = firstNames.Count > 0 ? firstNames[0] : null;
+                                    break;
+                                case WellKnownAttributes.Contact.Email:
+                                    var emailAddresses = fetch.Attributes[WellKnownAttributes.Contact.Email].Values;
+                                    sEmail = emailAddresses.Count > 0 ? emailAddresses[0] : null;
+                                    break;
+                                case WellKnownAttributes.Name.Last:
+                                    var lastNames = fetch.Attributes[WellKnownAttributes.Name.Last].Values;
+                                    sLastName = lastNames.Count > 0 ? lastNames[0] : null;
+                                    break;
+                                case WellKnownAttributes.Person.Gender:
+                                    var genders = fetch.Attributes[WellKnownAttributes.Person.Gender].Values;
+                                    sGender = genders.Count > 0 ? genders[0] : null;
+                                    break;
+                                case WellKnownAttributes.BirthDate.WholeBirthDate:
+                                    var doBs = fetch.Attributes[WellKnownAttributes.BirthDate.WholeBirthDate].Values;
+                                    sDob = doBs.Count > 0 ? doBs[0] : null;
+                                    break;
+                            }
+                        }
+                    }
+                    var sFriendlyLogin = response.FriendlyIdentifierForDisplay;
+                    var lm = new UserDetailsModel
+                    {
+                        OpenID = response.ClaimedIdentifier,
+
+                        FirstName = sFirstName,
+                        LastName = sLastName,
+
+                        Gender = sGender,
+                        Email = sEmail
+                    };
+                    return View("ShowUserDetails", lm);
+
+                case AuthenticationStatus.Canceled:
+                    ViewBag.Message = "Canceled at provider";
+                    return View("LogOn");
+                case AuthenticationStatus.Failed:
+                    ViewBag.Message = response.Exception.Message;
+                    return View("LogOn");
+            }
+
+            return new EmptyResult();
+        }
         //
         // GET: /Account/LogOn
         private RentalHouseFindingEntities _db = new RentalHouseFindingEntities();
