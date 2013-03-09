@@ -6,6 +6,7 @@ using System.Web.Mvc;
 using RentalHouseFinding.Models;
 using System.Net;
 using System.IO;
+using RentalHouseFinding.RHF.DAL;
 
 namespace RentalHouseFinding.Controllers
 {
@@ -16,15 +17,22 @@ namespace RentalHouseFinding.Controllers
         [AcceptVerbs(HttpVerbs.Get)]
         public JsonResult GetDistrictList(string id)
         {
-            int idPro = Convert.ToInt32(id);
-            var districts = _db.Districts.Where(d => d.ProvinceId == idPro).ToList();
-            var myData = districts.Select(a => new SelectListItem()
+            if (!string.IsNullOrEmpty(id))
             {
-                Text = a.Name,
-                Value = a.Id.ToString(),
-            });
+                int idPro = Convert.ToInt32(id);
+                var districts = _db.Districts.Where(d => d.ProvinceId == idPro).ToList();
+                var myData = districts.Select(a => new SelectListItem()
+                {
+                    Text = a.Name,
+                    Value = a.Id.ToString(),
+                });
 
-            return Json(myData, JsonRequestBehavior.AllowGet);
+                return Json(myData, JsonRequestBehavior.AllowGet);
+            }
+            else
+            {
+                return Json(new { message = "Fail" }, JsonRequestBehavior.AllowGet);
+            }
         }
         
         /// <summary>
@@ -36,124 +44,53 @@ namespace RentalHouseFinding.Controllers
         [AcceptVerbs(HttpVerbs.Get)]
         public JsonResult GetLatLon(string id, string type)
         {
-            int idPost = Convert.ToInt32(id);
-            if (type.Equals("province"))
+            if (!string.IsNullOrEmpty(id))
             {
-                var provinces = _db.Provinces.Where(d => d.Id == idPost).ToList();
-                var myData = provinces.Select(a => new SelectListItem()
+                int idPost = Convert.ToInt32(id);
+                if (type.Equals("province"))
                 {
-                    Text = a.Name,
-                    Value = a.Lat + ";" + a.Lon,
-                });
+                    var provinces = _db.Provinces.Where(d => d.Id == idPost).ToList();
+                    var myData = provinces.Select(a => new SelectListItem()
+                    {
+                        Text = a.Name,
+                        Value = a.Lat + ";" + a.Lon,
+                    });
 
-                return Json(myData, JsonRequestBehavior.AllowGet);
-            }
-            else if (type.Equals("district"))
-            {
-                var districts = _db.Districts.Where(d => d.Id == idPost).ToList();
-                var myData = districts.Select(a => new SelectListItem()
+                    return Json(myData, JsonRequestBehavior.AllowGet);
+                }
+                else if (type.Equals("district"))
                 {
-                    Text = a.Name,
-                    Value = a.Lat + ";" + a.Lon,
-                });
+                    var districts = _db.Districts.Where(d => d.Id == idPost).ToList();
+                    var myData = districts.Select(a => new SelectListItem()
+                    {
+                        Text = a.Name,
+                        Value = a.Lat + ";" + a.Lon,
+                    });
 
-                return Json(myData, JsonRequestBehavior.AllowGet);
+                    return Json(myData, JsonRequestBehavior.AllowGet);
+                }
             }
             return Json(new { message = "Fail" }, JsonRequestBehavior.AllowGet);
         }
 
-        //
-        // GET: /Service/
-
-        public ActionResult Index()
+        [AcceptVerbs(HttpVerbs.Get)]
+        public JsonResult GetFullTextSuggestion(string categoryId, string provinceId, string districtId, string keyword)
         {
-            return View();
-        }
-
-        //
-        // GET: /Service/Details/5
-
-        public ActionResult Details(int id)
-        {
-            return View();
-        }
-
-        //
-        // GET: /Service/Create
-
-        public ActionResult Create()
-        {
-            return View();
-        } 
-
-        //
-        // POST: /Service/Create
-
-        [HttpPost]
-        public ActionResult Create(FormCollection collection)
-        {
-            try
+            using (FullTextSearchHelper fullTextHelp = new FullTextSearchHelper())
             {
-                // TODO: Add insert logic here
+                var suggList = fullTextHelp.GetFullTextSuggestion(int.Parse(categoryId), int.Parse(provinceId), int.Parse(districtId), keyword);
+                if (suggList != null)
+                {
+                    var myData = suggList.Select(a => new SelectListItem()
+                    {
+                        Text = a.Title,
+                        Value = a.Id.ToString(),
+                    });
 
-                return RedirectToAction("Index");
+                    return Json(myData, JsonRequestBehavior.AllowGet);
+                }
             }
-            catch
-            {
-                return View();
-            }
-        }
-        
-        //
-        // GET: /Service/Edit/5
- 
-        public ActionResult Edit(int id)
-        {
-            return View();
-        }
-
-        //
-        // POST: /Service/Edit/5
-
-        [HttpPost]
-        public ActionResult Edit(int id, FormCollection collection)
-        {
-            try
-            {
-                // TODO: Add update logic here
- 
-                return RedirectToAction("Index");
-            }
-            catch
-            {
-                return View();
-            }
-        }
-
-        //
-        // GET: /Service/Delete/5
- 
-        public ActionResult Delete(int id)
-        {
-            return View();
-        }
-
-        //
-        // POST: /Service/Delete/5
-
-        [HttpPost]
-        public ActionResult Delete(int id, FormCollection collection)
-        {
-            try
-            {
-                // TODO: Add delete logic here
- 
-                return RedirectToAction("Index");
-            }
-            catch
-            {
-                return View();
-            }
+            return Json(new { message = "Fail" }, JsonRequestBehavior.AllowGet);
         }
     }
 }

@@ -25,3 +25,17 @@ E:\DO AN\RFS\Project\SourceCode\RentalHouseFinding\RentalHouseFinding.Tests\bin\
 E:\DO AN\RFS\Project\SourceCode\RentalHouseFinding\RentalHouseFinding.Tests\obj\Debug\ResolveAssemblyReference.cache
 E:\DO AN\RFS\Project\SourceCode\RentalHouseFinding\RentalHouseFinding.Tests\obj\Debug\RentalHouseFinding.Tests.dll
 E:\DO AN\RFS\Project\SourceCode\RentalHouseFinding\RentalHouseFinding.Tests\obj\Debug\RentalHouseFinding.Tests.pdb
+C:\RentalHouseFinding\Project\SourceCode\RentalHouseFinding\RentalHouseFinding.Tests\bin\Debug\RentalHouseFinding.Tests.dll.config
+C:\RentalHouseFinding\Project\SourceCode\RentalHouseFinding\RentalHouseFinding.Tests\bin\Debug\RentalHouseFinding.Tests.dll
+C:\RentalHouseFinding\Project\SourceCode\RentalHouseFinding\RentalHouseFinding.Tests\bin\Debug\RentalHouseFinding.Tests.pdb
+C:\RentalHouseFinding\Project\SourceCode\RentalHouseFinding\RentalHouseFinding.Tests\bin\Debug\RentalHouseFinding.dll
+C:\RentalHouseFinding\Project\SourceCode\RentalHouseFinding\RentalHouseFinding.Tests\bin\Debug\DotNetOpenAuth.dll
+C:\RentalHouseFinding\Project\SourceCode\RentalHouseFinding\RentalHouseFinding.Tests\bin\Debug\WebActivator.dll
+C:\RentalHouseFinding\Project\SourceCode\RentalHouseFinding\RentalHouseFinding.Tests\bin\Debug\EntityFramework.dll
+C:\RentalHouseFinding\Project\SourceCode\RentalHouseFinding\RentalHouseFinding.Tests\bin\Debug\DataAnnotationsExtensions.dll
+C:\RentalHouseFinding\Project\SourceCode\RentalHouseFinding\RentalHouseFinding.Tests\bin\Debug\DataAnnotationsExtensions.ClientValidation.dll
+C:\RentalHouseFinding\Project\SourceCode\RentalHouseFinding\RentalHouseFinding.Tests\bin\Debug\RentalHouseFinding.pdb
+C:\RentalHouseFinding\Project\SourceCode\RentalHouseFinding\RentalHouseFinding.Tests\bin\Debug\EntityFramework.xml
+C:\RentalHouseFinding\Project\SourceCode\RentalHouseFinding\RentalHouseFinding.Tests\obj\Debug\ResolveAssemblyReference.cache
+C:\RentalHouseFinding\Project\SourceCode\RentalHouseFinding\RentalHouseFinding.Tests\obj\Debug\RentalHouseFinding.Tests.dll
+C:\RentalHouseFinding\Project\SourceCode\RentalHouseFinding\RentalHouseFinding.Tests\obj\Debug\RentalHouseFinding.Tests.pdb

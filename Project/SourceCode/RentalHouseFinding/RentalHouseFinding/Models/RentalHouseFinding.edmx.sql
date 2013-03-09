@@ -2,8 +2,8 @@
 -- --------------------------------------------------
 -- Entity Designer DDL Script for SQL Server 2005, 2008, and Azure
 -- --------------------------------------------------
--- Date Created: 03/03/2013 22:37:58
--- Generated from EDMX file: C:\Users\MrBlackRose\documents\visual studio 2010\Projects\RentalHouseFinding\RentalHouseFinding\Models\RentalHouseFinding.edmx
+-- Date Created: 03/08/2013 15:47:43
+-- Generated from EDMX file: C:\RentalHouseFinding\Project\SourceCode\RentalHouseFinding\RentalHouseFinding\Models\RentalHouseFinding.edmx
 -- --------------------------------------------------
 
 SET QUOTED_IDENTIFIER OFF;
@@ -164,14 +164,15 @@ CREATE TABLE [dbo].[Posts] (
     [EditedDate] datetime  NOT NULL,
     [RenewDate] datetime  NULL,
     [DistrictId] int  NOT NULL,
-    [Address] nvarchar(max)  NOT NULL,
+    [NumberAddress] nvarchar(max)  NOT NULL,
     [Price] float  NOT NULL,
     [Area] float  NOT NULL,
     [PhoneActive] nvarchar(20)  NOT NULL,
     [Description] nvarchar(max)  NULL,
     [Lat] float  NOT NULL,
     [Lon] float  NOT NULL,
-    [UserId] int  NULL
+    [UserId] int  NULL,
+    [Street] nvarchar(50)  NOT NULL
 );
 GO
 
@@ -242,8 +243,8 @@ GO
 -- Creating table 'Facilities'
 CREATE TABLE [dbo].[Facilities] (
     [HasInternet] bit  NOT NULL,
-    [ElectricityFee] float  NULL,
-    [WaterFee] float  NULL,
+    [ElectricityFee] float  NOT NULL,
+    [WaterFee] float  NOT NULL,
     [HasTVCable] bit  NOT NULL,
     [HasBed] bit  NOT NULL,
     [HasWaterHeater] bit  NOT NULL,
@@ -253,7 +254,7 @@ CREATE TABLE [dbo].[Facilities] (
     [HasAirConditioner] bit  NOT NULL,
     [HasGarage] bit  NOT NULL,
     [IsStayWithOwner] bit  NOT NULL,
-    [RestrictHours] float  NULL,
+    [RestrictHours] float  NOT NULL,
     [HasSecurity] bit  NOT NULL,
     [Direction] nvarchar(max)  NULL,
     [PostIdFacilities] int  NOT NULL
@@ -276,6 +277,18 @@ CREATE TABLE [dbo].[PostVideos] (
     [PostId] int  NOT NULL,
     [Path] nvarchar(max)  NOT NULL,
     [IsDeleted] bit  NOT NULL
+);
+GO
+
+-- Creating table 'ConfigurationRHFs'
+CREATE TABLE [dbo].[ConfigurationRHFs] (
+    [Id] int IDENTITY(1,1) NOT NULL
+);
+GO
+
+-- Creating table 'Questions'
+CREATE TABLE [dbo].[Questions] (
+    [Id] int IDENTITY(1,1) NOT NULL
 );
 GO
 
@@ -364,6 +377,18 @@ GO
 -- Creating primary key on [Id] in table 'PostVideos'
 ALTER TABLE [dbo].[PostVideos]
 ADD CONSTRAINT [PK_PostVideos]
+    PRIMARY KEY CLUSTERED ([Id] ASC);
+GO
+
+-- Creating primary key on [Id] in table 'ConfigurationRHFs'
+ALTER TABLE [dbo].[ConfigurationRHFs]
+ADD CONSTRAINT [PK_ConfigurationRHFs]
+    PRIMARY KEY CLUSTERED ([Id] ASC);
+GO
+
+-- Creating primary key on [Id] in table 'Questions'
+ALTER TABLE [dbo].[Questions]
+ADD CONSTRAINT [PK_Questions]
     PRIMARY KEY CLUSTERED ([Id] ASC);
 GO
 
