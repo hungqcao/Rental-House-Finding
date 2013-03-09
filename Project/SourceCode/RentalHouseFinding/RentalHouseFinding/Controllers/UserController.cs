@@ -32,10 +32,12 @@ namespace RentalHouseFinding.Controllers
             userViewModel.Address = profile.Address;
             userViewModel.Avatar = profile.Avatar;
 
+            //Get post status list
+            var postStatusList = (from p in _db.PostStatuses select p).ToList();
+            ViewBag.StatusList = postStatusList;
             //Get user's posts list
             ViewBag.UserId = userId;
-            var postList = (from p in profile.Posts where (!p.IsDeleted) select p);
-            
+            var postList = (from p in _db.Posts where (p.UserId == userId && !p.IsDeleted) select p);
             ViewBag.PostList = postList.ToList();
             
             return View(userViewModel);
