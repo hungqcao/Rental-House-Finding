@@ -150,6 +150,66 @@ namespace RentalHouseFinding.Common
             };
         }
 
+        public static Posts ConvertPostViewModelToPost(Posts post, PostViewModel model, DateTime createdDate, DateTime editedDate, DateTime renewDate)
+        {
+            string newAddress = string.Empty;
+            if (!string.IsNullOrEmpty(model.NumberHouse))
+            {
+                newAddress += model.NumberHouse.Trim();
+                newAddress += " ";
+            }
+
+            if (!string.IsNullOrEmpty(model.Street))
+            {
+                newAddress += model.Street.Trim();
+            }
+
+            if (!string.IsNullOrEmpty(newAddress))
+            {
+                newAddress = newAddress.Trim();
+            }
+            post.Address = newAddress;
+            post.Area = model.Area;
+            post.CategoryId = model.CategoryId;
+            
+            post.Contacts.Email = model.Email;
+            post.Contacts.Phone = model.PhoneContact;
+            post.Contacts.Skype = model.Skype;
+            post.Contacts.Yahoo = model.Yahoo;
+
+            post.CreatedDate = createdDate;
+            post.Description = model.Description;
+            post.DistrictId = model.DistrictId;
+            post.EditedDate = editedDate;
+
+            post.Facilities.Direction = model.Direction;
+            post.Facilities.ElectricityFee = model.ElectricityFee;
+            post.Facilities.HasAirConditioner = model.HasAirConditioner;
+            post.Facilities.HasBed = model.HasBed;
+            post.Facilities.HasGarage = model.HasGarage;
+            post.Facilities.HasInternet = model.HasInternet;
+            post.Facilities.HasMotorParkingLot = model.HasMotorParking;
+            post.Facilities.HasSecurity = model.HasSecurity;
+            post.Facilities.HasToilet = model.HasToilet;
+            post.Facilities.HasTVCable = model.HasTVCable;
+            post.Facilities.HasWaterHeater = model.HasWaterHeater;
+            post.Facilities.IsAllowCooking = model.IsAllowCooking;
+            post.Facilities.IsStayWithOwner = model.IsStayWithOwner;
+            post.Facilities.RestrictHours = model.RestrictHours;
+            post.Facilities.WaterFee = model.WaterFee;
+
+            post.Lat = model.Lat;
+            post.Lon = model.Lon;
+            post.PhoneActive = model.PhoneActive;
+            post.Price = model.Price;
+            post.RenewDate = renewDate;
+            post.Title = model.Title;
+            post.Views = 0;
+            post.IsDeleted = false;
+
+            return post;
+        }
+
         public static PostViewModel ConvertPostToPostViewModel(Posts model)
         {
             return new PostViewModel
