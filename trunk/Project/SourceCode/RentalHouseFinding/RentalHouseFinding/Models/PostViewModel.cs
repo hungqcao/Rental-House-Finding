@@ -121,7 +121,12 @@ namespace RentalHouseFinding.Models
         public string Yahoo { get; set; }
 
         [Display(Name = "Tài khoản skype")]
-        public string Skype { get; set; }
+        public string Skype { get; set; }        
+        public int Views { get; set; }
+        public DateTime CreatedDate { get; set; }
+        public DateTime EditedDate { get; set; }
+        public string CreatedBy { get; set; }
+        public string Categori { get; set; }
 
     } 
    

@@ -183,7 +183,12 @@ namespace RentalHouseFinding.Common
                 Lon = model.Lon,
                 PhoneActive = model.PhoneActive,
                 Price = model.Price,
-                Title = model.Title
+                Title = model.Title,
+                Views = model.Views,                
+                CreatedDate = model.CreatedDate,
+                EditedDate = model.EditedDate,
+                //CreatedBy = model.User.Username,
+                Categori = model.Category.Name
             };
         }
 
