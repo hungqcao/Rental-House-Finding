@@ -22,23 +22,6 @@
           <EntitySet Name="ReportedPosts" EntityType="RentalHouseFinding.Store.ReportedPosts" store:Type="Tables" Schema="dbo" />
           <EntitySet Name="Roles" EntityType="RentalHouseFinding.Store.Roles" store:Type="Tables" Schema="dbo" />
           <EntitySet Name="Users" EntityType="RentalHouseFinding.Store.Users" store:Type="Tables" Schema="dbo" />
-          <EntitySet Name="V_PostFullInfo" EntityType="RentalHouseFinding.Store.V_PostFullInfo" store:Type="Views" store:Schema="dbo" store:Name="V_PostFullInfo">
-            <DefiningQuery>SELECT 
-      [V_PostFullInfo].[Id] AS [Id], 
-      [V_PostFullInfo].[Description] AS [Description], 
-      [V_PostFullInfo].[NumberAddress] AS [NumberAddress], 
-      [V_PostFullInfo].[Street] AS [Street], 
-      [V_PostFullInfo].[Title] AS [Title], 
-      [V_PostFullInfo].[Direction] AS [Direction], 
-      [V_PostFullInfo].[Email] AS [Email], 
-      [V_PostFullInfo].[Phone] AS [Phone], 
-      [V_PostFullInfo].[Skype] AS [Skype], 
-      [V_PostFullInfo].[Yahoo] AS [Yahoo], 
-      [V_PostFullInfo].[CategoryId] AS [CategoryId], 
-      [V_PostFullInfo].[DistrictId] AS [DistrictId], 
-      [V_PostFullInfo].[ProvinceId] AS [ProvinceId]
-      FROM [dbo].[V_PostFullInfo] AS [V_PostFullInfo]</DefiningQuery>
-          </EntitySet>
           <AssociationSet Name="FK_CategoriesPosts" Association="RentalHouseFinding.Store.FK_CategoriesPosts">
             <End Role="Categories" EntitySet="Categories" />
             <End Role="Posts" EntitySet="Posts" />
@@ -280,31 +263,6 @@
         <!--Errors Found During Generation:
       warning 6002: The table/view 'RentalHouseFinding.dbo.V_PostFullInfo' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.
       -->
-        <EntityType Name="V_PostFullInfo">
-          <Key>
-            <PropertyRef Name="Id" />
-            <PropertyRef Name="NumberAddress" />
-            <PropertyRef Name="Street" />
-            <PropertyRef Name="Title" />
-            <PropertyRef Name="Phone" />
-            <PropertyRef Name="CategoryId" />
-            <PropertyRef Name="DistrictId" />
-            <PropertyRef Name="ProvinceId" />
-          </Key>
-          <Property Name="Id" Type="int" Nullable="false" />
-          <Property Name="Description" Type="nvarchar(max)" />
-          <Property Name="NumberAddress" Type="nvarchar(max)" Nullable="false" />
-          <Property Name="Street" Type="nvarchar" Nullable="false" MaxLength="50" />
-          <Property Name="Title" Type="nvarchar(max)" Nullable="false" />
-          <Property Name="Direction" Type="nvarchar(max)" />
-          <Property Name="Email" Type="nvarchar(max)" />
-          <Property Name="Phone" Type="nvarchar(max)" Nullable="false" />
-          <Property Name="Skype" Type="nvarchar(max)" />
-          <Property Name="Yahoo" Type="nvarchar(max)" />
-          <Property Name="CategoryId" Type="int" Nullable="false" />
-          <Property Name="DistrictId" Type="int" Nullable="false" />
-          <Property Name="ProvinceId" Type="int" Nullable="false" />
-        </EntityType>
         <Association Name="FK_CategoriesPosts">
           <End Role="Categories" Type="RentalHouseFinding.Store.Categories" Multiplicity="1" />
           <End Role="Posts" Type="RentalHouseFinding.Store.Posts" Multiplicity="*" />
@@ -555,8 +513,7 @@
             <End Role="Posts" EntitySet="Posts" />
           </AssociationSet>
           <EntitySet Name="ConfigurationRHFs" EntityType="RentalHouseFinding.ConfigurationRHF" />
-          <EntitySet Name="Questions" EntityType="RentalHouseFinding.Questions" />
-          <EntitySet Name="V_PostFullInfo" EntityType="RentalHouseFinding.V_PostFullInfo" />
+          <EntitySet Name="Messeges" EntityType="RentalHouseFinding.Messeges" />
           <FunctionImport Name="FullTextSearchPost" ReturnType="Collection(RentalHouseFinding.FullTextSearchPost_ResultSuggestion)">
             <Parameter Name="CategoryIdPass" Mode="In" Type="Int32" />
             <Parameter Name="ProvinceIdPass" Mode="In" Type="Int32" />
@@ -935,36 +892,18 @@
           </Key>
           <Property Type="Int32" Name="Id" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
         </EntityType>
-        <EntityType Name="Questions">
+        <EntityType Name="Messeges">
           <Key>
             <PropertyRef Name="Id" />
           </Key>
           <Property Type="Int32" Name="Id" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-        </EntityType>
-        <EntityType Name="V_PostFullInfo">
-          <Key>
-            <PropertyRef Name="Id" />
-            <PropertyRef Name="NumberAddress" />
-            <PropertyRef Name="Street" />
-            <PropertyRef Name="Title" />
-            <PropertyRef Name="Phone" />
-            <PropertyRef Name="CategoryId" />
-            <PropertyRef Name="DistrictId" />
-            <PropertyRef Name="ProvinceId" />
-          </Key>
-          <Property Type="Int32" Name="Id" Nullable="false" />
-          <Property Type="String" Name="Description" MaxLength="Max" FixedLength="false" Unicode="true" />
-          <Property Type="String" Name="NumberAddress" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="true" />
-          <Property Type="String" Name="Street" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
-          <Property Type="String" Name="Title" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="true" />
-          <Property Type="String" Name="Direction" MaxLength="Max" FixedLength="false" Unicode="true" />
-          <Property Type="String" Name="Email" MaxLength="Max" FixedLength="false" Unicode="true" />
-          <Property Type="String" Name="Phone" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="true" />
-          <Property Type="String" Name="Skype" MaxLength="Max" FixedLength="false" Unicode="true" />
-          <Property Type="String" Name="Yahoo" MaxLength="Max" FixedLength="false" Unicode="true" />
-          <Property Type="Int32" Name="CategoryId" Nullable="false" />
-          <Property Type="Int32" Name="DistrictId" Nullable="false" />
-          <Property Type="Int32" Name="ProvinceId" Nullable="false" />
+          <Property Type="String" Name="Content" Nullable="false" MaxLength="Max" />
+          <Property Type="Int32" Name="SenderId" Nullable="false" />
+          <Property Type="Int32" Name="ReceiverId" Nullable="false" />
+          <Property Type="DateTime" Name="CreatedDate" Nullable="false" />
+          <Property Type="Boolean" Name="IsReceiverRead" Nullable="false" />
+          <Property Type="String" Name="Property" Nullable="false" />
+          <Property Type="Boolean" Name="IsDeleted" Nullable="false" />
         </EntityType>
         <ComplexType Name="FullTextSearchPost_ResultSuggestion">
           <Property Type="Int32" Name="Id" Nullable="false" />
@@ -1166,32 +1105,13 @@
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>
-    <EntitySetMapping Name="Questions">
-      <EntityTypeMapping TypeName="IsTypeOf(RentalHouseFinding.Questions)">
+    <EntitySetMapping Name="Messeges">
+      <EntityTypeMapping TypeName="IsTypeOf(RentalHouseFinding.Messeges)">
         <MappingFragment StoreEntitySet="Questions">
           <ScalarProperty Name="Id" ColumnName="Id" />
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>
-          <EntitySetMapping Name="V_PostFullInfo">
-            <EntityTypeMapping TypeName="RentalHouseFinding.V_PostFullInfo">
-              <MappingFragment StoreEntitySet="V_PostFullInfo">
-                <ScalarProperty Name="ProvinceId" ColumnName="ProvinceId" />
-                <ScalarProperty Name="DistrictId" ColumnName="DistrictId" />
-                <ScalarProperty Name="CategoryId" ColumnName="CategoryId" />
-                <ScalarProperty Name="Yahoo" ColumnName="Yahoo" />
-                <ScalarProperty Name="Skype" ColumnName="Skype" />
-                <ScalarProperty Name="Phone" ColumnName="Phone" />
-                <ScalarProperty Name="Email" ColumnName="Email" />
-                <ScalarProperty Name="Direction" ColumnName="Direction" />
-                <ScalarProperty Name="Title" ColumnName="Title" />
-                <ScalarProperty Name="Street" ColumnName="Street" />
-                <ScalarProperty Name="NumberAddress" ColumnName="NumberAddress" />
-                <ScalarProperty Name="Description" ColumnName="Description" />
-                <ScalarProperty Name="Id" ColumnName="Id" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
           <FunctionImportMapping FunctionImportName="FullTextSearchPost" FunctionName="RentalHouseFinding.Store.FullTextSearchPost">
             <ResultMapping>
               <ComplexTypeMapping TypeName="RentalHouseFinding.FullTextSearchPost_ResultSuggestion">
@@ -1300,8 +1220,7 @@
           <ConnectorPoint PointX="11" PointY="3.9035953776041667" />
         </AssociationConnector>
         <EntityTypeShape EntityType="RentalHouseFinding.ConfigurationRHF" Width="1.5" PointX="4.75" PointY="7.25" Height="1.2110807291666657" />
-        <EntityTypeShape EntityType="RentalHouseFinding.Questions" Width="1.5" PointX="3" PointY="6.5" Height="1.2110807291666665" />
-        <EntityTypeShape EntityType="RentalHouseFinding.V_PostFullInfo" Width="1.5" PointX="0.75" PointY="9.75" Height="3.3263964843750031" />
+        <EntityTypeShape EntityType="RentalHouseFinding.Messeges" Width="1.5" PointX="3" PointY="6.5" Height="2.5571907552083335" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

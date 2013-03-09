@@ -15,7 +15,7 @@ namespace RentalHouseFinding.Controllers
         //
         // GET: /Post/
 
-        public ActionResult Index()
+        public ActionResult Index(int id)
         {
             
             //if (TempData["IdSuccessPost"] == null)
@@ -23,7 +23,7 @@ namespace RentalHouseFinding.Controllers
             //    return RedirectToAction("Index", "Home");
             //}
             int postId = 1;//(int)TempData["IdSuccessPost"];
-            var post = (from p in _db.Posts where p.Id == postId select p).FirstOrDefault();
+            var post = (from p in _db.Posts where p.Id == id select p).FirstOrDefault();
             var districtAndProvinceName = (from d in _db.Districts 
                                 where d.Id == post.DistrictId
                                 select new { districtName = d.Name , provinceName= d.Province.Name}).FirstOrDefault();            
@@ -59,7 +59,7 @@ namespace RentalHouseFinding.Controllers
             ViewBag.Bed = post.Facilities.HasBed ? "Có" : "Không";
             ViewBag.Gara = post.Facilities.HasGarage ? "Có" : "Không";
             ViewBag.MotorParkingLot = post.Facilities.HasMotorParkingLot ? "Có" : "Không";
-            ViewBag.Security = post.Facilities.HasSecurity ? "Csó" : "Không";
+            ViewBag.Security = post.Facilities.HasSecurity ? "Có" : "Không";
             ViewBag.Toilet = post.Facilities.HasToilet ? "Có" : "Không";
             ViewBag.TVCable = post.Facilities.HasTVCable ? "Có" : "Không";
             ViewBag.WaterHeater = post.Facilities.HasWaterHeater ? "Có" : "Không";

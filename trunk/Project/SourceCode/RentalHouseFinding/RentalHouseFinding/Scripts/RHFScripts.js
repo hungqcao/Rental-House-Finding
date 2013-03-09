@@ -41,52 +41,27 @@ $(document).ready(function () {
             });
         });
     });
-//    $("#KeyWord").change(function () {
-//        $.getJSON("service/GetFullTextSuggestion?categoryId=1&provinceId=1&districtId=1&keyWord=post", {  },
-//        function (myData) {
-//            alert(myData);
-//            $.each(myData, function (index, itemData) {
-//                if (itemData.Text.lenght != 0) {
-//                    select.append($('<option/>', {
-//                        value: itemData.Value,
-//                        text: itemData.Text
-//                    }));
-//                }
-//            });
-//        });
-//    });
-
-//    $('#KeyWord').autocomplete("service/GetFullTextSuggestion?categoryId=1&provinceId=1&districtId=1&keyWord=" + $('#KeyWord').val(), {
-//        dataType: 'json',
-//        parse: function (data) {
-//            var rows = new Array();
-//            for (var i = 0; i < data.length; i++) {
-//                rows[i] = { data: data[i], value: data[i].Text };
-//            }
-//            return rows;
-//        },
-//        formatItem: function (row, i, n) {
-//            return row.Text;
-//        }
-//    });
 
     $("#KeyWord").autocomplete({
         source: function (request, response) {  
-            if(
+            if($("#ProvinceId option:selected").val().length == 0)
+            {
+                alert("Vui lòng chọn tỉnh thành phố");
+                return false;
+            }
             $.ajax({
                 url: "service/GetFullTextSuggestion", type: "GET", dataType: "json",
-                data: { categoryId: $("#CategoryId").val(), provinceId: $("#ProvinceId").val(), districtId: $("#DistrictId").val(), keyWord: request.term },
+                data: { categoryId: $("#CategoryId option:selected").val(), provinceId: $("#ProvinceId option:selected").val(), districtId: $("#DistrictId option:selected").val(), keyWord: request.term, skip: 0, take: 10 },
                 success: function (data) {
                     response($.map(data, function (item) {
-
-                        return { label: item.Text, value: item.Value }; //updated code
+                        return { value: item.Text, id: item.Value };
                     }));
                 }
             });
         },
         select: function (event, ui) {
-            $("#MovieID").val(ui.item.value);
-            $("#KeyWord").val(ui.item.Text);
+            $("#PostIdSuggest").val(ui.item.id);
+            $("#KeyWord").val(ui.item.label);
             return false;
         }
     });
