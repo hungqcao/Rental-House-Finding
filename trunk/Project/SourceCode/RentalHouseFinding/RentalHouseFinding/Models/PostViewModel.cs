@@ -8,6 +8,7 @@ using DataAnnotationsExtensions;
 using System.Runtime.Serialization.Json;
 using System.IO;
 using System.Text;
+using System.Web;
 
 namespace RentalHouseFinding.Models
 {
@@ -61,7 +62,7 @@ namespace RentalHouseFinding.Models
         [Display(Name = "Có Internet?")]
         public Boolean HasInternet { get; set; }
 
-        [Display(Name = "Giá Internet")]
+        [Display(Name = "Giá điện")]
         [Min(0, ErrorMessage = "Giá tiền phải lớn hơn hoặc bằng 0")]
         public double ElectricityFee { get; set; }
 
@@ -126,8 +127,9 @@ namespace RentalHouseFinding.Models
         public DateTime CreatedDate { get; set; }
         public DateTime EditedDate { get; set; }
         public string CreatedBy { get; set; }
-        public string Categori { get; set; }
+        public string Category { get; set; }
 
+        public IEnumerable<HttpPostedFileBase> Images { get; set; }
     } 
    
 }

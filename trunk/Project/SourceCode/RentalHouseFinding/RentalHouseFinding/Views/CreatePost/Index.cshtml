@@ -38,8 +38,30 @@
 
         }
 
+        //For page postback
+        var idPro = $("#ProvinceId option:selected").val();
+        var select = $("#DistrictId");
+        select.empty();
+        select.append($('<option/>', {
+            value: '',
+            text: '-- Chọn Quận/Huyện --'
+        }));
+        if (idPro != 0) {
+            $.getJSON("service/GetDistrictList", { id: idPro },
+            function (myData) {
+                $.each(myData, function (index, itemData) {
+                    if (itemData.Text.lenght != 0) {
+                        select.append($('<option/>', {
+                            value: itemData.Value,
+                            text: itemData.Text
+                        }));
+                    }
+                });
+            });
+        };
+
         $("#ProvinceId").change(function () {
-            var idPro = $(this).val();
+            var idPro = $("#ProvinceId option:selected").val();
             var select = $("#DistrictId");
             select.empty();
             select.append($('<option/>', {
@@ -48,12 +70,13 @@
             }));
             $.getJSON("service/GetDistrictList", { id: idPro },
                 function (myData) {
-                    
                     $.each(myData, function (index, itemData) {
-                        select.append($('<option/>', {
-                            value: itemData.Value,
-                            text: itemData.Text
-                        }));
+                        if (itemData.Text.lenght != 0) {
+                            select.append($('<option/>', {
+                                value: itemData.Value,
+                                text: itemData.Text
+                            }));
+                        }
                     });
                 });
             $.getJSON("service/GetLatLon", { id: idPro, type: "province" },
@@ -68,7 +91,7 @@
                 });
         });
         $("#DistrictId").change(function () {
-            var idDis = $(this).val();
+            var idDis = $("#DistrictId  option:selected").val();
             $.getJSON("service/GetLatLon", { id: idDis, type: "district" },
             function (myData) {
                 $.each(myData, function (index, itemData) {
@@ -107,7 +130,7 @@
                         else {
                             marker.setPosition(results[0].geometry.location);
 
-                        }                       
+                        }
 
                     }
                     else {
@@ -121,8 +144,36 @@
         google.setOnLoadCallback(initialize);
     });
 </script>
+<script type = "text/javascript">
+    var cellTemplates = new Array();
+    cellTemplates[0] = '<fieldset id="field{counter}"><label>Chọn ảnh: </label>';
+    cellTemplates[1] = '<input id="image{counter}" name="images" type="file" />';
+    cellTemplates[2] = '<a href="#" id="lnkRemoveFile{counter}" onclick="return removeFile(this);">Xóa</a></fieldset>';
+    var counter = 0;
+
+    //adds a file input row
+    function addFile(description) {
+        //increment counter
+        counter++;
+        var html = "";
+        for (var i = 0; i < cellTemplates.length; i++) {
+
+            //format the cell template text
+            html += cellTemplates[i].replace(/\{counter\}/g, counter).replace(/\{value\}/g,
+                    (description == null) ? '' : description);
+        }
+        $("#uploadFile").prepend(html);
+    }
+    //removes a file input row
+    function removeFile(obj) {
+        $('html, body').animate({
+            scrollTop: $("#uploadFile").offset().top
+        }, 10000);
+        $(obj).parent().remove();
+    }
+   </script>
 @Html.ValidationSummary(true, "Vui lòng kiểm tra lại thông tin như thông báo bên dưới!", new { style = "color:red" })
-@using (Html.BeginForm())
+@using (Html.BeginForm("index", "createpost", FormMethod.Post, new { enctype = "multipart/form-data" }))
 {
     <div id= "create-post-page">
         <div class = "content" style="float:left;" >
@@ -154,7 +205,7 @@
                 @Html.LabelFor(model => model.ProvinceId)
             </div>
             <div class="editor-field">            
-                @Html.DropDownList("ProvinceId", (IEnumerable<SelectListItem>)ViewBag.ProvinceId,"-- Chọn Tỉnh/Thành phố")
+                @Html.DropDownList("ProvinceId", (IEnumerable<SelectListItem>)ViewBag.ProvinceId, "-- Chọn Tỉnh/Thành phố --")
                 @Html.ValidationMessageFor(model => model.ProvinceId)                 
             </div>
 
@@ -162,8 +213,8 @@
                 @Html.LabelFor(model => model.DistrictId)
             </div>
             <div class="editor-field">
-                @Html.DropDownListFor(model => model.DistrictId, 
-        new SelectList(Enumerable.Empty<SelectListItem>(), "Id", "Name"), "-- Chọn Quận/Huyện --", 
+                @Html.DropDownListFor(model => model.DistrictId,
+        new SelectList(Enumerable.Empty<SelectListItem>(), "Id", "Name"), "-- Chọn Quận/Huyện --",
         new { id = "DistrictId" })
                 @Html.ValidationMessageFor(model => model.DistrictId)
             </div>
@@ -204,7 +255,7 @@
                 @Html.LabelFor(model => model.Description)
             </div>
             <div class="editor-field">
-                @Html.EditorFor(model => model.Description)
+                @Html.TextAreaFor(model => model.Description)
                 @Html.ValidationMessageFor(model => model.Description)
             </div>
 
@@ -244,8 +295,8 @@
                 @Html.LabelFor(model => model.HasBed)
             </div>
             <div class="editor-field">
-                @Html.EditorFor(model => model.HasWaterHeater)
-                @Html.ValidationMessageFor(model => model.HasWaterHeater)
+                @Html.EditorFor(model => model.HasBed)
+                @Html.ValidationMessageFor(model => model.HasBed)
             </div>
 
             <div class="editor-label">
@@ -350,6 +401,14 @@
             <div class="editor-field">
                 @Html.EditorFor(model => model.Skype)
                 @Html.ValidationMessageFor(model => model.Skype)
+            </div>
+
+            <div id="uploadFile">
+                <fieldset>
+                <label>Chọn ảnh: </label>
+                <input id="file0" name="images" type="file" />
+                <a href="javascript:;" onclick="return addFile();" >Thêm ảnh</a>
+                </fieldset>
             </div>
 
             <p>

@@ -4,7 +4,8 @@ using System.Linq;
 using System.Web;
 using System.Web.Mvc;
 using RentalHouseFinding.Models;
-using RentalHouseFinding.Common;
+using RentalHouseFinding.RHF.Common;
+using System.IO;
 
 namespace RentalHouseFinding.Controllers
 {
@@ -18,7 +19,6 @@ namespace RentalHouseFinding.Controllers
         {
             ViewBag.CategoryId = new SelectList(_db.Categories, "Id", "Name");
             ViewBag.ProvinceId = new SelectList(_db.Provinces, "Id", "Name");
-            ViewBag.DistrictId = new SelectList(_db.Districts, "Id", "Name");
             return View();
         }
 
@@ -26,7 +26,7 @@ namespace RentalHouseFinding.Controllers
         // POST: /CreatePost/Create
 
         [HttpPost]
-        public ActionResult Index(PostViewModel model)
+        public ActionResult Index(PostViewModel model, IEnumerable<HttpPostedFileBase> images)
         {
             if (ModelState.IsValid)
             {
@@ -48,8 +48,32 @@ namespace RentalHouseFinding.Controllers
                         _db.Posts.AddObject(postToCreate);
                         _db.SaveChanges();
                         TempData["MessageSuccessPostNew"] = "Đăng bài thành công, chúng tôi sẽ gửi tin nhắn đến số điện thoại bạn đã cung cấp";
-                        TempData["IdSuccessPost"] = postToCreate.Id;
-                        return RedirectToAction("Index", "Post");
+                        
+
+                        PostImages imageToCreate = null;
+                        
+                        if (!(images.Count() == 0 || images == null))
+                        {
+                            foreach (HttpPostedFileBase image in images)
+                            {
+                                if (image != null && image.ContentLength > 0)
+                                {
+                                    var path = Path.Combine(HttpContext.Server.MapPath("/App_Data/Images/"), postToCreate.Id.ToString());
+                                    Directory.CreateDirectory(path);
+                                    string filePath = Path.Combine(path, Path.GetFileName(image.FileName));
+                                    image.SaveAs(filePath);
+                                    imageToCreate = new PostImages();
+                                    imageToCreate.PostId = postToCreate.Id;
+                                    imageToCreate.Path = filePath;
+                                    imageToCreate.IsDeleted = false;
+
+                                    _db.PostImages.AddObject(imageToCreate);
+                                    _db.SaveChanges();
+                                }
+                            }
+                        }
+
+                        return RedirectToAction("Details", "Post", new { id = postToCreate.Id });
                     }
                     else
                     {
@@ -64,15 +88,6 @@ namespace RentalHouseFinding.Controllers
             }
             ViewBag.CategoryId = new SelectList(_db.Categories, "Id", "Name", model.CategoryId);
             ViewBag.ProvinceId = new SelectList(_db.Provinces, "Id", "Name", model.ProvinceId);
-            if (model.ProvinceId != 0)
-            {
-                var districtList = _db.Districts.Where(c => c.ProvinceId == model.ProvinceId);
-                ViewBag.DistrictId = new SelectList(districtList, "Id", "Name", model.ProvinceId);
-            }
-            else
-            {
-                ViewBag.DistrictId = new SelectList(_db.Districts, "Id", "Name", model.DistrictId);
-            }
             return View(model);
         }
     }

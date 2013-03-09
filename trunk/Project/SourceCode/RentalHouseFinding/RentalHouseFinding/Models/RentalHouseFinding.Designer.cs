@@ -306,6 +306,54 @@ namespace RentalHouseFinding.Models
             }
         }
         private ObjectSet<PostVideos> _PostVideos;
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        public ObjectSet<ConfigurationRHF> ConfigurationRHFs
+        {
+            get
+            {
+                if ((_ConfigurationRHFs == null))
+                {
+                    _ConfigurationRHFs = base.CreateObjectSet<ConfigurationRHF>("ConfigurationRHFs");
+                }
+                return _ConfigurationRHFs;
+            }
+        }
+        private ObjectSet<ConfigurationRHF> _ConfigurationRHFs;
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        public ObjectSet<Questions> Questions
+        {
+            get
+            {
+                if ((_Questions == null))
+                {
+                    _Questions = base.CreateObjectSet<Questions>("Questions");
+                }
+                return _Questions;
+            }
+        }
+        private ObjectSet<Questions> _Questions;
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        public ObjectSet<V_PostFullInfo> V_PostFullInfo
+        {
+            get
+            {
+                if ((_V_PostFullInfo == null))
+                {
+                    _V_PostFullInfo = base.CreateObjectSet<V_PostFullInfo>("V_PostFullInfo");
+                }
+                return _V_PostFullInfo;
+            }
+        }
+        private ObjectSet<V_PostFullInfo> _V_PostFullInfo;
 
         #endregion
         #region AddTo Methods
@@ -420,6 +468,85 @@ namespace RentalHouseFinding.Models
         public void AddToPostVideos(PostVideos postVideos)
         {
             base.AddObject("PostVideos", postVideos);
+        }
+    
+        /// <summary>
+        /// Deprecated Method for adding a new object to the ConfigurationRHFs EntitySet. Consider using the .Add method of the associated ObjectSet&lt;T&gt; property instead.
+        /// </summary>
+        public void AddToConfigurationRHFs(ConfigurationRHF configurationRHF)
+        {
+            base.AddObject("ConfigurationRHFs", configurationRHF);
+        }
+    
+        /// <summary>
+        /// Deprecated Method for adding a new object to the Questions EntitySet. Consider using the .Add method of the associated ObjectSet&lt;T&gt; property instead.
+        /// </summary>
+        public void AddToQuestions(Questions questions)
+        {
+            base.AddObject("Questions", questions);
+        }
+    
+        /// <summary>
+        /// Deprecated Method for adding a new object to the V_PostFullInfo EntitySet. Consider using the .Add method of the associated ObjectSet&lt;T&gt; property instead.
+        /// </summary>
+        public void AddToV_PostFullInfo(V_PostFullInfo v_PostFullInfo)
+        {
+            base.AddObject("V_PostFullInfo", v_PostFullInfo);
+        }
+
+        #endregion
+        #region Function Imports
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        /// <param name="categoryIdPass">No Metadata Documentation available.</param>
+        /// <param name="provinceIdPass">No Metadata Documentation available.</param>
+        /// <param name="districtIdPass">No Metadata Documentation available.</param>
+        /// <param name="keyword">No Metadata Documentation available.</param>
+        public ObjectResult<FullTextSearchPost_ResultSuggestion> FullTextSearchPost(Nullable<global::System.Int32> categoryIdPass, Nullable<global::System.Int32> provinceIdPass, Nullable<global::System.Int32> districtIdPass, global::System.String keyword)
+        {
+            ObjectParameter categoryIdPassParameter;
+            if (categoryIdPass.HasValue)
+            {
+                categoryIdPassParameter = new ObjectParameter("CategoryIdPass", categoryIdPass);
+            }
+            else
+            {
+                categoryIdPassParameter = new ObjectParameter("CategoryIdPass", typeof(global::System.Int32));
+            }
+    
+            ObjectParameter provinceIdPassParameter;
+            if (provinceIdPass.HasValue)
+            {
+                provinceIdPassParameter = new ObjectParameter("ProvinceIdPass", provinceIdPass);
+            }
+            else
+            {
+                provinceIdPassParameter = new ObjectParameter("ProvinceIdPass", typeof(global::System.Int32));
+            }
+    
+            ObjectParameter districtIdPassParameter;
+            if (districtIdPass.HasValue)
+            {
+                districtIdPassParameter = new ObjectParameter("DistrictIdPass", districtIdPass);
+            }
+            else
+            {
+                districtIdPassParameter = new ObjectParameter("DistrictIdPass", typeof(global::System.Int32));
+            }
+    
+            ObjectParameter keywordParameter;
+            if (keyword != null)
+            {
+                keywordParameter = new ObjectParameter("Keyword", keyword);
+            }
+            else
+            {
+                keywordParameter = new ObjectParameter("Keyword", typeof(global::System.String));
+            }
+    
+            return base.ExecuteFunction<FullTextSearchPost_ResultSuggestion>("FullTextSearchPost", categoryIdPassParameter, provinceIdPassParameter, districtIdPassParameter, keywordParameter);
         }
 
         #endregion
@@ -665,6 +792,61 @@ namespace RentalHouseFinding.Models
         }
 
         #endregion
+    }
+    
+    /// <summary>
+    /// No Metadata Documentation available.
+    /// </summary>
+    [EdmEntityTypeAttribute(NamespaceName="RentalHouseFinding", Name="ConfigurationRHF")]
+    [Serializable()]
+    [DataContractAttribute(IsReference=true)]
+    public partial class ConfigurationRHF : EntityObject
+    {
+        #region Factory Method
+    
+        /// <summary>
+        /// Create a new ConfigurationRHF object.
+        /// </summary>
+        /// <param name="id">Initial value of the Id property.</param>
+        public static ConfigurationRHF CreateConfigurationRHF(global::System.Int32 id)
+        {
+            ConfigurationRHF configurationRHF = new ConfigurationRHF();
+            configurationRHF.Id = id;
+            return configurationRHF;
+        }
+
+        #endregion
+        #region Primitive Properties
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=true, IsNullable=false)]
+        [DataMemberAttribute()]
+        public global::System.Int32 Id
+        {
+            get
+            {
+                return _Id;
+            }
+            set
+            {
+                if (_Id != value)
+                {
+                    OnIdChanging(value);
+                    ReportPropertyChanging("Id");
+                    _Id = StructuralObject.SetValidValue(value);
+                    ReportPropertyChanged("Id");
+                    OnIdChanged();
+                }
+            }
+        }
+        private global::System.Int32 _Id;
+        partial void OnIdChanging(global::System.Int32 value);
+        partial void OnIdChanged();
+
+        #endregion
+    
     }
     
     /// <summary>
@@ -2027,13 +2209,14 @@ namespace RentalHouseFinding.Models
         /// <param name="createdDate">Initial value of the CreatedDate property.</param>
         /// <param name="editedDate">Initial value of the EditedDate property.</param>
         /// <param name="districtId">Initial value of the DistrictId property.</param>
-        /// <param name="address">Initial value of the Address property.</param>
+        /// <param name="numberAddress">Initial value of the NumberAddress property.</param>
         /// <param name="price">Initial value of the Price property.</param>
         /// <param name="area">Initial value of the Area property.</param>
         /// <param name="phoneActive">Initial value of the PhoneActive property.</param>
         /// <param name="lat">Initial value of the Lat property.</param>
         /// <param name="lon">Initial value of the Lon property.</param>
-        public static Posts CreatePosts(global::System.Int32 id, global::System.String title, global::System.Int32 categoryId, global::System.Int32 statusId, global::System.Boolean isDeleted, global::System.Int32 views, global::System.DateTime createdDate, global::System.DateTime editedDate, global::System.Int32 districtId, global::System.String address, global::System.Double price, global::System.Double area, global::System.String phoneActive, global::System.Double lat, global::System.Double lon)
+        /// <param name="street">Initial value of the Street property.</param>
+        public static Posts CreatePosts(global::System.Int32 id, global::System.String title, global::System.Int32 categoryId, global::System.Int32 statusId, global::System.Boolean isDeleted, global::System.Int32 views, global::System.DateTime createdDate, global::System.DateTime editedDate, global::System.Int32 districtId, global::System.String numberAddress, global::System.Double price, global::System.Double area, global::System.String phoneActive, global::System.Double lat, global::System.Double lon, global::System.String street)
         {
             Posts posts = new Posts();
             posts.Id = id;
@@ -2045,12 +2228,13 @@ namespace RentalHouseFinding.Models
             posts.CreatedDate = createdDate;
             posts.EditedDate = editedDate;
             posts.DistrictId = districtId;
-            posts.Address = address;
+            posts.NumberAddress = numberAddress;
             posts.Price = price;
             posts.Area = area;
             posts.PhoneActive = phoneActive;
             posts.Lat = lat;
             posts.Lon = lon;
+            posts.Street = street;
             return posts;
         }
 
@@ -2305,24 +2489,24 @@ namespace RentalHouseFinding.Models
         /// </summary>
         [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=false)]
         [DataMemberAttribute()]
-        public global::System.String Address
+        public global::System.String NumberAddress
         {
             get
             {
-                return _Address;
+                return _NumberAddress;
             }
             set
             {
-                OnAddressChanging(value);
-                ReportPropertyChanging("Address");
-                _Address = StructuralObject.SetValidValue(value, false);
-                ReportPropertyChanged("Address");
-                OnAddressChanged();
+                OnNumberAddressChanging(value);
+                ReportPropertyChanging("NumberAddress");
+                _NumberAddress = StructuralObject.SetValidValue(value, false);
+                ReportPropertyChanged("NumberAddress");
+                OnNumberAddressChanged();
             }
         }
-        private global::System.String _Address;
-        partial void OnAddressChanging(global::System.String value);
-        partial void OnAddressChanged();
+        private global::System.String _NumberAddress;
+        partial void OnNumberAddressChanging(global::System.String value);
+        partial void OnNumberAddressChanged();
     
         /// <summary>
         /// No Metadata Documentation available.
@@ -2491,6 +2675,30 @@ namespace RentalHouseFinding.Models
         private Nullable<global::System.Int32> _UserId;
         partial void OnUserIdChanging(Nullable<global::System.Int32> value);
         partial void OnUserIdChanged();
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=false)]
+        [DataMemberAttribute()]
+        public global::System.String Street
+        {
+            get
+            {
+                return _Street;
+            }
+            set
+            {
+                OnStreetChanging(value);
+                ReportPropertyChanging("Street");
+                _Street = StructuralObject.SetValidValue(value, false);
+                ReportPropertyChanged("Street");
+                OnStreetChanged();
+            }
+        }
+        private global::System.String _Street;
+        partial void OnStreetChanging(global::System.String value);
+        partial void OnStreetChanged();
 
         #endregion
     
@@ -3325,6 +3533,61 @@ namespace RentalHouseFinding.Models
         }
 
         #endregion
+    }
+    
+    /// <summary>
+    /// No Metadata Documentation available.
+    /// </summary>
+    [EdmEntityTypeAttribute(NamespaceName="RentalHouseFinding", Name="Questions")]
+    [Serializable()]
+    [DataContractAttribute(IsReference=true)]
+    public partial class Questions : EntityObject
+    {
+        #region Factory Method
+    
+        /// <summary>
+        /// Create a new Questions object.
+        /// </summary>
+        /// <param name="id">Initial value of the Id property.</param>
+        public static Questions CreateQuestions(global::System.Int32 id)
+        {
+            Questions questions = new Questions();
+            questions.Id = id;
+            return questions;
+        }
+
+        #endregion
+        #region Primitive Properties
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=true, IsNullable=false)]
+        [DataMemberAttribute()]
+        public global::System.Int32 Id
+        {
+            get
+            {
+                return _Id;
+            }
+            set
+            {
+                if (_Id != value)
+                {
+                    OnIdChanging(value);
+                    ReportPropertyChanging("Id");
+                    _Id = StructuralObject.SetValidValue(value);
+                    ReportPropertyChanged("Id");
+                    OnIdChanged();
+                }
+            }
+        }
+        private global::System.Int32 _Id;
+        partial void OnIdChanging(global::System.Int32 value);
+        partial void OnIdChanged();
+
+        #endregion
+    
     }
     
     /// <summary>
@@ -4255,6 +4518,464 @@ namespace RentalHouseFinding.Models
                 }
             }
         }
+
+        #endregion
+    }
+    
+    /// <summary>
+    /// No Metadata Documentation available.
+    /// </summary>
+    [EdmEntityTypeAttribute(NamespaceName="RentalHouseFinding", Name="V_PostFullInfo")]
+    [Serializable()]
+    [DataContractAttribute(IsReference=true)]
+    public partial class V_PostFullInfo : EntityObject
+    {
+        #region Factory Method
+    
+        /// <summary>
+        /// Create a new V_PostFullInfo object.
+        /// </summary>
+        /// <param name="id">Initial value of the Id property.</param>
+        /// <param name="numberAddress">Initial value of the NumberAddress property.</param>
+        /// <param name="street">Initial value of the Street property.</param>
+        /// <param name="title">Initial value of the Title property.</param>
+        /// <param name="phone">Initial value of the Phone property.</param>
+        /// <param name="categoryId">Initial value of the CategoryId property.</param>
+        /// <param name="districtId">Initial value of the DistrictId property.</param>
+        /// <param name="provinceId">Initial value of the ProvinceId property.</param>
+        public static V_PostFullInfo CreateV_PostFullInfo(global::System.Int32 id, global::System.String numberAddress, global::System.String street, global::System.String title, global::System.String phone, global::System.Int32 categoryId, global::System.Int32 districtId, global::System.Int32 provinceId)
+        {
+            V_PostFullInfo v_PostFullInfo = new V_PostFullInfo();
+            v_PostFullInfo.Id = id;
+            v_PostFullInfo.NumberAddress = numberAddress;
+            v_PostFullInfo.Street = street;
+            v_PostFullInfo.Title = title;
+            v_PostFullInfo.Phone = phone;
+            v_PostFullInfo.CategoryId = categoryId;
+            v_PostFullInfo.DistrictId = districtId;
+            v_PostFullInfo.ProvinceId = provinceId;
+            return v_PostFullInfo;
+        }
+
+        #endregion
+        #region Primitive Properties
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=true, IsNullable=false)]
+        [DataMemberAttribute()]
+        public global::System.Int32 Id
+        {
+            get
+            {
+                return _Id;
+            }
+            set
+            {
+                if (_Id != value)
+                {
+                    OnIdChanging(value);
+                    ReportPropertyChanging("Id");
+                    _Id = StructuralObject.SetValidValue(value);
+                    ReportPropertyChanged("Id");
+                    OnIdChanged();
+                }
+            }
+        }
+        private global::System.Int32 _Id;
+        partial void OnIdChanging(global::System.Int32 value);
+        partial void OnIdChanged();
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=true)]
+        [DataMemberAttribute()]
+        public global::System.String Description
+        {
+            get
+            {
+                return _Description;
+            }
+            set
+            {
+                OnDescriptionChanging(value);
+                ReportPropertyChanging("Description");
+                _Description = StructuralObject.SetValidValue(value, true);
+                ReportPropertyChanged("Description");
+                OnDescriptionChanged();
+            }
+        }
+        private global::System.String _Description;
+        partial void OnDescriptionChanging(global::System.String value);
+        partial void OnDescriptionChanged();
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=true, IsNullable=false)]
+        [DataMemberAttribute()]
+        public global::System.String NumberAddress
+        {
+            get
+            {
+                return _NumberAddress;
+            }
+            set
+            {
+                if (_NumberAddress != value)
+                {
+                    OnNumberAddressChanging(value);
+                    ReportPropertyChanging("NumberAddress");
+                    _NumberAddress = StructuralObject.SetValidValue(value, false);
+                    ReportPropertyChanged("NumberAddress");
+                    OnNumberAddressChanged();
+                }
+            }
+        }
+        private global::System.String _NumberAddress;
+        partial void OnNumberAddressChanging(global::System.String value);
+        partial void OnNumberAddressChanged();
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=true, IsNullable=false)]
+        [DataMemberAttribute()]
+        public global::System.String Street
+        {
+            get
+            {
+                return _Street;
+            }
+            set
+            {
+                if (_Street != value)
+                {
+                    OnStreetChanging(value);
+                    ReportPropertyChanging("Street");
+                    _Street = StructuralObject.SetValidValue(value, false);
+                    ReportPropertyChanged("Street");
+                    OnStreetChanged();
+                }
+            }
+        }
+        private global::System.String _Street;
+        partial void OnStreetChanging(global::System.String value);
+        partial void OnStreetChanged();
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=true, IsNullable=false)]
+        [DataMemberAttribute()]
+        public global::System.String Title
+        {
+            get
+            {
+                return _Title;
+            }
+            set
+            {
+                if (_Title != value)
+                {
+                    OnTitleChanging(value);
+                    ReportPropertyChanging("Title");
+                    _Title = StructuralObject.SetValidValue(value, false);
+                    ReportPropertyChanged("Title");
+                    OnTitleChanged();
+                }
+            }
+        }
+        private global::System.String _Title;
+        partial void OnTitleChanging(global::System.String value);
+        partial void OnTitleChanged();
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=true)]
+        [DataMemberAttribute()]
+        public global::System.String Direction
+        {
+            get
+            {
+                return _Direction;
+            }
+            set
+            {
+                OnDirectionChanging(value);
+                ReportPropertyChanging("Direction");
+                _Direction = StructuralObject.SetValidValue(value, true);
+                ReportPropertyChanged("Direction");
+                OnDirectionChanged();
+            }
+        }
+        private global::System.String _Direction;
+        partial void OnDirectionChanging(global::System.String value);
+        partial void OnDirectionChanged();
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=true)]
+        [DataMemberAttribute()]
+        public global::System.String Email
+        {
+            get
+            {
+                return _Email;
+            }
+            set
+            {
+                OnEmailChanging(value);
+                ReportPropertyChanging("Email");
+                _Email = StructuralObject.SetValidValue(value, true);
+                ReportPropertyChanged("Email");
+                OnEmailChanged();
+            }
+        }
+        private global::System.String _Email;
+        partial void OnEmailChanging(global::System.String value);
+        partial void OnEmailChanged();
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=true, IsNullable=false)]
+        [DataMemberAttribute()]
+        public global::System.String Phone
+        {
+            get
+            {
+                return _Phone;
+            }
+            set
+            {
+                if (_Phone != value)
+                {
+                    OnPhoneChanging(value);
+                    ReportPropertyChanging("Phone");
+                    _Phone = StructuralObject.SetValidValue(value, false);
+                    ReportPropertyChanged("Phone");
+                    OnPhoneChanged();
+                }
+            }
+        }
+        private global::System.String _Phone;
+        partial void OnPhoneChanging(global::System.String value);
+        partial void OnPhoneChanged();
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=true)]
+        [DataMemberAttribute()]
+        public global::System.String Skype
+        {
+            get
+            {
+                return _Skype;
+            }
+            set
+            {
+                OnSkypeChanging(value);
+                ReportPropertyChanging("Skype");
+                _Skype = StructuralObject.SetValidValue(value, true);
+                ReportPropertyChanged("Skype");
+                OnSkypeChanged();
+            }
+        }
+        private global::System.String _Skype;
+        partial void OnSkypeChanging(global::System.String value);
+        partial void OnSkypeChanged();
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=true)]
+        [DataMemberAttribute()]
+        public global::System.String Yahoo
+        {
+            get
+            {
+                return _Yahoo;
+            }
+            set
+            {
+                OnYahooChanging(value);
+                ReportPropertyChanging("Yahoo");
+                _Yahoo = StructuralObject.SetValidValue(value, true);
+                ReportPropertyChanged("Yahoo");
+                OnYahooChanged();
+            }
+        }
+        private global::System.String _Yahoo;
+        partial void OnYahooChanging(global::System.String value);
+        partial void OnYahooChanged();
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=true, IsNullable=false)]
+        [DataMemberAttribute()]
+        public global::System.Int32 CategoryId
+        {
+            get
+            {
+                return _CategoryId;
+            }
+            set
+            {
+                if (_CategoryId != value)
+                {
+                    OnCategoryIdChanging(value);
+                    ReportPropertyChanging("CategoryId");
+                    _CategoryId = StructuralObject.SetValidValue(value);
+                    ReportPropertyChanged("CategoryId");
+                    OnCategoryIdChanged();
+                }
+            }
+        }
+        private global::System.Int32 _CategoryId;
+        partial void OnCategoryIdChanging(global::System.Int32 value);
+        partial void OnCategoryIdChanged();
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=true, IsNullable=false)]
+        [DataMemberAttribute()]
+        public global::System.Int32 DistrictId
+        {
+            get
+            {
+                return _DistrictId;
+            }
+            set
+            {
+                if (_DistrictId != value)
+                {
+                    OnDistrictIdChanging(value);
+                    ReportPropertyChanging("DistrictId");
+                    _DistrictId = StructuralObject.SetValidValue(value);
+                    ReportPropertyChanged("DistrictId");
+                    OnDistrictIdChanged();
+                }
+            }
+        }
+        private global::System.Int32 _DistrictId;
+        partial void OnDistrictIdChanging(global::System.Int32 value);
+        partial void OnDistrictIdChanged();
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=true, IsNullable=false)]
+        [DataMemberAttribute()]
+        public global::System.Int32 ProvinceId
+        {
+            get
+            {
+                return _ProvinceId;
+            }
+            set
+            {
+                if (_ProvinceId != value)
+                {
+                    OnProvinceIdChanging(value);
+                    ReportPropertyChanging("ProvinceId");
+                    _ProvinceId = StructuralObject.SetValidValue(value);
+                    ReportPropertyChanged("ProvinceId");
+                    OnProvinceIdChanged();
+                }
+            }
+        }
+        private global::System.Int32 _ProvinceId;
+        partial void OnProvinceIdChanging(global::System.Int32 value);
+        partial void OnProvinceIdChanged();
+
+        #endregion
+    
+    }
+
+    #endregion
+    #region ComplexTypes
+    
+    /// <summary>
+    /// No Metadata Documentation available.
+    /// </summary>
+    [EdmComplexTypeAttribute(NamespaceName="RentalHouseFinding", Name="FullTextSearchPost_ResultSuggestion")]
+    [DataContractAttribute(IsReference=true)]
+    [Serializable()]
+    public partial class FullTextSearchPost_ResultSuggestion : ComplexObject
+    {
+        #region Factory Method
+    
+        /// <summary>
+        /// Create a new FullTextSearchPost_ResultSuggestion object.
+        /// </summary>
+        /// <param name="id">Initial value of the Id property.</param>
+        /// <param name="title">Initial value of the Title property.</param>
+        public static FullTextSearchPost_ResultSuggestion CreateFullTextSearchPost_ResultSuggestion(global::System.Int32 id, global::System.String title)
+        {
+            FullTextSearchPost_ResultSuggestion fullTextSearchPost_ResultSuggestion = new FullTextSearchPost_ResultSuggestion();
+            fullTextSearchPost_ResultSuggestion.Id = id;
+            fullTextSearchPost_ResultSuggestion.Title = title;
+            return fullTextSearchPost_ResultSuggestion;
+        }
+
+        #endregion
+        #region Primitive Properties
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=false)]
+        [DataMemberAttribute()]
+        public global::System.Int32 Id
+        {
+            get
+            {
+                return _Id;
+            }
+            set
+            {
+                OnIdChanging(value);
+                ReportPropertyChanging("Id");
+                _Id = StructuralObject.SetValidValue(value);
+                ReportPropertyChanged("Id");
+                OnIdChanged();
+            }
+        }
+        private global::System.Int32 _Id;
+        partial void OnIdChanging(global::System.Int32 value);
+        partial void OnIdChanged();
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=false)]
+        [DataMemberAttribute()]
+        public global::System.String Title
+        {
+            get
+            {
+                return _Title;
+            }
+            set
+            {
+                OnTitleChanging(value);
+                ReportPropertyChanging("Title");
+                _Title = StructuralObject.SetValidValue(value, false);
+                ReportPropertyChanged("Title");
+                OnTitleChanged();
+            }
+        }
+        private global::System.String _Title;
+        partial void OnTitleChanging(global::System.String value);
+        partial void OnTitleChanged();
 
         #endregion
     }
