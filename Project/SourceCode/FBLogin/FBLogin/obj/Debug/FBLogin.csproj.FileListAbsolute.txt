@@ -1,0 +1,11 @@
+c:\users\mrblackrose\documents\visual studio 2010\Projects\FBLogin\FBLogin\bin\FBLogin.dll
+c:\users\mrblackrose\documents\visual studio 2010\Projects\FBLogin\FBLogin\bin\FBLogin.pdb
+c:\users\mrblackrose\documents\visual studio 2010\Projects\FBLogin\FBLogin\bin\EntityFramework.dll
+c:\users\mrblackrose\documents\visual studio 2010\Projects\FBLogin\FBLogin\bin\EntityFramework.xml
+c:\users\mrblackrose\documents\visual studio 2010\Projects\FBLogin\FBLogin\obj\Debug\ResolveAssemblyReference.cache
+c:\users\mrblackrose\documents\visual studio 2010\Projects\FBLogin\FBLogin\obj\Debug\FBLogin.dll
+c:\users\mrblackrose\documents\visual studio 2010\Projects\FBLogin\FBLogin\obj\Debug\FBLogin.pdb
+c:\users\mrblackrose\documents\visual studio 2010\Projects\FBLogin\FBLogin\bin\Facebook.dll
+c:\users\mrblackrose\documents\visual studio 2010\Projects\FBLogin\FBLogin\bin\Newtonsoft.Json.dll
+c:\users\mrblackrose\documents\visual studio 2010\Projects\FBLogin\FBLogin\bin\Facebook.xml
+c:\users\mrblackrose\documents\visual studio 2010\Projects\FBLogin\FBLogin\bin\Newtonsoft.Json.xml
