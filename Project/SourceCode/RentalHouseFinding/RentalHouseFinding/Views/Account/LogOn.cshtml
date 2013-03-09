@@ -11,46 +11,29 @@
 </p>
 <div id="fb-root"></div>
 <script type="text/javascript">
-    $(document).ready(function () {
-        // Init the SDK upon load
-        window.fbAsyncInit = function () {
-            FB.init({
-                appId: '476765599060884', // App ID
-                channelUrl: '//' + window.location.hostname + '/channel', // Path to your Channel File
-                scope: 'id,name,first_name,last_name,gender,email',
-                status: true, // check login status
-                cookie: true, // enable cookies to allow the server to access the session
-                xfbml: true  // parse XFBML
-            });
-        };
-        (function (d) {
-            var js, id = 'facebook-jssdk'; if (d.getElementById(id)) { return; }
-            js = d.createElement('script'); js.id = id; js.async = true;
-            js.src = "//connect.facebook.net/en_US/all.js";
-            d.getElementsByTagName('head')[0].appendChild(js);
-        } (document));
-    });
+   
     /*This Method will be invoked on lick on Facebook button*/
     function FBLogin() {
-        FB.login(FBCallBack);
-    }
-    function FBCallBack(response) {
-        if (response.authResponse) {
-            // user has auth'd your app and is logged into Facebook
-            FB.api('/me', function (userDetail) {
-                if (userDetail.name) {
-                    alert(userDetail.name);
-                    var url = '@Url.Action("ShowUserDetails", "Account", new { OpenID = "_id_",FirstName = "_first_", LastName = "_last_", Gender = "_gender_" })';
+        InitialiseFacebook("476765599060884");
+        //FB.login(FBCallBack);
+    }   
+//    function FBCallBack(response) {
+//        if (response.authResponse) {
+//            // user has auth'd your app and is logged into Facebook
+//            FB.api('/me', function (userDetail) {
+//                if (userDetail.name) {
+//                    alert(userDetail.name);
+//                    var url = '@Url.Action("ShowUserDetails", "Account", new { OpenID = "_id_",FirstName = "_first_", LastName = "_last_", Gender = "_gender_" })';
 
-                    url = url.replace('_id_', userDetail.id);
-                    url = url.replace('_first_', userDetail.first_name);
-                    url = url.replace('_last_', userDetail.last_name);
-                    url = url.replace('_gender_', userDetail.gender);
-                    window.location.href = url;
-                }
-            });
-        }
-    }
+//                    url = url.replace('_id_', userDetail.id);
+//                    url = url.replace('_first_', userDetail.first_name);
+//                    url = url.replace('_last_', userDetail.last_name);
+//                    url = url.replace('_gender_', userDetail.gender);
+//                    window.location.href = url;
+//                }
+//            });
+//        }
+//    }
     </script>  
 <form action="Authenticate?ReturnUrl=@HttpUtility.UrlEncode(Request.QueryString["ReturnUrl"])" method="post" id="openid_form">
 <input type="hidden" name="action" value="verify" />

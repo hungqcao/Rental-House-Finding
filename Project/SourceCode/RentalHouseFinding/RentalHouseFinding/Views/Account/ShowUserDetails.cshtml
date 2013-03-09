@@ -3,28 +3,29 @@
     ViewBag.Title = "Show User Details";
 }
 
-<h2> Welcome @Model.FirstName Your Details are as follows: </h2>
+<h2> Welcome @Model.first_name Your Details are as follows: </h2>
 <table style="border:1">
+@*<tr><td>Picture</td><td><img src='@Model.picture.data.url' /></td></tr>*@
  <tr>
     <td> OpenID / FaceBook ID  </td>
-    <td> @Model.OpenID </td>
+    <td> @Model.id </td>
  </tr>
   
   <tr>
     <td> First Name  </td>
-    <td> @Model.FirstName </td>
+    <td> @Model.first_name </td>
  </tr>
   <tr>
     <td> Last Name  </td>
-    <td> @Model.LastName </td>
+    <td> @Model.last_name </td>
  </tr>
  
   <tr>
     <td> Gender  </td>
-    <td> @Model.Gender </td>
+    <td> @Model.gender </td>
  </tr>
    <tr>
     <td> Email  </td>
-    <td> @Model.Email </td>
+    <td> @Model.email </td>
  </tr>
 </table>
