@@ -1,10 +1,10 @@
 ﻿@model RentalHouseFinding.Models.PostViewModel
 
 @{
-    ViewBag.Title = "ViewPage1";
+    ViewBag.Title = "Chỉnh sửa bài đăng";
 }
 
-<h2>ViewPage1</h2>
+<h2>Chỉnh sửa bài đăng</h2>
 
 <script src="@Url.Content("~/Scripts/jquery.validate.min.js")" type="text/javascript"></script>
 <script src="@Url.Content("~/Scripts/jquery.validate.unobtrusive.min.js")" type="text/javascript"></script>
@@ -12,7 +12,7 @@
 @using (Html.BeginForm()) {
     @Html.ValidationSummary(true)
     <fieldset>
-        <legend>PostViewModel</legend>
+        <legend>Chỉnh sửa bài đăng</legend>
 
         <div class="editor-label">
             @Html.LabelFor(model => model.Title)
@@ -269,5 +269,5 @@
 }
 
 <div>
-    @Html.ActionLink("Back to List", "Index")
+    <input type="button" onclick="history.go(-1)" value="Quay lại" />
 </div>
