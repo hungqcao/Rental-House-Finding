@@ -27,11 +27,11 @@ namespace RentalHouseFinding.RHF.DAL
         }
 
         [HttpPost]
-        public List<FullTextSearchPost_ResultSuggestion> GetFullTextSuggestion(int categoryId, int provinceId, int DistrictId, string keyWords)
+        public List<FullTextSearchPost_ResultSuggestion> GetFullTextSuggestion(int categoryId, int provinceId, int DistrictId, string keyWords, int skip, int take)
         {
             try
             {
-                var listSuggestion = _db.FullTextSearchPost(categoryId, provinceId, DistrictId, keyWords).Take(5);
+                var listSuggestion = _db.FullTextSearchPost(categoryId, provinceId, DistrictId, keyWords).Skip(skip).Take(take);
                 return listSuggestion.ToList();
             }
             catch(Exception ex)

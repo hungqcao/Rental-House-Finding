@@ -27,5 +27,8 @@ namespace RentalHouseFinding.Models
 
         [Display(Name = "Từ khóa")]
         public string KeyWord { get; set; }
+
+        [HiddenInput(DisplayValue = false)]
+        public string PostIdSuggest { get; set; }
     }
 }

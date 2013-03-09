@@ -74,11 +74,22 @@ namespace RentalHouseFinding.Controllers
         }
 
         [AcceptVerbs(HttpVerbs.Get)]
-        public JsonResult GetFullTextSuggestion(string categoryId, string provinceId, string districtId, string keyword)
+        public JsonResult GetFullTextSuggestion(string categoryId, string provinceId, string districtId, string keyword, string skip, string take)
         {
+            int catId;
+            int proId;
+            int disId;
+            int skipNum;
+            int takeNum;
+
+            int.TryParse(categoryId, out catId);
+            int.TryParse(provinceId, out proId);
+            int.TryParse(districtId, out disId);
+            int.TryParse(skip, out skipNum);
+            int.TryParse(take, out takeNum);
             using (FullTextSearchHelper fullTextHelp = new FullTextSearchHelper())
             {
-                var suggList = fullTextHelp.GetFullTextSuggestion(int.Parse(categoryId), int.Parse(provinceId), int.Parse(districtId), keyword);
+                var suggList = fullTextHelp.GetFullTextSuggestion(catId, proId, disId, keyword, skipNum, takeNum);
                 if (suggList != null)
                 {
                     var myData = suggList.Select(a => new SelectListItem()
