@@ -5,6 +5,7 @@ using System.Web;
 using System.Web.Mvc;
 using RentalHouseFinding.Models;
 using RentalHouseFinding.Common;
+using System.Data;
 
 namespace RentalHouseFinding.Controllers
 {
@@ -48,7 +49,8 @@ namespace RentalHouseFinding.Controllers
 
         public ActionResult Details(int id)
         {
-            return View();
+            var postList = (from p in _db.Posts where p.Id == id select p).FirstOrDefault();
+            return View(postList);
         }
 
         //
@@ -82,25 +84,22 @@ namespace RentalHouseFinding.Controllers
  
         public ActionResult Edit(int id)
         {
-            return View();
+            var postModel = (from p in _db.Posts where (p.Id == id) && (!p.IsDeleted) select p).FirstOrDefault();
+            return View(CommonModel.ConvertPostToPostViewModel(postModel));
         }
 
         //
         // POST: /Post/Edit/5
 
         [HttpPost]
-        public ActionResult Edit(int id, FormCollection collection)
+        public ActionResult Edit(int id, PostViewModel postViewModel)
         {
-            try
-            {
-                // TODO: Add update logic here
- 
-                return RedirectToAction("Index");
-            }
-            catch
-            {
-                return View();
-            }
+            var post = (from p in _db.Posts where (p.Id == id) select p).FirstOrDefault();
+            post = CommonModel.ConvertPostViewModelToPost(post, postViewModel, post.CreatedDate, DateTime.Now, DateTime.Now);
+            _db.ObjectStateManager.ChangeObjectState(post, EntityState.Modified);
+            _db.SaveChanges();
+            TempData["MessageSuccessEdit"] = "Success";
+            return RedirectToAction("Index");
         }
 
         //
@@ -108,25 +107,28 @@ namespace RentalHouseFinding.Controllers
  
         public ActionResult Delete(int id)
         {
-            return View();
-        }
-
-        //
-        // POST: /Post/Delete/5
-
-        [HttpPost]
-        public ActionResult Delete(int id, FormCollection collection)
-        {
             try
             {
-                // TODO: Add delete logic here
- 
+                var post = (from p in _db.Posts where (p.Id == id) select p).FirstOrDefault();
+                post.IsDeleted = true;
+                _db.ObjectStateManager.ChangeObjectState(post, EntityState.Modified);
+                _db.SaveChanges();
+
                 return RedirectToAction("Index");
             }
             catch
             {
                 return View();
             }
+        }
+
+        //
+        // POST: /Post/Delete/5
+
+        [HttpPost]
+        public ActionResult Delete(int id, PostViewModel postViewModel)
+        {
+            return View();
         }
     }
 }
