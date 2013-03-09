@@ -64,6 +64,7 @@
         <th>CreatedDate</th>
         <th>EditedDate</th>
         <th>RenewDate</th>
+        <th>Status</th>
         <th></th>
     </tr>
 @for (var i = 0; i < @ViewBag.PostList.Count; i++)
@@ -73,7 +74,8 @@
         <td>@ViewBag.PostList[i].CreatedDate</td>
         <td>@ViewBag.PostList[i].EditedDate</td>
         <td>@ViewBag.PostList[i].RenewDate</td>
-        <td>@Html.ActionLink("Delete", "Delete/" + (int)ViewBag.PostList[i].Id, "Post")</td>
+        <td>@ViewBag.StatusList[@ViewBag.PostList[i].StatusId - 1].Name</td>
+        <td><button type="button" onclick="self.location='/Post/Delete/@ViewBag.PostList[i].Id'">Delete</button></td>
     </tr>
 }
 </table>
