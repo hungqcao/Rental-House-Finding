@@ -13,12 +13,38 @@ using DotNetOpenAuth.Messaging;
 using DotNetOpenAuth.OpenId;
 using DotNetOpenAuth.OpenId.RelyingParty;
 using DotNetOpenAuth.OpenId.Extensions.AttributeExchange;
+using Facebook;
+using System.Net;
+using FBLogin.Models;
 
 
 namespace RentalHouseFinding.Controllers
 {
     public class AccountController : Controller
     {
+        
+        public ActionResult FacebookUserDetail()
+        {
+            FacebookClient.SetDefaultHttpWebRequestFactory(uri =>
+            {
+                var request = new HttpWebRequestWrapper((HttpWebRequest)WebRequest.Create(uri));
+                //request.Proxy = new WebProxy("proxy", 8080); // normal .net IWebProxy
+                return request;
+            });
+            var client = new FacebookClient(Session["accessToken"].ToString());
+            dynamic fbresult = client.Get("me?fields=id,email,first_name,last_name,gender,locale,link,username,timezone,location,picture");
+
+            UserDetailsModel facebookUser = Newtonsoft.Json.JsonConvert.DeserializeObject<UserDetailsModel>(fbresult.ToString());
+            return View("ShowUserDetails", facebookUser);            
+        }
+        [HttpPost]
+        public JsonResult FacebookLogin(FacebookLoginModel model)
+        {
+            Session["uid"] = model.uid;
+            Session["accessToken"] = model.accessToken;
+
+            return Json(new { success = true });
+        }
         //
         //Logon by Openid
         private static OpenIdRelyingParty openid = new OpenIdRelyingParty();
@@ -99,13 +125,13 @@ namespace RentalHouseFinding.Controllers
                     var sFriendlyLogin = response.FriendlyIdentifierForDisplay;
                     var lm = new UserDetailsModel
                     {
-                        OpenID = response.ClaimedIdentifier,
+                        id = response.ClaimedIdentifier,
 
-                        FirstName = sFirstName,
-                        LastName = sLastName,
+                        first_name = sFirstName,
+                        last_name = sLastName,
 
-                        Gender = sGender,
-                        Email = sEmail
+                        gender = sGender,
+                        email = sEmail
                     };
                     return View("ShowUserDetails", lm);
 
