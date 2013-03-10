@@ -2,7 +2,7 @@
 -- --------------------------------------------------
 -- Entity Designer DDL Script for SQL Server 2005, 2008, and Azure
 -- --------------------------------------------------
--- Date Created: 03/08/2013 15:47:43
+-- Date Created: 03/10/2013 14:52:28
 -- Generated from EDMX file: C:\RentalHouseFinding\Project\SourceCode\RentalHouseFinding\RentalHouseFinding\Models\RentalHouseFinding.edmx
 -- --------------------------------------------------
 
@@ -59,6 +59,15 @@ GO
 IF OBJECT_ID(N'[dbo].[FK_UsersPosts]', 'F') IS NOT NULL
     ALTER TABLE [dbo].[Posts] DROP CONSTRAINT [FK_UsersPosts];
 GO
+IF OBJECT_ID(N'[dbo].[FK_PostsMessegesReceiver]', 'F') IS NOT NULL
+    ALTER TABLE [dbo].[Questions] DROP CONSTRAINT [FK_PostsMessegesReceiver];
+GO
+IF OBJECT_ID(N'[dbo].[FK_PostsMessegesSender]', 'F') IS NOT NULL
+    ALTER TABLE [dbo].[Questions] DROP CONSTRAINT [FK_PostsMessegesSender];
+GO
+IF OBJECT_ID(N'[dbo].[FK_QuestionsAnswers]', 'F') IS NOT NULL
+    ALTER TABLE [dbo].[Answers] DROP CONSTRAINT [FK_QuestionsAnswers];
+GO
 
 -- --------------------------------------------------
 -- Dropping existing tables
@@ -105,6 +114,15 @@ IF OBJECT_ID(N'[dbo].[Contacts]', 'U') IS NOT NULL
 GO
 IF OBJECT_ID(N'[dbo].[PostVideos]', 'U') IS NOT NULL
     DROP TABLE [dbo].[PostVideos];
+GO
+IF OBJECT_ID(N'[dbo].[ConfigurationRHFs]', 'U') IS NOT NULL
+    DROP TABLE [dbo].[ConfigurationRHFs];
+GO
+IF OBJECT_ID(N'[dbo].[Questions]', 'U') IS NOT NULL
+    DROP TABLE [dbo].[Questions];
+GO
+IF OBJECT_ID(N'[dbo].[Answers]', 'U') IS NOT NULL
+    DROP TABLE [dbo].[Answers];
 GO
 
 -- --------------------------------------------------
@@ -288,7 +306,24 @@ GO
 
 -- Creating table 'Questions'
 CREATE TABLE [dbo].[Questions] (
-    [Id] int IDENTITY(1,1) NOT NULL
+    [Id] int IDENTITY(1,1) NOT NULL,
+    [Content] nvarchar(max)  NOT NULL,
+    [SenderId] int  NOT NULL,
+    [ReceiverId] int  NOT NULL,
+    [CreatedDate] datetime  NOT NULL,
+    [IsReceiverRead] bit  NOT NULL,
+    [Property] nvarchar(max)  NOT NULL,
+    [IsDeleted] bit  NOT NULL
+);
+GO
+
+-- Creating table 'Answers'
+CREATE TABLE [dbo].[Answers] (
+    [Id] int IDENTITY(1,1) NOT NULL,
+    [Content] nvarchar(max)  NOT NULL,
+    [CreatedDate] datetime  NOT NULL,
+    [IsDeleted] bit  NOT NULL,
+    [QuestionId] int  NOT NULL
 );
 GO
 
@@ -389,6 +424,12 @@ GO
 -- Creating primary key on [Id] in table 'Questions'
 ALTER TABLE [dbo].[Questions]
 ADD CONSTRAINT [PK_Questions]
+    PRIMARY KEY CLUSTERED ([Id] ASC);
+GO
+
+-- Creating primary key on [Id] in table 'Answers'
+ALTER TABLE [dbo].[Answers]
+ADD CONSTRAINT [PK_Answers]
     PRIMARY KEY CLUSTERED ([Id] ASC);
 GO
 
@@ -580,6 +621,48 @@ ADD CONSTRAINT [FK_UsersPosts]
 CREATE INDEX [IX_FK_UsersPosts]
 ON [dbo].[Posts]
     ([UserId]);
+GO
+
+-- Creating foreign key on [ReceiverId] in table 'Questions'
+ALTER TABLE [dbo].[Questions]
+ADD CONSTRAINT [FK_PostsMessegesReceiver]
+    FOREIGN KEY ([ReceiverId])
+    REFERENCES [dbo].[Posts]
+        ([Id])
+    ON DELETE NO ACTION ON UPDATE NO ACTION;
+
+-- Creating non-clustered index for FOREIGN KEY 'FK_PostsMessegesReceiver'
+CREATE INDEX [IX_FK_PostsMessegesReceiver]
+ON [dbo].[Questions]
+    ([ReceiverId]);
+GO
+
+-- Creating foreign key on [SenderId] in table 'Questions'
+ALTER TABLE [dbo].[Questions]
+ADD CONSTRAINT [FK_PostsMessegesSender]
+    FOREIGN KEY ([SenderId])
+    REFERENCES [dbo].[Posts]
+        ([Id])
+    ON DELETE NO ACTION ON UPDATE NO ACTION;
+
+-- Creating non-clustered index for FOREIGN KEY 'FK_PostsMessegesSender'
+CREATE INDEX [IX_FK_PostsMessegesSender]
+ON [dbo].[Questions]
+    ([SenderId]);
+GO
+
+-- Creating foreign key on [QuestionId] in table 'Answers'
+ALTER TABLE [dbo].[Answers]
+ADD CONSTRAINT [FK_QuestionsAnswers]
+    FOREIGN KEY ([QuestionId])
+    REFERENCES [dbo].[Questions]
+        ([Id])
+    ON DELETE NO ACTION ON UPDATE NO ACTION;
+
+-- Creating non-clustered index for FOREIGN KEY 'FK_QuestionsAnswers'
+CREATE INDEX [IX_FK_QuestionsAnswers]
+ON [dbo].[Answers]
+    ([QuestionId]);
 GO
 
 -- --------------------------------------------------

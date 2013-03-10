@@ -32,6 +32,9 @@ using System.Runtime.Serialization;
 [assembly: EdmRelationshipAttribute("RentalHouseFinding", "PostsPostVideos", "Posts", System.Data.Metadata.Edm.RelationshipMultiplicity.One, typeof(RentalHouseFinding.Models.Posts), "PostVideos", System.Data.Metadata.Edm.RelationshipMultiplicity.Many, typeof(RentalHouseFinding.Models.PostVideos), true)]
 [assembly: EdmRelationshipAttribute("RentalHouseFinding", "PostStatusesPosts", "PostStatuses", System.Data.Metadata.Edm.RelationshipMultiplicity.One, typeof(RentalHouseFinding.Models.PostStatuses), "Posts", System.Data.Metadata.Edm.RelationshipMultiplicity.Many, typeof(RentalHouseFinding.Models.Posts), true)]
 [assembly: EdmRelationshipAttribute("RentalHouseFinding", "UsersPosts", "Users", System.Data.Metadata.Edm.RelationshipMultiplicity.ZeroOrOne, typeof(RentalHouseFinding.Models.Users), "Posts", System.Data.Metadata.Edm.RelationshipMultiplicity.Many, typeof(RentalHouseFinding.Models.Posts), true)]
+[assembly: EdmRelationshipAttribute("RentalHouseFinding", "PostsMessegesReceiver", "Posts", System.Data.Metadata.Edm.RelationshipMultiplicity.One, typeof(RentalHouseFinding.Models.Posts), "Messeges", System.Data.Metadata.Edm.RelationshipMultiplicity.Many, typeof(RentalHouseFinding.Models.Questions), true)]
+[assembly: EdmRelationshipAttribute("RentalHouseFinding", "PostsMessegesSender", "Posts", System.Data.Metadata.Edm.RelationshipMultiplicity.One, typeof(RentalHouseFinding.Models.Posts), "Messeges", System.Data.Metadata.Edm.RelationshipMultiplicity.Many, typeof(RentalHouseFinding.Models.Questions), true)]
+[assembly: EdmRelationshipAttribute("RentalHouseFinding", "QuestionsAnswers", "Questions", System.Data.Metadata.Edm.RelationshipMultiplicity.One, typeof(RentalHouseFinding.Models.Questions), "Answers", System.Data.Metadata.Edm.RelationshipMultiplicity.Many, typeof(RentalHouseFinding.Models.Answers), true)]
 
 #endregion
 
@@ -326,18 +329,34 @@ namespace RentalHouseFinding.Models
         /// <summary>
         /// No Metadata Documentation available.
         /// </summary>
-        public ObjectSet<Messeges> Messeges
+        public ObjectSet<Questions> Questions
         {
             get
             {
-                if ((_Messeges == null))
+                if ((_Questions == null))
                 {
-                    _Messeges = base.CreateObjectSet<Messeges>("Messeges");
+                    _Questions = base.CreateObjectSet<Questions>("Questions");
                 }
-                return _Messeges;
+                return _Questions;
             }
         }
-        private ObjectSet<Messeges> _Messeges;
+        private ObjectSet<Questions> _Questions;
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        public ObjectSet<Answers> Answers
+        {
+            get
+            {
+                if ((_Answers == null))
+                {
+                    _Answers = base.CreateObjectSet<Answers>("Answers");
+                }
+                return _Answers;
+            }
+        }
+        private ObjectSet<Answers> _Answers;
 
         #endregion
         #region AddTo Methods
@@ -463,11 +482,19 @@ namespace RentalHouseFinding.Models
         }
     
         /// <summary>
-        /// Deprecated Method for adding a new object to the Messeges EntitySet. Consider using the .Add method of the associated ObjectSet&lt;T&gt; property instead.
+        /// Deprecated Method for adding a new object to the Questions EntitySet. Consider using the .Add method of the associated ObjectSet&lt;T&gt; property instead.
         /// </summary>
-        public void AddToMesseges(Messeges messeges)
+        public void AddToQuestions(Questions questions)
         {
-            base.AddObject("Messeges", messeges);
+            base.AddObject("Questions", questions);
+        }
+    
+        /// <summary>
+        /// Deprecated Method for adding a new object to the Answers EntitySet. Consider using the .Add method of the associated ObjectSet&lt;T&gt; property instead.
+        /// </summary>
+        public void AddToAnswers(Answers answers)
+        {
+            base.AddObject("Answers", answers);
         }
 
         #endregion
@@ -532,6 +559,206 @@ namespace RentalHouseFinding.Models
     #endregion
     
     #region Entities
+    
+    /// <summary>
+    /// No Metadata Documentation available.
+    /// </summary>
+    [EdmEntityTypeAttribute(NamespaceName="RentalHouseFinding", Name="Answers")]
+    [Serializable()]
+    [DataContractAttribute(IsReference=true)]
+    public partial class Answers : EntityObject
+    {
+        #region Factory Method
+    
+        /// <summary>
+        /// Create a new Answers object.
+        /// </summary>
+        /// <param name="id">Initial value of the Id property.</param>
+        /// <param name="content">Initial value of the Content property.</param>
+        /// <param name="createdDate">Initial value of the CreatedDate property.</param>
+        /// <param name="isDeleted">Initial value of the IsDeleted property.</param>
+        /// <param name="questionId">Initial value of the QuestionId property.</param>
+        public static Answers CreateAnswers(global::System.Int32 id, global::System.String content, global::System.DateTime createdDate, global::System.Boolean isDeleted, global::System.Int32 questionId)
+        {
+            Answers answers = new Answers();
+            answers.Id = id;
+            answers.Content = content;
+            answers.CreatedDate = createdDate;
+            answers.IsDeleted = isDeleted;
+            answers.QuestionId = questionId;
+            return answers;
+        }
+
+        #endregion
+        #region Primitive Properties
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=true, IsNullable=false)]
+        [DataMemberAttribute()]
+        public global::System.Int32 Id
+        {
+            get
+            {
+                return _Id;
+            }
+            set
+            {
+                if (_Id != value)
+                {
+                    OnIdChanging(value);
+                    ReportPropertyChanging("Id");
+                    _Id = StructuralObject.SetValidValue(value);
+                    ReportPropertyChanged("Id");
+                    OnIdChanged();
+                }
+            }
+        }
+        private global::System.Int32 _Id;
+        partial void OnIdChanging(global::System.Int32 value);
+        partial void OnIdChanged();
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=false)]
+        [DataMemberAttribute()]
+        public global::System.String Content
+        {
+            get
+            {
+                return _Content;
+            }
+            set
+            {
+                OnContentChanging(value);
+                ReportPropertyChanging("Content");
+                _Content = StructuralObject.SetValidValue(value, false);
+                ReportPropertyChanged("Content");
+                OnContentChanged();
+            }
+        }
+        private global::System.String _Content;
+        partial void OnContentChanging(global::System.String value);
+        partial void OnContentChanged();
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=false)]
+        [DataMemberAttribute()]
+        public global::System.DateTime CreatedDate
+        {
+            get
+            {
+                return _CreatedDate;
+            }
+            set
+            {
+                OnCreatedDateChanging(value);
+                ReportPropertyChanging("CreatedDate");
+                _CreatedDate = StructuralObject.SetValidValue(value);
+                ReportPropertyChanged("CreatedDate");
+                OnCreatedDateChanged();
+            }
+        }
+        private global::System.DateTime _CreatedDate;
+        partial void OnCreatedDateChanging(global::System.DateTime value);
+        partial void OnCreatedDateChanged();
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=false)]
+        [DataMemberAttribute()]
+        public global::System.Boolean IsDeleted
+        {
+            get
+            {
+                return _IsDeleted;
+            }
+            set
+            {
+                OnIsDeletedChanging(value);
+                ReportPropertyChanging("IsDeleted");
+                _IsDeleted = StructuralObject.SetValidValue(value);
+                ReportPropertyChanged("IsDeleted");
+                OnIsDeletedChanged();
+            }
+        }
+        private global::System.Boolean _IsDeleted;
+        partial void OnIsDeletedChanging(global::System.Boolean value);
+        partial void OnIsDeletedChanged();
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=false)]
+        [DataMemberAttribute()]
+        public global::System.Int32 QuestionId
+        {
+            get
+            {
+                return _QuestionId;
+            }
+            set
+            {
+                OnQuestionIdChanging(value);
+                ReportPropertyChanging("QuestionId");
+                _QuestionId = StructuralObject.SetValidValue(value);
+                ReportPropertyChanged("QuestionId");
+                OnQuestionIdChanged();
+            }
+        }
+        private global::System.Int32 _QuestionId;
+        partial void OnQuestionIdChanging(global::System.Int32 value);
+        partial void OnQuestionIdChanged();
+
+        #endregion
+    
+        #region Navigation Properties
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [XmlIgnoreAttribute()]
+        [SoapIgnoreAttribute()]
+        [DataMemberAttribute()]
+        [EdmRelationshipNavigationPropertyAttribute("RentalHouseFinding", "QuestionsAnswers", "Questions")]
+        public Questions Question
+        {
+            get
+            {
+                return ((IEntityWithRelationships)this).RelationshipManager.GetRelatedReference<Questions>("RentalHouseFinding.QuestionsAnswers", "Questions").Value;
+            }
+            set
+            {
+                ((IEntityWithRelationships)this).RelationshipManager.GetRelatedReference<Questions>("RentalHouseFinding.QuestionsAnswers", "Questions").Value = value;
+            }
+        }
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [BrowsableAttribute(false)]
+        [DataMemberAttribute()]
+        public EntityReference<Questions> QuestionReference
+        {
+            get
+            {
+                return ((IEntityWithRelationships)this).RelationshipManager.GetRelatedReference<Questions>("RentalHouseFinding.QuestionsAnswers", "Questions");
+            }
+            set
+            {
+                if ((value != null))
+                {
+                    ((IEntityWithRelationships)this).RelationshipManager.InitializeRelatedReference<Questions>("RentalHouseFinding.QuestionsAnswers", "Questions", value);
+                }
+            }
+        }
+
+        #endregion
+    }
     
     /// <summary>
     /// No Metadata Documentation available.
@@ -1992,243 +2219,6 @@ namespace RentalHouseFinding.Models
     /// <summary>
     /// No Metadata Documentation available.
     /// </summary>
-    [EdmEntityTypeAttribute(NamespaceName="RentalHouseFinding", Name="Messeges")]
-    [Serializable()]
-    [DataContractAttribute(IsReference=true)]
-    public partial class Messeges : EntityObject
-    {
-        #region Factory Method
-    
-        /// <summary>
-        /// Create a new Messeges object.
-        /// </summary>
-        /// <param name="id">Initial value of the Id property.</param>
-        /// <param name="content">Initial value of the Content property.</param>
-        /// <param name="senderId">Initial value of the SenderId property.</param>
-        /// <param name="receiverId">Initial value of the ReceiverId property.</param>
-        /// <param name="createdDate">Initial value of the CreatedDate property.</param>
-        /// <param name="isReceiverRead">Initial value of the IsReceiverRead property.</param>
-        /// <param name="property">Initial value of the Property property.</param>
-        /// <param name="isDeleted">Initial value of the IsDeleted property.</param>
-        public static Messeges CreateMesseges(global::System.Int32 id, global::System.String content, global::System.Int32 senderId, global::System.Int32 receiverId, global::System.DateTime createdDate, global::System.Boolean isReceiverRead, global::System.String property, global::System.Boolean isDeleted)
-        {
-            Messeges messeges = new Messeges();
-            messeges.Id = id;
-            messeges.Content = content;
-            messeges.SenderId = senderId;
-            messeges.ReceiverId = receiverId;
-            messeges.CreatedDate = createdDate;
-            messeges.IsReceiverRead = isReceiverRead;
-            messeges.Property = property;
-            messeges.IsDeleted = isDeleted;
-            return messeges;
-        }
-
-        #endregion
-        #region Primitive Properties
-    
-        /// <summary>
-        /// No Metadata Documentation available.
-        /// </summary>
-        [EdmScalarPropertyAttribute(EntityKeyProperty=true, IsNullable=false)]
-        [DataMemberAttribute()]
-        public global::System.Int32 Id
-        {
-            get
-            {
-                return _Id;
-            }
-            set
-            {
-                if (_Id != value)
-                {
-                    OnIdChanging(value);
-                    ReportPropertyChanging("Id");
-                    _Id = StructuralObject.SetValidValue(value);
-                    ReportPropertyChanged("Id");
-                    OnIdChanged();
-                }
-            }
-        }
-        private global::System.Int32 _Id;
-        partial void OnIdChanging(global::System.Int32 value);
-        partial void OnIdChanged();
-    
-        /// <summary>
-        /// No Metadata Documentation available.
-        /// </summary>
-        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=false)]
-        [DataMemberAttribute()]
-        public global::System.String Content
-        {
-            get
-            {
-                return _Content;
-            }
-            set
-            {
-                OnContentChanging(value);
-                ReportPropertyChanging("Content");
-                _Content = StructuralObject.SetValidValue(value, false);
-                ReportPropertyChanged("Content");
-                OnContentChanged();
-            }
-        }
-        private global::System.String _Content;
-        partial void OnContentChanging(global::System.String value);
-        partial void OnContentChanged();
-    
-        /// <summary>
-        /// No Metadata Documentation available.
-        /// </summary>
-        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=false)]
-        [DataMemberAttribute()]
-        public global::System.Int32 SenderId
-        {
-            get
-            {
-                return _SenderId;
-            }
-            set
-            {
-                OnSenderIdChanging(value);
-                ReportPropertyChanging("SenderId");
-                _SenderId = StructuralObject.SetValidValue(value);
-                ReportPropertyChanged("SenderId");
-                OnSenderIdChanged();
-            }
-        }
-        private global::System.Int32 _SenderId;
-        partial void OnSenderIdChanging(global::System.Int32 value);
-        partial void OnSenderIdChanged();
-    
-        /// <summary>
-        /// No Metadata Documentation available.
-        /// </summary>
-        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=false)]
-        [DataMemberAttribute()]
-        public global::System.Int32 ReceiverId
-        {
-            get
-            {
-                return _ReceiverId;
-            }
-            set
-            {
-                OnReceiverIdChanging(value);
-                ReportPropertyChanging("ReceiverId");
-                _ReceiverId = StructuralObject.SetValidValue(value);
-                ReportPropertyChanged("ReceiverId");
-                OnReceiverIdChanged();
-            }
-        }
-        private global::System.Int32 _ReceiverId;
-        partial void OnReceiverIdChanging(global::System.Int32 value);
-        partial void OnReceiverIdChanged();
-    
-        /// <summary>
-        /// No Metadata Documentation available.
-        /// </summary>
-        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=false)]
-        [DataMemberAttribute()]
-        public global::System.DateTime CreatedDate
-        {
-            get
-            {
-                return _CreatedDate;
-            }
-            set
-            {
-                OnCreatedDateChanging(value);
-                ReportPropertyChanging("CreatedDate");
-                _CreatedDate = StructuralObject.SetValidValue(value);
-                ReportPropertyChanged("CreatedDate");
-                OnCreatedDateChanged();
-            }
-        }
-        private global::System.DateTime _CreatedDate;
-        partial void OnCreatedDateChanging(global::System.DateTime value);
-        partial void OnCreatedDateChanged();
-    
-        /// <summary>
-        /// No Metadata Documentation available.
-        /// </summary>
-        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=false)]
-        [DataMemberAttribute()]
-        public global::System.Boolean IsReceiverRead
-        {
-            get
-            {
-                return _IsReceiverRead;
-            }
-            set
-            {
-                OnIsReceiverReadChanging(value);
-                ReportPropertyChanging("IsReceiverRead");
-                _IsReceiverRead = StructuralObject.SetValidValue(value);
-                ReportPropertyChanged("IsReceiverRead");
-                OnIsReceiverReadChanged();
-            }
-        }
-        private global::System.Boolean _IsReceiverRead;
-        partial void OnIsReceiverReadChanging(global::System.Boolean value);
-        partial void OnIsReceiverReadChanged();
-    
-        /// <summary>
-        /// No Metadata Documentation available.
-        /// </summary>
-        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=false)]
-        [DataMemberAttribute()]
-        public global::System.String Property
-        {
-            get
-            {
-                return _Property;
-            }
-            set
-            {
-                OnPropertyChanging(value);
-                ReportPropertyChanging("Property");
-                _Property = StructuralObject.SetValidValue(value, false);
-                ReportPropertyChanged("Property");
-                OnPropertyChanged();
-            }
-        }
-        private global::System.String _Property;
-        partial void OnPropertyChanging(global::System.String value);
-        partial void OnPropertyChanged();
-    
-        /// <summary>
-        /// No Metadata Documentation available.
-        /// </summary>
-        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=false)]
-        [DataMemberAttribute()]
-        public global::System.Boolean IsDeleted
-        {
-            get
-            {
-                return _IsDeleted;
-            }
-            set
-            {
-                OnIsDeletedChanging(value);
-                ReportPropertyChanging("IsDeleted");
-                _IsDeleted = StructuralObject.SetValidValue(value);
-                ReportPropertyChanged("IsDeleted");
-                OnIsDeletedChanged();
-            }
-        }
-        private global::System.Boolean _IsDeleted;
-        partial void OnIsDeletedChanging(global::System.Boolean value);
-        partial void OnIsDeletedChanged();
-
-        #endregion
-    
-    }
-    
-    /// <summary>
-    /// No Metadata Documentation available.
-    /// </summary>
     [EdmEntityTypeAttribute(NamespaceName="RentalHouseFinding", Name="PostImages")]
     [Serializable()]
     [DataContractAttribute(IsReference=true)]
@@ -3232,6 +3222,50 @@ namespace RentalHouseFinding.Models
                 }
             }
         }
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [XmlIgnoreAttribute()]
+        [SoapIgnoreAttribute()]
+        [DataMemberAttribute()]
+        [EdmRelationshipNavigationPropertyAttribute("RentalHouseFinding", "PostsMessegesReceiver", "Messeges")]
+        public EntityCollection<Questions> Messeges
+        {
+            get
+            {
+                return ((IEntityWithRelationships)this).RelationshipManager.GetRelatedCollection<Questions>("RentalHouseFinding.PostsMessegesReceiver", "Messeges");
+            }
+            set
+            {
+                if ((value != null))
+                {
+                    ((IEntityWithRelationships)this).RelationshipManager.InitializeRelatedCollection<Questions>("RentalHouseFinding.PostsMessegesReceiver", "Messeges", value);
+                }
+            }
+        }
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [XmlIgnoreAttribute()]
+        [SoapIgnoreAttribute()]
+        [DataMemberAttribute()]
+        [EdmRelationshipNavigationPropertyAttribute("RentalHouseFinding", "PostsMessegesSender", "Messeges")]
+        public EntityCollection<Questions> Messeges_1
+        {
+            get
+            {
+                return ((IEntityWithRelationships)this).RelationshipManager.GetRelatedCollection<Questions>("RentalHouseFinding.PostsMessegesSender", "Messeges");
+            }
+            set
+            {
+                if ((value != null))
+                {
+                    ((IEntityWithRelationships)this).RelationshipManager.InitializeRelatedCollection<Questions>("RentalHouseFinding.PostsMessegesSender", "Messeges", value);
+                }
+            }
+        }
 
         #endregion
     }
@@ -3751,6 +3785,344 @@ namespace RentalHouseFinding.Models
     /// <summary>
     /// No Metadata Documentation available.
     /// </summary>
+    [EdmEntityTypeAttribute(NamespaceName="RentalHouseFinding", Name="Questions")]
+    [Serializable()]
+    [DataContractAttribute(IsReference=true)]
+    public partial class Questions : EntityObject
+    {
+        #region Factory Method
+    
+        /// <summary>
+        /// Create a new Questions object.
+        /// </summary>
+        /// <param name="id">Initial value of the Id property.</param>
+        /// <param name="content">Initial value of the Content property.</param>
+        /// <param name="senderId">Initial value of the SenderId property.</param>
+        /// <param name="receiverId">Initial value of the ReceiverId property.</param>
+        /// <param name="createdDate">Initial value of the CreatedDate property.</param>
+        /// <param name="isReceiverRead">Initial value of the IsReceiverRead property.</param>
+        /// <param name="property">Initial value of the Property property.</param>
+        /// <param name="isDeleted">Initial value of the IsDeleted property.</param>
+        public static Questions CreateQuestions(global::System.Int32 id, global::System.String content, global::System.Int32 senderId, global::System.Int32 receiverId, global::System.DateTime createdDate, global::System.Boolean isReceiverRead, global::System.String property, global::System.Boolean isDeleted)
+        {
+            Questions questions = new Questions();
+            questions.Id = id;
+            questions.Content = content;
+            questions.SenderId = senderId;
+            questions.ReceiverId = receiverId;
+            questions.CreatedDate = createdDate;
+            questions.IsReceiverRead = isReceiverRead;
+            questions.Property = property;
+            questions.IsDeleted = isDeleted;
+            return questions;
+        }
+
+        #endregion
+        #region Primitive Properties
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=true, IsNullable=false)]
+        [DataMemberAttribute()]
+        public global::System.Int32 Id
+        {
+            get
+            {
+                return _Id;
+            }
+            set
+            {
+                if (_Id != value)
+                {
+                    OnIdChanging(value);
+                    ReportPropertyChanging("Id");
+                    _Id = StructuralObject.SetValidValue(value);
+                    ReportPropertyChanged("Id");
+                    OnIdChanged();
+                }
+            }
+        }
+        private global::System.Int32 _Id;
+        partial void OnIdChanging(global::System.Int32 value);
+        partial void OnIdChanged();
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=false)]
+        [DataMemberAttribute()]
+        public global::System.String Content
+        {
+            get
+            {
+                return _Content;
+            }
+            set
+            {
+                OnContentChanging(value);
+                ReportPropertyChanging("Content");
+                _Content = StructuralObject.SetValidValue(value, false);
+                ReportPropertyChanged("Content");
+                OnContentChanged();
+            }
+        }
+        private global::System.String _Content;
+        partial void OnContentChanging(global::System.String value);
+        partial void OnContentChanged();
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=false)]
+        [DataMemberAttribute()]
+        public global::System.Int32 SenderId
+        {
+            get
+            {
+                return _SenderId;
+            }
+            set
+            {
+                OnSenderIdChanging(value);
+                ReportPropertyChanging("SenderId");
+                _SenderId = StructuralObject.SetValidValue(value);
+                ReportPropertyChanged("SenderId");
+                OnSenderIdChanged();
+            }
+        }
+        private global::System.Int32 _SenderId;
+        partial void OnSenderIdChanging(global::System.Int32 value);
+        partial void OnSenderIdChanged();
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=false)]
+        [DataMemberAttribute()]
+        public global::System.Int32 ReceiverId
+        {
+            get
+            {
+                return _ReceiverId;
+            }
+            set
+            {
+                OnReceiverIdChanging(value);
+                ReportPropertyChanging("ReceiverId");
+                _ReceiverId = StructuralObject.SetValidValue(value);
+                ReportPropertyChanged("ReceiverId");
+                OnReceiverIdChanged();
+            }
+        }
+        private global::System.Int32 _ReceiverId;
+        partial void OnReceiverIdChanging(global::System.Int32 value);
+        partial void OnReceiverIdChanged();
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=false)]
+        [DataMemberAttribute()]
+        public global::System.DateTime CreatedDate
+        {
+            get
+            {
+                return _CreatedDate;
+            }
+            set
+            {
+                OnCreatedDateChanging(value);
+                ReportPropertyChanging("CreatedDate");
+                _CreatedDate = StructuralObject.SetValidValue(value);
+                ReportPropertyChanged("CreatedDate");
+                OnCreatedDateChanged();
+            }
+        }
+        private global::System.DateTime _CreatedDate;
+        partial void OnCreatedDateChanging(global::System.DateTime value);
+        partial void OnCreatedDateChanged();
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=false)]
+        [DataMemberAttribute()]
+        public global::System.Boolean IsReceiverRead
+        {
+            get
+            {
+                return _IsReceiverRead;
+            }
+            set
+            {
+                OnIsReceiverReadChanging(value);
+                ReportPropertyChanging("IsReceiverRead");
+                _IsReceiverRead = StructuralObject.SetValidValue(value);
+                ReportPropertyChanged("IsReceiverRead");
+                OnIsReceiverReadChanged();
+            }
+        }
+        private global::System.Boolean _IsReceiverRead;
+        partial void OnIsReceiverReadChanging(global::System.Boolean value);
+        partial void OnIsReceiverReadChanged();
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=false)]
+        [DataMemberAttribute()]
+        public global::System.String Property
+        {
+            get
+            {
+                return _Property;
+            }
+            set
+            {
+                OnPropertyChanging(value);
+                ReportPropertyChanging("Property");
+                _Property = StructuralObject.SetValidValue(value, false);
+                ReportPropertyChanged("Property");
+                OnPropertyChanged();
+            }
+        }
+        private global::System.String _Property;
+        partial void OnPropertyChanging(global::System.String value);
+        partial void OnPropertyChanged();
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=false)]
+        [DataMemberAttribute()]
+        public global::System.Boolean IsDeleted
+        {
+            get
+            {
+                return _IsDeleted;
+            }
+            set
+            {
+                OnIsDeletedChanging(value);
+                ReportPropertyChanging("IsDeleted");
+                _IsDeleted = StructuralObject.SetValidValue(value);
+                ReportPropertyChanged("IsDeleted");
+                OnIsDeletedChanged();
+            }
+        }
+        private global::System.Boolean _IsDeleted;
+        partial void OnIsDeletedChanging(global::System.Boolean value);
+        partial void OnIsDeletedChanged();
+
+        #endregion
+    
+        #region Navigation Properties
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [XmlIgnoreAttribute()]
+        [SoapIgnoreAttribute()]
+        [DataMemberAttribute()]
+        [EdmRelationshipNavigationPropertyAttribute("RentalHouseFinding", "PostsMessegesReceiver", "Posts")]
+        public Posts PostMessReceiver
+        {
+            get
+            {
+                return ((IEntityWithRelationships)this).RelationshipManager.GetRelatedReference<Posts>("RentalHouseFinding.PostsMessegesReceiver", "Posts").Value;
+            }
+            set
+            {
+                ((IEntityWithRelationships)this).RelationshipManager.GetRelatedReference<Posts>("RentalHouseFinding.PostsMessegesReceiver", "Posts").Value = value;
+            }
+        }
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [BrowsableAttribute(false)]
+        [DataMemberAttribute()]
+        public EntityReference<Posts> PostMessReceiverReference
+        {
+            get
+            {
+                return ((IEntityWithRelationships)this).RelationshipManager.GetRelatedReference<Posts>("RentalHouseFinding.PostsMessegesReceiver", "Posts");
+            }
+            set
+            {
+                if ((value != null))
+                {
+                    ((IEntityWithRelationships)this).RelationshipManager.InitializeRelatedReference<Posts>("RentalHouseFinding.PostsMessegesReceiver", "Posts", value);
+                }
+            }
+        }
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [XmlIgnoreAttribute()]
+        [SoapIgnoreAttribute()]
+        [DataMemberAttribute()]
+        [EdmRelationshipNavigationPropertyAttribute("RentalHouseFinding", "PostsMessegesSender", "Posts")]
+        public Posts PostMessSender
+        {
+            get
+            {
+                return ((IEntityWithRelationships)this).RelationshipManager.GetRelatedReference<Posts>("RentalHouseFinding.PostsMessegesSender", "Posts").Value;
+            }
+            set
+            {
+                ((IEntityWithRelationships)this).RelationshipManager.GetRelatedReference<Posts>("RentalHouseFinding.PostsMessegesSender", "Posts").Value = value;
+            }
+        }
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [BrowsableAttribute(false)]
+        [DataMemberAttribute()]
+        public EntityReference<Posts> PostMessSenderReference
+        {
+            get
+            {
+                return ((IEntityWithRelationships)this).RelationshipManager.GetRelatedReference<Posts>("RentalHouseFinding.PostsMessegesSender", "Posts");
+            }
+            set
+            {
+                if ((value != null))
+                {
+                    ((IEntityWithRelationships)this).RelationshipManager.InitializeRelatedReference<Posts>("RentalHouseFinding.PostsMessegesSender", "Posts", value);
+                }
+            }
+        }
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [XmlIgnoreAttribute()]
+        [SoapIgnoreAttribute()]
+        [DataMemberAttribute()]
+        [EdmRelationshipNavigationPropertyAttribute("RentalHouseFinding", "QuestionsAnswers", "Answers")]
+        public EntityCollection<Answers> Answers
+        {
+            get
+            {
+                return ((IEntityWithRelationships)this).RelationshipManager.GetRelatedCollection<Answers>("RentalHouseFinding.QuestionsAnswers", "Answers");
+            }
+            set
+            {
+                if ((value != null))
+                {
+                    ((IEntityWithRelationships)this).RelationshipManager.InitializeRelatedCollection<Answers>("RentalHouseFinding.QuestionsAnswers", "Answers", value);
+                }
+            }
+        }
+
+        #endregion
+    }
+    
+    /// <summary>
+    /// No Metadata Documentation available.
+    /// </summary>
     [EdmEntityTypeAttribute(NamespaceName="RentalHouseFinding", Name="ReportedPosts")]
     [Serializable()]
     [DataContractAttribute(IsReference=true)]
@@ -4183,19 +4555,15 @@ namespace RentalHouseFinding.Models
         /// </summary>
         /// <param name="id">Initial value of the Id property.</param>
         /// <param name="username">Initial value of the Username property.</param>
-        /// <param name="password">Initial value of the Password property.</param>
-        /// <param name="email">Initial value of the Email property.</param>
         /// <param name="createdDate">Initial value of the CreatedDate property.</param>
         /// <param name="lastUpdate">Initial value of the LastUpdate property.</param>
         /// <param name="isDeleted">Initial value of the IsDeleted property.</param>
         /// <param name="roleId">Initial value of the RoleId property.</param>
-        public static Users CreateUsers(global::System.Int32 id, global::System.String username, global::System.String password, global::System.String email, global::System.DateTime createdDate, global::System.DateTime lastUpdate, global::System.Boolean isDeleted, global::System.Int32 roleId)
+        public static Users CreateUsers(global::System.Int32 id, global::System.String username, global::System.DateTime createdDate, global::System.DateTime lastUpdate, global::System.Boolean isDeleted, global::System.Int32 roleId)
         {
             Users users = new Users();
             users.Id = id;
             users.Username = username;
-            users.Password = password;
-            users.Email = email;
             users.CreatedDate = createdDate;
             users.LastUpdate = lastUpdate;
             users.IsDeleted = isDeleted;
@@ -4260,7 +4628,7 @@ namespace RentalHouseFinding.Models
         /// <summary>
         /// No Metadata Documentation available.
         /// </summary>
-        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=false)]
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=true)]
         [DataMemberAttribute()]
         public global::System.String Password
         {
@@ -4272,7 +4640,7 @@ namespace RentalHouseFinding.Models
             {
                 OnPasswordChanging(value);
                 ReportPropertyChanging("Password");
-                _Password = StructuralObject.SetValidValue(value, false);
+                _Password = StructuralObject.SetValidValue(value, true);
                 ReportPropertyChanged("Password");
                 OnPasswordChanged();
             }
@@ -4284,7 +4652,7 @@ namespace RentalHouseFinding.Models
         /// <summary>
         /// No Metadata Documentation available.
         /// </summary>
-        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=false)]
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=true)]
         [DataMemberAttribute()]
         public global::System.String Email
         {
@@ -4296,7 +4664,7 @@ namespace RentalHouseFinding.Models
             {
                 OnEmailChanging(value);
                 ReportPropertyChanging("Email");
-                _Email = StructuralObject.SetValidValue(value, false);
+                _Email = StructuralObject.SetValidValue(value, true);
                 ReportPropertyChanged("Email");
                 OnEmailChanged();
             }

@@ -105,7 +105,6 @@
         });
 
         $("#Street").change(function () {
-
             //var NumberHouse = $('#NumberHouse').val();
             var Street = $(this).val();
             var District = $("#DistrictId option:selected").text();
@@ -129,9 +128,7 @@
                         }
                         else {
                             marker.setPosition(results[0].geometry.location);
-
                         }
-
                     }
                     else {
                         alert("Geocoding failed: " + status);
