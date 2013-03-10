@@ -30,5 +30,51 @@ namespace RentalHouseFinding.Models
 
         [HiddenInput(DisplayValue = false)]
         public string PostIdSuggest { get; set; }
+
+
+        //Advanced search
+        [Display(Name = "Có Internet?")]
+        public Boolean HasInternet { get; set; }
+        public int HasInternetScore { get; set; }
+
+        [Display(Name = "Có truyền hình cáp?")]
+        public Boolean HasTVCable { get; set; }
+        public int HasTVCableScore { get; set; }
+
+        [Display(Name = "Có giường đi kèm?")]
+        public Boolean HasBed { get; set; }
+        public int HasBedScore { get; set; }
+
+        [Display(Name = "Có bình nóng lạnh?")]
+        public Boolean HasWaterHeater { get; set; }
+        public int HasWaterHeaterScore { get; set; }
+
+        [Display(Name = "Cho phép nấu ăn trong nhà?")]
+        public Boolean IsAllowCooking { get; set; }
+        public int IsAllowCookingScore { get; set; }
+
+        [Display(Name = "Có chỗ để xe máy, xe đạp?")]
+        public Boolean HasMotorParking { get; set; }
+        public int HasMotorParkingScore { get; set; }
+
+        [Display(Name = "Có phòng vệ sinh khép kín?")]
+        public Boolean HasToilet { get; set; }
+        public int HasToiletScore { get; set; }
+
+        [Display(Name = "Có điều hòa?")]
+        public Boolean HasAirConditioner { get; set; }
+        public int HasAirConditionerScore { get; set; }
+
+        [Display(Name = "Có gara để ô tô?")]
+        public Boolean HasGarage { get; set; }
+        public int HasGarageScore { get; set; }
+
+        [Display(Name = "Ở cùng với chủ?")]
+        public Boolean IsStayWithOwner { get; set; }
+        public int IsStayWithOwnerScore { get; set; }
+
+        [Display(Name = "Có bảo vệ?")]
+        public Boolean HasSecurity { get; set; }
+        public int HasSecurityScore { get; set; }
     }
 }

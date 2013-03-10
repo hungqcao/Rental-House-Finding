@@ -71,7 +71,7 @@ namespace RentalHouseFinding.Controllers
         [HttpPost]
         public ActionResult Edit(UserViewModel userViewModel)
         {
-            if (Membership.ValidateUser(userViewModel.UserName, GetMD5Hash(userViewModel.Password)))
+            if (Membership.ValidateUser(userViewModel.UserName, CommonController.GetMD5Hash(userViewModel.Password)))
             {
                 //Get user ID
                 int userId = CommonModel.GetUserIdByUsername(User.Identity.Name);
@@ -91,18 +91,6 @@ namespace RentalHouseFinding.Controllers
                 TempData["ProfileChanged"] = true;
             }
             return RedirectToAction("Index", "User");
-        }
-
-        public string GetMD5Hash(string value)
-        {
-            MD5 md5Hasher = MD5.Create();
-            byte[] data = md5Hasher.ComputeHash(Encoding.Default.GetBytes(value));
-            var sBuilder = new StringBuilder();
-            for (int i = 0; i < data.Length; i++)
-            {
-                sBuilder.Append(data[i].ToString("x2"));
-            }
-            return sBuilder.ToString();
         }
 
     }
