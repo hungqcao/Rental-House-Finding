@@ -14,6 +14,8 @@ namespace RentalHouseFinding.Models
 {
     public class PostViewModel
     {
+        public int Id;
+
         [Required(ErrorMessage = "Vui lòng nhập tiêu đề")]
         [Display(Name = "Tiêu đề")]
         [MaxLength(100, ErrorMessage = "Không được vượt quá 100 ký tự, xin vui lòng nhập lại.")]
@@ -129,7 +131,7 @@ namespace RentalHouseFinding.Models
         public string CreatedBy { get; set; }
         public string Category { get; set; }
 
-        public IEnumerable<HttpPostedFileBase> Images { get; set; }
+        public IEnumerable<PostImages> Images { get; set; }
     } 
    
 }

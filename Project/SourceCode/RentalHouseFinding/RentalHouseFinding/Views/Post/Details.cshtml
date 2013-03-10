@@ -1,6 +1,7 @@
 ﻿@model RentalHouseFinding.Models.PostViewModel
 @{
     ViewBag.Title = "Index";
+                                                   
 }
 
 <h2>View a post</h2>
@@ -31,7 +32,8 @@
     });
 </script>
 
-@using (Html.BeginForm()) {
+@using (Html.BeginForm())
+{
     @Html.ValidationSummary(true, "Có lỗi xảy ra, vui lòng thông báo cho chúng tôi!", new { style = "color:red" })
     <div id= "View-post-page">
         <div class = "content" style="float:left;" >
@@ -151,4 +153,5 @@
         <div class = "clear" style="clear:both;">
         </div>
     </div>
+    @Html.Action("ViewImages/" + Model.Id)
 }

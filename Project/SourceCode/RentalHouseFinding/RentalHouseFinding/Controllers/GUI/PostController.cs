@@ -147,5 +147,11 @@ namespace RentalHouseFinding.Controllers
         {
             return View();
         }
+
+        public ActionResult DisplayImages(int postId)
+        {
+            var images = (from i in _db.PostImages where (i.PostId == postId && !i.IsDeleted) select i);
+            return PartialView(images);
+        }
     }
 }
