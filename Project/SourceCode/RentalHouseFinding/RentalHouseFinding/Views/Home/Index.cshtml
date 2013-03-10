@@ -27,7 +27,7 @@
             $('#postContent').html(result);
         })
         .error(function (xhr, status) {
-            alert(xhr.responseText);
+            xhr.abort();
         });
 
 

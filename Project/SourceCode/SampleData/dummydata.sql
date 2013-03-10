@@ -12,6 +12,15 @@ INSERT INTO [RentalHouseFinding].[dbo].[Roles]
            ('Admin','Description',0),('Moderator','Description',0),('User','Description',0)
 GO
 
+DELETE FROM [RentalHouseFinding].[dbo].[AdvanceSearchScores]
+
+GO
+
+INSERT INTO [RentalHouseFinding].[dbo].[AdvanceSearchScores] VALUES 
+			('Low',5),('Medium',10),('High',15)
+
+GO
+
 DELETE FROM [RentalHouseFinding].[dbo].[PostStatuses]
 
 GO
@@ -112,5 +121,87 @@ ELSE IF(@Keyword IS NOT NULL AND @DistrictIdPass = 0)
 		ORDER BY KEY_TBL.RANK DESC;
 	END
 GO
+
 EXEC FullTextSearchPost @CategoryIdPass = 1, @ProvinceIdPass = 1, @DistrictIdPass = 0, @KeyWord = 'post'
 
+USE RentalHouseFinding ;
+GO
+IF OBJECT_ID ('dbo.V_PostFacilityInfo', 'V') IS NOT NULL
+    DROP VIEW dbo.V_PostFacilityInfo ;
+GO
+CREATE VIEW V_PostFacilityInfo WITH SCHEMABINDING AS
+SELECT P.Id, P.Area, P.Price, F.HasAirConditioner, F.HasBed, F.HasGarage, F.HasInternet, F.HasMotorParkingLot, F.HasSecurity, F.HasTVCable, F.HasToilet, F.HasWaterHeater, F.IsAllowCooking, F.IsStayWithOwner, P.CategoryId, P.DistrictId, D.ProvinceId
+FROM dbo.Posts P 
+	INNER JOIN dbo.Facilities F
+		ON(P.Id = F.PostIdFacilities)
+	INNER JOIN dbo.Contacts C
+		ON(P.Id = C.PostIdContacts)
+	INNER JOIN dbo.Districts D
+		ON(P.DistrictId = D.Id) 
+WHERE P.IsDeleted = 'false' AND D.IsDeleted = 'false'
+
+GO
+
+
+IF OBJECT_ID ('dbo.AdvancedSearchFacility', 'P') IS NOT NULL
+    DROP PROCEDURE dbo.AdvancedSearchFacility ;
+GO
+CREATE PROCEDURE AdvancedSearchFacility 
+	@CategoryIdPass int = 0, 
+	@ProvinceIdPass int = 0, 
+	@DistrictIdPass int = 0, 
+	@AreaMax float = 0,
+	@AreaMin float = 0,
+	@PriceMax float = 0,
+	@PriceMin float = 0,
+	@HasAirConditionerScore int = 0,
+	@HasBedScore int = 0,
+	@HasGarageScore int = 0,
+	@HasInternetScore int = 0,
+	@HasMotorParkingLotScore int = 0,
+	@HasSecurityScore int = 0,
+	@HasTVCableScore int = 0,
+	@HasWaterHeaterScore int = 0,
+	@IsAllowCookingScore int = 0,
+	@IsStayWithOwnerScore int = 0,
+	@HasToilet int = 0
+AS
+
+SELECT F.Id, ((F.HasAirConditioner * @HasAirConditionerScore) + 
+				(F.HasBed * @HasBedScore) +
+				(F.HasGarage * @HasGarageScore) +
+				(F.HasInternet * @HasInternetScore) +
+				(F.HasMotorParkingLot * @HasMotorParkingLotScore) + 
+				(F.HasSecurity * @HasSecurityScore) +
+				(F.HasTVCable * @HasTVCableScore) +
+				(F.HasWaterHeater * @HasWaterHeaterScore) +
+				(F.IsAllowCooking * @IsAllowCookingScore) +
+				(F.IsStayWithOwner * @IsStayWithOwnerScore) +
+				(F.HasToilet * @HasToilet)
+) AS Score FROM dbo.V_PostFacilityInfo F WHERE
+	F.CategoryId = @CategoryIdPass AND
+	F.DistrictId = @DistrictIdPass AND
+	F.ProvinceId = @ProvinceIdPass AND
+	F.Area <= @AreaMax AND F.Area >= @AreaMin AND
+	F.Price <= @PriceMax AND F.Price >= @PriceMin
+	ORDER BY Score
+GO
+
+EXEC AdvancedSearchFacility 
+	@CategoryIdPass = 1, 
+	@ProvinceIdPass = 1, 
+	@DistrictIdPass = 1, 
+	@AreaMax = 20000, 
+	@AreaMin = 0, 
+	@PriceMax = 100000, 
+	@PriceMin = 0,
+	@HasAirConditionerScore = 5,
+	@HasBedScore = 5,
+	@HasGarageScore = 5,
+	@HasInternetScore = 5,
+	@HasMotorParkingLotScore = 5,
+	@HasSecurityScore = 5,
+	@HasTVCableScore = 5,
+	@HasWaterHeaterScore = 5,
+	@IsAllowCookingScore = 5,
+	@IsStayWithOwnerScore = 5

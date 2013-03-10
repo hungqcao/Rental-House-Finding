@@ -32,6 +32,7 @@ namespace RentalHouseFinding.RHF.DAL
             try
             {
                 var listSuggestion = _db.FullTextSearchPost(categoryId, provinceId, DistrictId, keyWords).Skip(skip).Take(take);
+               
                 return listSuggestion.ToList();
             }
             catch(Exception ex)

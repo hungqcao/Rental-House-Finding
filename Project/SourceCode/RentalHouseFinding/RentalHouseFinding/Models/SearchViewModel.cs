@@ -13,6 +13,9 @@ namespace RentalHouseFinding.Models
 {
     public class SearchViewModel
     {
+        public bool IsNormalSearch { get; set; }
+        public bool IsAdvancedSearch { get; set; }
+
         [Required(ErrorMessage = "Vui lòng chọn thể loại")]
         [Display(Name = "Thể loại")]
         public int CategoryId { get; set; }
@@ -33,6 +36,17 @@ namespace RentalHouseFinding.Models
 
 
         //Advanced search
+        [Display(Name = "Diện tích lớn nhất")]
+        public float AreaMax { get; set; }
+        [Display(Name = "Diện tích nhỏ nhất")]
+        public float AreaMin { get; set; }
+
+        [Display(Name = "Giá cao nhất")]
+        public float PriceMax { get; set; }
+        [Display(Name = "Giá thấp nhất")]
+        public float PriceMin { get; set; }
+
+
         [Display(Name = "Có Internet?")]
         public Boolean HasInternet { get; set; }
         public int HasInternetScore { get; set; }

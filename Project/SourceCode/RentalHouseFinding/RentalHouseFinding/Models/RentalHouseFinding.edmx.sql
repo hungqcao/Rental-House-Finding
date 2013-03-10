@@ -2,7 +2,7 @@
 -- --------------------------------------------------
 -- Entity Designer DDL Script for SQL Server 2005, 2008, and Azure
 -- --------------------------------------------------
--- Date Created: 03/10/2013 14:52:28
+-- Date Created: 03/10/2013 22:48:58
 -- Generated from EDMX file: C:\RentalHouseFinding\Project\SourceCode\RentalHouseFinding\RentalHouseFinding\Models\RentalHouseFinding.edmx
 -- --------------------------------------------------
 
@@ -133,8 +133,8 @@ GO
 CREATE TABLE [dbo].[Users] (
     [Id] int IDENTITY(1,1) NOT NULL,
     [Username] nvarchar(50)  NOT NULL,
-    [Password] nvarchar(max)  NOT NULL,
-    [Email] nvarchar(50)  NOT NULL,
+    [Password] nvarchar(max)  NULL,
+    [Email] nvarchar(50)  NULL,
     [PhoneNumber] nvarchar(15)  NULL,
     [Address] nvarchar(max)  NULL,
     [Name] nvarchar(max)  NULL,
@@ -327,6 +327,14 @@ CREATE TABLE [dbo].[Answers] (
 );
 GO
 
+-- Creating table 'AdvanceSearchScores'
+CREATE TABLE [dbo].[AdvanceSearchScores] (
+    [Id] int IDENTITY(1,1) NOT NULL,
+    [Name] nvarchar(max)  NOT NULL,
+    [Score] int  NOT NULL
+);
+GO
+
 -- --------------------------------------------------
 -- Creating all PRIMARY KEY constraints
 -- --------------------------------------------------
@@ -430,6 +438,12 @@ GO
 -- Creating primary key on [Id] in table 'Answers'
 ALTER TABLE [dbo].[Answers]
 ADD CONSTRAINT [PK_Answers]
+    PRIMARY KEY CLUSTERED ([Id] ASC);
+GO
+
+-- Creating primary key on [Id] in table 'AdvanceSearchScores'
+ALTER TABLE [dbo].[AdvanceSearchScores]
+ADD CONSTRAINT [PK_AdvanceSearchScores]
     PRIMARY KEY CLUSTERED ([Id] ASC);
 GO
 
