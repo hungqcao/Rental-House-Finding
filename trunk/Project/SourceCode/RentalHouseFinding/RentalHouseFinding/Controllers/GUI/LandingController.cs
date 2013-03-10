@@ -27,7 +27,9 @@ namespace RentalHouseFinding.Controllers
 
             if(model != null)
             {
-                TempData["SearchViewModel"] = model;
+                model.IsAdvancedSearch = false;
+                model.IsNormalSearch = true;
+                Session["SearchViewModel"] = model;
             }
             return RedirectToAction("Index", "Home");
         }

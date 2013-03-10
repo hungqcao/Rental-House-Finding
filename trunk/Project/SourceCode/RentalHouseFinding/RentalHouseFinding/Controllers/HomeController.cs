@@ -12,6 +12,7 @@ namespace RentalHouseFinding.Controllers
     public class HomeController : Controller
     {
         private RentalHouseFindingEntities _db = new RentalHouseFindingEntities();
+
         //
         // GET: /Home/
 
@@ -22,111 +23,30 @@ namespace RentalHouseFinding.Controllers
 
         public ActionResult GetSectionSideListPost(int skipNum, int takeNum)
         {
-            if (TempData["SearchViewModel"] != null)
+            if (Session["SearchViewModel"] != null)
             {
-                SearchViewModel model = (SearchViewModel)TempData["SearchViewModel"];
+                SearchViewModel _modelRequest = (SearchViewModel)Session["SearchViewModel"];
                 
-                using (FullTextSearchHelper fullTextHelp = new FullTextSearchHelper())
+
+                if (_modelRequest.IsNormalSearch)
                 {
-                    IEnumerable<int> list = new List<int>();
-                    var suggList = fullTextHelp.GetFullTextSuggestion(model.CategoryId, model.ProvinceId, model.DistrictId, model.KeyWord, skipNum, takeNum);
-                    if (suggList != null)
+                    using (FullTextSearchHelper fullTextHelp = new FullTextSearchHelper())
                     {
-                        list = suggList.Select(p => p.Id).ToList();
+                        IEnumerable<int> list = new List<int>();
+                        var suggList = fullTextHelp.GetFullTextSuggestion(_modelRequest.CategoryId, _modelRequest.ProvinceId, _modelRequest.DistrictId, _modelRequest.KeyWord, skipNum, takeNum);
+                        if (suggList != null)
+                        {
+                            list = suggList.Select(p => p.Id).ToList();
+                        }
+                        List<Posts> query = (from p in _db.Posts
+                                             where list.Contains(p.Id)
+                                             select p).ToList();
+                        var lstPostViewModel = query.Select(p => CommonModel.ConvertPostToPostViewModel(p));
+                        return View(lstPostViewModel);
                     }
-                    List<Posts> query = (from p in _db.Posts
-                           where list.Contains(p.Id)
-                           select p).ToList();
-                    var lstPostViewModel = query.Select(p => CommonModel.ConvertPostToPostViewModel(p));
-                    return View(lstPostViewModel);
                 }
             }
-            return View("Index");
-        }
-        //
-        // GET: /Home/Details/5
-
-        public ActionResult Details(int id)
-        {
-            return View();
-        }
-
-        //
-        // GET: /Home/Create
-
-        public ActionResult Create()
-        {
-            return View();
-        } 
-
-        //
-        // POST: /Home/Create
-
-        [HttpPost]
-        public ActionResult Create(FormCollection collection)
-        {
-            try
-            {
-                // TODO: Add insert logic here
-
-                return RedirectToAction("Index");
-            }
-            catch
-            {
-                return View();
-            }
-        }
-        
-        //
-        // GET: /Home/Edit/5
- 
-        public ActionResult Edit(int id)
-        {
-            return View();
-        }
-
-        //
-        // POST: /Home/Edit/5
-
-        [HttpPost]
-        public ActionResult Edit(int id, FormCollection collection)
-        {
-            try
-            {
-                // TODO: Add update logic here
- 
-                return RedirectToAction("Index");
-            }
-            catch
-            {
-                return View();
-            }
-        }
-
-        //
-        // GET: /Home/Delete/5
- 
-        public ActionResult Delete(int id)
-        {
-            return View();
-        }
-
-        //
-        // POST: /Home/Delete/5
-
-        [HttpPost]
-        public ActionResult Delete(int id, FormCollection collection)
-        {
-            try
-            {
-                // TODO: Add delete logic here
- 
-                return RedirectToAction("Index");
-            }
-            catch
-            {
-                return View();
-            }
+            return null;
         }
     }
 }

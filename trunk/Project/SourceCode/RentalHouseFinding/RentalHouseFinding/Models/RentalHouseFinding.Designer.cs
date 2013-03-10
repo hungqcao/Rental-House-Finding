@@ -357,6 +357,22 @@ namespace RentalHouseFinding.Models
             }
         }
         private ObjectSet<Answers> _Answers;
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        public ObjectSet<AdvanceSearchScore> AdvanceSearchScores
+        {
+            get
+            {
+                if ((_AdvanceSearchScores == null))
+                {
+                    _AdvanceSearchScores = base.CreateObjectSet<AdvanceSearchScore>("AdvanceSearchScores");
+                }
+                return _AdvanceSearchScores;
+            }
+        }
+        private ObjectSet<AdvanceSearchScore> _AdvanceSearchScores;
 
         #endregion
         #region AddTo Methods
@@ -496,6 +512,14 @@ namespace RentalHouseFinding.Models
         {
             base.AddObject("Answers", answers);
         }
+    
+        /// <summary>
+        /// Deprecated Method for adding a new object to the AdvanceSearchScores EntitySet. Consider using the .Add method of the associated ObjectSet&lt;T&gt; property instead.
+        /// </summary>
+        public void AddToAdvanceSearchScores(AdvanceSearchScore advanceSearchScore)
+        {
+            base.AddObject("AdvanceSearchScores", advanceSearchScore);
+        }
 
         #endregion
         #region Function Imports
@@ -551,6 +575,212 @@ namespace RentalHouseFinding.Models
     
             return base.ExecuteFunction<FullTextSearchPost_ResultSuggestion>("FullTextSearchPost", categoryIdPassParameter, provinceIdPassParameter, districtIdPassParameter, keywordParameter);
         }
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        /// <param name="categoryIdPass">No Metadata Documentation available.</param>
+        /// <param name="provinceIdPass">No Metadata Documentation available.</param>
+        /// <param name="districtIdPass">No Metadata Documentation available.</param>
+        /// <param name="areaMax">No Metadata Documentation available.</param>
+        /// <param name="areaMin">No Metadata Documentation available.</param>
+        /// <param name="priceMax">No Metadata Documentation available.</param>
+        /// <param name="priceMin">No Metadata Documentation available.</param>
+        /// <param name="hasAirConditionerScore">No Metadata Documentation available.</param>
+        /// <param name="hasBedScore">No Metadata Documentation available.</param>
+        /// <param name="hasGarageScore">No Metadata Documentation available.</param>
+        /// <param name="hasInternetScore">No Metadata Documentation available.</param>
+        /// <param name="hasMotorParkingLotScore">No Metadata Documentation available.</param>
+        /// <param name="hasSecurityScore">No Metadata Documentation available.</param>
+        /// <param name="hasTVCableScore">No Metadata Documentation available.</param>
+        /// <param name="hasWaterHeaterScore">No Metadata Documentation available.</param>
+        /// <param name="isAllowCookingScore">No Metadata Documentation available.</param>
+        /// <param name="isStayWithOwnerScore">No Metadata Documentation available.</param>
+        /// <param name="hasToilet">No Metadata Documentation available.</param>
+        public int AdvancedSearchFacility(Nullable<global::System.Int32> categoryIdPass, Nullable<global::System.Int32> provinceIdPass, Nullable<global::System.Int32> districtIdPass, Nullable<global::System.Double> areaMax, Nullable<global::System.Double> areaMin, Nullable<global::System.Double> priceMax, Nullable<global::System.Double> priceMin, Nullable<global::System.Int32> hasAirConditionerScore, Nullable<global::System.Int32> hasBedScore, Nullable<global::System.Int32> hasGarageScore, Nullable<global::System.Int32> hasInternetScore, Nullable<global::System.Int32> hasMotorParkingLotScore, Nullable<global::System.Int32> hasSecurityScore, Nullable<global::System.Int32> hasTVCableScore, Nullable<global::System.Int32> hasWaterHeaterScore, Nullable<global::System.Int32> isAllowCookingScore, Nullable<global::System.Int32> isStayWithOwnerScore, Nullable<global::System.Int32> hasToilet)
+        {
+            ObjectParameter categoryIdPassParameter;
+            if (categoryIdPass.HasValue)
+            {
+                categoryIdPassParameter = new ObjectParameter("CategoryIdPass", categoryIdPass);
+            }
+            else
+            {
+                categoryIdPassParameter = new ObjectParameter("CategoryIdPass", typeof(global::System.Int32));
+            }
+    
+            ObjectParameter provinceIdPassParameter;
+            if (provinceIdPass.HasValue)
+            {
+                provinceIdPassParameter = new ObjectParameter("ProvinceIdPass", provinceIdPass);
+            }
+            else
+            {
+                provinceIdPassParameter = new ObjectParameter("ProvinceIdPass", typeof(global::System.Int32));
+            }
+    
+            ObjectParameter districtIdPassParameter;
+            if (districtIdPass.HasValue)
+            {
+                districtIdPassParameter = new ObjectParameter("DistrictIdPass", districtIdPass);
+            }
+            else
+            {
+                districtIdPassParameter = new ObjectParameter("DistrictIdPass", typeof(global::System.Int32));
+            }
+    
+            ObjectParameter areaMaxParameter;
+            if (areaMax.HasValue)
+            {
+                areaMaxParameter = new ObjectParameter("AreaMax", areaMax);
+            }
+            else
+            {
+                areaMaxParameter = new ObjectParameter("AreaMax", typeof(global::System.Double));
+            }
+    
+            ObjectParameter areaMinParameter;
+            if (areaMin.HasValue)
+            {
+                areaMinParameter = new ObjectParameter("AreaMin", areaMin);
+            }
+            else
+            {
+                areaMinParameter = new ObjectParameter("AreaMin", typeof(global::System.Double));
+            }
+    
+            ObjectParameter priceMaxParameter;
+            if (priceMax.HasValue)
+            {
+                priceMaxParameter = new ObjectParameter("PriceMax", priceMax);
+            }
+            else
+            {
+                priceMaxParameter = new ObjectParameter("PriceMax", typeof(global::System.Double));
+            }
+    
+            ObjectParameter priceMinParameter;
+            if (priceMin.HasValue)
+            {
+                priceMinParameter = new ObjectParameter("PriceMin", priceMin);
+            }
+            else
+            {
+                priceMinParameter = new ObjectParameter("PriceMin", typeof(global::System.Double));
+            }
+    
+            ObjectParameter hasAirConditionerScoreParameter;
+            if (hasAirConditionerScore.HasValue)
+            {
+                hasAirConditionerScoreParameter = new ObjectParameter("HasAirConditionerScore", hasAirConditionerScore);
+            }
+            else
+            {
+                hasAirConditionerScoreParameter = new ObjectParameter("HasAirConditionerScore", typeof(global::System.Int32));
+            }
+    
+            ObjectParameter hasBedScoreParameter;
+            if (hasBedScore.HasValue)
+            {
+                hasBedScoreParameter = new ObjectParameter("HasBedScore", hasBedScore);
+            }
+            else
+            {
+                hasBedScoreParameter = new ObjectParameter("HasBedScore", typeof(global::System.Int32));
+            }
+    
+            ObjectParameter hasGarageScoreParameter;
+            if (hasGarageScore.HasValue)
+            {
+                hasGarageScoreParameter = new ObjectParameter("HasGarageScore", hasGarageScore);
+            }
+            else
+            {
+                hasGarageScoreParameter = new ObjectParameter("HasGarageScore", typeof(global::System.Int32));
+            }
+    
+            ObjectParameter hasInternetScoreParameter;
+            if (hasInternetScore.HasValue)
+            {
+                hasInternetScoreParameter = new ObjectParameter("HasInternetScore", hasInternetScore);
+            }
+            else
+            {
+                hasInternetScoreParameter = new ObjectParameter("HasInternetScore", typeof(global::System.Int32));
+            }
+    
+            ObjectParameter hasMotorParkingLotScoreParameter;
+            if (hasMotorParkingLotScore.HasValue)
+            {
+                hasMotorParkingLotScoreParameter = new ObjectParameter("HasMotorParkingLotScore", hasMotorParkingLotScore);
+            }
+            else
+            {
+                hasMotorParkingLotScoreParameter = new ObjectParameter("HasMotorParkingLotScore", typeof(global::System.Int32));
+            }
+    
+            ObjectParameter hasSecurityScoreParameter;
+            if (hasSecurityScore.HasValue)
+            {
+                hasSecurityScoreParameter = new ObjectParameter("HasSecurityScore", hasSecurityScore);
+            }
+            else
+            {
+                hasSecurityScoreParameter = new ObjectParameter("HasSecurityScore", typeof(global::System.Int32));
+            }
+    
+            ObjectParameter hasTVCableScoreParameter;
+            if (hasTVCableScore.HasValue)
+            {
+                hasTVCableScoreParameter = new ObjectParameter("HasTVCableScore", hasTVCableScore);
+            }
+            else
+            {
+                hasTVCableScoreParameter = new ObjectParameter("HasTVCableScore", typeof(global::System.Int32));
+            }
+    
+            ObjectParameter hasWaterHeaterScoreParameter;
+            if (hasWaterHeaterScore.HasValue)
+            {
+                hasWaterHeaterScoreParameter = new ObjectParameter("HasWaterHeaterScore", hasWaterHeaterScore);
+            }
+            else
+            {
+                hasWaterHeaterScoreParameter = new ObjectParameter("HasWaterHeaterScore", typeof(global::System.Int32));
+            }
+    
+            ObjectParameter isAllowCookingScoreParameter;
+            if (isAllowCookingScore.HasValue)
+            {
+                isAllowCookingScoreParameter = new ObjectParameter("IsAllowCookingScore", isAllowCookingScore);
+            }
+            else
+            {
+                isAllowCookingScoreParameter = new ObjectParameter("IsAllowCookingScore", typeof(global::System.Int32));
+            }
+    
+            ObjectParameter isStayWithOwnerScoreParameter;
+            if (isStayWithOwnerScore.HasValue)
+            {
+                isStayWithOwnerScoreParameter = new ObjectParameter("IsStayWithOwnerScore", isStayWithOwnerScore);
+            }
+            else
+            {
+                isStayWithOwnerScoreParameter = new ObjectParameter("IsStayWithOwnerScore", typeof(global::System.Int32));
+            }
+    
+            ObjectParameter hasToiletParameter;
+            if (hasToilet.HasValue)
+            {
+                hasToiletParameter = new ObjectParameter("HasToilet", hasToilet);
+            }
+            else
+            {
+                hasToiletParameter = new ObjectParameter("HasToilet", typeof(global::System.Int32));
+            }
+    
+            return base.ExecuteFunction("AdvancedSearchFacility", categoryIdPassParameter, provinceIdPassParameter, districtIdPassParameter, areaMaxParameter, areaMinParameter, priceMaxParameter, priceMinParameter, hasAirConditionerScoreParameter, hasBedScoreParameter, hasGarageScoreParameter, hasInternetScoreParameter, hasMotorParkingLotScoreParameter, hasSecurityScoreParameter, hasTVCableScoreParameter, hasWaterHeaterScoreParameter, isAllowCookingScoreParameter, isStayWithOwnerScoreParameter, hasToiletParameter);
+        }
 
         #endregion
     }
@@ -559,6 +789,113 @@ namespace RentalHouseFinding.Models
     #endregion
     
     #region Entities
+    
+    /// <summary>
+    /// No Metadata Documentation available.
+    /// </summary>
+    [EdmEntityTypeAttribute(NamespaceName="RentalHouseFinding", Name="AdvanceSearchScore")]
+    [Serializable()]
+    [DataContractAttribute(IsReference=true)]
+    public partial class AdvanceSearchScore : EntityObject
+    {
+        #region Factory Method
+    
+        /// <summary>
+        /// Create a new AdvanceSearchScore object.
+        /// </summary>
+        /// <param name="id">Initial value of the Id property.</param>
+        /// <param name="name">Initial value of the Name property.</param>
+        /// <param name="score">Initial value of the Score property.</param>
+        public static AdvanceSearchScore CreateAdvanceSearchScore(global::System.Int32 id, global::System.String name, global::System.Int32 score)
+        {
+            AdvanceSearchScore advanceSearchScore = new AdvanceSearchScore();
+            advanceSearchScore.Id = id;
+            advanceSearchScore.Name = name;
+            advanceSearchScore.Score = score;
+            return advanceSearchScore;
+        }
+
+        #endregion
+        #region Primitive Properties
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=true, IsNullable=false)]
+        [DataMemberAttribute()]
+        public global::System.Int32 Id
+        {
+            get
+            {
+                return _Id;
+            }
+            set
+            {
+                if (_Id != value)
+                {
+                    OnIdChanging(value);
+                    ReportPropertyChanging("Id");
+                    _Id = StructuralObject.SetValidValue(value);
+                    ReportPropertyChanged("Id");
+                    OnIdChanged();
+                }
+            }
+        }
+        private global::System.Int32 _Id;
+        partial void OnIdChanging(global::System.Int32 value);
+        partial void OnIdChanged();
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=false)]
+        [DataMemberAttribute()]
+        public global::System.String Name
+        {
+            get
+            {
+                return _Name;
+            }
+            set
+            {
+                OnNameChanging(value);
+                ReportPropertyChanging("Name");
+                _Name = StructuralObject.SetValidValue(value, false);
+                ReportPropertyChanged("Name");
+                OnNameChanged();
+            }
+        }
+        private global::System.String _Name;
+        partial void OnNameChanging(global::System.String value);
+        partial void OnNameChanged();
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=false)]
+        [DataMemberAttribute()]
+        public global::System.Int32 Score
+        {
+            get
+            {
+                return _Score;
+            }
+            set
+            {
+                OnScoreChanging(value);
+                ReportPropertyChanging("Score");
+                _Score = StructuralObject.SetValidValue(value);
+                ReportPropertyChanged("Score");
+                OnScoreChanged();
+            }
+        }
+        private global::System.Int32 _Score;
+        partial void OnScoreChanging(global::System.Int32 value);
+        partial void OnScoreChanged();
+
+        #endregion
+    
+    }
     
     /// <summary>
     /// No Metadata Documentation available.
