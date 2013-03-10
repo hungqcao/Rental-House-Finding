@@ -18,6 +18,7 @@ using System.Net;
 using FBLogin.Models;
 
 
+
 namespace RentalHouseFinding.Controllers
 {
     public class AccountController : Controller
@@ -34,8 +35,8 @@ namespace RentalHouseFinding.Controllers
             var client = new FacebookClient(Session["accessToken"].ToString());
             dynamic fbresult = client.Get("me?fields=id,email,first_name,last_name,gender,locale,link,username,timezone,location,picture");
 
-            UserDetailsModel facebookUser = Newtonsoft.Json.JsonConvert.DeserializeObject<UserDetailsModel>(fbresult.ToString());
-            return View("ShowUserDetails", facebookUser);            
+            UserDetailsModel facebookUser = Newtonsoft.Json.JsonConvert.DeserializeObject<UserDetailsModel>(fbresult.ToString());           
+            return FBookOrOpenIdLogon(facebookUser);
         }
         [HttpPost]
         public JsonResult FacebookLogin(FacebookLoginModel model)
@@ -64,10 +65,12 @@ namespace RentalHouseFinding.Controllers
                         var request = openid.CreateRequest(Request.Form["openid_identifier"]);
                         var fetch = new FetchRequest();
                         fetch.Attributes.Add(new AttributeRequest(WellKnownAttributes.Contact.Email, true));
-                        fetch.Attributes.Add(new AttributeRequest(WellKnownAttributes.BirthDate.WholeBirthDate, true));
+                        fetch.Attributes.Add(new AttributeRequest(WellKnownAttributes.BirthDate.DayOfMonth, true));
                         fetch.Attributes.Add(new AttributeRequest(WellKnownAttributes.Person.Gender, true));
                         fetch.Attributes.Add(new AttributeRequest(WellKnownAttributes.Name.First, true));
                         fetch.Attributes.Add(new AttributeRequest(WellKnownAttributes.Name.Last, true));
+                        fetch.Attributes.Add(new AttributeRequest(WellKnownAttributes.Contact.Phone.Mobile, true));
+                        
                         request.AddExtension(fetch);
                         return request.RedirectingResponse.AsActionResult();
                     }
@@ -93,6 +96,7 @@ namespace RentalHouseFinding.Controllers
                     var sLastName = "";
                     var sGender = "";
                     var sDob = "";
+                    var sPhoneNumber = "";
                     if (fetch != null)
                     {
                         foreach (var vAtrrib in fetch.Attributes)
@@ -115,10 +119,14 @@ namespace RentalHouseFinding.Controllers
                                     var genders = fetch.Attributes[WellKnownAttributes.Person.Gender].Values;
                                     sGender = genders.Count > 0 ? genders[0] : null;
                                     break;
-                                case WellKnownAttributes.BirthDate.WholeBirthDate:
-                                    var doBs = fetch.Attributes[WellKnownAttributes.BirthDate.WholeBirthDate].Values;
+                                case WellKnownAttributes.BirthDate.DayOfMonth:
+                                    var doBs = fetch.Attributes[WellKnownAttributes.BirthDate.DayOfMonth].Values;
                                     sDob = doBs.Count > 0 ? doBs[0] : null;
                                     break;
+                                case WellKnownAttributes.Contact.Phone.Mobile:
+                                    var phoneNumbers = fetch.Attributes[WellKnownAttributes.Contact.Phone.Mobile].Values;
+                                    sPhoneNumber = phoneNumbers.Count > 0 ? phoneNumbers[0] : null;
+                                    break;                                
                             }
                         }
                     }
@@ -126,14 +134,15 @@ namespace RentalHouseFinding.Controllers
                     var lm = new UserDetailsModel
                     {
                         id = response.ClaimedIdentifier,
-
                         first_name = sFirstName,
                         last_name = sLastName,
-
                         gender = sGender,
-                        email = sEmail
+                        email = sEmail,
+                        phoneMumber = sPhoneNumber,
+                        user_birthday = sDob
+
                     };
-                    return View("ShowUserDetails", lm);
+                    return FBookOrOpenIdLogon(lm);
 
                 case AuthenticationStatus.Canceled:
                     ViewBag.Message = "Canceled at provider";
@@ -144,6 +153,24 @@ namespace RentalHouseFinding.Controllers
             }
 
             return new EmptyResult();
+        }
+        public ActionResult FBookOrOpenIdLogon(UserDetailsModel userDetail)
+        {
+            // Attempt to register the user
+            MembershipCreateStatus createStatus;
+            CustomMembershipProvider customMP = new CustomMembershipProvider();
+            customMP.CreateUserForOpenID(userDetail, out createStatus);
+            if (createStatus == MembershipCreateStatus.Success ||createStatus == MembershipCreateStatus.DuplicateUserName)
+            {
+                FormsAuthentication.SetAuthCookie(userDetail.email, false /* createPersistentCookie */);
+                return RedirectToAction("Index", "Landing");
+            }
+            else
+            {
+                ModelState.AddModelError("", ErrorCodeToString(createStatus));
+            }
+            // If we got this far, something failed, redisplay form
+            return View(userDetail);
         }
         //
         // GET: /Account/LogOn
@@ -186,7 +213,7 @@ namespace RentalHouseFinding.Controllers
                     }
                     else
                     {
-                        return RedirectToAction("Index", "Home");
+                        return RedirectToAction("Index", "Landing");
                     }
                 }
                 else
@@ -204,7 +231,7 @@ namespace RentalHouseFinding.Controllers
         {
             FormsAuthentication.SignOut();
 
-            return RedirectToAction("Index", "Home");
+            return RedirectToAction("Index", "Landing");
         }
 
         //

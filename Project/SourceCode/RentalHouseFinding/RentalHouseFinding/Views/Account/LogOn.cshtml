@@ -17,23 +17,6 @@
         InitialiseFacebook("476765599060884");
         //FB.login(FBCallBack);
     }   
-//    function FBCallBack(response) {
-//        if (response.authResponse) {
-//            // user has auth'd your app and is logged into Facebook
-//            FB.api('/me', function (userDetail) {
-//                if (userDetail.name) {
-//                    alert(userDetail.name);
-//                    var url = '@Url.Action("ShowUserDetails", "Account", new { OpenID = "_id_",FirstName = "_first_", LastName = "_last_", Gender = "_gender_" })';
-
-//                    url = url.replace('_id_', userDetail.id);
-//                    url = url.replace('_first_', userDetail.first_name);
-//                    url = url.replace('_last_', userDetail.last_name);
-//                    url = url.replace('_gender_', userDetail.gender);
-//                    window.location.href = url;
-//                }
-//            });
-//        }
-//    }
     </script>  
 <form action="Authenticate?ReturnUrl=@HttpUtility.UrlEncode(Request.QueryString["ReturnUrl"])" method="post" id="openid_form">
 <input type="hidden" name="action" value="verify" />
@@ -75,7 +58,7 @@
                 {
                     //user exist 
                 <p class="buttonGreen">
-                    <a href="@Url.Action("Index", "Home")">Welcome , @Model.UserName, Continue..." </a>
+                    <a href="@Url.Action("Index", "Landing")">Welcome , @Model.UserName, Continue..." </a>
                 </p>
 
                 }

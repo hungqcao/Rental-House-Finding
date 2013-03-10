@@ -6,32 +6,31 @@
             cookie: true,
             xfbml: true
         });
-        //        FB.Event.subscribe('auth.login', function (response) {
-        //            alert('1');
-        //            var credentials = { uid: response.authResponse.userID, accessToken: response.authResponse.accessToken };
-        //            SubmitLogin(credentials);
-        //        });
+//        FB.Event.subscribe('auth.login', function (response) {
+//        alert('1');
+//        var credentials = { uid: response.authResponse.userID, accessToken: response.authResponse.accessToken };
+//        SubmitLogin(credentials);
+//        });
         FB.getLoginStatus(function (response) {
             if (response.status === 'connected') {
-                alert(response.authResponse.userID);
                 var credentials = { uid: response.authResponse.userID, accessToken: response.authResponse.accessToken };
                 SubmitLogin(credentials);
                 var url = 'FacebookUserDetail';
                 url = url.replace('_id_', response.authResponse.userID);
                 window.location.href = url;
             }
-            else if (response.status === 'not_authorized') { alert("user is not authorised"); }
-            else { alert("user is not conntected to facebook"); }
+            else if (response.status === 'not_authorized') {  }
+            else {}
 
         });
 
         function SubmitLogin(credentials) {
-            $.ajax({
+            $.ajax({            
                 url: "/account/facebookLogin",
                 type: "POST",
                 data: credentials,
                 error: function () {
-                    alert("error logging in to your facebook account.");
+                    //alert("error logging in to your facebook account.");
                 },
                 success: function () {
                     window.location.reload();

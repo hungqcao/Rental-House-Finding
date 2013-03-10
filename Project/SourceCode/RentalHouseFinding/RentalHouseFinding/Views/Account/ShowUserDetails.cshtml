@@ -2,6 +2,10 @@
 @{
     ViewBag.Title = "Show User Details";
 }
+@if(Request.IsAuthenticated) {
+    <text>Welcome <strong>@Html.ActionLink(@User.Identity.Name, "Index", "User")</strong>!
+    [ @Html.ActionLink("Log Off", "LogOff", "Account") ]</text>
+}
 
 <h2> Welcome @Model.first_name Your Details are as follows: </h2>
 <table style="border:1">

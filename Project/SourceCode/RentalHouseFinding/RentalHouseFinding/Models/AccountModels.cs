@@ -107,7 +107,9 @@ namespace RentalHouseFinding.Models
         public string email { get; set; }        
         public string locale { get; set; }
         public string link { get; set; }
-        public string username { get; set; }
+        public string user_birthday { get; set; }
+        public string phoneMumber { get; set; }
+        public string address { get; set; }
         public int timezone { get; set; }
         //public FacebookLocation location { get; set; }
         public Picture picture { get; set; }

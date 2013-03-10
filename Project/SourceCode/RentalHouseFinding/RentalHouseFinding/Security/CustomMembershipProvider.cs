@@ -3,6 +3,7 @@ using System.Web.Security;
 using System.Linq;
 using RentalHouseFinding.Models;
 using System.Data;
+using RentalHouseFinding.RHF.Common;
 
 namespace RentalHouseFinding.Sercurity
 {
@@ -60,9 +61,16 @@ namespace RentalHouseFinding.Sercurity
                 return null;
             }
 
-            if ((RequiresUniqueEmail && !(string.IsNullOrEmpty(GetUserNameByEmail(model.Email)))))
+            //if ((RequiresUniqueEmail && !(string.IsNullOrEmpty(GetUserNameByEmail(model.Email)))))
+            //{
+            //    status = MembershipCreateStatus.DuplicateEmail;
+            //    return null;
+            //}
+            int userID = CommonModel.GetUserIdByUsername(model.UserName);
+
+            if (userID != -1)
             {
-                status = MembershipCreateStatus.DuplicateEmail;
+                status = MembershipCreateStatus.DuplicateUserName;
                 return null;
             }
 
@@ -107,6 +115,57 @@ namespace RentalHouseFinding.Sercurity
             else
             {
                 status = MembershipCreateStatus.DuplicateUserName;
+            }
+
+            return null;
+        }
+
+        public MembershipUser CreateUserForOpenID(UserDetailsModel model, out MembershipCreateStatus status)
+        {
+            //Check username da tontai chua, sau do check openid xem co ton tai chua
+            int userID = CommonModel.GetUserIdByUsername(model.email);
+
+            if (userID != -1)
+            {
+                status = MembershipCreateStatus.DuplicateUserName;
+                return GetUser(model.email, false);
+            }
+            else
+                //create user
+            {
+                try
+                {
+                    using (RentalHouseFindingEntities _db = new RentalHouseFindingEntities())
+                    {
+                        //add user info
+                        Users user = new Users();
+                        user.OpenIdURL = model.id;
+                        user.Name = model.first_name + " " + model.last_name;                        
+                        user.IsDeleted = false;
+                        user.Username = model.email;
+                        if(!String.IsNullOrEmpty(model.user_birthday))
+                        {
+                            user.DOB =  DateTime.Parse(model.user_birthday);
+                        }                        
+                        user.CreatedDate = DateTime.Now;
+                        user.LastUpdate = DateTime.Now;
+                        user.RoleId = 3;
+                        user.Sex = model.gender;
+
+                        _db.AddToUsers(user);
+
+                        _db.SaveChanges();
+
+                        status = MembershipCreateStatus.Success;
+
+                        return GetUser(model.email, false);
+                    }
+
+                }
+                catch (Exception ex)
+                {
+                    status = MembershipCreateStatus.ProviderError;
+                }
             }
 
             return null;
@@ -197,7 +256,7 @@ namespace RentalHouseFinding.Sercurity
         public override MembershipUser GetUser(object providerUserKey, bool userIsOnline)
         {
             throw new NotImplementedException();
-        }
+        }        
 
         public override string GetUserNameByEmail(string email)
         {
