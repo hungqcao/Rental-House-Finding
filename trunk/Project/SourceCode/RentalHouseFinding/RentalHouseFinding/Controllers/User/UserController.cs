@@ -28,9 +28,11 @@ namespace RentalHouseFinding.Controllers
             userViewModel.PhoneNumber = profile.PhoneNumber;
             userViewModel.Name = profile.Name;
             userViewModel.Email = profile.Email;
-            userViewModel.DateOfBirth = profile.DOB.Value;
+            DateTime? a = null;
+            userViewModel.DateOfBirth = profile.DOB.HasValue ? profile.DOB.Value : a; 
             userViewModel.Address = profile.Address;
             userViewModel.Avatar = profile.Avatar;
+            userViewModel.Sex = profile.Sex;
 
             //Get post status list
             var postStatusList = (from p in _db.PostStatuses select p).ToList();
@@ -56,8 +58,8 @@ namespace RentalHouseFinding.Controllers
             userViewModel.UserName = profile.Username;
             userViewModel.PhoneNumber = profile.PhoneNumber;
             userViewModel.Name = profile.Name;
-            userViewModel.Email = profile.Email;
-            userViewModel.DateOfBirth = profile.DOB.Value;
+            DateTime? a = null;
+            userViewModel.DateOfBirth = profile.DOB.HasValue ? profile.DOB.Value : a; 
             userViewModel.Address = profile.Address;
             userViewModel.Avatar = profile.Avatar;
 
