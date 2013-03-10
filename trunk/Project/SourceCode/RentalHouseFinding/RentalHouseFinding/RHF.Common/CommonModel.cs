@@ -110,6 +110,7 @@ namespace RentalHouseFinding.RHF.Common
         {
             return new PostViewModel
             {
+                Id = model.Id,
                 NumberHouse = model.NumberAddress,
                 Street = model.Street,
                 Area = model.Area,

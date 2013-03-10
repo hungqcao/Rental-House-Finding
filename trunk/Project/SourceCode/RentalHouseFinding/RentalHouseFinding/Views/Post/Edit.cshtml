@@ -261,7 +261,7 @@
             @Html.EditorFor(model => model.Skype)
             @Html.ValidationMessageFor(model => model.Skype)
         </div>
-
+        @Html.Action("ViewImages/" + Model.Id)
         <p>
             <input type="submit" value="Save" />
         </p>
