@@ -15,6 +15,18 @@ namespace RentalHouseFinding.RHF.Common
 
         public static Posts ConvertPostViewModelToPost(PostViewModel model, DateTime createdDate, DateTime editedDate, DateTime renewDate)
         {
+            string facilityTempId = (model.HasAirConditioner ? "1" : "0") +
+                                    (model.HasBed ? "1" : "0") +
+                                    (model.HasGarage ? "1" : "0") +
+                                    (model.HasInternet ? "1" : "0") +
+                                    (model.HasMotorParking ? "1" : "0") +
+                                    (model.HasSecurity ? "1" : "0") +
+                                    (model.HasToilet ? "1" : "0") +
+                                    (model.HasTVCable ? "1" : "0") +
+                                    (model.HasWaterHeater ? "1" : "0") +
+                                    (model.IsAllowCooking ? "1" : "0") + 
+                                    (model.IsStayWithOwner ? "1" : "0");
+            int facTemId = Convert.ToInt32(facilityTempId, 2) + 1;
             return new Posts
             {
                 NumberAddress = model.NumberHouse,
@@ -48,7 +60,9 @@ namespace RentalHouseFinding.RHF.Common
                     IsAllowCooking = model.IsAllowCooking,
                     IsStayWithOwner = model.IsStayWithOwner,
                     RestrictHours = model.RestrictHours,
-                    WaterFee = model.WaterFee
+                    WaterFee = model.WaterFee,
+                    FacilityTemplateId = facTemId
+                    
                 },
                 Lat = model.Lat,
                 Lon = model.Lon,

@@ -130,7 +130,7 @@ IF OBJECT_ID ('dbo.V_PostFacilityInfo', 'V') IS NOT NULL
     DROP VIEW dbo.V_PostFacilityInfo ;
 GO
 CREATE VIEW V_PostFacilityInfo WITH SCHEMABINDING AS
-SELECT P.Id, P.Area, P.Price, F.HasAirConditioner, F.HasBed, F.HasGarage, F.HasInternet, F.HasMotorParkingLot, F.HasSecurity, F.HasTVCable, F.HasToilet, F.HasWaterHeater, F.IsAllowCooking, F.IsStayWithOwner, P.CategoryId, P.DistrictId, D.ProvinceId
+SELECT P.Id, P.Area, P.Price, F.HasAirConditioner, F.HasBed, F.HasGarage, F.HasInternet, F.HasMotorParkingLot, F.HasSecurity, F.HasToilet, F.HasTVCable, F.HasWaterHeater, F.IsAllowCooking, F.IsStayWithOwner, P.CategoryId, P.DistrictId, D.ProvinceId, F.FacilityTemplateId
 FROM dbo.Posts P 
 	INNER JOIN dbo.Facilities F
 		ON(P.Id = F.PostIdFacilities)
@@ -160,31 +160,34 @@ CREATE PROCEDURE AdvancedSearchFacility
 	@HasInternetScore int = 0,
 	@HasMotorParkingLotScore int = 0,
 	@HasSecurityScore int = 0,
+	@HasToilet int = 0,
 	@HasTVCableScore int = 0,
 	@HasWaterHeaterScore int = 0,
 	@IsAllowCookingScore int = 0,
-	@IsStayWithOwnerScore int = 0,
-	@HasToilet int = 0
+	@IsStayWithOwnerScore int = 0
 AS
 
-SELECT F.Id, ((F.HasAirConditioner * @HasAirConditionerScore) + 
-				(F.HasBed * @HasBedScore) +
-				(F.HasGarage * @HasGarageScore) +
-				(F.HasInternet * @HasInternetScore) +
-				(F.HasMotorParkingLot * @HasMotorParkingLotScore) + 
-				(F.HasSecurity * @HasSecurityScore) +
-				(F.HasTVCable * @HasTVCableScore) +
-				(F.HasWaterHeater * @HasWaterHeaterScore) +
-				(F.IsAllowCooking * @IsAllowCookingScore) +
-				(F.IsStayWithOwner * @IsStayWithOwnerScore) +
-				(F.HasToilet * @HasToilet)
-) AS Score FROM dbo.V_PostFacilityInfo F WHERE
+SELECT T.Id, ((T.Column1 * @HasAirConditionerScore) + 
+				(T.Column2 * @HasBedScore) +
+				(T.Column3 * @HasGarageScore) +
+				(T.Column4 * @HasInternetScore) +
+				(T.Column5 * @HasMotorParkingLotScore) + 
+				(T.Column6 * @HasSecurityScore) +
+				(T.Column7 * @HasToilet) +
+				(T.Column8 * @HasTVCableScore) +
+				(T.Column9 * @HasWaterHeaterScore) +
+				(T.Column10 * @IsAllowCookingScore) +
+				(T.Column11 * @IsStayWithOwnerScore)) AS Score
+ FROM dbo.FacilityTemplates T
+INNER JOIN
+(SELECT F.Id, F.FacilityTemplateId FROM dbo.V_PostFacilityInfo F 
+WHERE
 	F.CategoryId = @CategoryIdPass AND
 	F.DistrictId = @DistrictIdPass AND
 	F.ProvinceId = @ProvinceIdPass AND
 	F.Area <= @AreaMax AND F.Area >= @AreaMin AND
-	F.Price <= @PriceMax AND F.Price >= @PriceMin
-	ORDER BY Score
+	F.Price <= @PriceMax AND F.Price >= @PriceMin) S
+ON T.Id = S.FacilityTemplateId
 GO
 
 EXEC AdvancedSearchFacility 
@@ -193,7 +196,7 @@ EXEC AdvancedSearchFacility
 	@DistrictIdPass = 1, 
 	@AreaMax = 20000, 
 	@AreaMin = 0, 
-	@PriceMax = 100000, 
+	@PriceMax = 3000000, 
 	@PriceMin = 0,
 	@HasAirConditionerScore = 5,
 	@HasBedScore = 5,
@@ -201,7 +204,8 @@ EXEC AdvancedSearchFacility
 	@HasInternetScore = 5,
 	@HasMotorParkingLotScore = 5,
 	@HasSecurityScore = 5,
+	@HasToilet = 5,
 	@HasTVCableScore = 5,
 	@HasWaterHeaterScore = 5,
 	@IsAllowCookingScore = 5,
-	@IsStayWithOwnerScore = 5
+	@IsStayWithOwnerScore = 0

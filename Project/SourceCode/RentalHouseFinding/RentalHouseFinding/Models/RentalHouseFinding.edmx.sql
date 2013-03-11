@@ -2,7 +2,7 @@
 -- --------------------------------------------------
 -- Entity Designer DDL Script for SQL Server 2005, 2008, and Azure
 -- --------------------------------------------------
--- Date Created: 03/10/2013 22:48:58
+-- Date Created: 03/11/2013 15:48:28
 -- Generated from EDMX file: C:\RentalHouseFinding\Project\SourceCode\RentalHouseFinding\RentalHouseFinding\Models\RentalHouseFinding.edmx
 -- --------------------------------------------------
 
@@ -68,6 +68,9 @@ GO
 IF OBJECT_ID(N'[dbo].[FK_QuestionsAnswers]', 'F') IS NOT NULL
     ALTER TABLE [dbo].[Answers] DROP CONSTRAINT [FK_QuestionsAnswers];
 GO
+IF OBJECT_ID(N'[dbo].[FK_FacilityTemplatesFacilities]', 'F') IS NOT NULL
+    ALTER TABLE [dbo].[Facilities] DROP CONSTRAINT [FK_FacilityTemplatesFacilities];
+GO
 
 -- --------------------------------------------------
 -- Dropping existing tables
@@ -123,6 +126,12 @@ IF OBJECT_ID(N'[dbo].[Questions]', 'U') IS NOT NULL
 GO
 IF OBJECT_ID(N'[dbo].[Answers]', 'U') IS NOT NULL
     DROP TABLE [dbo].[Answers];
+GO
+IF OBJECT_ID(N'[dbo].[AdvanceSearchScores]', 'U') IS NOT NULL
+    DROP TABLE [dbo].[AdvanceSearchScores];
+GO
+IF OBJECT_ID(N'[dbo].[FacilityTemplates]', 'U') IS NOT NULL
+    DROP TABLE [dbo].[FacilityTemplates];
 GO
 
 -- --------------------------------------------------
@@ -275,7 +284,8 @@ CREATE TABLE [dbo].[Facilities] (
     [RestrictHours] float  NOT NULL,
     [HasSecurity] bit  NOT NULL,
     [Direction] nvarchar(max)  NULL,
-    [PostIdFacilities] int  NOT NULL
+    [PostIdFacilities] int  NOT NULL,
+    [FacilityTemplateId] int  NOT NULL
 );
 GO
 
@@ -332,6 +342,23 @@ CREATE TABLE [dbo].[AdvanceSearchScores] (
     [Id] int IDENTITY(1,1) NOT NULL,
     [Name] nvarchar(max)  NOT NULL,
     [Score] int  NOT NULL
+);
+GO
+
+-- Creating table 'FacilityTemplates'
+CREATE TABLE [dbo].[FacilityTemplates] (
+    [Id] int IDENTITY(1,1) NOT NULL,
+    [Column1] bit  NOT NULL,
+    [Column2] bit  NOT NULL,
+    [Column3] bit  NOT NULL,
+    [Column4] bit  NOT NULL,
+    [Column5] bit  NOT NULL,
+    [Column6] bit  NOT NULL,
+    [Column7] bit  NOT NULL,
+    [Column8] bit  NOT NULL,
+    [Column9] bit  NOT NULL,
+    [Column10] bit  NOT NULL,
+    [Column11] bit  NOT NULL
 );
 GO
 
@@ -444,6 +471,12 @@ GO
 -- Creating primary key on [Id] in table 'AdvanceSearchScores'
 ALTER TABLE [dbo].[AdvanceSearchScores]
 ADD CONSTRAINT [PK_AdvanceSearchScores]
+    PRIMARY KEY CLUSTERED ([Id] ASC);
+GO
+
+-- Creating primary key on [Id] in table 'FacilityTemplates'
+ALTER TABLE [dbo].[FacilityTemplates]
+ADD CONSTRAINT [PK_FacilityTemplates]
     PRIMARY KEY CLUSTERED ([Id] ASC);
 GO
 
@@ -677,6 +710,20 @@ ADD CONSTRAINT [FK_QuestionsAnswers]
 CREATE INDEX [IX_FK_QuestionsAnswers]
 ON [dbo].[Answers]
     ([QuestionId]);
+GO
+
+-- Creating foreign key on [FacilityTemplateId] in table 'Facilities'
+ALTER TABLE [dbo].[Facilities]
+ADD CONSTRAINT [FK_FacilityTemplatesFacilities]
+    FOREIGN KEY ([FacilityTemplateId])
+    REFERENCES [dbo].[FacilityTemplates]
+        ([Id])
+    ON DELETE NO ACTION ON UPDATE NO ACTION;
+
+-- Creating non-clustered index for FOREIGN KEY 'FK_FacilityTemplatesFacilities'
+CREATE INDEX [IX_FK_FacilityTemplatesFacilities]
+ON [dbo].[Facilities]
+    ([FacilityTemplateId]);
 GO
 
 -- --------------------------------------------------

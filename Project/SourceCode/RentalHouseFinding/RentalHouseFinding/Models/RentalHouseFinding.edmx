@@ -14,6 +14,7 @@
           <EntitySet Name="Contacts" EntityType="RentalHouseFinding.Store.Contacts" store:Type="Tables" Schema="dbo" />
           <EntitySet Name="Districts" EntityType="RentalHouseFinding.Store.Districts" store:Type="Tables" Schema="dbo" />
           <EntitySet Name="Facilities" EntityType="RentalHouseFinding.Store.Facilities" store:Type="Tables" Schema="dbo" />
+          <EntitySet Name="FacilityTemplates" EntityType="RentalHouseFinding.Store.FacilityTemplates" store:Type="Tables" Schema="dbo" />
           <EntitySet Name="Favorites" EntityType="RentalHouseFinding.Store.Favorites" store:Type="Tables" Schema="dbo" />
           <EntitySet Name="PostImages" EntityType="RentalHouseFinding.Store.PostImages" store:Type="Tables" Schema="dbo" />
           <EntitySet Name="Posts" EntityType="RentalHouseFinding.Store.Posts" store:Type="Tables" Schema="dbo" />
@@ -31,6 +32,10 @@
           <AssociationSet Name="FK_DistrictsPosts" Association="RentalHouseFinding.Store.FK_DistrictsPosts">
             <End Role="Districts" EntitySet="Districts" />
             <End Role="Posts" EntitySet="Posts" />
+          </AssociationSet>
+          <AssociationSet Name="FK_FacilityTemplatesFacilities" Association="RentalHouseFinding.Store.FK_FacilityTemplatesFacilities">
+            <End Role="FacilityTemplates" EntitySet="FacilityTemplates" />
+            <End Role="Facilities" EntitySet="Facilities" />
           </AssociationSet>
           <AssociationSet Name="FK_PostsContacts" Association="RentalHouseFinding.Store.FK_PostsContacts">
             <End Role="Posts" EntitySet="Posts" />
@@ -174,6 +179,24 @@
           <Property Name="HasSecurity" Type="bit" Nullable="false" />
           <Property Name="Direction" Type="nvarchar(max)" />
           <Property Name="PostIdFacilities" Type="int" Nullable="false" />
+          <Property Name="FacilityTemplateId" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="FacilityTemplates">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
+          <Property Name="Column1" Type="bit" Nullable="false" />
+          <Property Name="Column2" Type="bit" Nullable="false" />
+          <Property Name="Column3" Type="bit" Nullable="false" />
+          <Property Name="Column4" Type="bit" Nullable="false" />
+          <Property Name="Column5" Type="bit" Nullable="false" />
+          <Property Name="Column6" Type="bit" Nullable="false" />
+          <Property Name="Column7" Type="bit" Nullable="false" />
+          <Property Name="Column8" Type="bit" Nullable="false" />
+          <Property Name="Column9" Type="bit" Nullable="false" />
+          <Property Name="Column10" Type="bit" Nullable="false" />
+          <Property Name="Column11" Type="bit" Nullable="false" />
         </EntityType>
         <EntityType Name="Favorites">
           <Key>
@@ -320,6 +343,18 @@
             </Principal>
             <Dependent Role="Posts">
               <PropertyRef Name="DistrictId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_FacilityTemplatesFacilities">
+          <End Role="FacilityTemplates" Type="RentalHouseFinding.Store.FacilityTemplates" Multiplicity="1" />
+          <End Role="Facilities" Type="RentalHouseFinding.Store.Facilities" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="FacilityTemplates">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Facilities">
+              <PropertyRef Name="FacilityTemplateId" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -517,17 +552,11 @@
           <Parameter Name="HasInternetScore" Type="int" Mode="In" />
           <Parameter Name="HasMotorParkingLotScore" Type="int" Mode="In" />
           <Parameter Name="HasSecurityScore" Type="int" Mode="In" />
+          <Parameter Name="HasToilet" Type="int" Mode="In" />
           <Parameter Name="HasTVCableScore" Type="int" Mode="In" />
           <Parameter Name="HasWaterHeaterScore" Type="int" Mode="In" />
           <Parameter Name="IsAllowCookingScore" Type="int" Mode="In" />
           <Parameter Name="IsStayWithOwnerScore" Type="int" Mode="In" />
-          <Parameter Name="HasToilet" Type="int" Mode="In" />
-        </Function>
-        <Function Name="FullTextSearchPost" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
-          <Parameter Name="CategoryIdPass" Type="int" Mode="In" />
-          <Parameter Name="ProvinceIdPass" Type="int" Mode="In" />
-          <Parameter Name="DistrictIdPass" Type="int" Mode="In" />
-          <Parameter Name="Keyword" Type="nvarchar" Mode="In" />
         </Function>
       </Schema></edmx:StorageModels>
     <!-- CSDL content -->
@@ -626,7 +655,12 @@
             <End Role="Answers" EntitySet="Answers" />
           </AssociationSet>
           <EntitySet Name="AdvanceSearchScores" EntityType="RentalHouseFinding.AdvanceSearchScore" />
-          <FunctionImport Name="AdvancedSearchFacility">
+          <EntitySet Name="FacilityTemplates" EntityType="RentalHouseFinding.FacilityTemplates" />
+          <AssociationSet Name="FacilityTemplatesFacilities" Association="RentalHouseFinding.FacilityTemplatesFacilities">
+            <End Role="FacilityTemplates" EntitySet="FacilityTemplates" />
+            <End Role="Facilities" EntitySet="Facilities" />
+          </AssociationSet>
+          <FunctionImport Name="AdvancedSearchFacilities" ReturnType="Collection(RentalHouseFinding.AdvancedSearchFacility_Result)">
             <Parameter Name="CategoryIdPass" Mode="In" Type="Int32" />
             <Parameter Name="ProvinceIdPass" Mode="In" Type="Int32" />
             <Parameter Name="DistrictIdPass" Mode="In" Type="Int32" />
@@ -640,11 +674,11 @@
             <Parameter Name="HasInternetScore" Mode="In" Type="Int32" />
             <Parameter Name="HasMotorParkingLotScore" Mode="In" Type="Int32" />
             <Parameter Name="HasSecurityScore" Mode="In" Type="Int32" />
+            <Parameter Name="HasToilet" Mode="In" Type="Int32" />
             <Parameter Name="HasTVCableScore" Mode="In" Type="Int32" />
             <Parameter Name="HasWaterHeaterScore" Mode="In" Type="Int32" />
             <Parameter Name="IsAllowCookingScore" Mode="In" Type="Int32" />
             <Parameter Name="IsStayWithOwnerScore" Mode="In" Type="Int32" />
-            <Parameter Name="HasToilet" Mode="In" Type="Int32" />
           </FunctionImport>
           </EntityContainer>
         <EntityType Name="Users">
@@ -932,6 +966,8 @@
           <Property Name="Direction" Nullable="true" Type="String" />
           <Property Name="PostIdFacilities" Nullable="false" Type="Int32" />
           <NavigationProperty Name="Post" Relationship="RentalHouseFinding.PostsFacilities" FromRole="Facilities" ToRole="Posts" />
+          <Property Type="Int32" Name="FacilityTemplateId" Nullable="false" />
+          <NavigationProperty Name="FacilityTemplate" Relationship="RentalHouseFinding.FacilityTemplatesFacilities" FromRole="Facilities" ToRole="FacilityTemplates" />
         </EntityType>
         <EntityType Name="Contacts">
           <Key>
@@ -1095,6 +1131,40 @@
           <Property Type="String" Name="Name" Nullable="false" />
           <Property Type="Int32" Name="Score" Nullable="false" />
         </EntityType>
+        <EntityType Name="FacilityTemplates">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Type="Int32" Name="Id" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Type="Boolean" Name="Column1" Nullable="false" DefaultValue="false" />
+          <Property Type="Boolean" Name="Column2" Nullable="false" DefaultValue="false" />
+          <Property Type="Boolean" Name="Column3" Nullable="false" DefaultValue="false" />
+          <Property Type="Boolean" Name="Column4" Nullable="false" DefaultValue="false" />
+          <Property Type="Boolean" Name="Column5" Nullable="false" DefaultValue="false" />
+          <Property Type="Boolean" Name="Column6" Nullable="false" DefaultValue="false" />
+          <Property Type="Boolean" Name="Column7" Nullable="false" DefaultValue="false" />
+          <Property Type="Boolean" Name="Column8" Nullable="false" DefaultValue="false" />
+          <Property Type="Boolean" Name="Column9" Nullable="false" DefaultValue="false" />
+          <Property Type="Boolean" Name="Column10" Nullable="false" DefaultValue="false" />
+          <Property Type="Boolean" Name="Column11" Nullable="false" DefaultValue="false" />
+          <NavigationProperty Name="Facilities" Relationship="RentalHouseFinding.FacilityTemplatesFacilities" FromRole="FacilityTemplates" ToRole="Facilities" />
+        </EntityType>
+        <Association Name="FacilityTemplatesFacilities">
+          <End Type="RentalHouseFinding.FacilityTemplates" Role="FacilityTemplates" Multiplicity="1" />
+          <End Type="RentalHouseFinding.Facilities" Role="Facilities" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="FacilityTemplates">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Facilities">
+              <PropertyRef Name="FacilityTemplateId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <ComplexType Name="AdvancedSearchFacility_Result">
+          <Property Type="Int32" Name="Id" Nullable="false" />
+          <Property Type="Int32" Name="Score" Nullable="true" />
+        </ComplexType>
         </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -1260,6 +1330,7 @@
           <ScalarProperty Name="RestrictHours" ColumnName="RestrictHours" />
           <ScalarProperty Name="HasSecurity" ColumnName="HasSecurity" />
           <ScalarProperty Name="Direction" ColumnName="Direction" />
+          <ScalarProperty Name="FacilityTemplateId" ColumnName="FacilityTemplateId" />
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>
@@ -1325,15 +1396,32 @@
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>
-          <FunctionImportMapping FunctionImportName="FullTextSearchPost" FunctionName="RentalHouseFinding.Store.FullTextSearchPost">
+    <EntitySetMapping Name="FacilityTemplates">
+      <EntityTypeMapping TypeName="IsTypeOf(RentalHouseFinding.FacilityTemplates)">
+        <MappingFragment StoreEntitySet="FacilityTemplates">
+          <ScalarProperty Name="Id" ColumnName="Id" />
+          <ScalarProperty Name="Column1" ColumnName="Column1" />
+          <ScalarProperty Name="Column2" ColumnName="Column2" />
+          <ScalarProperty Name="Column3" ColumnName="Column3" />
+          <ScalarProperty Name="Column4" ColumnName="Column4" />
+          <ScalarProperty Name="Column5" ColumnName="Column5" />
+          <ScalarProperty Name="Column6" ColumnName="Column6" />
+          <ScalarProperty Name="Column7" ColumnName="Column7" />
+          <ScalarProperty Name="Column8" ColumnName="Column8" />
+          <ScalarProperty Name="Column9" ColumnName="Column9" />
+          <ScalarProperty Name="Column10" ColumnName="Column10" />
+          <ScalarProperty Name="Column11" ColumnName="Column11" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+          <FunctionImportMapping FunctionImportName="AdvancedSearchFacilities" FunctionName="RentalHouseFinding.Store.AdvancedSearchFacility">
             <ResultMapping>
-              <ComplexTypeMapping TypeName="RentalHouseFinding.FullTextSearchPost_ResultSuggestion">
+              <ComplexTypeMapping TypeName="RentalHouseFinding.AdvancedSearchFacility_Result">
                 <ScalarProperty Name="Id" ColumnName="Id" />
-                <ScalarProperty Name="Title" ColumnName="Title" />
+                <ScalarProperty Name="Score" ColumnName="Score" />
               </ComplexTypeMapping>
             </ResultMapping>
           </FunctionImportMapping>
-          <FunctionImportMapping FunctionImportName="AdvancedSearchFacility" FunctionName="RentalHouseFinding.Store.AdvancedSearchFacility" />
   </EntityContainerMapping>
 </Mapping></edmx:Mappings>
   </edmx:Runtime>
@@ -1377,25 +1465,29 @@
         <EntityTypeShape EntityType="RentalHouseFinding.PostImages" PointX="7.5" PointY="20.5" Width="1.5" Height="1.9802864583333317" IsExpanded="true" />
         <AssociationConnector Association="RentalHouseFinding.PostsPostImages">
           <ConnectorPoint PointX="6.75" PointY="10.932815005608976" />
-          <ConnectorPoint PointX="7.40625" PointY="11.589065005608976" />
-          <ConnectorPoint PointX="7.40625" PointY="21.490143229166666" />
+          <ConnectorPoint PointX="7.25" PointY="11.432815005608976" />
+          <ConnectorPoint PointX="7.25" PointY="21.490143229166666" />
           <ConnectorPoint PointX="7.5" PointY="21.490143229166666" />
         </AssociationConnector>
         <EntityTypeShape EntityType="RentalHouseFinding.PostStatuses" PointX="3" PointY="6.125" Width="1.5" Height="1.9802864583333317" IsExpanded="true" />
         <EntityTypeShape EntityType="RentalHouseFinding.Favorites" PointX="8.25" PointY="12.25" Width="1.5" Height="2.3648893229166674" IsExpanded="true" />
         <AssociationConnector Association="RentalHouseFinding.UsersFavorites">
-          <ConnectorPoint PointX="4.5" PointY="15.091095377647628" />
-          <ConnectorPoint PointX="4.791666666666667" PointY="15.091095377647628" />
-          <ConnectorPoint PointX="4.958333333333333" PointY="15.091095377647628" />
-          <ConnectorPoint PointX="7.041666666666667" PointY="15.091095377647626" />
-          <ConnectorPoint PointX="7.489583333333333" PointY="15.091095377647628" />
-          <ConnectorPoint PointX="7.760416666666667" PointY="15.091095377647628" />
-          <ConnectorPoint PointX="7.927083333333333" PointY="15.091095377647628" />
-          <ConnectorPoint PointX="9.40625" PointY="15.091095377647628" />
+          <ConnectorPoint PointX="4.5" PointY="15.043017519531251" />
+          <ConnectorPoint PointX="4.791666666666667" PointY="15.043017519531251" />
+          <ConnectorPoint PointX="4.958333333333333" PointY="15.043017519531251" />
+          <ConnectorPoint PointX="7.041666666666667" PointY="15.043017519531249" />
+          <ConnectorPoint PointX="7.333333333333333" PointY="15.043017519531251" />
+          <ConnectorPoint PointX="7.510416666666667" PointY="15.043017519531251" />
+          <ConnectorPoint PointX="7.677083333333333" PointY="15.043017519531251" />
+          <ConnectorPoint PointX="7.885416666666667" PointY="15.043017519531251" />
+          <ConnectorPoint PointX="8.0520833333333339" PointY="15.043017519531251" />
+          <ConnectorPoint PointX="9.40625" PointY="15.043017519531251" />
           <ConnectorPoint PointX="9.40625" PointY="14.614889322916667" />
         </AssociationConnector>
         <AssociationConnector Association="RentalHouseFinding.PostsFavorites">
           <ConnectorPoint PointX="6.75" PointY="7.4588093489583329" />
+          <ConnectorPoint PointX="7.885416666666667" PointY="7.458809348958332" />
+          <ConnectorPoint PointX="8.0520833333333339" PointY="7.4588093489583329" />
           <ConnectorPoint PointX="9" PointY="7.4588093489583329" />
           <ConnectorPoint PointX="9" PointY="12.25" />
         </AssociationConnector>
@@ -1415,24 +1507,24 @@
           <ConnectorPoint PointX="2.25" PointY="13.490143229166666" />
           <ConnectorPoint PointX="3" PointY="13.490143229166666" />
         </AssociationConnector>
-        <EntityTypeShape EntityType="RentalHouseFinding.Facilities" PointX="7.5" PointY="15.5" Width="1.5" Height="4.2879036458333317" IsExpanded="true" />
+        <EntityTypeShape EntityType="RentalHouseFinding.Facilities" PointX="7.5" PointY="15.5" Width="1.5" Height="4.4802050781250031" IsExpanded="true" />
         <EntityTypeShape EntityType="RentalHouseFinding.Contacts" PointX="7.5" PointY="23.25" Width="1.5" Height="2.1725878906250031" IsExpanded="true" />
         <EntityTypeShape EntityType="RentalHouseFinding.PostVideos" PointX="7.5" PointY="26.25" Width="1.5" Height="1.9802864583333317" IsExpanded="true" />
         <AssociationConnector Association="RentalHouseFinding.PostsFacilities">
           <ConnectorPoint PointX="6.75" PointY="9.2194665234375" />
-          <ConnectorPoint PointX="7.84375" PointY="9.2194665234375" />
-          <ConnectorPoint PointX="7.84375" PointY="15.5" />
+          <ConnectorPoint PointX="7.59375" PointY="9.2194665234375" />
+          <ConnectorPoint PointX="7.59375" PointY="15.5" />
         </AssociationConnector>
         <AssociationConnector Association="RentalHouseFinding.PostsContacts">
           <ConnectorPoint PointX="6.7488461538461531" PointY="10.980123697916667" />
-          <ConnectorPoint PointX="7.28125" PointY="11.512527544070515" />
-          <ConnectorPoint PointX="7.28125" PointY="24.3362939453125" />
+          <ConnectorPoint PointX="7.21875" PointY="11.450027544070515" />
+          <ConnectorPoint PointX="7.21875" PointY="24.3362939453125" />
           <ConnectorPoint PointX="7.5" PointY="24.3362939453125" />
         </AssociationConnector>
         <AssociationConnector Association="RentalHouseFinding.PostsPostVideos">
-          <ConnectorPoint PointX="6.75" PointY="10.957045774839745" />
-          <ConnectorPoint PointX="7.34375" PointY="11.550795774839745" />
-          <ConnectorPoint PointX="7.34375" PointY="27.240143229166666" />
+          <ConnectorPoint PointX="6.75" PointY="10.925891928685898" />
+          <ConnectorPoint PointX="7.1875" PointY="11.363391928685898" />
+          <ConnectorPoint PointX="7.1875" PointY="27.240143229166666" />
           <ConnectorPoint PointX="7.5" PointY="27.240143229166666" />
         </AssociationConnector>
         <AssociationConnector Association="RentalHouseFinding.PostStatusesPosts">
@@ -1457,8 +1549,8 @@
         </AssociationConnector>
         <AssociationConnector Association="RentalHouseFinding.PostsMessegesSender">
           <ConnectorPoint PointX="6.75" PointY="10.974353467147436" />
-          <ConnectorPoint PointX="7.21875" PointY="11.443103467147436" />
-          <ConnectorPoint PointX="7.21875" PointY="30.442047526041669" />
+          <ConnectorPoint PointX="7.15625" PointY="11.380603467147436" />
+          <ConnectorPoint PointX="7.15625" PointY="30.442047526041669" />
           <ConnectorPoint PointX="7.5" PointY="30.442047526041669" />
         </AssociationConnector>
         <EntityTypeShape EntityType="RentalHouseFinding.Answers" Width="1.5" PointX="9.75" PointY="29.375" Height="2.172587890624996" IsExpanded="true" />
@@ -1467,6 +1559,11 @@
           <ConnectorPoint PointX="9.75" PointY="30.461293945312498" />
         </AssociationConnector>
         <EntityTypeShape EntityType="RentalHouseFinding.AdvanceSearchScore" Width="1.5" PointX="4.75" PointY="0.75" Height="1.5956835937499996" IsExpanded="true" />
+        <EntityTypeShape EntityType="RentalHouseFinding.FacilityTemplates" Width="1.5" PointX="7.75" PointY="1.125" Height="3.3263964843749996" />
+        <AssociationConnector Association="RentalHouseFinding.FacilityTemplatesFacilities">
+          <ConnectorPoint PointX="7.96875" PointY="4.6436979166666656" />
+          <ConnectorPoint PointX="7.96875" PointY="15.5" />
+        </AssociationConnector>
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

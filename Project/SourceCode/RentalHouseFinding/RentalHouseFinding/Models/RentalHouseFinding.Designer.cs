@@ -35,6 +35,7 @@ using System.Runtime.Serialization;
 [assembly: EdmRelationshipAttribute("RentalHouseFinding", "PostsMessegesReceiver", "Posts", System.Data.Metadata.Edm.RelationshipMultiplicity.One, typeof(RentalHouseFinding.Models.Posts), "Messeges", System.Data.Metadata.Edm.RelationshipMultiplicity.Many, typeof(RentalHouseFinding.Models.Questions), true)]
 [assembly: EdmRelationshipAttribute("RentalHouseFinding", "PostsMessegesSender", "Posts", System.Data.Metadata.Edm.RelationshipMultiplicity.One, typeof(RentalHouseFinding.Models.Posts), "Messeges", System.Data.Metadata.Edm.RelationshipMultiplicity.Many, typeof(RentalHouseFinding.Models.Questions), true)]
 [assembly: EdmRelationshipAttribute("RentalHouseFinding", "QuestionsAnswers", "Questions", System.Data.Metadata.Edm.RelationshipMultiplicity.One, typeof(RentalHouseFinding.Models.Questions), "Answers", System.Data.Metadata.Edm.RelationshipMultiplicity.Many, typeof(RentalHouseFinding.Models.Answers), true)]
+[assembly: EdmRelationshipAttribute("RentalHouseFinding", "FacilityTemplatesFacilities", "FacilityTemplates", System.Data.Metadata.Edm.RelationshipMultiplicity.One, typeof(RentalHouseFinding.Models.FacilityTemplates), "Facilities", System.Data.Metadata.Edm.RelationshipMultiplicity.Many, typeof(RentalHouseFinding.Models.Facilities), true)]
 
 #endregion
 
@@ -373,6 +374,22 @@ namespace RentalHouseFinding.Models
             }
         }
         private ObjectSet<AdvanceSearchScore> _AdvanceSearchScores;
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        public ObjectSet<FacilityTemplates> FacilityTemplates
+        {
+            get
+            {
+                if ((_FacilityTemplates == null))
+                {
+                    _FacilityTemplates = base.CreateObjectSet<FacilityTemplates>("FacilityTemplates");
+                }
+                return _FacilityTemplates;
+            }
+        }
+        private ObjectSet<FacilityTemplates> _FacilityTemplates;
 
         #endregion
         #region AddTo Methods
@@ -520,6 +537,14 @@ namespace RentalHouseFinding.Models
         {
             base.AddObject("AdvanceSearchScores", advanceSearchScore);
         }
+    
+        /// <summary>
+        /// Deprecated Method for adding a new object to the FacilityTemplates EntitySet. Consider using the .Add method of the associated ObjectSet&lt;T&gt; property instead.
+        /// </summary>
+        public void AddToFacilityTemplates(FacilityTemplates facilityTemplates)
+        {
+            base.AddObject("FacilityTemplates", facilityTemplates);
+        }
 
         #endregion
         #region Function Imports
@@ -592,12 +617,12 @@ namespace RentalHouseFinding.Models
         /// <param name="hasInternetScore">No Metadata Documentation available.</param>
         /// <param name="hasMotorParkingLotScore">No Metadata Documentation available.</param>
         /// <param name="hasSecurityScore">No Metadata Documentation available.</param>
+        /// <param name="hasToilet">No Metadata Documentation available.</param>
         /// <param name="hasTVCableScore">No Metadata Documentation available.</param>
         /// <param name="hasWaterHeaterScore">No Metadata Documentation available.</param>
         /// <param name="isAllowCookingScore">No Metadata Documentation available.</param>
         /// <param name="isStayWithOwnerScore">No Metadata Documentation available.</param>
-        /// <param name="hasToilet">No Metadata Documentation available.</param>
-        public int AdvancedSearchFacility(Nullable<global::System.Int32> categoryIdPass, Nullable<global::System.Int32> provinceIdPass, Nullable<global::System.Int32> districtIdPass, Nullable<global::System.Double> areaMax, Nullable<global::System.Double> areaMin, Nullable<global::System.Double> priceMax, Nullable<global::System.Double> priceMin, Nullable<global::System.Int32> hasAirConditionerScore, Nullable<global::System.Int32> hasBedScore, Nullable<global::System.Int32> hasGarageScore, Nullable<global::System.Int32> hasInternetScore, Nullable<global::System.Int32> hasMotorParkingLotScore, Nullable<global::System.Int32> hasSecurityScore, Nullable<global::System.Int32> hasTVCableScore, Nullable<global::System.Int32> hasWaterHeaterScore, Nullable<global::System.Int32> isAllowCookingScore, Nullable<global::System.Int32> isStayWithOwnerScore, Nullable<global::System.Int32> hasToilet)
+        public ObjectResult<AdvancedSearchFacility_Result> AdvancedSearchFacilities(Nullable<global::System.Int32> categoryIdPass, Nullable<global::System.Int32> provinceIdPass, Nullable<global::System.Int32> districtIdPass, Nullable<global::System.Double> areaMax, Nullable<global::System.Double> areaMin, Nullable<global::System.Double> priceMax, Nullable<global::System.Double> priceMin, Nullable<global::System.Int32> hasAirConditionerScore, Nullable<global::System.Int32> hasBedScore, Nullable<global::System.Int32> hasGarageScore, Nullable<global::System.Int32> hasInternetScore, Nullable<global::System.Int32> hasMotorParkingLotScore, Nullable<global::System.Int32> hasSecurityScore, Nullable<global::System.Int32> hasToilet, Nullable<global::System.Int32> hasTVCableScore, Nullable<global::System.Int32> hasWaterHeaterScore, Nullable<global::System.Int32> isAllowCookingScore, Nullable<global::System.Int32> isStayWithOwnerScore)
         {
             ObjectParameter categoryIdPassParameter;
             if (categoryIdPass.HasValue)
@@ -729,6 +754,16 @@ namespace RentalHouseFinding.Models
                 hasSecurityScoreParameter = new ObjectParameter("HasSecurityScore", typeof(global::System.Int32));
             }
     
+            ObjectParameter hasToiletParameter;
+            if (hasToilet.HasValue)
+            {
+                hasToiletParameter = new ObjectParameter("HasToilet", hasToilet);
+            }
+            else
+            {
+                hasToiletParameter = new ObjectParameter("HasToilet", typeof(global::System.Int32));
+            }
+    
             ObjectParameter hasTVCableScoreParameter;
             if (hasTVCableScore.HasValue)
             {
@@ -769,17 +804,7 @@ namespace RentalHouseFinding.Models
                 isStayWithOwnerScoreParameter = new ObjectParameter("IsStayWithOwnerScore", typeof(global::System.Int32));
             }
     
-            ObjectParameter hasToiletParameter;
-            if (hasToilet.HasValue)
-            {
-                hasToiletParameter = new ObjectParameter("HasToilet", hasToilet);
-            }
-            else
-            {
-                hasToiletParameter = new ObjectParameter("HasToilet", typeof(global::System.Int32));
-            }
-    
-            return base.ExecuteFunction("AdvancedSearchFacility", categoryIdPassParameter, provinceIdPassParameter, districtIdPassParameter, areaMaxParameter, areaMinParameter, priceMaxParameter, priceMinParameter, hasAirConditionerScoreParameter, hasBedScoreParameter, hasGarageScoreParameter, hasInternetScoreParameter, hasMotorParkingLotScoreParameter, hasSecurityScoreParameter, hasTVCableScoreParameter, hasWaterHeaterScoreParameter, isAllowCookingScoreParameter, isStayWithOwnerScoreParameter, hasToiletParameter);
+            return base.ExecuteFunction<AdvancedSearchFacility_Result>("AdvancedSearchFacilities", categoryIdPassParameter, provinceIdPassParameter, districtIdPassParameter, areaMaxParameter, areaMinParameter, priceMaxParameter, priceMinParameter, hasAirConditionerScoreParameter, hasBedScoreParameter, hasGarageScoreParameter, hasInternetScoreParameter, hasMotorParkingLotScoreParameter, hasSecurityScoreParameter, hasToiletParameter, hasTVCableScoreParameter, hasWaterHeaterScoreParameter, isAllowCookingScoreParameter, isStayWithOwnerScoreParameter);
         }
 
         #endregion
@@ -1859,7 +1884,8 @@ namespace RentalHouseFinding.Models
         /// <param name="restrictHours">Initial value of the RestrictHours property.</param>
         /// <param name="hasSecurity">Initial value of the HasSecurity property.</param>
         /// <param name="postIdFacilities">Initial value of the PostIdFacilities property.</param>
-        public static Facilities CreateFacilities(global::System.Boolean hasInternet, global::System.Double electricityFee, global::System.Double waterFee, global::System.Boolean hasTVCable, global::System.Boolean hasBed, global::System.Boolean hasWaterHeater, global::System.Boolean isAllowCooking, global::System.Boolean hasMotorParkingLot, global::System.Boolean hasToilet, global::System.Boolean hasAirConditioner, global::System.Boolean hasGarage, global::System.Boolean isStayWithOwner, global::System.Double restrictHours, global::System.Boolean hasSecurity, global::System.Int32 postIdFacilities)
+        /// <param name="facilityTemplateId">Initial value of the FacilityTemplateId property.</param>
+        public static Facilities CreateFacilities(global::System.Boolean hasInternet, global::System.Double electricityFee, global::System.Double waterFee, global::System.Boolean hasTVCable, global::System.Boolean hasBed, global::System.Boolean hasWaterHeater, global::System.Boolean isAllowCooking, global::System.Boolean hasMotorParkingLot, global::System.Boolean hasToilet, global::System.Boolean hasAirConditioner, global::System.Boolean hasGarage, global::System.Boolean isStayWithOwner, global::System.Double restrictHours, global::System.Boolean hasSecurity, global::System.Int32 postIdFacilities, global::System.Int32 facilityTemplateId)
         {
             Facilities facilities = new Facilities();
             facilities.HasInternet = hasInternet;
@@ -1877,6 +1903,7 @@ namespace RentalHouseFinding.Models
             facilities.RestrictHours = restrictHours;
             facilities.HasSecurity = hasSecurity;
             facilities.PostIdFacilities = postIdFacilities;
+            facilities.FacilityTemplateId = facilityTemplateId;
             return facilities;
         }
 
@@ -2269,6 +2296,30 @@ namespace RentalHouseFinding.Models
         private global::System.Int32 _PostIdFacilities;
         partial void OnPostIdFacilitiesChanging(global::System.Int32 value);
         partial void OnPostIdFacilitiesChanged();
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=false)]
+        [DataMemberAttribute()]
+        public global::System.Int32 FacilityTemplateId
+        {
+            get
+            {
+                return _FacilityTemplateId;
+            }
+            set
+            {
+                OnFacilityTemplateIdChanging(value);
+                ReportPropertyChanging("FacilityTemplateId");
+                _FacilityTemplateId = StructuralObject.SetValidValue(value);
+                ReportPropertyChanged("FacilityTemplateId");
+                OnFacilityTemplateIdChanged();
+            }
+        }
+        private global::System.Int32 _FacilityTemplateId;
+        partial void OnFacilityTemplateIdChanging(global::System.Int32 value);
+        partial void OnFacilityTemplateIdChanged();
 
         #endregion
     
@@ -2308,6 +2359,388 @@ namespace RentalHouseFinding.Models
                 if ((value != null))
                 {
                     ((IEntityWithRelationships)this).RelationshipManager.InitializeRelatedReference<Posts>("RentalHouseFinding.PostsFacilities", "Posts", value);
+                }
+            }
+        }
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [XmlIgnoreAttribute()]
+        [SoapIgnoreAttribute()]
+        [DataMemberAttribute()]
+        [EdmRelationshipNavigationPropertyAttribute("RentalHouseFinding", "FacilityTemplatesFacilities", "FacilityTemplates")]
+        public FacilityTemplates FacilityTemplate
+        {
+            get
+            {
+                return ((IEntityWithRelationships)this).RelationshipManager.GetRelatedReference<FacilityTemplates>("RentalHouseFinding.FacilityTemplatesFacilities", "FacilityTemplates").Value;
+            }
+            set
+            {
+                ((IEntityWithRelationships)this).RelationshipManager.GetRelatedReference<FacilityTemplates>("RentalHouseFinding.FacilityTemplatesFacilities", "FacilityTemplates").Value = value;
+            }
+        }
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [BrowsableAttribute(false)]
+        [DataMemberAttribute()]
+        public EntityReference<FacilityTemplates> FacilityTemplateReference
+        {
+            get
+            {
+                return ((IEntityWithRelationships)this).RelationshipManager.GetRelatedReference<FacilityTemplates>("RentalHouseFinding.FacilityTemplatesFacilities", "FacilityTemplates");
+            }
+            set
+            {
+                if ((value != null))
+                {
+                    ((IEntityWithRelationships)this).RelationshipManager.InitializeRelatedReference<FacilityTemplates>("RentalHouseFinding.FacilityTemplatesFacilities", "FacilityTemplates", value);
+                }
+            }
+        }
+
+        #endregion
+    }
+    
+    /// <summary>
+    /// No Metadata Documentation available.
+    /// </summary>
+    [EdmEntityTypeAttribute(NamespaceName="RentalHouseFinding", Name="FacilityTemplates")]
+    [Serializable()]
+    [DataContractAttribute(IsReference=true)]
+    public partial class FacilityTemplates : EntityObject
+    {
+        #region Factory Method
+    
+        /// <summary>
+        /// Create a new FacilityTemplates object.
+        /// </summary>
+        /// <param name="id">Initial value of the Id property.</param>
+        public static FacilityTemplates CreateFacilityTemplates(global::System.Int32 id)
+        {
+            FacilityTemplates facilityTemplates = new FacilityTemplates();
+            facilityTemplates.Id = id;
+            return facilityTemplates;
+        }
+
+        #endregion
+        #region Primitive Properties
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=true, IsNullable=false)]
+        [DataMemberAttribute()]
+        public global::System.Int32 Id
+        {
+            get
+            {
+                return _Id;
+            }
+            set
+            {
+                if (_Id != value)
+                {
+                    OnIdChanging(value);
+                    ReportPropertyChanging("Id");
+                    _Id = StructuralObject.SetValidValue(value);
+                    ReportPropertyChanged("Id");
+                    OnIdChanged();
+                }
+            }
+        }
+        private global::System.Int32 _Id;
+        partial void OnIdChanging(global::System.Int32 value);
+        partial void OnIdChanged();
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=false)]
+        [DataMemberAttribute()]
+        public global::System.Boolean Column1
+        {
+            get
+            {
+                return _Column1;
+            }
+            set
+            {
+                OnColumn1Changing(value);
+                ReportPropertyChanging("Column1");
+                _Column1 = StructuralObject.SetValidValue(value);
+                ReportPropertyChanged("Column1");
+                OnColumn1Changed();
+            }
+        }
+        private global::System.Boolean _Column1 = false;
+        partial void OnColumn1Changing(global::System.Boolean value);
+        partial void OnColumn1Changed();
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=false)]
+        [DataMemberAttribute()]
+        public global::System.Boolean Column2
+        {
+            get
+            {
+                return _Column2;
+            }
+            set
+            {
+                OnColumn2Changing(value);
+                ReportPropertyChanging("Column2");
+                _Column2 = StructuralObject.SetValidValue(value);
+                ReportPropertyChanged("Column2");
+                OnColumn2Changed();
+            }
+        }
+        private global::System.Boolean _Column2 = false;
+        partial void OnColumn2Changing(global::System.Boolean value);
+        partial void OnColumn2Changed();
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=false)]
+        [DataMemberAttribute()]
+        public global::System.Boolean Column3
+        {
+            get
+            {
+                return _Column3;
+            }
+            set
+            {
+                OnColumn3Changing(value);
+                ReportPropertyChanging("Column3");
+                _Column3 = StructuralObject.SetValidValue(value);
+                ReportPropertyChanged("Column3");
+                OnColumn3Changed();
+            }
+        }
+        private global::System.Boolean _Column3 = false;
+        partial void OnColumn3Changing(global::System.Boolean value);
+        partial void OnColumn3Changed();
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=false)]
+        [DataMemberAttribute()]
+        public global::System.Boolean Column4
+        {
+            get
+            {
+                return _Column4;
+            }
+            set
+            {
+                OnColumn4Changing(value);
+                ReportPropertyChanging("Column4");
+                _Column4 = StructuralObject.SetValidValue(value);
+                ReportPropertyChanged("Column4");
+                OnColumn4Changed();
+            }
+        }
+        private global::System.Boolean _Column4 = false;
+        partial void OnColumn4Changing(global::System.Boolean value);
+        partial void OnColumn4Changed();
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=false)]
+        [DataMemberAttribute()]
+        public global::System.Boolean Column5
+        {
+            get
+            {
+                return _Column5;
+            }
+            set
+            {
+                OnColumn5Changing(value);
+                ReportPropertyChanging("Column5");
+                _Column5 = StructuralObject.SetValidValue(value);
+                ReportPropertyChanged("Column5");
+                OnColumn5Changed();
+            }
+        }
+        private global::System.Boolean _Column5 = false;
+        partial void OnColumn5Changing(global::System.Boolean value);
+        partial void OnColumn5Changed();
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=false)]
+        [DataMemberAttribute()]
+        public global::System.Boolean Column6
+        {
+            get
+            {
+                return _Column6;
+            }
+            set
+            {
+                OnColumn6Changing(value);
+                ReportPropertyChanging("Column6");
+                _Column6 = StructuralObject.SetValidValue(value);
+                ReportPropertyChanged("Column6");
+                OnColumn6Changed();
+            }
+        }
+        private global::System.Boolean _Column6 = false;
+        partial void OnColumn6Changing(global::System.Boolean value);
+        partial void OnColumn6Changed();
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=false)]
+        [DataMemberAttribute()]
+        public global::System.Boolean Column7
+        {
+            get
+            {
+                return _Column7;
+            }
+            set
+            {
+                OnColumn7Changing(value);
+                ReportPropertyChanging("Column7");
+                _Column7 = StructuralObject.SetValidValue(value);
+                ReportPropertyChanged("Column7");
+                OnColumn7Changed();
+            }
+        }
+        private global::System.Boolean _Column7 = false;
+        partial void OnColumn7Changing(global::System.Boolean value);
+        partial void OnColumn7Changed();
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=false)]
+        [DataMemberAttribute()]
+        public global::System.Boolean Column8
+        {
+            get
+            {
+                return _Column8;
+            }
+            set
+            {
+                OnColumn8Changing(value);
+                ReportPropertyChanging("Column8");
+                _Column8 = StructuralObject.SetValidValue(value);
+                ReportPropertyChanged("Column8");
+                OnColumn8Changed();
+            }
+        }
+        private global::System.Boolean _Column8 = false;
+        partial void OnColumn8Changing(global::System.Boolean value);
+        partial void OnColumn8Changed();
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=false)]
+        [DataMemberAttribute()]
+        public global::System.Boolean Column9
+        {
+            get
+            {
+                return _Column9;
+            }
+            set
+            {
+                OnColumn9Changing(value);
+                ReportPropertyChanging("Column9");
+                _Column9 = StructuralObject.SetValidValue(value);
+                ReportPropertyChanged("Column9");
+                OnColumn9Changed();
+            }
+        }
+        private global::System.Boolean _Column9 = false;
+        partial void OnColumn9Changing(global::System.Boolean value);
+        partial void OnColumn9Changed();
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=false)]
+        [DataMemberAttribute()]
+        public global::System.Boolean Column10
+        {
+            get
+            {
+                return _Column10;
+            }
+            set
+            {
+                OnColumn10Changing(value);
+                ReportPropertyChanging("Column10");
+                _Column10 = StructuralObject.SetValidValue(value);
+                ReportPropertyChanged("Column10");
+                OnColumn10Changed();
+            }
+        }
+        private global::System.Boolean _Column10 = false;
+        partial void OnColumn10Changing(global::System.Boolean value);
+        partial void OnColumn10Changed();
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=false)]
+        [DataMemberAttribute()]
+        public global::System.Boolean Column11
+        {
+            get
+            {
+                return _Column11;
+            }
+            set
+            {
+                OnColumn11Changing(value);
+                ReportPropertyChanging("Column11");
+                _Column11 = StructuralObject.SetValidValue(value);
+                ReportPropertyChanged("Column11");
+                OnColumn11Changed();
+            }
+        }
+        private global::System.Boolean _Column11 = false;
+        partial void OnColumn11Changing(global::System.Boolean value);
+        partial void OnColumn11Changed();
+
+        #endregion
+    
+        #region Navigation Properties
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [XmlIgnoreAttribute()]
+        [SoapIgnoreAttribute()]
+        [DataMemberAttribute()]
+        [EdmRelationshipNavigationPropertyAttribute("RentalHouseFinding", "FacilityTemplatesFacilities", "Facilities")]
+        public EntityCollection<Facilities> Facilities
+        {
+            get
+            {
+                return ((IEntityWithRelationships)this).RelationshipManager.GetRelatedCollection<Facilities>("RentalHouseFinding.FacilityTemplatesFacilities", "Facilities");
+            }
+            set
+            {
+                if ((value != null))
+                {
+                    ((IEntityWithRelationships)this).RelationshipManager.InitializeRelatedCollection<Facilities>("RentalHouseFinding.FacilityTemplatesFacilities", "Facilities", value);
                 }
             }
         }
@@ -5387,6 +5820,81 @@ namespace RentalHouseFinding.Models
 
     #endregion
     #region ComplexTypes
+    
+    /// <summary>
+    /// No Metadata Documentation available.
+    /// </summary>
+    [EdmComplexTypeAttribute(NamespaceName="RentalHouseFinding", Name="AdvancedSearchFacility_Result")]
+    [DataContractAttribute(IsReference=true)]
+    [Serializable()]
+    public partial class AdvancedSearchFacility_Result : ComplexObject
+    {
+        #region Factory Method
+    
+        /// <summary>
+        /// Create a new AdvancedSearchFacility_Result object.
+        /// </summary>
+        /// <param name="id">Initial value of the Id property.</param>
+        public static AdvancedSearchFacility_Result CreateAdvancedSearchFacility_Result(global::System.Int32 id)
+        {
+            AdvancedSearchFacility_Result advancedSearchFacility_Result = new AdvancedSearchFacility_Result();
+            advancedSearchFacility_Result.Id = id;
+            return advancedSearchFacility_Result;
+        }
+
+        #endregion
+        #region Primitive Properties
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=false)]
+        [DataMemberAttribute()]
+        public global::System.Int32 Id
+        {
+            get
+            {
+                return _Id;
+            }
+            set
+            {
+                OnIdChanging(value);
+                ReportPropertyChanging("Id");
+                _Id = StructuralObject.SetValidValue(value);
+                ReportPropertyChanged("Id");
+                OnIdChanged();
+            }
+        }
+        private global::System.Int32 _Id;
+        partial void OnIdChanging(global::System.Int32 value);
+        partial void OnIdChanged();
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=true)]
+        [DataMemberAttribute()]
+        public Nullable<global::System.Int32> Score
+        {
+            get
+            {
+                return _Score;
+            }
+            set
+            {
+                OnScoreChanging(value);
+                ReportPropertyChanging("Score");
+                _Score = StructuralObject.SetValidValue(value);
+                ReportPropertyChanged("Score");
+                OnScoreChanged();
+            }
+        }
+        private Nullable<global::System.Int32> _Score;
+        partial void OnScoreChanging(Nullable<global::System.Int32> value);
+        partial void OnScoreChanged();
+
+        #endregion
+    }
     
     /// <summary>
     /// No Metadata Documentation available.

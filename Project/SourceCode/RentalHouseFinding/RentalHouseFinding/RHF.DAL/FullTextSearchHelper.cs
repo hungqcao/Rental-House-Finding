@@ -40,5 +40,55 @@ namespace RentalHouseFinding.RHF.DAL
                 return null;
             }
         }
+
+        public List<AdvancedSearchFacility_Result> AdvanceSearch(int categoryId, 
+                                                                int provinceId, 
+                                                                int DistrictId, 
+                                                                double areaMax,
+                                                                double areaMin,
+                                                                double priceMax,
+                                                                double priceMin,
+                                                                int hasAirConditionerScore,
+                                                                int hasBedScore,
+                                                                int hasGarageScore,
+                                                                int hasInternetScore,
+                                                                int hasMotorParkingLotScore,
+                                                                int hasSecurityScore,
+                                                                int hasTVCableScore,
+                                                                int hasWaterHeaterScore,
+                                                                int isAllowCookingScore,
+                                                                int isStayWithOwnerScore,
+                                                                int hasToiletScore,
+                                                                int skip, 
+                                                                int take)
+        {
+            try
+            {
+                var listSuggestion = _db.AdvancedSearchFacilities(categoryId, 
+                                                                provinceId, 
+                                                                DistrictId, 
+                                                                areaMax, 
+                                                                areaMin, 
+                                                                priceMax, 
+                                                                priceMin, 
+                                                                hasAirConditionerScore,
+                                                                hasBedScore,
+                                                                hasGarageScore,
+                                                                hasInternetScore,
+                                                                hasMotorParkingLotScore,
+                                                                hasSecurityScore,
+                                                                hasTVCableScore,
+                                                                hasWaterHeaterScore,
+                                                                isAllowCookingScore,
+                                                                isStayWithOwnerScore,
+                                                                hasToiletScore).Skip(skip).Take(take);
+
+                return listSuggestion.ToList();
+            }
+            catch (Exception ex)
+            {
+                return null;
+            }
+        }
     }
 }
