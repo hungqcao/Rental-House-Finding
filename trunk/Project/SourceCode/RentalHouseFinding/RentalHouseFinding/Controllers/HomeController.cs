@@ -26,7 +26,7 @@ namespace RentalHouseFinding.Controllers
             if (Session["SearchViewModel"] != null)
             {
                 SearchViewModel _modelRequest = (SearchViewModel)Session["SearchViewModel"];
-
+                
                 if (_modelRequest.IsNormalSearch)
                 {
                     using (FullTextSearchHelper fullTextHelp = new FullTextSearchHelper())

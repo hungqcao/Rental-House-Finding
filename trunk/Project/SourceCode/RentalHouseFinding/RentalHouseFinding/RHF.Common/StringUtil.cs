@@ -74,32 +74,5 @@ namespace RentalHouseFinding.RHF.Common
             return str;
 
         }
-        public static string GetNumber(string classId)
-        {
-            int check;
-            string result;
-
-
-            try
-            {
-                result = classId.TrimEnd().Substring(0, 2);
-                check = Convert.ToInt32(result);
-            }
-            catch (Exception)
-            {
-                try
-                {
-                    result = classId.TrimEnd().Substring(0, 1);
-                    check = Convert.ToInt32(result);
-                }
-                catch (Exception)
-                {
-                    result = classId.TrimEnd().Substring(0, 3);
-                    check = Convert.ToInt32(result);
-                }
-
-            }
-            return result;
-        }
     }
 }

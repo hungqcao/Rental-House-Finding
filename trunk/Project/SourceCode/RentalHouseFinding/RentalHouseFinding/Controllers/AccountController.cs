@@ -177,15 +177,15 @@ namespace RentalHouseFinding.Controllers
         public ActionResult Activation(UserViewModel model,int id, string key)
         { 
             var user = (from u in _db.Users
-                        where u.Id == id && !u.IsActivate
-                        select new { u.KeyActivate, u.Username }).FirstOrDefault();
+                        where u.Id == id && !u.IsActive
+                        select new { u.KeyActive, u.Username }).FirstOrDefault();
             if (user != null)
             {
-                if (user.KeyActivate.ToString().Equals(key, StringComparison.CurrentCultureIgnoreCase))
+                if (user.KeyActive.ToString().Equals(key, StringComparison.CurrentCultureIgnoreCase))
                 {
                     //update user                
                     var profile = (from p in _db.Users where (p.Id == id) select p).FirstOrDefault();
-                    profile.IsActivate = true;
+                    profile.IsActive = true;
 
                     _db.ObjectStateManager.ChangeObjectState(profile, System.Data.EntityState.Modified);
                     _db.SaveChanges();
@@ -236,8 +236,8 @@ namespace RentalHouseFinding.Controllers
             {
                 if (Membership.ValidateUser(model.UserName, model.Password))
                 {
-                    var user = (from p in _db.Users where p.Username == model.UserName select new { p.IsActivate , p.RoleId }).FirstOrDefault();
-                    if (user.IsActivate)
+                    var user = (from p in _db.Users where p.Username == model.UserName select new { p.IsActive , p.RoleId }).FirstOrDefault();
+                    if (user.IsActive)
                     {
 
                         FormsAuthentication.SetAuthCookie(model.UserName, model.RememberMe);

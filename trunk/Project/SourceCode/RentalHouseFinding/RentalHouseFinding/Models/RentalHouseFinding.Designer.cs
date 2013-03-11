@@ -36,6 +36,7 @@ using System.Runtime.Serialization;
 [assembly: EdmRelationshipAttribute("RentalHouseFinding", "PostsMessegesSender", "Posts", System.Data.Metadata.Edm.RelationshipMultiplicity.One, typeof(RentalHouseFinding.Models.Posts), "Messeges", System.Data.Metadata.Edm.RelationshipMultiplicity.Many, typeof(RentalHouseFinding.Models.Questions), true)]
 [assembly: EdmRelationshipAttribute("RentalHouseFinding", "QuestionsAnswers", "Questions", System.Data.Metadata.Edm.RelationshipMultiplicity.One, typeof(RentalHouseFinding.Models.Questions), "Answers", System.Data.Metadata.Edm.RelationshipMultiplicity.Many, typeof(RentalHouseFinding.Models.Answers), true)]
 [assembly: EdmRelationshipAttribute("RentalHouseFinding", "FacilityTemplatesFacilities", "FacilityTemplates", System.Data.Metadata.Edm.RelationshipMultiplicity.One, typeof(RentalHouseFinding.Models.FacilityTemplates), "Facilities", System.Data.Metadata.Edm.RelationshipMultiplicity.Many, typeof(RentalHouseFinding.Models.Facilities), true)]
+[assembly: EdmRelationshipAttribute("RentalHouseFinding", "BadWordTypesBadWords", "BadWordTypes", System.Data.Metadata.Edm.RelationshipMultiplicity.One, typeof(RentalHouseFinding.Models.BadWordTypes), "BadWords", System.Data.Metadata.Edm.RelationshipMultiplicity.Many, typeof(RentalHouseFinding.Models.BadWords), true)]
 
 #endregion
 
@@ -390,6 +391,22 @@ namespace RentalHouseFinding.Models
             }
         }
         private ObjectSet<FacilityTemplates> _FacilityTemplates;
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        public ObjectSet<BadWordTypes> BadWordTypes
+        {
+            get
+            {
+                if ((_BadWordTypes == null))
+                {
+                    _BadWordTypes = base.CreateObjectSet<BadWordTypes>("BadWordTypes");
+                }
+                return _BadWordTypes;
+            }
+        }
+        private ObjectSet<BadWordTypes> _BadWordTypes;
 
         #endregion
         #region AddTo Methods
@@ -544,6 +561,14 @@ namespace RentalHouseFinding.Models
         public void AddToFacilityTemplates(FacilityTemplates facilityTemplates)
         {
             base.AddObject("FacilityTemplates", facilityTemplates);
+        }
+    
+        /// <summary>
+        /// Deprecated Method for adding a new object to the BadWordTypes EntitySet. Consider using the .Add method of the associated ObjectSet&lt;T&gt; property instead.
+        /// </summary>
+        public void AddToBadWordTypes(BadWordTypes badWordTypes)
+        {
+            base.AddObject("BadWordTypes", badWordTypes);
         }
 
         #endregion
@@ -1137,11 +1162,13 @@ namespace RentalHouseFinding.Models
         /// </summary>
         /// <param name="id">Initial value of the Id property.</param>
         /// <param name="word">Initial value of the Word property.</param>
-        public static BadWords CreateBadWords(global::System.Int32 id, global::System.String word)
+        /// <param name="typeId">Initial value of the TypeId property.</param>
+        public static BadWords CreateBadWords(global::System.Int32 id, global::System.String word, global::System.Int32 typeId)
         {
             BadWords badWords = new BadWords();
             badWords.Id = id;
             badWords.Word = word;
+            badWords.TypeId = typeId;
             return badWords;
         }
 
@@ -1198,9 +1225,180 @@ namespace RentalHouseFinding.Models
         private global::System.String _Word;
         partial void OnWordChanging(global::System.String value);
         partial void OnWordChanged();
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=false)]
+        [DataMemberAttribute()]
+        public global::System.Int32 TypeId
+        {
+            get
+            {
+                return _TypeId;
+            }
+            set
+            {
+                OnTypeIdChanging(value);
+                ReportPropertyChanging("TypeId");
+                _TypeId = StructuralObject.SetValidValue(value);
+                ReportPropertyChanged("TypeId");
+                OnTypeIdChanged();
+            }
+        }
+        private global::System.Int32 _TypeId;
+        partial void OnTypeIdChanging(global::System.Int32 value);
+        partial void OnTypeIdChanged();
 
         #endregion
     
+        #region Navigation Properties
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [XmlIgnoreAttribute()]
+        [SoapIgnoreAttribute()]
+        [DataMemberAttribute()]
+        [EdmRelationshipNavigationPropertyAttribute("RentalHouseFinding", "BadWordTypesBadWords", "BadWordTypes")]
+        public BadWordTypes BadWordType
+        {
+            get
+            {
+                return ((IEntityWithRelationships)this).RelationshipManager.GetRelatedReference<BadWordTypes>("RentalHouseFinding.BadWordTypesBadWords", "BadWordTypes").Value;
+            }
+            set
+            {
+                ((IEntityWithRelationships)this).RelationshipManager.GetRelatedReference<BadWordTypes>("RentalHouseFinding.BadWordTypesBadWords", "BadWordTypes").Value = value;
+            }
+        }
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [BrowsableAttribute(false)]
+        [DataMemberAttribute()]
+        public EntityReference<BadWordTypes> BadWordTypeReference
+        {
+            get
+            {
+                return ((IEntityWithRelationships)this).RelationshipManager.GetRelatedReference<BadWordTypes>("RentalHouseFinding.BadWordTypesBadWords", "BadWordTypes");
+            }
+            set
+            {
+                if ((value != null))
+                {
+                    ((IEntityWithRelationships)this).RelationshipManager.InitializeRelatedReference<BadWordTypes>("RentalHouseFinding.BadWordTypesBadWords", "BadWordTypes", value);
+                }
+            }
+        }
+
+        #endregion
+    }
+    
+    /// <summary>
+    /// No Metadata Documentation available.
+    /// </summary>
+    [EdmEntityTypeAttribute(NamespaceName="RentalHouseFinding", Name="BadWordTypes")]
+    [Serializable()]
+    [DataContractAttribute(IsReference=true)]
+    public partial class BadWordTypes : EntityObject
+    {
+        #region Factory Method
+    
+        /// <summary>
+        /// Create a new BadWordTypes object.
+        /// </summary>
+        /// <param name="id">Initial value of the Id property.</param>
+        /// <param name="name">Initial value of the Name property.</param>
+        public static BadWordTypes CreateBadWordTypes(global::System.Int32 id, global::System.String name)
+        {
+            BadWordTypes badWordTypes = new BadWordTypes();
+            badWordTypes.Id = id;
+            badWordTypes.Name = name;
+            return badWordTypes;
+        }
+
+        #endregion
+        #region Primitive Properties
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=true, IsNullable=false)]
+        [DataMemberAttribute()]
+        public global::System.Int32 Id
+        {
+            get
+            {
+                return _Id;
+            }
+            set
+            {
+                if (_Id != value)
+                {
+                    OnIdChanging(value);
+                    ReportPropertyChanging("Id");
+                    _Id = StructuralObject.SetValidValue(value);
+                    ReportPropertyChanged("Id");
+                    OnIdChanged();
+                }
+            }
+        }
+        private global::System.Int32 _Id;
+        partial void OnIdChanging(global::System.Int32 value);
+        partial void OnIdChanged();
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=false)]
+        [DataMemberAttribute()]
+        public global::System.String Name
+        {
+            get
+            {
+                return _Name;
+            }
+            set
+            {
+                OnNameChanging(value);
+                ReportPropertyChanging("Name");
+                _Name = StructuralObject.SetValidValue(value, false);
+                ReportPropertyChanged("Name");
+                OnNameChanged();
+            }
+        }
+        private global::System.String _Name;
+        partial void OnNameChanging(global::System.String value);
+        partial void OnNameChanged();
+
+        #endregion
+    
+        #region Navigation Properties
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [XmlIgnoreAttribute()]
+        [SoapIgnoreAttribute()]
+        [DataMemberAttribute()]
+        [EdmRelationshipNavigationPropertyAttribute("RentalHouseFinding", "BadWordTypesBadWords", "BadWords")]
+        public EntityCollection<BadWords> BadWords
+        {
+            get
+            {
+                return ((IEntityWithRelationships)this).RelationshipManager.GetRelatedCollection<BadWords>("RentalHouseFinding.BadWordTypesBadWords", "BadWords");
+            }
+            set
+            {
+                if ((value != null))
+                {
+                    ((IEntityWithRelationships)this).RelationshipManager.InitializeRelatedCollection<BadWords>("RentalHouseFinding.BadWordTypesBadWords", "BadWords", value);
+                }
+            }
+        }
+
+        #endregion
     }
     
     /// <summary>

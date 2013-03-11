@@ -60,6 +60,27 @@ INSERT INTO [RentalHouseFinding].[dbo].[Districts] VALUES
 
 GO
 
+DELETE FROM [RentalHouseFinding].[dbo].BadWords
+
+GO
+
+
+DELETE FROM [RentalHouseFinding].[dbo].BadWordTypes
+
+GO
+
+
+INSERT INTO [RentalHouseFinding].[dbo].BadWordTypes VALUES 
+			('Chinh tri'),('Tinh duc'),('Tu long')
+
+GO
+
+INSERT INTO [RentalHouseFinding].[dbo].BadWords VALUES 
+			('Fuck', 1),('Ass', 2), ('Hung Vuong', 1)
+
+GO
+
+
 USE RentalHouseFinding ;
 GO
 IF OBJECT_ID ('dbo.V_PostFullInfo', 'V') IS NOT NULL
@@ -188,6 +209,7 @@ WHERE
 	F.Area <= @AreaMax AND F.Area >= @AreaMin AND
 	F.Price <= @PriceMax AND F.Price >= @PriceMin) S
 ON T.Id = S.FacilityTemplateId
+ORDER BY Score
 GO
 
 EXEC AdvancedSearchFacility 
