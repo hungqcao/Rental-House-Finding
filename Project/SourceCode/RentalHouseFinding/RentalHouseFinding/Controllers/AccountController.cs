@@ -172,6 +172,42 @@ namespace RentalHouseFinding.Controllers
             // If we got this far, something failed, redisplay form
             return View(userDetail);
         }
+
+        //get
+        public ActionResult Activation(UserViewModel model,int id, string key)
+        { 
+            var user = (from u in _db.Users
+                        where u.Id == id && !u.IsActivate
+                        select new { u.KeyActivate, u.Username }).FirstOrDefault();
+            if (user != null)
+            {
+                if (user.KeyActivate.ToString().Equals(key, StringComparison.CurrentCultureIgnoreCase))
+                {
+                    //update user                
+                    var profile = (from p in _db.Users where (p.Id == id) select p).FirstOrDefault();
+                    profile.IsActivate = true;
+
+                    _db.ObjectStateManager.ChangeObjectState(profile, System.Data.EntityState.Modified);
+                    _db.SaveChanges();
+                    model.UserName = profile.Username;
+
+                }
+            }
+            else
+            { 
+                //account da dc active.
+            }
+            return View(model);
+        }
+        [HttpPost]
+        public ActionResult Activation(int id)
+        {
+            var profile = (from p in _db.Users where (p.Id == id) select p).FirstOrDefault();
+            FormsAuthentication.SetAuthCookie(profile.Username,true);
+            return RedirectToAction("Index", "Landing");            
+        }
+        
+        //
         //
         // GET: /Account/LogOn
         private RentalHouseFindingEntities _db = new RentalHouseFindingEntities();
@@ -200,20 +236,30 @@ namespace RentalHouseFinding.Controllers
             {
                 if (Membership.ValidateUser(model.UserName, model.Password))
                 {
-                    FormsAuthentication.SetAuthCookie(model.UserName, model.RememberMe);
-                    if (Url.IsLocalUrl(returnUrl) && returnUrl.Length > 1 && returnUrl.StartsWith("/")
-                        && !returnUrl.StartsWith("//") && !returnUrl.StartsWith("/\\"))
+                    var user = (from p in _db.Users where p.Username == model.UserName select new { p.IsActivate , p.RoleId }).FirstOrDefault();
+                    if (user.IsActivate)
                     {
-                        return Redirect(returnUrl);
-                    }
-                    int accountType = (from p in _db.Users where p.Username == model.UserName select p.RoleId).FirstOrDefault();
-                    if (accountType == 1)
-                    {
-                        return RedirectToAction("Index", "Admin");
+
+                        FormsAuthentication.SetAuthCookie(model.UserName, model.RememberMe);
+                        if (Url.IsLocalUrl(returnUrl) && returnUrl.Length > 1 && returnUrl.StartsWith("/")
+                            && !returnUrl.StartsWith("//") && !returnUrl.StartsWith("/\\"))
+                        {
+                            return Redirect(returnUrl);
+                        }
+                        //int accountType = (from p in _db.Users where p.Username == model.UserName select p.RoleId).FirstOrDefault();
+                        if (user.RoleId == 1)
+                        {
+                            return RedirectToAction("Index", "Admin");
+                        }
+                        else
+                        {
+                            return RedirectToAction("Index", "Landing");
+                        }
                     }
                     else
                     {
-                        return RedirectToAction("Index", "Landing");
+                        ModelState.AddModelError("", "Tài khoản của bạn chưa được kích hoạt");
+                        return View(model);
                     }
                 }
                 else
@@ -256,8 +302,8 @@ namespace RentalHouseFinding.Controllers
                 customMP.CreateUser(model, out createStatus);
                 if (createStatus == MembershipCreateStatus.Success)
                 {
-                    FormsAuthentication.SetAuthCookie(model.UserName, false /* createPersistentCookie */);
-                    return RedirectToAction("Index", "Home");
+                    //FormsAuthentication.SetAuthCookie(model.UserName, false /* createPersistentCookie */);
+                    return RedirectToAction("Index", "Landing");                    
                 }
                 else
                 {
@@ -310,7 +356,9 @@ namespace RentalHouseFinding.Controllers
                         _db.SaveChanges();
                         changePasswordSucceeded = true;
                         success = "Thay đổi mật khẩu thành công";
+                        CommonModel.SendEmail("vietvh01388@fpt.edu.vn","body",0);
                     }
+                    
                 }
                 catch (Exception)
                 {

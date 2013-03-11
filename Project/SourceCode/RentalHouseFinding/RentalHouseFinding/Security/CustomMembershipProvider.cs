@@ -96,12 +96,14 @@ namespace RentalHouseFinding.Sercurity
                         user.PhoneNumber = model.PhoneNumber;
                         user.RoleId = 3;
                         user.Sex = model.Sex;
+                        user.KeyActivate = Guid.NewGuid();
 
                         _db.AddToUsers(user);
 
                         _db.SaveChanges();
 
                         status = MembershipCreateStatus.Success;
+                        CommonModel.SendEmail(model.UserName, String.Format("http://localhost:65174/Account/Activation?id={1}&key={0}", user.KeyActivate.ToString(), user.Id), 0);
 
                         return GetUser(model.UserName, false);
                     }
@@ -224,7 +226,7 @@ namespace RentalHouseFinding.Sercurity
                 try
                 {
                     var user = (from u in _db.Users 
-                                where u.Username.Equals(username, StringComparison.CurrentCultureIgnoreCase) && !u.IsDeleted
+                                where u.Username.Equals(username, StringComparison.CurrentCultureIgnoreCase) && !u.IsDeleted && u.IsActivate==true
                                  select u)
                                  .FirstOrDefault();
  
