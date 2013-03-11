@@ -704,6 +704,8 @@
           <NavigationProperty Name="Role" Relationship="RentalHouseFinding.RolesUsers" FromRole="Users" ToRole="Roles" />
           <Property Name="Sex" Nullable="true" MaxLength="10" Type="String" />
           <NavigationProperty Name="Posts" Relationship="RentalHouseFinding.UsersPosts" FromRole="Users" ToRole="Posts" />
+          <Property Type="Boolean" Name="IsActive" Nullable="false" />
+          <Property Type="Guid" Name="KeyActive" Nullable="true" />
         </EntityType>
         <EntityType Name="Provinces">
           <Key>
@@ -1442,7 +1444,7 @@
     <!-- Diagram content (shape and connector positions) -->
     <edmx:Diagrams>
       <Diagram Name="RentalHouseFinding" ZoomLevel="81" >
-        <EntityTypeShape EntityType="RentalHouseFinding.Users" PointX="3" PointY="11.125" Width="1.5" Height="4.6725065104166674" IsExpanded="true" />
+        <EntityTypeShape EntityType="RentalHouseFinding.Users" PointX="3" PointY="11.125" Width="1.5" Height="5.057109375" IsExpanded="true" />
         <EntityTypeShape EntityType="RentalHouseFinding.Provinces" PointX="0.75" PointY="17.125" Width="1.5" Height="2.172587890624996" IsExpanded="true" />
         <EntityTypeShape EntityType="RentalHouseFinding.Districts" PointX="3" PointY="16.875" Width="1.5" Height="2.5571907552083317" IsExpanded="true" />
         <AssociationConnector Association="RentalHouseFinding.ProvincesDistricts">
@@ -1472,16 +1474,16 @@
         <EntityTypeShape EntityType="RentalHouseFinding.PostStatuses" PointX="3" PointY="6.125" Width="1.5" Height="1.9802864583333317" IsExpanded="true" />
         <EntityTypeShape EntityType="RentalHouseFinding.Favorites" PointX="8.25" PointY="12.25" Width="1.5" Height="2.3648893229166674" IsExpanded="true" />
         <AssociationConnector Association="RentalHouseFinding.UsersFavorites">
-          <ConnectorPoint PointX="4.5" PointY="15.043017519531251" />
-          <ConnectorPoint PointX="4.791666666666667" PointY="15.043017519531251" />
-          <ConnectorPoint PointX="4.958333333333333" PointY="15.043017519531251" />
-          <ConnectorPoint PointX="7.041666666666667" PointY="15.043017519531249" />
-          <ConnectorPoint PointX="7.333333333333333" PointY="15.043017519531251" />
-          <ConnectorPoint PointX="7.510416666666667" PointY="15.043017519531251" />
-          <ConnectorPoint PointX="7.677083333333333" PointY="15.043017519531251" />
-          <ConnectorPoint PointX="7.885416666666667" PointY="15.043017519531251" />
-          <ConnectorPoint PointX="8.0520833333333339" PointY="15.043017519531251" />
-          <ConnectorPoint PointX="9.40625" PointY="15.043017519531251" />
+          <ConnectorPoint PointX="4.5" PointY="15.091095377604166" />
+          <ConnectorPoint PointX="4.791666666666667" PointY="15.091095377604166" />
+          <ConnectorPoint PointX="4.958333333333333" PointY="15.091095377604166" />
+          <ConnectorPoint PointX="7.041666666666667" PointY="15.091095377604164" />
+          <ConnectorPoint PointX="7.333333333333333" PointY="15.091095377604166" />
+          <ConnectorPoint PointX="7.510416666666667" PointY="15.091095377604166" />
+          <ConnectorPoint PointX="7.677083333333333" PointY="15.091095377604166" />
+          <ConnectorPoint PointX="7.885416666666667" PointY="15.091095377604166" />
+          <ConnectorPoint PointX="8.0520833333333339" PointY="15.091095377604166" />
+          <ConnectorPoint PointX="9.40625" PointY="15.091095377604166" />
           <ConnectorPoint PointX="9.40625" PointY="14.614889322916667" />
         </AssociationConnector>
         <AssociationConnector Association="RentalHouseFinding.PostsFavorites">
@@ -1532,10 +1534,10 @@
           <ConnectorPoint PointX="5.25" PointY="6.7450309244791669" />
         </AssociationConnector>
         <AssociationConnector Association="RentalHouseFinding.UsersPosts">
-          <ConnectorPoint PointX="4.5" PointY="11.188460538064176" />
-          <ConnectorPoint PointX="4.8160744349011209" PointY="10.872386103163054" />
-          <ConnectorPoint PointX="4.9339255650988791" PointY="10.754534972965297" />
-          <ConnectorPoint PointX="5.0625" PointY="10.625960538064176" />
+          <ConnectorPoint PointX="4.5" PointY="11.188460538461539" />
+          <ConnectorPoint PointX="4.8160744349011209" PointY="10.872386103560418" />
+          <ConnectorPoint PointX="4.9339255650988791" PointY="10.754534973362661" />
+          <ConnectorPoint PointX="5.0625" PointY="10.625960538461539" />
           <ConnectorPoint PointX="5.0625" PointY="11.168776544070514" />
           <ConnectorPoint PointX="5.2511528461538459" PointY="10.980123697916667" />
         </AssociationConnector>
