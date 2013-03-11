@@ -5329,7 +5329,8 @@ namespace RentalHouseFinding.Models
         /// <param name="lastUpdate">Initial value of the LastUpdate property.</param>
         /// <param name="isDeleted">Initial value of the IsDeleted property.</param>
         /// <param name="roleId">Initial value of the RoleId property.</param>
-        public static Users CreateUsers(global::System.Int32 id, global::System.String username, global::System.DateTime createdDate, global::System.DateTime lastUpdate, global::System.Boolean isDeleted, global::System.Int32 roleId)
+        /// <param name="isActive">Initial value of the IsActive property.</param>
+        public static Users CreateUsers(global::System.Int32 id, global::System.String username, global::System.DateTime createdDate, global::System.DateTime lastUpdate, global::System.Boolean isDeleted, global::System.Int32 roleId, global::System.Boolean isActive)
         {
             Users users = new Users();
             users.Id = id;
@@ -5338,6 +5339,7 @@ namespace RentalHouseFinding.Models
             users.LastUpdate = lastUpdate;
             users.IsDeleted = isDeleted;
             users.RoleId = roleId;
+            users.IsActive = isActive;
             return users;
         }
 
@@ -5706,6 +5708,54 @@ namespace RentalHouseFinding.Models
         private global::System.String _Sex;
         partial void OnSexChanging(global::System.String value);
         partial void OnSexChanged();
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=false)]
+        [DataMemberAttribute()]
+        public global::System.Boolean IsActive
+        {
+            get
+            {
+                return _IsActive;
+            }
+            set
+            {
+                OnIsActiveChanging(value);
+                ReportPropertyChanging("IsActive");
+                _IsActive = StructuralObject.SetValidValue(value);
+                ReportPropertyChanged("IsActive");
+                OnIsActiveChanged();
+            }
+        }
+        private global::System.Boolean _IsActive;
+        partial void OnIsActiveChanging(global::System.Boolean value);
+        partial void OnIsActiveChanged();
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=true)]
+        [DataMemberAttribute()]
+        public Nullable<global::System.Guid> KeyActive
+        {
+            get
+            {
+                return _KeyActive;
+            }
+            set
+            {
+                OnKeyActiveChanging(value);
+                ReportPropertyChanging("KeyActive");
+                _KeyActive = StructuralObject.SetValidValue(value);
+                ReportPropertyChanged("KeyActive");
+                OnKeyActiveChanged();
+            }
+        }
+        private Nullable<global::System.Guid> _KeyActive;
+        partial void OnKeyActiveChanging(Nullable<global::System.Guid> value);
+        partial void OnKeyActiveChanged();
 
         #endregion
     
