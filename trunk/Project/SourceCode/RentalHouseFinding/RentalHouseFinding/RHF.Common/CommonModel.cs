@@ -6,6 +6,9 @@ using System.Text;
 using System.Text.RegularExpressions;
 using System.Web;
 using RentalHouseFinding.Models;
+using System.Collections.Generic;
+using System.Net.Mail;
+using System.Net;
 
 namespace RentalHouseFinding.RHF.Common
 {
@@ -171,6 +174,38 @@ namespace RentalHouseFinding.RHF.Common
                 //Error
                 return -1;
             }
+        }
+        //get all userName
+        public static List<string> GetAllUserName()
+        {
+            List<string> listUserName = null;
+            listUserName = (from u in _db.Users
+                        where !u.IsDeleted
+                        select u.Username).ToList<string>();
+            return listUserName;
+        }
+
+        //send Email.
+        public static bool SendEmail(string emailAdd,string bodyMessage, int messageType)
+        {
+            string email = "findinghousesystem@gmail.com";
+            string password = "matkhaulagi";
+
+            var loginInfo = new NetworkCredential(email, password);
+            var msg = new MailMessage();
+            var smtpClient = new SmtpClient("smtp.gmail.com", 587);
+
+            msg.From = new MailAddress(email);
+            msg.To.Add(new MailAddress(emailAdd));
+            msg.Subject = "subject test";
+            msg.Body = bodyMessage;
+            msg.IsBodyHtml = true;
+
+            smtpClient.EnableSsl = true;
+            smtpClient.UseDefaultCredentials = false;
+            smtpClient.Credentials = loginInfo;
+            smtpClient.Send(msg);
+            return true;
         }
 
         /// <summary>

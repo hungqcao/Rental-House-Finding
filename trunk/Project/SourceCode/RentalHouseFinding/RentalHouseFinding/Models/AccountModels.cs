@@ -53,6 +53,7 @@ namespace RentalHouseFinding.Models
         [Required(ErrorMessage= "Xin vui lòng gõ tên đăng nhập.")]
         [Display(Name = "Tên đăng nhập")]
         [MaxLength(50, ErrorMessage = "Không được vượt quá 50 ký tự, xin vui lòng nhập lại.")]
+        [Remote("IsUserNameAvailable", "Validation")]
         public string UserName { get; set; }
 
         [Display(Name = "Email")]
