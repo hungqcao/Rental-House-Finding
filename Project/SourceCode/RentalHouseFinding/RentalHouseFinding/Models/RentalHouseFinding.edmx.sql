@@ -2,7 +2,7 @@
 -- --------------------------------------------------
 -- Entity Designer DDL Script for SQL Server 2005, 2008, and Azure
 -- --------------------------------------------------
--- Date Created: 03/11/2013 15:48:28
+-- Date Created: 03/12/2013 01:12:23
 -- Generated from EDMX file: C:\RentalHouseFinding\Project\SourceCode\RentalHouseFinding\RentalHouseFinding\Models\RentalHouseFinding.edmx
 -- --------------------------------------------------
 
@@ -71,6 +71,9 @@ GO
 IF OBJECT_ID(N'[dbo].[FK_FacilityTemplatesFacilities]', 'F') IS NOT NULL
     ALTER TABLE [dbo].[Facilities] DROP CONSTRAINT [FK_FacilityTemplatesFacilities];
 GO
+IF OBJECT_ID(N'[dbo].[FK_BadWordTypesBadWords]', 'F') IS NOT NULL
+    ALTER TABLE [dbo].[BadWords] DROP CONSTRAINT [FK_BadWordTypesBadWords];
+GO
 
 -- --------------------------------------------------
 -- Dropping existing tables
@@ -133,6 +136,9 @@ GO
 IF OBJECT_ID(N'[dbo].[FacilityTemplates]', 'U') IS NOT NULL
     DROP TABLE [dbo].[FacilityTemplates];
 GO
+IF OBJECT_ID(N'[dbo].[BadWordTypes]', 'U') IS NOT NULL
+    DROP TABLE [dbo].[BadWordTypes];
+GO
 
 -- --------------------------------------------------
 -- Creating all tables
@@ -154,7 +160,9 @@ CREATE TABLE [dbo].[Users] (
     [IsDeleted] bit  NOT NULL,
     [OpenIdURL] nvarchar(max)  NULL,
     [RoleId] int  NOT NULL,
-    [Sex] nvarchar(10)  NULL
+    [Sex] nvarchar(10)  NULL,
+    [IsActive] bit  NOT NULL,
+    [KeyActive] uniqueidentifier  NULL
 );
 GO
 
@@ -263,7 +271,8 @@ GO
 -- Creating table 'BadWords'
 CREATE TABLE [dbo].[BadWords] (
     [Id] int IDENTITY(1,1) NOT NULL,
-    [Word] nvarchar(max)  NOT NULL
+    [Word] nvarchar(max)  NOT NULL,
+    [TypeId] int  NOT NULL
 );
 GO
 
@@ -359,6 +368,13 @@ CREATE TABLE [dbo].[FacilityTemplates] (
     [Column9] bit  NOT NULL,
     [Column10] bit  NOT NULL,
     [Column11] bit  NOT NULL
+);
+GO
+
+-- Creating table 'BadWordTypes'
+CREATE TABLE [dbo].[BadWordTypes] (
+    [Id] int IDENTITY(1,1) NOT NULL,
+    [Name] nvarchar(max)  NOT NULL
 );
 GO
 
@@ -477,6 +493,12 @@ GO
 -- Creating primary key on [Id] in table 'FacilityTemplates'
 ALTER TABLE [dbo].[FacilityTemplates]
 ADD CONSTRAINT [PK_FacilityTemplates]
+    PRIMARY KEY CLUSTERED ([Id] ASC);
+GO
+
+-- Creating primary key on [Id] in table 'BadWordTypes'
+ALTER TABLE [dbo].[BadWordTypes]
+ADD CONSTRAINT [PK_BadWordTypes]
     PRIMARY KEY CLUSTERED ([Id] ASC);
 GO
 
@@ -724,6 +746,20 @@ ADD CONSTRAINT [FK_FacilityTemplatesFacilities]
 CREATE INDEX [IX_FK_FacilityTemplatesFacilities]
 ON [dbo].[Facilities]
     ([FacilityTemplateId]);
+GO
+
+-- Creating foreign key on [TypeId] in table 'BadWords'
+ALTER TABLE [dbo].[BadWords]
+ADD CONSTRAINT [FK_BadWordTypesBadWords]
+    FOREIGN KEY ([TypeId])
+    REFERENCES [dbo].[BadWordTypes]
+        ([Id])
+    ON DELETE NO ACTION ON UPDATE NO ACTION;
+
+-- Creating non-clustered index for FOREIGN KEY 'FK_BadWordTypesBadWords'
+CREATE INDEX [IX_FK_BadWordTypesBadWords]
+ON [dbo].[BadWords]
+    ([TypeId]);
 GO
 
 -- --------------------------------------------------

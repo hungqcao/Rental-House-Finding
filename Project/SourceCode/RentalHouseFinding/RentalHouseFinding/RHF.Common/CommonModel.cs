@@ -9,12 +9,28 @@ using RentalHouseFinding.Models;
 using System.Collections.Generic;
 using System.Net.Mail;
 using System.Net;
+using System.Reflection;
+using System.Collections.Generic;
 
 namespace RentalHouseFinding.RHF.Common
 {
     public static class CommonModel
     {
-        private readonly static RentalHouseFindingEntities _db = new RentalHouseFindingEntities();
+        public static string BuildRegexBadWord()
+        {
+            using (RentalHouseFindingEntities _db = new RentalHouseFindingEntities()) 
+            {
+                StringBuilder sb = new StringBuilder();
+                string template = "({0})";
+                var regex = (from b in _db.BadWords select b).ToList();
+                foreach (var word in regex)
+                {
+                    sb.Append(string.Format(template, word.Word)).Append("|");
+                }
+                sb.Remove(sb.Length - 1, 1);
+                return sb.ToString();
+            }
+        }
 
         public static Posts ConvertPostViewModelToPost(PostViewModel model, DateTime createdDate, DateTime editedDate, DateTime renewDate)
         {
@@ -163,26 +179,33 @@ namespace RentalHouseFinding.RHF.Common
 
         public static int GetUserIdByUsername(string userName)
         {
-            var user = (from u in _db.Users
-                        where u.Username.Equals(userName, StringComparison.CurrentCultureIgnoreCase) && !u.IsDeleted select u).FirstOrDefault();
-            if (user != null)
+            using (RentalHouseFindingEntities _db = new RentalHouseFindingEntities())
             {
-                return user.Id;
-            }
-            else
-            {
-                //Error
-                return -1;
+                var user = (from u in _db.Users
+                            where u.Username.Equals(userName, StringComparison.CurrentCultureIgnoreCase) && !u.IsDeleted
+                            select u).FirstOrDefault();
+                if (user != null)
+                {
+                    return user.Id;
+                }
+                else
+                {
+                    //Error
+                    return -1;
+                }
             }
         }
         //get all userName
         public static List<string> GetAllUserName()
         {
-            List<string> listUserName = null;
-            listUserName = (from u in _db.Users
-                        where !u.IsDeleted
-                        select u.Username).ToList<string>();
-            return listUserName;
+            using (RentalHouseFindingEntities _db = new RentalHouseFindingEntities())
+            {
+                List<string> listUserName = null;
+                listUserName = (from u in _db.Users
+                                where !u.IsDeleted
+                                select u.Username).ToList<string>();
+                return listUserName;
+            }
         }
 
         //send Email.
@@ -213,9 +236,26 @@ namespace RentalHouseFinding.RHF.Common
         /// </summary>
         /// <param name="model"></param>
         /// <returns>false for it doesnt have bad word</returns>
-        public static bool FilterHasBadContent(PostViewModel model)
+        public static bool FilterHasBadContent(Object model)
         {
-            //Filter bad content
+            string regex = CommonModel.BuildRegexBadWord();
+
+            Type type = model.GetType();
+
+            Match match;
+            IList<PropertyInfo> props = new List<PropertyInfo>(type.GetProperties());
+
+            foreach (PropertyInfo prop in props)
+            {
+                object propValue = prop.GetValue(model, null);
+
+                match = Regex.Match(propValue.ToString(), regex, RegexOptions.IgnoreCase);
+
+                if (match.Success)
+                {
+                    return true;
+                }
+            }	
             return false;
         }
 
