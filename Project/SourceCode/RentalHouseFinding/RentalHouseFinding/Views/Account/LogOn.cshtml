@@ -29,7 +29,7 @@
             <div id="openid_btns">
             </div>
         </div>
-        <div id="openid_input_area">
+        @*<div id="openid_input_area">
             @Html.TextBox("openid_identifier")
             <input type="submit" value="Log On" />
         </div>
@@ -63,6 +63,9 @@
 
                 }
             }
+        </div>*@
+        <div id ="loading" style="display:none">
+        <img alt="login loading" src="/Content/images/loading.gif">
         </div>
     </fieldset>
 </div>

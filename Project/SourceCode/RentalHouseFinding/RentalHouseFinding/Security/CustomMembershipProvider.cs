@@ -96,14 +96,15 @@ namespace RentalHouseFinding.Sercurity
                         user.PhoneNumber = model.PhoneNumber;
                         user.RoleId = 3;
                         user.Sex = model.Sex;
-                        user.KeyActive = Guid.NewGuid();
+                        //user.KeyActive = Guid.NewGuid(); // curently, not use.
 
                         _db.AddToUsers(user);
 
                         _db.SaveChanges();
 
                         status = MembershipCreateStatus.Success;
-                        CommonModel.SendEmail(model.UserName, String.Format("http://localhost:65174/Account/Activation?id={1}&key={0}", user.KeyActive.ToString(), user.Id), 0);
+                        //send mail welcome!
+                        CommonModel.SendEmail(model.UserName, String.Format("Chào mừng bạn đến với HouseFinding!</br>Thông tin tài khoản:</br>-Email:{0}</br>-Mật khẩu:{1}</br> ",model.UserName,model.Password), 0);
 
                         return GetUser(model.UserName, false);
                     }
@@ -151,7 +152,7 @@ namespace RentalHouseFinding.Sercurity
                         }                        
                         user.CreatedDate = DateTime.Now;
                         user.LastUpdate = DateTime.Now;
-                        user.RoleId = 3;
+                        user.RoleId = 3;                        
                         user.Sex = model.gender;
 
                         _db.AddToUsers(user);

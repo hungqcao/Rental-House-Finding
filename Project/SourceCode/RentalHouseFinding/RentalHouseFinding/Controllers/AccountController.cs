@@ -173,39 +173,39 @@ namespace RentalHouseFinding.Controllers
             return View(userDetail);
         }
 
-        //get
-        public ActionResult Activation(UserViewModel model,int id, string key)
-        { 
-            var user = (from u in _db.Users
-                        where u.Id == id && !u.IsActive
-                        select new { u.KeyActive, u.Username }).FirstOrDefault();
-            if (user != null)
-            {
-                if (user.KeyActive.ToString().Equals(key, StringComparison.CurrentCultureIgnoreCase))
-                {
-                    //update user                
-                    var profile = (from p in _db.Users where (p.Id == id) select p).FirstOrDefault();
-                    profile.IsActive = true;
+        ////get NOT USE active acount/
+        //public ActionResult Activation(UserViewModel model,int id, string key)
+        //{ 
+        //    var user = (from u in _db.Users
+        //                where u.Id == id && !u.IsActive
+        //                select new { u.KeyActive, u.Username }).FirstOrDefault();
+        //    if (user != null)
+        //    {
+        //        if (user.KeyActive.ToString().Equals(key, StringComparison.CurrentCultureIgnoreCase))
+        //        {
+        //            //update user                
+        //            var profile = (from p in _db.Users where (p.Id == id) select p).FirstOrDefault();
+        //            profile.IsActive = true;
 
-                    _db.ObjectStateManager.ChangeObjectState(profile, System.Data.EntityState.Modified);
-                    _db.SaveChanges();
-                    model.UserName = profile.Username;
+        //            _db.ObjectStateManager.ChangeObjectState(profile, System.Data.EntityState.Modified);
+        //            _db.SaveChanges();
+        //            model.UserName = profile.Username;
 
-                }
-            }
-            else
-            { 
-                //account da dc active.
-            }
-            return View(model);
-        }
-        [HttpPost]
-        public ActionResult Activation(int id)
-        {
-            var profile = (from p in _db.Users where (p.Id == id) select p).FirstOrDefault();
-            FormsAuthentication.SetAuthCookie(profile.Username,true);
-            return RedirectToAction("Index", "Landing");            
-        }
+        //        }
+        //    }
+        //    else
+        //    { 
+        //        //account da dc active.
+        //    }
+        //    return View(model);
+        //}
+        //[HttpPost]
+        //public ActionResult Activation(int id)
+        //{
+        //    var profile = (from p in _db.Users where (p.Id == id) select p).FirstOrDefault();
+        //    FormsAuthentication.SetAuthCookie(profile.Username,true);
+        //    return RedirectToAction("Index", "Landing");            
+        //}
         
         //
         //
@@ -237,8 +237,8 @@ namespace RentalHouseFinding.Controllers
                 if (Membership.ValidateUser(model.UserName, model.Password))
                 {
                     var user = (from p in _db.Users where p.Username == model.UserName select new { p.IsActive , p.RoleId }).FirstOrDefault();
-                    if (user.IsActive)
-                    {
+                    //if (user.IsActive)
+                    //{
 
                         FormsAuthentication.SetAuthCookie(model.UserName, model.RememberMe);
                         if (Url.IsLocalUrl(returnUrl) && returnUrl.Length > 1 && returnUrl.StartsWith("/")
@@ -255,12 +255,12 @@ namespace RentalHouseFinding.Controllers
                         {
                             return RedirectToAction("Index", "Landing");
                         }
-                    }
-                    else
-                    {
-                        ModelState.AddModelError("", "Tài khoản của bạn chưa được kích hoạt");
-                        return View(model);
-                    }
+                    //}
+                    //else
+                    //{
+                    //    ModelState.AddModelError("", "Tài khoản của bạn chưa được kích hoạt");
+                    //    return View(model);
+                    //}
                 }
                 else
                 {
@@ -302,7 +302,7 @@ namespace RentalHouseFinding.Controllers
                 customMP.CreateUser(model, out createStatus);
                 if (createStatus == MembershipCreateStatus.Success)
                 {
-                    //FormsAuthentication.SetAuthCookie(model.UserName, false /* createPersistentCookie */);
+                    FormsAuthentication.SetAuthCookie(model.UserName, false /* createPersistentCookie */);
                     return RedirectToAction("Index", "Landing");                    
                 }
                 else

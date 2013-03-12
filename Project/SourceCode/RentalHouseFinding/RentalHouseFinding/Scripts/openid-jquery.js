@@ -53,11 +53,11 @@ openid = {
 				openid_btns.append(box);
 			}
 		}
-		$('#openid_form').submit(this.submit);
-		var box_id = this.readCookie();
-		if (box_id) {
-			this.signin(box_id, true);
-		}
+		$('#openid_form').submit(this.submit);        
+//		var box_id = this.readCookie();
+//		if (box_id) {
+//			this.signin(box_id, true);
+//		}
 	},
 
 	/**
@@ -82,7 +82,9 @@ openid = {
 	 * 
 	 * @return {Void}
 	 */
-	signin : function(box_id, onload) {
+	signin : function(box_id, onload) {    
+        $("#loading").css("display","inline");
+        
 		var provider = providers[box_id];
 		if (!provider) {
 			return;

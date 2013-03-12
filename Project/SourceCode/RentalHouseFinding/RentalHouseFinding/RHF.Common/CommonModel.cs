@@ -196,15 +196,23 @@ namespace RentalHouseFinding.RHF.Common
             }
         }
         //get all userName
-        public static List<string> GetAllUserName()
+        public static bool CheckUserName(string userName)
         {
             using (RentalHouseFindingEntities _db = new RentalHouseFindingEntities())
             {
-                List<string> listUserName = null;
-                listUserName = (from u in _db.Users
-                                where !u.IsDeleted
-                                select u.Username).ToList<string>();
-                return listUserName;
+                var userId = (from u in _db.Users
+                              where u.Username.Equals(userName, StringComparison.CurrentCultureIgnoreCase) && !u.IsDeleted
+                              select u.Id).FirstOrDefault();
+                if (userId != 0)
+                {
+                    //UserName is existed 
+                    return true;
+                }
+                else
+                {
+                    
+                    return false;
+                }
             }
         }
 
