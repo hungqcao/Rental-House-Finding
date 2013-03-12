@@ -1,6 +1,8 @@
 ﻿@model RentalHouseFinding.Models.PostViewModel
 @{
     ViewBag.Title = "Index";
+    Uri auxBaseUri = new Uri(Request.Url.GetLeftPart(UriPartial.Authority));
+    Uri baseUri = new Uri(auxBaseUri, Url.Content("~"));  
 }
 
 <h2>Create a post</h2>
@@ -47,7 +49,7 @@
             text: '-- Chọn Quận/Huyện --'
         }));
         if (idPro != 0) {
-            $.getJSON("service/GetDistrictList", { id: idPro },
+            $.getJSON("@baseUri.ToString()" + "service/GetDistrictList", { id: idPro },
             function (myData) {
                 $.each(myData, function (index, itemData) {
                     if (itemData.Text.lenght != 0) {
@@ -59,6 +61,7 @@
                 });
             });
         };
+        $("#DistrictId").val("@Session["DistrictIdSubmitted"]");
 
         $("#ProvinceId").change(function () {
             var idPro = $("#ProvinceId option:selected").val();
@@ -68,7 +71,7 @@
                 value: '',
                 text: '-- Chọn Quận/Huyện --'
             }));
-            $.getJSON("service/GetDistrictList", { id: idPro },
+            $.getJSON("@baseUri.ToString()" + "service/GetDistrictList", { id: idPro },
                 function (myData) {
                     $.each(myData, function (index, itemData) {
                         if (itemData.Text.lenght != 0) {
@@ -79,7 +82,7 @@
                         }
                     });
                 });
-            $.getJSON("service/GetLatLon", { id: idPro, type: "province" },
+                $.getJSON("@baseUri.ToString()" + "service/GetLatLon", { id: idPro, type: "province" },
                 function (myData) {
                     $.each(myData, function (index, itemData) {
                         var provinceLatLon = new google.maps.LatLng(itemData.Value.split(';')[0], itemData.Value.split(';')[1]);
@@ -92,7 +95,7 @@
         });
         $("#DistrictId").change(function () {
             var idDis = $("#DistrictId  option:selected").val();
-            $.getJSON("service/GetLatLon", { id: idDis, type: "district" },
+            $.getJSON("@baseUri.ToString()" + "service/GetLatLon", { id: idDis, type: "district" },
             function (myData) {
                 $.each(myData, function (index, itemData) {
                     var districtLatLon = new google.maps.LatLng(itemData.Value.split(';')[0], itemData.Value.split(';')[1]);
@@ -131,7 +134,7 @@
                         }
                     }
                     else {
-                        alert("Geocoding failed: " + status);
+                        alert("Lỗi kết nối đến máy chủ google: " + status);
                     }
                 });
             }
@@ -159,7 +162,7 @@
             html += cellTemplates[i].replace(/\{counter\}/g, counter).replace(/\{value\}/g,
                     (description == null) ? '' : description);
         }
-        $("#uploadFile").prepend(html);
+        $("#uploadFile").append(html);
     }
     //removes a file input row
     function removeFile(obj) {
@@ -170,7 +173,7 @@
     }
    </script>
 @Html.ValidationSummary(true, "Vui lòng kiểm tra lại thông tin như thông báo bên dưới!", new { style = "color:red" })
-@using (Html.BeginForm("index", "createpost", FormMethod.Post, new { enctype = "multipart/form-data" }))
+@using (Html.BeginForm("create", "post", FormMethod.Post, new { enctype = "multipart/form-data" }))
 {
     <div id= "create-post-page">
         <div class = "content" style="float:left;" >

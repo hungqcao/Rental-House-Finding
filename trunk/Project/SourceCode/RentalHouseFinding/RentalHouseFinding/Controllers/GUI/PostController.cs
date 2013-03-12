@@ -23,7 +23,7 @@ namespace RentalHouseFinding.Controllers
             //{
             //    return RedirectToAction("Index", "Home");
             //}
-            int postId = 1;//(int)TempData["IdSuccessPost"];
+            //int postId = 1;//(int)TempData["IdSuccessPost"];
             var post = (from p in _db.Posts where p.Id == id select p).FirstOrDefault();
             var districtAndProvinceName = (from d in _db.Districts 
                                 where d.Id == post.DistrictId
@@ -52,25 +52,78 @@ namespace RentalHouseFinding.Controllers
 
         public ActionResult Create()
         {
+            ViewBag.CategoryId = new SelectList(_db.Categories, "Id", "Name");
+            ViewBag.ProvinceId = new SelectList(_db.Provinces, "Id", "Name");
             return View();
-        } 
+        }
 
         //
         // POST: /Post/Create
 
         [HttpPost]
-        public ActionResult Create(FormCollection collection)
+        public ActionResult Create(PostViewModel model, IEnumerable<HttpPostedFileBase> images)
         {
-            try
+            if (ModelState.IsValid)
             {
-                // TODO: Add insert logic here
+                try
+                {
+                    if (!CommonModel.FilterHasBadContent(model))
+                    {
+                        Posts postToCreate = CommonModel.ConvertPostViewModelToPost(model, DateTime.Now, DateTime.Now, DateTime.Now);
+                        
+                        //1 for submitted
+                        postToCreate.StatusId = 1;
 
-                return RedirectToAction("Index");
+                        int userId;
+                        if (!string.IsNullOrEmpty(User.Identity.Name))
+                        {
+                            userId = CommonModel.GetUserIdByUsername(User.Identity.Name);
+                            postToCreate.UserId = userId;
+                        }
+                        _db.Posts.AddObject(postToCreate);
+                        _db.SaveChanges();
+                        TempData["MessageSuccessPostNew"] = "Đăng bài thành công, chúng tôi sẽ gửi tin nhắn đến số điện thoại bạn đã cung cấp";
+                        
+
+                        PostImages imageToCreate = null;
+
+                        if (!(images.Count() == 0 || images == null))
+                        {
+                            foreach (HttpPostedFileBase image in images)
+                            {
+                                if (image != null && image.ContentLength > 0)
+                                {
+                                    var path = Path.Combine(HttpContext.Server.MapPath("/Content/PostImages/"), postToCreate.Id.ToString());
+                                    Directory.CreateDirectory(path);
+                                    string filePath = Path.Combine(path, Path.GetFileName(image.FileName));
+                                    image.SaveAs(filePath);
+                                    imageToCreate = new PostImages();
+                                    imageToCreate.PostId = postToCreate.Id;
+                                    imageToCreate.Path = "/Content/PostImages/" + postToCreate.Id.ToString() + "/" + Path.GetFileName(image.FileName);
+                                    imageToCreate.IsDeleted = false;
+
+                                    _db.PostImages.AddObject(imageToCreate);
+                                    _db.SaveChanges();
+                                }
+                            }
+                        }
+
+                        return RedirectToAction("Index", "Post", new { id = postToCreate.Id });
+                    }
+                    else
+                    {
+                        //If model contain bad word
+                    }
+                    return RedirectToAction("Index");
+                }
+                catch (Exception ex)
+                {
+                    ModelState.AddModelError("", ex.InnerException);
+                }
             }
-            catch
-            {
-                return View();
-            }
+            ViewBag.CategoryId = new SelectList(_db.Categories, "Id", "Name", model.CategoryId);
+            ViewBag.ProvinceId = new SelectList(_db.Provinces, "Id", "Name", model.ProvinceId);
+            return View(model);
         }
         
         //

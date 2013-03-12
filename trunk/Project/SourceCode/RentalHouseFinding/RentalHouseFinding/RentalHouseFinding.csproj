@@ -416,6 +416,7 @@
     <Content Include="Scripts\jquery-ui-1.8.11.min.js" />
     <Content Include="Scripts\jquery.jcarousel.min.js" />
     <Content Include="Scripts\jquery.pikachoose.full.js" />
+    <Content Include="Scripts\jquery.pikachoose.js" />
     <Content Include="Scripts\jquery.unobtrusive-ajax.js" />
     <Content Include="Scripts\jquery.unobtrusive-ajax.min.js" />
     <Content Include="Scripts\jquery.validate-vsdoc.js" />
@@ -609,6 +610,9 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="Views\Account\Activation.cshtml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Views\Post\Create.cshtml" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <Import Project="$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v10.0\WebApplications\Microsoft.WebApplication.targets" />
