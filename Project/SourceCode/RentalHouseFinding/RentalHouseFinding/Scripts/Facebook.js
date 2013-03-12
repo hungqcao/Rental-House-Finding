@@ -6,37 +6,37 @@
             cookie: true,
             xfbml: true
         });
-//        FB.Event.subscribe('auth.login', function (response) {
-//        alert('1');
-//        var credentials = { uid: response.authResponse.userID, accessToken: response.authResponse.accessToken };
-//        SubmitLogin(credentials);
-//        });
+        //        FB.Event.subscribe('auth.login', function (response) {
+        //        alert('1');
+        //        var credentials = { uid: response.authResponse.userID, accessToken: response.authResponse.accessToken };
+        //        SubmitLogin(credentials);
+        //        });
         FB.getLoginStatus(function (response) {
             if (response.status === 'connected') {
                 var credentials = { uid: response.authResponse.userID, accessToken: response.authResponse.accessToken };
-                SubmitLogin(credentials);
-                var url = 'FacebookUserDetail';
+                //SubmitLogin(credentials);
+                var url = 'FacebookUserDetail?token=' + response.authResponse.accessToken;
                 url = url.replace('_id_', response.authResponse.userID);
                 window.location.href = url;
             }
-            else if (response.status === 'not_authorized') {  }
-            else {}
+            else if (response.status === 'not_authorized') { }
+            else { }
 
         });
 
-        function SubmitLogin(credentials) {
-            $.ajax({            
-                url: "/account/facebookLogin",
-                type: "POST",
-                data: credentials,
-                error: function () {
-                    //alert("error logging in to your facebook account.");
-                },
-                success: function () {
-                    window.location.reload();
-                }
-            });
-        }
+//        function SubmitLogin(credentials) {            
+//            $.ajax({
+//                url: "/account/facebookLogin",
+//                type: "POST",
+//                data: credentials,
+//                error: function () {
+//                    //alert("error logging in to your facebook account.");
+//                },
+//                success: function () {
+//                    window.location.reload();
+//                }
+//            });
+//        }
 
     };
 
