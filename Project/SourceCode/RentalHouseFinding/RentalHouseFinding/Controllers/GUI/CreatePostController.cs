@@ -51,20 +51,20 @@ namespace RentalHouseFinding.Controllers
                         
 
                         PostImages imageToCreate = null;
-                        
+
                         if (!(images.Count() == 0 || images == null))
                         {
                             foreach (HttpPostedFileBase image in images)
                             {
                                 if (image != null && image.ContentLength > 0)
                                 {
-                                    var path = Path.Combine(HttpContext.Server.MapPath("/App_Data/Images/"), postToCreate.Id.ToString());
+                                    var path = Path.Combine(HttpContext.Server.MapPath("/Content/PostImages/"), postToCreate.Id.ToString());
                                     Directory.CreateDirectory(path);
                                     string filePath = Path.Combine(path, Path.GetFileName(image.FileName));
                                     image.SaveAs(filePath);
                                     imageToCreate = new PostImages();
                                     imageToCreate.PostId = postToCreate.Id;
-                                    imageToCreate.Path = filePath;
+                                    imageToCreate.Path = "/Content/PostImages/" + postToCreate.Id.ToString() + "/" + Path.GetFileName(image.FileName);
                                     imageToCreate.IsDeleted = false;
 
                                     _db.PostImages.AddObject(imageToCreate);
@@ -73,7 +73,7 @@ namespace RentalHouseFinding.Controllers
                             }
                         }
 
-                        return RedirectToAction("Details", "Post", new { id = postToCreate.Id });
+                        return RedirectToAction("Index", "Post", new { id = postToCreate.Id });
                     }
                     else
                     {
