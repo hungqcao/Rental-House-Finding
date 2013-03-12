@@ -131,7 +131,7 @@ namespace RentalHouseFinding.Models
         public string CreatedBy { get; set; }
         public string Category { get; set; }
 
-        public IEnumerable<PostImages> Images { get; set; }
+        public IEnumerable<HttpPostedFileBase> Images { get; set; }
     } 
    
 }
