@@ -50,9 +50,10 @@ namespace RentalHouseFinding.Models
 
     public class RegisterModel
     {
-        [Required(ErrorMessage= "Xin vui lòng gõ tên đăng nhập.")]
-        [Display(Name = "Tên đăng nhập")]
+        [Required(ErrorMessage= "Xin vui lòng điền Email.")]
+        [Display(Name = "Email")]
         [MaxLength(50, ErrorMessage = "Không được vượt quá 50 ký tự, xin vui lòng nhập lại.")]
+        [RegularExpression(@"\w+([-+.']\w+)*@\w+([-.]\w+)*\.\w+([-.]\w+)*", ErrorMessage = "Email không hợp lệ.")]
         [Remote("IsUserNameAvailable", "Validation")]
         public string UserName { get; set; }
 

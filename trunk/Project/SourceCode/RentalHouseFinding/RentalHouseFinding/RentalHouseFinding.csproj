@@ -342,6 +342,7 @@
     <Content Include="Content\images.large\facebook.gif" />
     <Content Include="Content\images.large\google.gif" />
     <Content Include="Content\images.large\yahoo.gif" />
+    <Content Include="Content\images\loading.gif" />
     <Content Include="Content\images\openid-inputicon.gif" />
     <Content Include="Content\images\openid-providers-en.png" />
     <Content Include="Content\images\openid-providers-ru.png" />

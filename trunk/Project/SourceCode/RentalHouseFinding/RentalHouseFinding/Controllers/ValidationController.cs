@@ -14,10 +14,7 @@ namespace RentalHouseFinding.Controllers
 
         public JsonResult IsUserNameAvailable(string userName)
         {
-            //Go to the DB and retrievw the get User
-            List<string> userNames = CommonModel.GetAllUserName();
-            //Check if the list contains the userName
-            if (userNames.Contains(userName.ToLower()))
+            if (CommonModel.CheckUserName(userName))
             {
                 return Json("Email đã được sử dụng", JsonRequestBehavior.AllowGet);
             }
