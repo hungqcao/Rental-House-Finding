@@ -24,7 +24,7 @@ namespace RentalHouseFinding.Controllers
     public class AccountController : Controller
     {
         
-        public ActionResult FacebookUserDetail()
+        public ActionResult FacebookUserDetail(string token)
         {
             FacebookClient.SetDefaultHttpWebRequestFactory(uri =>
             {
@@ -32,21 +32,22 @@ namespace RentalHouseFinding.Controllers
                 //request.Proxy = new WebProxy("proxy", 8080); // normal .net IWebProxy
                 return request;
             });
-            var client = new FacebookClient(Session["accessToken"].ToString());
-            dynamic fbresult = client.Get("me?fields=id,email,first_name,last_name,gender,locale,link,username,timezone,location,picture");
+            if (!String.IsNullOrEmpty(token))
+            {
+                var client = new FacebookClient(token);//Session["accessToken"].ToString());
+                dynamic fbresult = client.Get("me?fields=id,email,first_name,last_name,gender,locale,link,username,timezone,location,picture");
 
-            UserDetailsModel facebookUser = Newtonsoft.Json.JsonConvert.DeserializeObject<UserDetailsModel>(fbresult.ToString());           
-            return FBookOrOpenIdLogon(facebookUser);
+                UserDetailsModel facebookUser = Newtonsoft.Json.JsonConvert.DeserializeObject<UserDetailsModel>(fbresult.ToString());
+                return FBookOrOpenIdLogon(facebookUser);
+            }
+            else
+            {
+                //fail
+                return RedirectToAction("LogOn", "Account");
+            }
+            
         }
-        [HttpPost]
-        public JsonResult FacebookLogin(FacebookLoginModel model)
-        {
-            Session["uid"] = model.uid;
-            Session["accessToken"] = model.accessToken;
-
-            return Json(new { success = true });
-        }
-        //
+        
         //Logon by Openid
         private static OpenIdRelyingParty openid = new OpenIdRelyingParty();
         public ActionResult Authenticate(string returnUrl)
