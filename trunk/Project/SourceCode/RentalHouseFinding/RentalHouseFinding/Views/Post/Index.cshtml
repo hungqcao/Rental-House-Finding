@@ -139,12 +139,15 @@
         @Html.DisplayFor(model => model.CreatedBy)
     </div>
         </div>
-        <div class = "map" style="float:right;">
+    <div class = "content" style="float:right;" >
+        @Html.Partial("_ImagesPartial")
+            </div>
+            <div class = "map" style="float:right;">
             <div id="mapContainer" style="width:500px;height:380px;"></div>
-            <div class="editor-field" style=" display:none;">
+            <div class="editor-field">
                 @Html.EditorFor(model => model.Lat)
             </div>
-            <div class="editor-field" style=" display:none;">
+            <div class="editor-field">
                 @Html.EditorFor(model => model.Lon)
             </div>
         </div>

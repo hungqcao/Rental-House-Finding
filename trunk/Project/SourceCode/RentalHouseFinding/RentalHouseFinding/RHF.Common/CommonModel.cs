@@ -257,11 +257,14 @@ namespace RentalHouseFinding.RHF.Common
             {
                 object propValue = prop.GetValue(model, null);
 
-                match = Regex.Match(propValue.ToString(), regex, RegexOptions.IgnoreCase);
-
-                if (match.Success)
+                if (propValue != null)
                 {
-                    return true;
+                    match = Regex.Match(propValue.ToString(), regex, RegexOptions.IgnoreCase);
+
+                    if (match.Success)
+                    {
+                        return true;
+                    }
                 }
             }	
             return false;
