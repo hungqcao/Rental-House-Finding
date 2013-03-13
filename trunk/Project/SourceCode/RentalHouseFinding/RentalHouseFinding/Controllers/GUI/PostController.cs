@@ -91,6 +91,8 @@ namespace RentalHouseFinding.Controllers
                             postLocation = new PostLocations();
                             postLocation.PostId = postToCreate.Id;
                             postLocation.LocationId = i;
+                            _db.PostLocations.AddObject(postLocation);
+                            _db.SaveChanges();
                         }
 
                         //Images post
@@ -117,7 +119,7 @@ namespace RentalHouseFinding.Controllers
                             }
                         }
 
-                        return RedirectToAction("Index", "Post", new { id = postToCreate.Id });
+                        return RedirectToAction("Details", "Post", new { id = postToCreate.Id });
                     }
                     else
                     {
@@ -220,7 +222,7 @@ namespace RentalHouseFinding.Controllers
                         int.TryParse(Request.Form.Keys[i].Split(':')[1], out id);
                         if (id == -1)
                         {
-                            if(string.IsNullOrEmpty(Request.Form.Keys[i].Split(':')[2].Trim()))
+                            if(!string.IsNullOrEmpty(Request.Form.Keys[i].Split(':')[2].Trim()))
                             {
                                 location = new Locations();
                                 location.DistrictId = model.DistrictId;

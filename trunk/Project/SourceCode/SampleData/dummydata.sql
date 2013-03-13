@@ -100,13 +100,63 @@ INSERT INTO [RentalHouseFinding].[dbo].Locations VALUES
 
 GO
 
+SELECT P.Id, STUFF((
+            SELECT ', ' + [Name]
+            FROM dbo.Locations t2
+            WHERE t2.Id = L.LocationId
+            ORDER BY [Name]
+            FOR XML PATH(''), TYPE
+        ).value('.', 'varchar(max)'), 1, 2, '') AS [Names]
+
+ FROM dbo.Posts P
+	INNER JOIN dbo.PostLocations L
+		ON P.Id = L.PostId
+	INNER JOIN dbo.Locations Lo
+		ON L.LocationId = Lo.Id
+GROUP BY P.Id
+
+USE RentalHouseFinding ;
+GO
+IF OBJECT_ID ('dbo.V_PostIdNearbyPlaceName', 'V') IS NOT NULL
+    DROP VIEW dbo.V_PostIdNearbyPlaceName ;
+GO
+CREATE VIEW V_PostIdNearbyPlaceName AS
+SELECT  t1.PostId,
+        STUFF((
+            SELECT ', ' + [Name]
+            FROM V_PostLocationAndLocationName t2
+            WHERE t1.PostId = t2.PostId
+            ORDER BY [Name]
+            FOR XML PATH(''), TYPE
+        ).value('.', 'varchar(max)'), 1, 2, '') AS [Names]
+FROM  dbo.V_PostLocationAndLocationName t1
+GROUP BY PostId
+WITH CHECK OPTION ;
+
+GO
+
+
+
+USE RentalHouseFinding ;
+GO
+IF OBJECT_ID ('dbo.V_PostLocationAndLocationName', 'V') IS NOT NULL
+    DROP VIEW dbo.V_PostLocationAndLocationName ;
+GO
+CREATE VIEW V_PostLocationAndLocationName WITH SCHEMABINDING AS
+SELECT t2.Name, t1.PostId FROM dbo.PostLocations t1 INNER JOIN dbo.Locations t2 ON t1.LocationId = t2.Id
+WITH CHECK OPTION ;
+
+GO
+
+
+
 USE RentalHouseFinding ;
 GO
 IF OBJECT_ID ('dbo.V_PostFullInfo', 'V') IS NOT NULL
     DROP VIEW dbo.V_PostFullInfo ;
 GO
 CREATE VIEW V_PostFullInfo WITH SCHEMABINDING AS
-SELECT P.Id, P.Description, P.NumberAddress, P.Street, P.Title, F.Direction, C.Email, C.Phone, C.Skype, C.Yahoo, P.CategoryId, P.DistrictId, D.ProvinceId
+SELECT P.Id, P.Description, P.NumberAddress, P.Street, P.Title, F.Direction, C.Email, C.Phone, C.Skype, C.Yahoo, P.CategoryId, P.DistrictId, D.ProvinceId, N.Names
 FROM dbo.Posts P 
 	INNER JOIN dbo.Facilities F
 		ON(P.Id = F.PostIdFacilities)
@@ -114,6 +164,8 @@ FROM dbo.Posts P
 		ON(P.Id = C.PostIdContacts)
 	INNER JOIN dbo.Districts D
 		ON(P.DistrictId = D.Id) 
+	LEFT OUTER JOIN dbo.V_PostIdNearbyPlaceName N
+		ON P.Id = N.PostId
 WHERE P.IsDeleted = 'false' AND D.IsDeleted = 'false'
 WITH CHECK OPTION ;
 

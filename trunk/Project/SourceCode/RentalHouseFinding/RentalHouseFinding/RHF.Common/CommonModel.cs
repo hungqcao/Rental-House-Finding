@@ -140,7 +140,8 @@ namespace RentalHouseFinding.RHF.Common
         }
 
         public static PostViewModel ConvertPostToPostViewModel(Posts model)
-        {            
+        {
+            string createBy = model.UserId == null ? string.Empty : model.User.Name;
             return new PostViewModel
             {
                 Id = model.Id,
@@ -177,7 +178,7 @@ namespace RentalHouseFinding.RHF.Common
                 Title = model.Title,
                 CreatedDate = model.CreatedDate,
                 EditedDate = model.EditedDate,
-                CreatedBy = model.User.Username,
+                CreatedBy = createBy,
                 Category = model.Category.Name,
                 Views = model.Views,
                 Internet = model.Facilities.HasInternet? "Có":"Không",
