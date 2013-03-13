@@ -2,7 +2,7 @@
 -- --------------------------------------------------
 -- Entity Designer DDL Script for SQL Server 2005, 2008, and Azure
 -- --------------------------------------------------
--- Date Created: 03/12/2013 23:05:48
+-- Date Created: 03/13/2013 16:43:06
 -- Generated from EDMX file: C:\RentalHouseFinding\Project\SourceCode\RentalHouseFinding\RentalHouseFinding\Models\RentalHouseFinding.edmx
 -- --------------------------------------------------
 
@@ -74,6 +74,18 @@ GO
 IF OBJECT_ID(N'[dbo].[FK_BadWordTypesBadWords]', 'F') IS NOT NULL
     ALTER TABLE [dbo].[BadWords] DROP CONSTRAINT [FK_BadWordTypesBadWords];
 GO
+IF OBJECT_ID(N'[dbo].[FK_DistrictsLocations]', 'F') IS NOT NULL
+    ALTER TABLE [dbo].[Locations] DROP CONSTRAINT [FK_DistrictsLocations];
+GO
+IF OBJECT_ID(N'[dbo].[FK_LocationTypesLocations]', 'F') IS NOT NULL
+    ALTER TABLE [dbo].[Locations] DROP CONSTRAINT [FK_LocationTypesLocations];
+GO
+IF OBJECT_ID(N'[dbo].[FK_PostsPostLocations]', 'F') IS NOT NULL
+    ALTER TABLE [dbo].[PostLocations] DROP CONSTRAINT [FK_PostsPostLocations];
+GO
+IF OBJECT_ID(N'[dbo].[FK_LocationsPostLocations]', 'F') IS NOT NULL
+    ALTER TABLE [dbo].[PostLocations] DROP CONSTRAINT [FK_LocationsPostLocations];
+GO
 
 -- --------------------------------------------------
 -- Dropping existing tables
@@ -139,6 +151,15 @@ GO
 IF OBJECT_ID(N'[dbo].[BadWordTypes]', 'U') IS NOT NULL
     DROP TABLE [dbo].[BadWordTypes];
 GO
+IF OBJECT_ID(N'[dbo].[Locations]', 'U') IS NOT NULL
+    DROP TABLE [dbo].[Locations];
+GO
+IF OBJECT_ID(N'[dbo].[LocationTypes]', 'U') IS NOT NULL
+    DROP TABLE [dbo].[LocationTypes];
+GO
+IF OBJECT_ID(N'[dbo].[PostLocations]', 'U') IS NOT NULL
+    DROP TABLE [dbo].[PostLocations];
+GO
 
 -- --------------------------------------------------
 -- Creating all tables
@@ -199,7 +220,7 @@ CREATE TABLE [dbo].[Posts] (
     [EditedDate] datetime  NOT NULL,
     [RenewDate] datetime  NULL,
     [DistrictId] int  NOT NULL,
-    [NumberAddress] nvarchar(max)  NOT NULL,
+    [NumberAddress] nvarchar(max)  NULL,
     [Price] float  NOT NULL,
     [Area] float  NOT NULL,
     [PhoneActive] nvarchar(20)  NOT NULL,
@@ -378,6 +399,32 @@ CREATE TABLE [dbo].[BadWordTypes] (
 );
 GO
 
+-- Creating table 'Locations'
+CREATE TABLE [dbo].[Locations] (
+    [Id] int IDENTITY(1,1) NOT NULL,
+    [Name] nvarchar(max)  NOT NULL,
+    [DistrictId] int  NOT NULL,
+    [Lat] nvarchar(max)  NULL,
+    [Lon] nvarchar(max)  NULL,
+    [LocationTypeId] int  NOT NULL
+);
+GO
+
+-- Creating table 'LocationTypes'
+CREATE TABLE [dbo].[LocationTypes] (
+    [Id] int IDENTITY(1,1) NOT NULL,
+    [Name] nvarchar(max)  NOT NULL
+);
+GO
+
+-- Creating table 'PostLocations'
+CREATE TABLE [dbo].[PostLocations] (
+    [Id] int IDENTITY(1,1) NOT NULL,
+    [PostId] int  NOT NULL,
+    [LocationId] int  NOT NULL
+);
+GO
+
 -- --------------------------------------------------
 -- Creating all PRIMARY KEY constraints
 -- --------------------------------------------------
@@ -499,6 +546,24 @@ GO
 -- Creating primary key on [Id] in table 'BadWordTypes'
 ALTER TABLE [dbo].[BadWordTypes]
 ADD CONSTRAINT [PK_BadWordTypes]
+    PRIMARY KEY CLUSTERED ([Id] ASC);
+GO
+
+-- Creating primary key on [Id] in table 'Locations'
+ALTER TABLE [dbo].[Locations]
+ADD CONSTRAINT [PK_Locations]
+    PRIMARY KEY CLUSTERED ([Id] ASC);
+GO
+
+-- Creating primary key on [Id] in table 'LocationTypes'
+ALTER TABLE [dbo].[LocationTypes]
+ADD CONSTRAINT [PK_LocationTypes]
+    PRIMARY KEY CLUSTERED ([Id] ASC);
+GO
+
+-- Creating primary key on [Id] in table 'PostLocations'
+ALTER TABLE [dbo].[PostLocations]
+ADD CONSTRAINT [PK_PostLocations]
     PRIMARY KEY CLUSTERED ([Id] ASC);
 GO
 
@@ -760,6 +825,62 @@ ADD CONSTRAINT [FK_BadWordTypesBadWords]
 CREATE INDEX [IX_FK_BadWordTypesBadWords]
 ON [dbo].[BadWords]
     ([TypeId]);
+GO
+
+-- Creating foreign key on [DistrictId] in table 'Locations'
+ALTER TABLE [dbo].[Locations]
+ADD CONSTRAINT [FK_DistrictsLocations]
+    FOREIGN KEY ([DistrictId])
+    REFERENCES [dbo].[Districts]
+        ([Id])
+    ON DELETE NO ACTION ON UPDATE NO ACTION;
+
+-- Creating non-clustered index for FOREIGN KEY 'FK_DistrictsLocations'
+CREATE INDEX [IX_FK_DistrictsLocations]
+ON [dbo].[Locations]
+    ([DistrictId]);
+GO
+
+-- Creating foreign key on [LocationTypeId] in table 'Locations'
+ALTER TABLE [dbo].[Locations]
+ADD CONSTRAINT [FK_LocationTypesLocations]
+    FOREIGN KEY ([LocationTypeId])
+    REFERENCES [dbo].[LocationTypes]
+        ([Id])
+    ON DELETE NO ACTION ON UPDATE NO ACTION;
+
+-- Creating non-clustered index for FOREIGN KEY 'FK_LocationTypesLocations'
+CREATE INDEX [IX_FK_LocationTypesLocations]
+ON [dbo].[Locations]
+    ([LocationTypeId]);
+GO
+
+-- Creating foreign key on [PostId] in table 'PostLocations'
+ALTER TABLE [dbo].[PostLocations]
+ADD CONSTRAINT [FK_PostsPostLocations]
+    FOREIGN KEY ([PostId])
+    REFERENCES [dbo].[Posts]
+        ([Id])
+    ON DELETE NO ACTION ON UPDATE NO ACTION;
+
+-- Creating non-clustered index for FOREIGN KEY 'FK_PostsPostLocations'
+CREATE INDEX [IX_FK_PostsPostLocations]
+ON [dbo].[PostLocations]
+    ([PostId]);
+GO
+
+-- Creating foreign key on [LocationId] in table 'PostLocations'
+ALTER TABLE [dbo].[PostLocations]
+ADD CONSTRAINT [FK_LocationsPostLocations]
+    FOREIGN KEY ([LocationId])
+    REFERENCES [dbo].[Locations]
+        ([Id])
+    ON DELETE NO ACTION ON UPDATE NO ACTION;
+
+-- Creating non-clustered index for FOREIGN KEY 'FK_LocationsPostLocations'
+CREATE INDEX [IX_FK_LocationsPostLocations]
+ON [dbo].[PostLocations]
+    ([LocationId]);
 GO
 
 -- --------------------------------------------------

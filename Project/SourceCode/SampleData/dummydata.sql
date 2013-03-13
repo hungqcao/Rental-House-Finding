@@ -80,6 +80,25 @@ INSERT INTO [RentalHouseFinding].[dbo].BadWords VALUES
 
 GO
 
+DELETE FROM [RentalHouseFinding].[dbo].Locations
+
+GO
+
+
+DELETE FROM [RentalHouseFinding].[dbo].LocationTypes
+
+GO
+
+INSERT INTO [RentalHouseFinding].[dbo].LocationTypes VALUES 
+			('Created by User'),('Hospital'),('Market')
+
+GO
+
+
+INSERT INTO [RentalHouseFinding].[dbo].Locations VALUES 
+			('Cho dong xuan', '1',21.035852,105.826094,'1'),('Super house', '1',21.035852,105.826094,'1'),('Sieu thi nguyen kim', '1',21.035852,105.826094,'1')
+
+GO
 
 USE RentalHouseFinding ;
 GO

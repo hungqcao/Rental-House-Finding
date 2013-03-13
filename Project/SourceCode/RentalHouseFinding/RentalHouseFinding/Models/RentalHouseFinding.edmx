@@ -26,6 +26,9 @@
     <EntitySet Name="AdvanceSearchScores" EntityType="RentalHouseFinding.Store.AdvanceSearchScores" store:Type="Tables" Schema="dbo" />
     <EntitySet Name="FacilityTemplates" EntityType="RentalHouseFinding.Store.FacilityTemplates" store:Type="Tables" Schema="dbo" />
     <EntitySet Name="BadWordTypes" EntityType="RentalHouseFinding.Store.BadWordTypes" store:Type="Tables" Schema="dbo" />
+    <EntitySet Name="Locations" EntityType="RentalHouseFinding.Store.Locations" store:Type="Tables" Schema="dbo" />
+    <EntitySet Name="LocationTypes" EntityType="RentalHouseFinding.Store.LocationTypes" store:Type="Tables" Schema="dbo" />
+    <EntitySet Name="PostLocations" EntityType="RentalHouseFinding.Store.PostLocations" store:Type="Tables" Schema="dbo" />
     <AssociationSet Name="ProvincesDistricts" Association="RentalHouseFinding.Store.ProvincesDistricts">
       <End Role="Provinces" EntitySet="Provinces" />
       <End Role="Districts" EntitySet="Districts" />
@@ -102,6 +105,22 @@
       <End Role="BadWordTypes" EntitySet="BadWordTypes" />
       <End Role="BadWords" EntitySet="BadWords" />
     </AssociationSet>
+    <AssociationSet Name="DistrictsLocations" Association="RentalHouseFinding.Store.DistrictsLocations">
+      <End Role="Districts" EntitySet="Districts" />
+      <End Role="Locations" EntitySet="Locations" />
+    </AssociationSet>
+    <AssociationSet Name="LocationTypesLocations" Association="RentalHouseFinding.Store.LocationTypesLocations">
+      <End Role="LocationTypes" EntitySet="LocationTypes" />
+      <End Role="Locations" EntitySet="Locations" />
+    </AssociationSet>
+    <AssociationSet Name="PostsPostLocations" Association="RentalHouseFinding.Store.PostsPostLocations">
+      <End Role="Posts" EntitySet="Posts" />
+      <End Role="PostLocations" EntitySet="PostLocations" />
+    </AssociationSet>
+    <AssociationSet Name="LocationsPostLocations" Association="RentalHouseFinding.Store.LocationsPostLocations">
+      <End Role="Locations" EntitySet="Locations" />
+      <End Role="PostLocations" EntitySet="PostLocations" />
+    </AssociationSet>
   </EntityContainer>
   <EntityType Name="Users">
     <Key>
@@ -160,7 +179,7 @@
     <Property Name="EditedDate" Type="datetime" Nullable="false" />
     <Property Name="RenewDate" Type="datetime" Nullable="true" />
     <Property Name="DistrictId" Type="int" Nullable="false" />
-    <Property Name="NumberAddress" Type="nvarchar(max)" Nullable="false" />
+    <Property Name="NumberAddress" Type="nvarchar(max)" Nullable="true" />
     <Property Name="Price" Type="float" Nullable="false" />
     <Property Name="Area" Type="float" Nullable="false" />
     <Property Name="PhoneActive" Type="nvarchar" Nullable="false" MaxLength="20" />
@@ -336,6 +355,32 @@
     </Key>
     <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
     <Property Name="Name" Type="nvarchar(max)" Nullable="false" />
+  </EntityType>
+  <EntityType Name="Locations">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="Name" Type="nvarchar(max)" Nullable="false" />
+    <Property Name="DistrictId" Type="int" Nullable="false" />
+    <Property Name="Lat" Type="nvarchar(max)" Nullable="true" />
+    <Property Name="Lon" Type="nvarchar(max)" Nullable="true" />
+    <Property Name="LocationTypeId" Type="int" Nullable="false" />
+  </EntityType>
+  <EntityType Name="LocationTypes">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="Name" Type="nvarchar(max)" Nullable="false" />
+  </EntityType>
+  <EntityType Name="PostLocations">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="PostId" Type="int" Nullable="false" />
+    <Property Name="LocationId" Type="int" Nullable="false" />
   </EntityType>
   <Association Name="ProvincesDistricts">
     <End Role="Provinces" Type="RentalHouseFinding.Store.Provinces" Multiplicity="1" />
@@ -565,6 +610,54 @@
       </Dependent>
     </ReferentialConstraint>
   </Association>
+  <Association Name="DistrictsLocations">
+    <End Role="Districts" Type="RentalHouseFinding.Store.Districts" Multiplicity="1" />
+    <End Role="Locations" Type="RentalHouseFinding.Store.Locations" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Districts">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="Locations">
+        <PropertyRef Name="DistrictId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="LocationTypesLocations">
+    <End Role="LocationTypes" Type="RentalHouseFinding.Store.LocationTypes" Multiplicity="1" />
+    <End Role="Locations" Type="RentalHouseFinding.Store.Locations" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="LocationTypes">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="Locations">
+        <PropertyRef Name="LocationTypeId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="PostsPostLocations">
+    <End Role="Posts" Type="RentalHouseFinding.Store.Posts" Multiplicity="1" />
+    <End Role="PostLocations" Type="RentalHouseFinding.Store.PostLocations" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Posts">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="PostLocations">
+        <PropertyRef Name="PostId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="LocationsPostLocations">
+    <End Role="Locations" Type="RentalHouseFinding.Store.Locations" Multiplicity="1" />
+    <End Role="PostLocations" Type="RentalHouseFinding.Store.PostLocations" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Locations">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="PostLocations">
+        <PropertyRef Name="LocationId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
 </Schema></edmx:StorageModels>
     <!-- CSDL content -->
     <edmx:ConceptualModels>
@@ -692,6 +785,25 @@
             <End Role="BadWordTypes" EntitySet="BadWordTypes" />
             <End Role="BadWords" EntitySet="BadWords" />
           </AssociationSet>
+          <EntitySet Name="Locations" EntityType="RentalHouseFinding.Locations" />
+          <AssociationSet Name="DistrictsLocations" Association="RentalHouseFinding.DistrictsLocations">
+            <End Role="Districts" EntitySet="Districts" />
+            <End Role="Locations" EntitySet="Locations" />
+          </AssociationSet>
+          <EntitySet Name="LocationTypes" EntityType="RentalHouseFinding.LocationTypes" />
+          <AssociationSet Name="LocationTypesLocations" Association="RentalHouseFinding.LocationTypesLocations">
+            <End Role="LocationTypes" EntitySet="LocationTypes" />
+            <End Role="Locations" EntitySet="Locations" />
+          </AssociationSet>
+          <EntitySet Name="PostLocations" EntityType="RentalHouseFinding.PostLocations" />
+          <AssociationSet Name="PostsPostLocations" Association="RentalHouseFinding.PostsPostLocations">
+            <End Role="Posts" EntitySet="Posts" />
+            <End Role="PostLocations" EntitySet="PostLocations" />
+          </AssociationSet>
+          <AssociationSet Name="LocationsPostLocations" Association="RentalHouseFinding.LocationsPostLocations">
+            <End Role="Locations" EntitySet="Locations" />
+            <End Role="PostLocations" EntitySet="PostLocations" />
+          </AssociationSet>
           </EntityContainer>
         <EntityType Name="Users">
           <Key>
@@ -742,6 +854,7 @@
           <NavigationProperty Name="Province" Relationship="RentalHouseFinding.ProvincesDistricts" FromRole="Districts" ToRole="Provinces" />
           <NavigationProperty Name="Posts" Relationship="RentalHouseFinding.DistrictsPosts" FromRole="Districts" ToRole="Posts" />
           <Property Name="IsDeleted" Nullable="false" Type="Boolean" />
+          <NavigationProperty Name="Locations" Relationship="RentalHouseFinding.DistrictsLocations" FromRole="Districts" ToRole="Locations" />
         </EntityType>
         <Association Name="ProvincesDistricts">
           <End Type="RentalHouseFinding.Provinces" Multiplicity="1" Role="Provinces" />
@@ -769,7 +882,7 @@
           <Property Name="EditedDate" Nullable="false" Type="DateTime" />
           <Property Name="RenewDate" Nullable="true" Type="DateTime" />
           <Property Name="DistrictId" Nullable="false" Type="Int32" />
-          <Property Name="NumberAddress" Nullable="false" MaxLength="Max" Unicode="true" Type="String" />
+          <Property Name="NumberAddress" Nullable="true" MaxLength="Max" Unicode="true" Type="String" />
           <Property Name="Price" Nullable="false" Type="Double" />
           <Property Name="Area" Nullable="false" Type="Double" />
           <Property Name="PhoneActive" Nullable="false" MaxLength="20" Type="String" />
@@ -790,6 +903,7 @@
           <Property Type="String" Name="Street" Nullable="false" MaxLength="50" />
           <NavigationProperty Name="Messeges" Relationship="RentalHouseFinding.PostsMessegesReceiver" FromRole="Posts" ToRole="Messeges" />
           <NavigationProperty Name="Messeges_1" Relationship="RentalHouseFinding.PostsMessegesSender" FromRole="Posts" ToRole="Messeges" />
+          <NavigationProperty Name="PostLocations" Relationship="RentalHouseFinding.PostsPostLocations" FromRole="Posts" ToRole="PostLocations" />
         </EntityType>
         <Association Name="DistrictsPosts">
           <End Type="RentalHouseFinding.Districts" Multiplicity="1" Role="Districts" />
@@ -1201,6 +1315,86 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <EntityType Name="Locations">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Type="Int32" Name="Id" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Type="String" Name="Name" Nullable="false" />
+          <Property Type="Int32" Name="DistrictId" Nullable="false" />
+          <Property Type="String" Name="Lat" Nullable="true" />
+          <Property Type="String" Name="Lon" Nullable="true" />
+          <NavigationProperty Name="District" Relationship="RentalHouseFinding.DistrictsLocations" FromRole="Locations" ToRole="Districts" />
+          <Property Type="Int32" Name="LocationTypeId" Nullable="false" />
+          <NavigationProperty Name="LocationType" Relationship="RentalHouseFinding.LocationTypesLocations" FromRole="Locations" ToRole="LocationTypes" />
+          <NavigationProperty Name="PostLocations" Relationship="RentalHouseFinding.LocationsPostLocations" FromRole="Locations" ToRole="PostLocations" />
+        </EntityType>
+        <Association Name="DistrictsLocations">
+          <End Type="RentalHouseFinding.Districts" Role="Districts" Multiplicity="1" />
+          <End Type="RentalHouseFinding.Locations" Role="Locations" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Districts">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Locations">
+              <PropertyRef Name="DistrictId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityType Name="LocationTypes">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Type="Int32" Name="Id" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Type="String" Name="Name" Nullable="false" />
+          <NavigationProperty Name="Locations" Relationship="RentalHouseFinding.LocationTypesLocations" FromRole="LocationTypes" ToRole="Locations" />
+        </EntityType>
+        <Association Name="LocationTypesLocations">
+          <End Type="RentalHouseFinding.LocationTypes" Role="LocationTypes" Multiplicity="1" />
+          <End Type="RentalHouseFinding.Locations" Role="Locations" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="LocationTypes">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Locations">
+              <PropertyRef Name="LocationTypeId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityType Name="PostLocations">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Type="Int32" Name="Id" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Type="Int32" Name="PostId" Nullable="false" />
+          <Property Type="Int32" Name="LocationId" Nullable="false" />
+          <NavigationProperty Name="Post" Relationship="RentalHouseFinding.PostsPostLocations" FromRole="PostLocations" ToRole="Posts" />
+          <NavigationProperty Name="Location" Relationship="RentalHouseFinding.LocationsPostLocations" FromRole="PostLocations" ToRole="Locations" />
+        </EntityType>
+        <Association Name="PostsPostLocations">
+          <End Type="RentalHouseFinding.Posts" Role="Posts" Multiplicity="1" />
+          <End Type="RentalHouseFinding.PostLocations" Role="PostLocations" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Posts">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="PostLocations">
+              <PropertyRef Name="PostId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="LocationsPostLocations">
+          <End Type="RentalHouseFinding.Locations" Role="Locations" Multiplicity="1" />
+          <End Type="RentalHouseFinding.PostLocations" Role="PostLocations" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Locations">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="PostLocations">
+              <PropertyRef Name="LocationId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -1461,6 +1655,35 @@
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>
+    <EntitySetMapping Name="Locations">
+      <EntityTypeMapping TypeName="IsTypeOf(RentalHouseFinding.Locations)">
+        <MappingFragment StoreEntitySet="Locations">
+          <ScalarProperty Name="Id" ColumnName="Id" />
+          <ScalarProperty Name="Name" ColumnName="Name" />
+          <ScalarProperty Name="DistrictId" ColumnName="DistrictId" />
+          <ScalarProperty Name="Lat" ColumnName="Lat" />
+          <ScalarProperty Name="Lon" ColumnName="Lon" />
+          <ScalarProperty Name="LocationTypeId" ColumnName="LocationTypeId" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="LocationTypes">
+      <EntityTypeMapping TypeName="IsTypeOf(RentalHouseFinding.LocationTypes)">
+        <MappingFragment StoreEntitySet="LocationTypes">
+          <ScalarProperty Name="Id" ColumnName="Id" />
+          <ScalarProperty Name="Name" ColumnName="Name" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="PostLocations">
+      <EntityTypeMapping TypeName="IsTypeOf(RentalHouseFinding.PostLocations)">
+        <MappingFragment StoreEntitySet="PostLocations">
+          <ScalarProperty Name="Id" ColumnName="Id" />
+          <ScalarProperty Name="PostId" ColumnName="PostId" />
+          <ScalarProperty Name="LocationId" ColumnName="LocationId" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
   </EntityContainerMapping>
 </Mapping></edmx:Mappings>
   </edmx:Runtime>
@@ -1503,24 +1726,24 @@
         </AssociationConnector>
         <EntityTypeShape EntityType="RentalHouseFinding.PostImages" PointX="7.5" PointY="20.5" Width="1.5" Height="1.9802864583333317" IsExpanded="true" />
         <AssociationConnector Association="RentalHouseFinding.PostsPostImages">
-          <ConnectorPoint PointX="6.75" PointY="10.932815005608976" />
-          <ConnectorPoint PointX="7.25" PointY="11.432815005608976" />
-          <ConnectorPoint PointX="7.25" PointY="21.490143229166666" />
+          <ConnectorPoint PointX="6.75" PointY="11.098577976362179" />
+          <ConnectorPoint PointX="7.34375" PointY="11.692327976362179" />
+          <ConnectorPoint PointX="7.34375" PointY="21.490143229166666" />
           <ConnectorPoint PointX="7.5" PointY="21.490143229166666" />
         </AssociationConnector>
         <EntityTypeShape EntityType="RentalHouseFinding.PostStatuses" PointX="3" PointY="6.125" Width="1.5" Height="1.9802864583333317" IsExpanded="true" />
         <EntityTypeShape EntityType="RentalHouseFinding.Favorites" PointX="8.25" PointY="12.25" Width="1.5" Height="2.3648893229166674" IsExpanded="true" />
         <AssociationConnector Association="RentalHouseFinding.UsersFavorites">
-          <ConnectorPoint PointX="4.5" PointY="15.091095377604166" />
-          <ConnectorPoint PointX="4.791666666666667" PointY="15.091095377604166" />
-          <ConnectorPoint PointX="4.958333333333333" PointY="15.091095377604166" />
-          <ConnectorPoint PointX="7.041666666666667" PointY="15.091095377604164" />
-          <ConnectorPoint PointX="7.333333333333333" PointY="15.091095377604166" />
-          <ConnectorPoint PointX="7.510416666666667" PointY="15.091095377604166" />
-          <ConnectorPoint PointX="7.677083333333333" PointY="15.091095377604166" />
-          <ConnectorPoint PointX="7.885416666666667" PointY="15.091095377604166" />
-          <ConnectorPoint PointX="8.0520833333333339" PointY="15.091095377604166" />
-          <ConnectorPoint PointX="9.40625" PointY="15.091095377604166" />
+          <ConnectorPoint PointX="4.5" PointY="15.043017519531256" />
+          <ConnectorPoint PointX="4.791666666666667" PointY="15.043017519531256" />
+          <ConnectorPoint PointX="4.958333333333333" PointY="15.043017519531256" />
+          <ConnectorPoint PointX="7.041666666666667" PointY="15.043017519531254" />
+          <ConnectorPoint PointX="7.333333333333333" PointY="15.043017519531256" />
+          <ConnectorPoint PointX="7.510416666666667" PointY="15.043017519531256" />
+          <ConnectorPoint PointX="7.677083333333333" PointY="15.043017519531256" />
+          <ConnectorPoint PointX="7.885416666666667" PointY="15.043017519531256" />
+          <ConnectorPoint PointX="8.0520833333333339" PointY="15.043017519531256" />
+          <ConnectorPoint PointX="9.40625" PointY="15.043017519531256" />
           <ConnectorPoint PointX="9.40625" PointY="14.614889322916667" />
         </AssociationConnector>
         <AssociationConnector Association="RentalHouseFinding.PostsFavorites">
@@ -1541,7 +1764,7 @@
           <ConnectorPoint PointX="4.958333333333333" PointY="13.403595377604166" />
           <ConnectorPoint PointX="5.25" PointY="13.403595377604166" />
         </AssociationConnector>
-        <EntityTypeShape EntityType="RentalHouseFinding.BadWords" PointX="0.75" PointY="0.75" Width="1.5" Height="1.59568359375" IsExpanded="true" />
+        <EntityTypeShape EntityType="RentalHouseFinding.BadWords" PointX="0.75" PointY="0.75" Width="1.5" Height="1.787985026041667" IsExpanded="true" />
         <AssociationConnector Association="RentalHouseFinding.RolesUsers">
           <ConnectorPoint PointX="2.25" PointY="13.490143229166666" />
           <ConnectorPoint PointX="3" PointY="13.490143229166666" />
@@ -1550,19 +1773,19 @@
         <EntityTypeShape EntityType="RentalHouseFinding.Contacts" PointX="7.5" PointY="23.25" Width="1.5" Height="2.1725878906250031" IsExpanded="true" />
         <EntityTypeShape EntityType="RentalHouseFinding.PostVideos" PointX="7.5" PointY="26.25" Width="1.5" Height="1.9802864583333317" IsExpanded="true" />
         <AssociationConnector Association="RentalHouseFinding.PostsFacilities">
-          <ConnectorPoint PointX="6.75" PointY="9.2194665234375" />
-          <ConnectorPoint PointX="7.59375" PointY="9.2194665234375" />
+          <ConnectorPoint PointX="6.75" PointY="9.1497511032460554" />
+          <ConnectorPoint PointX="7.59375" PointY="9.1497511032460554" />
           <ConnectorPoint PointX="7.59375" PointY="15.5" />
         </AssociationConnector>
         <AssociationConnector Association="RentalHouseFinding.PostsContacts">
-          <ConnectorPoint PointX="6.7488461538461531" PointY="10.980123697916667" />
-          <ConnectorPoint PointX="7.21875" PointY="11.450027544070515" />
-          <ConnectorPoint PointX="7.21875" PointY="24.3362939453125" />
+          <ConnectorPoint PointX="6.7488461538461539" PointY="11.172425130208332" />
+          <ConnectorPoint PointX="7.296875" PointY="11.72045397636218" />
+          <ConnectorPoint PointX="7.296875" PointY="24.3362939453125" />
           <ConnectorPoint PointX="7.5" PointY="24.3362939453125" />
         </AssociationConnector>
         <AssociationConnector Association="RentalHouseFinding.PostsPostVideos">
-          <ConnectorPoint PointX="6.75" PointY="10.925891928685898" />
-          <ConnectorPoint PointX="7.1875" PointY="11.363391928685898" />
+          <ConnectorPoint PointX="6.75" PointY="11.14934720713141" />
+          <ConnectorPoint PointX="7.1875" PointY="11.58684720713141" />
           <ConnectorPoint PointX="7.1875" PointY="27.240143229166666" />
           <ConnectorPoint PointX="7.5" PointY="27.240143229166666" />
         </AssociationConnector>
@@ -1581,15 +1804,15 @@
         <EntityTypeShape EntityType="RentalHouseFinding.ConfigurationRHF" Width="1.5" PointX="2.75" PointY="0.75" Height="1.2110807291666657" IsExpanded="true" />
         <EntityTypeShape EntityType="RentalHouseFinding.Questions" Width="1.5" PointX="7.5" PointY="28.875" Height="3.1340950520833353" IsExpanded="true" />
         <AssociationConnector Association="RentalHouseFinding.PostsMessegesReceiver">
-          <ConnectorPoint PointX="6.7003846153846149" PointY="10.980123697916667" />
-          <ConnectorPoint PointX="7.125" PointY="11.404739082532053" />
-          <ConnectorPoint PointX="7.125" PointY="30.442047526041669" />
-          <ConnectorPoint PointX="7.5" PointY="30.442047526041669" />
+          <ConnectorPoint PointX="6.724615384615384" PointY="11.172425130208332" />
+          <ConnectorPoint PointX="7.25" PointY="11.697809745592949" />
+          <ConnectorPoint PointX="7.25" PointY="29.627271763020843" />
+          <ConnectorPoint PointX="7.5" PointY="29.627271763020843" />
         </AssociationConnector>
         <AssociationConnector Association="RentalHouseFinding.PostsMessegesSender">
-          <ConnectorPoint PointX="6.75" PointY="10.974353467147436" />
-          <ConnectorPoint PointX="7.15625" PointY="11.380603467147436" />
-          <ConnectorPoint PointX="7.15625" PointY="30.442047526041669" />
+          <ConnectorPoint PointX="6.7003846153846149" PointY="11.172425130208332" />
+          <ConnectorPoint PointX="7.125" PointY="11.597040514823718" />
+          <ConnectorPoint PointX="7.125" PointY="30.442047526041669" />
           <ConnectorPoint PointX="7.5" PointY="30.442047526041669" />
         </AssociationConnector>
         <EntityTypeShape EntityType="RentalHouseFinding.Answers" Width="1.5" PointX="9.75" PointY="29.375" Height="2.172587890624996" IsExpanded="true" />
@@ -1603,12 +1826,45 @@
           <ConnectorPoint PointX="7.96875" PointY="4.6436979166666656" />
           <ConnectorPoint PointX="7.96875" PointY="15.5" />
         </AssociationConnector>
-        <EntityTypeShape EntityType="RentalHouseFinding.BadWordTypes" Width="1.5" PointX="0.75" PointY="2.5" Height="1.4033821614583331" />
+        <EntityTypeShape EntityType="RentalHouseFinding.BadWordTypes" Width="1.5" PointX="0.75" PointY="2.5" Height="1.5956835937499996" />
         <AssociationConnector Association="RentalHouseFinding.BadWordTypesBadWords">
           <ConnectorPoint PointX="2.25" PointY="3.297841796875" />
           <ConnectorPoint PointX="2.49" PointY="3.297841796875" />
           <ConnectorPoint PointX="2.49" PointY="1.6439925130208333" />
           <ConnectorPoint PointX="2.25" PointY="1.6439925130208333" />
+        </AssociationConnector>
+        <EntityTypeShape EntityType="RentalHouseFinding.Locations" Width="1.5" PointX="10" PointY="0.75" Height="2.7494921875" />
+        <AssociationConnector Association="RentalHouseFinding.DistrictsLocations">
+          <ConnectorPoint PointX="4.5" PointY="18.281574516826922" />
+          <ConnectorPoint PointX="7" PointY="18.281574516826922" />
+          <ConnectorPoint PointX="7" PointY="15.25" />
+          <ConnectorPoint PointX="7.041666666666667" PointY="15.249999999999998" />
+          <ConnectorPoint PointX="7.427083333333333" PointY="15.25" />
+          <ConnectorPoint PointX="7.510416666666667" PointY="15.25" />
+          <ConnectorPoint PointX="7.677083333333333" PointY="15.25" />
+          <ConnectorPoint PointX="7.885416666666667" PointY="15.25" />
+          <ConnectorPoint PointX="8.0520833333333339" PointY="15.25" />
+          <ConnectorPoint PointX="10.718748" PointY="15.25" />
+          <ConnectorPoint PointX="10.718748" PointY="3.4994921875" />
+        </AssociationConnector>
+        <EntityTypeShape EntityType="RentalHouseFinding.LocationTypes" Width="1.5" PointX="12.375" PointY="0.875" Height="1.4033821614583331" />
+        <AssociationConnector Association="RentalHouseFinding.LocationTypesLocations">
+          <ConnectorPoint PointX="12.375" PointY="1.672841796875" />
+          <ConnectorPoint PointX="11.5" PointY="1.672841796875" />
+        </AssociationConnector>
+        <EntityTypeShape EntityType="RentalHouseFinding.PostLocations" Width="1.5" PointX="11.75" PointY="4.375" Height="1.5956835937499996" />
+        <AssociationConnector Association="RentalHouseFinding.PostsPostLocations">
+          <ConnectorPoint PointX="6.75" PointY="5.6769148470052073" />
+          <ConnectorPoint PointX="7.885416666666667" PointY="5.6769148470052064" />
+          <ConnectorPoint PointX="8.0520833333333339" PointY="5.6769148470052073" />
+          <ConnectorPoint PointX="10.635414666666666" PointY="5.6769148470052064" />
+          <ConnectorPoint PointX="10.802081333333334" PointY="5.6769148470052073" />
+          <ConnectorPoint PointX="11.75" PointY="5.6769148470052073" />
+        </AssociationConnector>
+        <AssociationConnector Association="RentalHouseFinding.LocationsPostLocations">
+          <ConnectorPoint PointX="11.1406265" PointY="3.4994921875" />
+          <ConnectorPoint PointX="11.1406265" PointY="4.9947049235026038" />
+          <ConnectorPoint PointX="11.75" PointY="4.9947049235026038" />
         </AssociationConnector>
       </Diagram>
     </edmx:Diagrams>
