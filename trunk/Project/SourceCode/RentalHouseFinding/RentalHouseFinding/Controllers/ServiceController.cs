@@ -103,5 +103,25 @@ namespace RentalHouseFinding.Controllers
             }
             return Json(new { message = "Fail" }, JsonRequestBehavior.AllowGet);
         }
+
+        [AcceptVerbs(HttpVerbs.Get)]
+        public JsonResult GetLocation()
+        {
+            try
+            {
+                var localtions = _db.Locations.ToList();
+                var myData = localtions.Select(a => new SelectListItem()
+                {
+                    Text = a.Name.ToString(),
+                    Value = a.Id.ToString(),
+                });
+
+                return Json(myData, JsonRequestBehavior.AllowGet);
+            }
+            catch
+            {
+                return Json(new { message = "Fail" });
+            }
+        }
     }
 }

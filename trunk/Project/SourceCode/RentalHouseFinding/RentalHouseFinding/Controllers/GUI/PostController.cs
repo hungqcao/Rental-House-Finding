@@ -23,12 +23,6 @@ namespace RentalHouseFinding.Controllers
 
         public ActionResult Details(int id)
         {
-            
-            //if (TempData["IdSuccessPost"] == null)
-            //{
-            //    return RedirectToAction("Index", "Home");
-            //}
-            //int postId = 1;//(int)TempData["IdSuccessPost"];
             var post = (from p in _db.Posts where p.Id == id select p).FirstOrDefault();
             var provinceName = (from d in _db.Districts 
                                 where d.Id == post.DistrictId
@@ -66,9 +60,19 @@ namespace RentalHouseFinding.Controllers
                     if (!CommonModel.FilterHasBadContent(model))
                     {
                         Posts postToCreate = CommonModel.ConvertPostViewModelToPost(model, DateTime.Now, DateTime.Now, DateTime.Now);
-                        
-                        //1 for submitted
-                        postToCreate.StatusId = 1;
+
+                        if (CommonModel.FilterHasBadContent(model))
+                        {
+                            //2 for pending
+                            postToCreate.StatusId = 2;
+                            TempData["MessageSuccessPostNew"] = "Bài đăng có chứa những từ không cho phép, chúng tôi sẽ duyệt trước khi đăng lên hệ thống";
+                        }
+                        else
+                        {
+                            //1 for submitted
+                            postToCreate.StatusId = 1;
+                            TempData["MessageSuccessPostNew"] = "Đăng bài thành công, chúng tôi sẽ gửi tin nhắn đến số điện thoại bạn đã cung cấp";
+                        }
 
                         int userId;
                         if (!string.IsNullOrEmpty(User.Identity.Name))
@@ -78,9 +82,18 @@ namespace RentalHouseFinding.Controllers
                         }
                         _db.Posts.AddObject(postToCreate);
                         _db.SaveChanges();
-                        TempData["MessageSuccessPostNew"] = "Đăng bài thành công, chúng tôi sẽ gửi tin nhắn đến số điện thoại bạn đã cung cấp";
                         
+                        //Nearby places
+                        List<int> lstNearbyId = GetListNearbyLocations(model);
+                        PostLocations postLocation;
+                        foreach (int i in lstNearbyId)
+                        {
+                            postLocation = new PostLocations();
+                            postLocation.PostId = postToCreate.Id;
+                            postLocation.LocationId = i;
+                        }
 
+                        //Images post
                         PostImages imageToCreate = null;
 
                         if (!(images.Count() == 0 || images == null))
@@ -193,13 +206,44 @@ namespace RentalHouseFinding.Controllers
             }
         }
 
-        //
-        // POST: /Post/Delete/5
-
-        [HttpPost]
-        public ActionResult Delete(int id, PostViewModel postViewModel)
+        private List<int> GetListNearbyLocations(PostViewModel model)
         {
-            return View();
+            try
+            {
+                List<int> lstReturn = new List<int>();
+                int id;
+                Locations location;
+                for (int i = 0; i < Request.Form.Keys.Count; i++)
+                {
+                    if (Request.Form.Keys[i].Contains("idNearby"))
+                    {
+                        int.TryParse(Request.Form.Keys[i].Split(':')[1], out id);
+                        if (id == -1)
+                        {
+                            if(string.IsNullOrEmpty(Request.Form.Keys[i].Split(':')[2].Trim()))
+                            {
+                                location = new Locations();
+                                location.DistrictId = model.DistrictId;
+                                //1 for Create by User
+                                location.LocationTypeId = 1;
+                                location.Name = Request.Form.Keys[i].Split(':')[2];
+                                _db.Locations.AddObject(location);
+                                _db.SaveChanges();
+                                lstReturn.Add(location.Id);
+                            }
+                        }
+                        else
+                        {
+                            lstReturn.Add(id);
+                        }
+                    }
+                }
+                return lstReturn;
+            }
+            catch
+            {
+                return null;
+            }
         }
     }
 }
