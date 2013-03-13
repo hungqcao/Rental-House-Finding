@@ -13,10 +13,15 @@ namespace RentalHouseFinding.Controllers
     public class PostController : Controller
     {
         RentalHouseFindingEntities _db = new RentalHouseFindingEntities();
+        public ActionResult Index()
+        {
+            return View();
+        }
+        
         //
-        // GET: /Post/
+        // GET: /Post/Details/5
 
-        public ActionResult Index(int id)
+        public ActionResult Details(int id)
         {
             
             //if (TempData["IdSuccessPost"] == null)
@@ -42,8 +47,11 @@ namespace RentalHouseFinding.Controllers
             ViewBag.StayWithOwner = post.Facilities.IsStayWithOwner ? "Có" : "Không";
             ViewBag.WaterHeater = post.Facilities.HasWaterHeater ? "Có" : "Không";
             //Get images
-            var images = (from i in _db.PostImages where (i.PostId == post.Id && !i.IsDeleted) select i).ToList();
-            ViewBag.Images = images;
+            var images = (from i in _db.PostImages where (i.PostId == post.Id && !i.IsDeleted) select i);
+            if (images != null)
+            {
+                ViewBag.Images = images.ToList();
+            }
             return View(CommonModel.ConvertPostToPostViewModel(post));
         }
 
@@ -133,8 +141,11 @@ namespace RentalHouseFinding.Controllers
         {
             var postModel = (from p in _db.Posts where (p.Id == id) && (!p.IsDeleted) select p).FirstOrDefault();
             //Get images
-            var images = (from i in _db.PostImages where (i.PostId == postModel.Id && !i.IsDeleted) select i).ToList();
-            ViewBag.Images = images;
+            var images = (from i in _db.PostImages where (i.PostId == postModel.Id && !i.IsDeleted) select i);
+            if (images != null)
+            {
+                ViewBag.Images = images.ToList();
+            }
             return View(CommonModel.ConvertPostToPostViewModel(postModel));
         }
 
