@@ -49,7 +49,7 @@
     </div>    
     <div class="display-label">Địa chỉ:</div>
     <div class="display-field">
-        @Model.Street, @ViewBag.Address
+        @Model.Address, @ViewBag.Province
     </div>
 
     <div class="display-label">Giá:</div>
@@ -70,53 +70,53 @@
 
     <div class="display-label">Internet:</div>
     <div class="display-field">
-        @ViewBag.Internet
+        @Html.DisplayFor(model => model.Internet)
     </div>
 
     <div class="display-label">Truyền hình cáp:</div>
     <div class="display-field">
-        @ViewBag.TVCable
+        @Html.DisplayFor(model => model.TVCable)
     </div>
 
     <div class="display-label">Điều Hòa:</div>
     <div class="display-field">
-        @ViewBag.AirConditioner
+        @Html.DisplayFor(model => model.AirConditioner)
     </div>
 
     <div class="display-label">Nóng lạnh:</div>
     <div class="display-field">
-        @ViewBag.WaterHeater
+        @Html.DisplayFor(model => model.WaterHeater)
     </div>
     <div class="display-label">Giường:</div>
     <div class="display-field">
-        @ViewBag.Bed
+        @Html.DisplayFor(model => model.Bed)
     </div>
     <div class="display-label">Chỗ để xe máy, xe đạp:</div>
     <div class="display-field">
-        @ViewBag.MotorParkingLot
+        @Html.DisplayFor(model => model.MotorParkingLot)
     </div>
     <div class="display-label">Chỗ để Ô tô:</div>
     <div class="display-field">
-        @ViewBag.Gara
+        @Html.DisplayFor(model => model.Gara)
     </div>
     <div class="display-label">Chung chủ:</div>
     <div class="display-field">
-        @ViewBag.StayWithOwner
+        @Html.DisplayFor(model => model.StayWithOwner)
     </div>
 
     <div class="display-label">Vệ sinh khép kín:</div>
     <div class="display-field">
-        @ViewBag.Toilet
+        @Html.DisplayFor(model => model.Toilet)
     </div>
 
     <div class="display-label">Nấu ăn trong nhà:</div>
     <div class="display-field">
-        @ViewBag.AllowCooking
+        @Html.DisplayFor(model => model.AllowCooking)
     </div>
 
     <div class="display-label">Bảo vệ:</div>
     <div class="display-field">
-        @ViewBag.Security
+        @Html.DisplayFor(model => model.Security)
     </div>  
 
     <div class="display-label">Lượt xem:</div>
@@ -137,6 +137,10 @@
     <div class="display-label">Người đăng:</div>
     <div class="display-field">
         @Html.DisplayFor(model => model.CreatedBy)
+    </div>
+    <div class="display-label">Liên Hệ:</div>
+    <div class="display-field">
+        @Html.DisplayFor(model => model.PhoneContact)
     </div>
         </div>
     <div class = "content" style="float:right;" >
