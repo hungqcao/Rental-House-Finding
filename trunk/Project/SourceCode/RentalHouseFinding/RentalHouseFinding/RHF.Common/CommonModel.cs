@@ -133,19 +133,20 @@ namespace RentalHouseFinding.RHF.Common
             post.Price = model.Price;
             post.RenewDate = renewDate;
             post.Title = model.Title;
-            post.Views = 0;
+            //post.Views = 0;//?
             post.IsDeleted = false;
 
             return post;
         }
 
         public static PostViewModel ConvertPostToPostViewModel(Posts model)
-        {
+        {            
             return new PostViewModel
             {
                 Id = model.Id,
                 NumberHouse = model.NumberAddress,
                 Street = model.Street,
+                Address = String.Format("{0} {1}, {2}",model.NumberAddress,model.Street,model.District.Name),
                 Area = model.Area,
                 CategoryId = model.CategoryId,
                 Email = model.Contacts.Email,
@@ -173,7 +174,23 @@ namespace RentalHouseFinding.RHF.Common
                 Lon = model.Lon,
                 PhoneActive = model.PhoneActive,
                 Price = model.Price,
-                Title = model.Title
+                Title = model.Title,
+                CreatedDate = model.CreatedDate,
+                EditedDate = model.EditedDate,
+                CreatedBy = model.User.Username,
+                Category = model.Category.Name,
+                Views = model.Views,
+                Internet = model.Facilities.HasInternet? "Có":"Không",
+                AirConditioner = model.Facilities.HasAirConditioner ? "Có" : "Không",
+                Bed = model.Facilities.HasBed ? "Có" : "Không",
+                Gara = model.Facilities.HasGarage ? "Có" : "Không",
+                MotorParkingLot = model.Facilities.HasMotorParkingLot ? "Có" : "Không",
+                Security = model.Facilities.HasSecurity ? "Có" : "Không",
+                Toilet = model.Facilities.HasToilet ? "Có" : "Không",
+                TVCable = model.Facilities.HasTVCable ? "Có" : "Không",
+                WaterHeater = model.Facilities.HasWaterHeater ? "Có" : "Không",
+                AllowCooking = model.Facilities.IsAllowCooking ? "Có" : "Không",
+                StayWithOwner = model.Facilities.IsStayWithOwner ? "Có" : "Không"                
             };
         }
 

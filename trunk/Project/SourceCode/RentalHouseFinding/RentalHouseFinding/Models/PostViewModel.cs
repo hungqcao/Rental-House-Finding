@@ -130,6 +130,18 @@ namespace RentalHouseFinding.Models
         public DateTime EditedDate { get; set; }
         public string CreatedBy { get; set; }
         public string Category { get; set; }
+        public string Internet { get; set; }
+        public string AirConditioner { get; set; }
+        public string Bed { get; set; }
+        public string Gara { get; set; }
+        public string MotorParkingLot { get; set; }
+        public string Security { get; set; }
+        public string Toilet  { get; set; }
+        public string TVCable { get; set; }        
+        public string AllowCooking { get; set; }
+        public string StayWithOwner { get; set; }
+        public string WaterHeater { get; set; }
+        public string Address { get; set; }
 
         public IEnumerable<HttpPostedFileBase> Images { get; set; }
     } 
