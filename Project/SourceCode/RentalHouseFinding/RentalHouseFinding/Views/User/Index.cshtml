@@ -11,7 +11,7 @@
         <li>Thông tin đăng kí đã cập nhật thành công</li>
     }
 }
-<fieldset>
+<fieldset style="width: 500px;">
     <legend>User Profile</legend>
 
 
@@ -58,24 +58,51 @@
 <p>
     <input type="button" value="Thay đổi thông tin đăng kí" onclick="self.location='/User/Edit';" />
 </p>
-<table>
-    <tr>
-        <th>Title</th>
-        <th>CreatedDate</th>
-        <th>EditedDate</th>
-        <th>RenewDate</th>
-        <th>Status</th>
-        <th></th>
-    </tr>
-@for (var i = 0; i < @ViewBag.PostList.Count; i++)
-{
-    <tr>
-        <td>@Html.ActionLink((String)ViewBag.PostList[i].Title, "Edit/" + (int)ViewBag.PostList[i].Id, "Post")</td>
-        <td>@ViewBag.PostList[i].CreatedDate</td>
-        <td>@ViewBag.PostList[i].EditedDate</td>
-        <td>@ViewBag.PostList[i].RenewDate</td>
-        <td>@ViewBag.StatusList[@ViewBag.PostList[i].StatusId - 1].Name</td>
-        <td><button type="button" onclick="self.location='/Post/Delete/@ViewBag.PostList[i].Id'">Delete</button></td>
-    </tr>
-}
-</table>
+<fieldset style="width: 500px;">
+    <legend>Bài đã đăng</legend>
+    <table>
+        <tr>
+            <th>Title</th>
+            <th>CreatedDate</th>
+            <th>EditedDate</th>
+            <th>RenewDate</th>
+            <th>Status</th>
+            <th></th>
+        </tr>
+    @for (var i = 0; i < @ViewBag.PostList.Count; i++)
+    {
+        <tr>
+            <td>@Html.ActionLink((String)ViewBag.PostList[i].Title, "Edit/" + (int)ViewBag.PostList[i].Id, "Post")</td>
+            <td>@ViewBag.PostList[i].CreatedDate</td>
+            <td>@ViewBag.PostList[i].EditedDate</td>
+            <td>@ViewBag.PostList[i].RenewDate</td>
+            <td>@ViewBag.StatusList[@ViewBag.PostList[i].StatusId - 1].Name</td>
+            <td><button type="button" onclick="self.location='/Post/Delete/@ViewBag.PostList[i].Id'">Delete</button></td>
+        </tr>
+    }
+    </table>
+</fieldset>
+<fieldset style="width: 500px;">
+    <legend>Bài yêu thích</legend>
+    <table>
+        <tr>
+            <th>Title</th>
+            <th>CreatedDate</th>
+            <th>EditedDate</th>
+            <th>RenewDate</th>
+            <th>Status</th>
+            <th></th>
+        </tr>
+    @for (var i = 0; i < @ViewBag.FavoriteList.Count; i++)
+    {
+        <tr>
+            <td>@Html.ActionLink((String)ViewBag.FavoriteList[i].Title, "Edit/" + (int)ViewBag.FavoriteList[i].Id, "Post")</td>
+            <td>@ViewBag.FavoriteList[i].CreatedDate</td>
+            <td>@ViewBag.FavoriteList[i].EditedDate</td>
+            <td>@ViewBag.FavoriteList[i].RenewDate</td>
+            <td>@ViewBag.StatusList[@ViewBag.FavoriteList[i].StatusId - 1].Name</td>
+            <td><button type="button" onclick="self.location='/Post/Delete/@ViewBag.FavoriteList[i].Id'">Delete</button></td>
+        </tr>
+    }
+    </table>
+</fieldset>

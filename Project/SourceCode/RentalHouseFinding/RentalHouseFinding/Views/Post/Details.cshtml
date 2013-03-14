@@ -29,19 +29,50 @@
         google.maps.event.addDomListener(window, 'load', initialize);
         google.setOnLoadCallback(initialize);
     });
+
+    function addFavorite() {
+        $.getJSON("/Post/AddFavorite", null, function (success) {
+            if (success) {
+                alert('Đã thêm bài vào danh mục');
+                $("#favorite").attr('value', 'Gỡ khỏi danh mục');
+                $("#favorite").attr('onclick', 'removeFavorite();');
+            }
+        });
+    }
+    function removeFavorite() {
+        $.getJSON("/Post/RemoveFavorite", null, function (success) {
+            if (success) {
+                alert('Đã xóa bài khỏi danh mục');
+                $("#favorite").attr('value', 'Thêm vào danh mục');
+                $("#favorite").attr('onclick', 'addFavorite();');
+                
+            }
+        });
+    }
 </script>
 
-@using (Html.BeginForm()) {
+@using (Html.BeginForm())
+{
     @Html.ValidationSummary(true, "Có lỗi xảy ra, vui lòng thông báo cho chúng tôi!", new { style = "color:red" })
     <div id= "View-post-page">
         <div class = "content" style="float:left;" >
-            <div class="success-mess">
+            <div id="message" class="success-mess">
                 @TempData["MessageSuccessPostNew"]
-                @ViewBag.Id @ViewBag.mess
             </div>
     <div class="display-label">
     <strong>Tiêu đề:</strong> <strong>@Html.DisplayFor(model => model.Title)</strong>
     </div>
+    @{
+
+        if (ViewBag.RemoveFavorite == false)
+        {
+             <input type="button" id="favorite" onclick="addFavorite();" value="Thêm vào danh mục" />  
+        }
+        else if (ViewBag.RemoveFavorite == true)
+        {
+             <input type="button" id="favorite" onclick="removeFavorite();" value="Gỡ khỏi danh mục" />  
+        }
+    }
 
     <div class="display-label">Thể loại:</div>
     <div class="display-field">

@@ -1,20 +1,28 @@
-﻿
-    <link type="text/css" href="@Url.Content("~/Content/css/bottom.css")" rel="stylesheet" />
-    <script type="text/javascript" src="@Url.Content("~/Scripts/jquery-1.6.3.min.js")"></script>
-    <script type="text/javascript" src="@Url.Content("~/Scripts/jquery.jcarousel.min.js")"></script>
-    <script type="text/javascript" src="@Url.Content("~/Scripts/jquery.pikachoose.js")"></script>
-	<script language="javascript">
-		$(document).ready(
-			function () {
-			    $("#pikame").PikaChoose({ carousel: true, autoPlay:false, carouselOptions: { wrap: 'circular'}});
-			});
-	</script>
+﻿@{
+    if (ViewBag.Images.Count == 0)
+    {
+        <li>Không có hình ảnh</li>
+    }
+    else
+    {
+        <link type="text/css" href="@Url.Content("~/Content/css/bottom.css")" rel="stylesheet" />
+        <script type="text/javascript" src="@Url.Content("~/Scripts/jquery-1.6.3.min.js")"></script>
+        <script type="text/javascript" src="@Url.Content("~/Scripts/jquery.jcarousel.min.js")"></script>
+        <script type="text/javascript" src="@Url.Content("~/Scripts/jquery.pikachoose.js")"></script>
+        <script language="javascript">
+            $(document).ready(
+		        function () {
+		            $("#pikame").PikaChoose({ carousel: true, autoPlay: false, carouselOptions: { wrap: 'circular'} });
+		        });
+        </script>
 
-<div class="pikachoose">
-	<ul id="pikame" class="jcarousel-skin-pika">
-    @for (var i = 0; i < @ViewBag.Images.Count; i++)
-    { 
-        <li><img src="@ViewBag.Images[i].Path" alt="" /></li>
-    }	
-    </ul>
-</div>
+        <div class="pikachoose">
+        <ul id="pikame" class="jcarousel-skin-pika">
+        @for (var i = 0; i < @ViewBag.Images.Count; i++)
+        { 
+            <li><img src="@ViewBag.Images[i].Path" alt="" /></li>
+        }	
+        </ul>
+        </div>
+    }
+}
