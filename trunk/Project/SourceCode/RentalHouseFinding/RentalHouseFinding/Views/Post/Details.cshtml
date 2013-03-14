@@ -11,6 +11,47 @@
 
 <script type="text/javascript">
     $(document).ready(function () {
+        $("#ClickReport").click(function () {
+            if ($("#logindisplay").children().length == 1) {
+                //Not LogOn
+                alert("Bạn cần đăng nhập để sử dụng chức năng này");
+            }
+            else {
+            //Logged
+                $("#ClickReport").css("display", "none");
+                $("#ResionReport").css("display", "inline");
+                $("#txtResion").focus();
+            }
+
+        });
+
+        $("#sendButton").click(function () {
+            if ($("#txtResion").val() == '') {
+                alert("Vui lòng cung cấp lý do report");
+                $("#txtResion").focus();
+            }
+            else {
+                var mydata = { postId: $("#Id").val(), resion: $("#txtResion").val() };
+                SendRepost(mydata);
+                alert("Cảm ơn sự đóng góp của bạn!");
+                $("#ResionReport").css("display", "none");
+                $("#Report").html("Reported");
+            }
+
+        });
+        function SendRepost(mydata) {
+            $.ajax({
+                url: "/service/ReportPost",
+                type: "POST",
+                data: mydata,
+                error: function () {
+                    //alert("");
+                },
+                success: function () {
+                }
+            });
+        }
+
         var marker;
         var map;
         function initialize() {
@@ -28,6 +69,12 @@
         }
         google.maps.event.addDomListener(window, 'load', initialize);
         google.setOnLoadCallback(initialize);
+
+        //
+
+        //
+
+
     });
 
     function addFavorite() {
@@ -59,6 +106,7 @@
             <div id="message" class="success-mess">
                 @TempData["MessageSuccessPostNew"]
             </div>
+            @Html.HiddenFor(model => model.Id)
     <div class="display-label">
     <strong>Tiêu đề:</strong> <strong>@Html.DisplayFor(model => model.Title)</strong>
     </div>
@@ -191,6 +239,15 @@
             </div>
         </div>
         <div class = "clear" style="clear:both;">
+        </div>
+        <div id ="Report">
+        <div id ="ClickReport" class="display-label" style="width:120px;">Click here to report</div>
+            <div id ="ResionReport" class="editor-field" style="display:none">
+                @Html.Label("txtrs","Lý do")
+                @Html.TextArea("txtResion", "")
+                <input id="sendButton" type="button" value="Send" />                
+            </div>
+                  
         </div>
     </div>
 }
