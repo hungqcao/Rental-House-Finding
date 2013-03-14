@@ -16,7 +16,7 @@
                 var credentials = { uid: response.authResponse.userID, accessToken: response.authResponse.accessToken };
                 //SubmitLogin(credentials);
                 var url = 'FacebookUserDetail?token=' + response.authResponse.accessToken;
-                url = url.replace('_id_', response.authResponse.userID);
+                //url = url.replace('_id_', response.authResponse.userID);
                 window.location.href = url;
             }
             else if (response.status === 'not_authorized') { }
