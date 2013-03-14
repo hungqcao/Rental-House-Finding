@@ -7,6 +7,7 @@ using RentalHouseFinding.Models;
 using System.Net;
 using System.IO;
 using RentalHouseFinding.RHF.DAL;
+using RentalHouseFinding.RHF.Common;
 
 namespace RentalHouseFinding.Controllers
 {
