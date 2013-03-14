@@ -72,6 +72,10 @@
         {
              <input type="button" id="favorite" onclick="removeFavorite();" value="Gỡ khỏi danh mục" />  
         }
+        if (!User.Identity.IsAuthenticated)
+        {
+             <input type="button" id="favorite" onclick="alert('Bạn cần đăng nhập để sử dụng chức năng này');" value="Thêm vào danh mục" />
+        }
     }
 
     <div class="display-label">Thể loại:</div>
