@@ -35,13 +35,25 @@ namespace RentalHouseFinding.Controllers
             userViewModel.Sex = profile.Sex;
 
             //Get post status list
-            var postStatusList = (from p in _db.PostStatuses select p).ToList();
+            var postStatusList = (from p in _db.PostStatuses 
+                                  select p).ToList();
             ViewBag.StatusList = postStatusList;
+
             //Get user's posts list
             ViewBag.UserId = userId;
-            var postList = (from p in _db.Posts where (p.UserId == userId && !p.IsDeleted) select p);
+            var postList = (from p in _db.Posts 
+                            where (p.UserId == userId && !p.IsDeleted) 
+                            select p);
             ViewBag.PostList = postList.ToList();
             
+            //Get user's favorite list
+            var lstPostId = (from f in _db.Favorites
+                             where (f.UserId == userId && !f.IsDeleted)
+                             select f.PostId).ToList(); 
+            var favoriteList = (from f in _db.Posts
+                                where (f.UserId == userId && !f.IsDeleted && lstPostId.Contains(f.Id))
+                                select f).ToList();
+            ViewBag.FavoriteList = favoriteList;
             return View(userViewModel);
         }
 
