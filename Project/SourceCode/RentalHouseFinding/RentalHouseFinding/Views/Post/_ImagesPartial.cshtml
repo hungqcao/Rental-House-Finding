@@ -1,5 +1,5 @@
 ﻿@{
-    if (ViewBag.Images.Count == 0)
+    if (ViewBag.Images == null || ViewBag.Images.Count == 0)
     {
         <li>Không có hình ảnh</li>
     }
