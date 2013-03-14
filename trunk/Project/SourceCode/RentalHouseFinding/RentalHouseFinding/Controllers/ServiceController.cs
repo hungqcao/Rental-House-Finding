@@ -123,5 +123,32 @@ namespace RentalHouseFinding.Controllers
                 return Json(new { message = "Fail" });
             }
         }
+
+        //For Report Post
+        [AcceptVerbs(HttpVerbs.Post)]
+        public bool ReportPost(string postId, string resion)
+        {
+            RentalHouseFindingEntities _db = new RentalHouseFindingEntities();
+            int userid = CommonModel.GetUserIdByUsername(User.Identity.Name);
+            if (userid != -1)
+            {
+                ReportedPosts repost = new ReportedPosts();
+                repost.PostId = Int32.Parse(postId);
+                repost.ReportedBy = userid;
+                repost.Reason = resion;
+                repost.ReportedDate = DateTime.Now;
+                repost.IsIgnored = false;
+                _db.AddToReportedPosts(repost);
+                _db.SaveChanges();
+                //Send email to Mod
+                CommonModel.SendEmail("Vietvh01388@fpt.edu.vn", String.Format("PostId = {0} bị {1} repost ", postId, User.Identity.Name), 0);
+                return true;
+            }
+            else
+            {
+                return false;
+            }
+
+        }
     }
 }
