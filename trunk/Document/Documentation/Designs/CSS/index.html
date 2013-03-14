@@ -1,0 +1,96 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+<title>Untitled Document</title>
+<link rel="stylesheet" type="text/css" href="style.css">
+<script src="http://code.jquery.com/jquery-1.9.1.min.js"></script>
+<script type="text/javascript">
+    $(document).ready(function() {
+        $('select.select').each(function() {
+            var title = $(this).attr('title');
+            var id = $(this).attr('id');
+            if ($('option:selected', this).val() != '') title = $('option:selected', this).text();
+            $(this)
+            .css({ 'opacity': 0 })
+            .after('<span class="select" id="sp' + id + '">' + title + '</span>')
+            .change(function() {
+                val = $('option:selected', this).text();
+                $(this).next().text(val);
+            })
+        });
+    });
+</script>
+</head>
+
+<body>
+<div id="header">
+	<div id="containerLogo" class="left">
+    	<a href="javascript:;"  id="logoText">
+        	<img src="images/Intro_text.png" alt="5house.vn" />
+        </a>
+        <span id="slogan">Công cụ tìm kiếm nhà cho thuê ở Việt Nam</span>
+    </div>
+    <div id="containerLogin" class="right">
+    	<a href="javascript:;" style="padding-left: 20px;">
+        Đăng kí
+        </a>
+        |
+        <a href="javascript:;">
+         Đăng nhập
+         </a>
+    </div>
+</div>
+<div id="content">
+	<div id="searchInfo">
+	    <div id="buttonSearch">
+	    <a href="javascript:;" id="link1"></a>
+	    <a href="javascript:;" id="link2"></a>
+	    <a href="javascript:;" id="link3"></a>
+	    <a href="javascript:;" id="link4"></a>
+	    <a href="javascript:;" id="link5"></a>
+	    <div class="clear"></div>
+	</div>
+	
+	<div id="selectSearch">
+	    <select id="ddlProvince" class="select">
+	        <option value="HCM">Hồ Chí Minh</option>
+	        <option value="HCM">Hồ Chí Minh</option>
+	        <option value="HCM">Hồ Chí Minh</option>
+	    </select>
+	      <select id="ddlDistrict" class="select">
+	        <option value="HCM">Hồ Chí Minh</option>
+	        <option value="HCM">Hồ Chí Minh</option>
+	        <option value="HCM">Hồ Chí Minh</option>
+	    </select>
+	    <input type="text" id="txtKeyword" class="txt" />
+	    <div class="clear"></div>
+	   
+	</div>
+	 <h3 style=" margin-top: 30px;">Nơi bạn có thể tìm & đăng thông tin thuê nhà nhanh và hiệu quả</h3>
+    </div>
+    <div id="advanceSearch">
+        <div id="advanceSearch1" class="left">
+            <h3>Tìm kiếm nâng cao, kết quả chính xác</h3>
+            <div class="detail">
+            Bạn hiểu rõ yêu cầu tìm nhà của mình, hãy sử dụng ngay tìm kiếm nâng cao.
+            </div>
+            <input type="button" id="btnAdvanceSearch" />
+        </div>
+        <div id="advanceSearch2" class="left">
+            <h3>Tương tác trực quan trên bản đồ</h3>
+            <div class="detail">
+                Kết quả được hiện thị trực tiếp trên bản đồ thật giúp bạn có mắt nhìn trực quan nhất về địa điểm bạn đang quan tâm.
+            </div>
+            <img src="images/map.png"  style="margin-left: 50px; margin-top: 35px;"/>
+        </div>
+        <div id="advanceSearch3" class="left">
+            <h3>Đăng tin nhanh chóng với 3 bước nhỏ</h3>
+            <div class="detail">Bạn muốn đăng tin lên? Không cần phải đăng kí, đăng tin ngay trong 3 bước đơn giản.</div>
+            <input type="button" id="btnDangtin" />
+        </div>
+        <div class="clear"></div>
+    </div>
+</div>
+</body>
+</html>
