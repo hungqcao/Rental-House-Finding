@@ -4540,6 +4540,30 @@ namespace RentalHouseFinding.Models
         private global::System.String _Street;
         partial void OnStreetChanging(global::System.String value);
         partial void OnStreetChanged();
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=true)]
+        [DataMemberAttribute()]
+        public global::System.String NearbyPlace
+        {
+            get
+            {
+                return _NearbyPlace;
+            }
+            set
+            {
+                OnNearbyPlaceChanging(value);
+                ReportPropertyChanging("NearbyPlace");
+                _NearbyPlace = StructuralObject.SetValidValue(value, true);
+                ReportPropertyChanged("NearbyPlace");
+                OnNearbyPlaceChanged();
+            }
+        }
+        private global::System.String _NearbyPlace;
+        partial void OnNearbyPlaceChanging(global::System.String value);
+        partial void OnNearbyPlaceChanged();
 
         #endregion
     

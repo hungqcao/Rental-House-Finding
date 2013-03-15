@@ -5,25 +5,23 @@
 }
 
 @foreach (var item in Model) {
-    <div class="post-item">
-        <div class="display-label">
-            <strong>@Html.LabelFor(modelItem => item.Title)</strong> <strong>@Html.DisplayFor(modelItem => item.Title)</strong>
+<div class="search-result">
+    <div class="search-result-content">
+        <div class="search-result-address">
+            <strong>@Html.DisplayFor(modelItem => item.NumberHouse) - @Html.DisplayFor(modelItem => item.Street)</strong>
         </div>
-   
-        <div class="display-label">Địa chỉ:</div>
-        <div class="display-field">
-            <strong>@Html.DisplayText(item.NumberHouse + "-" + item.Street)</strong>
+        <div class="search-result-title">
+            <strong>@Html.DisplayFor(modelItem => item.Title)</strong>
         </div>
 
-        <div class="display-label">@Html.LabelFor(modelItem => item.Price)</div>
-        <div class="display-field">
+        <div class="fl_l">
             @Html.DisplayFor(modelItem => item.Price)
         </div>
 
-        <div class="display-label">@Html.LabelFor(modelItem => item.Area)</div>
-        <div class="display-field">
+        <div class="fl_r">
             @Html.DisplayFor(modelItem => item.Area)
         </div>
     </div>
+</div>
 }
 

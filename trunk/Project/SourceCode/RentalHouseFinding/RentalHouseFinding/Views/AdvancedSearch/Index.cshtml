@@ -12,143 +12,111 @@
 @using (Html.BeginForm())
 {
     <div id="advanced-search-home-page">      
-        <div class="editor-label">
-            @Html.LabelFor(model => model.CategoryId)
-        </div>
-        <div class="editor-field">
-            @Html.DropDownList("CategoryId")
-            @Html.ValidationMessageFor(model => model.CategoryId)
-        </div>
-
-        <div class="editor-label">
-            @Html.LabelFor(model => model.ProvinceId)
-        </div>
-        <div class="editor-field">            
-            @Html.DropDownList("ProvinceId", (IEnumerable<SelectListItem>)ViewBag.ProvinceId, "-- Chọn Tỉnh/Thành phố --")
-            @Html.ValidationMessageFor(model => model.ProvinceId)                 
-        </div>
-
-        <div class="editor-label">
-            @Html.LabelFor(model => model.DistrictId)
-        </div>
-        <div class="editor-field">
-            @Html.DropDownListFor(model => model.DistrictId,
-            new SelectList(Enumerable.Empty<SelectListItem>(), "Id", "Name"), "-- Chọn Quận/Huyện --",
-            new { id = "DistrictId" })
-            @Html.ValidationMessageFor(model => model.DistrictId)
-        </div>
-
-        <div class="editor-label">
-            @Html.LabelFor(model => model.AreaMax)
-        </div>
-        <div class="editor-field">
-            @Html.TextBoxFor(model => model.AreaMax)
-            @Html.ValidationMessageFor(model => model.AreaMax)
-        </div>
-
-        <div class="editor-label">
-            @Html.LabelFor(model => model.AreaMin)
-        </div>
-        <div class="editor-field">
-            @Html.TextBoxFor(model => model.AreaMin)
-            @Html.ValidationMessageFor(model => model.AreaMin)
-        </div>
-
-        <div class="editor-label">
-            @Html.LabelFor(model => model.AreaMax)
-        </div>
-        <div class="editor-field">
-            @Html.TextBoxFor(model => model.AreaMax)
-            @Html.ValidationMessageFor(model => model.AreaMax)
-        </div>
-
-        <div class="editor-label">
-            @Html.LabelFor(model => model.AreaMax)
-        </div>
-        <div class="editor-field">
-            @Html.TextBoxFor(model => model.AreaMax)
-            @Html.ValidationMessageFor(model => model.AreaMax)
-        </div>
-
-        <div class="editor-label">
-            @Html.LabelFor(model => model.HasAirConditioner)
-        </div>
-        <div class="editor-field">
-             @Html.DropDownListFor(model => model.HasAirConditionerScore, (IEnumerable<SelectListItem>)ViewBag.Score, new { id = "HasAirConditionerScore" })
-        </div>
-
-        <div class="editor-label">
-            @Html.LabelFor(model => model.HasBed)
-        </div>
-        <div class="editor-field">
-             @Html.DropDownListFor(model => model.HasBed, (IEnumerable<SelectListItem>)ViewBag.Score, new { id = "HasBedScore" })
-        </div>
-
-        <div class="editor-label">
-            @Html.LabelFor(model => model.HasGarage)
-        </div>
-        <div class="editor-field">
-             @Html.DropDownListFor(model => model.HasGarageScore, (IEnumerable<SelectListItem>)ViewBag.Score, new { id = "HasGarageScore" })
-        </div>
-
-        <div class="editor-label">
-            @Html.LabelFor(model => model.HasInternet)
-        </div>
-        <div class="editor-field">
-             @Html.DropDownListFor(model => model.HasInternetScore, (IEnumerable<SelectListItem>)ViewBag.Score, new { id = "HasInternetScore" })
-        </div>
-
-        <div class="editor-label">
-            @Html.LabelFor(model => model.HasMotorParking)
-        </div>
-        <div class="editor-field">
-             @Html.DropDownListFor(model => model.HasMotorParkingScore, (IEnumerable<SelectListItem>)ViewBag.Score, new { id = "HasMotorParkingScore" })
-        </div>
-
-        <div class="editor-label">
-            @Html.LabelFor(model => model.HasSecurity)
-        </div>
-        <div class="editor-field">
-             @Html.DropDownListFor(model => model.HasSecurityScore, (IEnumerable<SelectListItem>)ViewBag.Score, new { id = "HasSecurityScore" })
-        </div>
-
-        <div class="editor-label">
-            @Html.LabelFor(model => model.HasToilet)
-        </div>
-        <div class="editor-field">
-             @Html.DropDownListFor(model => model.HasToiletScore, (IEnumerable<SelectListItem>)ViewBag.Score, new { id = "HasToiletScore" })
-        </div>
-
-        <div class="editor-label">
-            @Html.LabelFor(model => model.HasTVCable)
-        </div>
-        <div class="editor-field">
-             @Html.DropDownListFor(model => model.HasTVCableScore, (IEnumerable<SelectListItem>)ViewBag.Score, new { id = "HasTVCableScore" })
-        </div>
-
-        <div class="editor-label">
-            @Html.LabelFor(model => model.HasWaterHeater)
-        </div>
-        <div class="editor-field">
-             @Html.DropDownListFor(model => model.HasWaterHeaterScore, (IEnumerable<SelectListItem>)ViewBag.Score, new { id = "HasWaterHeaterScore" })
-        </div>
-
-        <div class="editor-label">
-            @Html.LabelFor(model => model.IsAllowCooking)
-        </div>
-        <div class="editor-field">
-             @Html.DropDownListFor(model => model.IsAllowCookingScore, (IEnumerable<SelectListItem>)ViewBag.Score, new { id = "IsAllowCookingScore" })
-        </div>
-
-        <div class="editor-label">
-            @Html.LabelFor(model => model.IsStayWithOwner)
-        </div>
-        <div class="editor-field">
-             @Html.DropDownListFor(model => model.IsStayWithOwnerScore, (IEnumerable<SelectListItem>)ViewBag.Score, new { id = "IsStayWithOwnerScore" })
-        </div>
-
-        <p>
-            <input type="submit" value="Submit" />
-        </p>
+        <table>
+            <tr>
+                <td>@Html.LabelFor(model => model.CategoryId)</td>
+                <td>@Html.DropDownList("CategoryId")
+                    @Html.ValidationMessageFor(model => model.CategoryId)
+                </td>
+            </tr>
+            <tr>
+                <td>@Html.LabelFor(model => model.ProvinceId)</td>
+                <td>@Html.DropDownList("ProvinceId", (IEnumerable<SelectListItem>)ViewBag.ProvinceId, "-- Chọn Tỉnh/Thành phố --")
+                    @Html.ValidationMessageFor(model => model.ProvinceId)    
+                </td>
+            </tr>
+            <tr>
+                <td>@Html.LabelFor(model => model.DistrictId)</td>
+                <td>@Html.DropDownListFor(model => model.DistrictId,
+                    new SelectList(Enumerable.Empty<SelectListItem>(), "Id", "Name"), "-- Chọn Quận/Huyện --",
+                    new { id = "DistrictId" })
+                    @Html.ValidationMessageFor(model => model.DistrictId)
+                </td>
+            </tr>
+            <tr>
+                <td>@Html.LabelFor(model => model.AreaMax)</td>
+                <td>@Html.TextBoxFor(model => model.AreaMax)
+                    @Html.ValidationMessageFor(model => model.AreaMax)
+                </td>
+            </tr>
+            <tr>
+                <td>@Html.LabelFor(model => model.AreaMin)</td>
+                <td>@Html.TextBoxFor(model => model.AreaMin)
+                    @Html.ValidationMessageFor(model => model.AreaMin)
+                </td>
+            </tr>
+            <tr>
+                <td>@Html.LabelFor(model => model.PriceMax)</td>
+                <td>@Html.TextBoxFor(model => model.PriceMax)
+                    @Html.ValidationMessageFor(model => model.PriceMax)
+                </td>
+            </tr>
+            <tr>
+                <td>@Html.LabelFor(model => model.PriceMin)</td>
+                <td>@Html.TextBoxFor(model => model.PriceMin)
+                    @Html.ValidationMessageFor(model => model.PriceMin)
+                </td>
+            </tr>
+            <tr>
+                <td>@Html.LabelFor(model => model.HasAirConditioner)</td>
+                <td>@Html.DropDownListFor(model => model.HasAirConditionerScore, (IEnumerable<SelectListItem>)ViewBag.Score, new { id = "HasAirConditionerScore" })
+                </td>
+            </tr>
+            <tr>
+                <td>@Html.LabelFor(model => model.HasBed)</td>
+                <td>@Html.DropDownListFor(model => model.HasBedScore, (IEnumerable<SelectListItem>)ViewBag.Score, new { id = "HasBedScoreScore" })
+                </td>
+            </tr>
+            <tr>
+                <td>@Html.LabelFor(model => model.HasGarage)</td>
+                <td>@Html.DropDownListFor(model => model.HasGarageScore, (IEnumerable<SelectListItem>)ViewBag.Score, new { id = "HasGarageScore" })
+                </td>
+            </tr>
+            <tr>
+                <td>@Html.LabelFor(model => model.HasInternet)</td>
+                <td>@Html.DropDownListFor(model => model.HasInternetScore, (IEnumerable<SelectListItem>)ViewBag.Score, new { id = "HasInternetScore" })
+                </td>
+            </tr>
+            <tr>
+                <td>@Html.LabelFor(model => model.HasMotorParking)</td>
+                <td>@Html.DropDownListFor(model => model.HasMotorParkingScore, (IEnumerable<SelectListItem>)ViewBag.Score, new { id = "HasMotorParkingScore" })
+                </td>
+            </tr>
+            <tr>
+                <td>@Html.LabelFor(model => model.HasSecurity)</td>
+                <td>@Html.DropDownListFor(model => model.HasSecurityScore, (IEnumerable<SelectListItem>)ViewBag.Score, new { id = "HasSecurityScore" })
+                </td>
+            </tr>
+            <tr>
+                <td>@Html.LabelFor(model => model.HasToilet)</td>
+                <td>@Html.DropDownListFor(model => model.HasToiletScore, (IEnumerable<SelectListItem>)ViewBag.Score, new { id = "HasToiletScore" })
+                </td>
+            </tr>
+            <tr>
+                <td>@Html.LabelFor(model => model.HasTVCable)</td>
+                <td>@Html.DropDownListFor(model => model.HasTVCableScore, (IEnumerable<SelectListItem>)ViewBag.Score, new { id = "HasTVCableScore" })
+                </td>
+            </tr>
+            <tr>
+                <td>@Html.LabelFor(model => model.HasWaterHeater)</td>
+                <td>@Html.DropDownListFor(model => model.HasWaterHeaterScore, (IEnumerable<SelectListItem>)ViewBag.Score, new { id = "HasWaterHeaterScore" })
+                </td>
+            </tr>
+            <tr>
+                <td>@Html.LabelFor(model => model.IsAllowCooking)</td>
+                <td>@Html.DropDownListFor(model => model.IsAllowCookingScore, (IEnumerable<SelectListItem>)ViewBag.Score, new { id = "IsAllowCookingScore" })
+                </td>
+            </tr>
+            <tr>
+                <td>@Html.LabelFor(model => model.IsStayWithOwner)</td>
+                <td>@Html.DropDownListFor(model => model.IsStayWithOwnerScore, (IEnumerable<SelectListItem>)ViewBag.Score, new { id = "IsStayWithOwnerScore" })
+                </td>
+            </tr>
+            <tr>
+                <td></td>
+                <td><input type="submit" value="Submit" />
+                </td>
+            </tr>
+        </table>
     </div>
 }

@@ -116,17 +116,26 @@ namespace RentalHouseFinding.Controllers
                         _db.SaveChanges();
                         
                         //Nearby places
-                        List<int> lstNearbyId = GetListNearbyLocations(model);
+                        Dictionary<int, string> lstNearbyId = GetListNearbyLocations(model);
                         PostLocations postLocation;
-                        foreach (int i in lstNearbyId)
+                        string nearbyPlace = string.Empty;
+                        foreach (KeyValuePair<int,string> kvp in lstNearbyId)
                         {
                             postLocation = new PostLocations();
                             postLocation.PostId = postToCreate.Id;
-                            postLocation.LocationId = i;
+                            postLocation.LocationId = kvp.Key;
                             _db.PostLocations.AddObject(postLocation);
                             _db.SaveChanges();
+                            nearbyPlace += kvp.Value + ",";
                         }
-
+                        if (!string.IsNullOrEmpty(nearbyPlace))
+                        {
+                            nearbyPlace = nearbyPlace.Remove(nearbyPlace.Length - 1);
+                            postToCreate.NearbyPlace = nearbyPlace;
+                            _db.ObjectStateManager.ChangeObjectState(postToCreate, System.Data.EntityState.Modified);
+                            _db.SaveChanges();
+                        }
+                        
                         //Images post
                         PostImages imageToCreate = null;
 
@@ -261,11 +270,11 @@ namespace RentalHouseFinding.Controllers
             }
         }
 
-        private List<int> GetListNearbyLocations(PostViewModel model)
+        private Dictionary<int, string> GetListNearbyLocations(PostViewModel model)
         {
             try
             {
-                List<int> lstReturn = new List<int>();
+                Dictionary<int, string> lstReturn = new Dictionary<int, string>();
                 int id;
                 Locations location;
                 for (int i = 0; i < Request.Form.Keys.Count; i++)
@@ -284,12 +293,12 @@ namespace RentalHouseFinding.Controllers
                                 location.Name = Request.Form.Keys[i].Split(':')[2];
                                 _db.Locations.AddObject(location);
                                 _db.SaveChanges();
-                                lstReturn.Add(location.Id);
+                                lstReturn.Add(location.Id, location.Name);
                             }
                         }
                         else
                         {
-                            lstReturn.Add(id);
+                            lstReturn.Add(id, Request.Form[i].Trim());
                         }
                     }
                 }

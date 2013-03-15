@@ -5,8 +5,8 @@ $(document).ready(function () {
     var select = $("#DistrictId");
     select.empty();
     select.append($('<option/>', {
-        value: '',
-        text: '-- Chọn Quận/Huyện --'
+        value: '0',
+        text: 'Chọn Quận/Huyện'
     }));
     if (idPro != 0) {
         $.getJSON("service/GetDistrictList", { id: idPro },
@@ -26,8 +26,8 @@ $(document).ready(function () {
         var select = $("#DistrictId");
         select.empty();
         select.append($('<option/>', {
-            value: '',
-            text: '-- Chọn Quận/Huyện --'
+            value: '0',
+            text: 'Chọn Quận/Huyện'
         }));
         $.getJSON("service/GetDistrictList", { id: idPro },
         function (myData) {
@@ -44,7 +44,7 @@ $(document).ready(function () {
 
     $("#KeyWord").autocomplete({
         source: function (request, response) {  
-            if($("#ProvinceId option:selected").val().length == 0)
+            if($("#ProvinceId option:selected").val() == 0)
             {
                 alert("Vui lòng chọn tỉnh thành phố");
                 return false;
