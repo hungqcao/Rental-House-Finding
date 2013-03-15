@@ -1,0 +1,358 @@
+html, body, div, span, applet, object, iframe,
+h1, h2, h3, h4, h5, h6, p, blockquote, pre,
+a, abbr, acronym, address, big, cite, code,
+del, dfn, em, img, ins, kbd, q, s, samp,
+small, strike, strong, sub, sup, tt, var,
+b, u, i, center,
+dl, dt, dd, ol, ul, li,
+fieldset, form, label, legend,
+table, caption, tbody, tfoot, thead, tr, th, td,
+article, aside, canvas, details, embed, 
+figure, figcaption, footer, header, hgroup, 
+menu, nav, output, ruby, section, summary,
+time, mark, audio, video, input {
+	margin: 0;
+	padding: 0;
+	border: 0;
+	font-size: 100%;
+	font: inherit;
+	vertical-align: baseline;
+	font-family: Calibri, Arial,Helvetica,Sans-Serif;
+}
+/* HTML5 display-role reset for older browsers */
+article, aside, details, figcaption, figure, 
+footer, header, hgroup, menu, nav, section {
+	display: block;
+}
+body {
+	line-height: 1;
+}
+ol, ul {
+	list-style: none;
+}
+blockquote, q {
+	quotes: none;
+}
+blockquote:before, blockquote:after,
+q:before, q:after {
+	content: '';
+	content: none;
+}
+table {
+	border-collapse: collapse;
+	border-spacing: 0;
+}
+/* CSS Document */
+.left{
+	float:left;
+}
+.right{
+	float:right;
+}
+.clear{
+	clear:both;
+}
+body{
+	background: url(images/bg.jpg) repeat;
+}
+#header{
+	margin-top:40px;
+	height: 200px;
+}
+#containerLogo{
+	background: url(images/logo.png) no-repeat;
+	padding-top: 52px;
+	margin-left:75px;
+}
+#logoText, #slogan{
+	padding-left: 110px;
+	display:block;
+	color: #454545;
+}
+#containerLogin{
+	background: url(images/user.png) no-repeat scroll 50px 0;
+	padding: 0 70px;
+}
+#containerLogin a{
+	text-decoration:none;
+	font-size: 14px;
+	color:#454545;
+}
+/*Intro*/
+#searchInfo{
+	width:830px;
+	margin:0 auto;
+	padding-bottom: 60px;
+}
+#buttonSearch
+{
+	margin-bottom: 20px;
+}
+#searchInfo a
+{
+	float: left;
+}
+#link1
+{
+	background:url(images/button1.png) no-repeat;
+	 display: block;
+    height: 37px;
+    width: 125px;
+}
+a#link1:hover, a#link2:hover, a#link3:hover, a#link4:hover, a#link5:hover
+{
+	background-position: 0 -41px;
+}
+
+#link2
+{
+	background:url(images/button2.png) no-repeat ;
+	display: block;
+    height: 37px;
+    width: 103px;
+}
+#link3
+{
+	background:url(images/button3.png) no-repeat ;
+	display: block;
+    height: 37px;
+    width: 136px;
+}
+#link4
+{
+	background:url(images/button4.png) no-repeat ;
+	display: block;
+    height: 37px;
+    width: 102px;
+}
+#link5
+{
+	background:url(images/button5.png) no-repeat ;
+	display: block;
+    height: 37px;
+    width: 126px;
+}
+#selectSearch
+{
+	position: relative;
+}
+input.submit 
+{
+    background: url(images/btnSubmit.png) no-repeat scroll 0 0;
+    cursor: auto;
+    width: 37px;
+    height:40px;
+    font-size:0px;
+}
+select.select {
+    color: #B3B3B3;
+    cursor: pointer;
+    font-size: 12px;
+    height: 36px !important;
+    line-height: 36px;
+    margin-right: 11px;
+    position: relative;
+    float: left;
+    width: 164px !important;
+    z-index: 10;
+    float: left;
+}
+
+span.select {
+    background: url("images/bg_select.png") no-repeat 0 0;
+    color: #717171;
+    cursor: default;
+    float: left;
+    font-family: Calibri, Arial,Helvetica,Sans-Serif;
+    font-size: 12px;
+    font-weight: 700;
+    height: 38px;
+    line-height: 38px;
+    position: absolute;
+    text-indent: 10px;
+    width: 164px;
+    z-index: 1;
+}
+#spCategoryId
+{
+	left: 0px;
+}
+#spProvinceId
+{
+	left: 174px;
+}
+#spDistrictId 
+{
+	left: 348px;
+}
+#Keyword
+{
+	float: left;
+	background: url("images/textbox.png") no-repeat 0 0;
+	width: 235px;
+	height: 38px;
+	line-height: 38px;
+	text-indent: 10px;
+	margin-left: 5px;
+	color: #646464;
+}
+#content h3
+{
+	color: #717171;
+	font-weight: 700;
+	font-size: 22px;
+	font-family: Calibri, Arial,Helvetica,Sans-Serif;
+}
+#content
+{
+	
+}
+#advanceSearch1, #advanceSearch2, #advanceSearch3
+{
+	width: 300px;
+}
+#linkAdvanceSearch
+{
+	background: url("images/btnSearch1.png") no-repeat 0 0;
+	width: 225px;
+	height: 52px;
+	margin-left: 50px;
+    margin-top: 35px;
+    cursor: pointer;
+    display:block;
+    font-size: 0;
+}
+#linkDangtin
+{
+	background: url("images/btnDangtin.png") no-repeat 0 0;
+	width: 225px;
+	height: 52px;
+	margin-left: 50px;
+    margin-top: 35px;
+    cursor: pointer;
+    display:block;
+    font-size: 0;
+}
+#advanceSearch
+{
+	color: #454343;
+	font-size: 18px;
+	width: 1000px;
+	margin: 0 auto;
+}
+#advanceSearch h3
+{
+	font-size: 18px;
+	font-weight: 700;
+	font-style: italic;
+	margin-bottom: 10px;
+}
+#advanceSearch .detail
+{
+	padding-left: 55px;
+}
+#advanceSearch1, #advanceSearch2
+{
+	margin-right: 50px;
+}
+#advanceSearch1 .detail
+{
+	background: url("images/icon1.png") no-repeat 0 10px;
+}
+#advanceSearch2 .detail
+{
+	background: url("images/icon2.png") no-repeat 0 10px;
+}
+#advanceSearch3 .detail
+{
+	background: url("images/icon3.png") no-repeat 0 10px;
+}
+
+/*HungCQ*/
+.fl_l
+{
+    float:left;
+}
+.fl_r
+{
+    float:right;
+}
+div#create-post-page form
+{
+    width: 1000px;
+    margin: 0 auto;
+}
+div#create-post-page form div#mapContainer
+{
+    width: 400px;
+    height: 260px;
+}
+div.itemYesNo
+{
+    clear:both;
+}
+div.itemYesNo label
+{
+    float:left;
+    padding-left: 10px;
+}
+div.itemYesNo input.check-box
+{
+    float:left;
+}
+input 
+{
+    background: url("images/textbox.png") no-repeat scroll 0 0;
+    height: 40px;
+    width: 242px;
+    -webkit-border-radius: 5px;
+    -moz-border-radius: 5px;
+    border-radius: 5px;
+}
+div#content
+{
+    margin: 0 auto;
+    display: block;
+    width: 1000px;
+}
+div#postContent
+{
+    width: 300px;
+    border: 1px solid #e1e1e1;
+    -webkit-border-radius: 1px;
+    -moz-border-radius: 1px;
+    border-radius: 1px;
+    background-color: White;
+}
+div.search-result
+{
+    height: 140px;
+    display:block;
+    border: 1px solid #e1e1e1;
+}
+div#postContent div.search-result-address
+{
+    font-size: 14px;
+    font-style: italic;
+    font-weight:bold;
+}
+div#postContent div.search-result-content
+{
+    padding: 10px 10px;
+}
+div#view-result-page div.map div#mapContainer
+{
+    width: 660px;
+    height: 580px;
+    margin: 10px 10px;
+}
+div#view-result-page div.map
+{
+    width: 680px;
+    height: 600px;
+    background-color: white;
+}
+div#filter-search-bar
+{
+    position: relative;
+}

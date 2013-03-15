@@ -24,7 +24,6 @@ namespace RentalHouseFinding.Models
         [Display(Name = "Tỉnh, thành phố")]
         public int ProvinceId { get; set; }
 
-        [Required(ErrorMessage = "Vui lòng chọn quận, huyện")]
         [Display(Name = "Quận, huyện")]
         public int DistrictId { get; set; }
 
@@ -33,7 +32,6 @@ namespace RentalHouseFinding.Models
 
         [HiddenInput(DisplayValue = false)]
         public string PostIdSuggest { get; set; }
-
 
         //Advanced search
         [Display(Name = "Diện tích lớn nhất")]

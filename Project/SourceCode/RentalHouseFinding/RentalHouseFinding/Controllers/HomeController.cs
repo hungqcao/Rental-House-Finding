@@ -18,11 +18,35 @@ namespace RentalHouseFinding.Controllers
 
         public ActionResult Index()
         {
+            ViewBag.CategoryId = new SelectList(_db.Categories, "Id", "Name");
+            ViewBag.ProvinceId = new SelectList(_db.Provinces, "Id", "Name");
             return View();
+        }
+
+        [AcceptVerbs(HttpVerbs.Get)]
+        public JsonResult GetLatLonFromResult()
+        {
+            if (Session["ResultPostViewModel"] != null)
+            {
+                var lstResult = (IEnumerable<PostViewModel>)Session["ResultPostViewModel"];
+                var myData = lstResult.Select(a => new SelectListItem()
+                {
+                    Text = a.Lat + ";" + a.Lon,
+                    Value = a.Id.ToString(),
+                });
+
+                return Json(myData, JsonRequestBehavior.AllowGet);
+            }
+            else
+            {
+                return Json(new { message = "Fail" }, JsonRequestBehavior.AllowGet);
+            }
         }
 
         public ActionResult GetSectionSideListPost(int skipNum, int takeNum)
         {
+            ViewBag.CategoryId = new SelectList(_db.Categories, "Id", "Name");
+            ViewBag.ProvinceId = new SelectList(_db.Provinces, "Id", "Name");
             if (Session["SearchViewModel"] != null)
             {
                 SearchViewModel _modelRequest = (SearchViewModel)Session["SearchViewModel"];
@@ -41,6 +65,7 @@ namespace RentalHouseFinding.Controllers
                                              where list.Contains(p.Id)
                                              select p).ToList();
                         var lstPostViewModel = query.Select(p => CommonModel.ConvertPostToPostViewModel(p));
+                        Session["ResultPostViewModel"] = lstPostViewModel.ToList();
                         return View(lstPostViewModel);
                     }
                 }
@@ -78,6 +103,7 @@ namespace RentalHouseFinding.Controllers
                                              where list.Contains(p.Id)
                                              select p).ToList();
                         var lstPostViewModel = query.Select(p => CommonModel.ConvertPostToPostViewModel(p));
+                        Session["ResultPostViewModel"] = lstPostViewModel.ToList();
                         return View(lstPostViewModel);
                     }
                 }

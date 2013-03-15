@@ -2,7 +2,7 @@
 -- --------------------------------------------------
 -- Entity Designer DDL Script for SQL Server 2005, 2008, and Azure
 -- --------------------------------------------------
--- Date Created: 03/13/2013 16:43:06
+-- Date Created: 03/15/2013 00:04:05
 -- Generated from EDMX file: C:\RentalHouseFinding\Project\SourceCode\RentalHouseFinding\RentalHouseFinding\Models\RentalHouseFinding.edmx
 -- --------------------------------------------------
 
@@ -228,7 +228,8 @@ CREATE TABLE [dbo].[Posts] (
     [Lat] float  NOT NULL,
     [Lon] float  NOT NULL,
     [UserId] int  NULL,
-    [Street] nvarchar(50)  NOT NULL
+    [Street] nvarchar(50)  NOT NULL,
+    [NearbyPlace] nvarchar(max)  NULL
 );
 GO
 
