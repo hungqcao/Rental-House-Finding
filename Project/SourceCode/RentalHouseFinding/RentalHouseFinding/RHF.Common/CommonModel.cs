@@ -213,7 +213,47 @@ namespace RentalHouseFinding.RHF.Common
                 }
             }
         }
-        //get all userName
+
+        //get UserId by OpenId
+        public static int GetUserIdByOpenId(string openId)
+        {
+            using (RentalHouseFindingEntities _db = new RentalHouseFindingEntities())
+            {
+                var user = (from u in _db.Users
+                            where u.OpenIdURL.Equals(openId, StringComparison.CurrentCultureIgnoreCase) && !u.IsDeleted
+                            select u).FirstOrDefault();
+                if (user != null)
+                {
+                    return user.Id;
+                }
+                else
+                {
+                    //Error
+                    return -1;
+                }
+            }
+        }
+
+        //get UserName by openId
+        public static string GetUserNameByOpenId(string openId)
+        {
+            using (RentalHouseFindingEntities _db = new RentalHouseFindingEntities())
+            {
+                var user = (from u in _db.Users
+                            where u.OpenIdURL.Equals(openId, StringComparison.CurrentCultureIgnoreCase) && !u.IsDeleted
+                            select u.Username).FirstOrDefault();
+                if (user != null)
+                {
+                    return user;
+                }
+                else
+                {
+                    //Error
+                    return String.Empty;
+                }
+            }
+        }
+        //check UserName esixt 
         public static bool CheckUserName(string userName)
         {
             using (RentalHouseFindingEntities _db = new RentalHouseFindingEntities())
@@ -233,7 +273,26 @@ namespace RentalHouseFinding.RHF.Common
                 }
             }
         }
+        //check Email esixt 
+        public static bool CheckEmail(string email)
+        {
+            using (RentalHouseFindingEntities _db = new RentalHouseFindingEntities())
+            {
+                var userId = (from u in _db.Users
+                              where u.Email.Equals(email, StringComparison.CurrentCultureIgnoreCase) && !u.IsDeleted
+                              select u.Id).FirstOrDefault();
+                if (userId != 0)
+                {
+                    //UserName is existed 
+                    return true;
+                }
+                else
+                {
 
+                    return false;
+                }
+            }
+        }
         //send Email.
         public static bool SendEmail(string emailAdd,string bodyMessage, int messageType)
         {

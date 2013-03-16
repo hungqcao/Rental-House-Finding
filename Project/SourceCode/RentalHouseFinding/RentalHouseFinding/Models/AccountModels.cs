@@ -4,6 +4,8 @@ using System.ComponentModel.DataAnnotations;
 using System.Globalization;
 using System.Web.Mvc;
 using System.Web.Security;
+using System.Reflection;
+using System.Linq;
 
 namespace RentalHouseFinding.Models
 {
@@ -48,19 +50,22 @@ namespace RentalHouseFinding.Models
 
     }
 
-    public class RegisterModel
+    public class 
+        RegisterModel
     {
-        [Required(ErrorMessage= "Xin vui lòng điền Email.")]
-        [Display(Name = "Email")]
+        [Required(ErrorMessage= "Xin vui lòng điền tên tài khoản.")]
+        [Display(Name = "Tên tài khoản")]
         [MaxLength(50, ErrorMessage = "Không được vượt quá 50 ký tự, xin vui lòng nhập lại.")]
-        [RegularExpression(@"\w+([-+.']\w+)*@\w+([-.]\w+)*\.\w+([-.]\w+)*", ErrorMessage = "Email không hợp lệ.")]
+        //[RegularExpression(@"\w+([-+.']\w+)*@\w+([-.]\w+)*\.\w+([-.]\w+)*", ErrorMessage = "Email không hợp lệ.")]
         [Remote("IsUserNameAvailable", "Validation")]
         public string UserName { get; set; }
 
         [Display(Name = "Email")]
-        [MaxLength(50, ErrorMessage = "Không được vượt quá 50 ký tự, xin vui lòng nhập lại.")]
-        [Required(ErrorMessage = "Xin vui lòng nhập email.")]
+        [RequiredIfOtherFieldIsNull("PhoneNumber")]
+        [MaxLength(50, ErrorMessage = "Không được vượt quá 50 ký tự, xin vui lòng nhập lại.")]       
+        //[Required(ErrorMessage = "Xin vui lòng nhập email.")]
         [RegularExpression(@"\w+([-+.']\w+)*@\w+([-.]\w+)*\.\w+([-.]\w+)*", ErrorMessage = "Email không hợp lệ.")]
+        [Remote("IsEmailAvailable", "Validation")]
         public string Email { get; set; }
 
         [Required(ErrorMessage= "Xin vui lòng nhập mật khẩu")]
@@ -74,31 +79,82 @@ namespace RentalHouseFinding.Models
         [Compare("Password", ErrorMessage = @"Mật khẩu không trùng khớp.")]
         public string ConfirmPassword { get; set; }
 
-        [Required(ErrorMessage = "Xin vui lòng nhập số điện thoại.")]
+        //[Required(ErrorMessage = "Xin vui lòng nhập số điện thoại.")]
         [Display(Name = "Số điện thoại")]
         [MaxLength(15, ErrorMessage = "Không được vượt quá 15 ký tự, xin vui lòng nhập lại.")]
         [RegularExpression("(([0+])([0-9]+))", ErrorMessage = "Sai định dạng,xin vui lòng nhập lại")]
+        [RequiredIfOtherFieldIsNull("Email")]
         public string PhoneNumber { get; set; }
 
         [Display(Name = "Địa chỉ")]
         public string Address { get; set; }
 
-        [Display(Name = "Tên thật")]
+        [Display(Name = "Họ tên")]
         public string Name { get; set; }
 
         [Display(Name = "Ngày sinh")]
         [DataType(DataType.Date, ErrorMessage = "Xin vui lòng nhập đúng ngày tháng năm")]
-        public DateTime DateOfBirth { get; set; }
+        public DateTime? DateOfBirth { get; set; }
 
         [Display(Name = "Giới tính")]
-        [Required(ErrorMessage = @"Xin vui lòng chọn giới tính!")]
+        //[Required(ErrorMessage = @"Xin vui lòng chọn giới tính!")]
         [MaxLength(10, ErrorMessage = "Không được vượt quá 10 ký tự,xin vui lòng nhập lại")]
         [UIHint("Sex")]
         public string Sex { get; set; }
 
-        [Display(Name = "Avatar")]
+        [Display(Name = "Avatar")]        
         public string Avatar { get; set; }
+                
     }
+
+    public class RequiredIfOtherFieldIsNullAttribute : ValidationAttribute, IClientValidatable
+    {
+        private readonly string _otherProperty;
+        public RequiredIfOtherFieldIsNullAttribute(string otherProperty)
+        {
+            _otherProperty = otherProperty;
+        }
+
+        protected override ValidationResult IsValid(object value, ValidationContext validationContext)
+        {
+            var property = validationContext.ObjectType.GetProperty(_otherProperty);
+            if (property == null)
+            {
+                return new ValidationResult(string.Format(
+                    CultureInfo.CurrentCulture,
+                    "Unknown property {0}",
+                    new[] { _otherProperty }
+                ));
+            }
+            var otherPropertyValue = property.GetValue(validationContext.ObjectInstance, null);
+
+            if (otherPropertyValue == null || otherPropertyValue as string == string.Empty)
+            {
+                if (value == null || value as string == string.Empty)
+                {
+                    return new ValidationResult(string.Format(
+                        CultureInfo.CurrentCulture,
+                        FormatErrorMessage(validationContext.DisplayName),
+                        new[] { _otherProperty }
+                    ));
+                }
+            }
+
+            return null;
+        }
+
+        public IEnumerable<ModelClientValidationRule> GetClientValidationRules(ModelMetadata metadata, ControllerContext context)
+        {
+            var rule = new ModelClientValidationRule
+            {
+                ErrorMessage = FormatErrorMessage(metadata.GetDisplayName()),
+                ValidationType = "requiredif",
+            };
+            rule.ValidationParameters.Add("other", _otherProperty);
+            yield return rule;
+        }
+    }
+
 
     public class UserDetailsModel
     {

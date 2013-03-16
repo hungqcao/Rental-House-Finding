@@ -163,7 +163,8 @@ namespace RentalHouseFinding.Controllers
             customMP.CreateUserForOpenID(userDetail, out createStatus);
             if (createStatus == MembershipCreateStatus.Success ||createStatus == MembershipCreateStatus.DuplicateUserName)
             {
-                FormsAuthentication.SetAuthCookie(userDetail.email, false /* createPersistentCookie */);
+                string userName = CommonModel.GetUserNameByOpenId(userDetail.id);
+                FormsAuthentication.SetAuthCookie(userName, false /* createPersistentCookie */);
                 return RedirectToAction("Index", "Landing");
             }
             else
