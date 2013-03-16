@@ -7,14 +7,14 @@ using System.Web;
 using System.Web.Mvc;
 using RentalHouseFinding.Models;
 
-namespace RentalHouseFinding.Controllers
+namespace RentalHouseFinding.Controllers.Admin
 { 
-    public class DistrictController : Controller
+    public class ManageDistrictController : Controller
     {
         private RentalHouseFindingEntities db = new RentalHouseFindingEntities();
 
         //
-        // GET: /District/
+        // GET: /ManageDistrict/
 
         public ViewResult Index()
         {
@@ -23,7 +23,7 @@ namespace RentalHouseFinding.Controllers
         }
 
         //
-        // GET: /District/Details/5
+        // GET: /ManageDistrict/Details/5
 
         public ViewResult Details(int id)
         {
@@ -32,7 +32,7 @@ namespace RentalHouseFinding.Controllers
         }
 
         //
-        // GET: /District/Create
+        // GET: /ManageDistrict/Create
 
         public ActionResult Create()
         {
@@ -41,7 +41,7 @@ namespace RentalHouseFinding.Controllers
         } 
 
         //
-        // POST: /District/Create
+        // POST: /ManageDistrict/Create
 
         [HttpPost]
         public ActionResult Create(Districts districts)
@@ -58,7 +58,7 @@ namespace RentalHouseFinding.Controllers
         }
         
         //
-        // GET: /District/Edit/5
+        // GET: /ManageDistrict/Edit/5
  
         public ActionResult Edit(int id)
         {
@@ -68,7 +68,7 @@ namespace RentalHouseFinding.Controllers
         }
 
         //
-        // POST: /District/Edit/5
+        // POST: /ManageDistrict/Edit/5
 
         [HttpPost]
         public ActionResult Edit(Districts districts)
@@ -85,7 +85,7 @@ namespace RentalHouseFinding.Controllers
         }
 
         //
-        // GET: /District/Delete/5
+        // GET: /ManageDistrict/Delete/5
  
         public ActionResult Delete(int id)
         {
@@ -94,7 +94,7 @@ namespace RentalHouseFinding.Controllers
         }
 
         //
-        // POST: /District/Delete/5
+        // POST: /ManageDistrict/Delete/5
 
         [HttpPost, ActionName("Delete")]
         public ActionResult DeleteConfirmed(int id)

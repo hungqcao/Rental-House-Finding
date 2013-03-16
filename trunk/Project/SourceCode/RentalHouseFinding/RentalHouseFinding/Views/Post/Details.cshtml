@@ -12,6 +12,7 @@
 <script type="text/javascript">
     $(document).ready(function () {
         $("#ClickReport").click(function () {
+          
 //            if ($("#logindisplay").children().length == 1) {
 //                //Not LogOn
 //                alert("Bạn cần đăng nhập để sử dụng chức năng này");
@@ -98,8 +99,6 @@
     }
 </script>
 
-@using (Html.BeginForm())
-{
     @Html.ValidationSummary(true, "Có lỗi xảy ra, vui lòng thông báo cho chúng tôi!", new { style = "color:red" })
     <div id= "View-post-page">
         <div class = "content" style="float:left;" >
@@ -107,129 +106,129 @@
                 @TempData["MessageSuccessPostNew"]
             </div>
             @Html.HiddenFor(model => model.Id)
-    <div class="display-label">
-    <strong>Tiêu đề:</strong> <strong>@Html.DisplayFor(model => model.Title)</strong>
-    </div>
-    @{
-
-                                 if (ViewBag.RemoveFavorite == false)
-                                 {
-             <input type="button" id="favorite" onclick="addFavorite();" value="Thêm vào danh mục" />  
-                                 }
-                                 else if (ViewBag.RemoveFavorite == true)
-                                 {
-             <input type="button" id="favorite" onclick="removeFavorite();" value="Gỡ khỏi danh mục" />  
-                                 }
-                                 if (!User.Identity.IsAuthenticated)
-                                 {
-             <input type="button" id="favorite" onclick="alert('Bạn cần đăng nhập để sử dụng chức năng này');" value="Thêm vào danh mục" />
-                                 }
-    }
-
-    <div class="display-label">Thể loại:</div>
-    <div class="display-field">
-        @Html.DisplayFor(model => model.Category)
-    </div>    
-    <div class="display-label">Địa chỉ:</div>
-    <div class="display-field">
-        @Model.Address, @ViewBag.Province
-    </div>
-
-    <div class="display-label">Giá:</div>
-    <div class="display-field">
-        @Html.DisplayFor(model => model.Price)
-    </div>
-
-    <div class="display-label">Diện tích:</div>
-    <div class="display-field">
-        @Html.DisplayFor(model => model.Area)
-    </div>
-
-
-    <div class="display-label">Mô tả chi tiết:</div>
-    <div class="display-field">
-        @Html.DisplayFor(model => model.Description)
-    </div>
-
-    <div class="display-label">Internet:</div>
-    <div class="display-field">
-        @Html.DisplayFor(model => model.Internet)
-    </div>
-
-    <div class="display-label">Truyền hình cáp:</div>
-    <div class="display-field">
-        @Html.DisplayFor(model => model.TVCable)
-    </div>
-
-    <div class="display-label">Điều Hòa:</div>
-    <div class="display-field">
-        @Html.DisplayFor(model => model.AirConditioner)
-    </div>
-
-    <div class="display-label">Nóng lạnh:</div>
-    <div class="display-field">
-        @Html.DisplayFor(model => model.WaterHeater)
-    </div>
-    <div class="display-label">Giường:</div>
-    <div class="display-field">
-        @Html.DisplayFor(model => model.Bed)
-    </div>
-    <div class="display-label">Chỗ để xe máy, xe đạp:</div>
-    <div class="display-field">
-        @Html.DisplayFor(model => model.MotorParkingLot)
-    </div>
-    <div class="display-label">Chỗ để Ô tô:</div>
-    <div class="display-field">
-        @Html.DisplayFor(model => model.Gara)
-    </div>
-    <div class="display-label">Chung chủ:</div>
-    <div class="display-field">
-        @Html.DisplayFor(model => model.StayWithOwner)
-    </div>
-
-    <div class="display-label">Vệ sinh khép kín:</div>
-    <div class="display-field">
-        @Html.DisplayFor(model => model.Toilet)
-    </div>
-
-    <div class="display-label">Nấu ăn trong nhà:</div>
-    <div class="display-field">
-        @Html.DisplayFor(model => model.AllowCooking)
-    </div>
-
-    <div class="display-label">Bảo vệ:</div>
-    <div class="display-field">
-        @Html.DisplayFor(model => model.Security)
-    </div>  
-
-    <div class="display-label">Lượt xem:</div>
-    <div class="display-field">
-        @Html.DisplayFor(model => model.Views)
-    </div>
-
-    <div class="display-label">Ngày đăng</div>
-    <div class="display-field">
-        @Html.DisplayFor(model => model.CreatedDate)
-    </div>
-
-    <div class="display-label">Ngày sửa</div>
-    <div class="display-field">
-        @Html.DisplayFor(model => model.EditedDate)
-    </div>    
-
-    <div class="display-label">Người đăng:</div>
-    <div class="display-field">
-        @Html.DisplayFor(model => model.CreatedBy)
-    </div>
-    <div class="display-label">Liên Hệ:</div>
-    <div class="display-field">
-        @Html.DisplayFor(model => model.PhoneContact)
-    </div>
-        </div>
-    <div class = "content" style="float:right;" >
-        @Html.Partial("_ImagesPartial")
+            <div class="display-label">
+             <strong>Tiêu đề:</strong> <strong>@Html.DisplayFor(model => model.Title)</strong>
             </div>
-            <div class = "map" style="float:right;">
+            @{
+
+                if (ViewBag.RemoveFavorite == false)
+                {
+                     <input type="button" id="favorite" onclick="addFavorite();" value="Thêm vào danh mục" />  
+                }
+                else if (ViewBag.RemoveFavorite == true)
+                {
+                     <input type="button" id="favorite" onclick="removeFavorite();" value="Gỡ khỏi danh mục" />  
+                }
+                if (!User.Identity.IsAuthenticated)
+                {
+                     <input type="button" id="favorite" onclick="alert('Bạn cần đăng nhập để sử dụng chức năng này');" value="Thêm vào danh mục" />
+                }
+            }
+
+            <div class="display-label">Thể loại:</div>
+            <div class="display-field">
+                @Html.DisplayFor(model => model.Category)
+            </div>    
+            <div class="display-label">Địa chỉ:</div>
+            <div class="display-field">
+                @Model.Address, @ViewBag.Province
+            </div>
+
+            <div class="display-label">Giá:</div>
+            <div class="display-field">
+                @Html.DisplayFor(model => model.Price)
+            </div>
+
+            <div class="display-label">Diện tích:</div>
+            <div class="display-field">
+                @Html.DisplayFor(model => model.Area)
+            </div>
+
+
+            <div class="display-label">Mô tả chi tiết:</div>
+            <div class="display-field">
+                @Html.DisplayFor(model => model.Description)
+            </div>
+
+            <div class="display-label">Internet:</div>
+            <div class="display-field">
+                @Html.DisplayFor(model => model.Internet)
+            </div>
+
+            <div class="display-label">Truyền hình cáp:</div>
+            <div class="display-field">
+                @Html.DisplayFor(model => model.TVCable)
+            </div>
+
+            <div class="display-label">Điều Hòa:</div>
+            <div class="display-field">
+                @Html.DisplayFor(model => model.AirConditioner)
+            </div>
+
+            <div class="display-label">Nóng lạnh:</div>
+            <div class="display-field">
+                @Html.DisplayFor(model => model.WaterHeater)
+            </div>
+            <div class="display-label">Giường:</div>
+            <div class="display-field">
+                @Html.DisplayFor(model => model.Bed)
+            </div>
+            <div class="display-label">Chỗ để xe máy, xe đạp:</div>
+            <div class="display-field">
+                @Html.DisplayFor(model => model.MotorParkingLot)
+            </div>
+            <div class="display-label">Chỗ để Ô tô:</div>
+            <div class="display-field">
+                @Html.DisplayFor(model => model.Gara)
+            </div>
+            <div class="display-label">Chung chủ:</div>
+            <div class="display-field">
+                @Html.DisplayFor(model => model.StayWithOwner)
+            </div>
+
+            <div class="display-label">Vệ sinh khép kín:</div>
+            <div class="display-field">
+                @Html.DisplayFor(model => model.Toilet)
+            </div>
+
+            <div class="display-label">Nấu ăn trong nhà:</div>
+            <div class="display-field">
+                @Html.DisplayFor(model => model.AllowCooking)
+            </div>
+
+            <div class="display-label">Bảo vệ:</div>
+            <div class="display-field">
+                @Html.DisplayFor(model => model.Security)
+            </div>  
+
+            <div class="display-label">Lượt xem:</div>
+            <div class="display-field">
+                @Html.DisplayFor(model => model.Views)
+            </div>
+
+            <div class="display-label">Ngày đăng</div>
+            <div class="display-field">
+                @Html.DisplayFor(model => model.CreatedDate)
+            </div>
+
+            <div class="display-label">Ngày sửa</div>
+            <div class="display-field">
+                @Html.DisplayFor(model => model.EditedDate)
+            </div>    
+
+            <div class="display-label">Người đăng:</div>
+            <div class="display-field">
+                @Html.DisplayFor(model => model.CreatedBy)
+            </div>
+            <div class="display-label">Liên Hệ:</div>
+            <div class="display-field">
+                @Html.DisplayFor(model => model.PhoneContact)
+            </div>
+            </div>
+        <div class = "content" style="float:right;" >
+            @Html.Partial("_ImagesPartial")
+        </div>
+        <div class = "map" style="float:right;">
             <div id="mapContainer" style="width:500px;height:380px;"></div>
             <div class="editor-field">
                 @Html.EditorFor(model => model.Lat)
@@ -237,20 +236,19 @@
             <div class="editor-field">
                 @Html.EditorFor(model => model.Lon)
             </div>
-        </div>
+         </div>
         <div class = "clear" style="clear:both;">
         </div>
       @*  @{
     if (User.Identity.IsAuthenticated)
     {*@
         <div id ="Report">
-        <div id ="ClickReport" class="display-label" style="width:120px;">Click here to report</div>
+            <div id ="ClickReport" class="display-label" style="width:120px;">Click here to report</div>
             <div id ="ResionReport" class="editor-field" style="display:none">
                 @Html.Label("txtrs", "Lý do")
                 @Html.TextArea("txtResion", "")
                 <input id="sendButton" type="button" value="Send" />                
-            </div>
-                  
+            </div>     
         </div>
     @*}
     else
@@ -260,3 +258,15 @@
         }*@
     </div>
 }
+        <div id="Question">
+            @if (Request.IsAuthenticated)
+            {
+                @Html.Partial("_Question")
+            }
+            else
+            {
+                <text>Bạn cần phải đăng nhập để thực hiện chức năng này</text>
+            }
+            
+        </div>
+    </div>

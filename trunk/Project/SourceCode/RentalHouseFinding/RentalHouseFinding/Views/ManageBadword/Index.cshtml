@@ -1,7 +1,8 @@
-﻿@model IEnumerable<RentalHouseFinding.Models.Roles>
+﻿@model IEnumerable<RentalHouseFinding.Models.BadWords>
 
 @{
-    ViewBag.Title = "Index"; Layout = "~/Views/Shared/_AdminLayout.cshtml";
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_AdminLayout.cshtml";
 }
 
 <h2>Index</h2>
@@ -12,13 +13,10 @@
 <table>
     <tr>
         <th>
-            Name
+            Word
         </th>
         <th>
-            Description
-        </th>
-        <th>
-            IsDeleted
+            BadWordType
         </th>
         <th></th>
     </tr>
@@ -26,13 +24,10 @@
 @foreach (var item in Model) {
     <tr>
         <td>
-            @Html.DisplayFor(modelItem => item.Name)
+            @Html.DisplayFor(modelItem => item.Word)
         </td>
         <td>
-            @Html.DisplayFor(modelItem => item.Description)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.IsDeleted)
+            @Html.DisplayFor(modelItem => item.BadWordType.Name)
         </td>
         <td>
             @Html.ActionLink("Edit", "Edit", new { id=item.Id }) |

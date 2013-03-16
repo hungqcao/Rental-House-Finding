@@ -145,6 +145,14 @@ namespace RentalHouseFinding.Models
         public string Repost { get; set; }
 
         public IEnumerable<HttpPostedFileBase> Images { get; set; }
+
+        [Required(ErrorMessage = "Xin vui lòng nhập tiêu đề")]
+        [Display(Name = "Tiêu đề")]
+        public string TitleQuestion { get; set; }
+
+        [Required(ErrorMessage = "Xin vui lòng nhập nội dung")]
+        [Display(Name = "Nội dung")]
+        public string ContentQuestion { get; set; }
     } 
    
 }

@@ -1,7 +1,8 @@
-﻿@model IEnumerable<RentalHouseFinding.Models.Roles>
+﻿@model IEnumerable<RentalHouseFinding.Models.Districts>
 
 @{
-    ViewBag.Title = "Index"; Layout = "~/Views/Shared/_AdminLayout.cshtml";
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_AdminLayout.cshtml";
 }
 
 <h2>Index</h2>
@@ -15,7 +16,13 @@
             Name
         </th>
         <th>
-            Description
+            Lat
+        </th>
+        <th>
+            Lon
+        </th>
+        <th>
+            Province
         </th>
         <th>
             IsDeleted
@@ -29,7 +36,13 @@
             @Html.DisplayFor(modelItem => item.Name)
         </td>
         <td>
-            @Html.DisplayFor(modelItem => item.Description)
+            @Html.DisplayFor(modelItem => item.Lat)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Lon)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Province.Name)
         </td>
         <td>
             @Html.DisplayFor(modelItem => item.IsDeleted)
