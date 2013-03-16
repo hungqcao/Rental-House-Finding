@@ -23,8 +23,8 @@ namespace RentalHouseFinding.Controllers
 {
     public class AccountController : Controller
     {
-        
-        public ActionResult FacebookUserDetail(string token)
+
+        public ActionResult FacebookUserDetail(string token, string returnUrl)
         {
             FacebookClient.SetDefaultHttpWebRequestFactory(uri =>
             {
@@ -38,7 +38,7 @@ namespace RentalHouseFinding.Controllers
                 dynamic fbresult = client.Get("me?fields=id,email,first_name,last_name,gender,locale,link,username,timezone,location,picture");
 
                 UserDetailsModel facebookUser = Newtonsoft.Json.JsonConvert.DeserializeObject<UserDetailsModel>(fbresult.ToString());
-                return FBookOrOpenIdLogon(facebookUser);
+                return FBookOrOpenIdLogon(facebookUser, returnUrl);
             }
             else
             {
@@ -143,7 +143,7 @@ namespace RentalHouseFinding.Controllers
                         user_birthday = sDob
 
                     };
-                    return FBookOrOpenIdLogon(lm);
+                    return FBookOrOpenIdLogon(lm, returnUrl);
 
                 case AuthenticationStatus.Canceled:
                     ViewBag.Message = "Canceled at provider";
@@ -155,7 +155,7 @@ namespace RentalHouseFinding.Controllers
 
             return new EmptyResult();
         }
-        public ActionResult FBookOrOpenIdLogon(UserDetailsModel userDetail)
+        public ActionResult FBookOrOpenIdLogon(UserDetailsModel userDetail, string returnUrl)
         {
             // Attempt to register the user
             MembershipCreateStatus createStatus;
@@ -165,6 +165,11 @@ namespace RentalHouseFinding.Controllers
             {
                 string userName = CommonModel.GetUserNameByOpenId(userDetail.id);
                 FormsAuthentication.SetAuthCookie(userName, false /* createPersistentCookie */);
+                if (Url.IsLocalUrl(returnUrl) && returnUrl.Length > 1 && returnUrl.StartsWith("/")
+                            && !returnUrl.StartsWith("//") && !returnUrl.StartsWith("/\\"))
+                {
+                    return Redirect(returnUrl);
+                }
                 return RedirectToAction("Index", "Landing");
             }
             else

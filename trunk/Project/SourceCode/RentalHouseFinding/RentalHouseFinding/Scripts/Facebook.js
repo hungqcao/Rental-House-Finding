@@ -6,17 +6,9 @@
             cookie: true,
             xfbml: true
         });
-        //        FB.Event.subscribe('auth.login', function (response) {
-        //        alert('1');
-        //        var credentials = { uid: response.authResponse.userID, accessToken: response.authResponse.accessToken };
-        //        SubmitLogin(credentials);
-        //        });
         FB.getLoginStatus(function (response) {
-            if (response.status === 'connected') {
-                var credentials = { uid: response.authResponse.userID, accessToken: response.authResponse.accessToken };
-                //SubmitLogin(credentials);
-                var url = 'FacebookUserDetail?token=' + response.authResponse.accessToken;
-                //url = url.replace('_id_', response.authResponse.userID);
+            if (response.status === 'connected') {            
+            var url = 'FacebookUserDetail?token=' + response.authResponse.accessToken + '&returnUrl=' + getParameter('returnUrl');                
                 window.location.href = url;
             }
             else if (response.status === 'not_authorized') { }
@@ -24,19 +16,18 @@
 
         });
 
-//        function SubmitLogin(credentials) {            
-//            $.ajax({
-//                url: "/account/facebookLogin",
-//                type: "POST",
-//                data: credentials,
-//                error: function () {
-//                    //alert("error logging in to your facebook account.");
-//                },
-//                success: function () {
-//                    window.location.reload();
-//                }
-//            });
-//        }
+        function getParameter(paramName) {
+            var searchString = window.location.search.substring(1),
+      i, val, params = searchString.split("&");
+
+            for (i = 0; i < params.length; i++) {
+                val = params[i].split("=");
+                if (val[0] == paramName) {
+                    return unescape(val[1]);
+                }
+            }
+            return null;
+        }       
 
     };
 
