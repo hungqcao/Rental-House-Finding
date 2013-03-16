@@ -16,7 +16,16 @@ namespace RentalHouseFinding.Controllers
         {
             if (CommonModel.CheckUserName(userName))
             {
-                return Json("Email đã được sử dụng", JsonRequestBehavior.AllowGet);
+                return Json("Tên tài khoản này đã được sử dụng", JsonRequestBehavior.AllowGet);
+            }
+            return Json(true, JsonRequestBehavior.AllowGet);
+        }
+
+        public JsonResult IsEmailAvailable(string email)
+        {
+            if (CommonModel.CheckEmail(email))
+            {
+                return Json("Địa chỉ Email này đã được sử dụng", JsonRequestBehavior.AllowGet);
             }
             return Json(true, JsonRequestBehavior.AllowGet);
         }

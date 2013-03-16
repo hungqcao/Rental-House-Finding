@@ -87,7 +87,7 @@ namespace RentalHouseFinding.Sercurity
                         user.Name = model.Name;
                         user.Username = model.UserName;
                         user.Password = AccountHelper.GetMD5Hash(model.Password);
-                        user.Email = model.Email.ToLower();
+                        user.Email = model.Email == null? string.Empty :model.Email.ToLower();
                         user.CreatedDate = DateTime.Now;
                         user.LastUpdate = DateTime.Now;
                         user.Address = model.Address;
@@ -104,7 +104,11 @@ namespace RentalHouseFinding.Sercurity
 
                         status = MembershipCreateStatus.Success;
                         //send mail welcome!
-                        CommonModel.SendEmail(model.UserName, String.Format("Chào mừng bạn đến với HouseFinding!</br>Thông tin tài khoản:</br>-Email:{0}</br>-Mật khẩu:{1}</br> ",model.UserName,model.Password), 0);
+                        if (!String.IsNullOrEmpty(user.Email))
+                        {
+                            CommonModel.SendEmail(user.Email, String.Format("Chào mừng bạn đến với HouseFinding!</br>Thông tin tài khoản:</br>-Tên tài khoản:{0}</br>-Mật khẩu:{1}</br> ", model.UserName, model.Password), 0);
+                        }
+                        
 
                         return GetUser(model.UserName, false);
                     }
@@ -123,15 +127,15 @@ namespace RentalHouseFinding.Sercurity
             return null;
         }
 
-        public MembershipUser CreateUserForOpenID(UserDetailsModel model, out MembershipCreateStatus status)
+        public bool CreateUserForOpenID(UserDetailsModel model, out MembershipCreateStatus status)
         {
-            //Check username da tontai chua, sau do check openid xem co ton tai chua
-            int userID = CommonModel.GetUserIdByUsername(model.email);
+            //check openid xem co ton tai chua
+            int userID = CommonModel.GetUserIdByOpenId(model.id);
 
             if (userID != -1)
             {
                 status = MembershipCreateStatus.DuplicateUserName;
-                return GetUser(model.email, false);
+                return false;
             }
             else
                 //create user
@@ -145,7 +149,8 @@ namespace RentalHouseFinding.Sercurity
                         user.OpenIdURL = model.id;
                         user.Name = model.first_name + " " + model.last_name;                        
                         user.IsDeleted = false;
-                        user.Username = model.email;
+                        user.Username = String.IsNullOrEmpty(model.email) ?Guid.NewGuid().ToString() :model.email.ToLower();
+                        user.Email = String.IsNullOrEmpty(model.email) ? String.Empty : model.email.ToLower();
                         if(!String.IsNullOrEmpty(model.user_birthday))
                         {
                             user.DOB =  DateTime.Parse(model.user_birthday);
@@ -160,8 +165,8 @@ namespace RentalHouseFinding.Sercurity
                         _db.SaveChanges();
 
                         status = MembershipCreateStatus.Success;
-
-                        return GetUser(model.email, false);
+                        CommonModel.SendEmail(user.Email, String.Format("Chào mừng bạn đến với HouseFinding!</br>"), 0);
+                        return true;
                     }
 
                 }
@@ -171,7 +176,7 @@ namespace RentalHouseFinding.Sercurity
                 }
             }
 
-            return null;
+            return true;
         }
 
         public override MembershipUser CreateUser(string username, string password, string email, string passwordQuestion, string passwordAnswer, bool isApproved, object providerUserKey, out MembershipCreateStatus status)

@@ -12,16 +12,16 @@
 <script type="text/javascript">
     $(document).ready(function () {
         $("#ClickReport").click(function () {
-            if ($("#logindisplay").children().length == 1) {
-                //Not LogOn
-                alert("Bạn cần đăng nhập để sử dụng chức năng này");
-            }
-            else {
-            //Logged
+//            if ($("#logindisplay").children().length == 1) {
+//                //Not LogOn
+//                alert("Bạn cần đăng nhập để sử dụng chức năng này");
+//            }
+//            else {
+//            //Logged
                 $("#ClickReport").css("display", "none");
                 $("#ResionReport").css("display", "inline");
                 $("#txtResion").focus();
-            }
+            //}
 
         });
 
@@ -112,18 +112,18 @@
     </div>
     @{
 
-        if (ViewBag.RemoveFavorite == false)
-        {
+                                 if (ViewBag.RemoveFavorite == false)
+                                 {
              <input type="button" id="favorite" onclick="addFavorite();" value="Thêm vào danh mục" />  
-        }
-        else if (ViewBag.RemoveFavorite == true)
-        {
+                                 }
+                                 else if (ViewBag.RemoveFavorite == true)
+                                 {
              <input type="button" id="favorite" onclick="removeFavorite();" value="Gỡ khỏi danh mục" />  
-        }
-        if (!User.Identity.IsAuthenticated)
-        {
+                                 }
+                                 if (!User.Identity.IsAuthenticated)
+                                 {
              <input type="button" id="favorite" onclick="alert('Bạn cần đăng nhập để sử dụng chức năng này');" value="Thêm vào danh mục" />
-        }
+                                 }
     }
 
     <div class="display-label">Thể loại:</div>
@@ -240,14 +240,23 @@
         </div>
         <div class = "clear" style="clear:both;">
         </div>
+      @*  @{
+    if (User.Identity.IsAuthenticated)
+    {*@
         <div id ="Report">
         <div id ="ClickReport" class="display-label" style="width:120px;">Click here to report</div>
             <div id ="ResionReport" class="editor-field" style="display:none">
-                @Html.Label("txtrs","Lý do")
+                @Html.Label("txtrs", "Lý do")
                 @Html.TextArea("txtResion", "")
                 <input id="sendButton" type="button" value="Send" />                
             </div>
                   
         </div>
+    @*}
+    else
+    {
+                <div onclick="alert('Bạn cần phải đăng nhập để sử dụng chức năng này')" class="display-label" style="width:120px;">Click here to report</div> 
+    }
+        }*@
     </div>
 }

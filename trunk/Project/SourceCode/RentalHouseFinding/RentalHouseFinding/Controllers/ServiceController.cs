@@ -126,7 +126,9 @@ namespace RentalHouseFinding.Controllers
         }
 
         //For Report Post
-        [AcceptVerbs(HttpVerbs.Post)]
+        
+        //[AcceptVerbs(HttpVerbs.Post)]
+        [Authorize(Roles = "User")]
         public bool ReportPost(string postId, string resion)
         {
             RentalHouseFindingEntities _db = new RentalHouseFindingEntities();
