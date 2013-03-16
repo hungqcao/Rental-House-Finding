@@ -100,63 +100,13 @@ INSERT INTO [RentalHouseFinding].[dbo].Locations VALUES
 
 GO
 
-SELECT P.Id, STUFF((
-            SELECT ', ' + [Name]
-            FROM dbo.Locations t2
-            WHERE t2.Id = L.LocationId
-            ORDER BY [Name]
-            FOR XML PATH(''), TYPE
-        ).value('.', 'varchar(max)'), 1, 2, '') AS [Names]
-
- FROM dbo.Posts P
-	INNER JOIN dbo.PostLocations L
-		ON P.Id = L.PostId
-	INNER JOIN dbo.Locations Lo
-		ON L.LocationId = Lo.Id
-GROUP BY P.Id
-
-USE RentalHouseFinding ;
-GO
-IF OBJECT_ID ('dbo.V_PostIdNearbyPlaceName', 'V') IS NOT NULL
-    DROP VIEW dbo.V_PostIdNearbyPlaceName ;
-GO
-CREATE VIEW V_PostIdNearbyPlaceName AS
-SELECT  t1.PostId,
-        STUFF((
-            SELECT ', ' + [Name]
-            FROM V_PostLocationAndLocationName t2
-            WHERE t1.PostId = t2.PostId
-            ORDER BY [Name]
-            FOR XML PATH(''), TYPE
-        ).value('.', 'varchar(max)'), 1, 2, '') AS [Names]
-FROM  dbo.V_PostLocationAndLocationName t1
-GROUP BY PostId
-WITH CHECK OPTION ;
-
-GO
-
-
-
-USE RentalHouseFinding ;
-GO
-IF OBJECT_ID ('dbo.V_PostLocationAndLocationName', 'V') IS NOT NULL
-    DROP VIEW dbo.V_PostLocationAndLocationName ;
-GO
-CREATE VIEW V_PostLocationAndLocationName WITH SCHEMABINDING AS
-SELECT t2.Name, t1.PostId FROM dbo.PostLocations t1 INNER JOIN dbo.Locations t2 ON t1.LocationId = t2.Id
-WITH CHECK OPTION ;
-
-GO
-
-
-
 USE RentalHouseFinding ;
 GO
 IF OBJECT_ID ('dbo.V_PostFullInfo', 'V') IS NOT NULL
     DROP VIEW dbo.V_PostFullInfo ;
 GO
 CREATE VIEW V_PostFullInfo WITH SCHEMABINDING AS
-SELECT P.Id, P.Description, P.NumberAddress, P.Street, P.Title, F.Direction, C.Email, C.Phone, C.Skype, C.Yahoo, P.CategoryId, P.DistrictId, D.ProvinceId, N.Names
+SELECT P.Id, P.Description, P.NumberAddress, P.Street, P.Title, F.Direction, C.Email, C.Phone, C.Skype, C.Yahoo, P.CategoryId, P.DistrictId, D.ProvinceId, P.NearbyPlace
 FROM dbo.Posts P 
 	INNER JOIN dbo.Facilities F
 		ON(P.Id = F.PostIdFacilities)
@@ -164,13 +114,10 @@ FROM dbo.Posts P
 		ON(P.Id = C.PostIdContacts)
 	INNER JOIN dbo.Districts D
 		ON(P.DistrictId = D.Id) 
-	LEFT OUTER JOIN dbo.V_PostIdNearbyPlaceName N
-		ON P.Id = N.PostId
 WHERE P.IsDeleted = 'false' AND D.IsDeleted = 'false'
 WITH CHECK OPTION ;
 
 GO
-
 CREATE UNIQUE CLUSTERED INDEX UCI_PostId ON V_PostFullInfo(Id);
 
 GO
@@ -214,7 +161,87 @@ ELSE IF(@Keyword IS NOT NULL AND @DistrictIdPass = 0)
 	END
 GO
 
-EXEC FullTextSearchPost @CategoryIdPass = 1, @ProvinceIdPass = 1, @DistrictIdPass = 0, @KeyWord = 'post'
+USE RentalHouseFinding ;
+GO
+IF OBJECT_ID ('dbo.FullTextSearchPostWithWeightenScore', 'P') IS NOT NULL
+    DROP PROCEDURE dbo.FullTextSearchPostWithWeightenScore ;
+GO
+CREATE PROCEDURE FullTextSearchPostWithWeightenScore @CategoryIdPass int = 0, 
+									@ProvinceIdPass int = 0, 
+									@DistrictIdPass int = 0, 
+									@Keyword nvarchar(100) = null,
+									@TitleScore int = 1,
+									@DescriptionScore int = 1,
+									@StreetScore int = 1,
+									@NearbyScore int = 1,
+									@NumberAddressScore int = 1,
+									@DirectionScore int = 1
+AS
+IF(@Keyword IS NULL AND @DistrictIdPass != 0)
+	BEGIN
+		SELECT Id, Title FROM dbo.V_PostFullInfo S WHERE S.CategoryId = @CategoryIdPass AND S.ProvinceId = @ProvinceIdPass AND S.DistrictId = @DistrictIdPass 
+	END
+ELSE IF(@Keyword IS NULL AND @DistrictIdPass = 0)
+	BEGIN
+		SELECT Id, Title FROM dbo.V_PostFullInfo S WHERE S.CategoryId = @CategoryIdPass AND S.ProvinceId = @ProvinceIdPass
+	END
+ELSE IF(@Keyword IS NOT NULL AND @DistrictIdPass != 0)
+	BEGIN
+		SELECT f.WeightedRank, l.Title, l.Id
+		FROM dbo.V_PostFullInfo l INNER JOIN
+		(
+			SELECT [KEY], SUM(Rank) AS WeightedRank
+			FROM
+			(
+				SELECT Rank * @TitleScore as Rank, [KEY] from FREETEXTTABLE(dbo.V_PostFullInfo, Title , @Keyword)
+				UNION
+				SELECT Rank * @DescriptionScore as Rank, [KEY] from FREETEXTTABLE(dbo.V_PostFullInfo, Description, @Keyword)
+				UNION
+				SELECT Rank * @StreetScore as Rank, [KEY] from FREETEXTTABLE(dbo.V_PostFullInfo, Street, @Keyword)
+				UNION
+				SELECT Rank * @NearbyScore as Rank, [KEY] from FREETEXTTABLE(dbo.V_PostFullInfo, NearbyPlace, @Keyword)
+				UNION
+				SELECT Rank * @NumberAddressScore as Rank, [KEY] from FREETEXTTABLE(dbo.V_PostFullInfo, NumberAddress, @Keyword)
+				UNION
+				SELECT Rank * @DirectionScore as Rank, [KEY] from FREETEXTTABLE(dbo.V_PostFullInfo, Direction, @Keyword)
+			) as x
+			GROUP BY [KEY]
+		) as f
+		ON l.Id = f.[KEY]
+		WHERE l.CategoryId = @CategoryIdPass AND l.ProvinceId = @ProvinceIdPass AND l.DistrictId = @DistrictIdPass 
+		ORDER BY f.WeightedRank DESC
+	END
+ELSE IF(@Keyword IS NOT NULL AND @DistrictIdPass = 0)
+	BEGIN
+		SELECT f.WeightedRank, l.Title, l.Id
+		FROM dbo.V_PostFullInfo l INNER JOIN
+		(
+			SELECT [KEY], SUM(Rank) AS WeightedRank
+			FROM
+			(
+				SELECT Rank * @TitleScore as Rank, [KEY] from FREETEXTTABLE(dbo.V_PostFullInfo, Title , @Keyword)
+				UNION
+				SELECT Rank * @DescriptionScore as Rank, [KEY] from FREETEXTTABLE(dbo.V_PostFullInfo, Description, @Keyword)
+				UNION
+				SELECT Rank * @StreetScore as Rank, [KEY] from FREETEXTTABLE(dbo.V_PostFullInfo, Street, @Keyword)
+				UNION
+				SELECT Rank * @NearbyScore as Rank, [KEY] from FREETEXTTABLE(dbo.V_PostFullInfo, NearbyPlace, @Keyword)
+				UNION
+				SELECT Rank * @NumberAddressScore as Rank, [KEY] from FREETEXTTABLE(dbo.V_PostFullInfo, NumberAddress, @Keyword)
+				UNION
+				SELECT Rank * @DirectionScore as Rank, [KEY] from FREETEXTTABLE(dbo.V_PostFullInfo, Direction, @Keyword)
+			) as x
+			GROUP BY [KEY]
+		) as f
+		ON l.Id = f.[KEY]
+		WHERE l.CategoryId = @CategoryIdPass AND l.ProvinceId = @ProvinceIdPass
+		ORDER BY f.WeightedRank DESC
+	END
+GO
+
+
+
+EXEC FullTextSearchPost @CategoryIdPass = 1, @ProvinceIdPass = 1, @DistrictIdPass = 0, @KeyWord = 'nha'
 
 USE RentalHouseFinding ;
 GO
@@ -259,7 +286,7 @@ CREATE PROCEDURE AdvancedSearchFacility
 	@IsStayWithOwnerScore int = 0
 AS
 
-SELECT T.Id, ((T.Column1 * @HasAirConditionerScore) + 
+SELECT S.Id, ((T.Column1 * @HasAirConditionerScore) + 
 				(T.Column2 * @HasBedScore) +
 				(T.Column3 * @HasGarageScore) +
 				(T.Column4 * @HasInternetScore) +
@@ -301,4 +328,31 @@ EXEC AdvancedSearchFacility
 	@HasTVCableScore = 5,
 	@HasWaterHeaterScore = 5,
 	@IsAllowCookingScore = 5,
-	@IsStayWithOwnerScore = 0
+	@IsStayWithOwnerScore = 5
+
+
+SELECT f.WeightedRank, l.Title, l.Id
+FROM dbo.V_PostFullInfo l INNER JOIN
+(
+    SELECT [KEY], SUM(Rank) AS WeightedRank
+    FROM
+    (
+        SELECT Rank * 1.0 as Rank, [KEY] from FREETEXTTABLE(dbo.V_PostFullInfo, Title , 'xau')
+        UNION
+        SELECT Rank * 1.0 as Rank, [KEY] from FREETEXTTABLE(dbo.V_PostFullInfo, Description, 'xau')
+        UNION
+        SELECT Rank * 1.0 as Rank, [KEY] from FREETEXTTABLE(dbo.V_PostFullInfo, Street, 'xau')
+        UNION
+        SELECT Rank * 1.0 as Rank, [KEY] from FREETEXTTABLE(dbo.V_PostFullInfo, NearbyPlace, 'xau')
+        UNION
+        SELECT Rank * 1.0 as Rank, [KEY] from FREETEXTTABLE(dbo.V_PostFullInfo, NumberAddress, 'xau')
+        UNION
+        SELECT Rank * 1.0 as Rank, [KEY] from FREETEXTTABLE(dbo.V_PostFullInfo, Direction, 'xau')
+    ) as x
+    GROUP BY [KEY]
+) as f
+ON l.Id = f.[KEY]
+ORDER BY f.WeightedRank DESC
+
+EXEC dbo.FullTextSearchPostWithWeightenScore @CategoryIdPass = 1, @ProvinceIdPass = 1, @DistrictIdPass = 0, @KeyWord = 'xau',
+												@NumberAddressScore = 10
