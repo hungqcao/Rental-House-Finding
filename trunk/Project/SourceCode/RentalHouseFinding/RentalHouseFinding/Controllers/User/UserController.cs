@@ -34,26 +34,6 @@ namespace RentalHouseFinding.Controllers
             userViewModel.Avatar = profile.Avatar;
             userViewModel.Sex = profile.Sex;
 
-            //Get post status list
-            var postStatusList = (from p in _db.PostStatuses 
-                                  select p).ToList();
-            ViewBag.StatusList = postStatusList;
-
-            //Get user's posts list
-            ViewBag.UserId = userId;
-            var postList = (from p in _db.Posts 
-                            where (p.UserId == userId && !p.IsDeleted) 
-                            select p);
-            ViewBag.PostList = postList.ToList();
-            
-            //Get user's favorite list
-            var lstPostId = (from f in _db.Favorites
-                             where (f.UserId == userId && !f.IsDeleted)
-                             select f.PostId).ToList(); 
-            var favoriteList = (from f in _db.Posts
-                                where (f.UserId == userId && !f.IsDeleted && lstPostId.Contains(f.Id))
-                                select f).ToList();
-            ViewBag.FavoriteList = favoriteList;
             return View(userViewModel);
         }
 
@@ -103,6 +83,48 @@ namespace RentalHouseFinding.Controllers
                 TempData["ProfileChanged"] = true;
             }
             return RedirectToAction("Index", "User");
+        }
+
+        [Authorize(Roles = "Admin, User")]
+        public ActionResult Favorites()
+        {
+            //Get user ID
+            int userId = CommonModel.GetUserIdByUsername(User.Identity.Name);
+            //Get user's favorite list
+            var lstPostId = (from f in _db.Favorites
+                             where (f.UserId == userId && !f.IsDeleted)
+                             select f.PostId).ToList();
+            var favoriteList = (from f in _db.Posts
+                                where (f.UserId == userId && !f.IsDeleted && lstPostId.Contains(f.Id))
+                                select f).ToList();
+            ViewBag.FavoriteList = favoriteList;
+            return View();
+        }
+
+        [Authorize(Roles = "Admin, User")]
+        public ActionResult Posts()
+        {
+            //Get user ID
+            int userId = CommonModel.GetUserIdByUsername(User.Identity.Name);
+            //Get post status list
+            var postStatusList = (from p in _db.PostStatuses
+                                  select p).ToList();
+            ViewBag.StatusList = postStatusList;
+
+            //Get user's posts list
+            ViewBag.UserId = userId;
+            var postList = (from p in _db.Posts
+                            where (p.UserId == userId && !p.IsDeleted)
+                            select p);
+            ViewBag.PostList = postList.ToList();
+            
+            return View();
+        }
+
+        [Authorize(Roles = "Admin, User")]
+        public ActionResult Questions()
+        {
+            return View();
         }
 
     }

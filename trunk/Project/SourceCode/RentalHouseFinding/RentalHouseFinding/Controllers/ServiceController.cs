@@ -128,7 +128,7 @@ namespace RentalHouseFinding.Controllers
         //For Report Post
         
         //[AcceptVerbs(HttpVerbs.Post)]
-        [Authorize(Roles = "User")]
+        [Authorize(Roles = "User, Admin")]
         public bool ReportPost(string postId, string resion)
         {
             RentalHouseFindingEntities _db = new RentalHouseFindingEntities();
@@ -144,7 +144,7 @@ namespace RentalHouseFinding.Controllers
                 _db.AddToReportedPosts(repost);
                 _db.SaveChanges();
                 //Send email to Mod
-                CommonModel.SendEmail("Vietvh01388@fpt.edu.vn", String.Format("PostId = {0} bị {1} repost ", postId, User.Identity.Name), 0);
+                //CommonModel.SendEmail("Vietvh01388@fpt.edu.vn", String.Format("PostId = {0} bị {1} repost ", postId, User.Identity.Name), 0);
                 return true;
             }
             else

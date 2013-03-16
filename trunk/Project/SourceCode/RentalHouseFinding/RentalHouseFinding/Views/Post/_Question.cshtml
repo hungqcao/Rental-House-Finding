@@ -1,6 +1,4 @@
-﻿@model RentalHouseFinding.Models.PostViewModel
-<script src="@Url.Content("~/Scripts/jquery.validate.min.js")" type="text/javascript"></script>
-<script src="@Url.Content("~/Scripts/jquery.validate.unobtrusive.min.js")" type="text/javascript"></script>
+﻿@model RentalHouseFinding.Models.QuestionViewModel
 <script src="@Url.Content("~/Scripts/jquery.unobtrusive-ajax.min.js")" type="text/javascript"></script>
 
 @using (Ajax.BeginForm("sendquestion", "post", new AjaxOptions { UpdateTargetId = "result" }))

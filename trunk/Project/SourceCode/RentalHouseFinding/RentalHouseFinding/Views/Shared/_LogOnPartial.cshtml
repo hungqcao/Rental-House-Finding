@@ -1,7 +1,7 @@
 ﻿@if(Request.IsAuthenticated) {
     <text>Chào mừng <strong>@Html.ActionLink(@User.Identity.Name, "Index", "User")</strong>!
-    [ @Html.ActionLink("Trang admin", "Index", "Admin").If(User.IsInRole("Admin"))]
-    [ @Html.ActionLink("Thoát", "LogOff", "Account") ]</text>
+    [@Html.ActionLink("Trang admin", "Index", "Admin").If(User.IsInRole("Admin"))]
+    [@Html.ActionLink("Thoát", "LogOff", "Account") ]</text>
 }
 else {
     @:[ @Html.ActionLink("Đăng nhập", "LogOn", "Account") ]

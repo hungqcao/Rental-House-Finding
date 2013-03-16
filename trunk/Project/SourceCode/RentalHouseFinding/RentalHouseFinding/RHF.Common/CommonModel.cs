@@ -191,7 +191,8 @@ namespace RentalHouseFinding.RHF.Common
                 TVCable = model.Facilities.HasTVCable ? "Có" : "Không",
                 WaterHeater = model.Facilities.HasWaterHeater ? "Có" : "Không",
                 AllowCooking = model.Facilities.IsAllowCooking ? "Có" : "Không",
-                StayWithOwner = model.Facilities.IsStayWithOwner ? "Có" : "Không"                
+                StayWithOwner = model.Facilities.IsStayWithOwner ? "Có" : "Không",
+                UserId = model.UserId
             };
         }
 

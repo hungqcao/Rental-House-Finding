@@ -104,6 +104,7 @@
     <Compile Include="Controllers\ValidationController.cs" />
     <Compile Include="Models\FacebookLoginModel.cs" />
     <Compile Include="Models\Picture.cs" />
+    <Compile Include="Models\QuestionViewModel.cs" />
     <Compile Include="RHF.Common\CommonController.cs" />
     <Compile Include="RHF.Common\CommonModel.cs" />
     <Compile Include="RHF.Common\HtmlHelper.cs" />
@@ -500,7 +501,9 @@
     <Content Include="Scripts\openid-en.js" />
     <Content Include="Scripts\openid-jquery.js" />
     <Content Include="Scripts\RHFScripts.js" />
-    <Content Include="Web.config" />
+    <Content Include="Web.config">
+      <SubType>Designer</SubType>
+    </Content>
     <Content Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </Content>
@@ -703,6 +706,18 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="Views\Post\_Question.cshtml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Views\Shared\_LayoutUser.cshtml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Views\User\Favorites.cshtml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Views\User\Posts.cshtml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Views\User\Questions.cshtml" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <Import Project="$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v10.0\WebApplications\Microsoft.WebApplication.targets" />

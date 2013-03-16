@@ -356,3 +356,8 @@ div#filter-search-bar
 {
     position: relative;
 }
+div#tabs
+{
+    width: 1000px;
+    margin: 0 auto;
+}
