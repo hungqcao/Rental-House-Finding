@@ -1,0 +1,32 @@
+﻿@model RentalHouseFinding.Models.PostViewModel
+<script src="@Url.Content("~/Scripts/jquery.validate.min.js")" type="text/javascript"></script>
+<script src="@Url.Content("~/Scripts/jquery.validate.unobtrusive.min.js")" type="text/javascript"></script>
+<script src="@Url.Content("~/Scripts/jquery.unobtrusive-ajax.min.js")" type="text/javascript"></script>
+
+@using (Ajax.BeginForm("sendquestion", "post", new AjaxOptions { UpdateTargetId = "result" }))
+{
+    @Html.ValidationSummary(true)
+    <fieldset>
+        <div id="result"></div>
+        <div class="editor-label">
+            @Html.LabelFor(model => model.TitleQuestion)
+        </div>
+        <div class="editor-field">
+            @Html.EditorFor(model => model.TitleQuestion)
+            @Html.ValidationMessageFor(model => model.TitleQuestion)
+        </div>
+
+        <div class="editor-label">
+            @Html.LabelFor(model => model.ContentQuestion)
+        </div>
+        <div class="editor-field">
+            @Html.EditorFor(model => model.ContentQuestion)
+            @Html.ValidationMessageFor(model => model.ContentQuestion)
+        </div>
+
+        <p>
+            <input type="submit" value="Submit" />
+        </p>
+    </fieldset>
+}
+

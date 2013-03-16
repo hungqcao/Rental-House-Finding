@@ -1,10 +1,11 @@
 ﻿@model RentalHouseFinding.Models.Districts
 
 @{
-    ViewBag.Title = "Create";
+    ViewBag.Title = "Edit";
+    Layout = "~/Views/Shared/_AdminLayout.cshtml";
 }
 
-<h2>Create</h2>
+<h2>Edit</h2>
 
 <script src="@Url.Content("~/Scripts/jquery.validate.min.js")" type="text/javascript"></script>
 <script src="@Url.Content("~/Scripts/jquery.validate.unobtrusive.min.js")" type="text/javascript"></script>
@@ -13,6 +14,8 @@
     @Html.ValidationSummary(true)
     <fieldset>
         <legend>Districts</legend>
+
+        @Html.HiddenFor(model => model.Id)
 
         <div class="editor-label">
             @Html.LabelFor(model => model.Name)
@@ -55,7 +58,7 @@
         </div>
 
         <p>
-            <input type="submit" value="Create" />
+            <input type="submit" value="Save" />
         </p>
     </fieldset>
 }

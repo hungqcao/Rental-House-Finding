@@ -66,6 +66,7 @@ namespace RentalHouseFinding.Controllers
                 }
             }
             TempData["PostID"] = post.Id;
+            TempData["CreatedUserId"] = post.UserId;
             return View(CommonModel.ConvertPostToPostViewModel(post));
         }
 
@@ -180,7 +181,7 @@ namespace RentalHouseFinding.Controllers
         
         //
         // GET: /Post/Edit/5
-		[Authorize(Roles = "User")]
+		[Authorize(Roles = "User, Admin")]
         public ActionResult Edit(int id)
         {
             int userId = CommonModel.GetUserIdByUsername(User.Identity.Name);
@@ -189,7 +190,7 @@ namespace RentalHouseFinding.Controllers
             //Check if the post belongs to current user
             if (postModel == null)
             {
-                return View();
+                return RedirectToAction("Index", "Landing");
             }
             //Get images
             var images = (from i in _db.PostImages where (i.PostId == postModel.Id && !i.IsDeleted) select i);
@@ -204,7 +205,7 @@ namespace RentalHouseFinding.Controllers
         // POST: /Post/Edit/5
 
         [HttpPost]
-		[Authorize(Roles = "User")]
+        [Authorize(Roles = "User, Admin")]
         public ActionResult Edit(int id, PostViewModel postViewModel, IEnumerable<HttpPostedFileBase> images)
         {
             var post = (from p in _db.Posts where (p.Id == id) select p).FirstOrDefault();
@@ -248,7 +249,7 @@ namespace RentalHouseFinding.Controllers
 
         //
         // GET: /Post/Delete/5
-		[Authorize(Roles = "User")]
+        [Authorize(Roles = "User, Admin")]
         public ActionResult Delete(int id)
         {
             try
@@ -309,8 +310,8 @@ namespace RentalHouseFinding.Controllers
                 return null;
             }
         }
-		
-		[Authorize(Roles = "User")]
+
+        [Authorize(Roles = "User, Admin")]
         public JsonResult AddFavorite(PostViewModel postViewModel)
         {
             int userId = CommonModel.GetUserIdByUsername(User.Identity.Name);
@@ -355,7 +356,7 @@ namespace RentalHouseFinding.Controllers
             
         }
 
-        [Authorize(Roles = "User")]
+        [Authorize(Roles = "User, Admin")]
         public JsonResult RemoveFavorite()
         {
             int userId = CommonModel.GetUserIdByUsername(User.Identity.Name);
@@ -386,6 +387,18 @@ namespace RentalHouseFinding.Controllers
             {
                 return Json(success, JsonRequestBehavior.AllowGet);
             }
+        }
+
+        [HttpPost]
+        [Authorize(Roles = "User, Admin")]
+        public ActionResult SendQuestion(PostViewModel model)
+        {
+            int userId = CommonModel.GetUserIdByUsername(User.Identity.Name);
+            int postId = Convert.ToInt32(TempData["PostID"]);
+            int createdUserId = Convert.ToInt32(TempData["CreatedUserId"]);
+
+            return Content("Thông tin đã được gửi đi", "text/html");
+            
         }
     }
 }

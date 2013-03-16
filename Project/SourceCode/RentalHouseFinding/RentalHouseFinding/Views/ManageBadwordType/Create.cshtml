@@ -1,4 +1,4 @@
-﻿@model RentalHouseFinding.Models.PostStatuses
+﻿@model RentalHouseFinding.Models.BadWordTypes
 
 @{
     ViewBag.Title = "Create"; Layout = "~/Views/Shared/_AdminLayout.cshtml";
@@ -12,7 +12,7 @@
 @using (Html.BeginForm()) {
     @Html.ValidationSummary(true)
     <fieldset>
-        <legend>PostStatuses</legend>
+        <legend>BadWordTypes</legend>
 
         <div class="editor-label">
             @Html.LabelFor(model => model.Name)
@@ -20,22 +20,6 @@
         <div class="editor-field">
             @Html.EditorFor(model => model.Name)
             @Html.ValidationMessageFor(model => model.Name)
-        </div>
-
-        <div class="editor-label">
-            @Html.LabelFor(model => model.Description)
-        </div>
-        <div class="editor-field">
-            @Html.EditorFor(model => model.Description)
-            @Html.ValidationMessageFor(model => model.Description)
-        </div>
-
-        <div class="editor-label">
-            @Html.LabelFor(model => model.IsDeleted)
-        </div>
-        <div class="editor-field">
-            @Html.EditorFor(model => model.IsDeleted)
-            @Html.ValidationMessageFor(model => model.IsDeleted)
         </div>
 
         <p>

@@ -1,0 +1,25 @@
+﻿@model RentalHouseFinding.Models.BadWords
+
+@{
+    ViewBag.Title = "Details"; Layout = "~/Views/Shared/_AdminLayout.cshtml";
+}
+
+<h2>Details</h2>
+
+<fieldset>
+    <legend>BadWords</legend>
+
+    <div class="display-label">Word</div>
+    <div class="display-field">
+        @Html.DisplayFor(model => model.Word)
+    </div>
+
+    <div class="display-label">BadWordType</div>
+    <div class="display-field">
+        @Html.DisplayFor(model => model.BadWordType.Name)
+    </div>
+</fieldset>
+<p>
+    @Html.ActionLink("Edit", "Edit", new { id=Model.Id }) |
+    @Html.ActionLink("Back to List", "Index")
+</p>

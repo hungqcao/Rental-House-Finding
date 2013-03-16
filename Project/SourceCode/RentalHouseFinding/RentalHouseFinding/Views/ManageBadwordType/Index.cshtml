@@ -1,4 +1,4 @@
-﻿@model IEnumerable<RentalHouseFinding.Models.Districts>
+﻿@model IEnumerable<RentalHouseFinding.Models.BadWordTypes>
 
 @{
     ViewBag.Title = "Index";
@@ -14,18 +14,6 @@
         <th>
             Name
         </th>
-        <th>
-            Lat
-        </th>
-        <th>
-            Lon
-        </th>
-        <th>
-            Province
-        </th>
-        <th>
-            IsDeleted
-        </th>
         <th></th>
     </tr>
 
@@ -33,18 +21,6 @@
     <tr>
         <td>
             @Html.DisplayFor(modelItem => item.Name)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.Lat)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.Lon)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.Province.Name)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.IsDeleted)
         </td>
         <td>
             @Html.ActionLink("Edit", "Edit", new { id=item.Id }) |

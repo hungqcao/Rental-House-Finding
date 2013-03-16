@@ -1,5 +1,6 @@
 ﻿@if(Request.IsAuthenticated) {
-    <text>Welcome <strong>@Html.ActionLink(@User.Identity.Name, "Index", "User")</strong>!
+    <text>Chào mừng <strong>@Html.ActionLink(@User.Identity.Name, "Index", "User")</strong>!
+    [ @Html.ActionLink("Trang admin", "Index", "Admin").If(User.IsInRole("Admin"))]
     [ @Html.ActionLink("Thoát", "LogOff", "Account") ]</text>
 }
 else {
