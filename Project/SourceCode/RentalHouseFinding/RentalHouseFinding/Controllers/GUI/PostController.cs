@@ -67,6 +67,10 @@ namespace RentalHouseFinding.Controllers
             }
             TempData["PostID"] = post.Id;
             TempData["CreatedUserId"] = post.UserId;
+
+            Session["PostID"] = post.Id;
+            Session["CreatedUserId"] = post.UserId;
+
             return View(CommonModel.ConvertPostToPostViewModel(post));
         }
 
@@ -391,13 +395,31 @@ namespace RentalHouseFinding.Controllers
 
         [HttpPost]
         [Authorize(Roles = "User, Admin")]
-        public ActionResult SendQuestion(PostViewModel model)
+        public ActionResult SendQuestion(QuestionViewModel model)
         {
-            int userId = CommonModel.GetUserIdByUsername(User.Identity.Name);
-            int postId = Convert.ToInt32(TempData["PostID"]);
-            int createdUserId = Convert.ToInt32(TempData["CreatedUserId"]);
+            try
+            {
+                int userId = CommonModel.GetUserIdByUsername(User.Identity.Name);
+                int postId = Convert.ToInt32(Session["PostID"]);
+                int createdUserId = Convert.ToInt32(Session["CreatedUserId"]);
 
-            return Content("Thông tin đã được gửi đi", "text/html");
+                Questions questionToCreate = new Questions();
+                questionToCreate.Content = model.ContentQuestion.Trim();
+                questionToCreate.Title = model.TitleQuestion.Trim();
+                questionToCreate.CreatedDate = DateTime.Now;
+                questionToCreate.IsDeleted = false;
+                questionToCreate.IsReceiverRead = false;
+                questionToCreate.PostId = postId;
+                questionToCreate.SenderId = userId;
+                
+                _db.Questions.AddObject(questionToCreate);
+                _db.SaveChanges();
+                return Content("Thông tin đã được gửi đi", "text/html");
+            }
+            catch
+            {
+                return Content("Có lỗi xảy ra!", "text/html");
+            }
             
         }
     }

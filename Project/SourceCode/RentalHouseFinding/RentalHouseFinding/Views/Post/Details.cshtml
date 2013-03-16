@@ -57,7 +57,6 @@
             });
         }
 
-        $(function () {
             $("#report").live('click', function () {
                 if ($(this).hasClass("reported")) {
                     alert("Báo cáo hoàn tất! Ban quan trị sẽ kiểm tra lại trong thời gian sớm nhất.");
@@ -79,7 +78,6 @@
                 deselect();
                 return false;
             });
-        });
 
         $.fn.slideFadeToggle = function (easing, callback) {
             return this.animate({ opacity: 'toggle', height: 'toggle' }, "fast", easing, callback);
@@ -383,13 +381,15 @@ label {
             
 
         <div id="Question">
-            @if (Request.IsAuthenticated)
+        @if (Model.UserId != null && !Model.CreatedBy.Equals(User.Identity.Name, StringComparison.CurrentCultureIgnoreCase))
+        {
+            if (Request.IsAuthenticated)
             {
-                @Html.Partial("_Question")
+                @Html.Partial("_Question", new RentalHouseFinding.Models.QuestionViewModel())
             }
             else
             {
                 <text>Bạn cần phải đăng nhập để thực hiện chức năng này</text>
             }
-            
+        }
         </div>

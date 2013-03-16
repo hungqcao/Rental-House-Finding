@@ -1,0 +1,26 @@
+﻿@{
+    Layout = null;
+}
+<fieldset style="width: 500px;">
+    <table>
+        <tr>
+            <th>Title</th>
+            <th>CreatedDate</th>
+            <th>EditedDate</th>
+            <th>RenewDate</th>
+            <th>Status</th>
+            <th></th>
+        </tr>
+    @for (var i = 0; i < @ViewBag.PostList.Count; i++)
+    {
+        <tr>
+            <td>@Html.ActionLink((String)ViewBag.PostList[i].Title, "Edit/" + (int)ViewBag.PostList[i].Id, "Post")</td>
+            <td>@ViewBag.PostList[i].CreatedDate</td>
+            <td>@ViewBag.PostList[i].EditedDate</td>
+            <td>@ViewBag.PostList[i].RenewDate</td>
+            <td>@ViewBag.StatusList[@ViewBag.PostList[i].StatusId - 1].Name</td>
+            <td><button type="button" onclick="self.location='/Post/Delete/@ViewBag.PostList[i].Id'">Delete</button></td>
+        </tr>
+    }
+    </table>
+</fieldset>
