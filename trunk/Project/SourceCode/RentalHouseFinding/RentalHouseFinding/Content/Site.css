@@ -1,18 +1,4 @@
-﻿/*----------------------------------------------------------
-The base color for this template is #5c87b2. If you'd like
-to use a different color start by replacing all instances of
-#5c87b2 with your new color.
-----------------------------------------------------------*/
-body {
-    background-color: #5c87b2;
-    font-size: .85em;
-    font-family: "Trebuchet MS", Verdana, Helvetica, Sans-Serif;
-    margin: 0;
-    padding: 0;
-    color: #696969;
-}
-
-a:link {
+﻿a:link {
     color: #034af3;
     text-decoration: underline;
 }
@@ -190,7 +176,7 @@ textarea {
     min-height: 75px;
 }
 
-input[type="text"], 
+/*input[type="text"], 
 input[type="password"] {
     border: 1px solid #ccc;
     padding: 2px;
@@ -209,26 +195,26 @@ select {
 input[type="submit"] {
     font-size: 1.2em;
     padding: 5px;
-}
+}*/
 
 /* TABLE
 ----------------------------------------------------------*/
 
 table {
-    border: solid 1px #e8eef4;
+    border: solid 1px #e1e1e1;
     border-collapse: collapse;
 }
 
 table td {
     padding: 5px;
-    border: solid 1px #e8eef4;
+    border: solid 1px #e1e1e1;
 }
 
 table th {
     padding: 6px 5px;
     text-align: left;
-    background-color: #e8eef4;
-    border: solid 1px #e8eef4;
+    background-color: #e1e1e1;
+    border: solid 1px #e1e1e1;
 }
 
 /* MISC  

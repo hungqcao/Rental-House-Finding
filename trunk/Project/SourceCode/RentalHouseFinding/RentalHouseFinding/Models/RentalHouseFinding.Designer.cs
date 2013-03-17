@@ -1065,7 +1065,8 @@ namespace RentalHouseFinding.Models
         /// <param name="createdDate">Initial value of the CreatedDate property.</param>
         /// <param name="isDeleted">Initial value of the IsDeleted property.</param>
         /// <param name="questionId">Initial value of the QuestionId property.</param>
-        public static Answers CreateAnswers(global::System.Int32 id, global::System.String content, global::System.DateTime createdDate, global::System.Boolean isDeleted, global::System.Int32 questionId)
+        /// <param name="isRead">Initial value of the IsRead property.</param>
+        public static Answers CreateAnswers(global::System.Int32 id, global::System.String content, global::System.DateTime createdDate, global::System.Boolean isDeleted, global::System.Int32 questionId, global::System.Boolean isRead)
         {
             Answers answers = new Answers();
             answers.Id = id;
@@ -1073,6 +1074,7 @@ namespace RentalHouseFinding.Models
             answers.CreatedDate = createdDate;
             answers.IsDeleted = isDeleted;
             answers.QuestionId = questionId;
+            answers.IsRead = isRead;
             return answers;
         }
 
@@ -1201,6 +1203,30 @@ namespace RentalHouseFinding.Models
         private global::System.Int32 _QuestionId;
         partial void OnQuestionIdChanging(global::System.Int32 value);
         partial void OnQuestionIdChanged();
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=false)]
+        [DataMemberAttribute()]
+        public global::System.Boolean IsRead
+        {
+            get
+            {
+                return _IsRead;
+            }
+            set
+            {
+                OnIsReadChanging(value);
+                ReportPropertyChanging("IsRead");
+                _IsRead = StructuralObject.SetValidValue(value);
+                ReportPropertyChanged("IsRead");
+                OnIsReadChanged();
+            }
+        }
+        private global::System.Boolean _IsRead;
+        partial void OnIsReadChanging(global::System.Boolean value);
+        partial void OnIsReadChanged();
 
         #endregion
     
@@ -5667,18 +5693,18 @@ namespace RentalHouseFinding.Models
         /// <param name="content">Initial value of the Content property.</param>
         /// <param name="senderId">Initial value of the SenderId property.</param>
         /// <param name="createdDate">Initial value of the CreatedDate property.</param>
-        /// <param name="isReceiverRead">Initial value of the IsReceiverRead property.</param>
+        /// <param name="isRead">Initial value of the IsRead property.</param>
         /// <param name="isDeleted">Initial value of the IsDeleted property.</param>
         /// <param name="postId">Initial value of the PostId property.</param>
         /// <param name="title">Initial value of the Title property.</param>
-        public static Questions CreateQuestions(global::System.Int32 id, global::System.String content, global::System.Int32 senderId, global::System.DateTime createdDate, global::System.Boolean isReceiverRead, global::System.Boolean isDeleted, global::System.Int32 postId, global::System.String title)
+        public static Questions CreateQuestions(global::System.Int32 id, global::System.String content, global::System.Int32 senderId, global::System.DateTime createdDate, global::System.Boolean isRead, global::System.Boolean isDeleted, global::System.Int32 postId, global::System.String title)
         {
             Questions questions = new Questions();
             questions.Id = id;
             questions.Content = content;
             questions.SenderId = senderId;
             questions.CreatedDate = createdDate;
-            questions.IsReceiverRead = isReceiverRead;
+            questions.IsRead = isRead;
             questions.IsDeleted = isDeleted;
             questions.PostId = postId;
             questions.Title = title;
@@ -5792,24 +5818,24 @@ namespace RentalHouseFinding.Models
         /// </summary>
         [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=false)]
         [DataMemberAttribute()]
-        public global::System.Boolean IsReceiverRead
+        public global::System.Boolean IsRead
         {
             get
             {
-                return _IsReceiverRead;
+                return _IsRead;
             }
             set
             {
-                OnIsReceiverReadChanging(value);
-                ReportPropertyChanging("IsReceiverRead");
-                _IsReceiverRead = StructuralObject.SetValidValue(value);
-                ReportPropertyChanged("IsReceiverRead");
-                OnIsReceiverReadChanged();
+                OnIsReadChanging(value);
+                ReportPropertyChanging("IsRead");
+                _IsRead = StructuralObject.SetValidValue(value);
+                ReportPropertyChanged("IsRead");
+                OnIsReadChanged();
             }
         }
-        private global::System.Boolean _IsReceiverRead;
-        partial void OnIsReceiverReadChanging(global::System.Boolean value);
-        partial void OnIsReceiverReadChanged();
+        private global::System.Boolean _IsRead;
+        partial void OnIsReadChanging(global::System.Boolean value);
+        partial void OnIsReadChanged();
     
         /// <summary>
         /// No Metadata Documentation available.

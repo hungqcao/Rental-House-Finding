@@ -408,7 +408,7 @@ namespace RentalHouseFinding.Controllers
                 questionToCreate.Title = model.TitleQuestion.Trim();
                 questionToCreate.CreatedDate = DateTime.Now;
                 questionToCreate.IsDeleted = false;
-                questionToCreate.IsReceiverRead = false;
+                questionToCreate.IsRead = false;
                 questionToCreate.PostId = postId;
                 questionToCreate.SenderId = userId;
                 

@@ -1,0 +1,49 @@
+﻿@model RentalHouseFinding.Models.Questions
+
+@{
+    ViewBag.Title = "Details";
+    Layout = "~/Views/Shared/_LayoutUser.cshtml";
+}
+<fieldset>
+
+    <div class="display-label">Tiêu đề bài đăng</div>
+    <div class="display-field">
+        @Html.DisplayFor(model => model.Post.Title)
+    </div>
+
+    <div class="display-label">Tiêu đề câu hỏi</div>
+    <div class="display-field">
+        @Html.DisplayFor(model => model.Title)
+    </div>
+
+    <div class="display-label">Nội dung</div>
+    <div class="display-field">
+        @Html.DisplayFor(model => model.Content)
+    </div>
+
+    <div class="display-label">Người gửi</div>
+    <div class="display-field">
+        @Html.DisplayFor(model => model.User.Username)
+    </div>
+
+    <div class="display-label">Ngày gửi</div>
+    <div class="display-field">
+        @Html.DisplayFor(model => model.CreatedDate)
+    </div>
+    <div id="answers">
+    @foreach (var item in Model.Answers) {
+        <div class="display-label">Nội dung trả lời</div>
+        <div class="display-field">
+            @Html.DisplayFor(model => item.Content)
+        </div>
+        <div class="display-label">Ngày trả lời</div>
+        <div class="display-field">
+            @Html.DisplayFor(model => item.CreatedDate)
+        </div>
+    }
+    </div>
+    <div id="submit-answer">
+        @Html.Partial("_AnswerPartial", new RentalHouseFinding.Models.AnswerViewModel(), new ViewDataDictionary { { "questionId", Model.Id } })
+    </div>
+
+</fieldset>
