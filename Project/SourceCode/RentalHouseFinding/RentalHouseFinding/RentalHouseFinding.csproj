@@ -100,8 +100,11 @@
     <Compile Include="Controllers\AdvancedSearchController.cs" />
     <Compile Include="Controllers\GUI\PostController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
+    <Compile Include="Controllers\User\QuestionsController.cs" />
+    <Compile Include="Controllers\User\SentQuestionController.cs" />
     <Compile Include="Controllers\User\UserController.cs" />
     <Compile Include="Controllers\ValidationController.cs" />
+    <Compile Include="Models\AnswerViewModel.cs" />
     <Compile Include="Models\FacebookLoginModel.cs" />
     <Compile Include="Models\Picture.cs" />
     <Compile Include="Models\QuestionViewModel.cs" />
@@ -135,10 +138,11 @@
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="RHF.DAL\FullTextSearchHelper.cs" />
+    <Compile Include="RHF.Common\FullTextSearchHelper.cs" />
     <Compile Include="Security\AccountHelper.cs" />
     <Compile Include="Security\CustomMembershipProvider.cs" />
     <Compile Include="Security\CustomRoleProvider.cs" />
+    <Compile Include="Security\IsCurrentUser.cs" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Content\2012.1.419\Black\editor.png" />
@@ -437,6 +441,7 @@
     <Content Include="Content\ui-lightness\images\ui-icons_ffd27a_256x240.png" />
     <Content Include="Content\ui-lightness\images\ui-icons_ffffff_256x240.png" />
     <Content Include="Content\ui-lightness\jquery-ui-1.8.6.custom.css" />
+    <Content Include="Content\user\styles.css" />
     <Content Include="Global.asax" />
     <Content Include="Models\RentalHouseFinding.edmx.sql" />
     <Content Include="Scripts\2012.1.419\jquery-1.7.1.min.js" />
@@ -717,7 +722,25 @@
     <Content Include="Views\User\Posts.cshtml" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="Views\User\Questions.cshtml" />
+    <Content Include="Views\Questions\Index.cshtml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Views\Questions\Details.cshtml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Views\User\Info.cshtml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Views\Questions\_AnswerPartial.cshtml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Views\Questions\SendAnswer.cshtml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Views\SentQuestion\Index.cshtml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Views\SentQuestion\Details.cshtml" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <Import Project="$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v10.0\WebApplications\Microsoft.WebApplication.targets" />

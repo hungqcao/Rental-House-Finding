@@ -24,34 +24,35 @@
             </div>
         </div>
         <div id='cssmenu'>
-                <ul>
-                    <li>@Html.ActionLink("Home", "Index", "Home")</li>
-                    <li>@Html.ActionLink("Manage categories", "Index", "ManageCategories")</li>
-                    <li>@Html.ActionLink("Manage roles", "Index", "ManageRoles")</li>
-                    <li class='active has-sub'><a href="#">Manage locations</a>
-                        <ul>
-                            <li>@Html.ActionLink("View all city", "Index", "ManageProvinces")</li>
-                            <li>@Html.ActionLink("View all district", "Index", "ManageDistrict")</li>
-                        </ul>
-                    </li>
-                    <li>@Html.ActionLink("Manage moderators", "Index", "Moderator")</li>
-                    <li class='active has-sub'><a href="#">Manage bad words</a>
-                        <ul>
-                            <li>@Html.ActionLink("Badword types", "Index", "ManageBadwordType")</li>
-                            <li>@Html.ActionLink("Badword", "Index", "ManageBadword")</li>
-                        </ul>
-                    </li>
-                    <li>@Html.ActionLink("Manage bad posts", "Index", "ManageBadpost")</li>
-                    <li>@Html.ActionLink("Manage Post status", "Index", "ManagePostStatus")</li>
-                    <li>@Html.ActionLink("Manage payments", "Index", "ManagePayment")</li>
-                    <li>@Html.ActionLink("About", "About", "Home")</li>
-                </ul>
-            </div>
+            <ul>
+                <li>@Html.ActionLink("Home", "Index", "Home")</li>
+                <li>@Html.ActionLink("Manage categories", "Index", "ManageCategories")</li>
+                <li>@Html.ActionLink("Manage roles", "Index", "ManageRoles")</li>
+                <li class='active has-sub'><a href="#">Manage locations</a>
+                    <ul>
+                        <li>@Html.ActionLink("View all city", "Index", "ManageProvinces")</li>
+                        <li>@Html.ActionLink("View all district", "Index", "ManageDistrict")</li>
+                    </ul>
+                </li>
+                <li>@Html.ActionLink("Manage moderators", "Index", "Moderator")</li>
+                <li class='active has-sub'><a href="#">Manage bad words</a>
+                    <ul>
+                        <li>@Html.ActionLink("Badword types", "Index", "ManageBadwordType")</li>
+                        <li>@Html.ActionLink("Badword", "Index", "ManageBadword")</li>
+                    </ul>
+                </li>
+                <li>@Html.ActionLink("Manage bad posts", "Index", "ManageBadpost")</li>
+                <li>@Html.ActionLink("Manage Post status", "Index", "ManagePostStatus")</li>
+                <li>@Html.ActionLink("Manage payments", "Index", "ManagePayment")</li>
+                <li>@Html.ActionLink("About", "About", "Home")</li>
+            </ul>
+        </div>
         <section id="main">
             @RenderBody()
         </section>
-        <footer>
-        </footer>
+        <div id="footer">
+            <p>Bản quyền thuộc về &copy; 2013 | 5house.vn</p>
+        </div>
     </div>
 </body>
 </html>

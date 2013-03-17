@@ -19,6 +19,21 @@ namespace RentalHouseFinding.Controllers
         [Authorize(Roles = "Admin, User")]
         public ActionResult Index()
         {
+            int userId = CommonModel.GetUserIdByUsername(User.Identity.Name);
+            var lstPostId = _db.Posts.Where(p => p.UserId == userId && !p.IsDeleted).Select(p => p.Id).ToList();
+
+            int numOfUnreadQuestion = _db.Questions.Where(q => lstPostId.Contains(q.PostId) && !q.IsDeleted && !q.IsRead).ToList().Count;
+
+            var lstSentQuestion = _db.Questions.Where(q => q.SenderId == userId && !q.IsDeleted).ToList();
+
+            int numOfUnreadAnswer = 0;
+
+            return View();
+        }
+
+        [Authorize(Roles = "Admin, User")]
+        public ActionResult Info()
+        {
             //Get user ID
             int userId = CommonModel.GetUserIdByUsername(User.Identity.Name);
             //Get user profile
@@ -28,8 +43,8 @@ namespace RentalHouseFinding.Controllers
             userViewModel.PhoneNumber = profile.PhoneNumber;
             userViewModel.Name = profile.Name;
             userViewModel.Email = profile.Email;
-            DateTime? a = null;
-            userViewModel.DateOfBirth = profile.DOB.HasValue ? profile.DOB.Value : a; 
+            DateTime? dt = null;
+            userViewModel.DateOfBirth = profile.DOB.HasValue ? profile.DOB.Value : dt;
             userViewModel.Address = profile.Address;
             userViewModel.Avatar = profile.Avatar;
             userViewModel.Sex = profile.Sex;
@@ -88,6 +103,10 @@ namespace RentalHouseFinding.Controllers
         [Authorize(Roles = "Admin, User")]
         public ActionResult Favorites()
         {
+            //Get post status list
+            var postStatusList = (from p in _db.PostStatuses
+                                  select p).ToList();
+            ViewBag.StatusList = postStatusList;
             //Get user ID
             int userId = CommonModel.GetUserIdByUsername(User.Identity.Name);
             //Get user's favorite list
@@ -110,7 +129,6 @@ namespace RentalHouseFinding.Controllers
             var postStatusList = (from p in _db.PostStatuses
                                   select p).ToList();
             ViewBag.StatusList = postStatusList;
-
             //Get user's posts list
             ViewBag.UserId = userId;
             var postList = (from p in _db.Posts
@@ -118,12 +136,6 @@ namespace RentalHouseFinding.Controllers
                             select p);
             ViewBag.PostList = postList.ToList();
             
-            return View();
-        }
-
-        [Authorize(Roles = "Admin, User")]
-        public ActionResult Questions()
-        {
             return View();
         }
 

@@ -141,7 +141,7 @@ namespace RentalHouseFinding.RHF.Common
 
         public static PostViewModel ConvertPostToPostViewModel(Posts model)
         {
-            string createBy = model.UserId == null ? string.Empty : model.User.Name;
+            string createBy = model.UserId == null ? string.Empty : model.User.Username;
             return new PostViewModel
             {
                 Id = model.Id,
@@ -346,6 +346,33 @@ namespace RentalHouseFinding.RHF.Common
                 }
             }	
             return false;
+        }
+
+        public static int GetUserNotification(string name)
+        {
+            using (RentalHouseFindingEntities _db = new RentalHouseFindingEntities())
+            {
+                int userId = CommonModel.GetUserIdByUsername(name);
+                var lstPostId = _db.Posts.Where(p => p.UserId == userId && !p.IsDeleted).Select(p => p.Id).ToList();
+
+                int numOfUnreadQuestion = _db.Questions.Where(q => lstPostId.Contains(q.PostId) && !q.IsDeleted && !q.IsRead).ToList().Count;
+
+                var lstSentQuestion = _db.Questions.Where(q => q.SenderId == userId && !q.IsDeleted).ToList();
+
+                int numOfUnreadAnswer = 0;
+
+                foreach (var item in lstSentQuestion)
+                {
+                    foreach (var answer in item.Answers)
+                    {
+                        if (!answer.IsRead)
+                        {
+                            numOfUnreadAnswer++;
+                        }
+                    }
+                }
+                return numOfUnreadAnswer + numOfUnreadQuestion;
+            }
         }
 
     }

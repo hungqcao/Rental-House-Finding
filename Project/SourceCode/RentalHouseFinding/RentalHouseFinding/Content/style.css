@@ -24,6 +24,14 @@ article, aside, details, figcaption, figure,
 footer, header, hgroup, menu, nav, section {
 	display: block;
 }
+#footer {
+    text-align: center;
+    font-family: Calibri, Arial,Helvetica,Sans-Serif;
+    font-size: 14px;
+    color: #454545;
+    padding: 30px 0 20px 0;
+    clear: both;
+}
 body {
 	line-height: 1;
 }
@@ -314,6 +322,7 @@ div#content
     margin: 0 auto;
     display: block;
     width: 1000px;
+    min-height: 300px;
 }
 div#postContent
 {

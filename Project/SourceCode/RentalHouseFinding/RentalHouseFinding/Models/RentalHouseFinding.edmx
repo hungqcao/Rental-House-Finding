@@ -318,7 +318,7 @@
     <Property Name="Content" Type="nvarchar(max)" Nullable="false" />
     <Property Name="SenderId" Type="int" Nullable="false" />
     <Property Name="CreatedDate" Type="datetime" Nullable="false" />
-    <Property Name="IsReceiverRead" Type="bit" Nullable="false" />
+    <Property Name="IsRead" Type="bit" Nullable="false" />
     <Property Name="IsDeleted" Type="bit" Nullable="false" />
     <Property Name="PostId" Type="int" Nullable="false" />
     <Property Name="Title" Type="nvarchar(max)" Nullable="false" />
@@ -332,6 +332,7 @@
     <Property Name="CreatedDate" Type="datetime" Nullable="false" />
     <Property Name="IsDeleted" Type="bit" Nullable="false" />
     <Property Name="QuestionId" Type="int" Nullable="false" />
+    <Property Name="IsRead" Type="bit" Nullable="false" />
   </EntityType>
   <EntityType Name="AdvanceSearchScores">
     <Key>
@@ -1220,7 +1221,7 @@
           <Property Type="String" Name="Content" Nullable="false" MaxLength="Max" />
           <Property Type="Int32" Name="SenderId" Nullable="false" />
           <Property Type="DateTime" Name="CreatedDate" Nullable="false" />
-          <Property Type="Boolean" Name="IsReceiverRead" Nullable="false" />
+          <Property Type="Boolean" Name="IsRead" Nullable="false" />
           <Property Type="Boolean" Name="IsDeleted" Nullable="false" />
           <NavigationProperty Name="Answers" Relationship="RentalHouseFinding.QuestionsAnswers" FromRole="Questions" ToRole="Answers" />
           <Property Type="Int32" Name="PostId" Nullable="false" />
@@ -1242,6 +1243,7 @@
           <Property Type="Boolean" Name="IsDeleted" Nullable="false" />
           <Property Type="Int32" Name="QuestionId" Nullable="false" />
           <NavigationProperty Name="Question" Relationship="RentalHouseFinding.QuestionsAnswers" FromRole="Answers" ToRole="Questions" />
+          <Property Type="Boolean" Name="IsRead" Nullable="false" />
         </EntityType>
         <Association Name="QuestionsAnswers">
           <End Type="RentalHouseFinding.Questions" Role="Questions" Multiplicity="1" />
@@ -1644,7 +1646,7 @@
           <ScalarProperty Name="Content" ColumnName="Content" />
           <ScalarProperty Name="SenderId" ColumnName="SenderId" />
           <ScalarProperty Name="CreatedDate" ColumnName="CreatedDate" />
-          <ScalarProperty Name="IsReceiverRead" ColumnName="IsReceiverRead" />
+          <ScalarProperty Name="IsRead" ColumnName="IsRead" />
           <ScalarProperty Name="IsDeleted" ColumnName="IsDeleted" />
           <ScalarProperty Name="PostId" ColumnName="PostId" />
           <ScalarProperty Name="Title" ColumnName="Title" />
@@ -1659,6 +1661,7 @@
           <ScalarProperty Name="CreatedDate" ColumnName="CreatedDate" />
           <ScalarProperty Name="IsDeleted" ColumnName="IsDeleted" />
           <ScalarProperty Name="QuestionId" ColumnName="QuestionId" />
+          <ScalarProperty Name="IsRead" ColumnName="IsRead" />
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>
@@ -1854,7 +1857,7 @@
         </AssociationConnector>
         <EntityTypeShape EntityType="RentalHouseFinding.ConfigurationRHF" Width="1.5" PointX="2.75" PointY="0.75" Height="2.5571907552083331" IsExpanded="true" />
         <EntityTypeShape EntityType="RentalHouseFinding.Questions" Width="1.5" PointX="11.375" PointY="20.75" Height="3.1340950520833353" IsExpanded="true" />
-        <EntityTypeShape EntityType="RentalHouseFinding.Answers" Width="1.5" PointX="11.375" PointY="24.75" Height="2.172587890624996" IsExpanded="true" />
+        <EntityTypeShape EntityType="RentalHouseFinding.Answers" Width="1.5" PointX="11.375" PointY="24.75" Height="2.364889322916671" IsExpanded="true" />
         <AssociationConnector Association="RentalHouseFinding.QuestionsAnswers">
           <ConnectorPoint PointX="12.125" PointY="23.884095052083335" />
           <ConnectorPoint PointX="12.125" PointY="24.75" />
