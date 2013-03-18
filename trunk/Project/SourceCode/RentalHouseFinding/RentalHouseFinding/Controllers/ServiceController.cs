@@ -6,8 +6,8 @@ using System.Web.Mvc;
 using RentalHouseFinding.Models;
 using System.Net;
 using System.IO;
-using RentalHouseFinding.RHF.DAL;
-using RentalHouseFinding.RHF.Common;
+using RentalHouseFinding.Common;
+using RentalHouseFinding.Caching;
 
 namespace RentalHouseFinding.Controllers
 {
@@ -15,13 +15,24 @@ namespace RentalHouseFinding.Controllers
     {
         RentalHouseFindingEntities _db = new RentalHouseFindingEntities();
 
+        public ICacheRepository Repository { get; set; }
+        public ServiceController()
+            : this(new CacheRepository())
+        {
+        }
+
+        public ServiceController(ICacheRepository repository)
+        {
+            this.Repository = repository;
+        }
+
         [AcceptVerbs(HttpVerbs.Get)]
         public JsonResult GetDistrictList(string id)
         {
             if (!string.IsNullOrEmpty(id))
             {
                 int idPro = Convert.ToInt32(id);
-                var districts = _db.Districts.Where(d => d.ProvinceId == idPro).ToList();
+                var districts = Repository.GetAllDistricts().Where(d => d.ProvinceId == idPro).ToList();
                 var myData = districts.Select(a => new SelectListItem()
                 {
                     Text = a.Name,
@@ -50,7 +61,7 @@ namespace RentalHouseFinding.Controllers
                 int idPost = Convert.ToInt32(id);
                 if (type.Equals("province"))
                 {
-                    var provinces = _db.Provinces.Where(d => d.Id == idPost).ToList();
+                    var provinces = Repository.GetAllProvinces().Where(d => d.Id == idPost).ToList();
                     var myData = provinces.Select(a => new SelectListItem()
                     {
                         Text = a.Name,
@@ -61,7 +72,7 @@ namespace RentalHouseFinding.Controllers
                 }
                 else if (type.Equals("district"))
                 {
-                    var districts = _db.Districts.Where(d => d.Id == idPost).ToList();
+                    var districts = Repository.GetAllDistricts().Where(d => d.Id == idPost).ToList();
                     var myData = districts.Select(a => new SelectListItem()
                     {
                         Text = a.Name,
@@ -88,9 +99,22 @@ namespace RentalHouseFinding.Controllers
             int.TryParse(districtId, out disId);
             int.TryParse(skip, out skipNum);
             int.TryParse(take, out takeNum);
+
+            
             using (FullTextSearchHelper fullTextHelp = new FullTextSearchHelper())
             {
-                var suggList = fullTextHelp.GetFullTextSuggestion(catId, proId, disId, keyword, skipNum, takeNum);
+                var suggList = fullTextHelp.FullTextSearchPostWithWeightenScore(catId, 
+                                                                                proId, 
+                                                                                disId, 
+                                                                                keyword, 
+                                                                                int.Parse(Repository.GetAllConfiguration().Where( c => c.Name.Equals(ConstantColumnNameScoreNormalSearch.DESCRIPTION_COLUMN_SCORE_NAME, StringComparison.CurrentCultureIgnoreCase)).Select(c => c.Value).FirstOrDefault().ToString()),
+                                                                                int.Parse(Repository.GetAllConfiguration().Where(c => c.Name.Equals(ConstantColumnNameScoreNormalSearch.TITLE_COLUMN_SCORE_NAME, StringComparison.CurrentCultureIgnoreCase)).Select(c => c.Value).FirstOrDefault().ToString()),
+                                                                                int.Parse(Repository.GetAllConfiguration().Where(c => c.Name.Equals(ConstantColumnNameScoreNormalSearch.STREET_COLUMN_SCORE_NAME, StringComparison.CurrentCultureIgnoreCase)).Select(c => c.Value).FirstOrDefault().ToString()),
+                                                                                int.Parse(Repository.GetAllConfiguration().Where(c => c.Name.Equals(ConstantColumnNameScoreNormalSearch.NEARBY_COLUMN_SCORE_NAME, StringComparison.CurrentCultureIgnoreCase)).Select(c => c.Value).FirstOrDefault().ToString()),
+                                                                                int.Parse(Repository.GetAllConfiguration().Where(c => c.Name.Equals(ConstantColumnNameScoreNormalSearch.NUMBER_ADDRESS_COLUMN_SCORE_NAME, StringComparison.CurrentCultureIgnoreCase)).Select(c => c.Value).FirstOrDefault().ToString()),
+                                                                                int.Parse(Repository.GetAllConfiguration().Where(c => c.Name.Equals(ConstantColumnNameScoreNormalSearch.DIRECTION_COLUMN_SCORE_NAME, StringComparison.CurrentCultureIgnoreCase)).Select(c => c.Value).FirstOrDefault().ToString()),
+                                                                                skipNum, 
+                                                                                takeNum);
                 if (suggList != null)
                 {
                     var myData = suggList.Select(a => new SelectListItem()

@@ -3,7 +3,7 @@ using System.Web.Security;
 using System.Linq;
 using RentalHouseFinding.Models;
 using System.Data;
-using RentalHouseFinding.RHF.Common;
+using RentalHouseFinding.Common;
 
 namespace RentalHouseFinding.Sercurity
 {

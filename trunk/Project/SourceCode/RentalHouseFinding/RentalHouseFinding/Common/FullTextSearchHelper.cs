@@ -5,7 +5,7 @@ using System.Web;
 using RentalHouseFinding.Models;
 using System.Web.Mvc;
 
-namespace RentalHouseFinding.RHF.DAL
+namespace RentalHouseFinding.Common
 {
     public class FullTextSearchHelper : IDisposable
     {
@@ -26,7 +26,6 @@ namespace RentalHouseFinding.RHF.DAL
             }
         }
 
-        [HttpPost]
         public List<FullTextSearchPost_ResultSuggestion> GetFullTextSuggestion(int categoryId, int provinceId, int DistrictId, string keyWords, int skip, int take)
         {
             try
@@ -36,6 +35,31 @@ namespace RentalHouseFinding.RHF.DAL
                 return listSuggestion.ToList();
             }
             catch(Exception ex)
+            {
+                return null;
+            }
+        }
+
+        public List<FullTextSearchPostWithWeightenScore_Result> FullTextSearchPostWithWeightenScore(int categoryId,
+                                                                                                    int provinceId, 
+                                                                                                    int DistrictId, 
+                                                                                                    string keyWords, 
+                                                                                                    int descriptionColumnScore,
+                                                                                                    int titleColumnScore,
+                                                                                                    int streetColumnScore,
+                                                                                                    int nearbyColumnScore,
+                                                                                                    int numberAddressColumnScore,
+                                                                                                    int directionColumnScore,
+                                                                                                    int skip, 
+                                                                                                    int take)
+        {
+            try
+            {
+                var listSuggestion = _db.FullTextSearchPostWithWeightenScore(categoryId, provinceId, DistrictId, keyWords, titleColumnScore, descriptionColumnScore, streetColumnScore, nearbyColumnScore, numberAddressColumnScore, directionColumnScore).Skip(skip).Take(take);
+
+                return listSuggestion.ToList();
+            }
+            catch (Exception ex)
             {
                 return null;
             }

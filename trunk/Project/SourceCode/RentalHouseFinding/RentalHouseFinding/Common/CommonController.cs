@@ -7,7 +7,7 @@ using System.Text;
 using System.Text.RegularExpressions;
 using RentalHouseFinding.Models;
 
-namespace RentalHouseFinding.RHF.Common
+namespace RentalHouseFinding.Common
 {
     public static class CommonController
     {

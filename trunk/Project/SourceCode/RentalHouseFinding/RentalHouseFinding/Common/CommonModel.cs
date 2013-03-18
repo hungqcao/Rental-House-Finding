@@ -12,7 +12,7 @@ using System.Net;
 using System.Reflection;
 using System.Collections.Generic;
 
-namespace RentalHouseFinding.RHF.Common
+namespace RentalHouseFinding.Common
 {
     public static class CommonModel
     {
@@ -32,7 +32,7 @@ namespace RentalHouseFinding.RHF.Common
             }
         }
 
-        public static Posts ConvertPostViewModelToPost(PostViewModel model, DateTime createdDate, DateTime editedDate, DateTime renewDate)
+        public static Posts ConvertPostViewModelToPost(PostViewModel model, DateTime createdDate, DateTime editedDate, DateTime renewDate, string noInformation)
         {
             string facilityTempId = (model.HasAirConditioner ? "1" : "0") +
                                     (model.HasBed ? "1" : "0") +
@@ -48,7 +48,7 @@ namespace RentalHouseFinding.RHF.Common
             int facTemId = Convert.ToInt32(facilityTempId, 2) + 1;
             return new Posts
             {
-                NumberAddress = model.NumberHouse,
+                NumberAddress = string.IsNullOrEmpty(model.NumberHouse) ? noInformation : model.NumberHouse,
                 Street = model.Street,
                 Area = model.Area,
                 CategoryId = model.CategoryId,
@@ -60,7 +60,7 @@ namespace RentalHouseFinding.RHF.Common
                     Yahoo = model.Yahoo
                 },
                 CreatedDate = createdDate,
-                Description = model.Description,
+                Description = string.IsNullOrEmpty(model.Description) ? noInformation : model.Description,
                 DistrictId = model.DistrictId,
                 EditedDate = editedDate,
                 Facilities = new Facilities()

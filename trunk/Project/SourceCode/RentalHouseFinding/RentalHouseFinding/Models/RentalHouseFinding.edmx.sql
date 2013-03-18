@@ -2,7 +2,7 @@
 -- --------------------------------------------------
 -- Entity Designer DDL Script for SQL Server 2005, 2008, and Azure
 -- --------------------------------------------------
--- Date Created: 03/17/2013 20:14:54
+-- Date Created: 03/18/2013 22:41:53
 -- Generated from EDMX file: C:\RentalHouseFinding\Project\SourceCode\RentalHouseFinding\RentalHouseFinding\Models\RentalHouseFinding.edmx
 -- --------------------------------------------------
 
@@ -86,6 +86,9 @@ GO
 IF OBJECT_ID(N'[dbo].[FK_UsersQuestions]', 'F') IS NOT NULL
     ALTER TABLE [dbo].[Questions] DROP CONSTRAINT [FK_UsersQuestions];
 GO
+IF OBJECT_ID(N'[dbo].[FK_UsersUserLogs]', 'F') IS NOT NULL
+    ALTER TABLE [dbo].[UserLogs] DROP CONSTRAINT [FK_UsersUserLogs];
+GO
 
 -- --------------------------------------------------
 -- Dropping existing tables
@@ -162,6 +165,9 @@ IF OBJECT_ID(N'[dbo].[PostLocations]', 'U') IS NOT NULL
 GO
 IF OBJECT_ID(N'[dbo].[Types]', 'U') IS NOT NULL
     DROP TABLE [dbo].[Types];
+GO
+IF OBJECT_ID(N'[dbo].[UserLogs]', 'U') IS NOT NULL
+    DROP TABLE [dbo].[UserLogs];
 GO
 
 -- --------------------------------------------------
@@ -345,13 +351,8 @@ GO
 -- Creating table 'ConfigurationRHFs'
 CREATE TABLE [dbo].[ConfigurationRHFs] (
     [Id] int IDENTITY(1,1) NOT NULL,
-    [TitleScore] int  NOT NULL,
-    [DescriptionScore] int  NOT NULL,
-    [StreetScore] int  NOT NULL,
-    [NearbyScore] int  NOT NULL,
-    [NumberAddressScore] int  NOT NULL,
-    [DirectionScore] int  NOT NULL,
-    [NoneOfInformationText] nvarchar(max)  NOT NULL
+    [Name] nvarchar(max)  NOT NULL,
+    [Value] nvarchar(max)  NOT NULL
 );
 GO
 
@@ -442,6 +443,15 @@ CREATE TABLE [dbo].[Types] (
     [Id] int IDENTITY(1,1) NOT NULL,
     [Name] nvarchar(max)  NOT NULL,
     [IsDeleted] nvarchar(max)  NOT NULL
+);
+GO
+
+-- Creating table 'UserLogs'
+CREATE TABLE [dbo].[UserLogs] (
+    [Id] int IDENTITY(1,1) NOT NULL,
+    [Message] nvarchar(max)  NOT NULL,
+    [UserId] int  NOT NULL,
+    [IsRead] bit  NOT NULL
 );
 GO
 
@@ -590,6 +600,12 @@ GO
 -- Creating primary key on [Id] in table 'Types'
 ALTER TABLE [dbo].[Types]
 ADD CONSTRAINT [PK_Types]
+    PRIMARY KEY CLUSTERED ([Id] ASC);
+GO
+
+-- Creating primary key on [Id] in table 'UserLogs'
+ALTER TABLE [dbo].[UserLogs]
+ADD CONSTRAINT [PK_UserLogs]
     PRIMARY KEY CLUSTERED ([Id] ASC);
 GO
 
@@ -907,6 +923,20 @@ ADD CONSTRAINT [FK_UsersQuestions]
 CREATE INDEX [IX_FK_UsersQuestions]
 ON [dbo].[Questions]
     ([SenderId]);
+GO
+
+-- Creating foreign key on [UserId] in table 'UserLogs'
+ALTER TABLE [dbo].[UserLogs]
+ADD CONSTRAINT [FK_UsersUserLogs]
+    FOREIGN KEY ([UserId])
+    REFERENCES [dbo].[Users]
+        ([Id])
+    ON DELETE NO ACTION ON UPDATE NO ACTION;
+
+-- Creating non-clustered index for FOREIGN KEY 'FK_UsersUserLogs'
+CREATE INDEX [IX_FK_UsersUserLogs]
+ON [dbo].[UserLogs]
+    ([UserId]);
 GO
 
 -- --------------------------------------------------

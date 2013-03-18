@@ -4,24 +4,17 @@
     this.Layout = null;
 }
 
-@foreach (var item in Model) {
-<div class="search-result">
-    <div class="search-result-content">
-        <div class="search-result-address">
-            <strong>@Html.DisplayFor(modelItem => item.NumberHouse) - @Html.DisplayFor(modelItem => item.Street)</strong>
-        </div>
-        <div class="search-result-title">
-            <strong>@Html.DisplayFor(modelItem => item.Title)</strong>
-        </div>
-
-        <div class="fl_l">
-            @Html.DisplayFor(modelItem => item.Price)
-        </div>
-
-        <div class="fl_r">
-            @Html.DisplayFor(modelItem => item.Area)
-        </div>
+@foreach (var item in Model)
+{
+<div class="infoDetail left">
+    <div class="text left">
+        <span class="address left"><b>@Html.DisplayFor(modelItem => item.NumberHouse) - @Html.DisplayFor(modelItem => item.Street)</b></span>
+        <span class="desc left">@Html.DisplayFor(modelItem => item.Title)</span>
+        <div class="clear"></div>
+        <div  class="left"><span class="highlight">@Html.DisplayFor(modelItem => item.Price)</span><span class="hlText">&nbsp;triệu VND</span></div>
+        <div class="right"><span class="highlight">@Html.DisplayFor(modelItem => item.Area)</span><span class="hlText">&nbsp;m2</span></div>
     </div>
+    <img class="thumbnail right" src="@Url.Content("~/Content/images/thumbSample.png")" alt="image_sample"/>
 </div>
 }
 

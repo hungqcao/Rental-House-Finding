@@ -5,7 +5,7 @@ using System.Web;
 using System.Web.Mvc.Html;
 using System.Web.Mvc;
 
-namespace RentalHouseFinding.RHF.Common
+namespace RentalHouseFinding.Common
 {
     public static class HtmlHelper
     {

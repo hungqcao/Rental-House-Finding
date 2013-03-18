@@ -4,7 +4,7 @@ using System.Linq;
 using System.Web;
 using System.Web.Mvc;
 using RentalHouseFinding.Models;
-using RentalHouseFinding.RHF.Common;
+using RentalHouseFinding.Common;
 
 namespace RentalHouseFinding.Security
 {
