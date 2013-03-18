@@ -385,7 +385,7 @@ label {
         {
             if (Request.IsAuthenticated)
             {
-                @Html.Partial("_Question", new RentalHouseFinding.Models.QuestionViewModel())
+                @Html.Partial("_Question", new RentalHouseFinding.Models.QuestionViewModel(), new ViewDataDictionary { { "userId", Model.UserId } })
             }
             else
             {

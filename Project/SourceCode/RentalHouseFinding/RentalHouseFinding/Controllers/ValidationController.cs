@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
-using RentalHouseFinding.RHF.Common;
+using RentalHouseFinding.Common;
 
 namespace RentalHouseFinding.Controllers
 {

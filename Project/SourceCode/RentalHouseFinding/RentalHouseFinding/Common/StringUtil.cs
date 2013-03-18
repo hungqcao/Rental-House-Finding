@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text.RegularExpressions;
 using System.Web;
 
-namespace RentalHouseFinding.RHF.Common
+namespace RentalHouseFinding.Common
 {
     public class StringUtil
     {

@@ -4,7 +4,7 @@ using System.Linq;
 using System.Web;
 using System.IO;
 
-namespace RentalHouseFinding.RHF.Common
+namespace RentalHouseFinding.Common
 {
     class PNGHandler : IHttpHandler
     {

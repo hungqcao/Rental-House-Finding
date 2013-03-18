@@ -15,5 +15,7 @@ namespace RentalHouseFinding.Models
         [Required(ErrorMessage = "Xin vui lòng nhập nội dung")]
         [Display(Name = "Nội dung")]
         public string ContentQuestion { get; set; }
+
+        public int UserId { get; set; }
     }
 }

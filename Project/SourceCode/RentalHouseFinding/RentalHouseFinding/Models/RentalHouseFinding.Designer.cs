@@ -41,6 +41,7 @@ using System.Runtime.Serialization;
 [assembly: EdmRelationshipAttribute("RentalHouseFinding", "LocationsPostLocations", "Locations", System.Data.Metadata.Edm.RelationshipMultiplicity.One, typeof(RentalHouseFinding.Models.Locations), "PostLocations", System.Data.Metadata.Edm.RelationshipMultiplicity.Many, typeof(RentalHouseFinding.Models.PostLocations), true)]
 [assembly: EdmRelationshipAttribute("RentalHouseFinding", "PostsQuestions", "Posts", System.Data.Metadata.Edm.RelationshipMultiplicity.One, typeof(RentalHouseFinding.Models.Posts), "Questions", System.Data.Metadata.Edm.RelationshipMultiplicity.Many, typeof(RentalHouseFinding.Models.Questions), true)]
 [assembly: EdmRelationshipAttribute("RentalHouseFinding", "UsersQuestions", "Users", System.Data.Metadata.Edm.RelationshipMultiplicity.One, typeof(RentalHouseFinding.Models.Users), "Questions", System.Data.Metadata.Edm.RelationshipMultiplicity.Many, typeof(RentalHouseFinding.Models.Questions), true)]
+[assembly: EdmRelationshipAttribute("RentalHouseFinding", "UsersUserLogs", "Users", System.Data.Metadata.Edm.RelationshipMultiplicity.One, typeof(RentalHouseFinding.Models.Users), "UserLogs", System.Data.Metadata.Edm.RelationshipMultiplicity.Many, typeof(RentalHouseFinding.Models.UserLogs), true)]
 
 #endregion
 
@@ -475,6 +476,22 @@ namespace RentalHouseFinding.Models
             }
         }
         private ObjectSet<Types> _Types;
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        public ObjectSet<UserLogs> UserLogs
+        {
+            get
+            {
+                if ((_UserLogs == null))
+                {
+                    _UserLogs = base.CreateObjectSet<UserLogs>("UserLogs");
+                }
+                return _UserLogs;
+            }
+        }
+        private ObjectSet<UserLogs> _UserLogs;
 
         #endregion
         #region AddTo Methods
@@ -669,6 +686,14 @@ namespace RentalHouseFinding.Models
         public void AddToTypes(Types types)
         {
             base.AddObject("Types", types);
+        }
+    
+        /// <summary>
+        /// Deprecated Method for adding a new object to the UserLogs EntitySet. Consider using the .Add method of the associated ObjectSet&lt;T&gt; property instead.
+        /// </summary>
+        public void AddToUserLogs(UserLogs userLogs)
+        {
+            base.AddObject("UserLogs", userLogs);
         }
 
         #endregion
@@ -930,6 +955,124 @@ namespace RentalHouseFinding.Models
             }
     
             return base.ExecuteFunction<AdvancedSearchFacility_Result>("AdvancedSearchFacilities", categoryIdPassParameter, provinceIdPassParameter, districtIdPassParameter, areaMaxParameter, areaMinParameter, priceMaxParameter, priceMinParameter, hasAirConditionerScoreParameter, hasBedScoreParameter, hasGarageScoreParameter, hasInternetScoreParameter, hasMotorParkingLotScoreParameter, hasSecurityScoreParameter, hasToiletParameter, hasTVCableScoreParameter, hasWaterHeaterScoreParameter, isAllowCookingScoreParameter, isStayWithOwnerScoreParameter);
+        }
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        /// <param name="categoryIdPass">No Metadata Documentation available.</param>
+        /// <param name="provinceIdPass">No Metadata Documentation available.</param>
+        /// <param name="districtIdPass">No Metadata Documentation available.</param>
+        /// <param name="keyword">No Metadata Documentation available.</param>
+        /// <param name="titleScore">No Metadata Documentation available.</param>
+        /// <param name="descriptionScore">No Metadata Documentation available.</param>
+        /// <param name="streetScore">No Metadata Documentation available.</param>
+        /// <param name="nearbyScore">No Metadata Documentation available.</param>
+        /// <param name="numberAddressScore">No Metadata Documentation available.</param>
+        /// <param name="directionScore">No Metadata Documentation available.</param>
+        public ObjectResult<FullTextSearchPostWithWeightenScore_Result> FullTextSearchPostWithWeightenScore(Nullable<global::System.Int32> categoryIdPass, Nullable<global::System.Int32> provinceIdPass, Nullable<global::System.Int32> districtIdPass, global::System.String keyword, Nullable<global::System.Int32> titleScore, Nullable<global::System.Int32> descriptionScore, Nullable<global::System.Int32> streetScore, Nullable<global::System.Int32> nearbyScore, Nullable<global::System.Int32> numberAddressScore, Nullable<global::System.Int32> directionScore)
+        {
+            ObjectParameter categoryIdPassParameter;
+            if (categoryIdPass.HasValue)
+            {
+                categoryIdPassParameter = new ObjectParameter("CategoryIdPass", categoryIdPass);
+            }
+            else
+            {
+                categoryIdPassParameter = new ObjectParameter("CategoryIdPass", typeof(global::System.Int32));
+            }
+    
+            ObjectParameter provinceIdPassParameter;
+            if (provinceIdPass.HasValue)
+            {
+                provinceIdPassParameter = new ObjectParameter("ProvinceIdPass", provinceIdPass);
+            }
+            else
+            {
+                provinceIdPassParameter = new ObjectParameter("ProvinceIdPass", typeof(global::System.Int32));
+            }
+    
+            ObjectParameter districtIdPassParameter;
+            if (districtIdPass.HasValue)
+            {
+                districtIdPassParameter = new ObjectParameter("DistrictIdPass", districtIdPass);
+            }
+            else
+            {
+                districtIdPassParameter = new ObjectParameter("DistrictIdPass", typeof(global::System.Int32));
+            }
+    
+            ObjectParameter keywordParameter;
+            if (keyword != null)
+            {
+                keywordParameter = new ObjectParameter("Keyword", keyword);
+            }
+            else
+            {
+                keywordParameter = new ObjectParameter("Keyword", typeof(global::System.String));
+            }
+    
+            ObjectParameter titleScoreParameter;
+            if (titleScore.HasValue)
+            {
+                titleScoreParameter = new ObjectParameter("TitleScore", titleScore);
+            }
+            else
+            {
+                titleScoreParameter = new ObjectParameter("TitleScore", typeof(global::System.Int32));
+            }
+    
+            ObjectParameter descriptionScoreParameter;
+            if (descriptionScore.HasValue)
+            {
+                descriptionScoreParameter = new ObjectParameter("DescriptionScore", descriptionScore);
+            }
+            else
+            {
+                descriptionScoreParameter = new ObjectParameter("DescriptionScore", typeof(global::System.Int32));
+            }
+    
+            ObjectParameter streetScoreParameter;
+            if (streetScore.HasValue)
+            {
+                streetScoreParameter = new ObjectParameter("StreetScore", streetScore);
+            }
+            else
+            {
+                streetScoreParameter = new ObjectParameter("StreetScore", typeof(global::System.Int32));
+            }
+    
+            ObjectParameter nearbyScoreParameter;
+            if (nearbyScore.HasValue)
+            {
+                nearbyScoreParameter = new ObjectParameter("NearbyScore", nearbyScore);
+            }
+            else
+            {
+                nearbyScoreParameter = new ObjectParameter("NearbyScore", typeof(global::System.Int32));
+            }
+    
+            ObjectParameter numberAddressScoreParameter;
+            if (numberAddressScore.HasValue)
+            {
+                numberAddressScoreParameter = new ObjectParameter("NumberAddressScore", numberAddressScore);
+            }
+            else
+            {
+                numberAddressScoreParameter = new ObjectParameter("NumberAddressScore", typeof(global::System.Int32));
+            }
+    
+            ObjectParameter directionScoreParameter;
+            if (directionScore.HasValue)
+            {
+                directionScoreParameter = new ObjectParameter("DirectionScore", directionScore);
+            }
+            else
+            {
+                directionScoreParameter = new ObjectParameter("DirectionScore", typeof(global::System.Int32));
+            }
+    
+            return base.ExecuteFunction<FullTextSearchPostWithWeightenScore_Result>("FullTextSearchPostWithWeightenScore", categoryIdPassParameter, provinceIdPassParameter, districtIdPassParameter, keywordParameter, titleScoreParameter, descriptionScoreParameter, streetScoreParameter, nearbyScoreParameter, numberAddressScoreParameter, directionScoreParameter);
         }
 
         #endregion
@@ -1697,24 +1840,14 @@ namespace RentalHouseFinding.Models
         /// Create a new ConfigurationRHF object.
         /// </summary>
         /// <param name="id">Initial value of the Id property.</param>
-        /// <param name="titleScore">Initial value of the TitleScore property.</param>
-        /// <param name="descriptionScore">Initial value of the DescriptionScore property.</param>
-        /// <param name="streetScore">Initial value of the StreetScore property.</param>
-        /// <param name="nearbyScore">Initial value of the NearbyScore property.</param>
-        /// <param name="numberAddressScore">Initial value of the NumberAddressScore property.</param>
-        /// <param name="directionScore">Initial value of the DirectionScore property.</param>
-        /// <param name="noneOfInformationText">Initial value of the NoneOfInformationText property.</param>
-        public static ConfigurationRHF CreateConfigurationRHF(global::System.Int32 id, global::System.Int32 titleScore, global::System.Int32 descriptionScore, global::System.Int32 streetScore, global::System.Int32 nearbyScore, global::System.Int32 numberAddressScore, global::System.Int32 directionScore, global::System.String noneOfInformationText)
+        /// <param name="name">Initial value of the Name property.</param>
+        /// <param name="value">Initial value of the Value property.</param>
+        public static ConfigurationRHF CreateConfigurationRHF(global::System.Int32 id, global::System.String name, global::System.String value)
         {
             ConfigurationRHF configurationRHF = new ConfigurationRHF();
             configurationRHF.Id = id;
-            configurationRHF.TitleScore = titleScore;
-            configurationRHF.DescriptionScore = descriptionScore;
-            configurationRHF.StreetScore = streetScore;
-            configurationRHF.NearbyScore = nearbyScore;
-            configurationRHF.NumberAddressScore = numberAddressScore;
-            configurationRHF.DirectionScore = directionScore;
-            configurationRHF.NoneOfInformationText = noneOfInformationText;
+            configurationRHF.Name = name;
+            configurationRHF.Value = value;
             return configurationRHF;
         }
 
@@ -1753,168 +1886,48 @@ namespace RentalHouseFinding.Models
         /// </summary>
         [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=false)]
         [DataMemberAttribute()]
-        public global::System.Int32 TitleScore
+        public global::System.String Name
         {
             get
             {
-                return _TitleScore;
+                return _Name;
             }
             set
             {
-                OnTitleScoreChanging(value);
-                ReportPropertyChanging("TitleScore");
-                _TitleScore = StructuralObject.SetValidValue(value);
-                ReportPropertyChanged("TitleScore");
-                OnTitleScoreChanged();
+                OnNameChanging(value);
+                ReportPropertyChanging("Name");
+                _Name = StructuralObject.SetValidValue(value, false);
+                ReportPropertyChanged("Name");
+                OnNameChanged();
             }
         }
-        private global::System.Int32 _TitleScore;
-        partial void OnTitleScoreChanging(global::System.Int32 value);
-        partial void OnTitleScoreChanged();
+        private global::System.String _Name;
+        partial void OnNameChanging(global::System.String value);
+        partial void OnNameChanged();
     
         /// <summary>
         /// No Metadata Documentation available.
         /// </summary>
         [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=false)]
         [DataMemberAttribute()]
-        public global::System.Int32 DescriptionScore
+        public global::System.String Value
         {
             get
             {
-                return _DescriptionScore;
+                return _Value;
             }
             set
             {
-                OnDescriptionScoreChanging(value);
-                ReportPropertyChanging("DescriptionScore");
-                _DescriptionScore = StructuralObject.SetValidValue(value);
-                ReportPropertyChanged("DescriptionScore");
-                OnDescriptionScoreChanged();
+                OnValueChanging(value);
+                ReportPropertyChanging("Value");
+                _Value = StructuralObject.SetValidValue(value, false);
+                ReportPropertyChanged("Value");
+                OnValueChanged();
             }
         }
-        private global::System.Int32 _DescriptionScore;
-        partial void OnDescriptionScoreChanging(global::System.Int32 value);
-        partial void OnDescriptionScoreChanged();
-    
-        /// <summary>
-        /// No Metadata Documentation available.
-        /// </summary>
-        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=false)]
-        [DataMemberAttribute()]
-        public global::System.Int32 StreetScore
-        {
-            get
-            {
-                return _StreetScore;
-            }
-            set
-            {
-                OnStreetScoreChanging(value);
-                ReportPropertyChanging("StreetScore");
-                _StreetScore = StructuralObject.SetValidValue(value);
-                ReportPropertyChanged("StreetScore");
-                OnStreetScoreChanged();
-            }
-        }
-        private global::System.Int32 _StreetScore;
-        partial void OnStreetScoreChanging(global::System.Int32 value);
-        partial void OnStreetScoreChanged();
-    
-        /// <summary>
-        /// No Metadata Documentation available.
-        /// </summary>
-        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=false)]
-        [DataMemberAttribute()]
-        public global::System.Int32 NearbyScore
-        {
-            get
-            {
-                return _NearbyScore;
-            }
-            set
-            {
-                OnNearbyScoreChanging(value);
-                ReportPropertyChanging("NearbyScore");
-                _NearbyScore = StructuralObject.SetValidValue(value);
-                ReportPropertyChanged("NearbyScore");
-                OnNearbyScoreChanged();
-            }
-        }
-        private global::System.Int32 _NearbyScore;
-        partial void OnNearbyScoreChanging(global::System.Int32 value);
-        partial void OnNearbyScoreChanged();
-    
-        /// <summary>
-        /// No Metadata Documentation available.
-        /// </summary>
-        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=false)]
-        [DataMemberAttribute()]
-        public global::System.Int32 NumberAddressScore
-        {
-            get
-            {
-                return _NumberAddressScore;
-            }
-            set
-            {
-                OnNumberAddressScoreChanging(value);
-                ReportPropertyChanging("NumberAddressScore");
-                _NumberAddressScore = StructuralObject.SetValidValue(value);
-                ReportPropertyChanged("NumberAddressScore");
-                OnNumberAddressScoreChanged();
-            }
-        }
-        private global::System.Int32 _NumberAddressScore;
-        partial void OnNumberAddressScoreChanging(global::System.Int32 value);
-        partial void OnNumberAddressScoreChanged();
-    
-        /// <summary>
-        /// No Metadata Documentation available.
-        /// </summary>
-        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=false)]
-        [DataMemberAttribute()]
-        public global::System.Int32 DirectionScore
-        {
-            get
-            {
-                return _DirectionScore;
-            }
-            set
-            {
-                OnDirectionScoreChanging(value);
-                ReportPropertyChanging("DirectionScore");
-                _DirectionScore = StructuralObject.SetValidValue(value);
-                ReportPropertyChanged("DirectionScore");
-                OnDirectionScoreChanged();
-            }
-        }
-        private global::System.Int32 _DirectionScore;
-        partial void OnDirectionScoreChanging(global::System.Int32 value);
-        partial void OnDirectionScoreChanged();
-    
-        /// <summary>
-        /// No Metadata Documentation available.
-        /// </summary>
-        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=false)]
-        [DataMemberAttribute()]
-        public global::System.String NoneOfInformationText
-        {
-            get
-            {
-                return _NoneOfInformationText;
-            }
-            set
-            {
-                OnNoneOfInformationTextChanging(value);
-                ReportPropertyChanging("NoneOfInformationText");
-                _NoneOfInformationText = StructuralObject.SetValidValue(value, false);
-                ReportPropertyChanged("NoneOfInformationText");
-                OnNoneOfInformationTextChanged();
-            }
-        }
-        private global::System.String _NoneOfInformationText;
-        partial void OnNoneOfInformationTextChanging(global::System.String value);
-        partial void OnNoneOfInformationTextChanged();
+        private global::System.String _Value;
+        partial void OnValueChanging(global::System.String value);
+        partial void OnValueChanged();
 
         #endregion
     
@@ -6544,6 +6557,180 @@ namespace RentalHouseFinding.Models
     /// <summary>
     /// No Metadata Documentation available.
     /// </summary>
+    [EdmEntityTypeAttribute(NamespaceName="RentalHouseFinding", Name="UserLogs")]
+    [Serializable()]
+    [DataContractAttribute(IsReference=true)]
+    public partial class UserLogs : EntityObject
+    {
+        #region Factory Method
+    
+        /// <summary>
+        /// Create a new UserLogs object.
+        /// </summary>
+        /// <param name="id">Initial value of the Id property.</param>
+        /// <param name="message">Initial value of the Message property.</param>
+        /// <param name="userId">Initial value of the UserId property.</param>
+        /// <param name="isRead">Initial value of the IsRead property.</param>
+        public static UserLogs CreateUserLogs(global::System.Int32 id, global::System.String message, global::System.Int32 userId, global::System.Boolean isRead)
+        {
+            UserLogs userLogs = new UserLogs();
+            userLogs.Id = id;
+            userLogs.Message = message;
+            userLogs.UserId = userId;
+            userLogs.IsRead = isRead;
+            return userLogs;
+        }
+
+        #endregion
+        #region Primitive Properties
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=true, IsNullable=false)]
+        [DataMemberAttribute()]
+        public global::System.Int32 Id
+        {
+            get
+            {
+                return _Id;
+            }
+            set
+            {
+                if (_Id != value)
+                {
+                    OnIdChanging(value);
+                    ReportPropertyChanging("Id");
+                    _Id = StructuralObject.SetValidValue(value);
+                    ReportPropertyChanged("Id");
+                    OnIdChanged();
+                }
+            }
+        }
+        private global::System.Int32 _Id;
+        partial void OnIdChanging(global::System.Int32 value);
+        partial void OnIdChanged();
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=false)]
+        [DataMemberAttribute()]
+        public global::System.String Message
+        {
+            get
+            {
+                return _Message;
+            }
+            set
+            {
+                OnMessageChanging(value);
+                ReportPropertyChanging("Message");
+                _Message = StructuralObject.SetValidValue(value, false);
+                ReportPropertyChanged("Message");
+                OnMessageChanged();
+            }
+        }
+        private global::System.String _Message;
+        partial void OnMessageChanging(global::System.String value);
+        partial void OnMessageChanged();
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=false)]
+        [DataMemberAttribute()]
+        public global::System.Int32 UserId
+        {
+            get
+            {
+                return _UserId;
+            }
+            set
+            {
+                OnUserIdChanging(value);
+                ReportPropertyChanging("UserId");
+                _UserId = StructuralObject.SetValidValue(value);
+                ReportPropertyChanged("UserId");
+                OnUserIdChanged();
+            }
+        }
+        private global::System.Int32 _UserId;
+        partial void OnUserIdChanging(global::System.Int32 value);
+        partial void OnUserIdChanged();
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=false)]
+        [DataMemberAttribute()]
+        public global::System.Boolean IsRead
+        {
+            get
+            {
+                return _IsRead;
+            }
+            set
+            {
+                OnIsReadChanging(value);
+                ReportPropertyChanging("IsRead");
+                _IsRead = StructuralObject.SetValidValue(value);
+                ReportPropertyChanged("IsRead");
+                OnIsReadChanged();
+            }
+        }
+        private global::System.Boolean _IsRead;
+        partial void OnIsReadChanging(global::System.Boolean value);
+        partial void OnIsReadChanged();
+
+        #endregion
+    
+        #region Navigation Properties
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [XmlIgnoreAttribute()]
+        [SoapIgnoreAttribute()]
+        [DataMemberAttribute()]
+        [EdmRelationshipNavigationPropertyAttribute("RentalHouseFinding", "UsersUserLogs", "Users")]
+        public Users User
+        {
+            get
+            {
+                return ((IEntityWithRelationships)this).RelationshipManager.GetRelatedReference<Users>("RentalHouseFinding.UsersUserLogs", "Users").Value;
+            }
+            set
+            {
+                ((IEntityWithRelationships)this).RelationshipManager.GetRelatedReference<Users>("RentalHouseFinding.UsersUserLogs", "Users").Value = value;
+            }
+        }
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [BrowsableAttribute(false)]
+        [DataMemberAttribute()]
+        public EntityReference<Users> UserReference
+        {
+            get
+            {
+                return ((IEntityWithRelationships)this).RelationshipManager.GetRelatedReference<Users>("RentalHouseFinding.UsersUserLogs", "Users");
+            }
+            set
+            {
+                if ((value != null))
+                {
+                    ((IEntityWithRelationships)this).RelationshipManager.InitializeRelatedReference<Users>("RentalHouseFinding.UsersUserLogs", "Users", value);
+                }
+            }
+        }
+
+        #endregion
+    }
+    
+    /// <summary>
+    /// No Metadata Documentation available.
+    /// </summary>
     [EdmEntityTypeAttribute(NamespaceName="RentalHouseFinding", Name="Users")]
     [Serializable()]
     [DataContractAttribute(IsReference=true)]
@@ -7117,6 +7304,28 @@ namespace RentalHouseFinding.Models
                 }
             }
         }
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [XmlIgnoreAttribute()]
+        [SoapIgnoreAttribute()]
+        [DataMemberAttribute()]
+        [EdmRelationshipNavigationPropertyAttribute("RentalHouseFinding", "UsersUserLogs", "UserLogs")]
+        public EntityCollection<UserLogs> UserLogs
+        {
+            get
+            {
+                return ((IEntityWithRelationships)this).RelationshipManager.GetRelatedCollection<UserLogs>("RentalHouseFinding.UsersUserLogs", "UserLogs");
+            }
+            set
+            {
+                if ((value != null))
+                {
+                    ((IEntityWithRelationships)this).RelationshipManager.InitializeRelatedCollection<UserLogs>("RentalHouseFinding.UsersUserLogs", "UserLogs", value);
+                }
+            }
+        }
 
         #endregion
     }
@@ -7220,6 +7429,83 @@ namespace RentalHouseFinding.Models
             fullTextSearchPost_ResultSuggestion.Id = id;
             fullTextSearchPost_ResultSuggestion.Title = title;
             return fullTextSearchPost_ResultSuggestion;
+        }
+
+        #endregion
+        #region Primitive Properties
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=false)]
+        [DataMemberAttribute()]
+        public global::System.Int32 Id
+        {
+            get
+            {
+                return _Id;
+            }
+            set
+            {
+                OnIdChanging(value);
+                ReportPropertyChanging("Id");
+                _Id = StructuralObject.SetValidValue(value);
+                ReportPropertyChanged("Id");
+                OnIdChanged();
+            }
+        }
+        private global::System.Int32 _Id;
+        partial void OnIdChanging(global::System.Int32 value);
+        partial void OnIdChanged();
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=false)]
+        [DataMemberAttribute()]
+        public global::System.String Title
+        {
+            get
+            {
+                return _Title;
+            }
+            set
+            {
+                OnTitleChanging(value);
+                ReportPropertyChanging("Title");
+                _Title = StructuralObject.SetValidValue(value, false);
+                ReportPropertyChanged("Title");
+                OnTitleChanged();
+            }
+        }
+        private global::System.String _Title;
+        partial void OnTitleChanging(global::System.String value);
+        partial void OnTitleChanged();
+
+        #endregion
+    }
+    
+    /// <summary>
+    /// No Metadata Documentation available.
+    /// </summary>
+    [EdmComplexTypeAttribute(NamespaceName="RentalHouseFinding", Name="FullTextSearchPostWithWeightenScore_Result")]
+    [DataContractAttribute(IsReference=true)]
+    [Serializable()]
+    public partial class FullTextSearchPostWithWeightenScore_Result : ComplexObject
+    {
+        #region Factory Method
+    
+        /// <summary>
+        /// Create a new FullTextSearchPostWithWeightenScore_Result object.
+        /// </summary>
+        /// <param name="id">Initial value of the Id property.</param>
+        /// <param name="title">Initial value of the Title property.</param>
+        public static FullTextSearchPostWithWeightenScore_Result CreateFullTextSearchPostWithWeightenScore_Result(global::System.Int32 id, global::System.String title)
+        {
+            FullTextSearchPostWithWeightenScore_Result fullTextSearchPostWithWeightenScore_Result = new FullTextSearchPostWithWeightenScore_Result();
+            fullTextSearchPostWithWeightenScore_Result.Id = id;
+            fullTextSearchPostWithWeightenScore_Result.Title = title;
+            return fullTextSearchPostWithWeightenScore_Result;
         }
 
         #endregion

@@ -4,14 +4,25 @@ using System.Linq;
 using System.Web;
 using System.Web.Mvc;
 using RentalHouseFinding.Models;
-using RentalHouseFinding.RHF.DAL;
-using RentalHouseFinding.RHF.Common;
+using RentalHouseFinding.Common;
+using RentalHouseFinding.Caching;
 
 namespace RentalHouseFinding.Controllers
 {
     public class HomeController : Controller
     {
         private RentalHouseFindingEntities _db = new RentalHouseFindingEntities();
+
+        public ICacheRepository Repository { get; set; }
+        public HomeController()
+            : this(new CacheRepository())
+        {
+        }
+
+        public HomeController(ICacheRepository repository)
+        {
+            this.Repository = repository;
+        }
 
         //
         // GET: /Home/
@@ -56,7 +67,19 @@ namespace RentalHouseFinding.Controllers
                     using (FullTextSearchHelper fullTextHelp = new FullTextSearchHelper())
                     {
                         IEnumerable<int> list = new List<int>();
-                        var suggList = fullTextHelp.GetFullTextSuggestion(_modelRequest.CategoryId, _modelRequest.ProvinceId, _modelRequest.DistrictId, _modelRequest.KeyWord, skipNum, takeNum);
+                        
+                        var suggList = fullTextHelp.FullTextSearchPostWithWeightenScore(_modelRequest.CategoryId,
+                                                                                _modelRequest.ProvinceId,
+                                                                                _modelRequest.DistrictId,
+                                                                                _modelRequest.KeyWord,
+                                                                                int.Parse(Repository.GetAllConfiguration().Where(c => c.Name.Equals(ConstantColumnNameScoreNormalSearch.DESCRIPTION_COLUMN_SCORE_NAME, StringComparison.CurrentCultureIgnoreCase)).Select(c => c.Value).FirstOrDefault().ToString()),
+                                                                                int.Parse(Repository.GetAllConfiguration().Where(c => c.Name.Equals(ConstantColumnNameScoreNormalSearch.TITLE_COLUMN_SCORE_NAME, StringComparison.CurrentCultureIgnoreCase)).Select(c => c.Value).FirstOrDefault().ToString()),
+                                                                                int.Parse(Repository.GetAllConfiguration().Where(c => c.Name.Equals(ConstantColumnNameScoreNormalSearch.STREET_COLUMN_SCORE_NAME, StringComparison.CurrentCultureIgnoreCase)).Select(c => c.Value).FirstOrDefault().ToString()),
+                                                                                int.Parse(Repository.GetAllConfiguration().Where(c => c.Name.Equals(ConstantColumnNameScoreNormalSearch.NEARBY_COLUMN_SCORE_NAME, StringComparison.CurrentCultureIgnoreCase)).Select(c => c.Value).FirstOrDefault().ToString()),
+                                                                                int.Parse(Repository.GetAllConfiguration().Where(c => c.Name.Equals(ConstantColumnNameScoreNormalSearch.NUMBER_ADDRESS_COLUMN_SCORE_NAME, StringComparison.CurrentCultureIgnoreCase)).Select(c => c.Value).FirstOrDefault().ToString()),
+                                                                                int.Parse(Repository.GetAllConfiguration().Where(c => c.Name.Equals(ConstantColumnNameScoreNormalSearch.DIRECTION_COLUMN_SCORE_NAME, StringComparison.CurrentCultureIgnoreCase)).Select(c => c.Value).FirstOrDefault().ToString()),
+                                                                                skipNum,
+                                                                                takeNum);
                         if (suggList != null)
                         {
                             list = suggList.Select(p => p.Id).ToList();

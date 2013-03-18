@@ -4,15 +4,28 @@ using System.Linq;
 using System.Web;
 using System.Web.Mvc;
 using RentalHouseFinding.Models;
-using RentalHouseFinding.RHF.Common;
+using RentalHouseFinding.Common;
 using System.Data;
 using System.IO;
+using RentalHouseFinding.Caching;
 
 namespace RentalHouseFinding.Controllers
 {
     public class PostController : Controller
     {
         RentalHouseFindingEntities _db = new RentalHouseFindingEntities();
+
+        public ICacheRepository Repository { get; set; }
+        public PostController()
+            : this(new CacheRepository())
+        {
+        }
+
+        public PostController(ICacheRepository repository)
+        {
+            this.Repository = repository;
+        }
+
         public ActionResult Index()
         {
             return View();
@@ -28,9 +41,10 @@ namespace RentalHouseFinding.Controllers
             {
                 return View();
             }
-            var districtAndProvinceName = (from d in _db.Districts 
-                                where d.Id == post.DistrictId
-                                select new { districtName = d.Name , provinceName= d.Province.Name}).FirstOrDefault();            
+            var districtAndProvinceName = Repository.GetAllDistricts().Where(d => d.Id == post.DistrictId).Select(d => new { districtName = d.Name, provinceName = d.Province.Name }).FirstOrDefault();
+            //var districtAndProvinceName = (from d in _db.Districts 
+            //                    where d.Id == post.DistrictId
+            //                    select new { districtName = d.Name , provinceName= d.Province.Name}).FirstOrDefault();            
             ViewBag.Address = districtAndProvinceName.districtName + ", " + districtAndProvinceName.provinceName;
             ViewBag.Internet = post.Facilities.HasInternet ? "Có" : "Không";
             ViewBag.AirConditioner = post.Facilities.HasAirConditioner ? "Có" : "Không";
@@ -79,8 +93,8 @@ namespace RentalHouseFinding.Controllers
 		
         public ActionResult Create()
         {
-            ViewBag.CategoryId = new SelectList(_db.Categories, "Id", "Name");
-            ViewBag.ProvinceId = new SelectList(_db.Provinces, "Id", "Name");
+            ViewBag.CategoryId = new SelectList(Repository.GetAllCategories(), "Id", "Name");
+            ViewBag.ProvinceId = new SelectList(Repository.GetAllProvinces(), "Id", "Name");
             return View();
         }
 
@@ -96,7 +110,7 @@ namespace RentalHouseFinding.Controllers
                 {
                     if (!CommonModel.FilterHasBadContent(model))
                     {
-                        Posts postToCreate = CommonModel.ConvertPostViewModelToPost(model, DateTime.Now, DateTime.Now, DateTime.Now);
+                        Posts postToCreate = CommonModel.ConvertPostViewModelToPost(model, DateTime.Now, DateTime.Now, DateTime.Now, Repository.GetAllConfiguration().Where( c => c.Name.Equals(ConstantCommonString.NONE_INFORMATION, StringComparison.CurrentCultureIgnoreCase)).Select(c => c.Value).FirstOrDefault().ToString());
 
                         if (CommonModel.FilterHasBadContent(model))
                         {
@@ -178,8 +192,8 @@ namespace RentalHouseFinding.Controllers
                     ModelState.AddModelError("", ex.InnerException);
                 }
             }
-            ViewBag.CategoryId = new SelectList(_db.Categories, "Id", "Name", model.CategoryId);
-            ViewBag.ProvinceId = new SelectList(_db.Provinces, "Id", "Name", model.ProvinceId);
+            ViewBag.CategoryId = new SelectList(Repository.GetAllCategories(), "Id", "Name", model.CategoryId);
+            ViewBag.ProvinceId = new SelectList(Repository.GetAllProvinces(), "Id", "Name", model.ProvinceId);
             return View(model);
         }
         
@@ -401,7 +415,6 @@ namespace RentalHouseFinding.Controllers
             {
                 int userId = CommonModel.GetUserIdByUsername(User.Identity.Name);
                 int postId = Convert.ToInt32(Session["PostID"]);
-                int createdUserId = Convert.ToInt32(Session["CreatedUserId"]);
 
                 Questions questionToCreate = new Questions();
                 questionToCreate.Content = model.ContentQuestion.Trim();
@@ -410,7 +423,7 @@ namespace RentalHouseFinding.Controllers
                 questionToCreate.IsDeleted = false;
                 questionToCreate.IsRead = false;
                 questionToCreate.PostId = postId;
-                questionToCreate.SenderId = userId;
+                questionToCreate.SenderId = model.UserId;
                 
                 _db.Questions.AddObject(questionToCreate);
                 _db.SaveChanges();

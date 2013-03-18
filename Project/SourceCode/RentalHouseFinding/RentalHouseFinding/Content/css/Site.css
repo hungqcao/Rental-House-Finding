@@ -1,0 +1,774 @@
+body
+{
+    font-size: 75%;
+    font-family: Verdana, Tahoma, Arial, "Helvetica Neue", Helvetica, Sans-Serif;
+    color: #232323;
+    background-color: #fff;
+}
+
+b {
+    font-weight: 700;
+}
+
+/* Styles for basic forms
+-----------------------------------------------------------*/
+
+fieldset 
+{
+    border:1px solid #ddd;
+    padding:0 1.4em 1.4em 1.4em;
+    margin:0 0 1.5em 0;
+}
+
+legend 
+{
+    font-size:1.2em;
+    font-weight: bold;
+}
+
+textarea 
+{
+    min-height: 75px;
+}
+
+.editor-label 
+{
+    margin: 1em 0 0 0;
+}
+
+.editor-field 
+{
+    margin:0.5em 0 0 0;
+}
+
+
+/* Styles for validation helpers
+-----------------------------------------------------------*/
+.field-validation-error
+{
+    color: #ff0000;
+}
+
+.field-validation-valid
+{
+    display: none;
+}
+
+.input-validation-error
+{
+    border: 1px solid #ff0000;
+    background-color: #ffeeee;
+}
+
+.validation-summary-errors
+{
+    font-weight: bold;
+    color: #ff0000;
+}
+
+.validation-summary-valid
+{
+    display: none;
+}
+
+/* CSS Document */
+.left{
+	float:left;
+}
+.right{
+	float:right;
+}
+.clear{
+	clear:both;
+}
+.separator {
+    background-color: #d9d9d9;
+    height: 28px;
+    width: 1px;
+    display: block;
+    margin-top: 2px;
+}
+
+/* INTRO PAGE */
+
+body{
+	background: url(../../Content/images/bg.jpg) repeat;
+}
+#footer {
+    text-align: center;
+    font-family: Calibri, Arial,Helvetica,Sans-Serif;
+    font-size: 14px;
+    color: #454545;
+    padding: 30px 0 20px 0;
+}
+#header{
+	margin: 40px auto 25px;
+    max-width: 1054px;
+	height: 130px;
+	font-family: Calibri, Arial,Helvetica,Sans-Serif;
+    font-size: 14px;
+}
+#containerLogo{
+	background: url(../../Content/images/logo.png) no-repeat;
+	padding-top: 52px;
+}
+#logoText, #slogan{
+	padding-left: 110px;
+	display:block;
+	color: #454545;
+}
+#containerLogin{
+	background: url(../../Content/images/user.png) no-repeat;
+    margin: 15px 0 0 10px;
+    padding: 0 0 0 50px;
+    background-position: 30px 0;
+}
+#containerLogin a{
+	text-decoration:none;
+	font-size: 14px;
+	color:#454545;
+}
+/*Intro*/
+#searchInfo{
+	width:600px;
+	margin:0 auto;
+	padding-bottom: 60px;
+}
+#buttonSearch
+{
+	margin-bottom: 20px;
+}
+#searchInfo a
+{
+	float: left;
+}
+#link1
+{
+	background:url(../../Content/images/button1.png) no-repeat;
+	 display: block;
+    height: 37px;
+    width: 125px;
+}
+a#link1:hover, a#link2:hover, a#link3:hover, a#link4:hover, a#link5:hover
+{
+	background-position: 0 -41px;
+}
+
+#link2
+{
+	background:url(../../Content/images/button2.png) no-repeat ;
+	display: block;
+    height: 37px;
+    width: 103px;
+}
+#link3
+{
+	background:url(../../Content/images/button3.png) no-repeat ;
+	display: block;
+    height: 37px;
+    width: 136px;
+}
+#link4
+{
+	background:url(../../Content/images/button4.png) no-repeat ;
+	display: block;
+    height: 37px;
+    width: 102px;
+}
+#link5
+{
+	background:url(../../Content/images/button5.png) no-repeat ;
+	display: block;
+    height: 37px;
+    width: 126px;
+}
+#selectSearch
+{
+	position: relative;
+	margin-bottom: 130px;
+}
+select.select {
+    color: #B3B3B3;
+    cursor: pointer;
+    font-size: 12px;
+    height: 36px !important;
+    line-height: 36px;
+    margin-right: 11px;
+    position: relative;
+    float: left;
+    width: 164px !important;
+    z-index: 10;
+    float: left;
+}
+
+span.select {
+    background: url("../../Content/images/bg_select.png") no-repeat 0 0;
+    color: #717171;
+    cursor: default;
+    float: left;
+    font-family: Calibri, Arial,Helvetica,Sans-Serif;
+    font-size: 12px;
+    font-weight: 700;
+    height: 38px;
+    line-height: 38px;
+    position: absolute;
+    text-indent: 10px;
+    width: 164px;
+    z-index: 1;
+}
+#spProvinceId
+{
+	left: 0px;
+}
+#spDistrictId 
+{
+	left: 174px;
+}
+#KeyWord
+{
+	float: left;
+	background: url("../../Content/images/bg_txt.png") no-repeat 0 0;
+	width: 200px;
+	height: 38px;
+	line-height: 38px;
+	text-indent: 10px;
+	margin-left: 5px;
+	color: #646464;
+}
+#content h3
+{
+	color: #717171;
+	font-weight: 700;
+	font-size: 22px;
+	font-family: Calibri, Arial,Helvetica,Sans-Serif;
+}
+#content
+{
+    font-family: Calibri, Arial,Helvetica,Sans-Serif;
+    margin: 0 auto;
+    max-width: 1054px
+}
+#advanceSearch1, #advanceSearch2, #advanceSearch3
+{
+	width: 300px;
+}
+#linkAdvanceSearch
+{
+	background: url("../../Content/images/btnSearch1.png") no-repeat 0 0;
+	width: 184px;
+	height: 47px;
+	margin-left: 50px;
+    margin-top: 50px;
+    cursor: pointer;
+    display:block;
+    font-size: 0px;
+}
+#linkDangtin
+{
+	background: url("../../Content/images/btnDangtin.png") no-repeat 0 0;
+	width: 145px;
+	height: 47px;
+	margin-left: 80px;
+    margin-top: 48px;
+    cursor: pointer;
+    display:block;
+    font-size: 0px;
+}
+#advanceSearch
+{
+	color: #454343;
+	font-size: 18px;
+	width: 1000px;
+	margin: 0 auto;
+}
+#advanceSearch h3
+{
+	font-size: 18px;
+	font-weight: 700;
+	font-style: italic;
+	margin-bottom: 10px;
+}
+#advanceSearch .detail
+{
+	padding-left: 55px;
+    color: #454343;
+    font-family: Calibri, Arial,Helvetica,Sans-Serif;
+    font-size: 18px;
+}
+#advanceSearch .detail b{
+    font-weight: 700;
+}
+#advanceSearch1, #advanceSearch2
+{
+	margin-right: 50px;
+}
+#advanceSearch1 .detail
+{
+	background: url("../../Content/images/icon1.png") no-repeat 0 10px;
+}
+#advanceSearch2 .detail
+{
+	background: url("../../Content/images/icon2.png") no-repeat 0 10px;
+}
+#advanceSearch3 .detail
+{
+	background: url("../../Content/images/icon3.png") no-repeat 0 10px;
+}
+
+.helloText {
+    color: #717171;
+    font-family: Calibri, Arial,Helvetica,Sans-Serif;
+    font-weight: 700;
+    font-size: 14px;
+    width: 100%;
+    max-width: 612px;
+    margin: 0 auto;
+}
+
+.helloText .helloLine {
+    border-bottom: 2px solid #d7e2ec;
+    display: block;
+    float: left;
+    margin-top: 9px;
+    width: 44%;
+}
+
+.helloText span {
+    display: block;
+    float: left;
+    margin: 0 2px;
+}
+
+#searchInfo #searchTitle {
+    color: #454343;
+    font-size: 60px;
+    font-weight: 700;
+    display: block;
+    float: left;
+    margin: 30px 0 20px;    
+}
+
+#searchInfo #advanceSearchText {
+    text-decoration: underline;
+    font-family: Arial,Helvetica,Sans-Serif;
+    font-size: 12px;
+    display: block;
+    float: right;
+    color: #646464;
+    margin: 20px 10px 0 0;
+}
+
+#selectSearch #btnSubmit, #options #btnSubmit {
+    background: url("../../Content/images/bg_kinhlup.png") no-repeat transparent 0 0;
+    width: 38px;
+    height: 38px;
+    display: block;
+    cursor: pointer;
+}
+/*END INTRO PAGE */
+
+/* LOGIN & REGIS PAGE */
+#loginPanel {
+    background: url("../../Content/images/login_panel.png") no-repeat transparent 0 0;
+    width: 842px;
+    height: 607px;
+}
+#regisPanel {
+    background: url("../../Content/images/Register_bg_panel.png") no-repeat transparent -22px 0;
+    width: 880px;
+    height: 890px;
+}
+div.textbox
+{
+    height: 80px;
+}
+.login-regis {
+    display: block;
+    margin: 30px auto;
+}
+.login-regis h1 {
+    font-size: 22px;
+    font-weight: 700;
+    color: #464646;
+    margin-bottom: 5px;
+}
+.login-regis h2 {
+    font-size: 14px;
+    font-weight: 700;
+    color: #919191;
+}
+.login-regis h3 {
+    font-size: 12px;
+    font-weight: 700;
+    color: #888888;
+}
+.login-regis .title {
+    display: block;
+    float: left;
+    margin: 60px 0 0 90px;
+}
+.login-regis .socials {
+    border-bottom: 2px solid #E4E4E4;
+    border-top: 2px solid #E4E4E4;
+    display: block;
+    float: left;
+    margin: 20px 0 0 85px;
+    padding: 50px 0;
+    width: 672px;
+    text-align: center;
+}
+.login-regis .socials h2 {
+    margin-bottom: 20px;
+}
+.login-regis .userInfo h2 {
+    text-align: center;
+    margin: 10px 0 25px;
+}
+
+.login-regis .blockInfo {
+    display: block;
+    float: left;
+    margin-bottom: 10px;
+}
+
+.login-regis .blockInfo label{
+    color: #888;
+    font-size: 12px;
+    margin-bottom: 5px;
+    display: block;
+    float: left;
+    font-weight: 700;
+}
+.leftTbx {
+    background: url("../../Content/images/tbx_left.png") no-repeat transparent 0 0;
+    width: 14px;
+    height: 49px;
+    display: block;
+    float: left;
+}
+.rightTbx {
+    background: url("../../Content/images/tbx_right.png") no-repeat transparent 0 0;
+    width: 14px;
+    height: 49px;
+    display: block;
+    float: left;
+}
+.midTbx {
+    background: url("../../Content/images/tbx_pixel.png") repeat-x transparent 0 0;
+    width: 1px;
+    height: 49px;
+    display: block;
+    float: left;
+}
+.tbxRegister
+{
+    background: url("../../Content/images/tbxRegister.png") repeat-x transparent 0 0;
+    height: 29px;
+    display: block;
+    float:left;
+    padding: 10px;
+    width: 303px;
+}
+span.field-validation-error
+{
+    padding: 70px 0 20px 0;
+}
+span.field-validation-error > span, span.field-validation-error
+{
+    float:none !important;
+}
+.login-regis .leftBlock {
+    margin: 0 20px 0 85px;
+}
+.textbox {
+    display: block;
+    float: left;
+}
+.textbox input{
+    font-size: 18px;
+    color: #989898;
+    font-weight: 700;
+}
+.login-regis .notification {
+    margin: 30px 0 0 85px;
+    display: block;
+    float: left;
+}
+.login-regis #infoIcon {
+    display: block;
+    float: left;
+}
+.login-regis #message {
+    border-bottom: 1px solid #E8E8E8;
+    border-right: 1px solid #E8E8E8;
+    color: #969696;
+    display: block;
+    float: left;
+    font-size: 12px;
+    font-style: italic;
+    font-weight: 700;
+    margin: 4px 0 0 10px;
+    padding: 5px 5px 5px 10px;
+}
+.login-regis .buttons {
+    display: block;
+    float: right;
+    margin: 23px 80px 0 0;
+}
+.login-regis .buttons span, .login-regis #cbxSaveLogin  {
+    display: block;
+    float: left;
+    margin: 17px 10px 0 0;
+}
+.login-regis #btnLogin {
+    background: url("../../Content/images/login_btnDangNhap.png") no-repeat transparent 0 0;
+    width: 120px;
+    height: 47px;
+    display: block;
+    float: left;
+    cursor: pointer;
+}
+#maBaoVe1 {
+    margin: 0 25px 0 15px;
+}
+.login-regis .lastBlock {
+    margin-top: 10px;
+}
+.blockInfo #rAccept, .blockInfo span, .blockInfo #btnRegis {
+    display: block;
+    float: left;
+}
+#btnRegis {
+    background: url("../../Content/images/regis_btnDangky.png") no-repeat transparent 0 0;
+    width: 120px;
+    height: 47px;
+    cursor: pointer;
+}
+#blockBtnRegis > div {
+    margin-top: 16px;
+    display: block;
+    float: left;
+}
+#blockBtnRegis > div #rAccept {
+    margin-right: 5px;
+}
+#blockBtnRegis label {
+    margin-right: 10px;
+}
+/* END LOGIN & REGIS PAGE */
+
+/* INDEX PAGE */
+#header #newPost {
+    background: url("../../Content/images/index_newPostBtn.png") no-repeat transparent 0 0;
+    width: 132px;
+    height: 34px;
+    display: block;
+    float: left;
+    margin-right: 10px;
+}
+#header #helloUser {
+    font-family: Calibri, Arial,Helvetica,Sans-Serif;
+    font-size: 12px;
+    color: #747474;
+    display: block;
+    margin-bottom: 7px;
+}
+#header #favResult {
+    background: url("../../Content/images/index_favResult.png") no-repeat transparent 0 0;
+    width: 104px;
+    height: 13px;
+    cursor: pointer;
+    display: block;
+}
+.styledCheckbox {
+    display: block;
+    float: right;
+}
+#header #resultPanel {
+    display: block;
+    position: absolute;
+    width: 294px;
+    height: auto;
+    background-color: #FFF;
+    border: 1px solid #e5e5e5;
+    padding: 10px 20px;
+    left: -107px;
+    top: 45px;
+    font-family: Myriad Pro;
+    color: #747474;
+    font-size: 12px;
+    z-index: 10;
+}
+
+#header #resultPanel label {
+    margin-bottom: 10px;
+    display: block;
+}
+
+#header #resultPanel .result {
+    border-bottom: 1px solid #ECF0F3;
+    display: block;
+    margin: 0 0 3px 15px;
+    padding-bottom: 7px;
+}
+
+#header #resultPanel .lastResult {
+    border: none;
+}
+
+#options {
+    position: relative;
+    width: 1054px;
+    margin-bottom: 15px;
+}
+
+#options #btnShowList, #options select{
+    display: block;
+    float: left;
+    margin: 0 3px;
+}
+#options #btnShowList {
+    width: 45px;
+    height: 39px;
+    float: left;
+    cursor: pointer;
+}
+#options .btnShowListClicked {
+    background: url("../../Content/images/index_btnList.png") no-repeat transparent 0 -39px;
+} 
+#options .btnShowListNormal {
+    background: url("../../Content/images/index_btnList.png") no-repeat transparent 0 0;
+}
+#options #spProvinceId, #options #spDistrictId, #options #spCategoryId, #options #spddlArea {
+    background: url("../../Content/images/index_ddlCity.png") no-repeat transparent 0 0;
+    width: 133px;
+    height: 38px;
+}
+#options #spddlPrice {
+    background: url("../../Content/images/index_ddlPrice.png") no-repeat transparent 0 0;
+    width: 147px;
+    height: 38px;
+}
+#options #spProvinceId {
+    left: 53px;
+}
+#options #spDistrictId {
+    left: 192px;
+}
+#options #spCategoryId {
+    left: 331px;
+}
+#options #spddlPrice {
+    left: 470px;
+}
+#options #spddlArea {
+    left: 625px;
+}
+#options .narrow {
+    width: 133px !important;
+}
+#options .wide {
+    width: 148px !important;
+}
+#options #txtKeyword {
+    background: url("../../Content/images/index_searchBox.png") no-repeat transparent 0 0;
+    width: 292px;
+    height: 37px;
+}
+.searchLeft, .searchMid, .searchRight {
+    display: block;
+    float: left;
+    height: 36px;
+    width: 13px;
+    margin-top: 1px;
+}
+.searchLeft {
+    background: url("../../Content/images/searchLeft.png") no-repeat transparent 0 0;
+}
+.searchRight {
+    background: url("../../Content/images/searchRight.png") no-repeat transparent 0 0;
+}
+.searchMid {
+    background: url("../../Content/images/searchMid.png") repeat-x transparent 0 0;
+    width: 1px;
+}
+#listInfo, #infoMap {
+    background: #FFF;
+    border: 1px solid #e5e5e5;
+    height: 576px;
+    padding: 15px 0;
+}
+#listInfo {
+    width: 320px;
+    margin-right: 10px;
+    color: #717171;
+    font-weight: 700;
+}
+#listInfo b {
+    color: #52666e;
+}
+#infoMap {
+    width: 100%;
+}
+#listInfo label, #listInfo select {
+    display: block;
+    float: left;
+}
+#spddlSortBy {
+    background: url("../../Content/images/index_ddlSortBy.png") repeat-x transparent 6px -4px;
+    width: 95px;
+    height: 20px;
+    left: 278px;
+    line-height: 12px;
+}
+#listInfo .sortBy {
+    width: 95px !important;
+    height: 20px !important;
+    margin-left: 18px;
+}
+#listInfo .infoDetail {
+    display: block;
+    float: left;
+    padding: 0 15px;
+}
+#listInfo .infoDetail div, #listInfo .infoDetail img, #listInfo .infoDetail span {
+    display: block;
+}
+#listInfo .highlight {
+    font-weight: 700;
+    color: #f17612;
+    display: block;
+    float: left;
+    font-size: 24px;
+}
+#listInfo .address {
+    font-size: 14px;
+    font-style: italic;
+    margin: 10px 0;
+}
+#listInfo .desc {
+    margin-bottom: 7px;
+    line-height: 18px;
+}
+#listInfo .text {
+    margin-right: 15px;
+    width: 196px;
+}
+#listInfo .hlText {
+    display: block;
+    float: left;
+    margin-top: 11px;
+}
+#listInfo .thumbnail {
+    margin-top: 38px;
+}
+#listInfo .infoDetail:hover {
+    background-color: #f1f0f1;
+    border: 1px solid #d6d6d6;
+    cursor: pointer;
+}
+.scroll-pane {
+    width: 100%;
+    height: 520px;
+    overflow: auto;
+} 

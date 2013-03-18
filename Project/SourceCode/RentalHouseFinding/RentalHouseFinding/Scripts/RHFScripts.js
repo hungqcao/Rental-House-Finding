@@ -5,14 +5,16 @@ $(document).ready(function () {
     var select = $("#DistrictId");
     select.empty();
     select.append($('<option/>', {
-        value: '0',
+        value: '',
         text: 'Chọn Quận/Huyện'
     }));
+    select.val('0');
+    select.next().text('Chọn Quận/Huyện');
     if (idPro != 0) {
         $.getJSON("service/GetDistrictList", { id: idPro },
                 function (myData) {
                     $.each(myData, function (index, itemData) {
-                        if (itemData.Text.lenght != 0) {
+                        if (itemData.Text.length != 0) {
                             select.append($('<option/>', {
                                 value: itemData.Value,
                                 text: itemData.Text
@@ -26,13 +28,15 @@ $(document).ready(function () {
         var select = $("#DistrictId");
         select.empty();
         select.append($('<option/>', {
-            value: '0',
+            value: '',
             text: 'Chọn Quận/Huyện'
         }));
+        $("#DistrictId").val("0");
+        select.next().text('Chọn Quận/Huyện');
         $.getJSON("service/GetDistrictList", { id: idPro },
         function (myData) {
             $.each(myData, function (index, itemData) {
-                if (itemData.Text.lenght != 0) {
+                if (itemData.Text.length != 0) {
                     select.append($('<option/>', {
                         value: itemData.Value,
                         text: itemData.Text
@@ -43,9 +47,8 @@ $(document).ready(function () {
     });
 
     $("#KeyWord").autocomplete({
-        source: function (request, response) {  
-            if($("#ProvinceId option:selected").val() == 0)
-            {
+        source: function (request, response) {
+            if ($("#ProvinceId option:selected").val() == 0) {
                 alert("Vui lòng chọn tỉnh thành phố");
                 return false;
             }
