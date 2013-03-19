@@ -100,6 +100,14 @@ INSERT INTO [RentalHouseFinding].[dbo].Locations VALUES
 
 GO
 
+DELETE FROM [RentalHouseFinding].[dbo].ConfigurationRHFs
+
+GO
+INSERT INTO [RentalHouseFinding].[dbo].ConfigurationRHFs VALUES 
+			('DescriptionColumnScore','10'),('TitleColumnScore','10'),('StreetColumnScore','10'),('NearbyColumnScore','10'),('NumberAddressColumnScore','10'),('DirectionColumnScore','10'),('NoneOfInformationText','N/A')
+
+GO
+
 USE RentalHouseFinding ;
 GO
 IF OBJECT_ID ('dbo.V_PostFullInfo', 'V') IS NOT NULL
