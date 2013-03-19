@@ -65,6 +65,7 @@ namespace RentalHouseFinding.Controllers
             userViewModel.UserName = profile.Username;
             userViewModel.PhoneNumber = profile.PhoneNumber;
             userViewModel.Name = profile.Name;
+            userViewModel.Email = profile.Email;
             DateTime? a = null;
             userViewModel.DateOfBirth = profile.DOB.HasValue ? profile.DOB.Value : a; 
             userViewModel.Address = profile.Address;

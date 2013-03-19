@@ -22,9 +22,7 @@
             <div id="containerLogin" class="right">
     	        @Html.Partial("_LogOnPartial")
             </div>
-        </div>
-        <div id="content">
-            <div id='cssmenu'>
+            <div id='cssmenu' class="clear">
                 <ul>
                    <li>@Html.ActionLink("Thông tin người dùng", "info", "user")</li>
                    <li>@Html.ActionLink("Danh sách bài đăng", "posts", "user")</li>
@@ -37,6 +35,8 @@
                    </li>
                 </ul>
             </div>
+        </div>
+        <div id="content">
             <div id="user-content">
                 <div class="wrapper">
                     @RenderBody()

@@ -6,10 +6,10 @@ $(document).ready(function () {
     select.empty();
     select.append($('<option/>', {
         value: '',
-        text: 'Chọn Quận/Huyện'
+        text: 'Quận/Huyện'
     }));
     select.val('0');
-    select.next().text('Chọn Quận/Huyện');
+    select.next().text('Quận/Huyện');
     if (idPro != 0) {
         $.getJSON("service/GetDistrictList", { id: idPro },
                 function (myData) {
@@ -29,10 +29,10 @@ $(document).ready(function () {
         select.empty();
         select.append($('<option/>', {
             value: '',
-            text: 'Chọn Quận/Huyện'
+            text: 'Quận/Huyện'
         }));
         $("#DistrictId").val("0");
-        select.next().text('Chọn Quận/Huyện');
+        select.next().text('Quận/Huyện');
         $.getJSON("service/GetDistrictList", { id: idPro },
         function (myData) {
             $.each(myData, function (index, itemData) {

@@ -339,28 +339,5 @@ EXEC AdvancedSearchFacility
 	@IsStayWithOwnerScore = 5
 
 
-SELECT f.WeightedRank, l.Title, l.Id
-FROM dbo.V_PostFullInfo l INNER JOIN
-(
-    SELECT [KEY], SUM(Rank) AS WeightedRank
-    FROM
-    (
-        SELECT Rank * 1.0 as Rank, [KEY] from FREETEXTTABLE(dbo.V_PostFullInfo, Title , 'xau')
-        UNION
-        SELECT Rank * 1.0 as Rank, [KEY] from FREETEXTTABLE(dbo.V_PostFullInfo, Description, 'xau')
-        UNION
-        SELECT Rank * 1.0 as Rank, [KEY] from FREETEXTTABLE(dbo.V_PostFullInfo, Street, 'xau')
-        UNION
-        SELECT Rank * 1.0 as Rank, [KEY] from FREETEXTTABLE(dbo.V_PostFullInfo, NearbyPlace, 'xau')
-        UNION
-        SELECT Rank * 1.0 as Rank, [KEY] from FREETEXTTABLE(dbo.V_PostFullInfo, NumberAddress, 'xau')
-        UNION
-        SELECT Rank * 1.0 as Rank, [KEY] from FREETEXTTABLE(dbo.V_PostFullInfo, Direction, 'xau')
-    ) as x
-    GROUP BY [KEY]
-) as f
-ON l.Id = f.[KEY]
-ORDER BY f.WeightedRank DESC
-
 EXEC dbo.FullTextSearchPostWithWeightenScore @CategoryIdPass = 1, @ProvinceIdPass = 1, @DistrictIdPass = 0, @KeyWord = 'xau',
 												@NumberAddressScore = 10

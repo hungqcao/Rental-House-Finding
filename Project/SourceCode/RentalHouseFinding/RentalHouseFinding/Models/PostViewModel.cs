@@ -120,6 +120,9 @@ namespace RentalHouseFinding.Models
         [RegularExpression(@"\w+([-+.']\w+)*@\w+([-.]\w+)*\.\w+([-.]\w+)*", ErrorMessage = "Email không hợp lệ.")]
         public string Email { get; set; }
 
+        [Display(Name = "Tên liên hệ")]
+        public string NameContact { get; set; }
+
         [Display(Name = "Tài khoản Yahoo")]
         public string Yahoo { get; set; }
 

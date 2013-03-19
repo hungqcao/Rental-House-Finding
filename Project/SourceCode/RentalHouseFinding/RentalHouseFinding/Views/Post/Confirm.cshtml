@@ -1,0 +1,18 @@
+﻿@model RentalHouseFinding.Models.PostViewModel
+
+@if (!ViewContext.ViewData.ModelState.IsValid)
+{
+    <h2>The following errors were found:</h2>
+    @Html.ValidationSummary()
+}
+else
+{
+    <h2>
+    Confirm</h2>
+<h3>
+    Please confirm that your information is correct:</h3>
+    <fieldset>
+    Blah blah blah
+    </fieldset>
+
+} 
