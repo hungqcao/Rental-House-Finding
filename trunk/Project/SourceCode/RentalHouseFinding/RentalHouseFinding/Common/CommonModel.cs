@@ -57,7 +57,8 @@ namespace RentalHouseFinding.Common
                     Email = model.Email,
                     Phone = model.PhoneContact,
                     Skype = model.Skype,
-                    Yahoo = model.Yahoo
+                    Yahoo = model.Yahoo,
+                    NameContact = string.IsNullOrEmpty(model.NameContact) ? noInformation : model.NameContact,
                 },
                 CreatedDate = createdDate,
                 Description = string.IsNullOrEmpty(model.Description) ? noInformation : model.Description,
@@ -90,7 +91,8 @@ namespace RentalHouseFinding.Common
                 RenewDate = renewDate,
                 Title = model.Title,
                 Views = 0,
-                IsDeleted = false
+                IsDeleted = false,
+                NearbyPlace = noInformation
             };
         }
 
@@ -105,6 +107,7 @@ namespace RentalHouseFinding.Common
             post.Contacts.Phone = model.PhoneContact;
             post.Contacts.Skype = model.Skype;
             post.Contacts.Yahoo = model.Yahoo;
+            post.Contacts.NameContact = model.NameContact;
 
             post.CreatedDate = createdDate;
             post.Description = model.Description;
@@ -192,7 +195,8 @@ namespace RentalHouseFinding.Common
                 WaterHeater = model.Facilities.HasWaterHeater ? "Có" : "Không",
                 AllowCooking = model.Facilities.IsAllowCooking ? "Có" : "Không",
                 StayWithOwner = model.Facilities.IsStayWithOwner ? "Có" : "Không",
-                UserId = model.UserId
+                UserId = model.UserId,
+                NameContact = model.Contacts.NameContact
             };
         }
 

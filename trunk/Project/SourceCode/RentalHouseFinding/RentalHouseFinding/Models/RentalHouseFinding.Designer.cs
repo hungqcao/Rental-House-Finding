@@ -1948,11 +1948,13 @@ namespace RentalHouseFinding.Models
         /// </summary>
         /// <param name="phone">Initial value of the Phone property.</param>
         /// <param name="postIdContacts">Initial value of the PostIdContacts property.</param>
-        public static Contacts CreateContacts(global::System.String phone, global::System.Int32 postIdContacts)
+        /// <param name="nameContact">Initial value of the NameContact property.</param>
+        public static Contacts CreateContacts(global::System.String phone, global::System.Int32 postIdContacts, global::System.String nameContact)
         {
             Contacts contacts = new Contacts();
             contacts.Phone = phone;
             contacts.PostIdContacts = postIdContacts;
+            contacts.NameContact = nameContact;
             return contacts;
         }
 
@@ -2081,6 +2083,30 @@ namespace RentalHouseFinding.Models
         private global::System.Int32 _PostIdContacts;
         partial void OnPostIdContactsChanging(global::System.Int32 value);
         partial void OnPostIdContactsChanged();
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=false)]
+        [DataMemberAttribute()]
+        public global::System.String NameContact
+        {
+            get
+            {
+                return _NameContact;
+            }
+            set
+            {
+                OnNameContactChanging(value);
+                ReportPropertyChanging("NameContact");
+                _NameContact = StructuralObject.SetValidValue(value, false);
+                ReportPropertyChanged("NameContact");
+                OnNameContactChanged();
+            }
+        }
+        private global::System.String _NameContact;
+        partial void OnNameContactChanging(global::System.String value);
+        partial void OnNameContactChanged();
 
         #endregion
     

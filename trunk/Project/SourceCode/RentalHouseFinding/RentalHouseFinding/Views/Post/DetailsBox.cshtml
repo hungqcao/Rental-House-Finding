@@ -1,0 +1,177 @@
+﻿@model RentalHouseFinding.Models.PostViewModel
+@{
+    this.Layout = null;
+}
+<!DOCTYPE html>
+
+<html>
+<head runat="server">
+    <title>IndexPopup</title>
+<link href="@Url.Content("~/Content/css/reset.css")" rel="stylesheet" type="text/css" />
+<link href="@Url.Content("~/Content/css/Site.css")" rel="stylesheet" type="text/css" />
+</head>
+<body>
+<div id="popup_wrapper">
+    <div class="popup_header">
+        <div>
+            <span class="type">[@Model.Category]</span><span class="address">&nbsp;@Model.NumberHouse @Model.Street</span>
+            <div class="clear"></div>
+            <span class="shortDesc">@Model.Title</span>
+        </div>
+        <div class="rightInfo" style="float: right;">
+            <div><span class="highlight">@Model.Price</span><span class="rightText">triệu VND</span></div>
+            <div><span class="highlight">@Model.Area</span><span class="rightText">m2</span></div>
+        </div>
+    </div>
+    <div class="clear"></div>
+    <div class="popup_content">
+        <div class="blockInfo" style="width: 475px; margin-right: 10px;">
+            <div class="title"><div class="plusBtn"></div>THÔNG TIN CƠ BẢN</div>
+            <div class="clear"></div>
+            <span class="blockLeftText" style="width: 100%;"><b>Địa chỉ:</b>&nbsp;@Model.NumberHouse @Model.Street </span>
+            <div class="clear"></div>
+            <span class="blockLeftText"><b>Giá nhà:</b>&nbsp;@Model.Price triệu/tháng</span>
+            <span class="blockRightText"><b>Diện tích:</b>&nbsp;@Model.Area m2</span>
+            <span class="blockLeftText"><b>Giá điện:</b>&nbsp;@Model.ElectricityFee triệu/tháng</span>
+            <span class="blockRightText"><b>Giá nước:</b>&nbsp;@Model.WaterFee triệu/tháng</span>
+            <span class="blockLeftText"><b>Hướng nhà:</b>&nbsp;@Model.Direction</span>
+            <span class="blockRightText"><b>Ngày đăng:</b>&nbsp;@Model.CreatedDate</span>
+            <span class="blockLeftText" style="margin-top:10px;"><b>Liên hệ:</b>&nbsp;@Model.NameContact</span>
+            <div class="clear"></div>
+            <span class="blockLeftText"><b>Di động:</b>&nbsp;@Model.PhoneContact</span>
+            <span class="blockRightText"><b>Yahoo!, Skype:</b>&nbsp;@Model.Skype</span>
+            <span class="blockLeftText" style="width: 95%;"><b>Ghi chú:</b>&nbsp;@Model.Description</span>
+        </div>
+        <div class="blockInfo" style="width: 400px;">
+            <div class="title">
+                <div class="plusBtn"></div>
+                <div class="icon camera clickable">HÌNH ẢNH</div>
+                <div class="icon pin clickable">BẢN ĐỒ</div>
+                <div class="icon video clickable">VIDEO</div>
+            </div>
+            <img class="imgLeft" src="@Url.Content("~/Content/images/sample_image.png")"/>
+            <img src="@Url.Content("~/Content/images/sample_image.png")"/>
+            <img class="imgLeft" src="@Url.Content("~/Content/images/sample_image.png")"/>
+            <img src="@Url.Content("~/Content/images/sample_image.png")"/>
+        </div>
+        <div class="clear"></div>
+        <div class="blockInfo" style="width: 475px;">
+            <div class="title"><div class="plusBtn"></div>TIỆN ÍCH DỊCH VỤ BÊN TRONG</div>
+            <div class="clear"></div>
+            <div class="colLeft">
+                @if (Model.HasInternet)
+                {
+                    <span class="icon check">Internet</span>
+                }
+                else
+                {
+                    <span class="icon question">Internet</span>
+                }
+                @if (Model.HasBed)
+                {
+                    <span class="icon check">Giường, tủ</span>
+                }
+                else
+                {
+                    <span class="icon question">Giường, tủ</span>
+                }
+                @if (Model.HasSecurity)
+                {
+                    <span class="icon check">Bảo vệ</span>
+                }
+                else
+                {
+                    <span class="icon question">Bảo vệ</span>
+                }
+                @if (Model.HasToilet)
+                {
+                    <span class="icon check">WC riêng</span>
+                }
+                else
+                {
+                    <span class="icon question">WC riêng</span>
+                }
+                @if (Model.IsStayWithOwner)
+                {
+                    <span class="icon check">Chung chủ</span>
+                }
+                else
+                {
+                    <span class="icon question">Chung chủ</span>
+                }
+            </div>
+            <div class="colRight">
+                @if (Model.HasTVCable)
+                {
+                    <span class="icon question">Tivi, truyền hình cáp</span>
+                }
+                else
+                {
+                    <span class="icon question">Tivi, truyền hình cáp</span>
+                }
+                @if (Model.HasMotorParking)
+                {
+                    <span class="icon question">Bãi đỗ xe</span>
+                }
+                else
+                {
+                    <span class="icon question">Bãi đỗ xe</span>
+                }
+                @if (Model.IsAllowCooking)
+                {
+                    <span class="icon question">Cho phép nấu ăn</span>
+                }
+                else
+                {
+                    <span class="icon question">Cho phép nấu ăn</span>
+                }
+                @if (Model.HasWaterHeater)
+                {
+                    <span class="icon question">Bình nóng lạnh</span>
+                }
+                else
+                {
+                    <span class="icon question">Bình nóng lạnh</span>
+                }
+                @if (Model.HasGarage)
+                {
+                    <span class="icon check">Gara ôtô</span>
+                }
+                else
+                {
+                    <span class="icon check">Gara ôtô</span>
+                }
+            </div>
+        </div>
+        <div class="blockInfo" id="block4" style="width: 400px;">
+                <div class="title"><div class="plusBtn"></div>ĐỊA ĐIỂM LỚN XUNG QUANH</div>
+                <span class="icon plus"><b>Y TẾ</b></span>
+                <div class="clear"></div>
+                <span class="desc"></span>
+                <div class="clear"></div>
+                <span class="icon book"><b>GIÁO DỤC</b></span>
+                <div class="clear"></div>
+                <span class="desc">Trường đại học FPT, Trường Đại học Công Đoàn, Đại học Mỹ Thuật Công Nghiệp, Đại học Hàng Hải, Trường THPT Hai Bà Trưng</span>
+                <div class="clear"></div>
+                <span class="icon inbox"><b>THƯƠNG MẠI</b></span>
+                <div class="clear"></div>
+                <span class="icon globe"><b>VUI CHƠI GIẢI TRÍ</b></span>
+                <div class="clear"></div>
+                <span class="icon calendar"><b>GIAO THÔNG CÔNG CỘNG</b></span>
+                <div class="clear"></div>
+        </div>
+        <div class="clear"></div>
+        <div id="sendQuestion">
+            <a href="#"><img src="@Url.Content("~/Content/images/triangle_comment.png")"/></a>
+            <span>Gửi câu hỏi thắc mắc cho người đăng!</span>
+        </div>
+        <div id="saveBookmark">
+            <a href="#"><img src="@Url.Content("~/Content/images/triangle_fav.png")"/></a>
+            <span>Bạn quan tâm bài đăng này, bạn hãy lưu lại! </span>
+        </div>
+        <div class="clear"></div>
+    </div>
+    <div class="clear"></div>
+</div>
+</body>
+</html>

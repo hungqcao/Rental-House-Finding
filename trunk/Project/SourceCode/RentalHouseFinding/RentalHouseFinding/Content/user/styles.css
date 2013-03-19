@@ -1,171 +1,143 @@
-div#user-content
-{
-    float:left;
-    border: 1px solid #e1e1e1;
-    -webkit-border-radius: 5px;
-    -moz-border-radius: 5px;
-    border-radius: 5px;
-    width: 700px;
-    margin-left: 20px;
-}
-div.wrapper
-{
-    padding: 20px 20px;
-}
-/* Starter CSS for Flyout Menu */
-#cssmenu {
+@charset 'UTF-8';
+#cssmenu ul,
+#cssmenu li,
+#cssmenu span,
+#cssmenu a {
+  border: 0;
+  margin: 0;
   padding: 0;
-  margin: 0;
-  border: 0; 
-  float: left;}
-
-#cssmenu ul, li {
-  list-style: none;
-  margin: 0;
-  padding: 0; }
-
-#cssmenu ul {
   position: relative;
-  z-index: 597;
-  float: left; }
-
-#cssmenu ul li {
-  float: left;
-  min-height: 1px;
-  line-height: 1em;
-  vertical-align: middle; }
-
-#cssmenu ul li.hover,
-#cssmenu ul li:hover {
-  position: relative;
-  z-index: 599;
-  cursor: default; }
-
-#cssmenu ul ul {
-  visibility: hidden;
-  position: absolute;
-  top: 100%;
-  left: 0;
-  z-index: 598;
-  width: 100%; }
-
-#cssmenu ul ul li {
-  float: none; }
-
-#cssmenu ul li:hover > ul {
-  visibility: visible; }
-
-#cssmenu ul ul {
-  top: 0;
-  left: 100%; }
-
-#cssmenu ul li {
-  float: none; }
-
-/* Custom Stuff */
+}
+#containerLogo
+{
+    margin-bottom: 40px;
+}
 #cssmenu {
+  border-radius: 5px;
   -moz-border-radius: 5px;
   -webkit-border-radius: 5px;
-  border-radius: 5px;
-  -moz-background-clip: padding;
-  -webkit-background-clip: padding-box;
-  background-clip: padding-box;
+  background: #f2edea url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAA0CAIAAADEwMXAAAAAA3NCSVQICAjb4U/gAAAAMklEQVQImWP49PYV0////6GYAcFm+I9d/P9/JgZkcRR12NVDzMMihlMtRJyBkHpMNwIA6ZmLp7k56KwAAAAASUVORK5CYII=) 100% 100%;
+  box-shadow: 0 0 2px 1px rgba(0, 0, 0, 0.15);
   -moz-box-shadow: 0 0 2px 1px rgba(0, 0, 0, 0.15);
   -webkit-box-shadow: 0 0 2px 1px rgba(0, 0, 0, 0.15);
-  box-shadow: 0 0 2px 1px rgba(0, 0, 0, 0.15);
-  width: 200px; }
-  #cssmenu span, #cssmenu a {
-    display: inline-block;
-    font-family: Arial, Helvetica, sans-serif;
-    font-size: 12px;
-    text-decoration: none; }
-  #cssmenu:after, #cssmenu ul:after {
-    content: '';
-    display: block;
-    clear: both; }
-  #cssmenu > ul > li:first-child {
-    -moz-border-radius: 5px 5px 0 0;
-    -webkit-border-radius: 5px 5px 0 0;
-    border-radius: 5px 5px 0 0;
-    -moz-background-clip: padding;
-    -webkit-background-clip: padding-box;
-    background-clip: padding-box; }
-  #cssmenu > ul > li:last-child {
-    -moz-border-radius: 0 0 5px 5px;
-    -webkit-border-radius: 0 0 5px 5px;
-    border-radius: 0 0 5px 5px;
-    -moz-background-clip: padding;
-    -webkit-background-clip: padding-box;
-    background-clip: padding-box; }
-  #cssmenu > ul > li ul ul {
-    -moz-border-radius: 0 6px 6px 0;
-    -webkit-border-radius: 0 6px 6px 0;
-    border-radius: 0 6px 6px 0;
-    -moz-background-clip: padding;
-    -webkit-background-clip: padding-box;
-    background-clip: padding-box; }
-  #cssmenu > ul > li ul ul li:first-child {
-    -moz-border-radius: 0 5px 0 0;
-    -webkit-border-radius: 0 5px 0 0;
-    border-radius: 0 5px 0 0;
-    -moz-background-clip: padding;
-    -webkit-background-clip: padding-box;
-    background-clip: padding-box; }
-  #cssmenu > ul > li ul ul li:last-child {
-    -moz-border-radius: 0 0 5px 0;
-    -webkit-border-radius: 0 0 5px 0;
-    border-radius: 0 0 5px 0;
-    -moz-background-clip: padding;
-    -webkit-background-clip: padding-box;
-    background-clip: padding-box; }
-  #cssmenu ul, #cssmenu li {
-    width: 100%; }
-  #cssmenu li {
-    background: #dddddd url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAoAAAAJCAMAAAA8eE0hAAAAUVBMVEX////MzMzMzMzMzMzMzMzMzMzMzMzMzMzMzMzMzMzMzMzNzc3l5eXg4ODZ2dnMzMzi4uLS0tLe3t7Q0NDV1dXj4+PW1tbk5OTc3NzPz8/R0dH0Zv5RAAAAC3RSTlMAM2YekAmlPHuEAwArv7wAAAA/SURBVHheY2Dl5mdigABGKV5BNnYok4dHQpKFGcrkEefj5gAzQUBABM7kFYQyRcX4mUBMkEpOLrA2IWGwfgYAn0UDZszv8IwAAAAASUVORK5CYII=) repeat-x;
-    background-image: -webkit-gradient(linear, left top, left bottom, color-stop(0, #e5e5e5), color-stop(1, #dddddd));
-    background-image: -webkit-linear-gradient(top, #e5e5e5, #dddddd);
-    background-image: -moz-linear-gradient(top, #e5e5e5, #dddddd);
-    background-image: -ms-linear-gradient(top, #e5e5e5, #dddddd);
-    background-image: -o-linear-gradient(top, #e5e5e5, #dddddd);
-    background-image: linear-gradient(#e5e5e5, #dddddd); }
-    #cssmenu li:hover {
-      background: #f6f6f6; }
-  #cssmenu a {
-    color: #666666;
-    line-height: 160%;
-    padding: 11px 28px 11px 28px;
-    width: 144px; }
-  #cssmenu ul ul {
-    border: 1px solid #dddddd;
-    -moz-box-shadow: 0 1px 2px rgba(0, 0, 0, 0.15);
-    -webkit-box-shadow: 0 1px 2px rgba(0, 0, 0, 0.15);
-    box-shadow: 0 1px 2px rgba(0, 0, 0, 0.15); }
-    #cssmenu ul ul li {
-      background: #f6f6f6; }
-      #cssmenu ul ul li:hover {
-        background: #dddddd; }
-        #cssmenu ul ul li:hover a {
-          color: #AE0001; }
-      #cssmenu ul ul li ul li {
-        background: #dddddd; }
-        #cssmenu ul ul li ul li:hover {
-          background: #b7b7b7; }
-  #cssmenu .has-sub {
-    position: relative; }
-    #cssmenu .has-sub:after, #cssmenu .has-sub > ul > .has-sub:hover:after {
-      content: '';
-      display: block;
-      width: 10px;
-      height: 9px;
-      position: absolute;
-      right: 5px;
-      top: 50%;
-      margin-top: -5px;
-      background-image: url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAoAAAAJCAMAAAA8eE0hAAAAUVBMVEX////MzMzMzMzMzMzMzMzMzMzMzMzMzMzMzMzMzMzMzMzNzc3l5eXg4ODZ2dnMzMzi4uLS0tLe3t7Q0NDV1dXj4+PW1tbk5OTc3NzPz8/R0dH0Zv5RAAAAC3RSTlMAM2YekAmlPHuEAwArv7wAAAA/SURBVHheY2Dl5mdigABGKV5BNnYok4dHQpKFGcrkEefj5gAzQUBABM7kFYQyRcX4mUBMkEpOLrA2IWGwfgYAn0UDZszv8IwAAAAASUVORK5CYII=);
-      -moz-transform: rotate(360deg);
-      -o-transform: rotate(360deg);
-      -ms-transform: rotate(360deg);
-      -webkit-transform: rotate(360deg);
-      transform: rotate(360deg); }
-    #cssmenu .has-sub > ul > .has-sub:after, #cssmenu .has-sub:hover:after {
-      background-image: url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAoAAAAJCAMAAAA8eE0hAAAAUVBMVEX////d3d3d3d3d3d3d3d3d3d3d3d3d3d3d3d3d3d3d3d3e3t729vbx8fHq6urd3d3z8/Pj4+Pv7+/h4eHm5ub09PTn5+f19fXt7e3g4ODi4uLUsVdlAAAAC3RSTlMAM2YekAmlPHuEAwArv7wAAAA/SURBVHheY2Dl5mdigABGKV5BNnYok4dHQpKFGcrkEefj5gAzQUBABM7kFYQyRcX4mUBMkEpOLrA2IWGwfgYAn0UDZszv8IwAAAAASUVORK5CYII=); }
+  background: -moz-linear-gradient(top, #f2edea 0%, #c0bebf 100%);
+  background: -webkit-gradient(linear, left top, left bottom, color-stop(0%, #f2edea), color-stop(100%, #c0bebf));
+  background: -webkit-linear-gradient(top, #f2edea 0%, #c0bebf 100%);
+  background: -o-linear-gradient(top, #f2edea 0%, #c0bebf 100%);
+  background: -ms-linear-gradient(top, #f2edea 0%, #c0bebf 100%);
+  background: linear-gradient(to bottom, #f2edea 0%, #c0bebf 100%);
+  font-weight: 600;
+  height: 52px;
+  width: 960px;
+  margin: 0 auto;
+}
+#cssmenu:after,
+#cssmenu ul:after {
+  content: '';
+  display: block;
+  clear: both;
+}
+#cssmenu a {
+  box-shadow: inset 0 1px 0 whitesmoke;
+  -moz-box-shadow: inset 0 1px 0 whitesmoke;
+  -webkit-box-shadow: inset 0 1px 0 whitesmoke;
+  background: #f2edea url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAA0CAIAAADEwMXAAAAAA3NCSVQICAjb4U/gAAAAMklEQVQImWP49PYV0////6GYAcFm+I9d/P9/JgZkcRR12NVDzMMihlMtRJyBkHpMNwIA6ZmLp7k56KwAAAAASUVORK5CYII=) 100% 100%;
+  background: -moz-linear-gradient(top, #f2edea 0%, #c0bebf 100%);
+  background: -webkit-gradient(linear, left top, left bottom, color-stop(0%, #f2edea), color-stop(100%, #c0bebf));
+  background: -webkit-linear-gradient(top, #f2edea 0%, #c0bebf 100%);
+  background: -o-linear-gradient(top, #f2edea 0%, #c0bebf 100%);
+  background: -ms-linear-gradient(top, #f2edea 0%, #c0bebf 100%);
+  background: linear-gradient(to bottom, #f2edea 0%, #c0bebf 100%);
+  color: #666666;
+  display: inline-block;
+  font-family: Arial, Verdana, sans-serif;
+  font-size: 12px;
+  line-height: 52px;
+  padding: 0 28px;
+  text-decoration: none;
+}
+#cssmenu ul {
+  list-style: none;
+  box-shadow: inset 0 1px 0 whitesmoke;
+  -moz-box-shadow: inset 0 1px 0 whitesmoke;
+  -webkit-box-shadow: inset 0 1px 0 whitesmoke;
+}
+#cssmenu > ul {
+  float: left;
+}
+#cssmenu > ul > li {
+  float: left;
+}
+#cssmenu > ul > li:first-child a {
+  border-radius: 5px 0 0 5px;
+  -moz-border-radius: 5px 0 0 5px;
+  -webkit-border-radius: 5px 0 0 5px;
+}
+#cssmenu > ul > li.active a,
+#cssmenu > ul > li:hover > a {
+  box-shadow: inset 0 -2px 3px rgba(0, 0, 0, 0.15);
+  -moz-box-shadow: inset 0 -2px 3px rgba(0, 0, 0, 0.15);
+  -webkit-box-shadow: inset 0 -2px 3px rgba(0, 0, 0, 0.15);
+  color: white;
+  background: #4a5662 url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAA0CAIAAADEwMXAAAAAGXRFWHRTb2Z0d2FyZQBBZG9iZSBJbWFnZVJlYWR5ccllPAAAAyBpVFh0WE1MOmNvbS5hZG9iZS54bXAAAAAAADw/eHBhY2tldCBiZWdpbj0i77u/IiBpZD0iVzVNME1wQ2VoaUh6cmVTek5UY3prYzlkIj8+IDx4OnhtcG1ldGEgeG1sbnM6eD0iYWRvYmU6bnM6bWV0YS8iIHg6eG1wdGs9IkFkb2JlIFhNUCBDb3JlIDUuMC1jMDYwIDYxLjEzNDc3NywgMjAxMC8wMi8xMi0xNzozMjowMCAgICAgICAgIj4gPHJkZjpSREYgeG1sbnM6cmRmPSJodHRwOi8vd3d3LnczLm9yZy8xOTk5LzAyLzIyLXJkZi1zeW50YXgtbnMjIj4gPHJkZjpEZXNjcmlwdGlvbiByZGY6YWJvdXQ9IiIgeG1sbnM6eG1wPSJodHRwOi8vbnMuYWRvYmUuY29tL3hhcC8xLjAvIiB4bWxuczp4bXBNTT0iaHR0cDovL25zLmFkb2JlLmNvbS94YXAvMS4wL21tLyIgeG1sbnM6c3RSZWY9Imh0dHA6Ly9ucy5hZG9iZS5jb20veGFwLzEuMC9zVHlwZS9SZXNvdXJjZVJlZiMiIHhtcDpDcmVhdG9yVG9vbD0iQWRvYmUgUGhvdG9zaG9wIENTNSBXaW5kb3dzIiB4bXBNTTpJbnN0YW5jZUlEPSJ4bXAuaWlkOkNDNkM2QzM1NDk0QjExRTI5NjFDQzlFM0NGQzY5RDNBIiB4bXBNTTpEb2N1bWVudElEPSJ4bXAuZGlkOkNDNkM2QzM2NDk0QjExRTI5NjFDQzlFM0NGQzY5RDNBIj4gPHhtcE1NOkRlcml2ZWRGcm9tIHN0UmVmOmluc3RhbmNlSUQ9InhtcC5paWQ6Q0M2QzZDMzM0OTRCMTFFMjk2MUNDOUUzQ0ZDNjlEM0EiIHN0UmVmOmRvY3VtZW50SUQ9InhtcC5kaWQ6Q0M2QzZDMzQ0OTRCMTFFMjk2MUNDOUUzQ0ZDNjlEM0EiLz4gPC9yZGY6RGVzY3JpcHRpb24+IDwvcmRmOlJERj4gPC94OnhtcG1ldGE+IDw/eHBhY2tldCBlbmQ9InIiPz6bEPV5AAAAUUlEQVR42mSO0RWAMAgDc4znAA7g/jvUFKj66gevCT0COs4rJLkIoSC1X+j+7GFfupj+a4bFu+isydcMr88dY/PkLL8bPnrLXTvHk2NdzC3AAIj5BKfn0x2aAAAAAElFTkSuQmCC);
+  background: -moz-linear-gradient(top, #4a5662 0%, #606a76 100%);
+  background: -webkit-gradient(linear, left top, left bottom, color-stop(0%, #4a5662), color-stop(100%, #606a76));
+  background: -webkit-linear-gradient(top, #4a5662 0%, #606a76 100%);
+  background: -o-linear-gradient(top, #4a5662 0%, #606a76 100%);
+  background: -ms-linear-gradient(top, #4a5662 0%, #606a76 100%);
+  background: linear-gradient(to bottom, #4a5662 0%, #606a76 100%);
+}
+#cssmenu .has-sub {
+  z-index: 1;
+}
+#cssmenu .has-sub:hover > ul {
+  display: block;
+}
+#cssmenu .has-sub ul {
+  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.15);
+  -moz-box-shadow: 0 1px 2px rgba(0, 0, 0, 0.15);
+  -webkit-box-shadow: 0 1px 2px rgba(0, 0, 0, 0.15);
+  display: none;
+  position: absolute;
+  width: 200px;
+  top: 100%;
+  left: 0;
+}
+#cssmenu .has-sub ul li a {
+  background: #606a76;
+  border-bottom: 1px solid #59636f;
+  box-shadow: inset 0 1px 0 #66707c;
+  -moz-box-shadow: inset 0 1px 0 #66707c;
+  -webkit-box-shadow: inset 0 1px 0 #66707c;
+  color: white;
+  display: block;
+  line-height: 160%;
+  padding: 15px 10px;
+}
+#cssmenu .has-sub ul li:hover a {
+  background: #4a5662;
+  box-shadow: inset 0 0 3px 1px rgba(0, 0, 0, 0.15);
+  -moz-box-shadow: inset 0 0 3px 1px rgba(0, 0, 0, 0.15);
+  -webkit-box-shadow: inset 0 0 3px 1px rgba(0, 0, 0, 0.15);
+}
+#cssmenu .has-sub .has-sub:hover > ul {
+  display: block;
+}
+#cssmenu .has-sub .has-sub ul {
+  display: none;
+  position: absolute;
+  left: 100%;
+  top: 0;
+}
+#cssmenu .has-sub .has-sub ul li a {
+  background: #606a76;
+  box-shadow: none;
+  -moz-box-shadow: none;
+  -webkit-box-shadow: none;
+}
+#cssmenu .has-sub .has-sub ul li a:hover {
+  background: #4a5662;
+  box-shadow: inset 0 0 3px 1px rgba(0, 0, 0, 0.15);
+  -moz-box-shadow: inset 0 0 3px 1px rgba(0, 0, 0, 0.15);
+  -webkit-box-shadow: inset 0 0 3px 1px rgba(0, 0, 0, 0.15);
+}

@@ -17,30 +17,88 @@
 
 <script type="text/javascript">
     $(document).ready(function () {
-        var marker;
-        var map;
-        function initialize() {
-            var mapProp = {
-                center: new google.maps.LatLng(21.04349121680354, 105.523681640625),
-                zoom: 8,
-                mapTypeId: google.maps.MapTypeId.ROADMAP
-            };
-            map = new google.maps.Map(document.getElementById("mapContainer"), mapProp);
-            google.maps.event.addListener(map, 'click', function (event) {
-                if (marker == null) {
-                    marker = new google.maps.Marker({
-                        position: event.latLng,
-                        map: map,
-                        draggable: true
-                    });
-                } else {
-                    marker.setPosition(event.latLng);
+        $(".wizard-step:first").fadeIn(); // show first step
+
+
+        // attach backStep button handler
+        // hide on first step
+        $("#back-step").hide().click(function () {
+            var $step = $(".wizard-step:visible"); // get current step
+            if ($step.prev().hasClass("wizard-step")) { // is there any previous step?
+                $step.hide().prev().fadeIn();  // show it and hide current step
+
+                // disable backstep button?
+                if (!$step.prev().prev().hasClass("wizard-step")) {
+                    $("#back-step").hide();
                 }
-                $('#Lat').val(event.latLng.lat());
-                $('#Lon').val(event.latLng.lng());
+            }
+        });
+
+
+        // attach nextStep button handler       
+        $("#next-step").click(function () {
+
+            var $step = $(".wizard-step:visible"); // get current step
+
+            var validator = $("form").validate(); // obtain validator
+            var anyError = false;
+            $step.find("input").each(function () {
+                if (!validator.element(this)) { // validate every input element inside this step
+                    anyError = true;
+                }
+
             });
 
-        }
+            if (anyError)
+                return false; // exit if any error found
+
+
+
+
+            if ($step.next().hasClass("confirm")) { // is it confirmation?
+                // show confirmation asynchronously
+                $.post("/post/confirm", $("form").serialize(), function (r) {
+                    // inject response in confirmation step
+                    $(".wizard-step.confirm").html(r);
+                });
+
+            }
+
+            if ($step.next().hasClass("wizard-step")) { // is there any next step?
+                $step.hide().next().fadeIn();  // show it and hide current step
+                $("#back-step").show();   // recall to show backStep button
+            }
+
+            else { // this is last step, submit form
+                $("form").submit();
+            }
+
+
+        });
+        //--------------------
+        var marker;
+        var map;
+        var mapProp = {
+            center: new google.maps.LatLng(21.04349121680354, 105.523681640625),
+            zoom: 8,
+            mapTypeId: google.maps.MapTypeId.ROADMAP
+        };
+        map = new google.maps.Map(document.getElementById("mapContainer"), mapProp);
+        google.maps.event.addListener(map, 'click', function (event) {
+            if (marker == null) {
+                marker = new google.maps.Marker({
+                    position: event.latLng,
+                    map: map,
+                    draggable: true
+                });
+            } else {
+                marker.setPosition(event.latLng);
+            }
+            $('#Lat').val(event.latLng.lat());
+            $('#Lon').val(event.latLng.lng());
+        });
+
+        
         //For tag input
         var source;
         $.getJSON("@baseUri.ToString()" + "service/GetLocation", 
@@ -161,9 +219,7 @@
                 });
             }
         });
-
-        google.maps.event.addDomListener(window, 'load', initialize);
-        google.setOnLoadCallback(initialize);
+        
     });
 </script>
 <script type = "text/javascript">
@@ -194,13 +250,268 @@
         $(obj).parent().remove();
     }
    </script>
+
+<script type="text/javascript">
+    $(document).ready(function () {
+        
+
+    });
+
+</script>
+
+<style type="text/css">
+    .wizard-step
+    {
+	    display: none;
+    }
+
+    .display-field
+    {
+	    font-weight: bold;
+    }
+</style>
    
 <div id= "create-post-page">
 @Html.ValidationSummary(true, "Vui lòng kiểm tra lại thông tin như thông báo bên dưới!", new { style = "color:red" })
 @using (Html.BeginForm("create", "post", FormMethod.Post, new { enctype = "multipart/form-data" }))
 {
         <div class = "content" style="float:left;" >
+            <div class="wizard-step">
+            <h3>
+                Step 1: Username and email address.</h3>
+            <div class="editor-label">
+                @Html.LabelFor(model => model.Title)
+            </div>
+            <div class="editor-field">
+                @Html.EditorFor(model => model.Title)
+                @Html.ValidationMessageFor(model => model.Title)
+            </div>
+            <div class="editor-label">
+                @Html.LabelFor(model => model.CategoryId)
+            </div>
+            <div class="editor-field">
+                @Html.DropDownList("CategoryId", null, new { @class = "select" })
+                @Html.ValidationMessageFor(model => model.CategoryId)
+            </div>
+            <div class="editor-label">
+                @Html.LabelFor(model => model.ProvinceId)
+            </div>
+            <div class="editor-field">
+                @Html.DropDownList("ProvinceId", (IEnumerable<SelectListItem>)ViewBag.ProvinceId, new { @class = "select" })
+                @Html.ValidationMessageFor(model => model.ProvinceId)
+            </div>
+            <div class="editor-label">
+                @Html.LabelFor(model => model.DistrictId)
+            </div>
+            <div class="editor-field">
+                @Html.DropDownListFor(model => model.DistrictId,
+                        new SelectList(Enumerable.Empty<SelectListItem>(), "Id", "Name"), "-- Chọn Quận/Huyện --",
+                        new { id = "DistrictId", @class = "select" })
+                @Html.ValidationMessageFor(model => model.DistrictId)
+            </div>
+            <div class="editor-label">
+                @Html.LabelFor(model => model.NumberHouse)
+            </div>
+            <div class="editor-field">
+                @Html.EditorFor(model => model.NumberHouse)
+                @Html.ValidationMessageFor(model => model.NumberHouse)
+            </div>
+            <div class="editor-label">
+                @Html.LabelFor(model => model.Street)
+            </div>
+            <div class="editor-field">
+                @Html.EditorFor(model => model.Street)
+                @Html.ValidationMessageFor(model => model.Street)
+            </div>
+            <div class="editor-label">
+                @Html.LabelFor(model => model.Price)
+            </div>
+            <div class="editor-field">
+                @Html.EditorFor(model => model.Price)
+                @Html.ValidationMessageFor(model => model.Price)
+            </div>
+            <div class="editor-label">
+                @Html.LabelFor(model => model.Area)
+            </div>
+            <div class="editor-field">
+                @Html.EditorFor(model => model.Area)
+                @Html.ValidationMessageFor(model => model.Area)
+            </div>
+            <div class="editor-label">
+                @Html.LabelFor(model => model.Area)
+            </div>
+            <div class="editor-field">
+                @Html.EditorFor(model => model.Area)
+                @Html.ValidationMessageFor(model => model.Area)
+            </div>
+            <div class="editor-label">
+                @Html.LabelFor(model => model.Direction)
+            </div>
+            <div class="editor-field">
+                @Html.EditorFor(model => model.Direction)
+                @Html.ValidationMessageFor(model => model.Direction)
+            </div>
+            <div class="editor-label">
+                @Html.LabelFor(model => model.Direction)
+            </div>
+            <div class="editor-field">
+                @Html.EditorFor(model => model.Direction)
+                @Html.ValidationMessageFor(model => model.Direction)
+            </div>
+            <div class="editor-label">
+                @Html.LabelFor(model => model.NameContact)
+            </div>
+            <div class="editor-field">
+                @Html.EditorFor(model => model.NameContact)
+                @Html.ValidationMessageFor(model => model.NameContact)
+            </div>
+            <div class="editor-label">
+                @Html.LabelFor(model => model.PhoneContact)
+            </div>
+            <div class="editor-field">
+                @Html.EditorFor(model => model.PhoneContact)
+                @Html.ValidationMessageFor(model => model.PhoneContact)
+            </div>
+            <div class="editor-label">
+                @Html.LabelFor(model => model.Email)
+            </div>
+            <div class="editor-field">
+                @Html.EditorFor(model => model.Email)
+                @Html.ValidationMessageFor(model => model.Email)
+            </div>
+            <div class="editor-label">
+                @Html.LabelFor(model => model.Yahoo)
+            </div>
+            <div class="editor-field">
+                @Html.EditorFor(model => model.Yahoo)
+                @Html.ValidationMessageFor(model => model.Yahoo)
+            </div>
+            <div class="editor-label">
+                @Html.LabelFor(model => model.Skype)
+            </div>
+            <div class="editor-field">
+                @Html.EditorFor(model => model.Skype)
+                @Html.ValidationMessageFor(model => model.Skype)
+            </div>
+            <div class="editor-label">
+                @Html.LabelFor(model => model.Description)
+            </div>
+            <div class="editor-field">
+                @Html.TextAreaFor(model => model.Description)
+                @Html.ValidationMessageFor(model => model.Description)
+            </div>
+            <div class = "map fl_r">
+                <div id="mapContainer" style="width:500px;height:380px;"></div>
+                <div class="editor-field">
+                    @Html.EditorFor(model => model.Lat)
+                </div>
+                <div class="editor-field">
+                    @Html.EditorFor(model => model.Lon)
+                </div>
+            </div>
+           <div id="uploadFile">
+                <fieldset>
+                <label>Chọn ảnh: </label>
+                <input id="file0" name="images" type="file" />
+                <a href="javascript:;" onclick="return addFile();" >Thêm ảnh</a>
+                </fieldset>
+            </div>
+        </div>
+        <div class="wizard-step" >
+            <h3>
+                Step 2: First name and last name.</h3>
             <table>
+                <tr>
+                    <td align="right">@Html.EditorFor(model => model.HasInternet)</td>
+                    <td>@Html.LabelFor(model => model.HasInternet)</td>
+                </tr>
+                <tr>
+                    <td align="right">@Html.EditorFor(model => model.HasWaterHeater)</td>
+                    <td>@Html.LabelFor(model => model.HasWaterHeater)</td>
+                </tr>
+                <tr>
+                    <td align="left">@Html.LabelFor(model => model.ElectricityFee)</td>
+                    <td>@Html.EditorFor(model => model.ElectricityFee)
+                        @Html.ValidationMessageFor(model => model.ElectricityFee)
+                    </td>
+                </tr>
+                <tr>
+                    <td align="left">@Html.LabelFor(model => model.WaterFee)</td>
+                    <td>@Html.EditorFor(model => model.WaterFee)
+                        @Html.ValidationMessageFor(model => model.WaterFee)
+                    </td>
+                </tr>
+                <tr>
+                    <td align="right">@Html.EditorFor(model => model.HasTVCable)</td>
+                    <td>@Html.LabelFor(model => model.HasTVCable)</td>
+                </tr>
+                <tr>
+                    <td align="right">@Html.EditorFor(model => model.HasBed)</td>
+                    <td>@Html.LabelFor(model => model.HasBed)</td>
+                </tr>
+                <tr>
+                    <td align="right">@Html.EditorFor(model => model.IsAllowCooking)</td>
+                    <td>@Html.LabelFor(model => model.IsAllowCooking)</td>
+                </tr>
+                <tr>
+                    <td align="right">@Html.EditorFor(model => model.HasMotorParking)</td>
+                    <td>@Html.LabelFor(model => model.HasMotorParking)</td>
+                </tr>
+                <tr>
+                    <td align="right">@Html.EditorFor(model => model.HasToilet)</td>
+                    <td>@Html.LabelFor(model => model.HasToilet)</td>
+                </tr>
+                <tr>
+                    <td align="right">@Html.EditorFor(model => model.HasAirConditioner)</td>
+                    <td>@Html.LabelFor(model => model.HasAirConditioner)</td>
+                </tr>
+                <tr>
+                    <td align="right">@Html.EditorFor(model => model.HasGarage)</td>
+                    <td>@Html.LabelFor(model => model.HasGarage)</td>
+                </tr>
+                <tr>
+                    <td align="right">@Html.EditorFor(model => model.IsStayWithOwner)</td>
+                    <td>@Html.LabelFor(model => model.IsStayWithOwner)</td>
+                </tr>
+                <tr>
+                    <td align="right">@Html.EditorFor(model => model.HasSecurity)</td>
+                    <td>@Html.LabelFor(model => model.HasSecurity)</td>
+                </tr>
+                <tr>
+                    <td align="left">@Html.LabelFor(model => model.RestrictHours)</td>
+                    <td>@Html.EditorFor(model => model.RestrictHours)
+                        @Html.ValidationMessageFor(model => model.RestrictHours)
+                    </td>
+                </tr>
+                <tr>
+                    <td align="left">@Html.Label("Địa điểm lân cận:")</td>
+                    <td><input type="text" name="tag[]" value="" class="tag"/>
+                   </td>
+                </tr>
+            </table>
+        </div>
+        <div class="wizard-step" >
+            <h3>
+                Step 3: Age and biography.</h3>
+            <table>
+                <tr>
+                    <td align="left">@Html.LabelFor(model => model.PhoneActive)</td>
+                    <td>@Html.EditorFor(model => model.PhoneActive)
+                        @Html.ValidationMessageFor(model => model.PhoneActive)
+                    </td>
+                </tr>
+            </table>
+        </div>
+        <div class="wizard-step confirm">
+        
+        </div>
+       
+       
+        <p>
+            <input type="button" id="back-step" name="back-step" value="< Back" />
+            <input type="button" id="next-step" name="next-step" value="Next >" />            
+        </p>
+            @*<table>
                 <tr>
                     <td align="left">@Html.LabelFor(model => model.Title)</td>
                     <td>@Html.EditorFor(model => model.Title)
@@ -356,6 +667,12 @@
                    </td>
                 </tr>
                 <tr>
+                    <td align="left">@Html.LabelFor(model => model.NameContact)</td>
+                    <td>@Html.EditorFor(model => model.NameContact)
+                        @Html.ValidationMessageFor(model => model.NameContact)
+                   </td>
+                </tr>
+                <tr>
                     <td align="left">@Html.Label("Địa điểm lân cận:")</td>
                     <td><input type="text" name="tag[]" value="" class="tag"/>
                    </td>
@@ -372,9 +689,9 @@
 
             <p>
                 <input type="submit" value="Create" />
-            </p>
+            </p>*@
         </div>
-        <div class = "map fl_r">
+        @*<div class = "map fl_r">
             <div id="mapContainer" style="width:500px;height:380px;"></div>
             <div class="editor-field">
                 @Html.EditorFor(model => model.Lat)
@@ -382,7 +699,7 @@
             <div class="editor-field">
                 @Html.EditorFor(model => model.Lon)
             </div>
-        </div>
+        </div>*@
         <div class = "clear" style="clear:both;">
         </div>
 }

@@ -88,6 +88,62 @@ namespace RentalHouseFinding.Controllers
             return View(CommonModel.ConvertPostToPostViewModel(post));
         }
 
+        public ActionResult DetailsBox(int id)
+        {
+            var post = (from p in _db.Posts where p.Id == id select p).FirstOrDefault();
+            if (post == null)
+            {
+                return View();
+            }
+            var districtAndProvinceName = Repository.GetAllDistricts().Where(d => d.Id == post.DistrictId).Select(d => new { districtName = d.Name, provinceName = d.Province.Name }).FirstOrDefault();
+            //var districtAndProvinceName = (from d in _db.Districts 
+            //                    where d.Id == post.DistrictId
+            //                    select new { districtName = d.Name , provinceName= d.Province.Name}).FirstOrDefault();            
+            ViewBag.Address = districtAndProvinceName.districtName + ", " + districtAndProvinceName.provinceName;
+            ViewBag.Internet = post.Facilities.HasInternet ? "Có" : "Không";
+            ViewBag.AirConditioner = post.Facilities.HasAirConditioner ? "Có" : "Không";
+            ViewBag.Bed = post.Facilities.HasBed ? "Có" : "Không";
+            ViewBag.Gara = post.Facilities.HasGarage ? "Có" : "Không";
+            ViewBag.MotorParkingLot = post.Facilities.HasMotorParkingLot ? "Có" : "Không";
+            ViewBag.Security = post.Facilities.HasSecurity ? "Có" : "Không";
+            ViewBag.Toilet = post.Facilities.HasToilet ? "Có" : "Không";
+            ViewBag.TVCable = post.Facilities.HasTVCable ? "Có" : "Không";
+            ViewBag.WaterHeater = post.Facilities.HasWaterHeater ? "Có" : "Không";
+            ViewBag.AllowCooking = post.Facilities.IsAllowCooking ? "Có" : "Không";
+            ViewBag.StayWithOwner = post.Facilities.IsStayWithOwner ? "Có" : "Không";
+            ViewBag.WaterHeater = post.Facilities.HasWaterHeater ? "Có" : "Không";
+            //Get images
+            var images = (from i in _db.PostImages where (i.PostId == post.Id && !i.IsDeleted) select i);
+            if (images != null)
+            {
+                ViewBag.Images = images.ToList();
+            }
+            //Check if the post is in favorite list
+            if (User.Identity.IsAuthenticated)
+            {
+                int userId = CommonModel.GetUserIdByUsername(User.Identity.Name);
+                var favorite = (from f in _db.Favorites
+                                where
+                                    (f.PostId == post.Id && f.UserId == userId && !f.IsDeleted)
+                                select f).ToList();
+                if (favorite.Count > 0)
+                {
+                    ViewBag.RemoveFavorite = true;
+                }
+                else
+                {
+                    ViewBag.RemoveFavorite = false;
+                }
+            }
+            TempData["PostID"] = post.Id;
+            TempData["CreatedUserId"] = post.UserId;
+
+            Session["PostID"] = post.Id;
+            Session["CreatedUserId"] = post.UserId;
+
+            return View(CommonModel.ConvertPostToPostViewModel(post));
+        }
+
         //
         // GET: /Post/Create
 		
@@ -196,7 +252,13 @@ namespace RentalHouseFinding.Controllers
             ViewBag.ProvinceId = new SelectList(Repository.GetAllProvinces(), "Id", "Name", model.ProvinceId);
             return View(model);
         }
-        
+
+        [HttpPost]
+        public ActionResult Confirm(PostViewModel model)
+        {
+            return PartialView(model);
+        }
+
         //
         // GET: /Post/Edit/5
 		[Authorize(Roles = "User, Admin")]
