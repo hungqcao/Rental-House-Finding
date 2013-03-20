@@ -301,20 +301,30 @@ namespace RentalHouseFinding.Controllers
         [HttpPost]
         public ActionResult Register(RegisterModel model)
         {
-            if (ModelState.IsValid)
+            if (model.CaptchaText != HttpContext.Session["captchastring"].ToString())
             {
-                // Attempt to register the user
-                MembershipCreateStatus createStatus;
-                CustomMembershipProvider customMP = new CustomMembershipProvider();
-                customMP.CreateUser(model, out createStatus);
-                if (createStatus == MembershipCreateStatus.Success)
+                ViewBag.Message = "Sai mã bảo vệ";
+                return View(model);
+            }
+            else
+            {
+
+
+                if (ModelState.IsValid)
                 {
-                    FormsAuthentication.SetAuthCookie(model.UserName, false /* createPersistentCookie */);
-                    return RedirectToAction("Index", "Landing");                    
-                }
-                else
-                {
-                    ModelState.AddModelError("", ErrorCodeToString(createStatus));
+                    // Attempt to register the user
+                    MembershipCreateStatus createStatus;
+                    CustomMembershipProvider customMP = new CustomMembershipProvider();
+                    customMP.CreateUser(model, out createStatus);
+                    if (createStatus == MembershipCreateStatus.Success)
+                    {
+                        FormsAuthentication.SetAuthCookie(model.UserName, false /* createPersistentCookie */);
+                        return RedirectToAction("Index", "Landing");
+                    }
+                    else
+                    {
+                        ModelState.AddModelError("", ErrorCodeToString(createStatus));
+                    }
                 }
             }
 
@@ -406,6 +416,11 @@ namespace RentalHouseFinding.Controllers
                 sBuilder.Append(data[i].ToString("x2"));
             }
             return sBuilder.ToString();
+        }
+
+        public CaptchaImageResult ShowCaptchaImage()
+        {
+            return new CaptchaImageResult();
         }
 
         #region Status Codes
