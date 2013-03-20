@@ -109,6 +109,7 @@
     <Compile Include="Controllers\User\UserController.cs" />
     <Compile Include="Controllers\ValidationController.cs" />
     <Compile Include="Models\AnswerViewModel.cs" />
+    <Compile Include="Models\CaptchaImageResult.cs" />
     <Compile Include="Models\FacebookLoginModel.cs" />
     <Compile Include="Models\Picture.cs" />
     <Compile Include="Models\QuestionViewModel.cs" />
