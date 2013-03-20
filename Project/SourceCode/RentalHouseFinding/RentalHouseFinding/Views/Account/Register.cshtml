@@ -72,31 +72,30 @@
     <div class="helloLine"></div>
 </div>
 <div class="clear"></div>
-@using (Html.BeginForm()) {
-    @Html.ValidationSummary(true, "Account creation was unsuccessful. Please correct the errors and try again.")
+
     <div id="regisPanel" class="login-regis">
         <div class="title">
             <h1>Đăng kí</h1>
             <h2>Bạn nên đăng kí để có những tiện ích hỗ trợ tốt nhất.</h2>
         </div>
         <div class="clear"></div>
-        <div class="socials">  
-            <h2>Đăng nhập cực nhanh với các tài khoản có sẵn của bạn tại:</h2>
-            <div class="openid_choice">
-                <div id="openid_btns">
+        <form action="Authenticate?ReturnUrl=@HttpUtility.UrlEncode(Request.QueryString["ReturnUrl"])" method="post" id="openid_form">
+            <input type="hidden" name="action" value="verify" />
+            <div class="socials">   
+                <h2>Đăng nhập nhanh với các tài khoản có sẵn của bạn tại:</h2>
+                <div class="openid_choice">
+                    <div id="openid_btns">
+                    </div>
+                </div>
+                <div id ="loading" style="display:none">
+                <img alt="login loading" src="/Content/images/loading.gif">
                 </div>
             </div>
-            <div id ="loading" style="display:none">
-            <img alt="login loading" src="/Content/images/loading.gif">
-            </div>
-        </div>
-        @*<div class="socials">
-            <h2>Đăng nhập cực nhanh với các tài khoản có sẵn của bạn tại:</h2>
-            <a href="javascript:;" id="facebook"><img src="@Url.Content("~/Content/images/login_fb.png")" alt="Facebook"/></a>
-            <a href="javascript:;" id="google"><img src="@Url.Content("~/Content/images/login_gg.png")" alt="Google+"/></a>
-            <a href="javascript:;" id="yahoo"><img src="@Url.Content("~/Content/images/login_yh.png")" alt="Yahoo!"/></a>
-        </div>*@
+        </form>
+       
         <div class="clear"></div>
+        @using (Html.BeginForm()) {
+    @Html.ValidationSummary(true, "Account creation was unsuccessful. Please correct the errors and try again.")
         <div class="userInfo">
             <h2>Đăng kí tài khoản 5house.vn chỉ với 1 bước đơn giản</h2>
             <div class="blockInfo leftBlock" id="blockName">
@@ -157,16 +156,9 @@
                     @Html.TextBoxFor(m => m.CaptchaText, new { @class = "tbxRegisterCapcha" })
                     @Html.ValidationMessageFor(m => m.CaptchaText)         
                 </div>
-                @*<label>Mã bảo vệ</label>
-                <div class="textbox" id="maBaoVe1">
-                    <div class="leftTbx"></div>
-                    <input class="midTbx" id="tbxMaBaoVe1" type="text" style="width: 90px;"/>
-                    <div class="rightTbx"></div>
-                </div>*@
+               
                 <div class="textbox" style="margin-left:95px">
-                    @*<div class="leftTbx"></div>
-                    <input class="midTbx" id="tbxMaBaoVe2" type="text" style="width: 90px;" value="2GpD35"/>
-                    <div class="rightTbx"></div>*@
+                   
                     <p><img src="/account/ShowCaptchaImage" /></p>
                     @ViewBag.Message
                 </div>
@@ -180,5 +172,6 @@
                 <input type="submit" id="btnRegis" value=""/>
             </div>
         </div>
-    </div>
+    
 }
+</div>

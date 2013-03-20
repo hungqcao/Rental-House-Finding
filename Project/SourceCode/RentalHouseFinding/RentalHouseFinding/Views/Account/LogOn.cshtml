@@ -27,9 +27,6 @@
     }   
 </script>  
 
-@Html.ValidationSummary(true, "Login was unsuccessful. Please correct the errors and try again.")
-@using (Html.BeginForm())
-{
     <div class="helloText">
         <div class="helloLine"></div>
         <span>Chào bạn!</span>
@@ -56,6 +53,9 @@
             </div>
         </form>
         <div class="clear"></div>
+@Html.ValidationSummary(true, "Login was unsuccessful. Please correct the errors and try again.")
+@using (Html.BeginForm())
+{
         <div class="userInfo">
             <h2>Đăng nhập vào tài khoản 5house.vn của bạn ngay</h2>
             <div class="blockInfo leftBlock" id="blockEmail">
@@ -85,5 +85,6 @@
             @Html.CheckBoxFor(m => m.RememberMe, new { @class="checkbox"})
             <input type="submit" id="btnLogin" value=""/>
         </div>
-    </div>
+    
 }
+</div>
