@@ -76,7 +76,7 @@
 
         });
         //--------------------
-        var marker;
+
         var map;
         var mapProp = {
             center: new google.maps.LatLng(21.04349121680354, 105.523681640625),
@@ -84,6 +84,7 @@
             mapTypeId: google.maps.MapTypeId.ROADMAP
         };
         map = new google.maps.Map(document.getElementById("mapContainer"), mapProp);
+        var marker;             
         google.maps.event.addListener(map, 'click', function (event) {
             if (marker == null) {
                 marker = new google.maps.Marker({
@@ -91,17 +92,21 @@
                     map: map,
                     draggable: true
                 });
+
             } else {
                 marker.setPosition(event.latLng);
             }
             $('#Lat').val(event.latLng.lat());
             $('#Lon').val(event.latLng.lng());
+            google.maps.event.addListener(marker, 'dragend', function (event) {
+                $('#Lat').val(event.latLng.lat());
+                $('#Lon').val(event.latLng.lng());
+            });
         });
-
         
         //For tag input
         var source;
-        $.getJSON("@baseUri.ToString()" + "service/GetLocation", 
+        $.getJSON("@baseUri.ToString()" + "service/GetLocation",
             function (myData) {
                 source = myData;
             });
@@ -162,7 +167,7 @@
                         }
                     });
                 });
-                $.getJSON("@baseUri.ToString()" + "service/GetLatLon", { id: idPro, type: "province" },
+            $.getJSON("@baseUri.ToString()" + "service/GetLatLon", { id: idPro, type: "province" },
                 function (myData) {
                     $.each(myData, function (index, itemData) {
                         var provinceLatLon = new google.maps.LatLng(itemData.Value.split(';')[0], itemData.Value.split(';')[1]);
@@ -199,6 +204,7 @@
                 geocoder.geocode({ 'address': address }, function (results, status) {
                     if (status == google.maps.GeocoderStatus.OK) {
                         map.setOptions({
+
                             center: results[0].geometry.location,
                             zoom: 16
                         });
@@ -212,6 +218,12 @@
                         else {
                             marker.setPosition(results[0].geometry.location);
                         }
+                        $('#Lat').val(results[0].geometry.location.kb);
+                        $('#Lon').val(results[0].geometry.location.lb);
+                        google.maps.event.addListener(marker, 'dragend', function (event) {
+                            $('#Lat').val(event.latLng.lat());
+                            $('#Lon').val(event.latLng.lng());
+                        });
                     }
                     else {
                         alert("Lỗi kết nối đến máy chủ google: " + status);
@@ -219,7 +231,7 @@
                 });
             }
         });
-        
+
     });
 </script>
 <script type = "text/javascript">
