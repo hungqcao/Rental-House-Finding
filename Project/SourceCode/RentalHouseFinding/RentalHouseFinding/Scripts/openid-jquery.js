@@ -94,14 +94,7 @@ openid = {
 		this.provider_id = box_id;
 		this.provider_url = provider['url'];
 		// prompt user for input?
-		if (provider['label']) {
-			this.useInputBox(provider);
-		} else {
-			$('#openid_input_area').empty();
-			if (!onload) {
-				$('#openid_form').submit();
-			}
-		}
+		$('#openid_form').submit();
 	},
 
 	/**

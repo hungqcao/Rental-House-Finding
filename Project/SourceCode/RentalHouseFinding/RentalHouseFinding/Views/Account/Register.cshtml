@@ -57,7 +57,7 @@
         </div>
         <div class="clear"></div>
         <div class="socials">
-            <h2>Đăng kí cực nhanh với các tài khoản có sẵn của bạn tại:</h2>
+            <h2>Đăng nhập cực nhanh với các tài khoản có sẵn của bạn tại:</h2>
             <a href="javascript:;" id="facebook"><img src="@Url.Content("~/Content/images/login_fb.png")" alt="Facebook"/></a>
             <a href="javascript:;" id="google"><img src="@Url.Content("~/Content/images/login_gg.png")" alt="Google+"/></a>
             <a href="javascript:;" id="yahoo"><img src="@Url.Content("~/Content/images/login_yh.png")" alt="Yahoo!"/></a>
@@ -117,16 +117,26 @@
             </div>
             <div class="clear"></div>
             <div class="blockInfo leftBlock lastBlock">
-                <label>Mã bảo vệ</label>
+            <label>@Html.LabelFor(m => m.CaptchaText)</label>
+                <div class="clear"></div>
+                <div class="textbox">
+                              
+                @Html.TextBoxFor(m => m.CaptchaText, new { @class = "tbxRegister" })
+                @Html.ValidationMessageFor(m => m.CaptchaText)                 
+                    
+                </div>
+                @*<label>Mã bảo vệ</label>
                 <div class="textbox" id="maBaoVe1">
                     <div class="leftTbx"></div>
                     <input class="midTbx" id="tbxMaBaoVe1" type="text" style="width: 90px;"/>
                     <div class="rightTbx"></div>
-                </div>
+                </div>*@
                 <div class="textbox">
-                    <div class="leftTbx"></div>
+                    @*<div class="leftTbx"></div>
                     <input class="midTbx" id="tbxMaBaoVe2" type="text" style="width: 90px;" value="2GpD35"/>
-                    <div class="rightTbx"></div>
+                    <div class="rightTbx"></div>*@
+                    <p><img src="/account/ShowCaptchaImage" /></p>
+                    @ViewBag.Message
                 </div>
             </div>
             <div class="blockInfo lastBlock" id="blockBtnRegis">
