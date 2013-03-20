@@ -7,28 +7,23 @@
 @using (Ajax.BeginForm("sendquestion", "post", new AjaxOptions { UpdateTargetId = "result" }))
 {
     @Html.ValidationSummary(true)
-    <fieldset>
-        <div id="result"></div>
-        <input id = "UserId" name="UserId" value="@userId" type="hidden" />
-        <div class="editor-label">
-            @Html.LabelFor(model => model.TitleQuestion)
-        </div>
-        <div class="editor-field">
-            @Html.EditorFor(model => model.TitleQuestion)
-            @Html.ValidationMessageFor(model => model.TitleQuestion)
-        </div>
-
-        <div class="editor-label">
-            @Html.LabelFor(model => model.ContentQuestion)
-        </div>
-        <div class="editor-field">
-            @Html.EditorFor(model => model.ContentQuestion)
-            @Html.ValidationMessageFor(model => model.ContentQuestion)
-        </div>
-
-        <p>
-            <input type="submit" value="Submit" />
-        </p>
-    </fieldset>
+    <div id="result"></div>
+    <input id = "UserId" name="UserId" value="@userId" type="hidden" />
+    <div class="title-ques" >
+        @Html.LabelFor(model => model.TitleQuestion)
+    </div>
+    <div class="title-ques-input">
+        @Html.EditorFor(model => model.TitleQuestion)
+        @Html.ValidationMessageFor(model => model.TitleQuestion)
+    </div>
+    <div class="clear"></div>
+    <div class="title-ques" >
+        @Html.LabelFor(model => model.ContentQuestion)
+    </div>
+    <div class="content-ques-input" >
+        @Html.TextAreaFor(model => model.ContentQuestion)
+        @Html.ValidationMessageFor(model => model.ContentQuestion)
+    </div>
+    <input type="submit" value="Submit" class="btn-send-question"/>
 }
 

@@ -1,7 +1,7 @@
 ﻿@{
     if (ViewBag.Images == null || ViewBag.Images.Count == 0)
     {
-        <li>Không có hình ảnh</li>
+        <span>Không có hình ảnh</span>
     }
     else
     {
@@ -12,17 +12,17 @@
         <script language="javascript">
             $(document).ready(
 		        function () {
-		            $("#pikame").PikaChoose({ carousel: true, autoPlay: false, carouselOptions: { wrap: 'circular'} });
+		            $("#pikame").PikaChoose({ carousel: false, autoPlay: false, carouselOptions: { wrap: 'circular'} });
 		        });
         </script>
 
         <div class="pikachoose">
-        <ul id="pikame" class="jcarousel-skin-pika">
-        @for (var i = 0; i < @ViewBag.Images.Count; i++)
-        { 
-            <li><img src="@ViewBag.Images[i].Path" alt="" /></li>
-        }	
-        </ul>
+            <ul id="pikame" class="jcarousel-skin-pika" style="display:none">
+            @for (var i = 0; i < @ViewBag.Images.Count; i++)
+            { 
+                <li><img src="@ViewBag.Images[i].Path" alt="" /></li>
+            }	
+            </ul>
         </div>
     }
 }

@@ -196,7 +196,8 @@ namespace RentalHouseFinding.Common
                 AllowCooking = model.Facilities.IsAllowCooking ? "Có" : "Không",
                 StayWithOwner = model.Facilities.IsStayWithOwner ? "Có" : "Không",
                 UserId = model.UserId,
-                NameContact = model.Contacts.NameContact
+                NameContact = model.Contacts.NameContact,
+                NearByPlace = model.NearbyPlace
             };
         }
 
