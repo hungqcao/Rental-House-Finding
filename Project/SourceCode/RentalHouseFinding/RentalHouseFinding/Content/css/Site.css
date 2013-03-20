@@ -529,6 +529,12 @@ span.field-validation-error > span, span.field-validation-error
     float: right;
     margin: 23px 80px 0 0;
 }
+.checkbox, .buttons label
+{
+    display: block;
+    float: left;
+    margin: 17px 10px 0 0;
+}
 .login-regis .buttons span, .login-regis #cbxSaveLogin  {
     display: block;
     float: left;
