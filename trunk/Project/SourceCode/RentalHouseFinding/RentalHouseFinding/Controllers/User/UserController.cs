@@ -115,7 +115,7 @@ namespace RentalHouseFinding.Controllers
                              where (f.UserId == userId && !f.IsDeleted)
                              select f.PostId).ToList();
             var favoriteList = (from f in _db.Posts
-                                where (f.UserId == userId && !f.IsDeleted && lstPostId.Contains(f.Id))
+                                where (!f.IsDeleted && lstPostId.Contains(f.Id))
                                 select f).ToList();
             ViewBag.FavoriteList = favoriteList;
             return View();

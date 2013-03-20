@@ -148,6 +148,7 @@ namespace RentalHouseFinding.Models
         public string Repost { get; set; }
         public int? UserId { get; set; }
 
+        public string NearByPlace { get; set; }
         public IEnumerable<HttpPostedFileBase> Images { get; set; }
     } 
    
