@@ -39,12 +39,12 @@ namespace RentalHouseFinding.Models
 
         public override void ExecuteResult(ControllerContext context)
         {
-            Bitmap bmp = new Bitmap(100, 30);
+            Bitmap bmp = new Bitmap(118, 49);
             Graphics g = Graphics.FromImage(bmp);
-            g.Clear(Color.Navy);
+            g.Clear(Color.GhostWhite);
             string randomString = GetCaptchaString(6);
             context.HttpContext.Session["captchastring"] = randomString;
-            g.DrawString(randomString, new Font("Courier", 16), new SolidBrush(Color.WhiteSmoke), 2, 2);
+            g.DrawString(randomString, new Font("Courier", 16), new SolidBrush(Color.LightGray), 2, 2);
             HttpResponseBase response = context.HttpContext.Response;
             response.ContentType = "image/jpeg";
             bmp.Save(response.OutputStream,ImageFormat.Jpeg);

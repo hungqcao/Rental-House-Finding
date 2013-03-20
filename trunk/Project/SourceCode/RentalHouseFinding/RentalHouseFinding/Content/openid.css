@@ -17,6 +17,12 @@
 	display: none;
 }
 
+.openid_choice
+{
+    width: 390px;
+    margin: 0 auto;
+}
+
 #openid_input_area {
 	clear: both;
 	padding: 10px;
@@ -33,13 +39,13 @@
 }
 
 .openid_large_btn {
-	width: 100px;
+	width: 120px;
 	height: 60px;
 /* fix for IE 6 only: http://en.wikipedia.org/wiki/CSS_filter#Underscore_hack */
 	_width: 102px;
 	_height: 62px;
 
-	border: 1px solid #DDD;
+	/*border: 1px solid #DDD;*/
 	margin: 3px;
 	float: left;
 }
