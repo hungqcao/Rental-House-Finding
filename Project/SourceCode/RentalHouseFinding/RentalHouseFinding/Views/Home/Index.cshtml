@@ -42,8 +42,10 @@
         .success(function (result) {
             $('.scroll-pane').html(result);
             $("a.fancybox").fancybox({
-                'type': 'ajax'
-            });
+                'width': '85%',
+                'height': '100%',
+                'type': 'iframe'
+           });
 
             var map;
             var i = 0;
