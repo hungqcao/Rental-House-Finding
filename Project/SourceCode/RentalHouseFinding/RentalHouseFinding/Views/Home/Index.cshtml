@@ -45,7 +45,7 @@
                 'width': '85%',
                 'height': '100%',
                 'type': 'iframe'
-           });
+            });
 
             var map;
             var i = 0;
@@ -58,7 +58,7 @@
             //        function initialize() {
             var mapProp = {
                 zoomControl: true,
-                zoom: 0,
+                zoom: 13,
                 mapTypeId: google.maps.MapTypeId.ROADMAP
             };
             var infowindow;
@@ -72,11 +72,11 @@
             $.getJSON("home/GetLatLonFromResult",
             function (myData) {
                 source = myData;
-//                var marker;
-//                var imageUrl = 'http://chart.apis.google.com/chart?cht=mm&chs=24x32&chco=' +
-//                'FFFFFF,008CFF,000000&ext=.png';
-//                        var markerImage = new google.maps.MarkerImage(imageUrl,
-//                new google.maps.Size(24, 32));
+                //                var marker;
+                //                var imageUrl = 'http://chart.apis.google.com/chart?cht=mm&chs=24x32&chco=' +
+                //                'FFFFFF,008CFF,000000&ext=.png';
+                //                        var markerImage = new google.maps.MarkerImage(imageUrl,
+                //                new google.maps.Size(24, 32));
 
                 var markerImg = new google.maps.MarkerImage(imageInactive);
                 var altMarkerImg = new google.maps.MarkerImage(imageActive);
@@ -91,24 +91,41 @@
                         var latLonToSet = new google.maps.LatLng((itemData.Text.split(';')[0]), (itemData.Text.split(';')[1]));
                         map.setOptions({
                             center: latLonToSet,
-                            zoom: 11
+                            zoom: 14
                         });
                         i++;
                         infowindow = new google.maps.InfoWindow();
                         google.maps.event.addListener(marker, 'click', (function (marker, i) {
                             return function () {
-                                infowindow.setContent(itemData.Value);
+                                var valuePost = itemData.Value.split('|');                              
+                                infowindow.setContent('<div class="1">'
+                                + '<h3>' +valuePost[2] +'</h3>'
+                                + ' <br>'
+                                + '<h4>'+valuePost[1] +'<h4>'
+                                + '<br>'
+                                + '<br>'
+                                + 'Diện tích:' + valuePost[5]+' m2' + '  |  Giá:' + valuePost[4] + ' VNĐ'
+                                + '<br>'
+                                + '<br>'
+                                + 'Liên hệ:' + valuePost[3] + '<br>'
+                                + '<br>'                                
+                                + '<a class="infoDetail left fancybox" href="/post/detailsbox/'+valuePost[0]+'">Xem chi tiết</a>'
+                                + '</div>');
                                 infowindow.open(map, marker);
                             }
                         })(marker, i));
-
                         markers.marker.push({ "id": itemData.Value, "value": marker });
                         markers1.push(marker);
                         //bounds.extend(latLonToSet);
                     }
                 });
-                debugger;
-                var markerCluster = new MarkerClusterer(map, markers1);
+                var markerCluster = new MarkerClusterer(map, markers1, {
+                    zoomOnClick: false,
+                    maxZoom: 18,
+                    gridSize: 50
+                });
+                MarkerCluster.setGridSize(100);
+
             });
 
             $("#ul-result li a").mouseover(function () {
