@@ -6,7 +6,6 @@
 }
 <script src="@Url.Content("~/Scripts/jquery.validate.min.js")" type="text/javascript"></script>
 <script src="@Url.Content("~/Scripts/jquery.validate.unobtrusive.min.js")" type="text/javascript"></script>
-<script src="http://maps.googleapis.com/maps/api/js?sensor=false" type="text/javascript"></script>
 <script src="@Url.Content("~/Scripts/RHFScripts.js")" type="text/javascript"></script>
 <script src="@Url.Content("~/Scripts/jquery-ui-1.8.11.min.js")" type="text/javascript"></script>
 
@@ -21,55 +20,33 @@
 
 @*Group Marker*@
 <script src="http://www.google.com/jsapi"></script>
-
-
-
-
 <script type="text/javascript">
-    $(document).ready(function () {
+    function initialize() {
+        var mapOptions = {
+            zoomControl: true,
+            zoom: 13,
+            mapTypeId: google.maps.MapTypeId.ROADMAP
+        };
 
-        var source;
-        $.ajax({
-            url: 'home/GetSectionSideListPost',
-            contentType: 'application/html; charset=utf-8',
-            type: 'GET',
-            dataType: 'html',
-            data: {
-                skipNum: 0,
-                takeNum: 10
-            }
-        })
-        .success(function (result) {
-            $('.scroll-pane').html(result);
-            $("a.fancybox").fancybox({
-                'width': '85%',
-                'height': '100%',
-                'type': 'iframe'
-            });
+        var map = new google.maps.Map(document.getElementById('infoMap'),
+            mapOptions);
+        var i = 0;
+        var markers1 = [];
+        var markers = { marker: [] };
+        var imageInactive = '@Url.Content("~/Content/images/inactive_marker.png")';
+        var imageActive = '@Url.Content("~/Content/images/active_marker.png")';
 
-            var map;
-            var i = 0;
-            var markers1 = [];
-            var markers = { marker: [] };
-            var imageInactive = '@Url.Content("~/Content/images/inactive_marker.png")';
-            var imageActive = '@Url.Content("~/Content/images/active_marker.png")';
+        //var bounds = new google.maps.LatLngBounds();
+        //        function initialize() {
+        
+        var infowindow;
+        //=======For Group Marker=======
 
-            //var bounds = new google.maps.LatLngBounds();
-            //        function initialize() {
-            var mapProp = {
-                zoomControl: true,
-                zoom: 13,
-                mapTypeId: google.maps.MapTypeId.ROADMAP
-            };
-            var infowindow;
-            map = new google.maps.Map(document.getElementById("infoMap"), mapProp);
-            //=======For Group Marker=======
-
-            //===========End================
+        //===========End================
 
 
 
-            $.getJSON("home/GetLatLonFromResult",
+        $.getJSON("home/GetLatLonFromResult",
             function (myData) {
                 source = myData;
                 //                var marker;
@@ -97,19 +74,19 @@
                         infowindow = new google.maps.InfoWindow();
                         google.maps.event.addListener(marker, 'click', (function (marker, i) {
                             return function () {
-                                var valuePost = itemData.Value.split('|');                              
+                                var valuePost = itemData.Value.split('|');
                                 infowindow.setContent('<div class="1">'
-                                + '<h3>' +valuePost[2] +'</h3>'
+                                + '<h3>' + valuePost[2] + '</h3>'
                                 + ' <br>'
-                                + '<h4>'+valuePost[1] +'<h4>'
+                                + '<h4>' + valuePost[1] + '<h4>'
                                 + '<br>'
                                 + '<br>'
-                                + 'Diện tích:' + valuePost[5]+' m2' + '  |  Giá:' + valuePost[4] + ' VNĐ'
+                                + 'Diện tích:' + valuePost[5] + ' m2' + '  |  Giá:' + valuePost[4] + ' VNĐ'
                                 + '<br>'
                                 + '<br>'
                                 + 'Liên hệ:' + valuePost[3] + '<br>'
-                                + '<br>'                                
-                                + '<a class="infoDetail left fancybox" href="/post/detailsbox/'+valuePost[0]+'">Xem chi tiết</a>'
+                                + '<br>'
+                                + '<a class="infoDetail left fancybox" href="/post/detailsbox/' + valuePost[0] + '">Xem chi tiết</a>'
                                 + '</div>');
                                 infowindow.open(map, marker);
                             }
@@ -124,35 +101,62 @@
                     maxZoom: 18,
                     gridSize: 50
                 });
-                MarkerCluster.setGridSize(100);
 
             });
 
-            $("#ul-result li a").mouseover(function () {
-                var id = $(this).attr('id').split('-')[1];
-                for (var key in markers.marker) {
-                    if (markers.marker[key].id == id) {
-                        markers.marker[key].value.setIcon(imageActive);
-                    }
+        $("#ul-result li a").mouseover(function () {
+            var id = $(this).attr('id').split('-')[1];
+            for (var key in markers.marker) {
+                if (markers.marker[key].id == id) {
+                    markers.marker[key].value.setIcon(imageActive);
                 }
-            }).mouseout(function () {
-                var id = $(this).attr('id').split('-')[1];
-                for (var key in markers.marker) {
-                    if (markers.marker[key].id == id) {
-                        markers.marker[key].value.setIcon(imageInactive);
-                    }
+            }
+        }).mouseout(function () {
+            var id = $(this).attr('id').split('-')[1];
+            for (var key in markers.marker) {
+                if (markers.marker[key].id == id) {
+                    markers.marker[key].value.setIcon(imageInactive);
                 }
-            });
-            //            $("#ul-result li a").on('mouseenter', function () {
-            //                var id = $(this).attr('id').split('-')[1];
-            //                markers.marker[id].setIcon(imageActive);
-            //            }).on('mouseleave', function () {
-            //                var id = $(this).attr('id').split('-')[1];
-            //                markers.marker[id].setIcon(imageInactive);
-            //            });
+            }
+        });
+    }
 
-            //        google.maps.event.addDomListener(window, 'load', initialize);
-            //        google.setOnLoadCallback(initialize(source));
+    function loadScript() {
+        var script = document.createElement('script');
+        script.type = 'text/javascript';
+        script.src = 'https://maps.googleapis.com/maps/api/js?v=3.exp&sensor=false&' +
+            'callback=initialize';
+        document.body.appendChild(script);
+    }
+
+    window.onload = loadScript;
+</script>
+
+
+
+<script type="text/javascript">
+    $(document).ready(function () {
+
+        var source;
+        $.ajax({
+            url: 'home/GetSectionSideListPost',
+            contentType: 'application/html; charset=utf-8',
+            type: 'GET',
+            dataType: 'html',
+            data: {
+                skipNum: 0,
+                takeNum: 10
+            }
+        })
+        .success(function (result) {
+            $('.scroll-pane').html(result);
+            $("a.fancybox").fancybox({
+                'width': '85%',
+                'height': '100%',
+                'type': 'iframe'
+            });
+
+            
         })
         .error(function (xhr, status) {
             xhr.abort();
@@ -212,15 +216,6 @@
 
 @section head{
     <script type="text/javascript">
-
-        $(function () {
-            var pathToImageCbx = '@Url.Content("~/Content/images/index_cbx.png")';
-            $('input:checkbox').screwDefaultButtons({
-                image: "url(" + pathToImageCbx + ")",
-                width: 17,
-                height: 17
-            });
-        });
 
         function toggle_visibility(id) {
             var e = document.getElementById(id);
