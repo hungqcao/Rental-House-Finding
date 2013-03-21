@@ -513,6 +513,7 @@
     <Content Include="Scripts\2012.1.419\telerik.treeview.min.js" />
     <Content Include="Scripts\2012.1.419\telerik.upload.min.js" />
     <Content Include="Scripts\2012.1.419\telerik.window.min.js" />
+    <Content Include="Scripts\advSearch.js" />
     <Content Include="Scripts\DDLScripts.js" />
     <Content Include="Scripts\details_post.js" />
     <Content Include="Scripts\Facebook.js" />

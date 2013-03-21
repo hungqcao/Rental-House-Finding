@@ -1063,10 +1063,10 @@ div#sendQuestion div#element_to_pop_up
 }
 
 label {
-    display: block;
+    /*display: block;
     margin-bottom: 3px;
     padding-left: 15px;
-    text-indent: -15px;
+    text-indent: -15px;*/
 }
 
 .reportpop p, .reportpop.div {
@@ -1324,3 +1324,107 @@ textarea#Description {
     display: none;
 }
 /* End Post New */
+
+/* ADVANCE SEARCH PAGE */
+#as_wrapper {
+    position: relative;
+    text-align: center;
+    width: 1054px;
+}
+#as_wrapper .searchText {
+    width: 613px;
+}
+#as_wrapper .searchText .searchLine {
+    width: 40%;
+}
+#as_wrapper h1 {
+    color: #454343;
+    font-size: 24px;
+    font-weight: 700;
+    margin-bottom: 20px;
+}
+#as_wrapper .basicInfo {
+    margin: 0 0 45px 256px;
+}
+
+#as_wrapper .basicInfo, #as_wrapper .blockTitle, #as_wrapper .blockTitle, #as_wrapper .field, #as_wrapper .field span, #as_wrapper .field input, #as_wrapper select, #as_wrapper input {
+    display: block;
+    float: left;
+}
+#as_wrapper .range {
+    background: url("../../Content/images/as_priceRange_bg.png") no-repeat transparent 0 0px;
+    width: 108px;
+    height: 32px;
+}
+
+#as_wrapper #spddlOptions {
+    left: 256px;
+}
+#as_wrapper #spddlCity {
+    left: 431px;
+}
+#as_wrapper #spddlDistrict {
+    left: 606px;
+}
+#as_wrapper span.select {
+    text-align: left;
+}
+#as_wrapper .basicInfo .field {
+    color: #888;
+    font-size: 14px;
+    font-weight: 700;
+    margin: 20px 52px 0 0;
+}
+#as_wrapper .field input {
+    padding: 0 5px;
+}
+#as_wrapper .field span {
+    margin-bottom: 7px;
+}
+#as_wrapper .col, #as_wrapper .row, #as_wrapper .row h2, #as_wrapper .row select {
+    display: block;
+    float: left;
+}
+#as_wrapper .row h2 {
+    color: #59595D;
+    font-size: 18px;
+    line-height: 31px;
+    text-align: left;
+    width: 150px;
+}
+.otherInfo .col {
+    width: 380px;
+}
+
+.otherInfo .row {
+    margin-bottom: 10px;
+}
+#spddlInternet, #spddlGiuongTu, #spddlBaoVe, #spddlWcRieng, #spddlDoXe, #spddlNauAn {
+    left: 310px;
+}
+#spddlNongLanh, #spddlDieuHoa, #spddlChungChu, #spddlTv, #spddlGarage {
+    left: 690px;
+}
+#as_wrapper #noteSites {
+    background: url("../../Content/images/as_textArea.png") no-repeat transparent 0 0px;
+    width: 477px;
+    height: 80px;
+    resize: none;
+    padding: 10px;
+    border: none;
+}
+#as_wrapper #btnAdvancedSearch {
+    background: url("../../Content/images/as_advanceSearchBtn.png") no-repeat transparent 0 0px;
+    width: 184px;
+    height: 47px;
+    cursor: pointer;
+}
+#as_wrapper #btnSearch_wrapper {
+    margin: 20px auto 30px;
+    width: 184px;
+    height: 47px;    
+}
+#as_wrapper .otherInfo {
+    margin-bottom: 30px;
+}
+/* END ADVANCE SEARCH PAGE*/

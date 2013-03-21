@@ -7,116 +7,124 @@
 <script src="@Url.Content("~/Scripts/jquery.validate.min.js")" type="text/javascript"></script>
 <script src="@Url.Content("~/Scripts/jquery.validate.unobtrusive.min.js")" type="text/javascript"></script>
 <link rel="stylesheet" href="http://code.jquery.com/ui/1.10.1/themes/base/jquery-ui.css" />
-<script src="@Url.Content("~/Scripts/RHFScripts.js")" type="text/javascript"></script>
+<script src="@Url.Content("~/Scripts/advSearch.js")" type="text/javascript"></script>
 @Html.ValidationSummary(true, "Vui lòng kiểm tra lại thông tin như thông báo bên dưới!", new { style = "color:red" })
 @using (Html.BeginForm())
 {
-    <div id="advanced-search-home-page">      
-        <table>
-            <tr>
-                <td>@Html.LabelFor(model => model.CategoryId)</td>
-                <td>@Html.DropDownList("CategoryId")
-                    @Html.ValidationMessageFor(model => model.CategoryId)
-                </td>
-            </tr>
-            <tr>
-                <td>@Html.LabelFor(model => model.ProvinceId)</td>
-                <td>@Html.DropDownList("ProvinceId", (IEnumerable<SelectListItem>)ViewBag.ProvinceId, "-- Chọn Tỉnh/Thành phố --")
-                    @Html.ValidationMessageFor(model => model.ProvinceId)    
-                </td>
-            </tr>
-            <tr>
-                <td>@Html.LabelFor(model => model.DistrictId)</td>
-                <td>@Html.DropDownListFor(model => model.DistrictId,
-                    new SelectList(Enumerable.Empty<SelectListItem>(), "Id", "Name"), "-- Chọn Quận/Huyện --",
-                    new { id = "DistrictId" })
-                    @Html.ValidationMessageFor(model => model.DistrictId)
-                </td>
-            </tr>
-            <tr>
-                <td>@Html.LabelFor(model => model.AreaMax)</td>
-                <td>@Html.TextBoxFor(model => model.AreaMax)
-                    @Html.ValidationMessageFor(model => model.AreaMax)
-                </td>
-            </tr>
-            <tr>
-                <td>@Html.LabelFor(model => model.AreaMin)</td>
-                <td>@Html.TextBoxFor(model => model.AreaMin)
-                    @Html.ValidationMessageFor(model => model.AreaMin)
-                </td>
-            </tr>
-            <tr>
-                <td>@Html.LabelFor(model => model.PriceMax)</td>
-                <td>@Html.TextBoxFor(model => model.PriceMax)
-                    @Html.ValidationMessageFor(model => model.PriceMax)
-                </td>
-            </tr>
-            <tr>
-                <td>@Html.LabelFor(model => model.PriceMin)</td>
-                <td>@Html.TextBoxFor(model => model.PriceMin)
-                    @Html.ValidationMessageFor(model => model.PriceMin)
-                </td>
-            </tr>
-            <tr>
-                <td>@Html.LabelFor(model => model.HasAirConditioner)</td>
-                <td>@Html.DropDownListFor(model => model.HasAirConditionerScore, (IEnumerable<SelectListItem>)ViewBag.Score, new { id = "HasAirConditionerScore" })
-                </td>
-            </tr>
-            <tr>
-                <td>@Html.LabelFor(model => model.HasBed)</td>
-                <td>@Html.DropDownListFor(model => model.HasBedScore, (IEnumerable<SelectListItem>)ViewBag.Score, new { id = "HasBedScoreScore" })
-                </td>
-            </tr>
-            <tr>
-                <td>@Html.LabelFor(model => model.HasGarage)</td>
-                <td>@Html.DropDownListFor(model => model.HasGarageScore, (IEnumerable<SelectListItem>)ViewBag.Score, new { id = "HasGarageScore" })
-                </td>
-            </tr>
-            <tr>
-                <td>@Html.LabelFor(model => model.HasInternet)</td>
-                <td>@Html.DropDownListFor(model => model.HasInternetScore, (IEnumerable<SelectListItem>)ViewBag.Score, new { id = "HasInternetScore" })
-                </td>
-            </tr>
-            <tr>
-                <td>@Html.LabelFor(model => model.HasMotorParking)</td>
-                <td>@Html.DropDownListFor(model => model.HasMotorParkingScore, (IEnumerable<SelectListItem>)ViewBag.Score, new { id = "HasMotorParkingScore" })
-                </td>
-            </tr>
-            <tr>
-                <td>@Html.LabelFor(model => model.HasSecurity)</td>
-                <td>@Html.DropDownListFor(model => model.HasSecurityScore, (IEnumerable<SelectListItem>)ViewBag.Score, new { id = "HasSecurityScore" })
-                </td>
-            </tr>
-            <tr>
-                <td>@Html.LabelFor(model => model.HasToilet)</td>
-                <td>@Html.DropDownListFor(model => model.HasToiletScore, (IEnumerable<SelectListItem>)ViewBag.Score, new { id = "HasToiletScore" })
-                </td>
-            </tr>
-            <tr>
-                <td>@Html.LabelFor(model => model.HasTVCable)</td>
-                <td>@Html.DropDownListFor(model => model.HasTVCableScore, (IEnumerable<SelectListItem>)ViewBag.Score, new { id = "HasTVCableScore" })
-                </td>
-            </tr>
-            <tr>
-                <td>@Html.LabelFor(model => model.HasWaterHeater)</td>
-                <td>@Html.DropDownListFor(model => model.HasWaterHeaterScore, (IEnumerable<SelectListItem>)ViewBag.Score, new { id = "HasWaterHeaterScore" })
-                </td>
-            </tr>
-            <tr>
-                <td>@Html.LabelFor(model => model.IsAllowCooking)</td>
-                <td>@Html.DropDownListFor(model => model.IsAllowCookingScore, (IEnumerable<SelectListItem>)ViewBag.Score, new { id = "IsAllowCookingScore" })
-                </td>
-            </tr>
-            <tr>
-                <td>@Html.LabelFor(model => model.IsStayWithOwner)</td>
-                <td>@Html.DropDownListFor(model => model.IsStayWithOwnerScore, (IEnumerable<SelectListItem>)ViewBag.Score, new { id = "IsStayWithOwnerScore" })
-                </td>
-            </tr>
-            <tr>
-                <td></td>
-                <td><input type="submit" value="Submit" />
-                </td>
-            </tr>
-        </table>
+    <div id="as_wrapper">
+        <div class="helloText searchText">
+            <div class="helloLine searchLine"></div>
+            <span>Tìm kiếm nâng cao</span>
+            <div class="helloLine searchLine"></div>
+        </div>
+        <div class="clear"></div>
+        <h1 style="margin-top: 20px;">Bạn đã hiểu rất rõ nhu cầu tìm kiếm của mình? Hãy bắt đầu ngay:</h1>
+        <h1 class="blockTitle">1. Thông tin cơ bản</h1>
+        <div class="clear"></div>
+        <div class="basicInfo">
+            @Html.DropDownListFor(model => model.CategoryId, (IEnumerable<SelectListItem>)ViewBag.CategoryId, new { @class = "select", @id = "ddlOptions" })
+            @Html.DropDownListFor(model => model.ProvinceId, (IEnumerable<SelectListItem>)ViewBag.ProvinceId, "Chọn Tỉnh/Thành phố", new { @id = "ddlCity", @class="select"})
+            @Html.DropDownListFor(model => model.DistrictId,
+                        new SelectList(Enumerable.Empty<SelectListItem>(), "Id", "Name"), "Chọn Quận/Huyện",
+                     new { id = "ddlDistrict", @class = "select" })
+            <div class="clear"></div>
+            <div class="field">
+                <span>Giá tiền (triệu VND/tháng)</span>
+                <div class="clear"></div>
+                @Html.TextBoxFor(model => model.PriceMin, new { @id = "fromPrice", @class = "range", @placeholder = "từ" })
+                @Html.ValidationMessageFor(model => model.PriceMin)
+                @Html.TextBoxFor(model => model.PriceMax, new { @id = "toPrice", @class = "range", @placeholder = "tới" })
+                @Html.ValidationMessageFor(model => model.PriceMax)
+            </div>
+            <div class="field">
+                <span>Diện tích (m2)</span>
+                <div class="clear"></div>
+                @Html.TextBoxFor(model => model.AreaMin, new { @id = "fromArea", @class = "range", @placeholder = "từ" })
+                @Html.ValidationMessageFor(model => model.AreaMin)
+                @Html.TextBoxFor(model => model.AreaMax, new { @id = "toArea", @class = "range", @placeholder = "tới" })
+                @Html.ValidationMessageFor(model => model.AreaMax)
+            </div>
+        </div>
+        <div class="clear"></div>
+        <h1 class="blockTitle">2. Các tiện ích, dịch vụ bên trong bao gồm:</h1>
+        <div class="clear"></div>
+        <div class="otherInfo">
+            <div class="col" style="margin-left: 160px;">
+                <div class="row">
+                    <h2>Internet</h2>
+                    @Html.DropDownListFor(model => model.HasInternetScore, (IEnumerable<SelectListItem>)ViewBag.Score, new { id = "ddlInternet", @class = "select" })
+                </div>
+                <div class="row">
+                    <h2>Giường, tủ</h2>
+                    @Html.DropDownListFor(model => model.HasBedScore, (IEnumerable<SelectListItem>)ViewBag.Score, new { id = "ddlGiuongTu", @class = "select" })
+                </div>
+                <div class="row">
+                    <h2>Bảo vệ</h2>
+                    @Html.DropDownListFor(model => model.HasSecurityScore, (IEnumerable<SelectListItem>)ViewBag.Score, new { id = "ddlBaoVe", @class = "select" })
+                </div>
+                <div class="row">
+                    <h2>WC riêng</h2>
+                    @Html.DropDownListFor(model => model.HasToiletScore, (IEnumerable<SelectListItem>)ViewBag.Score, new { id = "ddlWcRieng", @class = "select" })
+                </div>
+                <div class="row">
+                    <h2>Bãi đỗ xe</h2>
+                    @Html.DropDownListFor(model => model.HasMotorParkingScore, (IEnumerable<SelectListItem>)ViewBag.Score, new { id = "ddlDoXe", @class = "select" })
+                </div>
+                <div class="row">
+                    <h2>Cho nấu ăn</h2>
+                    @Html.DropDownListFor(model => model.IsAllowCookingScore, (IEnumerable<SelectListItem>)ViewBag.Score, new { id = "ddlNauAn", @class = "select" })
+                </div>
+            </div>
+            <div class="col">
+                <div class="row">
+                    <h2>Bình nóng lạnh</h2>
+                    @Html.DropDownListFor(model => model.HasWaterHeaterScore, (IEnumerable<SelectListItem>)ViewBag.Score, new { id = "ddlNongLanh", @class = "select" })
+                </div>
+                <div class="row">
+                    <h2>Điều hoà</h2>
+                    @Html.DropDownListFor(model => model.HasAirConditionerScore, (IEnumerable<SelectListItem>)ViewBag.Score, new { id = "ddlDieuHoa", @class = "select" })
+                </div>
+                <div class="row">
+                    <h2>Chung chủ</h2>
+                    @Html.DropDownListFor(model => model.IsStayWithOwnerScore, (IEnumerable<SelectListItem>)ViewBag.Score, new { id = "ddlChungChu", @class = "select" })
+                </div>
+                <div class="row">
+                    <h2>Tivi, cáp quang</h2>
+                    @Html.DropDownListFor(model => model.HasTVCableScore, (IEnumerable<SelectListItem>)ViewBag.Score, new { id = "ddlTv", @class = "select" })
+                </div>
+                <div class="row">
+                    <h2>Gara ôtô</h2>
+                    @Html.DropDownListFor(model => model.HasGarageScore, (IEnumerable<SelectListItem>)ViewBag.Score, new { id = "ddlGarage", @class = "select" })
+                </div>
+            </div>
+            <div class="clear"></div>
+        </div>            
+        <div id="btnSearch_wrapper">
+            <input type="submit" id="btnAdvancedSearch" value=""/>
+        </div>
+        <div class="clear"></div>
     </div>
+}
+@section head{
+    <script type="text/javascript">
+        $(document).ready(function () {
+            $('select.select').each(function () {
+                var title = $(this).attr('title');
+                var id = $(this).attr('id');
+                if ($('option:selected', this).val() != '') {
+                    title = $('option:selected', this).text();
+                } else {
+                    $('option:selected', this).val('0');
+                    title = $('option:selected', this).val('0').text();
+                }
+                $(this)
+                .css({ 'opacity': 0 })
+                .after('<span class="select" id="sp' + id + '">' + title + '</span>')
+                .change(function () {
+                    val = $('option:selected', this).text();
+                    $(this).next().text(val);
+                })
+            });
+        });
+        </script>
 }
