@@ -52,8 +52,27 @@ namespace RentalHouseFinding.Controllers.Admin
                 }
                 TempData["ProvinceId"] = Convert.ToInt32(TempData["ProvinceId"]);
             }
-            
-            return View(postList);
+
+            var postViewList = postList.Select(p => new
+            {
+                p.Id,
+                p.UserId,
+                p.Title,
+                p.CreatedDate,
+                p.EditedDate,
+                p.RenewDate,
+                PostStatus = (from stt in _db.PostStatuses
+                              where (stt.Id == p.StatusId)
+                              select stt.Name).FirstOrDefault()
+            });
+
+            var grid = new WebGrid(postViewList, ajaxUpdateContainerId: "container-grid", canSort: false);
+
+            ViewBag.Grid = grid.GetHtml(tableStyle: "webGrid", mode: WebGridPagerModes.All,
+                            headerStyle: "header",
+                            alternatingRowStyle: "alt",
+                            htmlAttributes: new { id = "grid" });
+            return View();
         }
         [HttpPost]
         public ActionResult Index(int? page, FormCollection form)
@@ -92,8 +111,26 @@ namespace RentalHouseFinding.Controllers.Admin
                 }
                 TempData["ProvinceId"] = Convert.ToInt32(form["ProvinceId"]);
             }
-            
-            return View(postList);
+
+            var postViewList = postList.Select(p => new
+            {
+                p.Id,
+                p.UserId,
+                p.Title,
+                p.CreatedDate,
+                p.EditedDate,
+                p.RenewDate,
+                PostStatus = (from stt in _db.PostStatuses 
+                 where (stt.Id == p.StatusId) select stt.Name).FirstOrDefault()
+            });
+
+            var grid = new WebGrid(postViewList, ajaxUpdateContainerId: "container-grid", canSort: false);
+
+            ViewBag.Grid = grid.GetHtml(tableStyle: "webGrid", mode: WebGridPagerModes.All,
+                            headerStyle: "header",
+                            alternatingRowStyle: "alt",
+                            htmlAttributes: new { id = "grid" });
+            return View();
         }
 
     }
