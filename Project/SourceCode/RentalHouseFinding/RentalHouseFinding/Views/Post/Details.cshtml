@@ -121,24 +121,22 @@
 
     });
 
-    function addFavorite() {
-        $.getJSON("/Post/AddFavorite", null, function (success) {
-            if (success) {
-                alert('Đã thêm bài vào danh mục');
-                $("#favorite").attr('value', 'Gỡ khỏi danh mục');
-                $("#favorite").attr('onclick', 'removeFavorite();');
-            }
-        });
-    }
-    function removeFavorite() {
-        $.getJSON("/Post/RemoveFavorite", null, function (success) {
-            if (success) {
-                alert('Đã xóa bài khỏi danh mục');
-                $("#favorite").attr('value', 'Thêm vào danh mục');
-                $("#favorite").attr('onclick', 'addFavorite();');
-                
-            }
-        });
+    function favorite() {
+        if ($("#favorite").val() == 'Thêm vào danh mục') {
+            $.getJSON("/Post/AddFavorite", null, function (success) {
+                if (success) {
+                    alert('Đã thêm bài vào danh mục');
+                    $("#favorite").attr('value', 'Gỡ khỏi danh mục');
+                }
+            });
+        } else if ($("#favorite").val() == 'Gỡ khỏi danh mục') {
+            $.getJSON("/Post/RemoveFavorite", null, function (success) {
+                if (success) {
+                    alert('Đã xóa bài khỏi danh mục');
+                    $("#favorite").attr('value', 'Thêm vào danh mục');
+                }
+            });
+        }
     }
 </script>
 <style>
