@@ -88,24 +88,6 @@
                 }
             });
         }
-
-        var marker;
-        var map;
-        function initialize() {
-            var mapProp = {
-                center: new google.maps.LatLng($('#Lat').val(), $('#Lon').val()),
-                zoom: 16,
-                mapTypeId: google.maps.MapTypeId.ROADMAP
-            };
-            map = new google.maps.Map(document.getElementById("mapContainer"), mapProp);
-            marker = new google.maps.Marker({
-                position: new google.maps.LatLng($('#Lat').val(), $('#Lon').val()),
-                map: map
-            });
-
-        }
-        google.maps.event.addDomListener(window, 'load', initialize);
-
     });
 
     function addFavorite() {

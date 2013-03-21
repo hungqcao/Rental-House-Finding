@@ -5,7 +5,7 @@ $(document).ready(function () {
     var select = $("#DistrictId");
     select.empty();
     select.append($('<option/>', {
-        value: '',
+        value: '0',
         text: 'Quận/Huyện'
     }));
     select.val('0');
@@ -28,7 +28,7 @@ $(document).ready(function () {
         var select = $("#DistrictId");
         select.empty();
         select.append($('<option/>', {
-            value: '',
+            value: '0',
             text: 'Quận/Huyện'
         }));
         $("#DistrictId").val("0");

@@ -13,96 +13,148 @@
 <script type="text/javascript" src="@Url.Content("~/Scripts/jquery-ui-1.8.6.custom.min.js")"></script>
 <script type="text/javascript" src="@Url.Content("~/Scripts/jquery.autoGrowInput.js")"></script>
 <script type="text/javascript" src="@Url.Content("~/Scripts/jquery.tagedit.js")"></script>
-<script src="http://maps.google.com/maps/api/js?sensor=false"></script>
+<script src="@Url.Content("~/Content/js/jquery.screwdefaultbuttonsV2.min.js")" type="text/javascript"></script>
 
 <script type="text/javascript">
-    $(document).ready(function () {
-        $(".wizard-step:first").fadeIn(); // show first step
-
-
-        // attach backStep button handler
-        // hide on first step
-        $("#back-step").hide().click(function () {
-            var $step = $(".wizard-step:visible"); // get current step
-            if ($step.prev().hasClass("wizard-step")) { // is there any previous step?
-                $step.hide().prev().fadeIn();  // show it and hide current step
-
-                // disable backstep button?
-                if (!$step.prev().prev().hasClass("wizard-step")) {
-                    $("#back-step").hide();
-                }
-            }
-        });
-
-
-        // attach nextStep button handler       
-        $("#next-step").click(function () {
-
-            var $step = $(".wizard-step:visible"); // get current step
-
-            var validator = $("form").validate(); // obtain validator
-            var anyError = false;
-            $step.find("input").each(function () {
-                if (!validator.element(this)) { // validate every input element inside this step
-                    anyError = true;
-                }
-
-            });
-
-            if (anyError)
-                return false; // exit if any error found
-
-
-
-
-            if ($step.next().hasClass("confirm")) { // is it confirmation?
-                // show confirmation asynchronously
-                $.post("/post/confirm", $("form").serialize(), function (r) {
-                    // inject response in confirmation step
-                    $(".wizard-step.confirm").html(r);
-                });
-
-            }
-
-            if ($step.next().hasClass("wizard-step")) { // is there any next step?
-                $step.hide().next().fadeIn();  // show it and hide current step
-                $("#back-step").show();   // recall to show backStep button
-            }
-
-            else { // this is last step, submit form
-                $("form").submit();
-            }
-
-
-        });
-        //--------------------
-
-        var map;
-        var mapProp = {
-            center: new google.maps.LatLng(21.04349121680354, 105.523681640625),
-            zoom: 8,
-            mapTypeId: google.maps.MapTypeId.ROADMAP
+      function initialize() {
+        var mapOptions = {
+          zoom: 8,
+          center: new google.maps.LatLng(21.04349121680354, 105.523681640625),
+          mapTypeId: google.maps.MapTypeId.ROADMAP
         };
-        map = new google.maps.Map(document.getElementById("mapContainer"), mapProp);
-        var marker;             
-        google.maps.event.addListener(map, 'click', function (event) {
-            if (marker == null) {
-                marker = new google.maps.Marker({
-                    position: event.latLng,
-                    map: map,
-                    draggable: true
-                });
 
-            } else {
-                marker.setPosition(event.latLng);
-            }
-            $('#Lat').val(event.latLng.lat());
-            $('#Lon').val(event.latLng.lng());
-            google.maps.event.addListener(marker, 'dragend', function (event) {
-                $('#Lat').val(event.latLng.lat());
-                $('#Lon').val(event.latLng.lng());
+      var map = new google.maps.Map(document.getElementById('mapContainer'),
+            mapOptions);
+      var marker;  
+      google.maps.event.addListener(map, 'click', function (event) {
+          if (marker == null) {
+              marker = new google.maps.Marker({
+                  position: event.latLng,
+                  map: map,
+                  draggable: true
+              });
+
+          } else {
+              marker.setPosition(event.latLng);
+          }
+          $('#Lat').val(event.latLng.lat());
+          $('#Lon').val(event.latLng.lng());
+          google.maps.event.addListener(marker, 'dragend', function (event) {
+              $('#Lat').val(event.latLng.lat());
+              $('#Lon').val(event.latLng.lng());
+          });
+      });
+
+      $("#ProvinceId").change(function () {
+          var idPro = $("#ProvinceId option:selected").val();
+          var select = $("#DistrictId");
+          select.empty();
+          select.append($('<option/>', {
+              value: '',
+              text: '-- Chọn Quận/Huyện --'
+          }));
+          $.getJSON("@baseUri.ToString()" + "service/GetDistrictList", { id: idPro },
+                function (myData) {
+                    $.each(myData, function (index, itemData) {
+                        if (itemData.Text.lenght != 0) {
+                            select.append($('<option/>', {
+                                value: itemData.Value,
+                                text: itemData.Text
+                            }));
+                        }
+                    });
+                });
+          $.getJSON("@baseUri.ToString()" + "service/GetLatLon", { id: idPro, type: "province" },
+                function (myData) {
+                    $.each(myData, function (index, itemData) {
+                        var provinceLatLon = new google.maps.LatLng(itemData.Value.split(';')[0], itemData.Value.split(';')[1]);
+                        map.setOptions({
+                            center: provinceLatLon,
+                            zoom: 11
+                        });
+                    });
+                });
+      });
+      $("#DistrictId").change(function () {
+          var idDis = $("#DistrictId  option:selected").val();
+          $.getJSON("@baseUri.ToString()" + "service/GetLatLon", { id: idDis, type: "district" },
+            function (myData) {
+                $.each(myData, function (index, itemData) {
+                    var districtLatLon = new google.maps.LatLng(itemData.Value.split(';')[0], itemData.Value.split(';')[1]);
+                    map.setOptions({
+                        center: districtLatLon,
+                        zoom: 14
+                    });
+                });
             });
-        });
+      });
+
+      $("#Street").change(function () {
+          //var NumberHouse = $('#NumberHouse').val();
+          var Street = $(this).val();
+          var District = $("#DistrictId option:selected").text();
+          var Province = $("#ProvinceId option:selected").text();
+          var geocoder = new google.maps.Geocoder();
+          var address = Street + ' ' + District + ' ' + Province;
+
+          if (geocoder) {
+              geocoder.geocode({ 'address': address }, function (results, status) {
+                  if (status == google.maps.GeocoderStatus.OK) {
+                      map.setOptions({
+
+                          center: results[0].geometry.location,
+                          zoom: 16
+                      });
+                      if (marker == null) {
+                          marker = new google.maps.Marker({
+                              position: results[0].geometry.location,
+                              map: map,
+                              draggable: true
+                          });
+                      }
+                      else {
+                          marker.setPosition(results[0].geometry.location);
+                      }
+                      $('#Lat').val(results[0].geometry.location.kb);
+                      $('#Lon').val(results[0].geometry.location.lb);
+                      google.maps.event.addListener(marker, 'dragend', function (event) {
+                          $('#Lat').val(event.latLng.lat());
+                          $('#Lon').val(event.latLng.lng());
+                      });
+                  }
+                  else {
+                      alert("Lỗi kết nối đến máy chủ google: " + status);
+                  }
+              });
+          }
+      });
+      }
+
+      function loadScript() {
+        var script = document.createElement('script');
+        script.type = 'text/javascript';
+        script.src = 'https://maps.googleapis.com/maps/api/js?v=3.exp&sensor=false&' +
+            'callback=initialize';
+        document.body.appendChild(script);
+      }
+
+      window.onload = loadScript;
+</script>
+<script type="text/javascript">
+    $(document).ready(function () {
+//        var map;
+//        var mapProp = {
+//            center: new google.maps.LatLng(21.04349121680354, 105.523681640625),
+//            zoom: 8,
+//            mapTypeId: google.maps.MapTypeId.ROADMAP
+//        };
+//        map = new google.maps.Map(document.getElementById("mapContainer"), mapProp);
+
+//        $('input:checkbox').screwDefaultButtons({
+//            image: "url(@Url.Content("~/Content/images/index_cbx.png)")",
+//            width: 17,
+//            height: 17
+//        });
         
         //For tag input
         var source;
@@ -148,90 +200,6 @@
             });
         };
 
-        $("#ProvinceId").change(function () {
-            var idPro = $("#ProvinceId option:selected").val();
-            var select = $("#DistrictId");
-            select.empty();
-            select.append($('<option/>', {
-                value: '',
-                text: '-- Chọn Quận/Huyện --'
-            }));
-            $.getJSON("@baseUri.ToString()" + "service/GetDistrictList", { id: idPro },
-                function (myData) {
-                    $.each(myData, function (index, itemData) {
-                        if (itemData.Text.lenght != 0) {
-                            select.append($('<option/>', {
-                                value: itemData.Value,
-                                text: itemData.Text
-                            }));
-                        }
-                    });
-                });
-            $.getJSON("@baseUri.ToString()" + "service/GetLatLon", { id: idPro, type: "province" },
-                function (myData) {
-                    $.each(myData, function (index, itemData) {
-                        var provinceLatLon = new google.maps.LatLng(itemData.Value.split(';')[0], itemData.Value.split(';')[1]);
-                        map.setOptions({
-                            center: provinceLatLon,
-                            zoom: 11
-                        });
-                    });
-                });
-        });
-        $("#DistrictId").change(function () {
-            var idDis = $("#DistrictId  option:selected").val();
-            $.getJSON("@baseUri.ToString()" + "service/GetLatLon", { id: idDis, type: "district" },
-            function (myData) {
-                $.each(myData, function (index, itemData) {
-                    var districtLatLon = new google.maps.LatLng(itemData.Value.split(';')[0], itemData.Value.split(';')[1]);
-                    map.setOptions({
-                        center: districtLatLon,
-                        zoom: 14
-                    });
-                });
-            });
-        });
-
-        $("#Street").change(function () {
-            //var NumberHouse = $('#NumberHouse').val();
-            var Street = $(this).val();
-            var District = $("#DistrictId option:selected").text();
-            var Province = $("#ProvinceId option:selected").text();
-            var geocoder = new google.maps.Geocoder();
-            var address = Street + ' ' + District + ' ' + Province;
-
-            if (geocoder) {
-                geocoder.geocode({ 'address': address }, function (results, status) {
-                    if (status == google.maps.GeocoderStatus.OK) {
-                        map.setOptions({
-
-                            center: results[0].geometry.location,
-                            zoom: 16
-                        });
-                        if (marker == null) {
-                            marker = new google.maps.Marker({
-                                position: results[0].geometry.location,
-                                map: map,
-                                draggable: true
-                            });
-                        }
-                        else {
-                            marker.setPosition(results[0].geometry.location);
-                        }
-                        $('#Lat').val(results[0].geometry.location.kb);
-                        $('#Lon').val(results[0].geometry.location.lb);
-                        google.maps.event.addListener(marker, 'dragend', function (event) {
-                            $('#Lat').val(event.latLng.lat());
-                            $('#Lon').val(event.latLng.lng());
-                        });
-                    }
-                    else {
-                        alert("Lỗi kết nối đến máy chủ google: " + status);
-                    }
-                });
-            }
-        });
-
     });
 </script>
 <script type = "text/javascript">
@@ -262,441 +230,288 @@
         $(obj).parent().remove();
     }
    </script>
+ 
 
-<script type="text/javascript">
-    $(document).ready(function () {
-        
-
-    });
-
-</script>
-
-<style type="text/css">
-    .wizard-step
-    {
-	    display: none;
-    }
-
-    .display-field
-    {
-	    font-weight: bold;
-    }
-</style>
-   
-<div id= "create-post-page">
+<div id="postnew_wrapper">
 @Html.ValidationSummary(true, "Vui lòng kiểm tra lại thông tin như thông báo bên dưới!", new { style = "color:red" })
 @using (Html.BeginForm("create", "post", FormMethod.Post, new { enctype = "multipart/form-data" }))
 {
-        <div class = "content" style="float:left;" >
-            <div class="wizard-step">
-            <div class="editor-label">
-                @Html.LabelFor(model => model.Title)
-            </div>
-            <div class="editor-field">
-                @Html.EditorFor(model => model.Title)
-                @Html.ValidationMessageFor(model => model.Title)
-            </div>
-            <div class="editor-label">
-                @Html.LabelFor(model => model.CategoryId)
-            </div>
-            <div class="editor-field">
-                @Html.DropDownList("CategoryId", null, new { @class = "select" })
-                @Html.ValidationMessageFor(model => model.CategoryId)
-            </div>
-            <div class="editor-label">
-                @Html.LabelFor(model => model.ProvinceId)
-            </div>
-            <div class="editor-field">
-                @Html.DropDownList("ProvinceId", (IEnumerable<SelectListItem>)ViewBag.ProvinceId, new { @class = "select" })
-                @Html.ValidationMessageFor(model => model.ProvinceId)
-            </div>
-            <div class="editor-label">
-                @Html.LabelFor(model => model.DistrictId)
-            </div>
-            <div class="editor-field">
-                @Html.DropDownListFor(model => model.DistrictId,
-                        new SelectList(Enumerable.Empty<SelectListItem>(), "Id", "Name"), "-- Chọn Quận/Huyện --",
-                        new { id = "DistrictId", @class = "select" })
-                @Html.ValidationMessageFor(model => model.DistrictId)
-            </div>
-            <div class="editor-label">
-                @Html.LabelFor(model => model.NumberHouse)
-            </div>
-            <div class="editor-field">
-                @Html.EditorFor(model => model.NumberHouse)
-                @Html.ValidationMessageFor(model => model.NumberHouse)
-            </div>
-            <div class="editor-label">
-                @Html.LabelFor(model => model.Street)
-            </div>
-            <div class="editor-field">
-                @Html.EditorFor(model => model.Street)
-                @Html.ValidationMessageFor(model => model.Street)
-            </div>
-            <div class="editor-label">
-                @Html.LabelFor(model => model.Price)
-            </div>
-            <div class="editor-field">
-                @Html.EditorFor(model => model.Price)
-                @Html.ValidationMessageFor(model => model.Price)
-            </div>
-            <div class="editor-label">
-                @Html.LabelFor(model => model.Area)
-            </div>
-            <div class="editor-field">
-                @Html.EditorFor(model => model.Area)
-                @Html.ValidationMessageFor(model => model.Area)
-            </div>
-            <div class="editor-label">
-                @Html.LabelFor(model => model.Direction)
-            </div>
-            <div class="editor-field">
-                @Html.EditorFor(model => model.Direction)
-                @Html.ValidationMessageFor(model => model.Direction)
-            </div>
-            <div class="editor-label">
-                @Html.LabelFor(model => model.NameContact)
-            </div>
-            <div class="editor-field">
-                @Html.EditorFor(model => model.NameContact)
-                @Html.ValidationMessageFor(model => model.NameContact)
-            </div>
-            <div class="editor-label">
-                @Html.LabelFor(model => model.PhoneContact)
-            </div>
-            <div class="editor-field">
-                @Html.EditorFor(model => model.PhoneContact)
-                @Html.ValidationMessageFor(model => model.PhoneContact)
-            </div>
-            <div class="editor-label">
-                @Html.LabelFor(model => model.Email)
-            </div>
-            <div class="editor-field">
-                @Html.EditorFor(model => model.Email)
-                @Html.ValidationMessageFor(model => model.Email)
-            </div>
-            <div class="editor-label">
-                @Html.LabelFor(model => model.Yahoo)
-            </div>
-            <div class="editor-field">
-                @Html.EditorFor(model => model.Yahoo)
-                @Html.ValidationMessageFor(model => model.Yahoo)
-            </div>
-            <div class="editor-label">
-                @Html.LabelFor(model => model.Skype)
-            </div>
-            <div class="editor-field">
-                @Html.EditorFor(model => model.Skype)
-                @Html.ValidationMessageFor(model => model.Skype)
-            </div>
-            <div class="editor-label">
-                @Html.LabelFor(model => model.Description)
-            </div>
-            <div class="editor-field">
-                @Html.TextAreaFor(model => model.Description)
-                @Html.ValidationMessageFor(model => model.Description)
-            </div>
-            <div class = "map fl_r">
-                <div id="mapContainer" style="width:500px;height:380px;"></div>
-                <div class="editor-field">
-                    @Html.EditorFor(model => model.Lat)
+    <div class="header">
+        <a><img src="@Url.Content("~/Content/images/pnew_thongTinCoBan.png")"/></a>
+        <img src="@Url.Content("~/Content/images/pnew_gachNgang.png")" id="separator"/>
+        <a href="#" onclick="scrollTo('pnew2_header'); $('.collapseBtn').click();"><img src="@Url.Content("~/Content/images/pnew_thongTinChiTiet.png")"/></a>
+    </div>
+    <div class="content">
+        <div class="title">
+            <h1>Đăng tin mới</h1>
+            <h2>Ngay sau bước đầu tiên bạn đã có thể đăng tin được ngay. 5house.vn khuyên bạn nên hoàn thành cả 2 bước để có bài đăng chi tiết và hiệu quả nhất.</h2>
+        </div>
+        <div class="pnew1">
+            <h1>1 | Thông tin cơ bản</h1>
+            <div class="clear"></div>
+            <div class="pnLeft">
+                <div class="infoElement">
+                    <h2>Loại tin đăng</h2>
+                    <div class="clear"></div>
+                    @Html.DropDownList("CategoryId", null, new { @class = "select" })
+                    @Html.ValidationMessageFor(model => model.CategoryId)
                 </div>
-                <div class="editor-field">
-                    @Html.EditorFor(model => model.Lon)
+                <div class="infoElement infoTitle">
+                    <h2>Tiêu đề tin đăng</h2>
+                    <div class="clear"></div>
+                    @Html.TextBoxFor(model => model.Title, new { @class = "longTbx" })
+                    @Html.ValidationMessageFor(model => model.Title)
+                </div>
+                <div class="clear"></div>
+                <div class="infoElement">
+                    <h2>Tỉnh, thành phố</h2>
+                    <div class="clear"></div>
+                    @Html.DropDownList("ProvinceId", (IEnumerable<SelectListItem>)ViewBag.ProvinceId, new { @class = "select city" })
+                    @Html.ValidationMessageFor(model => model.ProvinceId)
+                </div>
+                <div class="infoElement">
+                    <h2>Quận huyện</h2>
+                    <div class="clear"></div>
+                    @Html.DropDownListFor(model => model.DistrictId,
+                        new SelectList(Enumerable.Empty<SelectListItem>(), "Id", "Name"), "Chọn Quận/Huyện",
+                        new { id = "DistrictId", @class = "select city" })
+                    @Html.ValidationMessageFor(model => model.DistrictId)
+                </div>
+                <div class="clear"></div>
+                <div class="infoElement">
+                    <h2>Đường, phố</h2>
+                    <div class="clear"></div>
+                    @Html.TextBoxFor(model => model.Street, new { @class = "tbx" })
+                    @Html.ValidationMessageFor(model => model.Street)
+                </div>
+                <div class="infoElement">
+                    <h2>Ngách, số nhà</h2>
+                    <div class="clear"></div>
+                    @Html.TextBoxFor(model => model.NumberHouse, new { @class = "tbx" })
+                    @Html.ValidationMessageFor(model => model.NumberHouse)
+                </div>
+                <div class="clear"></div>
+                <div class="infoElement">
+                    <h2>Giá tiền (triệu VND/tháng)</h2>
+                    <div class="clear"></div>
+                    @Html.TextBoxFor(model => model.Price, new { @class = "tbx" })
+                    @Html.ValidationMessageFor(model => model.Price)
+                </div>
+                <div class="infoElement">
+                    <h2>Diện tích (m2)</h2>
+                    <div class="clear"></div>
+                    @Html.TextBoxFor(model => model.Area, new { @class = "tbx" })
+                    @Html.ValidationMessageFor(model => model.Area)
+                </div>
+                <div class="clear"></div>
+                <div class="infoElement">
+                    <h2>Tên người liên hệ</h2>
+                    <div class="clear"></div>
+                    @Html.TextBoxFor(model => model.NameContact, new { @class = "tbx" })
+                    @Html.ValidationMessageFor(model => model.NameContact)
+                </div>
+                <div class="infoElement">
+                    <h2>Điện thoại liên hệ</h2>
+                    <div class="clear"></div>
+                    @Html.TextBoxFor(model => model.PhoneContact, new { @class = "tbx" })
+                    @Html.ValidationMessageFor(model => model.PhoneContact)
+                </div>
+                <div class="infoElement">
+                    <h2>Điện thoại kích hoạt</h2>
+                    <div class="clear"></div>
+                    @Html.TextBoxFor(model => model.PhoneActive, new { @class = "tbx" })
+                    @Html.ValidationMessageFor(model => model.PhoneActive)
+                </div>
+                <div class="clear"></div>
+                <div class="infoElement">
+                    <h2>Email liên hệ</h2>
+                    <div class="clear"></div>
+                    @Html.TextBoxFor(model => model.Email, new { @class = "tbx" })
+                    @Html.ValidationMessageFor(model => model.Email)
+                </div>
+                <div class="infoElement">
+                    <h2>Tài khoản Yahoo!</h2>
+                    <div class="clear"></div>
+                    @Html.TextBoxFor(model => model.Yahoo, new { @class = "shortTbx" })
+                    @Html.ValidationMessageFor(model => model.Yahoo)
+                </div>
+                <div class="infoElement">
+                    <h2>Tài khoản Skype</h2>
+                    <div class="clear"></div>
+                    @Html.TextBoxFor(model => model.Skype, new { @class = "shortTbx" })
+                    @Html.ValidationMessageFor(model => model.Skype)
+                </div>
+                <div class="clear"></div>
+                <div class="infoElement">
+                    <h2>Ghi chú</h2>
+                    <div class="clear"></div>
+                    @Html.TextAreaFor(model => model.Description, new { @cols="15", @rows="2"} )
+                </div>
+                <div class="clear"></div>
+            </div>
+            <div class="pnRight">
+                <h2>Vị trí trên bản đồ</h2>
+                <br />
+                <h2 style="color: #888888; font-weight: 400; font-style: italic; margin-top: 5px;">Hệ thống sẽ tự động xác định địa chỉ bạn cung cấp. Bạn có thể chọn một cách chính xác vị trí bạn mong muốn trên bản đồ dưới đây:</h2>
+                <div class="clear"></div>
+                <div class="map">
+                    <div id="mapContainer" style="width:372px;height:340px;"></div>
+                        <div class="editor-field">
+                            @Html.HiddenFor(model => model.Lat)
+                        </div>
+                        <div class="editor-field">
+                            @Html.HiddenFor(model => model.Lon)
+                        </div>
+                    </div>
+                <h2>Ảnh, video minh hoạ</h2>
+                <div class="clear"></div>
+                <div class="btnPlus">
+                    <div id="uploadFile">
+                        <label>Chọn ảnh: </label>
+                        <input id="file0" name="images" type="file" />
+                        <a href="javascript:;" onclick="return addFile();" >Thêm ảnh</a>
+                    </div>
                 </div>
             </div>
-           <div id="uploadFile">
-                <fieldset>
-                <label>Chọn ảnh: </label>
-                <input id="file0" name="images" type="file" />
-                <a href="javascript:;" onclick="return addFile();" >Thêm ảnh</a>
-                </fieldset>
-            </div>
+            <div class="clear"></div>
         </div>
-        <div class="wizard-step" >
-            <h3>
-                Step 2: First name and last name.</h3>
-            <table>
-                <tr>
-                    <td align="right">@Html.EditorFor(model => model.HasInternet)</td>
-                    <td>@Html.LabelFor(model => model.HasInternet)</td>
-                </tr>
-                <tr>
-                    <td align="right">@Html.EditorFor(model => model.HasWaterHeater)</td>
-                    <td>@Html.LabelFor(model => model.HasWaterHeater)</td>
-                </tr>
-                <tr>
-                    <td align="left">@Html.LabelFor(model => model.ElectricityFee)</td>
-                    <td>@Html.EditorFor(model => model.ElectricityFee)
+        <div id="pnew2_header">
+                <div class="collapseBtn" onclick="toggleP2();"></div>
+                <h1>2 | Thông tin chi tiết</h1>
+                <div class="tips">
+                    <span id="tip1">Để có bài đăng chi tiết và hiệu quả nhất hãy hoàn thành phần thông tin chi tiết này.</span>
+                    <br/>
+                    <span id="tip2">Ấn nút mũi tên màu bạc để tiếp tục cung cấp thông tin hoặc ấn nút màu cam để bỏ qua bước này và đăng tin ngay!</span>
+                </div>
+                <div class="clear"></div>
+            </div>
+        <div id="pnew2_toggle">
+                <div>
+                    <div class="infoElement">
+                        <h2>Giá tiền điện (nghìn vnđ/số)</h2>
+                        <div class="clear"></div>
+                        @Html.TextBoxFor(model => model.ElectricityFee, new { @class = "electricPriceTbx" })
                         @Html.ValidationMessageFor(model => model.ElectricityFee)
-                    </td>
-                </tr>
-                <tr>
-                    <td align="left">@Html.LabelFor(model => model.WaterFee)</td>
-                    <td>@Html.EditorFor(model => model.WaterFee)
+                    </div>
+                    <div class="infoElement">
+                        <h2>Giá tiền nước (nghìn vnđ/khối) </h2>
+                        <div class="clear"></div>
+                        @Html.TextBoxFor(model => model.WaterFee, new { @class = "electricPriceTbx" })
                         @Html.ValidationMessageFor(model => model.WaterFee)
-                    </td>
-                </tr>
-                <tr>
-                    <td align="right">@Html.EditorFor(model => model.HasTVCable)</td>
-                    <td>@Html.LabelFor(model => model.HasTVCable)</td>
-                </tr>
-                <tr>
-                    <td align="right">@Html.EditorFor(model => model.HasBed)</td>
-                    <td>@Html.LabelFor(model => model.HasBed)</td>
-                </tr>
-                <tr>
-                    <td align="right">@Html.EditorFor(model => model.IsAllowCooking)</td>
-                    <td>@Html.LabelFor(model => model.IsAllowCooking)</td>
-                </tr>
-                <tr>
-                    <td align="right">@Html.EditorFor(model => model.HasMotorParking)</td>
-                    <td>@Html.LabelFor(model => model.HasMotorParking)</td>
-                </tr>
-                <tr>
-                    <td align="right">@Html.EditorFor(model => model.HasToilet)</td>
-                    <td>@Html.LabelFor(model => model.HasToilet)</td>
-                </tr>
-                <tr>
-                    <td align="right">@Html.EditorFor(model => model.HasAirConditioner)</td>
-                    <td>@Html.LabelFor(model => model.HasAirConditioner)</td>
-                </tr>
-                <tr>
-                    <td align="right">@Html.EditorFor(model => model.HasGarage)</td>
-                    <td>@Html.LabelFor(model => model.HasGarage)</td>
-                </tr>
-                <tr>
-                    <td align="right">@Html.EditorFor(model => model.IsStayWithOwner)</td>
-                    <td>@Html.LabelFor(model => model.IsStayWithOwner)</td>
-                </tr>
-                <tr>
-                    <td align="right">@Html.EditorFor(model => model.HasSecurity)</td>
-                    <td>@Html.LabelFor(model => model.HasSecurity)</td>
-                </tr>
-                <tr>
-                    <td align="left">@Html.LabelFor(model => model.RestrictHours)</td>
-                    <td>@Html.EditorFor(model => model.RestrictHours)
+                    </div>
+                    <div class="infoElement">
+                        <h2>Giờ đóng cửa, cổng (nếu có)</h2>
+                        <div class="clear"></div>
+                        @Html.TextBoxFor(model => model.RestrictHours, new { @class = "electricPriceTbx" })
                         @Html.ValidationMessageFor(model => model.RestrictHours)
-                    </td>
-                </tr>
-                <tr>
-                    <td align="left">@Html.Label("Địa điểm lân cận:")</td>
-                    <td><input type="text" name="tag[]" value="" class="tag"/>
-                   </td>
-                </tr>
-            </table>
-        </div>
-        <div class="wizard-step" >
-            <h3>
-                Step 3: Age and biography.</h3>
-            <table>
-                <tr>
-                    <td align="left">@Html.LabelFor(model => model.PhoneActive)</td>
-                    <td>@Html.EditorFor(model => model.PhoneActive)
-                        @Html.ValidationMessageFor(model => model.PhoneActive)
-                    </td>
-                </tr>
-            </table>
-        </div>
-        <div class="wizard-step confirm">
-        
-        </div>
-       
-       
-        <p>
-            <input type="button" id="back-step" name="back-step" value="< Back" />
-            <input type="button" id="next-step" name="next-step" value="Next >" />            
-        </p>
-            @*<table>
-                <tr>
-                    <td align="left">@Html.LabelFor(model => model.Title)</td>
-                    <td>@Html.EditorFor(model => model.Title)
-                        @Html.ValidationMessageFor(model => model.Title)
-                   </td>
-                </tr>
-                <tr>
-                    <td align="left">@Html.LabelFor(model => model.PhoneActive)</td>
-                    <td>@Html.EditorFor(model => model.PhoneActive)
-                        @Html.ValidationMessageFor(model => model.PhoneActive)
-                   </td>
-                </tr>
-                <tr>
-                    <td align="left">@Html.LabelFor(model => model.CategoryId)</td>
-                    <td>@Html.DropDownList("CategoryId", null, new { @class = "select" })
-                         @Html.ValidationMessageFor(model => model.CategoryId)
-                   </td>
-                </tr>
-                <tr>
-                    <td align="left">@Html.LabelFor(model => model.ProvinceId)</td>
-                    <td>@Html.DropDownList("ProvinceId", (IEnumerable<SelectListItem>)ViewBag.ProvinceId, new { @class = "select" })
-                        @Html.ValidationMessageFor(model => model.ProvinceId)
-                   </td>
-                </tr>
-                <tr>
-                    <td align="left">@Html.LabelFor(model => model.DistrictId)</td>
-                    <td>@Html.DropDownListFor(model => model.DistrictId,
-                        new SelectList(Enumerable.Empty<SelectListItem>(), "Id", "Name"), "-- Chọn Quận/Huyện --",
-                        new { id = "DistrictId", @class = "select" })
-                        @Html.ValidationMessageFor(model => model.DistrictId)
-                   </td>
-                </tr>
-                <tr>
-                    <td align="left">@Html.LabelFor(model => model.NumberHouse)</td>
-                    <td>@Html.EditorFor(model => model.NumberHouse)
-                        @Html.ValidationMessageFor(model => model.NumberHouse)
-                   </td>
-                </tr>
-                <tr>
-                    <td align="left">@Html.LabelFor(model => model.Street)</td>
-                    <td>@Html.EditorFor(model => model.Street)
-                        @Html.ValidationMessageFor(model => model.Street)
-                   </td>
-                </tr>
-                <tr>
-                    <td align="left">@Html.LabelFor(model => model.Price) đồng</td>
-                    <td>@Html.EditorFor(model => model.Price)
-                        @Html.ValidationMessageFor(model => model.Price)
-                   </td>
-                </tr>
-                <tr>
-                    <td align="left">@Html.LabelFor(model => model.Area) m2</td>
-                    <td>@Html.EditorFor(model => model.Area)
-                        @Html.ValidationMessageFor(model => model.Area)
-                   </td>
-                </tr>
-                <tr>
-                    <td align="left">@Html.LabelFor(model => model.Description)</td>
-                    <td>@Html.TextAreaFor(model => model.Description)
-                        @Html.ValidationMessageFor(model => model.Description)
-                   </td>
-                </tr>
-                <tr>
-                    <td align="right">@Html.EditorFor(model => model.HasInternet)</td>
-                    <td>@Html.LabelFor(model => model.HasInternet)</td>
-                </tr>
-                <tr>
-                    <td align="right">@Html.EditorFor(model => model.HasWaterHeater)</td>
-                    <td>@Html.LabelFor(model => model.HasWaterHeater)</td>
-                </tr>
-                <tr>
-                    <td align="left">@Html.LabelFor(model => model.ElectricityFee)</td>
-                    <td>@Html.EditorFor(model => model.ElectricityFee)
-                        @Html.ValidationMessageFor(model => model.ElectricityFee)
-                   </td>
-                </tr>
-                <tr>
-                    <td align="left">@Html.LabelFor(model => model.WaterFee)</td>
-                    <td>@Html.EditorFor(model => model.WaterFee)
-                        @Html.ValidationMessageFor(model => model.WaterFee)
-                   </td>
-                </tr>
-                <tr>
-                    <td align="right">@Html.EditorFor(model => model.HasTVCable)</td>
-                    <td>@Html.LabelFor(model => model.HasTVCable)</td>
-                </tr>
-                <tr>
-                    <td align="right">@Html.EditorFor(model => model.HasBed)</td>
-                    <td>@Html.LabelFor(model => model.HasBed)</td>
-                </tr>
-                <tr>
-                    <td align="right">@Html.EditorFor(model => model.IsAllowCooking)</td>
-                    <td>@Html.LabelFor(model => model.IsAllowCooking)</td>
-                </tr>
-                <tr>
-                    <td align="right">@Html.EditorFor(model => model.HasMotorParking)</td>
-                    <td>@Html.LabelFor(model => model.HasMotorParking)</td>
-                </tr>
-                <tr>
-                    <td align="right">@Html.EditorFor(model => model.HasToilet)</td>
-                    <td>@Html.LabelFor(model => model.HasToilet)</td>
-                </tr>
-                <tr>
-                    <td align="right">@Html.EditorFor(model => model.HasAirConditioner)</td>
-                    <td>@Html.LabelFor(model => model.HasAirConditioner)</td>
-                </tr>
-                <tr>
-                    <td align="right">@Html.EditorFor(model => model.HasGarage)</td>
-                    <td>@Html.LabelFor(model => model.HasGarage)</td>
-                </tr>
-                <tr>
-                    <td align="right">@Html.EditorFor(model => model.IsStayWithOwner)</td>
-                    <td>@Html.LabelFor(model => model.IsStayWithOwner)</td>
-                </tr>
-                <tr>
-                    <td align="right">@Html.EditorFor(model => model.HasSecurity)</td>
-                    <td>@Html.LabelFor(model => model.HasSecurity)</td>
-                </tr>
-                <tr>
-                    <td align="left">@Html.LabelFor(model => model.RestrictHours)</td>
-                    <td>@Html.EditorFor(model => model.RestrictHours)
-                        @Html.ValidationMessageFor(model => model.RestrictHours)
-                   </td>
-                </tr>
-                <tr>
-                    <td align="left">@Html.LabelFor(model => model.Direction)</td>
-                    <td>@Html.EditorFor(model => model.Direction)
-                        @Html.ValidationMessageFor(model => model.Direction)
-                   </td>
-                </tr>
-                <tr>
-                    <td align="left">@Html.LabelFor(model => model.PhoneContact)</td>
-                    <td>@Html.EditorFor(model => model.PhoneContact)
-                        @Html.ValidationMessageFor(model => model.PhoneContact)
-                   </td>
-                </tr>
-                <tr>
-                    <td align="left">@Html.LabelFor(model => model.Email)</td>
-                    <td>@Html.EditorFor(model => model.Email)
-                        @Html.ValidationMessageFor(model => model.Email)
-                   </td>
-                </tr>
-                <tr>
-                    <td align="left">@Html.LabelFor(model => model.Yahoo)</td>
-                    <td>@Html.EditorFor(model => model.Yahoo)
-                        @Html.ValidationMessageFor(model => model.Yahoo)
-                   </td>
-                </tr>
-                <tr>
-                    <td align="left">@Html.LabelFor(model => model.Skype)</td>
-                    <td>@Html.EditorFor(model => model.Skype)
-                        @Html.ValidationMessageFor(model => model.Skype)
-                   </td>
-                </tr>
-                <tr>
-                    <td align="left">@Html.LabelFor(model => model.NameContact)</td>
-                    <td>@Html.EditorFor(model => model.NameContact)
-                        @Html.ValidationMessageFor(model => model.NameContact)
-                   </td>
-                </tr>
-                <tr>
-                    <td align="left">@Html.Label("Địa điểm lân cận:")</td>
-                    <td><input type="text" name="tag[]" value="" class="tag"/>
-                   </td>
-                </tr>
-            </table>
-
-            <div id="uploadFile">
-                <fieldset>
-                <label>Chọn ảnh: </label>
-                <input id="file0" name="images" type="file" />
-                <a href="javascript:;" onclick="return addFile();" >Thêm ảnh</a>
-                </fieldset>
+                    </div>
+                    <div class="clear"></div>
+                </div>
+                <div class="clear"></div>
+                <div class="leftContent" style="margin-right: 144px;">
+                    <h1>Các dịch vụ & tiện ích</h1>
+                    <div class="clear"></div>
+                    <div class="partCol">
+                        <div class="part">
+                            @Html.CheckBoxFor(model => model.HasInternet, new { @class = "styledCheckbox" })
+                            <span>Internet</span>
+                        </div>
+                        <div class="part">
+                            @Html.CheckBoxFor(model => model.HasBed, new { @class = "styledCheckbox" })
+                            <span>Giường, tủ</span>
+                        </div>
+                        <div class="part">
+                            @Html.CheckBoxFor(model => model.IsAllowCooking, new { @class = "styledCheckbox" })
+                            <span>Cho phép nấu ăn</span>
+                        </div>
+                        <div class="part">
+                            @Html.CheckBoxFor(model => model.HasWaterHeater, new { @class = "styledCheckbox" })
+                            <span>Bình nóng lạnh</span>
+                        </div>
+                        <div class="part">
+                            @Html.CheckBoxFor(model => model.HasSecurity, new { @class = "styledCheckbox" })
+                            <span>Bảo vệ</span>
+                        </div>
+                        <div class="clear"></div>
+                        <div class="part">
+                            @Html.CheckBoxFor(model => model.HasToilet, new { @class = "styledCheckbox" })
+                            <span>WC riêng</span>
+                        </div>
+                    </div>
+                    <div class="partCol">
+                        <div class="part">
+                            @Html.CheckBoxFor(model => model.HasMotorParking, new { @class = "styledCheckbox" })
+                            <span>Bãi đỗ xe</span>
+                        </div>
+                        <div class="part">
+                            @Html.CheckBoxFor(model => model.IsStayWithOwner, new { @class = "styledCheckbox" })
+                            <span>Chung chủ</span>
+                        </div>
+                        <div class="part">
+                            @Html.CheckBoxFor(model => model.HasGarage, new { @class = "styledCheckbox" })
+                            <span>Gara ôtô</span>
+                        </div>
+                        <div class="clear"></div>
+                        <div class="part">
+                            @Html.CheckBoxFor(model => model.HasWaterHeater, new { @class = "styledCheckbox" })
+                            <span>Điều hòa</span>
+                        </div>
+                        <div class="part">
+                            @Html.CheckBoxFor(model => model.HasTVCable, new { @class = "styledCheckbox" })
+                            <span>Tivi, truyền hình cáp</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="leftContent">
+                    <h1>Các địa điểm nổi bật xung quanh</h1>
+                    <div class="clear"></div>
+                    <div class="ta_wrapper">
+                        <input id="osSites" type="text" name="tag[]" value="" class="tag"/>
+                    </div>
+                </div>
+                <div class="clear"></div>
             </div>
-
-            <p>
-                <input type="submit" value="Create" />
-            </p>*@
-        </div>
-        @*<div class = "map fl_r">
-            <div id="mapContainer" style="width:500px;height:380px;"></div>
-            <div class="editor-field">
-                @Html.EditorFor(model => model.Lat)
-            </div>
-            <div class="editor-field">
-                @Html.EditorFor(model => model.Lon)
-            </div>
-        </div>*@
-        <div class = "clear" style="clear:both;">
-        </div>
+        <input id="btnDangTinNgay" type="submit" value=""/>
+        <div class="clear"></div>
+    </div>
 }
 </div>
+@section head{
+    <script type="text/javascript">
+        $(document).ready(function () {
+            $('select.select').each(function () {
+                var title = $(this).attr('title');
+                var id = $(this).attr('id');
+                if ($('option:selected', this).val() != '') {
+                    title = $('option:selected', this).text();
+                } else {
+                    $('option:selected', this).val('0');
+                    title = $('option:selected', this).val('0').text();
+                }
+                $(this)
+                .css({ 'opacity': 0 })
+                .after('<span class="select" id="sp' + id + '">' + title + '</span>')
+                .change(function () {
+                    val = $('option:selected', this).text();
+                    $(this).next().text(val);
+                })
+            });
+        });
+
+        function toggleP2() {
+            $('#pnew2_toggle').toggle();
+            if (!$('#pnew2_toggle').is(':hidden')) {
+                $('.collapseBtn').css('background-position', '0 -50px');
+            } else {
+                $('.collapseBtn').css('background-position', '0 0');
+            }
+        }
+
+        function scrollTo(id) {
+            $('html, body').animate({
+                scrollTop: $('#' + id).offset().top
+            }, 1000);
+        }
+        
+    </script>
+}

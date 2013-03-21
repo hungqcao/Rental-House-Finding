@@ -9,6 +9,7 @@ using System.Runtime.Serialization.Json;
 using System.IO;
 using System.Text;
 using System.Web;
+using RentalHouseFinding.Common;
 
 namespace RentalHouseFinding.Models
 {
