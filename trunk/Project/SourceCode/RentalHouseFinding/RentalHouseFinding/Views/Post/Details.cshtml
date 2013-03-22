@@ -233,7 +233,7 @@
             <div class="colRight">
                 @if (Model.HasTVCable)
                 {
-                    <span class="icon question">Tivi, truyền hình cáp</span>
+                    <span class="icon check">Tivi, truyền hình cáp</span>
                 }
                 else
                 {
@@ -241,7 +241,7 @@
                 }
                 @if (Model.HasMotorParking)
                 {
-                    <span class="icon question">Bãi đỗ xe</span>
+                    <span class="icon check">Bãi đỗ xe</span>
                 }
                 else
                 {
@@ -249,7 +249,7 @@
                 }
                 @if (Model.IsAllowCooking)
                 {
-                    <span class="icon question">Cho phép nấu ăn</span>
+                    <span class="icon check">Cho phép nấu ăn</span>
                 }
                 else
                 {
@@ -257,7 +257,7 @@
                 }
                 @if (Model.HasWaterHeater)
                 {
-                    <span class="icon question">Bình nóng lạnh</span>
+                    <span class="icon check">Bình nóng lạnh</span>
                 }
                 else
                 {
@@ -269,13 +269,13 @@
                 }
                 else
                 {
-                    <span class="icon check">Gara ôtô</span>
+                    <span class="icon question">Gara ôtô</span>
                 }
             </div>
         </div>
         <div class="blockInfo rightSide" id="block4">
                 <div class="clear"></div>
-                <div class="title"><div class="plusBtn"></div>ĐỊA ĐIỂM LỚN XUNG QUANH</div>
+                <div class="title"><div class="plusBtn"></div>VỊ TRÍ TRÊN BẢN ĐỒ</div>
                 <div class="map_wrapper" style="border:1px solid #bebebe">
                     <div class = "map" style="margin: 5px">
                         <div id="mapContainer" style="width:400px;height:380px;"></div>
@@ -311,35 +311,37 @@
             <div id = "ReportPost">
             @if (User.Identity.IsAuthenticated)
             {
-                <div class="reportpop pop">
+                <div class="reportpop pop" id="element_to_pop_up">
                     <form method="post" id="new_message" action="/messages">                    
-                        <div class="display-label" style="float:left">Lý do:</div>
-                        <div style ="float:right"><textarea rows="6" name="body" id="txtResion" cols="28"></textarea></div>
-                        <div id ="rpMessage" style="color:Red; display:none; float:right">Vui lòng cung cấp lý do</div>
-                        <div style ="float : right">
-                        <input class="button_report" type="button" value="Gửi" name="commit" id="message_submit"/> or <input class="button_report" type="button" class="close" value="Hủy" name="commit" id="message_cancel"/>
+                        <div class="display-label">Lý do:</div>
+                        <div><textarea rows="6" name="body" id="txtResion" cols="28"></textarea></div>
+                        <div id ="rpMessage" style="color:Red; display:none;">Vui lòng cung cấp lý do</div>
+                        <div id="report-form">
+
+                        <input class="button_report" type="button" value="Gửi" name="commit" id="message_submit"/> or <input type="button" class="close b-close button_report" value="Hủy" name="commit" id="message_cancel"/>
                         </div>
-                            
+                        <div class="clear"></div>    
                     </form>
                 </div>
-                <div id="report"><img src="@Url.Content("~/Content/images/triangle_comment.png")"/></div>
+                
+                <div class="clear"></div>
             }
             else
-            {     
-                <div id="reportWithoutLogin" class="withOutLogin"><img src="@Url.Content("~/Content/images/triangle_comment.png")"/></div>
+            {    
                 <!-- Element to pop up -->
-                <div id="element_to_pop_up">
+                <div id="element_to_pop_up" class="login-form" style="margin: 0 auto; width: 635px;">
                     <a class="b-close">x</a>
                     <div style="font-size:30px; color:Black">Bạn cần 
                     <a style="color:Black;" href="@Request.Url.AbsoluteUri.Replace(@Request.Url.Authority, Request.Url.Authority + "/account/logon?returnUrl=")">đăng nhập</a>
                     để sử dụng chức năng này</div>
                     
                     <div style="font-size:20px;color:Black">Đăng nhập nhanh chóng với tài khoản của Google, Yahoo, Facebook</div>
-
-
                 </div>
+                <div class="clear"></div>
             }
             </div>  
+            <div id="reportWithoutLogin" class="withOutLoginReport"><img src="@Url.Content("~/Content/images/triangle_comment.png")"/></div>
+            <div class="clear"></div>
             <span>Gửi câu hỏi thắc mắc cho người đăng!</span>
         </div>
         <div id="saveBookmark">
@@ -357,7 +359,7 @@
                 }
                 if (!User.Identity.IsAuthenticated)
                 {
-                    <div id="favorite" class="withOutLogin"><img src="@Url.Content("~/Content/images/triangle_fav.png")"/></div>
+                    <div id="favorite" class="withOutLoginFav"><img src="@Url.Content("~/Content/images/triangle_fav.png")"/></div>
                 }
             }
             <span>Bạn quan tâm bài đăng này, bạn hãy lưu lại! </span>
