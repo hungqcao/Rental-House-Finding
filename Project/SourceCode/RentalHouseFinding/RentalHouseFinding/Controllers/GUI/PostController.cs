@@ -164,84 +164,76 @@ namespace RentalHouseFinding.Controllers
             {
                 try
                 {
-                    if (!CommonModel.FilterHasBadContent(model))
+                    Posts postToCreate = CommonModel.ConvertPostViewModelToPost(model, DateTime.Now, DateTime.Now, DateTime.Now, Repository.GetAllConfiguration().Where( c => c.Name.Equals(ConstantCommonString.NONE_INFORMATION, StringComparison.CurrentCultureIgnoreCase)).Select(c => c.Value).FirstOrDefault().ToString());
+
+                    if (CommonModel.FilterHasBadContent(model))
                     {
-                        Posts postToCreate = CommonModel.ConvertPostViewModelToPost(model, DateTime.Now, DateTime.Now, DateTime.Now, Repository.GetAllConfiguration().Where( c => c.Name.Equals(ConstantCommonString.NONE_INFORMATION, StringComparison.CurrentCultureIgnoreCase)).Select(c => c.Value).FirstOrDefault().ToString());
-
-                        if (CommonModel.FilterHasBadContent(model))
-                        {
-                            //2 for pending
-                            postToCreate.StatusId = 2;
-                            TempData["MessageSuccessPostNew"] = "Bài đăng có chứa những từ không cho phép, chúng tôi sẽ duyệt trước khi đăng lên hệ thống";
-                        }
-                        else
-                        {
-                            //1 for submitted
-                            postToCreate.StatusId = 1;
-                            TempData["MessageSuccessPostNew"] = "Đăng bài thành công, chúng tôi sẽ gửi tin nhắn đến số điện thoại bạn đã cung cấp";
-                        }
-
-                        int userId;
-                        if (!string.IsNullOrEmpty(User.Identity.Name))
-                        {
-                            userId = CommonModel.GetUserIdByUsername(User.Identity.Name);
-                            postToCreate.UserId = userId;
-                        }
-                        _db.Posts.AddObject(postToCreate);
-                        _db.SaveChanges();
-                        
-                        //Nearby places
-                        Dictionary<int, string> lstNearbyId = GetListNearbyLocations(model);
-                        PostLocations postLocation;
-                        string nearbyPlace = string.Empty;
-                        foreach (KeyValuePair<int,string> kvp in lstNearbyId)
-                        {
-                            postLocation = new PostLocations();
-                            postLocation.PostId = postToCreate.Id;
-                            postLocation.LocationId = kvp.Key;
-                            _db.PostLocations.AddObject(postLocation);
-                            _db.SaveChanges();
-                            nearbyPlace += kvp.Value + ",";
-                        }
-                        if (!string.IsNullOrEmpty(nearbyPlace))
-                        {
-                            nearbyPlace = nearbyPlace.Remove(nearbyPlace.Length - 1);
-                            postToCreate.NearbyPlace = nearbyPlace;
-                            _db.ObjectStateManager.ChangeObjectState(postToCreate, System.Data.EntityState.Modified);
-                            _db.SaveChanges();
-                        }
-                        
-                        //Images post
-                        PostImages imageToCreate = null;
-
-                        if (!(images.Count() == 0 || images == null))
-                        {
-                            foreach (HttpPostedFileBase image in images)
-                            {
-                                if (image != null && image.ContentLength > 0)
-                                {
-                                    var path = Path.Combine(HttpContext.Server.MapPath("/Content/PostImages/"), postToCreate.Id.ToString());
-                                    Directory.CreateDirectory(path);
-                                    string filePath = Path.Combine(path, Path.GetFileName(image.FileName));
-                                    image.SaveAs(filePath);
-                                    imageToCreate = new PostImages();
-                                    imageToCreate.PostId = postToCreate.Id;
-                                    imageToCreate.Path = "/Content/PostImages/" + postToCreate.Id.ToString() + "/" + Path.GetFileName(image.FileName);
-                                    imageToCreate.IsDeleted = false;
-
-                                    _db.PostImages.AddObject(imageToCreate);
-                                    _db.SaveChanges();
-                                }
-                            }
-                        }
-
-                        return RedirectToAction("Details", "Post", new { id = postToCreate.Id });
+                        //2 for pending
+                        postToCreate.StatusId = 2;
+                        TempData["MessageSuccessPostNew"] = "Bài đăng có chứa những từ không cho phép, chúng tôi sẽ duyệt trước khi đăng lên hệ thống";
                     }
                     else
                     {
-                        //If model contain bad word
+                        //1 for submitted
+                        postToCreate.StatusId = 1;
+                        TempData["MessageSuccessPostNew"] = "Đăng bài thành công, chúng tôi sẽ gửi tin nhắn đến số điện thoại bạn đã cung cấp";
                     }
-                    return RedirectToAction("Index");
+
+                    int userId;
+                    if (!string.IsNullOrEmpty(User.Identity.Name))
+                    {
+                        userId = CommonModel.GetUserIdByUsername(User.Identity.Name);
+                        postToCreate.UserId = userId;
+                    }
+                    _db.Posts.AddObject(postToCreate);
+                    _db.SaveChanges();
+                        
+                    //Nearby places
+                    Dictionary<int, string> lstNearbyId = GetListNearbyLocations(model);
+                    PostLocations postLocation;
+                    string nearbyPlace = string.Empty;
+                    foreach (KeyValuePair<int,string> kvp in lstNearbyId)
+                    {
+                        postLocation = new PostLocations();
+                        postLocation.PostId = postToCreate.Id;
+                        postLocation.LocationId = kvp.Key;
+                        _db.PostLocations.AddObject(postLocation);
+                        _db.SaveChanges();
+                        nearbyPlace += kvp.Value + ",";
+                    }
+                    if (!string.IsNullOrEmpty(nearbyPlace))
+                    {
+                        nearbyPlace = nearbyPlace.Remove(nearbyPlace.Length - 1);
+                        postToCreate.NearbyPlace = nearbyPlace;
+                        _db.ObjectStateManager.ChangeObjectState(postToCreate, System.Data.EntityState.Modified);
+                        _db.SaveChanges();
+                    }
+                        
+                    //Images post
+                    PostImages imageToCreate = null;
+
+                    if (!(images.Count() == 0 || images == null))
+                    {
+                        foreach (HttpPostedFileBase image in images)
+                        {
+                            if (image != null && image.ContentLength > 0)
+                            {
+                                var path = Path.Combine(HttpContext.Server.MapPath("/Content/PostImages/"), postToCreate.Id.ToString());
+                                Directory.CreateDirectory(path);
+                                string filePath = Path.Combine(path, Path.GetFileName(image.FileName));
+                                image.SaveAs(filePath);
+                                imageToCreate = new PostImages();
+                                imageToCreate.PostId = postToCreate.Id;
+                                imageToCreate.Path = "/Content/PostImages/" + postToCreate.Id.ToString() + "/" + Path.GetFileName(image.FileName);
+                                imageToCreate.IsDeleted = false;
+
+                                _db.PostImages.AddObject(imageToCreate);
+                                _db.SaveChanges();
+                            }
+                        }
+                    }
+
+                    return RedirectToAction("Details", "Post", new { id = postToCreate.Id });
                 }
                 catch (Exception ex)
                 {
@@ -253,17 +245,13 @@ namespace RentalHouseFinding.Controllers
             return View(model);
         }
 
-        [HttpPost]
-        public ActionResult Confirm(PostViewModel model)
-        {
-            return PartialView(model);
-        }
-
         //
         // GET: /Post/Edit/5
 		[Authorize(Roles = "User, Admin")]
         public ActionResult Edit(int id)
         {
+            ViewBag.CategoryId = new SelectList(Repository.GetAllCategories(), "Id", "Name");
+            ViewBag.ProvinceId = new SelectList(Repository.GetAllProvinces(), "Id", "Name");
             int userId = CommonModel.GetUserIdByUsername(User.Identity.Name);
             var postModel = (from p in _db.Posts where (p.Id == id) 
                                  && (!p.IsDeleted)  && p.UserId == userId select p).FirstOrDefault();
@@ -288,43 +276,64 @@ namespace RentalHouseFinding.Controllers
         [Authorize(Roles = "User, Admin")]
         public ActionResult Edit(int id, PostViewModel postViewModel, IEnumerable<HttpPostedFileBase> images)
         {
-            var post = (from p in _db.Posts where (p.Id == id) select p).FirstOrDefault();
-            post = CommonModel.ConvertPostViewModelToPost(post, postViewModel, post.CreatedDate, DateTime.Now, DateTime.Now);
-            _db.ObjectStateManager.ChangeObjectState(post, EntityState.Modified);
-            _db.SaveChanges();
-
-            PostImages imageToCreate = null;
-            if (!(images.Count() == 0 || images == null))
+            
+            if (ModelState.IsValid)
             {
-                foreach (HttpPostedFileBase image in images)
+                try
                 {
-                    if (image != null && image.ContentLength > 0)
+                    int status = 0;
+                    var post = (from p in _db.Posts where (p.Id == id) select p).FirstOrDefault();
+                    if (CommonModel.FilterHasBadContent(postViewModel))
                     {
-                        var path = Path.Combine(HttpContext.Server.MapPath("/Content/PostImages/"), id.ToString());
-                        //Check if image already exists
-                        var imagesPath = (from i in _db.PostImages 
-                                          where (i.Path == "/Content/PostImages/" 
-                                                + id.ToString() + "/" + Path.GetFileName(image.FileName)) 
-                                          select i.Path).ToArray();
-                        if (imagesPath.Count() > 0)
-                        {
-                            break;
-                        }
-                        Directory.CreateDirectory(path);
-                        string filePath = Path.Combine(path, Path.GetFileName(image.FileName));
-                        image.SaveAs(filePath);
-                        imageToCreate = new PostImages();
-                        imageToCreate.PostId = id;
-                        imageToCreate.Path = "/Content/PostImages/" + id.ToString() + "/" + Path.GetFileName(image.FileName);
-                        imageToCreate.IsDeleted = false;
-
-                        _db.PostImages.AddObject(imageToCreate);
-                        _db.SaveChanges();
+                        //2 for pending
+                        post.StatusId = 2;
+                        TempData["MessageSuccessEdit"] = "Bài đăng có chứa những từ không cho phép, chúng tôi sẽ duyệt trước khi đăng lên hệ thống";
                     }
+                    post = CommonModel.ConvertPostViewModelToPost(post, postViewModel, post.CreatedDate, DateTime.Now, DateTime.Now);
+                    _db.ObjectStateManager.ChangeObjectState(post, EntityState.Modified);
+                    _db.SaveChanges();
+
+                    PostImages imageToCreate = null;
+                    if (!(images.Count() == 0 || images == null))
+                    {
+                        foreach (HttpPostedFileBase image in images)
+                        {
+                            if (image != null && image.ContentLength > 0)
+                            {
+                                var path = Path.Combine(HttpContext.Server.MapPath("/Content/PostImages/"), id.ToString());
+                                //Check if image already exists
+                                var imagesPath = (from i in _db.PostImages 
+                                                  where (i.Path == "/Content/PostImages/" 
+                                                        + id.ToString() + "/" + Path.GetFileName(image.FileName)) 
+                                                  select i.Path).ToArray();
+                                if (imagesPath.Count() > 0)
+                                {
+                                    break;
+                                }
+                                Directory.CreateDirectory(path);
+                                string filePath = Path.Combine(path, Path.GetFileName(image.FileName));
+                                image.SaveAs(filePath);
+                                imageToCreate = new PostImages();
+                                imageToCreate.PostId = id;
+                                imageToCreate.Path = "/Content/PostImages/" + id.ToString() + "/" + Path.GetFileName(image.FileName);
+                                imageToCreate.IsDeleted = false;
+
+                                _db.PostImages.AddObject(imageToCreate);
+                                _db.SaveChanges();
+                            }
+                        }
+                    }
+                    TempData["MessageSuccessEdit"] = "Success";
+                    return RedirectToAction("Index/" + id);
+                }
+                catch (Exception ex)
+                {
+                    ModelState.AddModelError("", ex.InnerException);
                 }
             }
-            TempData["MessageSuccessEdit"] = "Success";
-            return RedirectToAction("Index/" + id);
+            ViewBag.CategoryId = new SelectList(Repository.GetAllCategories(), "Id", "Name", postViewModel.CategoryId);
+            ViewBag.ProvinceId = new SelectList(Repository.GetAllProvinces(), "Id", "Name", postViewModel.ProvinceId);
+            return View(postViewModel);
         }
 
         //

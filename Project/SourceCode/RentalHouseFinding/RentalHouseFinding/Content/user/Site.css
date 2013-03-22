@@ -1,0 +1,169 @@
+﻿/* INFO UCP PAGE */
+#leftInfo #accInfo {
+    display: block;
+    float: left;
+    color: #52666e;
+    padding: 30px 45px;
+}
+
+#leftInfo #accInfo .title 
+{
+    font-size: 14px;
+    display: block;
+}
+
+#leftInfo #accInfo .info 
+{
+    font-size: 14px;
+    font-weight: 400;
+    margin: 0 20px 0 8px;
+    display: block;
+    padding-bottom: 10px;
+} 
+
+#rightInfo .infoDetail .activityInfo{
+    display: block;
+    float: left;
+    color: #52666e;
+    font-weight: 400;
+    font-size: 14px;    
+    border-bottom: 1px solid #D6D6D6; 
+    width: 550px;
+}
+#rightInfo .infoDetail .activityInfo .activityDetail 
+{    
+    margin: 20px 30px;   
+}
+
+/* END INFO UCP PAGE */
+
+/* FAVORITE USER CONTROL PANEL PAGE */
+#options #btnKinhLup
+{
+    float:left;
+}
+
+#options #btnThongTin
+{
+    background: url("../../Content/images/btnThongTin.png") no-repeat transparent 0 0px;
+    height: 33px;
+    width: 180px;
+    float: left;
+    display: block;
+    margin: 5px 0px 10px 23px;
+}
+
+#options #btnQuanLy
+{
+    background: url("../../Content/images/btnQuanLy.png") no-repeat transparent 0 0px;
+    height: 33px;
+    width: 180px;
+    float: left;
+    display: block;
+    margin: 5px 0px 10px 23px;
+}
+
+#options #btnTinNhan
+{
+    background: url("../../Content/images/btnTinNhan.png") no-repeat transparent 0 0px;
+    height: 33px;
+    width: 180px;
+    float: left;
+    display: block;
+    margin: 5px 0px 10px 23px;
+}
+
+#options #btnLichSu
+{
+    background: url("../../Content/images/btnLichSu.png") no-repeat transparent 0 0px;
+    height: 33px;
+    width: 180px;
+    float: left;
+    display: block;
+    margin: 5px 0px 10px 23px;
+}
+
+#options #btnDanhSach
+{
+    background: url("../../Content/images/btnDanhSach.png") no-repeat transparent 0 0px;
+    height: 33px;
+    width: 180px;
+    float: left;
+    display: block;
+    margin: 5px 0px 10px 23px;
+}
+
+#leftInfo, #rightInfo {
+    background: none repeat scroll 0 0 #FFFFFF;
+    border: 1px solid #E5E5E5;
+    height: 576px;
+    padding: 15px 0;
+}
+
+#rightInfo
+{
+    width: 690px;
+    padding: 15px;
+}
+
+#leftInfo {
+    width: 320px;
+    margin-right: 10px;
+    color: #717171;
+    font-weight: 700;
+}
+
+#leftInfo label{
+    display: block;
+    float: left;
+}
+
+#leftInfo .infoDetail {
+    display: block;
+    float: left;
+    color: #52666e;
+    padding: 15px 45px;
+}
+#leftInfo .infoDetail div, #leftInfo .infoDetail span {
+    display: block;
+}
+#leftInfo .highlight {
+    font-weight: 700;
+    color: #f17612;
+    display: block;
+    float: left;
+    font-size: 24px;
+}
+
+#leftInfo .infoDetail:hover {
+    background-color: #f1f0f1;
+    border: 1px solid #d6d6d6;
+    cursor: pointer;
+}
+
+#leftInfo .title {
+    font-size: 14px;
+    font-style: italic;
+    margin: 10px 0;
+}
+
+#leftInfo .from {
+    line-height: 18px;
+    margin-bottom: 7px;
+}
+
+#leftInfo .time {
+    line-height: 18px;
+    margin-bottom: 7px;
+}
+
+#rightInfo .infoDetail {
+    display: block;
+    float: left;
+    color: #52666e;
+    font-weight: 700;
+    font-size: 14px;
+    margin-left: 30px;    
+}
+
+/* END FAVORITE USER CONTROL PANEL PAGE */

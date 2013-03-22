@@ -1,61 +1,52 @@
 ﻿@model RentalHouseFinding.Models.PostViewModel
-
 @{
-    ViewBag.Title = "Chỉnh sửa bài đăng";
+    ViewBag.Title = "Chỉnh sửa bài " + Model.Title;
+    Uri auxBaseUri = new Uri(Request.Url.GetLeftPart(UriPartial.Authority));
+    Uri baseUri = new Uri(auxBaseUri, Url.Content("~"));  
 }
-
-<h2>Chỉnh sửa bài đăng</h2>
 <script src="@Url.Content("~/Scripts/jquery.validate.min.js")" type="text/javascript"></script>
 <script src="@Url.Content("~/Scripts/jquery.validate.unobtrusive.min.js")" type="text/javascript"></script>
-<script src="http://maps.google.com/maps/api/js?sensor=false"></script>
-<script type = "text/javascript">
-    $(document).ready(function () {
+<link rel="StyleSheet" href="@Url.Content("~/Content/ui-lightness/jquery-ui-1.8.6.custom.css")" type="text/css" media="all"/>
+<link rel="StyleSheet" href="@Url.Content("~/Content/jquery.tagedit.css")" type="text/css" media="all"/>
+<script type="text/javascript" src="@Url.Content("~/Scripts/jquery-ui-1.8.6.custom.min.js")"></script>
+<script type="text/javascript" src="@Url.Content("~/Scripts/jquery.autoGrowInput.js")"></script>
+<script type="text/javascript" src="@Url.Content("~/Scripts/jquery.tagedit.js")"></script>
+<script src="@Url.Content("~/Content/js/jquery.screwdefaultbuttonsV2.min.js")" type="text/javascript"></script>
+
+<script type="text/javascript">
+    function initialize() {
+        var mapOptions = {
+            zoom: 16,
+            center: new google.maps.LatLng($('#Lat').val(), $('#Lon').val()),
+            mapTypeId: google.maps.MapTypeId.ROADMAP
+        };
+
+        var map = new google.maps.Map(document.getElementById('mapContainer'),
+            mapOptions);
         var marker;
-        var map;
-        function initialize() {
-            var mapProp = {
-                center: new google.maps.LatLng(21.04349121680354, 105.523681640625),
-                zoom: 8,
-                mapTypeId: google.maps.MapTypeId.ROADMAP
-            };
-            map = new google.maps.Map(document.getElementById("mapContainer"), mapProp);
-            google.maps.event.addListener(map, 'click', function (event) {
-                if (marker == null) {
-                    marker = new google.maps.Marker({
-                        position: event.latLng,
-                        map: map,
-                        draggable: true
-                    });
-                } else {
-                    marker.setPosition(event.latLng);
-                }
+        marker = new google.maps.Marker({
+            position: new google.maps.LatLng($('#Lat').val(), $('#Lon').val()),
+            map: map,
+            draggable: true
+        });
+        google.maps.event.addListener(map, 'click', function (event) {
+            if (marker == null) {
+                marker = new google.maps.Marker({
+                    position: event.latLng,
+                    map: map,
+                    draggable: true
+                });
+
+            } else {
+                marker.setPosition(event.latLng);
+            }
+            $('#Lat').val(event.latLng.lat());
+            $('#Lon').val(event.latLng.lng());
+            google.maps.event.addListener(marker, 'dragend', function (event) {
                 $('#Lat').val(event.latLng.lat());
                 $('#Lon').val(event.latLng.lng());
             });
-
-        }
-
-        //For page postback
-        var idPro = $("#ProvinceId option:selected").val();
-        var select = $("#DistrictId");
-        select.empty();
-        select.append($('<option/>', {
-            value: '',
-            text: '-- Chọn Quận/Huyện --'
-        }));
-        if (idPro != 0) {
-            $.getJSON("service/GetDistrictList", { id: idPro },
-            function (myData) {
-                $.each(myData, function (index, itemData) {
-                    if (itemData.Text.lenght != 0) {
-                        select.append($('<option/>', {
-                            value: itemData.Value,
-                            text: itemData.Text
-                        }));
-                    }
-                });
-            });
-        };
+        });
 
         $("#ProvinceId").change(function () {
             var idPro = $("#ProvinceId option:selected").val();
@@ -65,7 +56,7 @@
                 value: '',
                 text: '-- Chọn Quận/Huyện --'
             }));
-            $.getJSON("service/GetDistrictList", { id: idPro },
+            $.getJSON("@baseUri.ToString()" + "service/GetDistrictList", { id: idPro },
                 function (myData) {
                     $.each(myData, function (index, itemData) {
                         if (itemData.Text.lenght != 0) {
@@ -76,7 +67,7 @@
                         }
                     });
                 });
-            $.getJSON("service/GetLatLon", { id: idPro, type: "province" },
+            $.getJSON("@baseUri.ToString()" + "service/GetLatLon", { id: idPro, type: "province" },
                 function (myData) {
                     $.each(myData, function (index, itemData) {
                         var provinceLatLon = new google.maps.LatLng(itemData.Value.split(';')[0], itemData.Value.split(';')[1]);
@@ -89,7 +80,7 @@
         });
         $("#DistrictId").change(function () {
             var idDis = $("#DistrictId  option:selected").val();
-            $.getJSON("service/GetLatLon", { id: idDis, type: "district" },
+            $.getJSON("@baseUri.ToString()" + "service/GetLatLon", { id: idDis, type: "district" },
             function (myData) {
                 $.each(myData, function (index, itemData) {
                     var districtLatLon = new google.maps.LatLng(itemData.Value.split(';')[0], itemData.Value.split(';')[1]);
@@ -113,6 +104,7 @@
                 geocoder.geocode({ 'address': address }, function (results, status) {
                     if (status == google.maps.GeocoderStatus.OK) {
                         map.setOptions({
+
                             center: results[0].geometry.location,
                             zoom: 16
                         });
@@ -126,18 +118,94 @@
                         else {
                             marker.setPosition(results[0].geometry.location);
                         }
+                        $('#Lat').val(results[0].geometry.location.kb);
+                        $('#Lon').val(results[0].geometry.location.lb);
+                        google.maps.event.addListener(marker, 'dragend', function (event) {
+                            $('#Lat').val(event.latLng.lat());
+                            $('#Lon').val(event.latLng.lng());
+                        });
                     }
                     else {
-                        alert("Geocoding failed: " + status);
+                        alert("Lỗi kết nối đến máy chủ google: " + status);
                     }
                 });
             }
         });
+    }
 
-        google.maps.event.addDomListener(window, 'load', initialize);
-        google.setOnLoadCallback(initialize);
+    function loadScript() {
+        var script = document.createElement('script');
+        script.type = 'text/javascript';
+        script.src = 'https://maps.googleapis.com/maps/api/js?v=3.exp&sensor=false&' +
+            'callback=initialize';
+        document.body.appendChild(script);
+    }
+
+    window.onload = loadScript;
+</script>
+<script type="text/javascript">
+    $(document).ready(function () {
+        //        var map;
+        //        var mapProp = {
+        //            center: new google.maps.LatLng(21.04349121680354, 105.523681640625),
+        //            zoom: 8,
+        //            mapTypeId: google.maps.MapTypeId.ROADMAP
+        //        };
+        //        map = new google.maps.Map(document.getElementById("mapContainer"), mapProp);
+
+        //        $('input:checkbox').screwDefaultButtons({
+        //            image: "url(@Url.Content("~/Content/images/index_cbx.png)")",
+        //            width: 17,
+        //            height: 17
+        //        });
+
+        //For tag input
+        var source;
+        $.getJSON("@baseUri.ToString()" + "service/GetLocation",
+            function (myData) {
+                source = myData;
+            });
+        $('input.tag').tagedit({
+            autocompleteOptions: {
+                source: function (request, response) {
+                    var data = [];
+                    $.each(source, function (index, itemData) {
+                        if (itemData.Text.length != 0) {
+                            data.push({ "id": itemData.Value, "label": itemData.Text, "value": itemData.Text });
+                        }
+                    });
+                    return response($.ui.autocomplete.filter(data, request.term));
+                }
+            },
+            allowEdit: false,
+            allowDelete: false
+        });
+
+        //For page postback
+        var idPro = $("#ProvinceId option:selected").val();
+        var select = $("#DistrictId");
+        select.empty();
+        select.append($('<option/>', {
+            value: '',
+            text: '-- Chọn Quận/Huyện --'
+        }));
+        if (idPro != 0) {
+            $.getJSON("@baseUri.ToString()" + "service/GetDistrictList", { id: idPro },
+            function (myData) {
+                $.each(myData, function (index, itemData) {
+                    if (itemData.Text.length != 0) {
+                        select.append($('<option/>', {
+                            value: itemData.Value,
+                            text: itemData.Text
+                        }));
+                    }
+                });
+            });
+        };
+
     });
-
+</script>
+<script type = "text/javascript">
     var cellTemplates = new Array();
     cellTemplates[0] = '<fieldset id="field{counter}"><label>Chọn ảnh: </label>';
     cellTemplates[1] = '<input id="image{counter}" name="images" type="file" />';
@@ -155,280 +223,297 @@
             html += cellTemplates[i].replace(/\{counter\}/g, counter).replace(/\{value\}/g,
                     (description == null) ? '' : description);
         }
-        $("#uploadFile").prepend(html);
+        $("#uploadFile").append(html);
     }
     //removes a file input row
     function removeFile(obj) {
         $('html, body').animate({
             scrollTop: $("#uploadFile").offset().top
-        }, 10000);
+        }, 500);
         $(obj).parent().remove();
     }
    </script>
+ 
+
+<div id="postnew_wrapper">
+@Html.ValidationSummary(true, "Vui lòng kiểm tra lại thông tin như thông báo bên dưới!", new { style = "color:red" })
 @using (Html.BeginForm("Edit", "Post", FormMethod.Post, new { enctype = "multipart/form-data" }))
 {
-    @Html.ValidationSummary(true)
-    <div class = "content" style="float:left;" >
-        <legend>Chỉnh sửa bài đăng</legend>
-
-        <div class="editor-label">
-            @Html.LabelFor(model => model.Title)
+    <div class="header">
+        <a><img src="@Url.Content("~/Content/images/pnew_thongTinCoBan.png")"/></a>
+        <img src="@Url.Content("~/Content/images/pnew_gachNgang.png")" id="separator"/>
+        <a href="#" onclick="scrollTo('pnew2_header'); $('.collapseBtn').click();"><img src="@Url.Content("~/Content/images/pnew_thongTinChiTiet.png")"/></a>
+    </div>
+    <div class="content">
+        <div class="title">
+            <h1>Đăng tin mới</h1>
+            <h2>Ngay sau bước đầu tiên bạn đã có thể đăng tin được ngay. 5house.vn khuyên bạn nên hoàn thành cả 2 bước để có bài đăng chi tiết và hiệu quả nhất.</h2>
         </div>
-        <div class="editor-field">
-            @Html.EditorFor(model => model.Title)
-            @Html.ValidationMessageFor(model => model.Title)
-        </div>
-
-        <div class="editor-label">
-            @Html.LabelFor(model => model.CategoryId)
-        </div>
-        <div class="editor-field">
-            @Html.EditorFor(model => model.CategoryId)
-            @Html.ValidationMessageFor(model => model.CategoryId)
-        </div>
-
-        <div class="editor-label">
-            @Html.LabelFor(model => model.ProvinceId)
-        </div>
-        <div class="editor-field">
-            @Html.EditorFor(model => model.ProvinceId)
-            @Html.ValidationMessageFor(model => model.ProvinceId)
-        </div>
-
-        <div class="editor-label">
-            @Html.LabelFor(model => model.DistrictId)
-        </div>
-        <div class="editor-field">
-            @Html.EditorFor(model => model.DistrictId)
-            @Html.ValidationMessageFor(model => model.DistrictId)
-        </div>
-
-        <div class="editor-label">
-            @Html.LabelFor(model => model.NumberHouse)
-        </div>
-        <div class="editor-field">
-            @Html.EditorFor(model => model.NumberHouse)
-            @Html.ValidationMessageFor(model => model.NumberHouse)
-        </div>
-
-        <div class="editor-label">
-            @Html.LabelFor(model => model.Street)
-        </div>
-        <div class="editor-field">
-            @Html.EditorFor(model => model.Street)
-            @Html.ValidationMessageFor(model => model.Street)
-        </div>
-
-        <div class="editor-label">
-            @Html.LabelFor(model => model.Price)
-        </div>
-        <div class="editor-field">
-            @Html.EditorFor(model => model.Price)
-            @Html.ValidationMessageFor(model => model.Price)
-        </div>
-
-        <div class="editor-label">
-            @Html.LabelFor(model => model.Area)
-        </div>
-        <div class="editor-field">
-            @Html.EditorFor(model => model.Area)
-            @Html.ValidationMessageFor(model => model.Area)
-        </div>
-
-        <div class="editor-label">
-            @Html.LabelFor(model => model.PhoneActive)
-        </div>
-        <div class="editor-field">
-            @Html.EditorFor(model => model.PhoneActive)
-            @Html.ValidationMessageFor(model => model.PhoneActive)
-        </div>
-
-        <div class="editor-label">
-            @Html.LabelFor(model => model.Description)
-        </div>
-        <div class="editor-field">
-            @Html.EditorFor(model => model.Description)
-            @Html.ValidationMessageFor(model => model.Description)
-        </div>
-
-        <div class="editor-label">
-            @Html.LabelFor(model => model.HasInternet)
-        </div>
-        <div class="editor-field">
-            @Html.EditorFor(model => model.HasInternet)
-            @Html.ValidationMessageFor(model => model.HasInternet)
-        </div>
-
-        <div class="editor-label">
-            @Html.LabelFor(model => model.ElectricityFee)
-        </div>
-        <div class="editor-field">
-            @Html.EditorFor(model => model.ElectricityFee)
-            @Html.ValidationMessageFor(model => model.ElectricityFee)
-        </div>
-
-        <div class="editor-label">
-            @Html.LabelFor(model => model.WaterFee)
-        </div>
-        <div class="editor-field">
-            @Html.EditorFor(model => model.WaterFee)
-            @Html.ValidationMessageFor(model => model.WaterFee)
-        </div>
-
-        <div class="editor-label">
-            @Html.LabelFor(model => model.HasTVCable)
-        </div>
-        <div class="editor-field">
-            @Html.EditorFor(model => model.HasTVCable)
-            @Html.ValidationMessageFor(model => model.HasTVCable)
-        </div>
-
-        <div class="editor-label">
-            @Html.LabelFor(model => model.HasBed)
-        </div>
-        <div class="editor-field">
-            @Html.EditorFor(model => model.HasBed)
-            @Html.ValidationMessageFor(model => model.HasBed)
-        </div>
-
-        <div class="editor-label">
-            @Html.LabelFor(model => model.HasWaterHeater)
-        </div>
-        <div class="editor-field">
-            @Html.EditorFor(model => model.HasWaterHeater)
-            @Html.ValidationMessageFor(model => model.HasWaterHeater)
-        </div>
-
-        <div class="editor-label">
-            @Html.LabelFor(model => model.IsAllowCooking)
-        </div>
-        <div class="editor-field">
-            @Html.EditorFor(model => model.IsAllowCooking)
-            @Html.ValidationMessageFor(model => model.IsAllowCooking)
-        </div>
-
-        <div class="editor-label">
-            @Html.LabelFor(model => model.HasMotorParking)
-        </div>
-        <div class="editor-field">
-            @Html.EditorFor(model => model.HasMotorParking)
-            @Html.ValidationMessageFor(model => model.HasMotorParking)
-        </div>
-
-        <div class="editor-label">
-            @Html.LabelFor(model => model.HasToilet)
-        </div>
-        <div class="editor-field">
-            @Html.EditorFor(model => model.HasToilet)
-            @Html.ValidationMessageFor(model => model.HasToilet)
-        </div>
-
-        <div class="editor-label">
-            @Html.LabelFor(model => model.HasAirConditioner)
-        </div>
-        <div class="editor-field">
-            @Html.EditorFor(model => model.HasAirConditioner)
-            @Html.ValidationMessageFor(model => model.HasAirConditioner)
-        </div>
-
-        <div class="editor-label">
-            @Html.LabelFor(model => model.HasGarage)
-        </div>
-        <div class="editor-field">
-            @Html.EditorFor(model => model.HasGarage)
-            @Html.ValidationMessageFor(model => model.HasGarage)
-        </div>
-
-        <div class="editor-label">
-            @Html.LabelFor(model => model.IsStayWithOwner)
-        </div>
-        <div class="editor-field">
-            @Html.EditorFor(model => model.IsStayWithOwner)
-            @Html.ValidationMessageFor(model => model.IsStayWithOwner)
-        </div>
-
-        <div class="editor-label">
-            @Html.LabelFor(model => model.RestrictHours)
-        </div>
-        <div class="editor-field">
-            @Html.EditorFor(model => model.RestrictHours)
-            @Html.ValidationMessageFor(model => model.RestrictHours)
-        </div>
-
-        <div class="editor-label">
-            @Html.LabelFor(model => model.Direction)
-        </div>
-        <div class="editor-field">
-            @Html.EditorFor(model => model.Direction)
-            @Html.ValidationMessageFor(model => model.Direction)
-        </div>
-
-        <div class="editor-label">
-            @Html.LabelFor(model => model.HasSecurity)
-        </div>
-        <div class="editor-field">
-            @Html.EditorFor(model => model.HasSecurity)
-            @Html.ValidationMessageFor(model => model.HasSecurity)
-        </div>
-
-        <div class="editor-label">
-            @Html.LabelFor(model => model.PhoneContact)
-        </div>
-        <div class="editor-field">
-            @Html.EditorFor(model => model.PhoneContact)
-            @Html.ValidationMessageFor(model => model.PhoneContact)
-        </div>
-
-        <div class="editor-label">
-            @Html.LabelFor(model => model.Email)
-        </div>
-        <div class="editor-field">
-            @Html.EditorFor(model => model.Email)
-            @Html.ValidationMessageFor(model => model.Email)
-        </div>
-
-        <div class="editor-label">
-            @Html.LabelFor(model => model.Yahoo)
-        </div>
-        <div class="editor-field">
-            @Html.EditorFor(model => model.Yahoo)
-            @Html.ValidationMessageFor(model => model.Yahoo)
-        </div>
-
-        <div class="editor-label">
-            @Html.LabelFor(model => model.Skype)
-        </div>
-        <div class="editor-field">
-            @Html.EditorFor(model => model.Skype)
-            @Html.ValidationMessageFor(model => model.Skype)
-        </div>
-        <div id="uploadFile">
-            <fieldset>
-            <label>Chọn ảnh: </label>
-            <input id="file0" name="images" type="file" />
-            <a href="javascript:;" onclick="return addFile();" >Thêm ảnh</a>
-            </fieldset>
-        </div>
-        </div>
-    <div class = "content" style="float:right;" >
-        @Html.Partial("_ImagesPartial")
+        <div class="pnew1">
+            <h1>1 | Thông tin cơ bản</h1>
+            <div class="clear"></div>
+            <div class="pnLeft">
+                <div class="infoElement">
+                    <h2>Loại tin đăng</h2>
+                    <div class="clear"></div>
+                    @Html.DropDownListFor(model => model.CategoryId, (IEnumerable<SelectListItem>)ViewBag.CategoryId, new { @class = "select" })
+                    @Html.ValidationMessageFor(model => model.CategoryId)
+                </div>
+                <div class="infoElement infoTitle">
+                    <h2>Tiêu đề tin đăng</h2>
+                    <div class="clear"></div>
+                    @Html.TextBoxFor(model => model.Title, new { @class = "longTbx" })
+                    @Html.ValidationMessageFor(model => model.Title)
+                </div>
+                <div class="clear"></div>
+                <div class="infoElement">
+                    <h2>Tỉnh, thành phố</h2>
+                    <div class="clear"></div>
+                    @Html.DropDownListFor(model => model.ProvinceId, (IEnumerable<SelectListItem>)ViewBag.ProvinceId, new { @class = "select city" })
+                    @Html.ValidationMessageFor(model => model.ProvinceId)
+                </div>
+                <div class="infoElement">
+                    <h2>Quận huyện</h2>
+                    <div class="clear"></div>
+                    @Html.DropDownListFor(model => model.DistrictId,
+                        new SelectList(Enumerable.Empty<SelectListItem>(), "Id", "Name"), "Chọn Quận/Huyện",
+                        new { id = "DistrictId", @class = "select city" })
+                    @Html.ValidationMessageFor(model => model.DistrictId)
+                </div>
+                <div class="clear"></div>
+                <div class="infoElement">
+                    <h2>Đường, phố</h2>
+                    <div class="clear"></div>
+                    @Html.TextBoxFor(model => model.Street, new { @class = "tbx" })
+                    @Html.ValidationMessageFor(model => model.Street)
+                </div>
+                <div class="infoElement">
+                    <h2>Ngách, số nhà</h2>
+                    <div class="clear"></div>
+                    @Html.TextBoxFor(model => model.NumberHouse, new { @class = "tbx" })
+                    @Html.ValidationMessageFor(model => model.NumberHouse)
+                </div>
+                <div class="clear"></div>
+                <div class="infoElement">
+                    <h2>Giá tiền (triệu VND/tháng)</h2>
+                    <div class="clear"></div>
+                    @Html.TextBoxFor(model => model.Price, new { @class = "tbx" })
+                    @Html.ValidationMessageFor(model => model.Price)
+                </div>
+                <div class="infoElement">
+                    <h2>Diện tích (m2)</h2>
+                    <div class="clear"></div>
+                    @Html.TextBoxFor(model => model.Area, new { @class = "tbx" })
+                    @Html.ValidationMessageFor(model => model.Area)
+                </div>
+                <div class="clear"></div>
+                <div class="infoElement">
+                    <h2>Tên người liên hệ</h2>
+                    <div class="clear"></div>
+                    @Html.TextBoxFor(model => model.NameContact, new { @class = "tbx" })
+                    @Html.ValidationMessageFor(model => model.NameContact)
+                </div>
+                <div class="infoElement">
+                    <h2>Điện thoại liên hệ</h2>
+                    <div class="clear"></div>
+                    @Html.TextBoxFor(model => model.PhoneContact, new { @class = "tbx" })
+                    @Html.ValidationMessageFor(model => model.PhoneContact)
+                </div>
+                <div class="infoElement">
+                    <h2>Điện thoại kích hoạt</h2>
+                    <div class="clear"></div>
+                    @Html.TextBoxFor(model => model.PhoneActive, new { @class = "tbx" })
+                    @Html.ValidationMessageFor(model => model.PhoneActive)
+                </div>
+                <div class="clear"></div>
+                <div class="infoElement">
+                    <h2>Email liên hệ</h2>
+                    <div class="clear"></div>
+                    @Html.TextBoxFor(model => model.Email, new { @class = "tbx" })
+                    @Html.ValidationMessageFor(model => model.Email)
+                </div>
+                <div class="infoElement">
+                    <h2>Tài khoản Yahoo!</h2>
+                    <div class="clear"></div>
+                    @Html.TextBoxFor(model => model.Yahoo, new { @class = "shortTbx" })
+                    @Html.ValidationMessageFor(model => model.Yahoo)
+                </div>
+                <div class="infoElement">
+                    <h2>Tài khoản Skype</h2>
+                    <div class="clear"></div>
+                    @Html.TextBoxFor(model => model.Skype, new { @class = "shortTbx" })
+                    @Html.ValidationMessageFor(model => model.Skype)
+                </div>
+                <div class="clear"></div>
+                <div class="infoElement">
+                    <h2>Ghi chú</h2>
+                    <div class="clear"></div>
+                    @Html.TextAreaFor(model => model.Description, new { @cols="15", @rows="2"} )
+                </div>
+                <div class="clear"></div>
             </div>
-            <div class = "map" style="float:right;">
-            <div id="mapContainer" style="width:500px;height:380px;"></div>
-            <div class="editor-field">
-                @Html.EditorFor(model => model.Lat)
+            <div class="pnRight">
+                <h2>Vị trí trên bản đồ</h2>
+                <br />
+                <h2 style="color: #888888; font-weight: 400; font-style: italic; margin-top: 5px;">Hệ thống sẽ tự động xác định địa chỉ bạn cung cấp. Bạn có thể chọn một cách chính xác vị trí bạn mong muốn trên bản đồ dưới đây:</h2>
+                <div class="clear"></div>
+                <div class="map">
+                    <div id="mapContainer" style="width:372px;height:340px;"></div>
+                        <div class="editor-field">
+                            @Html.HiddenFor(model => model.Lat)
+                        </div>
+                        <div class="editor-field">
+                            @Html.HiddenFor(model => model.Lon)
+                        </div>
+                    </div>
+                <h2>Ảnh, video minh hoạ</h2>
+                <div class="clear"></div>
+                <div class="btnPlus">
+                    <div id="uploadFile">
+                        <label>Chọn ảnh: </label>
+                        <input id="file0" name="images" type="file" />
+                        <a href="javascript:;" onclick="return addFile();" >Thêm ảnh</a>
+                    </div>
+                </div>
             </div>
-            <div class="editor-field">
-                @Html.EditorFor(model => model.Lon)
+            <div class="clear"></div>
+        </div>
+        <div id="pnew2_header">
+                <div class="collapseBtn" onclick="toggleP2();"></div>
+                <h1>2 | Thông tin chi tiết</h1>
+                <div class="tips">
+                    <span id="tip1">Để có bài đăng chi tiết và hiệu quả nhất hãy hoàn thành phần thông tin chi tiết này.</span>
+                    <br/>
+                    <span id="tip2">Ấn nút mũi tên màu bạc để tiếp tục cung cấp thông tin hoặc ấn nút màu cam để bỏ qua bước này và đăng tin ngay!</span>
+                </div>
+                <div class="clear"></div>
             </div>
-        </div>
-        <div class = "clear" style="clear:both;">
-        </div>
-
-        <p>
-            <input type="submit" value="Save" />
-        </p>
+        <div id="pnew2_toggle">
+                <div>
+                    <div class="infoElement">
+                        <h2>Giá tiền điện (nghìn vnđ/số)</h2>
+                        <div class="clear"></div>
+                        @Html.TextBoxFor(model => model.ElectricityFee, new { @class = "electricPriceTbx" })
+                        @Html.ValidationMessageFor(model => model.ElectricityFee)
+                    </div>
+                    <div class="infoElement">
+                        <h2>Giá tiền nước (nghìn vnđ/khối) </h2>
+                        <div class="clear"></div>
+                        @Html.TextBoxFor(model => model.WaterFee, new { @class = "electricPriceTbx" })
+                        @Html.ValidationMessageFor(model => model.WaterFee)
+                    </div>
+                    <div class="infoElement">
+                        <h2>Giờ đóng cửa, cổng (nếu có)</h2>
+                        <div class="clear"></div>
+                        @Html.TextBoxFor(model => model.RestrictHours, new { @class = "electricPriceTbx" })
+                        @Html.ValidationMessageFor(model => model.RestrictHours)
+                    </div>
+                    <div class="clear"></div>
+                </div>
+                <div class="clear"></div>
+                <div class="leftContent" style="margin-right: 144px;">
+                    <h1>Các dịch vụ & tiện ích</h1>
+                    <div class="clear"></div>
+                    <div class="partCol">
+                        <div class="part">
+                            @Html.CheckBoxFor(model => model.HasInternet, new { @class = "styledCheckbox" })
+                            <span>Internet</span>
+                        </div>
+                        <div class="part">
+                            @Html.CheckBoxFor(model => model.HasBed, new { @class = "styledCheckbox" })
+                            <span>Giường, tủ</span>
+                        </div>
+                        <div class="part">
+                            @Html.CheckBoxFor(model => model.IsAllowCooking, new { @class = "styledCheckbox" })
+                            <span>Cho phép nấu ăn</span>
+                        </div>
+                        <div class="part">
+                            @Html.CheckBoxFor(model => model.HasWaterHeater, new { @class = "styledCheckbox" })
+                            <span>Bình nóng lạnh</span>
+                        </div>
+                        <div class="part">
+                            @Html.CheckBoxFor(model => model.HasSecurity, new { @class = "styledCheckbox" })
+                            <span>Bảo vệ</span>
+                        </div>
+                        <div class="clear"></div>
+                        <div class="part">
+                            @Html.CheckBoxFor(model => model.HasToilet, new { @class = "styledCheckbox" })
+                            <span>WC riêng</span>
+                        </div>
+                    </div>
+                    <div class="partCol">
+                        <div class="part">
+                            @Html.CheckBoxFor(model => model.HasMotorParking, new { @class = "styledCheckbox" })
+                            <span>Bãi đỗ xe</span>
+                        </div>
+                        <div class="part">
+                            @Html.CheckBoxFor(model => model.IsStayWithOwner, new { @class = "styledCheckbox" })
+                            <span>Chung chủ</span>
+                        </div>
+                        <div class="part">
+                            @Html.CheckBoxFor(model => model.HasGarage, new { @class = "styledCheckbox" })
+                            <span>Gara ôtô</span>
+                        </div>
+                        <div class="clear"></div>
+                        <div class="part">
+                            @Html.CheckBoxFor(model => model.HasWaterHeater, new { @class = "styledCheckbox" })
+                            <span>Điều hòa</span>
+                        </div>
+                        <div class="part">
+                            @Html.CheckBoxFor(model => model.HasTVCable, new { @class = "styledCheckbox" })
+                            <span>Tivi, truyền hình cáp</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="leftContent">
+                    <h1>Các địa điểm nổi bật xung quanh</h1>
+                    <div class="clear"></div>
+                    <div class="ta_wrapper">
+                        <input id="osSites" type="text" name="tag[]" value="" class="tag"/>
+                    </div>
+                </div>
+                <div class="clear"></div>
+            </div>
+        <input id="btnDangTinNgay" type="submit" value=""/>
+        <div class="clear"></div>
+    </div>
 }
-<div>
-    <input type="button" onclick="history.go(-1)" value="Quay lại" />
-</div>
+@section head{
+    <script type="text/javascript">
+        $(document).ready(function () {
+            $('select.select').each(function () {
+                var title = $(this).attr('title');
+                var id = $(this).attr('id');
+                if ($('option:selected', this).val() != '') {
+                    title = $('option:selected', this).text();
+                } else {
+                    $('option:selected', this).val('0');
+                    title = $('option:selected', this).val('0').text();
+                }
+                $(this)
+                .css({ 'opacity': 0 })
+                .after('<span class="select" id="sp' + id + '">' + title + '</span>')
+                .change(function () {
+                    val = $('option:selected', this).text();
+                    $(this).next().text(val);
+                })
+            });
+        });
+
+        function toggleP2() {
+            $('#pnew2_toggle').toggle();
+            if (!$('#pnew2_toggle').is(':hidden')) {
+                $('.collapseBtn').css('background-position', '0 -50px');
+            } else {
+                $('.collapseBtn').css('background-position', '0 0');
+            }
+        }
+
+        function scrollTo(id) {
+            $('html, body').animate({
+                scrollTop: $('#' + id).offset().top
+            }, 1000);
+        }
+        
+    </script>
+}
