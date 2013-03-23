@@ -1,4 +1,5 @@
 ﻿@model RentalHouseFinding.Models.RegisterModel
+@using Recaptcha;
 
 @{
     ViewBag.Title = "Register";
@@ -150,17 +151,13 @@
             </div>
             <div class="clear"></div>
             <div class="blockInfo leftBlock lastBlock">
-                <label>@Html.LabelFor(m => m.CaptchaText)</label>
-                <div class="clear"></div>
-                <div class="textbox">
-                    @Html.TextBoxFor(m => m.CaptchaText, new { @class = "tbxRegisterCapcha" })
-                    @Html.ValidationMessageFor(m => m.CaptchaText)         
-                </div>
-               
-                <div class="textbox" style="margin-left:95px">
-                   
-                    <p><img src="/account/ShowCaptchaImage" /></p>
-                    @ViewBag.Message
+                <div class="textbox" style="margin-left:95px">                   
+                    <div class="editor-field">
+                      @Html.Raw(Html.GenerateCaptcha("captcha", "clean"))
+                      @Html.ValidationMessage("captcha")
+                    </div>
+                    @*<p><img src="/account/ShowCaptchaImage" /></p>
+                    @ViewBag.Message*@
                 </div>
             </div>
             <div class="blockInfo lastBlock" id="blockBtnRegis">
