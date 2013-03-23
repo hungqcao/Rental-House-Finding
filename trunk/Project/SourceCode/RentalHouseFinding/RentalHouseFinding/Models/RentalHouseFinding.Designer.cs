@@ -40,7 +40,7 @@ using System.Runtime.Serialization;
 [assembly: EdmRelationshipAttribute("RentalHouseFinding", "PostsPostLocations", "Posts", System.Data.Metadata.Edm.RelationshipMultiplicity.One, typeof(RentalHouseFinding.Models.Posts), "PostLocations", System.Data.Metadata.Edm.RelationshipMultiplicity.Many, typeof(RentalHouseFinding.Models.PostLocations), true)]
 [assembly: EdmRelationshipAttribute("RentalHouseFinding", "LocationsPostLocations", "Locations", System.Data.Metadata.Edm.RelationshipMultiplicity.One, typeof(RentalHouseFinding.Models.Locations), "PostLocations", System.Data.Metadata.Edm.RelationshipMultiplicity.Many, typeof(RentalHouseFinding.Models.PostLocations), true)]
 [assembly: EdmRelationshipAttribute("RentalHouseFinding", "PostsQuestions", "Posts", System.Data.Metadata.Edm.RelationshipMultiplicity.One, typeof(RentalHouseFinding.Models.Posts), "Questions", System.Data.Metadata.Edm.RelationshipMultiplicity.Many, typeof(RentalHouseFinding.Models.Questions), true)]
-[assembly: EdmRelationshipAttribute("RentalHouseFinding", "UsersQuestions", "Users", System.Data.Metadata.Edm.RelationshipMultiplicity.One, typeof(RentalHouseFinding.Models.Users), "Questions", System.Data.Metadata.Edm.RelationshipMultiplicity.Many, typeof(RentalHouseFinding.Models.Questions), true)]
+[assembly: EdmRelationshipAttribute("RentalHouseFinding", "UsersQuestions", "Users", System.Data.Metadata.Edm.RelationshipMultiplicity.ZeroOrOne, typeof(RentalHouseFinding.Models.Users), "Questions", System.Data.Metadata.Edm.RelationshipMultiplicity.Many, typeof(RentalHouseFinding.Models.Questions), true)]
 [assembly: EdmRelationshipAttribute("RentalHouseFinding", "UsersUserLogs", "Users", System.Data.Metadata.Edm.RelationshipMultiplicity.One, typeof(RentalHouseFinding.Models.Users), "UserLogs", System.Data.Metadata.Edm.RelationshipMultiplicity.Many, typeof(RentalHouseFinding.Models.UserLogs), true)]
 
 #endregion
@@ -5730,23 +5730,23 @@ namespace RentalHouseFinding.Models
         /// </summary>
         /// <param name="id">Initial value of the Id property.</param>
         /// <param name="content">Initial value of the Content property.</param>
-        /// <param name="senderId">Initial value of the SenderId property.</param>
         /// <param name="createdDate">Initial value of the CreatedDate property.</param>
         /// <param name="isRead">Initial value of the IsRead property.</param>
         /// <param name="isDeleted">Initial value of the IsDeleted property.</param>
         /// <param name="postId">Initial value of the PostId property.</param>
         /// <param name="title">Initial value of the Title property.</param>
-        public static Questions CreateQuestions(global::System.Int32 id, global::System.String content, global::System.Int32 senderId, global::System.DateTime createdDate, global::System.Boolean isRead, global::System.Boolean isDeleted, global::System.Int32 postId, global::System.String title)
+        /// <param name="senderEmail">Initial value of the SenderEmail property.</param>
+        public static Questions CreateQuestions(global::System.Int32 id, global::System.String content, global::System.DateTime createdDate, global::System.Boolean isRead, global::System.Boolean isDeleted, global::System.Int32 postId, global::System.String title, global::System.String senderEmail)
         {
             Questions questions = new Questions();
             questions.Id = id;
             questions.Content = content;
-            questions.SenderId = senderId;
             questions.CreatedDate = createdDate;
             questions.IsRead = isRead;
             questions.IsDeleted = isDeleted;
             questions.PostId = postId;
             questions.Title = title;
+            questions.SenderEmail = senderEmail;
             return questions;
         }
 
@@ -5807,9 +5807,9 @@ namespace RentalHouseFinding.Models
         /// <summary>
         /// No Metadata Documentation available.
         /// </summary>
-        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=false)]
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=true)]
         [DataMemberAttribute()]
-        public global::System.Int32 SenderId
+        public Nullable<global::System.Int32> SenderId
         {
             get
             {
@@ -5824,8 +5824,8 @@ namespace RentalHouseFinding.Models
                 OnSenderIdChanged();
             }
         }
-        private global::System.Int32 _SenderId;
-        partial void OnSenderIdChanging(global::System.Int32 value);
+        private Nullable<global::System.Int32> _SenderId;
+        partial void OnSenderIdChanging(Nullable<global::System.Int32> value);
         partial void OnSenderIdChanged();
     
         /// <summary>
@@ -5947,6 +5947,30 @@ namespace RentalHouseFinding.Models
         private global::System.String _Title;
         partial void OnTitleChanging(global::System.String value);
         partial void OnTitleChanged();
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=false)]
+        [DataMemberAttribute()]
+        public global::System.String SenderEmail
+        {
+            get
+            {
+                return _SenderEmail;
+            }
+            set
+            {
+                OnSenderEmailChanging(value);
+                ReportPropertyChanging("SenderEmail");
+                _SenderEmail = StructuralObject.SetValidValue(value, false);
+                ReportPropertyChanged("SenderEmail");
+                OnSenderEmailChanged();
+            }
+        }
+        private global::System.String _SenderEmail;
+        partial void OnSenderEmailChanging(global::System.String value);
+        partial void OnSenderEmailChanged();
 
         #endregion
     

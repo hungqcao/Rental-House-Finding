@@ -114,5 +114,76 @@ namespace RentalHouseFinding.Common
                 return null;
             }
         }
+
+        public List<FullTextSearchPostWithWeightenScore_Result> FullTextSearchPostWithWeightenScoreTakeAll(int categoryId,
+                                                                                                    int provinceId,
+                                                                                                    int DistrictId,
+                                                                                                    string keyWords,
+                                                                                                    int descriptionColumnScore,
+                                                                                                    int titleColumnScore,
+                                                                                                    int streetColumnScore,
+                                                                                                    int nearbyColumnScore,
+                                                                                                    int numberAddressColumnScore,
+                                                                                                    int directionColumnScore)
+        {
+            try
+            {
+                var listSuggestion = _db.FullTextSearchPostWithWeightenScore(categoryId, provinceId, DistrictId, keyWords, titleColumnScore, descriptionColumnScore, streetColumnScore, nearbyColumnScore, numberAddressColumnScore, directionColumnScore);
+
+                return listSuggestion.ToList();
+            }
+            catch (Exception ex)
+            {
+                return null;
+            }
+        }
+
+        public List<AdvancedSearchFacility_Result> AdvanceSearchTakeAll(int categoryId,
+                                                                int provinceId,
+                                                                int DistrictId,
+                                                                double areaMax,
+                                                                double areaMin,
+                                                                double priceMax,
+                                                                double priceMin,
+                                                                int hasAirConditionerScore,
+                                                                int hasBedScore,
+                                                                int hasGarageScore,
+                                                                int hasInternetScore,
+                                                                int hasMotorParkingLotScore,
+                                                                int hasSecurityScore,
+                                                                int hasTVCableScore,
+                                                                int hasWaterHeaterScore,
+                                                                int isAllowCookingScore,
+                                                                int isStayWithOwnerScore,
+                                                                int hasToiletScore)
+        {
+            try
+            {
+                var listSuggestion = _db.AdvancedSearchFacilities(categoryId,
+                                                                provinceId,
+                                                                DistrictId,
+                                                                areaMax,
+                                                                areaMin,
+                                                                priceMax,
+                                                                priceMin,
+                                                                hasAirConditionerScore,
+                                                                hasBedScore,
+                                                                hasGarageScore,
+                                                                hasInternetScore,
+                                                                hasMotorParkingLotScore,
+                                                                hasSecurityScore,
+                                                                hasTVCableScore,
+                                                                hasWaterHeaterScore,
+                                                                isAllowCookingScore,
+                                                                isStayWithOwnerScore,
+                                                                hasToiletScore);
+
+                return listSuggestion.ToList();
+            }
+            catch (Exception ex)
+            {
+                return null;
+            }
+        }
     }
 }

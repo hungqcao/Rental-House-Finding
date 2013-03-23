@@ -31,24 +31,40 @@ namespace RentalHouseFinding.Controllers
         {
             ViewBag.CategoryId = new SelectList(_db.Categories, "Id", "Name");
             ViewBag.ProvinceId = new SelectList(_db.Provinces, "Id", "Name");
+            Session["NumberSkip"] = null;
+            Session["NumberResult"] = null;
             return View();
+        }
+
+        [HttpPost]
+        public ActionResult Index(SearchViewModel model)
+        {
+            ViewBag.CategoryId = new SelectList(Repository.GetAllCategories(), "Id", "Name");
+            ViewBag.ProvinceId = new SelectList(Repository.GetAllProvinces(), "Id", "Name");
+
+            if (model != null)
+            {
+                model.IsAdvancedSearch = false;
+                model.IsNormalSearch = true;
+                Session["SearchViewModel"] = model;
+            }
+            return RedirectToAction("Index", "Home");
         }
 
         [AcceptVerbs(HttpVerbs.Get)]
         public JsonResult GetLatLonFromResult()
         {
-            if (Session["ResultPostViewModel"] != null)
+            try
             {
-                var lstResult = (IEnumerable<PostViewModel>)Session["ResultPostViewModel"];
-                var myData = lstResult.Select(a => new SelectListItem()
+                var myData = Repository.GetAllPosts().Select(a => new SelectListItem()
                 {
-                    Text = a.Lat + ";" + a.Lon,
+                    Text = a.Lat + "|" + a.Lon + "|" + a.Area.ToString() + "|" + a.Price.ToString() + "|" + a.NumberAddress.Trim() + " " + a.Street.Trim() + "|" + a.Title,
                     Value = a.Id.ToString(),
                 });
 
                 return Json(myData, JsonRequestBehavior.AllowGet);
             }
-            else
+            catch
             {
                 return Json(new { message = "Fail" }, JsonRequestBehavior.AllowGet);
             }
@@ -58,6 +74,11 @@ namespace RentalHouseFinding.Controllers
         {
             ViewBag.CategoryId = new SelectList(_db.Categories, "Id", "Name");
             ViewBag.ProvinceId = new SelectList(_db.Provinces, "Id", "Name");
+            if (!(Session["NumberSkip"] == null))
+            {
+                skipNum += (int)Session["NumberSkip"];
+            }
+                
             if (Session["SearchViewModel"] != null)
             {
                 SearchViewModel _modelRequest = (SearchViewModel)Session["SearchViewModel"];
@@ -80,15 +101,35 @@ namespace RentalHouseFinding.Controllers
                                                                                 int.Parse(Repository.GetAllConfiguration().Where(c => c.Name.Equals(ConstantColumnNameScoreNormalSearch.DIRECTION_COLUMN_SCORE_NAME, StringComparison.CurrentCultureIgnoreCase)).Select(c => c.Value).FirstOrDefault().ToString()),
                                                                                 skipNum,
                                                                                 takeNum);
+                        List<Posts> query = new List<Posts>();
                         if (suggList != null)
                         {
                             list = suggList.Select(p => p.Id).ToList();
+                            foreach (int i in list)
+                            {
+                                query.Add((from p in _db.Posts
+                                             where p.Id == i
+                                             select p).FirstOrDefault());
+                            }
                         }
-                        List<Posts> query = (from p in _db.Posts
-                                             where list.Contains(p.Id)
-                                             select p).ToList();
                         var lstPostViewModel = query.Select(p => CommonModel.ConvertPostToPostViewModel(p));
                         Session["ResultPostViewModel"] = lstPostViewModel.ToList();
+                        if (Session["NumberResult"] == null)
+                        {
+                            Session["NumberResult"] = lstPostViewModel.Count();
+                        }
+                        else
+                        {
+                            int result = (int)Session["NumberResult"] + lstPostViewModel.Count();
+                            Session["NumberResult"] = result;
+                        }
+                        if (Session["NumberSkip"] == null)
+                        {
+                            Session["NumberSkip"] = takeNum;
+                        }else if (lstPostViewModel.Count() > 0)
+                        {
+                            Session["NumberSkip"] = (int)Session["NumberSkip"] + takeNum;
+                        }
                         return View(lstPostViewModel);
                     }
                 }
@@ -118,15 +159,36 @@ namespace RentalHouseFinding.Controllers
                                                                   _modelRequest.HasToiletScore,
                                                                   skipNum, 
                                                                   takeNum);
+                        List<Posts> query = new List<Posts>();
                         if (suggList != null)
                         {
                             list = suggList.Select(p => p.Id).ToList();
+                            foreach (int i in list)
+                            {
+                                query.Add((from p in _db.Posts
+                                           where p.Id == i
+                                           select p).FirstOrDefault());
+                            }
                         }
-                        List<Posts> query = (from p in _db.Posts
-                                             where list.Contains(p.Id)
-                                             select p).ToList();
                         var lstPostViewModel = query.Select(p => CommonModel.ConvertPostToPostViewModel(p));
                         Session["ResultPostViewModel"] = lstPostViewModel.ToList();
+                        if (Session["NumberResult"] == null)
+                        {
+                            Session["NumberResult"] = lstPostViewModel.Count();
+                        }
+                        else
+                        {
+                            int result = (int)Session["NumberResult"] + lstPostViewModel.Count();
+                            Session["NumberResult"] = result;
+                        }
+                        if (Session["NumberSkip"] == null)
+                        {
+                            Session["NumberSkip"] = takeNum;
+                        }
+                        else if (lstPostViewModel.Count() > 0)
+                        {
+                            Session["NumberSkip"] = (int)Session["NumberSkip"] + takeNum;
+                        }
                         return View(lstPostViewModel);
                     }
                 }
