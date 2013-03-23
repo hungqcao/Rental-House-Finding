@@ -16,6 +16,7 @@ using DotNetOpenAuth.OpenId.Extensions.AttributeExchange;
 using Facebook;
 using System.Net;
 using FBLogin.Models;
+using Recaptcha;
 
 
 
@@ -298,13 +299,13 @@ namespace RentalHouseFinding.Controllers
         //
         // POST: /Account/Register
 
-        [HttpPost]
-        public ActionResult Register(RegisterModel model)
+        
+        [HttpPost, RecaptchaControlMvc.CaptchaValidator]
+        public ActionResult Register(RegisterModel model, bool captchaValid)
         {
-            if (model.CaptchaText != HttpContext.Session["captchastring"].ToString())
+            if (!captchaValid)
             {
-                ViewBag.Message = "Sai mã bảo vệ";
-                return View(model);
+                ModelState.AddModelError("captcha", "Sai mã bảo vệ");            
             }
             else
             {

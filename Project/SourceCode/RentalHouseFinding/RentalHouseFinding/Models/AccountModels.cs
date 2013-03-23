@@ -104,10 +104,6 @@ namespace RentalHouseFinding.Models
 
         [Display(Name = "Avatar")]        
         public string Avatar { get; set; }
-
-        [Required(ErrorMessage = "Xin vui lòng điền mã bảo vệ.")]
-        [Display(Name = "Mã bảo vệ")]
-        public string CaptchaText { get; set; }
                 
     }
 
