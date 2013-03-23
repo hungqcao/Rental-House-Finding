@@ -15,6 +15,7 @@ namespace RentalHouseFinding.Caching
         IEnumerable<ConfigurationRHF> GetAllConfiguration();
         IEnumerable<Provinces> GetAllProvinces();
         IEnumerable<Categories> GetAllCategories();
+        IEnumerable<Posts> GetAllPosts();
     }
 
     public class CacheRepository : ICacheRepository
@@ -118,6 +119,26 @@ namespace RentalHouseFinding.Caching
             return data;
         }
 
+        public IEnumerable<Posts> GetAllPosts()
+        {
+            // First, check the cache
+            IEnumerable<Posts> data = Cache.Get("posts") as IEnumerable<Posts>;
+
+            // If it's not in the cache, we need to read it from the repository
+            if (data == null)
+            {
+                // Get the repository data
+                data = DataContext.Posts.ToList();
+
+                if (data.Any())
+                {
+                    // Put this data into the cache for 30 minutes
+                    Cache.Set("posts", data, int.Parse(ConfigurationManager.AppSettings["TimeRefreshCache"]));
+                }
+            }
+
+            return data;
+        }
 
         public void ClearCache()
         {
@@ -125,6 +146,7 @@ namespace RentalHouseFinding.Caching
             Cache.Invalidate("configurations");
             Cache.Invalidate("provinces");
             Cache.Invalidate("categories");
+            Cache.Invalidate("posts");
         }
     }
 }

@@ -2,7 +2,7 @@
 -- --------------------------------------------------
 -- Entity Designer DDL Script for SQL Server 2005, 2008, and Azure
 -- --------------------------------------------------
--- Date Created: 03/20/2013 01:54:45
+-- Date Created: 03/24/2013 00:39:34
 -- Generated from EDMX file: C:\RentalHouseFinding\Project\SourceCode\RentalHouseFinding\RentalHouseFinding\Models\RentalHouseFinding.edmx
 -- --------------------------------------------------
 
@@ -361,12 +361,13 @@ GO
 CREATE TABLE [dbo].[Questions] (
     [Id] int IDENTITY(1,1) NOT NULL,
     [Content] nvarchar(max)  NOT NULL,
-    [SenderId] int  NOT NULL,
+    [SenderId] int  NULL,
     [CreatedDate] datetime  NOT NULL,
     [IsRead] bit  NOT NULL,
     [IsDeleted] bit  NOT NULL,
     [PostId] int  NOT NULL,
-    [Title] nvarchar(max)  NOT NULL
+    [Title] nvarchar(max)  NOT NULL,
+    [SenderEmail] nvarchar(max)  NOT NULL
 );
 GO
 

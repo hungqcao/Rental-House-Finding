@@ -768,6 +768,7 @@ span.field-validation-error > span, span.field-validation-error
     font-size: 14px;
     font-style: italic;
     margin: 10px 0;
+    width: 100%;
 }
 #listInfo .desc {
     margin-bottom: 7px;
@@ -1598,3 +1599,4 @@ textarea#Description {
 }
 
 /* END FAVORITE USER CONTROL PANEL PAGE */
+
