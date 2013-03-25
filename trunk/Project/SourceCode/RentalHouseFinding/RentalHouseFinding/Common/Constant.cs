@@ -18,6 +18,7 @@ namespace RentalHouseFinding.Common
     public static class ConstantCommonString
     {
         public const string NONE_INFORMATION = "NoneOfInformationText";
+        public const string EXPIRED_DATE = "ExpiredDate";
 
     }
 

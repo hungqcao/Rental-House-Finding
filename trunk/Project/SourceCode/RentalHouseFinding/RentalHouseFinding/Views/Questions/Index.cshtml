@@ -23,9 +23,9 @@
         <div class="scroll-panel" style="overflow: auto; width: 340px; height: 556px;">
             @foreach (var item in Model)
             {
-                <div id="@item.Id" class="infoDetail left" href="">
+                <div id="@item.Id" class="infoDetail left" style="font-size:13px;">
                     <div class="text left">
-                        <span class="title left"><strong>@item.Title</strong></span>
+                        <span class="title left" style="width:100%"><strong>@item.Title</strong></span>
                         <span class="from left">Từ bài đăng: @item.Post.Title</span> 
                         <span class="time left">Thời gian: @item.CreatedDate</span>
                         <span class="sender left">Người gửi: @item.SenderEmail</span>

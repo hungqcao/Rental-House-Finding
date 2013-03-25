@@ -156,7 +156,7 @@
         @Html.DropDownListFor(model => model.ProvinceId, (IEnumerable<SelectListItem>)ViewBag.ProvinceId, new { @class = "select narrow" })
         @Html.ValidationMessageFor(model => model.ProvinceId)
         @Html.DropDownListFor(model => model.DistrictId,
-            new SelectList(Enumerable.Empty<SelectListItem>(), "Id", "Name"), "Chọn Quận/Huyện",
+            new SelectList(Enumerable.Empty<SelectListItem>(), "Id", "Name"), "Quận/Huyện",
                     new { @id = "DistrictId", @class = "select narrow" })
         @Html.DropDownListFor(model => model.CategoryId, (IEnumerable<SelectListItem>)ViewBag.CategoryId, new { @class = "select narrow" })
         @Html.ValidationMessageFor(model => model.CategoryId)

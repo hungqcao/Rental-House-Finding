@@ -17,6 +17,7 @@ namespace RentalHouseFinding.Caching
         IEnumerable<Categories> GetAllCategories();
         IEnumerable<Posts> GetAllPosts();
         IEnumerable<EmailTemplate> GetAllEmailTemplate();
+        IEnumerable<PostStatuses> GetAllPostStatus();
     }
 
     public class CacheRepository : ICacheRepository
@@ -45,7 +46,7 @@ namespace RentalHouseFinding.Caching
             if (data == null)
             {
                 // Get the repository data
-                data = DataContext.Districts.OrderBy(v => v.Name).ToList();
+                data = DataContext.Districts.Where(d => d.IsDeleted == false).OrderBy(v => v.Name).ToList();
 
                 if (data.Any())
                 {
@@ -66,7 +67,7 @@ namespace RentalHouseFinding.Caching
             if (data == null)
             {
                 // Get the repository data
-                data = DataContext.Categories.OrderBy(v => v.Name).ToList();
+                data = DataContext.Categories.Where(d => d.IsDeleted == false).OrderBy(v => v.Name).ToList();
 
                 if (data.Any())
                 {
@@ -108,7 +109,7 @@ namespace RentalHouseFinding.Caching
             if (data == null)
             {
                 // Get the repository data
-                data = DataContext.Provinces.ToList();
+                data = DataContext.Provinces.Where(d => d.IsDeleted == false).ToList();
 
                 if (data.Any())
                 {
@@ -129,7 +130,7 @@ namespace RentalHouseFinding.Caching
             if (data == null)
             {
                 // Get the repository data
-                data = DataContext.Posts.ToList();
+                data = DataContext.Posts.Where(d => d.IsDeleted == false).ToList();
 
                 if (data.Any())
                 {
@@ -162,6 +163,28 @@ namespace RentalHouseFinding.Caching
             return data;
         }
 
+        public IEnumerable<PostStatuses> GetAllPostStatus()
+        {
+            // First, check the cache
+            IEnumerable<PostStatuses> data = Cache.Get("PostStatus") as IEnumerable<PostStatuses>;
+
+            // If it's not in the cache, we need to read it from the repository
+            if (data == null)
+            {
+                // Get the repository data
+                data = DataContext.PostStatuses.Where(d => d.IsDeleted == false).ToList();
+
+                if (data.Any())
+                {
+                    // Put this data into the cache for 30 minutes
+                    Cache.Set("PostStatus", data, int.Parse(ConfigurationManager.AppSettings["TimeRefreshCache"]));
+                }
+            }
+
+            return data;
+        }
+
+
         public void ClearCache()
         {
             Cache.Invalidate("districts");
@@ -170,6 +193,7 @@ namespace RentalHouseFinding.Caching
             Cache.Invalidate("categories");
             Cache.Invalidate("posts");
             Cache.Invalidate("EmailTemplate");
+            Cache.Invalidate("PostStatus");
         }
     }
 }

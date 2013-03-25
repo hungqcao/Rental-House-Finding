@@ -32,7 +32,7 @@ namespace RentalHouseFinding.Common
             }
         }
 
-        public static Posts ConvertPostViewModelToPost(PostViewModel model, DateTime createdDate, DateTime editedDate, DateTime renewDate, string noInformation)
+        public static Posts ConvertPostViewModelToPost(PostViewModel model, DateTime createdDate, DateTime editedDate, DateTime renewDate, DateTime expiredDate, string noInformation)
         {
             string facilityTempId = (model.HasAirConditioner ? "1" : "0") +
                                     (model.HasBed ? "1" : "0") +
@@ -64,6 +64,7 @@ namespace RentalHouseFinding.Common
                 Description = string.IsNullOrEmpty(model.Description) ? noInformation : model.Description,
                 DistrictId = model.DistrictId,
                 EditedDate = editedDate,
+                ExpiredDate = expiredDate,
                 Facilities = new Facilities()
                 {
                     Direction = model.Direction,

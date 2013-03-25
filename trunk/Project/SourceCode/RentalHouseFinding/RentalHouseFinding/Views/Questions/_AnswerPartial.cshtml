@@ -3,22 +3,24 @@
     int questionId = Convert.ToInt32(ViewData["questionId"]);
 }
 <script src="@Url.Content("~/Scripts/jquery.unobtrusive-ajax.min.js")" type="text/javascript"></script>
-
-@using (Ajax.BeginForm("sendanswer", "questions", new AjaxOptions { UpdateTargetId = "answers", InsertionMode = InsertionMode.InsertAfter }))
+<script type="text/javascript">
+    $(document).ready(function () {
+        $("#result").fadeOut();
+        $("#sendBtn").click(function () {
+            $("#result").fadeIn();
+            return true;
+        }
+    );
+    });
+</script>
+@using (Ajax.BeginForm("sendanswer", "questions", new AjaxOptions { UpdateTargetId = "answers", InsertionMode = InsertionMode.InsertAfter, OnSuccess = "OnSuccess", OnFailure = "OnFailure" }))
 {
+    <div id="result" style="margin-left:25px;" ><img src="@Url.Content("~/Content/images/ajax-loader.gif")" /></div>
+    <div class="clear"></div>
     @Html.ValidationSummary(true)
-    <fieldset>
-        <input id = "QuestionId" name="QuestionId" value="@questionId" type="hidden" />
-        <div class="editor-label">
-            @Html.LabelFor(model => model.ContentAnswer)
-        </div>
-        <div class="editor-label">
-            @Html.EditorFor(model => model.ContentAnswer)
-            @Html.ValidationMessageFor(model => model.ContentAnswer)
-        </div>
-        <p>
-            <input type="submit" value="Submit" />
-        </p>
-    </fieldset>
+    <input id = "QuestionId" name="QuestionId" value="@questionId" type="hidden" />
+    @Html.TextBoxFor(model => model.ContentAnswer, new { @id = "messageInput" })
+    @Html.ValidationMessageFor(model => model.ContentAnswer)
+    <input type="submit" value="" id="sendBtn"/>
 }
 
