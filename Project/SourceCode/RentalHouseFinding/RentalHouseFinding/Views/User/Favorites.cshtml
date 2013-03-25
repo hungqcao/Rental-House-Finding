@@ -1,26 +1,28 @@
 ﻿@{
     Layout = "~/Views/Shared/_LayoutUser.cshtml";
 }
+
 <fieldset style="width: 500px;">
-    <table>
-        <tr>
-            <th>Title</th>
-            <th>CreatedDate</th>
-            <th>EditedDate</th>
-            <th>RenewDate</th>
-            <th>Status</th>
-            <th></th>
-        </tr>
-    @for (var i = 0; i < @ViewBag.FavoriteList.Count; i++)
-    {
-        <tr>
-            <td>@Html.ActionLink((String)ViewBag.FavoriteList[i].Title, "Edit/" + (int)ViewBag.FavoriteList[i].Id, "Post")</td>
-            <td>@ViewBag.FavoriteList[i].CreatedDate</td>
-            <td>@ViewBag.FavoriteList[i].EditedDate</td>
-            <td>@ViewBag.FavoriteList[i].RenewDate</td>
-            <td>@ViewBag.StatusList[@ViewBag.FavoriteList[i].StatusId - 1].Name</td>
-            <td><button type="button" onclick="self.location='/Post/Delete/@ViewBag.FavoriteList[i].Id'">Delete</button></td>
-        </tr>
-    }
-    </table>
+    <div id="container-grid">
+        @{
+            if (ViewBag.PostList != null)
+            {
+                var grid = new WebGrid(ViewBag.PostList, ajaxUpdateContainerId: "container-grid", canSort: false
+                    );
+        
+                @grid.GetHtml(tableStyle: "cssTable", mode: WebGridPagerModes.All, 
+                                headerStyle: "header",
+                                alternatingRowStyle: "alt",
+                                htmlAttributes: new { id = "grid"});
+            }
+            else 
+            {
+                <h2>Không có bài post</h2>
+            }
+    
+        }
+        <br/>
+        <br/>
+    </div>
 </fieldset>
+@Html.ActionLink("Quay lại", "Index")

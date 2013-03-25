@@ -117,7 +117,21 @@ namespace RentalHouseFinding.Controllers
             var favoriteList = (from f in _db.Posts
                                 where (!f.IsDeleted && lstPostId.Contains(f.Id))
                                 select f).ToList();
-            ViewBag.FavoriteList = favoriteList;
+
+            var postViewList = favoriteList.Select(p => new
+            {
+                p.Id,
+                p.UserId,
+                p.Title,
+                p.CreatedDate,
+                p.EditedDate,
+                p.RenewDate,
+                PostStatus = (from stt in _db.PostStatuses
+                              where (stt.Id == p.StatusId)
+                              select stt.Name).FirstOrDefault()
+            });
+
+            ViewBag.FavoriteList = postViewList;
             return View();
         }
 
@@ -135,7 +149,20 @@ namespace RentalHouseFinding.Controllers
             var postList = (from p in _db.Posts
                             where (p.UserId == userId && !p.IsDeleted)
                             select p);
-            ViewBag.PostList = postList.ToList();
+
+            var postViewList = postList.Select(p => new
+            {
+                p.Id,
+                p.UserId,
+                p.Title,
+                p.CreatedDate,
+                p.EditedDate,
+                p.RenewDate,
+                PostStatus = (from stt in _db.PostStatuses
+                              where (stt.Id == p.StatusId)
+                              select stt.Name).FirstOrDefault()
+            });
+            ViewBag.PostList = postViewList.ToArray();
             
             return View();
         }
