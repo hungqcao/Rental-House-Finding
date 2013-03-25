@@ -7,12 +7,24 @@ using System.Web;
 using System.Web.Mvc;
 using RentalHouseFinding.Models;
 using RentalHouseFinding.Common;
+using RentalHouseFinding.Caching;
 
 namespace RentalHouseFinding.Controllers.User
 { 
     public class QuestionsController : Controller
     {
         private RentalHouseFindingEntities _db = new RentalHouseFindingEntities();
+
+        public ICacheRepository Repository { get; set; }
+        public QuestionsController()
+            : this(new CacheRepository())
+        {
+        }
+
+        public QuestionsController(ICacheRepository repository)
+        {
+            this.Repository = repository;
+        }
 
         //
         // GET: /Questions/
@@ -23,7 +35,10 @@ namespace RentalHouseFinding.Controllers.User
             int userId = CommonModel.GetUserIdByUsername(User.Identity.Name);
             var lstPostId = _db.Posts.Where(p => p.UserId == userId && !p.IsDeleted).Select(p => p.Id).ToList();
 
-            var lstQuestion = _db.Questions.Where(q => lstPostId.Contains(q.PostId) && !q.IsDeleted).ToList();
+            var lstQuestion = _db.Questions.Where(q => lstPostId.Contains(q.PostId) && !q.IsDeleted).OrderByDescending(q=>q.CreatedDate).ToList();
+            var lstSentQuestion = _db.Questions.Where(q => q.SenderId == userId && !q.IsDeleted).OrderByDescending(q=>q.CreatedDate).ToList();
+            lstQuestion.AddRange(lstSentQuestion);
+            lstQuestion.OrderByDescending(q => q.CreatedDate);
             return View(lstQuestion);
         }
 
@@ -54,6 +69,13 @@ namespace RentalHouseFinding.Controllers.User
                 answerToCreate.IsDeleted = false;
                 _db.Answers.AddObject(answerToCreate);
                 _db.SaveChanges();
+
+                if (!string.IsNullOrEmpty(answerToCreate.Question.SenderEmail))
+                {
+                    string emailTemplate = Repository.GetAllEmailTemplate().Where(e => e.Name.Equals(ConstantEmailTemplate.RECEIVE_ANSWER, StringComparison.CurrentCultureIgnoreCase)).Select(m => m.Template).FirstOrDefault();
+                    string message = string.Format(emailTemplate, User.Identity.Name, model.ContentAnswer, answerToCreate.Question.Title, answerToCreate.Question.Content);
+                    CommonModel.SendEmail(answerToCreate.Question.SenderEmail, message, "Bạn nhận được 1 câu trả lời", 0);
+                }
 
                 return View(answerToCreate);
             }

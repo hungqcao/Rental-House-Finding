@@ -181,42 +181,6 @@ namespace RentalHouseFinding.Controllers
             return View(userDetail);
         }
 
-        ////get NOT USE active acount/
-        //public ActionResult Activation(UserViewModel model,int id, string key)
-        //{ 
-        //    var user = (from u in _db.Users
-        //                where u.Id == id && !u.IsActive
-        //                select new { u.KeyActive, u.Username }).FirstOrDefault();
-        //    if (user != null)
-        //    {
-        //        if (user.KeyActive.ToString().Equals(key, StringComparison.CurrentCultureIgnoreCase))
-        //        {
-        //            //update user                
-        //            var profile = (from p in _db.Users where (p.Id == id) select p).FirstOrDefault();
-        //            profile.IsActive = true;
-
-        //            _db.ObjectStateManager.ChangeObjectState(profile, System.Data.EntityState.Modified);
-        //            _db.SaveChanges();
-        //            model.UserName = profile.Username;
-
-        //        }
-        //    }
-        //    else
-        //    { 
-        //        //account da dc active.
-        //    }
-        //    return View(model);
-        //}
-        //[HttpPost]
-        //public ActionResult Activation(int id)
-        //{
-        //    var profile = (from p in _db.Users where (p.Id == id) select p).FirstOrDefault();
-        //    FormsAuthentication.SetAuthCookie(profile.Username,true);
-        //    return RedirectToAction("Index", "Landing");            
-        //}
-        
-        //
-        //
         // GET: /Account/LogOn
         private RentalHouseFindingEntities _db = new RentalHouseFindingEntities();
         public ActionResult LogOn()
@@ -245,30 +209,20 @@ namespace RentalHouseFinding.Controllers
                 if (Membership.ValidateUser(model.UserName, model.Password))
                 {
                     var user = (from p in _db.Users where p.Username == model.UserName select new { p.IsActive , p.RoleId }).FirstOrDefault();
-                    //if (user.IsActive)
-                    //{
-
-                        FormsAuthentication.SetAuthCookie(model.UserName, model.RememberMe);
-                        if (Url.IsLocalUrl(returnUrl) && returnUrl.Length > 1 && returnUrl.StartsWith("/")
-                            && !returnUrl.StartsWith("//") && !returnUrl.StartsWith("/\\"))
-                        {
-                            return Redirect(returnUrl);
-                        }
-                        //int accountType = (from p in _db.Users where p.Username == model.UserName select p.RoleId).FirstOrDefault();
-                        if (user.RoleId == 1)
-                        {
-                            return RedirectToAction("Index", "Admin");
-                        }
-                        else
-                        {
-                            return RedirectToAction("Index", "Landing");
-                        }
-                    //}
-                    //else
-                    //{
-                    //    ModelState.AddModelError("", "Tài khoản của bạn chưa được kích hoạt");
-                    //    return View(model);
-                    //}
+                    FormsAuthentication.SetAuthCookie(model.UserName, model.RememberMe);
+                    if (Url.IsLocalUrl(returnUrl) && returnUrl.Length > 1 && returnUrl.StartsWith("/")
+                        && !returnUrl.StartsWith("//") && !returnUrl.StartsWith("/\\"))
+                    {
+                        return Redirect(returnUrl);
+                    }
+                    if (user.RoleId == 1)
+                    {
+                        return RedirectToAction("Index", "Admin");
+                    }
+                    else
+                    {
+                        return RedirectToAction("Index", "Landing");
+                    }
                 }
                 else
                 {
@@ -374,7 +328,7 @@ namespace RentalHouseFinding.Controllers
                         _db.SaveChanges();
                         changePasswordSucceeded = true;
                         success = "Thay đổi mật khẩu thành công";
-                        CommonModel.SendEmail("vietvh01388@fpt.edu.vn","body",0);
+                        CommonModel.SendEmail(account.Email,"Mật khẩu của tài khoản " + account.Username + " đã được đổi thành " + model.NewPassword,"Đổi mật khẩu thành công!", 0);
                     }
                     
                 }

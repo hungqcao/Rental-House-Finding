@@ -2,7 +2,7 @@
 -- --------------------------------------------------
 -- Entity Designer DDL Script for SQL Server 2005, 2008, and Azure
 -- --------------------------------------------------
--- Date Created: 03/24/2013 00:39:34
+-- Date Created: 03/25/2013 16:30:55
 -- Generated from EDMX file: C:\RentalHouseFinding\Project\SourceCode\RentalHouseFinding\RentalHouseFinding\Models\RentalHouseFinding.edmx
 -- --------------------------------------------------
 
@@ -117,6 +117,9 @@ IF OBJECT_ID(N'[dbo].[Contacts]', 'U') IS NOT NULL
 GO
 IF OBJECT_ID(N'[dbo].[Districts]', 'U') IS NOT NULL
     DROP TABLE [dbo].[Districts];
+GO
+IF OBJECT_ID(N'[dbo].[EmailTemplates]', 'U') IS NOT NULL
+    DROP TABLE [dbo].[EmailTemplates];
 GO
 IF OBJECT_ID(N'[dbo].[Facilities]', 'U') IS NOT NULL
     DROP TABLE [dbo].[Facilities];
@@ -238,7 +241,8 @@ CREATE TABLE [dbo].[Posts] (
     [Lon] float  NOT NULL,
     [UserId] int  NULL,
     [Street] nvarchar(50)  NOT NULL,
-    [NearbyPlace] nvarchar(max)  NULL
+    [NearbyPlace] nvarchar(max)  NULL,
+    [ExpiredDate] datetime  NOT NULL
 );
 GO
 
@@ -453,7 +457,16 @@ CREATE TABLE [dbo].[UserLogs] (
     [Id] int IDENTITY(1,1) NOT NULL,
     [Message] nvarchar(max)  NOT NULL,
     [UserId] int  NOT NULL,
-    [IsRead] bit  NOT NULL
+    [IsRead] bit  NOT NULL,
+    [CreatedDate] datetime  NOT NULL
+);
+GO
+
+-- Creating table 'EmailTemplates'
+CREATE TABLE [dbo].[EmailTemplates] (
+    [Id] int IDENTITY(1,1) NOT NULL,
+    [Name] nvarchar(max)  NOT NULL,
+    [Template] nvarchar(max)  NOT NULL
 );
 GO
 
@@ -608,6 +621,12 @@ GO
 -- Creating primary key on [Id] in table 'UserLogs'
 ALTER TABLE [dbo].[UserLogs]
 ADD CONSTRAINT [PK_UserLogs]
+    PRIMARY KEY CLUSTERED ([Id] ASC);
+GO
+
+-- Creating primary key on [Id] in table 'EmailTemplates'
+ALTER TABLE [dbo].[EmailTemplates]
+ADD CONSTRAINT [PK_EmailTemplates]
     PRIMARY KEY CLUSTERED ([Id] ASC);
 GO
 

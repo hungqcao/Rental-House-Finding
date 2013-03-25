@@ -20,15 +20,11 @@ namespace RentalHouseFinding.Controllers
         public ActionResult Index()
         {
             int userId = CommonModel.GetUserIdByUsername(User.Identity.Name);
-            var lstPostId = _db.Posts.Where(p => p.UserId == userId && !p.IsDeleted).Select(p => p.Id).ToList();
+            InfoAndUserLogsViewModel model = new InfoAndUserLogsViewModel();
+            model.User = _db.Users.Where(u => u.Id == userId).FirstOrDefault();
+            model.UserLogsList = _db.UserLogs.Where(u => u.UserId == userId).OrderBy(u => u.CreatedDate).ToList();
 
-            int numOfUnreadQuestion = _db.Questions.Where(q => lstPostId.Contains(q.PostId) && !q.IsDeleted && !q.IsRead).ToList().Count;
-
-            var lstSentQuestion = _db.Questions.Where(q => q.SenderId == userId && !q.IsDeleted).ToList();
-
-            int numOfUnreadAnswer = 0;
-
-            return View();
+            return View(model);
         }
 
         [Authorize(Roles = "Admin, User")]

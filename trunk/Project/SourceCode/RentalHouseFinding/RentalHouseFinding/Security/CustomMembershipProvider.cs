@@ -106,7 +106,7 @@ namespace RentalHouseFinding.Sercurity
                         //send mail welcome!
                         if (!String.IsNullOrEmpty(user.Email))
                         {
-                            CommonModel.SendEmail(user.Email, String.Format("Chào mừng bạn đến với HouseFinding!</br>Thông tin tài khoản:</br>-Tên tài khoản:{0}</br>-Mật khẩu:{1}</br> ", model.UserName, model.Password), 0);
+                            CommonModel.SendEmail(user.Email, String.Format("Chào mừng bạn đến với HouseFinding!<br/>Thông tin tài khoản:<br/>-Tên tài khoản:{0}<br/>-Mật khẩu:{1}<br/> ", model.UserName, model.Password), "Chào mừng bạn!", 0);
                         }
                         
 
@@ -165,7 +165,7 @@ namespace RentalHouseFinding.Sercurity
                         _db.SaveChanges();
 
                         status = MembershipCreateStatus.Success;
-                        CommonModel.SendEmail(user.Email, String.Format("Chào mừng bạn đến với HouseFinding!</br>"), 0);
+                        CommonModel.SendEmail(user.Email, String.Format("Chào mừng bạn đến với HouseFinding!<br/>"), "Welcome!", 0);
                         return true;
                     }
 

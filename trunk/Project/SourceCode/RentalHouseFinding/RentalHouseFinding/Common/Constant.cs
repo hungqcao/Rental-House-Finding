@@ -27,4 +27,10 @@ namespace RentalHouseFinding.Common
         public const string MESSAGE_RECEIVE_QUESTION = "MessageReceiveQuestion";
         public const string MESSAGE_RECEIVE_ANSWER = "MessageReceiveAnswer";
     }
+
+    public static class ConstantEmailTemplate
+    {
+        public const string RECEIVE_QUESTION = "YouReceiveQuestion";
+        public const string RECEIVE_ANSWER = "YouReceiveMessage";
+    }
 }

@@ -102,7 +102,7 @@ body{
     padding: 30px 0 20px 0;
 }
 #header{
-	margin: 40px auto 25px;
+	margin: 15px auto 0px;
     max-width: 1054px;
 	height: 130px;
 	font-family: Calibri, Arial,Helvetica,Sans-Serif;
@@ -119,9 +119,9 @@ body{
 }
 #containerLogin{
 	background: url(../../Content/images/user.png) no-repeat;
-    margin: 15px 0 0 10px;
-    padding: 0 0 0 50px;
-    background-position: 30px 0;
+    margin: 15px 0 0 0px;
+    padding: 0 0 0 25px;
+    background-position: 5px 0;
 }
 #containerLogin a{
 	text-decoration:none;
@@ -186,7 +186,6 @@ a#link1:hover, a#link2:hover, a#link3:hover, a#link4:hover, a#link5:hover
 #selectSearch
 {
 	position: relative;
-	margin-bottom: 130px;
 }
 select.select {
     color: #B3B3B3;
@@ -1000,9 +999,12 @@ span.field-validation-error > span, span.field-validation-error
 }
 div.title-ques
 {
-    width: 70px;
-    margin-right: 30px;
-    margin-bottom: 30px;
+    width: 100px;
+    margin-right: 20px;
+}
+div.title-ques-input
+{
+    margin-bottom: 10px;
 }
 div.title-ques-input input
 {
@@ -1013,7 +1015,7 @@ div.title-ques-input input
     -webkit-border-radius: 7px;
     -moz-border-radius: 7px;
     border-radius: 7px;
-    
+    padding: 5px;
 }
 div.content-ques-input textarea, textarea#txtResion
 {
@@ -1027,11 +1029,11 @@ div.content-ques-input textarea, textarea#txtResion
     -moz-border-radius: 7px;
     border-radius: 7px;
     resize: none;
+    padding: 5px;
 }
 input.btn-send-question
 {
     float: right;
-    margin-right: 30px;
     margin-top: 30px;
     background: url("../../Content/images/send_question.png") no-repeat transparent 0 0;
     display: block;
@@ -1600,3 +1602,113 @@ textarea#Description {
 
 /* END FAVORITE USER CONTROL PANEL PAGE */
 
+.CSSTable {
+	margin:0px;padding:0px;
+	width:100%;
+	box-shadow: 10px 10px 5px #888888;
+	border:1px solid #000000;
+	
+	-moz-border-radius-bottomleft:8px;
+	-webkit-border-bottom-left-radius:8px;
+	border-bottom-left-radius:8px;
+	
+	-moz-border-radius-bottomright:8px;
+	-webkit-border-bottom-right-radius:8px;
+	border-bottom-right-radius:8px;
+	
+	-moz-border-radius-topright:8px;
+	-webkit-border-top-right-radius:8px;
+	border-top-right-radius:8px;
+	
+	-moz-border-radius-topleft:8px;
+	-webkit-border-top-left-radius:8px;
+	border-top-left-radius:8px;
+}.CSSTable table{
+	width:100%;
+	height:100%;
+	margin:0px;padding:0px;
+}.CSSTable tr:last-child td:last-child {
+	-moz-border-radius-bottomright:8px;
+	-webkit-border-bottom-right-radius:8px;
+	border-bottom-right-radius:8px;
+}
+.CSSTable table tr:first-child td:first-child {
+	-moz-border-radius-topleft:8px;
+	-webkit-border-top-left-radius:8px;
+	border-top-left-radius:8px;
+}
+.CSSTable table tr:first-child td:last-child {
+	-moz-border-radius-topright:8px;
+	-webkit-border-top-right-radius:8px;
+	border-top-right-radius:8px;
+}.CSSTable tr:last-child td:first-child{
+	-moz-border-radius-bottomleft:8px;
+	-webkit-border-bottom-left-radius:8px;
+	border-bottom-left-radius:8px;
+}.CSSTable tr:hover td{
+	
+}
+.CSSTable tr:nth-child(odd){ background-color:#ffffff; }
+.CSSTable tr:nth-child(even)    { background-color:#ffffff; }.CSSTable td{
+	vertical-align:middle;
+	border:1px solid #000000;
+	border-width:0px 1px 1px 0px;
+	text-align:center;
+	padding:14px;
+	font-size:14px;
+	font-family:Arial;
+	color:#000000;
+}.CSSTable tr:last-child td{
+	border-width:0px 1px 0px 0px;
+}.CSSTable tr td:last-child{
+	border-width:0px 0px 1px 0px;
+}.CSSTable tr:last-child td:last-child{
+	border-width:0px 0px 0px 0px;
+}
+.CSSTable tr:first-child td{
+		background:-o-linear-gradient(bottom, #fd8515 5%, #de5c0d 100%);	background:-webkit-gradient( linear, left top, left bottom, color-stop(0.05, #fd8515), color-stop(1, #de5c0d) );
+	background:-moz-linear-gradient( center top, #fd8515 5%, #de5c0d 100% );
+	filter:progid:DXImageTransform.Microsoft.gradient(startColorstr="#fd8515", endColorstr="#de5c0d");	background: -o-linear-gradient(top,#fd8515,de5c0d);
+
+	background-color:#fd8515;
+	border:0px solid #000000;
+	text-align:center;
+	border-width:0px 0px 1px 1px;
+	font-size:18px;
+	font-family:Arial;
+	font-weight:bold;
+	color:#ffffff;
+}
+.CSSTable tr:first-child:hover td{
+	background:-o-linear-gradient(bottom, #fd8515 5%, #de5c0d 100%);	background:-webkit-gradient( linear, left top, left bottom, color-stop(0.05, #fd8515), color-stop(1, #de5c0d) );
+	background:-moz-linear-gradient( center top, #fd8515 5%, #de5c0d 100% );
+	filter:progid:DXImageTransform.Microsoft.gradient(startColorstr="#fd8515", endColorstr="#de5c0d");	background: -o-linear-gradient(top,#fd8515,de5c0d);
+
+	background-color:#fd8515;
+}
+.CSSTable tr:first-child td:first-child{
+	border-width:0px 0px 1px 0px;
+}
+.CSSTable tr:first-child td:last-child{
+	border-width:0px 0px 1px 1px;
+}
+
+/* TABLE
+----------------------------------------------------------*/
+
+table {
+    border: solid 1px #e1e1e1;
+    border-collapse: collapse;
+}
+
+table td {
+    padding: 5px;
+    border: solid 1px #e1e1e1;
+}
+
+table th {
+    padding: 6px 5px;
+    text-align: left;
+    background-color: #e1e1e1;
+    border: solid 1px #e1e1e1;
+}

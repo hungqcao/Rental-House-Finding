@@ -31,6 +31,7 @@
     <EntitySet Name="PostLocations" EntityType="RentalHouseFinding.Store.PostLocations" store:Type="Tables" Schema="dbo" />
     <EntitySet Name="Types" EntityType="RentalHouseFinding.Store.Types" store:Type="Tables" Schema="dbo" />
     <EntitySet Name="UserLogs" EntityType="RentalHouseFinding.Store.UserLogs" store:Type="Tables" Schema="dbo" />
+    <EntitySet Name="EmailTemplates" EntityType="RentalHouseFinding.Store.EmailTemplates" store:Type="Tables" Schema="dbo" />
     <AssociationSet Name="ProvincesDistricts" Association="RentalHouseFinding.Store.ProvincesDistricts">
       <End Role="Provinces" EntitySet="Provinces" />
       <End Role="Districts" EntitySet="Districts" />
@@ -195,6 +196,7 @@
     <Property Name="UserId" Type="int" Nullable="true" />
     <Property Name="Street" Type="nvarchar" Nullable="false" MaxLength="50" />
     <Property Name="NearbyPlace" Type="nvarchar(max)" Nullable="true" />
+    <Property Name="ExpiredDate" Type="datetime" Nullable="false" />
   </EntityType>
   <EntityType Name="Roles">
     <Key>
@@ -410,6 +412,15 @@
     <Property Name="Message" Type="nvarchar(max)" Nullable="false" />
     <Property Name="UserId" Type="int" Nullable="false" />
     <Property Name="IsRead" Type="bit" Nullable="false" />
+    <Property Name="CreatedDate" Type="datetime" Nullable="false" />
+  </EntityType>
+  <EntityType Name="EmailTemplates">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="Name" Type="nvarchar(max)" Nullable="false" />
+    <Property Name="Template" Type="nvarchar(max)" Nullable="false" />
   </EntityType>
   <Association Name="ProvincesDistricts">
     <End Role="Provinces" Type="RentalHouseFinding.Store.Provinces" Multiplicity="1" />
@@ -863,6 +874,7 @@
             <Parameter Name="NumberAddressScore" Mode="In" Type="Int32" />
             <Parameter Name="DirectionScore" Mode="In" Type="Int32" />
           </FunctionImport>
+          <EntitySet Name="EmailTemplates" EntityType="RentalHouseFinding.EmailTemplate" />
           </EntityContainer>
         <EntityType Name="Users">
           <Key>
@@ -965,6 +977,7 @@
           <NavigationProperty Name="PostLocations" Relationship="RentalHouseFinding.PostsPostLocations" FromRole="Posts" ToRole="PostLocations" />
           <Property Type="String" Name="NearbyPlace" Nullable="true" />
           <NavigationProperty Name="Questions" Relationship="RentalHouseFinding.PostsQuestions" FromRole="Posts" ToRole="Questions" />
+          <Property Type="DateTime" Name="ExpiredDate" Nullable="false" />
         </EntityType>
         <Association Name="DistrictsPosts">
           <End Type="RentalHouseFinding.Districts" Multiplicity="1" Role="Districts" />
@@ -1478,6 +1491,7 @@
           <Property Type="Int32" Name="UserId" Nullable="false" />
           <Property Type="Boolean" Name="IsRead" Nullable="false" />
           <NavigationProperty Name="User" Relationship="RentalHouseFinding.UsersUserLogs" FromRole="UserLogs" ToRole="Users" />
+          <Property Type="DateTime" Name="CreatedDate" Nullable="false" />
         </EntityType>
         <Association Name="UsersUserLogs">
           <End Type="RentalHouseFinding.Users" Role="Users" Multiplicity="1" />
@@ -1495,6 +1509,14 @@
           <Property Type="Int32" Name="Id" Nullable="false" />
           <Property Type="String" Name="Title" Nullable="false" />
         </ComplexType>
+        <EntityType Name="EmailTemplate">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Type="Int32" Name="Id" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Type="String" Name="Name" Nullable="false" />
+          <Property Type="String" Name="Template" Nullable="false" />
+        </EntityType>
         </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -1570,6 +1592,7 @@
           <ScalarProperty Name="UserId" ColumnName="UserId" />
           <ScalarProperty Name="Street" ColumnName="Street" />
           <ScalarProperty Name="NearbyPlace" ColumnName="NearbyPlace" />
+          <ScalarProperty Name="ExpiredDate" ColumnName="ExpiredDate" />
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>
@@ -1806,6 +1829,16 @@
           <ScalarProperty Name="Message" ColumnName="Message" />
           <ScalarProperty Name="UserId" ColumnName="UserId" />
           <ScalarProperty Name="IsRead" ColumnName="IsRead" />
+          <ScalarProperty Name="CreatedDate" ColumnName="CreatedDate" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="EmailTemplates">
+      <EntityTypeMapping TypeName="IsTypeOf(RentalHouseFinding.EmailTemplate)">
+        <MappingFragment StoreEntitySet="EmailTemplates">
+          <ScalarProperty Name="Id" ColumnName="Id" />
+          <ScalarProperty Name="Name" ColumnName="Name" />
+          <ScalarProperty Name="Template" ColumnName="Template" />
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>
@@ -1836,12 +1869,12 @@
           <ConnectorPoint PointX="2.25" PointY="18.211293945312498" />
           <ConnectorPoint PointX="3" PointY="18.211293945312498" />
         </AssociationConnector>
-        <EntityTypeShape EntityType="RentalHouseFinding.Posts" Width="1.5" PointX="5.25" PointY="4" Height="7.1724251302083335" IsExpanded="true" />
+        <EntityTypeShape EntityType="RentalHouseFinding.Posts" Width="1.5" PointX="5.25" PointY="4" Height="7.3647265625" IsExpanded="true" />
         <AssociationConnector Association="RentalHouseFinding.DistrictsPosts">
           <ConnectorPoint PointX="4.5" PointY="16.876152846153843" />
           <ConnectorPoint PointX="4.875" PointY="16.501152846153843" />
-          <ConnectorPoint PointX="4.875" PointY="7.5862125651041676" />
-          <ConnectorPoint PointX="5.25" PointY="7.5862125651041676" />
+          <ConnectorPoint PointX="4.875" PointY="9.239934395833334" />
+          <ConnectorPoint PointX="5.25" PointY="9.239934395833334" />
         </AssociationConnector>
         <EntityTypeShape EntityType="RentalHouseFinding.Roles" PointX="0.75" PointY="12.5" Width="1.5" Height="1.9802864583333317" IsExpanded="true" />
         <EntityTypeShape EntityType="RentalHouseFinding.Categories" PointX="3" PointY="3.5" Width="1.5" Height="1.9802864583333353" IsExpanded="true" />
@@ -1851,9 +1884,9 @@
         </AssociationConnector>
         <EntityTypeShape EntityType="RentalHouseFinding.PostImages" PointX="7.5" PointY="20.5" Width="1.5" Height="1.9802864583333317" IsExpanded="true" />
         <AssociationConnector Association="RentalHouseFinding.PostsPostImages">
-          <ConnectorPoint PointX="6.75" PointY="11.135501053285257" />
-          <ConnectorPoint PointX="7.25" PointY="11.635501053285257" />
-          <ConnectorPoint PointX="7.25" PointY="21.490143229166666" />
+          <ConnectorPoint PointX="6.75" PointY="11.352033254807692" />
+          <ConnectorPoint PointX="7.1875" PointY="11.789533254807692" />
+          <ConnectorPoint PointX="7.1875" PointY="21.490143229166666" />
           <ConnectorPoint PointX="7.5" PointY="21.490143229166666" />
         </AssociationConnector>
         <EntityTypeShape EntityType="RentalHouseFinding.PostStatuses" PointX="3" PointY="6.125" Width="1.5" Height="1.9802864583333317" IsExpanded="true" />
@@ -1862,29 +1895,29 @@
           <ConnectorPoint PointX="4.5" PointY="14.997345377604166" />
           <ConnectorPoint PointX="4.791666666666667" PointY="14.997345377604166" />
           <ConnectorPoint PointX="4.958333333333333" PointY="14.997345377604166" />
-          <ConnectorPoint PointX="7.041666666666667" PointY="14.997345377604166" />
-          <ConnectorPoint PointX="7.270833333333333" PointY="14.997345377604166" />
-          <ConnectorPoint PointX="7.510416666666667" PointY="14.997345377604166" />
-          <ConnectorPoint PointX="7.677083333333333" PointY="14.997345377604166" />
-          <ConnectorPoint PointX="7.885416666666667" PointY="14.997345377604166" />
-          <ConnectorPoint PointX="8.0520833333333339" PointY="14.997345377604166" />
+          <ConnectorPoint PointX="7.041666666666667" PointY="14.997345377604164" />
+          <ConnectorPoint PointX="7.302083333333333" PointY="14.997345377604166" />
+          <ConnectorPoint PointX="7.572916666666667" PointY="14.997345377604166" />
+          <ConnectorPoint PointX="7.739583333333333" PointY="14.997345377604166" />
+          <ConnectorPoint PointX="7.947916666666667" PointY="14.997345377604166" />
+          <ConnectorPoint PointX="8.1145833333333339" PointY="14.997345377604166" />
           <ConnectorPoint PointX="9.40625" PointY="14.997345377604166" />
           <ConnectorPoint PointX="9.40625" PointY="14.614889322916667" />
         </AssociationConnector>
         <AssociationConnector Association="RentalHouseFinding.PostsFavorites">
-          <ConnectorPoint PointX="6.75" PointY="11.130885668669873" />
-          <ConnectorPoint PointX="7.4375" PointY="11.818385668669873" />
+          <ConnectorPoint PointX="6.75" PointY="11.323187100961539" />
+          <ConnectorPoint PointX="7.4375" PointY="12.010687100961539" />
           <ConnectorPoint PointX="7.4375" PointY="13.432444661458334" />
-          <ConnectorPoint PointX="7.510416666666667" PointY="13.432444661458334" />
-          <ConnectorPoint PointX="7.677083333333333" PointY="13.432444661458334" />
-          <ConnectorPoint PointX="7.885416666666667" PointY="13.432444661458334" />
-          <ConnectorPoint PointX="8.0520833333333339" PointY="13.432444661458334" />
+          <ConnectorPoint PointX="7.572916666666667" PointY="13.432444661458334" />
+          <ConnectorPoint PointX="7.739583333333333" PointY="13.432444661458334" />
+          <ConnectorPoint PointX="7.947916666666667" PointY="13.432444661458334" />
+          <ConnectorPoint PointX="8.1145833333333339" PointY="13.432444661458334" />
           <ConnectorPoint PointX="8.25" PointY="13.432444661458334" />
         </AssociationConnector>
         <EntityTypeShape EntityType="RentalHouseFinding.ReportedPosts" PointX="5.25" PointY="12.125" Width="1.5" Height="2.5571907552083317" IsExpanded="true" />
         <AssociationConnector Association="RentalHouseFinding.PostsReportedPosts">
-          <ConnectorPoint PointX="5.9780764230769226" PointY="11.172425130208334" />
-          <ConnectorPoint PointX="5.9780764230769226" PointY="12.125" />
+          <ConnectorPoint PointX="5.9566321153846156" PointY="11.3647265625" />
+          <ConnectorPoint PointX="5.9566321153846156" PointY="12.125" />
         </AssociationConnector>
         <AssociationConnector Association="RentalHouseFinding.UsersReportedPosts">
           <ConnectorPoint PointX="4.5" PointY="13.403595377604166" />
@@ -1901,19 +1934,19 @@
         <EntityTypeShape EntityType="RentalHouseFinding.Contacts" PointX="7.5" PointY="23.25" Width="1.5" Height="2.364889322916671" IsExpanded="true" />
         <EntityTypeShape EntityType="RentalHouseFinding.PostVideos" PointX="7.5" PointY="26.25" Width="1.5" Height="1.9802864583333317" IsExpanded="true" />
         <AssociationConnector Association="RentalHouseFinding.PostsFacilities">
-          <ConnectorPoint PointX="6.75" PointY="10.076820293614219" />
-          <ConnectorPoint PointX="7.59375" PointY="10.076820293614219" />
-          <ConnectorPoint PointX="7.59375" PointY="15.5" />
+          <ConnectorPoint PointX="6.75" PointY="10.151903709730854" />
+          <ConnectorPoint PointX="7.65625" PointY="10.151903709730854" />
+          <ConnectorPoint PointX="7.65625" PointY="15.5" />
         </AssociationConnector>
         <AssociationConnector Association="RentalHouseFinding.PostsContacts">
-          <ConnectorPoint PointX="6.75" PointY="11.141270284054487" />
-          <ConnectorPoint PointX="7.21875" PointY="11.610020284054487" />
+          <ConnectorPoint PointX="6.7338461538461534" PointY="11.3647265625" />
+          <ConnectorPoint PointX="7.21875" PointY="11.849630408653846" />
           <ConnectorPoint PointX="7.21875" PointY="24.432444661458334" />
           <ConnectorPoint PointX="7.5" PointY="24.432444661458334" />
         </AssociationConnector>
         <AssociationConnector Association="RentalHouseFinding.PostsPostVideos">
-          <ConnectorPoint PointX="6.7130769230769225" PointY="11.172425130208334" />
-          <ConnectorPoint PointX="7.125" PointY="11.584348207131411" />
+          <ConnectorPoint PointX="6.705" PointY="11.3647265625" />
+          <ConnectorPoint PointX="7.125" PointY="11.7847265625" />
           <ConnectorPoint PointX="7.125" PointY="27.240143229166666" />
           <ConnectorPoint PointX="7.5" PointY="27.240143229166666" />
         </AssociationConnector>
@@ -1926,40 +1959,40 @@
           <ConnectorPoint PointX="4.8160744349011209" PointY="10.872386103560418" />
           <ConnectorPoint PointX="4.9339255650988791" PointY="10.754534973362661" />
           <ConnectorPoint PointX="5.0625" PointY="10.625960538461539" />
-          <ConnectorPoint PointX="5.0625" PointY="11.361077976362179" />
-          <ConnectorPoint PointX="5.2511528461538459" PointY="11.172425130208334" />
+          <ConnectorPoint PointX="5.0625" PointY="11.553379408653846" />
+          <ConnectorPoint PointX="5.2511528461538459" PointY="11.3647265625" />
         </AssociationConnector>
-        <EntityTypeShape EntityType="RentalHouseFinding.ConfigurationRHF" Width="1.625" PointX="2.875" PointY="0.5" Height="1.59568359375" IsExpanded="true" />
+        <EntityTypeShape EntityType="RentalHouseFinding.ConfigurationRHF" Width="1.625" PointX="2.625" PointY="0.5" Height="1.59568359375" IsExpanded="true" />
         <EntityTypeShape EntityType="RentalHouseFinding.Questions" Width="1.5" PointX="11.375" PointY="20.75" Height="3.3263964843750031" IsExpanded="true" />
         <EntityTypeShape EntityType="RentalHouseFinding.Answers" Width="1.5" PointX="11.375" PointY="24.75" Height="2.364889322916671" IsExpanded="true" />
         <AssociationConnector Association="RentalHouseFinding.QuestionsAnswers">
           <ConnectorPoint PointX="12.125" PointY="24.076396484375003" />
           <ConnectorPoint PointX="12.125" PointY="24.75" />
         </AssociationConnector>
-        <EntityTypeShape EntityType="RentalHouseFinding.AdvanceSearchScore" Width="1.5" PointX="5.5" PointY="0.625" Height="1.5956835937499996" IsExpanded="true" />
-        <EntityTypeShape EntityType="RentalHouseFinding.FacilityTemplates" Width="1.5" PointX="7.75" PointY="1.125" Height="3.3263964843749996" />
+        <EntityTypeShape EntityType="RentalHouseFinding.AdvanceSearchScore" Width="1.5" PointX="6.25" PointY="0.5" Height="1.5956835937499996" IsExpanded="true" />
+        <EntityTypeShape EntityType="RentalHouseFinding.FacilityTemplates" Width="1.5" PointX="7.875" PointY="0.5" Height="3.5186979166666656" />
         <AssociationConnector Association="RentalHouseFinding.FacilityTemplatesFacilities">
-          <ConnectorPoint PointX="7.96875" PointY="4.6436979166666656" />
-          <ConnectorPoint PointX="7.96875" PointY="15.5" />
+          <ConnectorPoint PointX="8.03125" PointY="4.0186979166666656" />
+          <ConnectorPoint PointX="8.03125" PointY="15.5" />
         </AssociationConnector>
         <EntityTypeShape EntityType="RentalHouseFinding.BadWordTypes" Width="1.5" PointX="0.75" PointY="2.5" Height="1.5956835937499996" />
         <AssociationConnector Association="RentalHouseFinding.BadWordTypesBadWords">
           <ConnectorPoint PointX="2.25" PointY="3.297841796875" />
-          <ConnectorPoint PointX="2.55" PointY="3.297841796875" />
-          <ConnectorPoint PointX="2.55" PointY="1.6439925130208337" />
+          <ConnectorPoint PointX="2.442" PointY="3.297841796875" />
+          <ConnectorPoint PointX="2.442" PointY="1.6439925130208337" />
           <ConnectorPoint PointX="2.25" PointY="1.6439925130208337" />
         </AssociationConnector>
         <EntityTypeShape EntityType="RentalHouseFinding.Locations" Width="1.5" PointX="10" PointY="0.75" Height="2.7494921875" />
         <AssociationConnector Association="RentalHouseFinding.DistrictsLocations">
           <ConnectorPoint PointX="4.5" PointY="18.281574516826922" />
           <ConnectorPoint PointX="7.041666666666667" PointY="18.281574516826922" />
-          <ConnectorPoint PointX="7.333333333333333" PointY="18.281574516826922" />
+          <ConnectorPoint PointX="7.302083333333333" PointY="18.281574516826922" />
           <ConnectorPoint PointX="7.375" PointY="18.281574516826922" />
           <ConnectorPoint PointX="7.375" PointY="15.25" />
-          <ConnectorPoint PointX="7.510416666666667" PointY="15.25" />
-          <ConnectorPoint PointX="7.677083333333333" PointY="15.25" />
-          <ConnectorPoint PointX="7.885416666666667" PointY="15.25" />
-          <ConnectorPoint PointX="8.0520833333333339" PointY="15.25" />
+          <ConnectorPoint PointX="7.572916666666667" PointY="15.25" />
+          <ConnectorPoint PointX="7.739583333333333" PointY="15.25" />
+          <ConnectorPoint PointX="7.947916666666667" PointY="15.25" />
+          <ConnectorPoint PointX="8.1145833333333339" PointY="15.25" />
           <ConnectorPoint PointX="10.5878890625" PointY="15.25" />
           <ConnectorPoint PointX="10.5878890625" PointY="3.4994921875" />
         </AssociationConnector>
@@ -1970,12 +2003,12 @@
         </AssociationConnector>
         <EntityTypeShape EntityType="RentalHouseFinding.PostLocations" Width="1.5" PointX="11.75" PointY="4.375" Height="1.5956835937499996" />
         <AssociationConnector Association="RentalHouseFinding.PostsPostLocations">
-          <ConnectorPoint PointX="6.75" PointY="5.4953106681823769" />
-          <ConnectorPoint PointX="7.885416666666667" PointY="5.495310668182376" />
-          <ConnectorPoint PointX="8.0520833333333339" PointY="5.4953106681823769" />
-          <ConnectorPoint PointX="10.504555729166667" PointY="5.495310668182376" />
-          <ConnectorPoint PointX="10.671222395833334" PointY="5.4953106681823769" />
-          <ConnectorPoint PointX="11.75" PointY="5.4953106681823769" />
+          <ConnectorPoint PointX="6.75" PointY="5.4953106681823778" />
+          <ConnectorPoint PointX="7.947916666666667" PointY="5.4953106681823769" />
+          <ConnectorPoint PointX="8.1145833333333339" PointY="5.4953106681823778" />
+          <ConnectorPoint PointX="10.504555729166667" PointY="5.4953106681823769" />
+          <ConnectorPoint PointX="10.671222395833334" PointY="5.4953106681823778" />
+          <ConnectorPoint PointX="11.75" PointY="5.4953106681823778" />
         </AssociationConnector>
         <AssociationConnector Association="RentalHouseFinding.LocationsPostLocations">
           <ConnectorPoint PointX="11.050783124999999" PointY="3.4994921875" />
@@ -1984,51 +2017,52 @@
         </AssociationConnector>
         <EntityTypeShape EntityType="RentalHouseFinding.Types" Width="1.5" PointX="0.75" PointY="4.875" Height="1.5956835937499996" />
         <AssociationConnector Association="RentalHouseFinding.PostsQuestions">
-          <ConnectorPoint PointX="6.75" PointY="9.0285508759737745" />
-          <ConnectorPoint PointX="7.885416666666667" PointY="9.0285508759737745" />
-          <ConnectorPoint PointX="8.0520833333333339" PointY="9.0285508759737745" />
-          <ConnectorPoint PointX="9.8854166666666661" PointY="9.0285508759737745" />
-          <ConnectorPoint PointX="10.052083333333334" PointY="9.0285508759737745" />
-          <ConnectorPoint PointX="10.504555729166667" PointY="9.0285508759737745" />
-          <ConnectorPoint PointX="10.671222395833334" PointY="9.0285508759737745" />
-          <ConnectorPoint PointX="11.53125" PointY="9.0285508759737745" />
+          <ConnectorPoint PointX="6.75" PointY="9.1622433001779253" />
+          <ConnectorPoint PointX="7.947916666666667" PointY="9.1622433001779253" />
+          <ConnectorPoint PointX="8.1145833333333339" PointY="9.1622433001779253" />
+          <ConnectorPoint PointX="9.8854166666666661" PointY="9.1622433001779253" />
+          <ConnectorPoint PointX="10.052083333333334" PointY="9.1622433001779253" />
+          <ConnectorPoint PointX="10.504555729166667" PointY="9.1622433001779253" />
+          <ConnectorPoint PointX="10.671222395833334" PointY="9.1622433001779253" />
+          <ConnectorPoint PointX="11.53125" PointY="9.1622433001779253" />
           <ConnectorPoint PointX="11.53125" PointY="20.75" />
         </AssociationConnector>
         <AssociationConnector Association="RentalHouseFinding.UsersQuestions">
-          <ConnectorPoint PointX="4.5" PointY="11.789740826009115" />
-          <ConnectorPoint PointX="4.791666666666667" PointY="11.789740826009115" />
-          <ConnectorPoint PointX="4.958333333333333" PointY="11.789740826009115" />
-          <ConnectorPoint PointX="5.8947430897435895" PointY="11.789740826009115" />
-          <ConnectorPoint PointX="6.0614097564102556" PointY="11.789740826009115" />
-          <ConnectorPoint PointX="7.041666666666667" PointY="11.789740826009114" />
-          <ConnectorPoint PointX="7.333333333333333" PointY="11.789740826009115" />
-          <ConnectorPoint PointX="7.510416666666667" PointY="11.789740826009115" />
-          <ConnectorPoint PointX="7.677083333333333" PointY="11.789740826009115" />
-          <ConnectorPoint PointX="7.885416666666667" PointY="11.789740826009115" />
-          <ConnectorPoint PointX="8.0520833333333339" PointY="11.789740826009115" />
-          <ConnectorPoint PointX="10.504555729166667" PointY="11.789740826009115" />
-          <ConnectorPoint PointX="10.671222395833334" PointY="11.789740826009115" />
-          <ConnectorPoint PointX="11.447916666666666" PointY="11.789740826009115" />
-          <ConnectorPoint PointX="11.614583333333334" PointY="11.789740826009115" />
-          <ConnectorPoint PointX="12.2343775" PointY="11.789740826009115" />
+          <ConnectorPoint PointX="4.5" PointY="11.74486328125" />
+          <ConnectorPoint PointX="4.791666666666667" PointY="11.74486328125" />
+          <ConnectorPoint PointX="4.958333333333333" PointY="11.74486328125" />
+          <ConnectorPoint PointX="5.8732987820512825" PointY="11.74486328125" />
+          <ConnectorPoint PointX="6.0399654487179486" PointY="11.74486328125" />
+          <ConnectorPoint PointX="7.0306495392628205" PointY="11.74486328125" />
+          <ConnectorPoint PointX="7.2550095136217942" PointY="11.74486328125" />
+          <ConnectorPoint PointX="7.572916666666667" PointY="11.74486328125" />
+          <ConnectorPoint PointX="7.739583333333333" PointY="11.74486328125" />
+          <ConnectorPoint PointX="7.947916666666667" PointY="11.74486328125" />
+          <ConnectorPoint PointX="8.1145833333333339" PointY="11.74486328125" />
+          <ConnectorPoint PointX="10.504555729166667" PointY="11.74486328125" />
+          <ConnectorPoint PointX="10.671222395833334" PointY="11.74486328125" />
+          <ConnectorPoint PointX="11.447916666666666" PointY="11.74486328125" />
+          <ConnectorPoint PointX="11.614583333333334" PointY="11.74486328125" />
+          <ConnectorPoint PointX="12.2343775" PointY="11.74486328125" />
           <ConnectorPoint PointX="12.2343775" PointY="20.75" />
         </AssociationConnector>
-        <EntityTypeShape EntityType="RentalHouseFinding.UserLogs" Width="1.5" PointX="8.625" PointY="6" Height="1.7879850260416665" />
+        <EntityTypeShape EntityType="RentalHouseFinding.UserLogs" Width="1.5" PointX="8.625" PointY="6" Height="2.1725878906249996" />
         <AssociationConnector Association="RentalHouseFinding.UsersUserLogs">
-          <ConnectorPoint PointX="4.5" PointY="11.454476652018229" />
-          <ConnectorPoint PointX="4.791666666666667" PointY="11.454476652018229" />
-          <ConnectorPoint PointX="4.958333333333333" PointY="11.454476652018229" />
-          <ConnectorPoint PointX="5.8947430897435895" PointY="11.454476652018229" />
-          <ConnectorPoint PointX="6.0614097564102556" PointY="11.454476652018229" />
-          <ConnectorPoint PointX="6.9117951115534852" PointY="11.454476652018229" />
-          <ConnectorPoint PointX="7.15692431668169" PointY="11.454476652018229" />
-          <ConnectorPoint PointX="7.510416666666667" PointY="11.454476652018229" />
-          <ConnectorPoint PointX="7.677083333333333" PointY="11.454476652018229" />
-          <ConnectorPoint PointX="7.885416666666667" PointY="11.454476652018229" />
-          <ConnectorPoint PointX="8.0520833333333339" PointY="11.454476652018229" />
-          <ConnectorPoint PointX="9.96875" PointY="11.454476652018229" />
-          <ConnectorPoint PointX="9.96875" PointY="7.9802864583333335" />
+          <ConnectorPoint PointX="4.5" PointY="11.554792421875" />
+          <ConnectorPoint PointX="4.791666666666667" PointY="11.554792421875" />
+          <ConnectorPoint PointX="4.958333333333333" PointY="11.554792421875" />
+          <ConnectorPoint PointX="5.8732987820512825" PointY="11.554792421875" />
+          <ConnectorPoint PointX="6.0399654487179486" PointY="11.554792421875" />
+          <ConnectorPoint PointX="6.8117325260416672" PointY="11.554792421875" />
+          <ConnectorPoint PointX="7.0649386542467942" PointY="11.554792421875" />
+          <ConnectorPoint PointX="7.572916666666667" PointY="11.554792421875" />
+          <ConnectorPoint PointX="7.739583333333333" PointY="11.554792421875" />
+          <ConnectorPoint PointX="7.947916666666667" PointY="11.554792421875" />
+          <ConnectorPoint PointX="8.1145833333333339" PointY="11.554792421875" />
+          <ConnectorPoint PointX="9.96875" PointY="11.554792421875" />
+          <ConnectorPoint PointX="9.96875" PointY="8.172587890625" />
         </AssociationConnector>
+        <EntityTypeShape EntityType="RentalHouseFinding.EmailTemplate" Width="1.5" PointX="4.5" PointY="0.5" Height="1.59568359375" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

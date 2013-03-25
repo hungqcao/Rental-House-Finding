@@ -16,6 +16,7 @@ namespace RentalHouseFinding.Caching
         IEnumerable<Provinces> GetAllProvinces();
         IEnumerable<Categories> GetAllCategories();
         IEnumerable<Posts> GetAllPosts();
+        IEnumerable<EmailTemplate> GetAllEmailTemplate();
     }
 
     public class CacheRepository : ICacheRepository
@@ -140,6 +141,27 @@ namespace RentalHouseFinding.Caching
             return data;
         }
 
+        public IEnumerable<EmailTemplate> GetAllEmailTemplate()
+        {
+            // First, check the cache
+            IEnumerable<EmailTemplate> data = Cache.Get("EmailTemplate") as IEnumerable<EmailTemplate>;
+
+            // If it's not in the cache, we need to read it from the repository
+            if (data == null)
+            {
+                // Get the repository data
+                data = DataContext.EmailTemplates.ToList();
+
+                if (data.Any())
+                {
+                    // Put this data into the cache for 30 minutes
+                    Cache.Set("EmailTemplate", data, int.Parse(ConfigurationManager.AppSettings["TimeRefreshCache"]));
+                }
+            }
+
+            return data;
+        }
+
         public void ClearCache()
         {
             Cache.Invalidate("districts");
@@ -147,6 +169,7 @@ namespace RentalHouseFinding.Caching
             Cache.Invalidate("provinces");
             Cache.Invalidate("categories");
             Cache.Invalidate("posts");
+            Cache.Invalidate("EmailTemplate");
         }
     }
 }
