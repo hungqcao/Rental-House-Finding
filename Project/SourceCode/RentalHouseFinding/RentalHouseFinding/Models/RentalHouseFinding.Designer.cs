@@ -492,6 +492,22 @@ namespace RentalHouseFinding.Models
             }
         }
         private ObjectSet<UserLogs> _UserLogs;
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        public ObjectSet<EmailTemplate> EmailTemplates
+        {
+            get
+            {
+                if ((_EmailTemplates == null))
+                {
+                    _EmailTemplates = base.CreateObjectSet<EmailTemplate>("EmailTemplates");
+                }
+                return _EmailTemplates;
+            }
+        }
+        private ObjectSet<EmailTemplate> _EmailTemplates;
 
         #endregion
         #region AddTo Methods
@@ -694,6 +710,14 @@ namespace RentalHouseFinding.Models
         public void AddToUserLogs(UserLogs userLogs)
         {
             base.AddObject("UserLogs", userLogs);
+        }
+    
+        /// <summary>
+        /// Deprecated Method for adding a new object to the EmailTemplates EntitySet. Consider using the .Add method of the associated ObjectSet&lt;T&gt; property instead.
+        /// </summary>
+        public void AddToEmailTemplates(EmailTemplate emailTemplate)
+        {
+            base.AddObject("EmailTemplates", emailTemplate);
         }
 
         #endregion
@@ -2421,6 +2445,113 @@ namespace RentalHouseFinding.Models
         }
 
         #endregion
+    }
+    
+    /// <summary>
+    /// No Metadata Documentation available.
+    /// </summary>
+    [EdmEntityTypeAttribute(NamespaceName="RentalHouseFinding", Name="EmailTemplate")]
+    [Serializable()]
+    [DataContractAttribute(IsReference=true)]
+    public partial class EmailTemplate : EntityObject
+    {
+        #region Factory Method
+    
+        /// <summary>
+        /// Create a new EmailTemplate object.
+        /// </summary>
+        /// <param name="id">Initial value of the Id property.</param>
+        /// <param name="name">Initial value of the Name property.</param>
+        /// <param name="template">Initial value of the Template property.</param>
+        public static EmailTemplate CreateEmailTemplate(global::System.Int32 id, global::System.String name, global::System.String template)
+        {
+            EmailTemplate emailTemplate = new EmailTemplate();
+            emailTemplate.Id = id;
+            emailTemplate.Name = name;
+            emailTemplate.Template = template;
+            return emailTemplate;
+        }
+
+        #endregion
+        #region Primitive Properties
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=true, IsNullable=false)]
+        [DataMemberAttribute()]
+        public global::System.Int32 Id
+        {
+            get
+            {
+                return _Id;
+            }
+            set
+            {
+                if (_Id != value)
+                {
+                    OnIdChanging(value);
+                    ReportPropertyChanging("Id");
+                    _Id = StructuralObject.SetValidValue(value);
+                    ReportPropertyChanged("Id");
+                    OnIdChanged();
+                }
+            }
+        }
+        private global::System.Int32 _Id;
+        partial void OnIdChanging(global::System.Int32 value);
+        partial void OnIdChanged();
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=false)]
+        [DataMemberAttribute()]
+        public global::System.String Name
+        {
+            get
+            {
+                return _Name;
+            }
+            set
+            {
+                OnNameChanging(value);
+                ReportPropertyChanging("Name");
+                _Name = StructuralObject.SetValidValue(value, false);
+                ReportPropertyChanged("Name");
+                OnNameChanged();
+            }
+        }
+        private global::System.String _Name;
+        partial void OnNameChanging(global::System.String value);
+        partial void OnNameChanged();
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=false)]
+        [DataMemberAttribute()]
+        public global::System.String Template
+        {
+            get
+            {
+                return _Template;
+            }
+            set
+            {
+                OnTemplateChanging(value);
+                ReportPropertyChanging("Template");
+                _Template = StructuralObject.SetValidValue(value, false);
+                ReportPropertyChanged("Template");
+                OnTemplateChanged();
+            }
+        }
+        private global::System.String _Template;
+        partial void OnTemplateChanging(global::System.String value);
+        partial void OnTemplateChanged();
+
+        #endregion
+    
     }
     
     /// <summary>
@@ -4329,7 +4460,8 @@ namespace RentalHouseFinding.Models
         /// <param name="lat">Initial value of the Lat property.</param>
         /// <param name="lon">Initial value of the Lon property.</param>
         /// <param name="street">Initial value of the Street property.</param>
-        public static Posts CreatePosts(global::System.Int32 id, global::System.String title, global::System.Int32 categoryId, global::System.Int32 statusId, global::System.Boolean isDeleted, global::System.Int32 views, global::System.DateTime createdDate, global::System.DateTime editedDate, global::System.Int32 districtId, global::System.Double price, global::System.Double area, global::System.String phoneActive, global::System.Double lat, global::System.Double lon, global::System.String street)
+        /// <param name="expiredDate">Initial value of the ExpiredDate property.</param>
+        public static Posts CreatePosts(global::System.Int32 id, global::System.String title, global::System.Int32 categoryId, global::System.Int32 statusId, global::System.Boolean isDeleted, global::System.Int32 views, global::System.DateTime createdDate, global::System.DateTime editedDate, global::System.Int32 districtId, global::System.Double price, global::System.Double area, global::System.String phoneActive, global::System.Double lat, global::System.Double lon, global::System.String street, global::System.DateTime expiredDate)
         {
             Posts posts = new Posts();
             posts.Id = id;
@@ -4347,6 +4479,7 @@ namespace RentalHouseFinding.Models
             posts.Lat = lat;
             posts.Lon = lon;
             posts.Street = street;
+            posts.ExpiredDate = expiredDate;
             return posts;
         }
 
@@ -4835,6 +4968,30 @@ namespace RentalHouseFinding.Models
         private global::System.String _NearbyPlace;
         partial void OnNearbyPlaceChanging(global::System.String value);
         partial void OnNearbyPlaceChanged();
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=false)]
+        [DataMemberAttribute()]
+        public global::System.DateTime ExpiredDate
+        {
+            get
+            {
+                return _ExpiredDate;
+            }
+            set
+            {
+                OnExpiredDateChanging(value);
+                ReportPropertyChanging("ExpiredDate");
+                _ExpiredDate = StructuralObject.SetValidValue(value);
+                ReportPropertyChanged("ExpiredDate");
+                OnExpiredDateChanged();
+            }
+        }
+        private global::System.DateTime _ExpiredDate;
+        partial void OnExpiredDateChanging(global::System.DateTime value);
+        partial void OnExpiredDateChanged();
 
         #endregion
     
@@ -6621,13 +6778,15 @@ namespace RentalHouseFinding.Models
         /// <param name="message">Initial value of the Message property.</param>
         /// <param name="userId">Initial value of the UserId property.</param>
         /// <param name="isRead">Initial value of the IsRead property.</param>
-        public static UserLogs CreateUserLogs(global::System.Int32 id, global::System.String message, global::System.Int32 userId, global::System.Boolean isRead)
+        /// <param name="createdDate">Initial value of the CreatedDate property.</param>
+        public static UserLogs CreateUserLogs(global::System.Int32 id, global::System.String message, global::System.Int32 userId, global::System.Boolean isRead, global::System.DateTime createdDate)
         {
             UserLogs userLogs = new UserLogs();
             userLogs.Id = id;
             userLogs.Message = message;
             userLogs.UserId = userId;
             userLogs.IsRead = isRead;
+            userLogs.CreatedDate = createdDate;
             return userLogs;
         }
 
@@ -6732,6 +6891,30 @@ namespace RentalHouseFinding.Models
         private global::System.Boolean _IsRead;
         partial void OnIsReadChanging(global::System.Boolean value);
         partial void OnIsReadChanged();
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=false)]
+        [DataMemberAttribute()]
+        public global::System.DateTime CreatedDate
+        {
+            get
+            {
+                return _CreatedDate;
+            }
+            set
+            {
+                OnCreatedDateChanging(value);
+                ReportPropertyChanging("CreatedDate");
+                _CreatedDate = StructuralObject.SetValidValue(value);
+                ReportPropertyChanged("CreatedDate");
+                OnCreatedDateChanged();
+            }
+        }
+        private global::System.DateTime _CreatedDate;
+        partial void OnCreatedDateChanging(global::System.DateTime value);
+        partial void OnCreatedDateChanged();
 
         #endregion
     

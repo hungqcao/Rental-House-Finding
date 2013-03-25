@@ -149,6 +149,65 @@ namespace RentalHouseFinding.Controllers
             }
         }
 
+        [Authorize(Roles = "User, Admin")]
+        [AcceptVerbs(HttpVerbs.Get)]
+        public ActionResult GetAllUserFavorite()
+        {
+            int userId = CommonModel.GetUserIdByUsername(User.Identity.Name);
+            try
+            {
+                var result = _db.Favorites.Where(f => f.UserId == userId).ToList();
+                return View(result);
+            }
+            catch
+            {
+                return Json(new { message = "Fail" }, JsonRequestBehavior.AllowGet);
+            }
+        }
+
+        [Authorize(Roles = "User, Admin")]
+        [AcceptVerbs(HttpVerbs.Get)]
+        public ActionResult ComparePost(string lstId)
+        {
+            try
+            {
+                string[] lstStrId = lstId.Split('|');
+                int count = 0;
+                int id = 0;
+                List<int> lstIdParse = new List<int>();
+                foreach(string item in lstStrId)
+                {
+                    if (!string.IsNullOrEmpty(item))
+                    {
+                        int.TryParse(item, out id);
+                        lstIdParse.Add(id);
+                        count++;
+                    }
+                }
+                List<Posts> lstPost = new List<Posts>();
+                if (lstIdParse.Count <= 3)
+                {
+                    foreach (int item in lstIdParse)
+                    {
+                        if(item > 0)
+                        {
+                            lstPost.Add(_db.Posts.Where(p => p.Id == item).FirstOrDefault());
+                        }
+                    }
+                }
+                if (lstPost.Count == 0)
+                {
+                    return Content("Bạn cần chọn bài để so sánh", "text/html");
+                }
+                return View(lstPost);
+            }
+            catch
+            {
+                return Json(new { message = "Fail" }, JsonRequestBehavior.AllowGet);
+            }
+        }
+
+
         //For Report Post
         
         //[AcceptVerbs(HttpVerbs.Post)]

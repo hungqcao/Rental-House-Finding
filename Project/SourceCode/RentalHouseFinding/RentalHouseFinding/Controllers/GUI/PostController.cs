@@ -479,13 +479,18 @@ namespace RentalHouseFinding.Controllers
         }
 
         [HttpPost]
-        [Authorize(Roles = "User, Admin")]
         public ActionResult SendQuestion(QuestionViewModel model)
         {
             try
             {
-                int userId = CommonModel.GetUserIdByUsername(User.Identity.Name);
                 int postId = Convert.ToInt32(Session["PostID"]);
+                Users user = null;
+                
+                var post = _db.Posts.Where( p => p.Id == postId).FirstOrDefault();
+                if (post.UserId != null)
+                {
+                    user = _db.Users.Where(u => u.Id == post.UserId).FirstOrDefault();
+                }
 
                 Questions questionToCreate = new Questions();
                 questionToCreate.Content = model.ContentQuestion.Trim();
@@ -494,10 +499,23 @@ namespace RentalHouseFinding.Controllers
                 questionToCreate.IsDeleted = false;
                 questionToCreate.IsRead = false;
                 questionToCreate.PostId = postId;
-                questionToCreate.SenderId = model.UserId;
-                
+                if (model.UserId != 0)
+                {
+                    questionToCreate.SenderId = model.UserId;
+                }
+                questionToCreate.SenderId = null;
+                questionToCreate.SenderEmail = model.Email;
+
                 _db.Questions.AddObject(questionToCreate);
                 _db.SaveChanges();
+
+                if (!(user == null))
+                {
+                    string emailTemplate = Repository.GetAllEmailTemplate().Where(e => e.Name.Equals(ConstantEmailTemplate.RECEIVE_QUESTION, StringComparison.CurrentCultureIgnoreCase)).Select(m => m.Template).FirstOrDefault();
+                    string message = string.Format(emailTemplate, model.Email, model.TitleQuestion, model.ContentQuestion, post.Title);
+                    CommonModel.SendEmail(user.Email, message, "Bạn nhận được 1 câu hỏi", 0);
+                }
+
                 return Content("Thông tin đã được gửi đi", "text/html");
             }
             catch

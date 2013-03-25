@@ -125,6 +125,14 @@
                 {
                     <span class="icon question">Chung chủ</span>
                 }
+                @if (Model.HasAirConditioner)
+                {
+                    <span class="icon check">Điều hòa</span>
+                }
+                else
+                {
+                    <span class="icon question">Điều hòa</span>
+                }
             </div>
             <div class="colRight">
                 @if (Model.HasTVCable)
@@ -170,15 +178,15 @@
             </div>
         </div>
         <div class="blockInfo rightSide" id="block4">
-                <div class="clear"></div>
-                <div class="title"><div class="plusBtn"></div>VỊ TRÍ TRÊN BẢN ĐỒ</div>
-                <div class="map_wrapper" style="border:1px solid #bebebe">
-                    <div class = "map" style="margin: 5px">
-                        <div id="mapContainer" style="width:400px;height:380px;"></div>
-                            @Html.HiddenFor(model => model.Lat)
-                            @Html.HiddenFor(model => model.Lon)
-                    </div>
+            <div class="clear"></div>
+            <div class="title"><div class="plusBtn"></div>VỊ TRÍ TRÊN BẢN ĐỒ</div>
+            <div class="map_wrapper" style="border:1px solid #bebebe">
+                <div class = "map" style="margin: 5px">
+                    <div id="mapContainer" style="width:400px;height:380px;"></div>
+                        @Html.HiddenFor(model => model.Lat)
+                        @Html.HiddenFor(model => model.Lon)
                 </div>
+            </div>
         </div>
         <div class="blockInfo leftSide" id="block5">
                 <div class="clear"></div>
@@ -189,16 +197,13 @@
                 <div class="clear"></div>
                 <div class="title"><div class="plusBtn"></div>HỎI ĐÁP</div>
                 <div id="Question">
-                    @if (Model.UserId != null && !Model.CreatedBy.Equals(User.Identity.Name, StringComparison.CurrentCultureIgnoreCase))
+                    @if (!Model.CreatedBy.Equals(User.Identity.Name, StringComparison.CurrentCultureIgnoreCase))
                     {
-                        if (Request.IsAuthenticated)
-                        {
-                            @Html.Partial("_Question", new RentalHouseFinding.Models.QuestionViewModel(), new ViewDataDictionary { { "userId", Model.UserId } })
-                        }
-                        else
-                        {
-                            <text>Bạn cần phải đăng nhập để thực hiện chức năng này</text>
-                        }
+                        @Html.Partial("_Question", new RentalHouseFinding.Models.QuestionViewModel(), new ViewDataDictionary { { "userId", Model.UserId } })
+                    }
+                    else if (User.Identity.IsAuthenticated)
+                    {
+                        <text>Đây là bài viết của bạn ^^</text>
                     }
                 </div>
         </div>

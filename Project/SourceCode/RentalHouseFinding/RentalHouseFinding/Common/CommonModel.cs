@@ -279,6 +279,25 @@ namespace RentalHouseFinding.Common
                 }
             }
         }
+        //get email 
+        public static string GetEmailByUserId(int userId)
+        {
+            using (RentalHouseFindingEntities _db = new RentalHouseFindingEntities())
+            {
+                var email = (from u in _db.Users
+                              where u.Id == userId && !u.IsDeleted
+                              select u.Email).FirstOrDefault();
+                if (!string.IsNullOrEmpty(email))
+                {
+                    //UserName is existed 
+                    return email;
+                }
+                else
+                {
+                    return string.Empty;
+                }
+            }
+        }
         //check Email esixt 
         public static bool CheckEmail(string email)
         {
@@ -300,7 +319,7 @@ namespace RentalHouseFinding.Common
             }
         }
         //send Email.
-        public static bool SendEmail(string emailAdd,string bodyMessage, int messageType)
+        public static bool SendEmail(string emailAdd,string bodyMessage, string subject, int messageType)
         {
             string email = "findinghousesystem@gmail.com";
             string password = "matkhaulagi";
@@ -311,7 +330,7 @@ namespace RentalHouseFinding.Common
 
             msg.From = new MailAddress(email);
             msg.To.Add(new MailAddress(emailAdd));
-            msg.Subject = "subject test";
+            msg.Subject = subject;
             msg.Body = bodyMessage;
             msg.IsBodyHtml = true;
 
