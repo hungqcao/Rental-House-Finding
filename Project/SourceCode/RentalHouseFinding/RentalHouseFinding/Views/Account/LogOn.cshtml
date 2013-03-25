@@ -53,7 +53,6 @@
             </div>
         </form>
         <div class="clear"></div>
-@Html.ValidationSummary(true, "Login was unsuccessful. Please correct the errors and try again.")
 @using (Html.BeginForm())
 {
         <div class="userInfo">
@@ -78,7 +77,7 @@
         <div class="clear"></div>
         <div class="notification">
             <img id="infoIcon" src="../../Content/images/login_infoIcon.png"/>
-            <span id="message">Bạn đã nhập sai mật khẩu. Xin vui lòng thử lại.</span>
+            <span id="message" style="width: 300px">@Html.ValidationSummary(true, "Đăng nhập không thành công, xin vui lòng kiểm tra lại thông báo và thử lại.")</span>
         </div>
         <div class="buttons">
             <span>Lưu đăng nhập</span>

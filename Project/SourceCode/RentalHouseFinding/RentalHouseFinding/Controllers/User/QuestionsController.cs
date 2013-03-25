@@ -70,12 +70,25 @@ namespace RentalHouseFinding.Controllers.User
                 _db.Answers.AddObject(answerToCreate);
                 _db.SaveChanges();
 
+                string message = string.Empty;
                 if (!string.IsNullOrEmpty(answerToCreate.Question.SenderEmail))
                 {
                     string emailTemplate = Repository.GetAllEmailTemplate().Where(e => e.Name.Equals(ConstantEmailTemplate.RECEIVE_ANSWER, StringComparison.CurrentCultureIgnoreCase)).Select(m => m.Template).FirstOrDefault();
-                    string message = string.Format(emailTemplate, User.Identity.Name, model.ContentAnswer, answerToCreate.Question.Title, answerToCreate.Question.Content);
+                    message = string.Format(emailTemplate, User.Identity.Name, model.ContentAnswer, answerToCreate.Question.Title, answerToCreate.Question.Content);
                     CommonModel.SendEmail(answerToCreate.Question.SenderEmail, message, "Bạn nhận được 1 câu trả lời", 0);
                 }
+
+                if (answerToCreate.Question.SenderId.HasValue)
+                {
+                    UserLogs log = new UserLogs();
+                    log.UserId = answerToCreate.Question.SenderId.Value;
+                    log.Message = message;
+                    log.IsRead = false;
+                    log.CreatedDate = DateTime.Now;
+                    _db.UserLogs.AddObject(log);
+                    _db.SaveChanges();
+                }
+                
 
                 return View(answerToCreate);
             }

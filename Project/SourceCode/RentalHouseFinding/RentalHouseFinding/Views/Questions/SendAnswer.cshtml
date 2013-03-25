@@ -2,12 +2,10 @@
 @{
     Layout = null;
 }
-
-<div class="display-label">Nội dung trả lời</div>
-<div class="display-field">
-    @Html.DisplayFor(model => model.Content)
+<div class="line">
+    <span class="name">Tôi</span>
+    <div class="clear"></div>
+    <span class="text">@Html.DisplayFor(model => model.Content)</span>
+    <span class="text">@Html.DisplayFor(model => model.CreatedDate)</span>
 </div>
-<div class="display-label">Ngày trả lời</div>
-<div class="display-field">
-    @Html.DisplayFor(model => model.CreatedDate)
-</div>
+<div class="clear"></div>

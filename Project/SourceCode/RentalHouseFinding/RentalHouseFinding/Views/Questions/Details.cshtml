@@ -4,41 +4,37 @@
     ViewBag.Title = "Details";
     Layout = null;
 }
-<div class="display-label">Tiêu đề bài đăng</div>
-<div class="display-field">
-    @Html.DisplayFor(model => model.Post.Title)
+<script type="text/javascript">
+    function OnSuccess() {
+        $("#result").fadeOut();
+    }
+    function OnFailure(ajaxContext) {
+        var response = ajaxContext.get_response();
+        var statusCode = response.get_statusCode();
+        alert("Error occured. Status code = " + statusCode);
+    }
+</script>
+<div class="infoDetail">
+    <span class="detail left">Chi tiết hội thoại</span>
 </div>
-
-<div class="display-label">Tiêu đề câu hỏi</div>
-<div class="display-field">
-    @Html.DisplayFor(model => model.Title)
-</div>
-
-<div class="display-label">Nội dung</div>
-<div class="display-field">
-    @Html.DisplayFor(model => model.Content)
-</div>
-
-<div class="display-label">Người gửi</div>
-<div class="display-field">
-    @Html.DisplayFor(model => model.User.Username)
-</div>
-
-<div class="display-label">Ngày gửi</div>
-<div class="display-field">
-    @Html.DisplayFor(model => model.CreatedDate)
-</div>
-<div id="answers">
-@foreach (var item in Model.Answers) {
-    <div class="display-label">Nội dung trả lời</div>
-    <div class="display-field">
-        @Html.DisplayFor(model => item.Content)
+<div class="messages">
+    <div class="line">
+        <span class="name">@Model.SenderEmail</span>
+        <div class="clear"></div>
+        <span class="text">@Model.Content</span>
     </div>
-    <div class="display-label">Ngày trả lời</div>
-    <div class="display-field">
-        @Html.DisplayFor(model => item.CreatedDate)
-    </div>
-}
+    <div class="clear"></div>
+    <div id="answers">
+    @foreach (var item in Model.Answers) {
+        <div class="line">
+            <span class="name">Tôi</span>
+            <div class="clear"></div>
+            <span class="text">@Html.DisplayFor(model => item.Content)</span>
+            <span class="text">Ngày trả lời: @Html.DisplayFor(model => item.CreatedDate)</span>
+        </div>
+        <div class="clear"></div>
+    }
+</div>
 </div>
 <div id="submit-answer">
     @Html.Partial("_AnswerPartial", new RentalHouseFinding.Models.AnswerViewModel(), new ViewDataDictionary { { "questionId", Model.Id } })

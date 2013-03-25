@@ -42,9 +42,7 @@ namespace RentalHouseFinding.Controllers
                 return View();
             }
             var districtAndProvinceName = Repository.GetAllDistricts().Where(d => d.Id == post.DistrictId).Select(d => new { districtName = d.Name, provinceName = d.Province.Name }).FirstOrDefault();
-            //var districtAndProvinceName = (from d in _db.Districts 
-            //                    where d.Id == post.DistrictId
-            //                    select new { districtName = d.Name , provinceName= d.Province.Name}).FirstOrDefault();            
+                   
             ViewBag.Address = districtAndProvinceName.districtName + ", " + districtAndProvinceName.provinceName;
             ViewBag.Internet = post.Facilities.HasInternet ? "Có" : "Không";
             ViewBag.AirConditioner = post.Facilities.HasAirConditioner ? "Có" : "Không";
@@ -96,9 +94,7 @@ namespace RentalHouseFinding.Controllers
                 return View();
             }
             var districtAndProvinceName = Repository.GetAllDistricts().Where(d => d.Id == post.DistrictId).Select(d => new { districtName = d.Name, provinceName = d.Province.Name }).FirstOrDefault();
-            //var districtAndProvinceName = (from d in _db.Districts 
-            //                    where d.Id == post.DistrictId
-            //                    select new { districtName = d.Name , provinceName= d.Province.Name}).FirstOrDefault();            
+                 
             ViewBag.Address = districtAndProvinceName.districtName + ", " + districtAndProvinceName.provinceName;
             ViewBag.Internet = post.Facilities.HasInternet ? "Có" : "Không";
             ViewBag.AirConditioner = post.Facilities.HasAirConditioner ? "Có" : "Không";
@@ -164,7 +160,12 @@ namespace RentalHouseFinding.Controllers
             {
                 try
                 {
-                    Posts postToCreate = CommonModel.ConvertPostViewModelToPost(model, DateTime.Now, DateTime.Now, DateTime.Now, Repository.GetAllConfiguration().Where( c => c.Name.Equals(ConstantCommonString.NONE_INFORMATION, StringComparison.CurrentCultureIgnoreCase)).Select(c => c.Value).FirstOrDefault().ToString());
+                    string strExpiredDate = Repository.GetAllConfiguration().Where(c => c.Name.Equals(ConstantCommonString.EXPIRED_DATE, StringComparison.CurrentCultureIgnoreCase)).Select(c => c.Value).FirstOrDefault().ToString();
+                    int numberExpiredDate = 0;
+                    int.TryParse(strExpiredDate, out numberExpiredDate);
+                    Posts postToCreate = CommonModel.ConvertPostViewModelToPost(model, DateTime.Now, DateTime.Now, DateTime.Now, 
+                                DateTime.Now.AddDays(numberExpiredDate),
+                                Repository.GetAllConfiguration().Where( c => c.Name.Equals(ConstantCommonString.NONE_INFORMATION, StringComparison.CurrentCultureIgnoreCase)).Select(c => c.Value).FirstOrDefault().ToString());
 
                     if (CommonModel.FilterHasBadContent(model))
                     {
@@ -509,12 +510,21 @@ namespace RentalHouseFinding.Controllers
                 _db.Questions.AddObject(questionToCreate);
                 _db.SaveChanges();
 
+                string message = string.Empty;
                 if (!(user == null))
                 {
                     string emailTemplate = Repository.GetAllEmailTemplate().Where(e => e.Name.Equals(ConstantEmailTemplate.RECEIVE_QUESTION, StringComparison.CurrentCultureIgnoreCase)).Select(m => m.Template).FirstOrDefault();
-                    string message = string.Format(emailTemplate, model.Email, model.TitleQuestion, model.ContentQuestion, post.Title);
+                    message = string.Format(emailTemplate, model.Email, model.TitleQuestion, model.ContentQuestion, post.Title);
                     CommonModel.SendEmail(user.Email, message, "Bạn nhận được 1 câu hỏi", 0);
                 }
+
+                UserLogs log = new UserLogs();
+                log.UserId = user.Id;
+                log.Message = message;
+                log.IsRead = false;
+                log.CreatedDate = DateTime.Now;
+                _db.UserLogs.AddObject(log);
+                _db.SaveChanges();
 
                 return Content("Thông tin đã được gửi đi", "text/html");
             }

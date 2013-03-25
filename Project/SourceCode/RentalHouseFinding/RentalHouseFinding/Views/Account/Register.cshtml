@@ -108,11 +108,11 @@
                 </div>
             </div>
             <div class="blockInfo" id="blockPhone">
-                <label>@Html.LabelFor(m => m.Name)</label>
+                <label>@Html.LabelFor(m => m.Email)</label>
                 <div class="clear"></div>
                 <div class="textbox">
-                   @Html.TextBoxFor(m => m.Name, new { @class = "tbxRegister" })
-                    @Html.ValidationMessageFor(m => m.Name)
+                    @Html.TextBoxFor(m => m.Email, new { @class = "tbxRegister" })
+                    @Html.ValidationMessageFor(m => m.Email)
                 </div>
             </div>
             <div class="clear"></div>
@@ -134,11 +134,11 @@
             </div>
             <div class="clear"></div>
             <div class="blockInfo leftBlock" id="blockPassword">
-                <label>@Html.LabelFor(m => m.Email)</label>
+                <label>@Html.LabelFor(m => m.Name)</label>
                 <div class="clear"></div>
                 <div class="textbox">
-                    @Html.TextBoxFor(m => m.Email, new { @class = "tbxRegister" })
-                    @Html.ValidationMessageFor(m => m.Email)
+                   @Html.TextBoxFor(m => m.Name, new { @class = "tbxRegister" })
+                    @Html.ValidationMessageFor(m => m.Name)
                 </div>
             </div>
             <div class="blockInfo" id="blockPasswordRetype">
@@ -151,22 +151,18 @@
             </div>
             <div class="clear"></div>
             <div class="blockInfo leftBlock lastBlock">
-                <div class="textbox" style="margin-left:95px">                   
-                    <div class="editor-field">
-                      @Html.Raw(Html.GenerateCaptcha("captcha", "clean"))
-                      @Html.ValidationMessage("captcha")
-                    </div>
-                    @*<p><img src="/account/ShowCaptchaImage" /></p>
-                    @ViewBag.Message*@
+                <div class="textbox">   
+                    @Html.Raw(Html.GenerateCaptcha("captcha", "clean"))
+                    @Html.ValidationMessage("captcha")
                 </div>
             </div>
             <div class="blockInfo lastBlock" id="blockBtnRegis">
-                <div class="clear"></div>
                 <div>
                     <input type="checkbox" id="rAccept"/>
-                    <label>Tôi đồng ý với điều khoản sử dụng</label>
+                    <label>Tôi đồng ý với <a href="/tos/">điều khoản sử dụng</a></label>
                 </div>
-                <input type="submit" id="btnRegis" value=""/>
+                <div class="clear"></div>
+                <input type="submit" id="btnRegis" value="" style="float:right"/>
             </div>
         </div>
     
