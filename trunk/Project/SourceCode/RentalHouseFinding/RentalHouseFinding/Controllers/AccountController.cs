@@ -340,7 +340,8 @@ namespace RentalHouseFinding.Controllers
 
                 if (changePasswordSucceeded)
                 {
-                    return RedirectToAction("ChangePasswordSuccess");
+                    ViewBag.Message = "Thay đổi mật khẩu thành công";
+                    return View();
                 }
                 else
                 {

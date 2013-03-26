@@ -27,6 +27,9 @@
                 height: 17
             });
             $('#header_panel').show();
+            $("a.close").click(function () {
+                $(this).parent().fadeOut();
+            });
         });
     </script>
 </head>
@@ -78,8 +81,7 @@
             <div id="user-content">
                 <div class="wrapper">
                     <div id="options">
-                        <div id="btnKinhLup" onclick="javascript:;">
-                        </div>
+                        <a id="btnKinhLup" href="@Url.Content("~")" />
                         <a href="@Url.Content("~/user/")" id="btnThongTin"></a>
                         <a href="@Url.Content("~/user/posts")" id="btnQuanLy"></a>
                         <a href="@Url.Content("~/questions")" id="btnTinNhan"></a>

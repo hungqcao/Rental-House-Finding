@@ -32,9 +32,31 @@
 
     window.onload = loadScript;
 </script>
-
-<div id="message" class="success-mess">
-    @TempData["MessageSuccessPostNew"]
+<div id="message-sv" style="width:320px; margin: 0 auto;">
+    @if (TempData["Success"] != null)
+    {
+        if ((bool)TempData["Success"] && TempData["Success"] != null)
+        {
+            <div class="message-notification success">
+                <a class="close"></a>
+                <div>
+                    @TempData["MessageSuccessPostNew"]
+                </div>
+            </div>
+        }
+    }
+    @if (TempData["Pending"] != null)
+    {
+        if ((bool)TempData["Pending"])
+        {
+            <div class="message-notification .message-information">
+                <a class="close"></a>
+                <div>
+                    @TempData["MessagePendingPostNew"]
+                </div>
+            </div>
+        }
+    }
 </div>
 <div id="popup_wrapper">
     <div class="popup_header">

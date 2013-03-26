@@ -149,23 +149,25 @@
         });
     });
 </script>
+<div id="home-search-area">
 @using (Html.BeginForm())
 {
     <div id="options">
         <div id="btnShowList" onclick="toggle_visibility('listInfo');" class="btnShowListClicked"></div>
-        @Html.DropDownListFor(model => model.ProvinceId, (IEnumerable<SelectListItem>)ViewBag.ProvinceId, new { @class = "select narrow" })
+        @Html.DropDownListFor(model => model.CategoryId, (IEnumerable<SelectListItem>)ViewBag.CategoryId, new { @class = "select" })
+        @Html.ValidationMessageFor(model => model.CategoryId)
+        @Html.DropDownListFor(model => model.ProvinceId, (IEnumerable<SelectListItem>)ViewBag.ProvinceId, new { @class = "select" })
         @Html.ValidationMessageFor(model => model.ProvinceId)
         @Html.DropDownListFor(model => model.DistrictId,
             new SelectList(Enumerable.Empty<SelectListItem>(), "Id", "Name"), "Quận/Huyện",
-                    new { @id = "DistrictId", @class = "select narrow" })
-        @Html.DropDownListFor(model => model.CategoryId, (IEnumerable<SelectListItem>)ViewBag.CategoryId, new { @class = "select narrow" })
-        @Html.ValidationMessageFor(model => model.CategoryId)
+                    new { @id = "DistrictId", @class = "select" })
         <div class="textbox">
-            @Html.TextBoxFor(model => model.KeyWord, new { @id = "KeyWord", @class = "searchMid", @placeholder = "từ khóa thêm", @style = "width: 231px; font-size: 12px;" })        
+            @Html.TextBoxFor(model => model.KeyWord, new { @id = "KeyWord", @class = "searchMid", @placeholder = "từ khóa thêm", @style = "width: 305px; font-size: 12px;" })        
         </div>
         <input type="submit" id="btnSubmit" value="" />
     </div>
 }
+</div>
 <div class="clear"></div>
 <div class="success-mess">
                 

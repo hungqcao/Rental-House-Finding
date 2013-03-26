@@ -25,15 +25,15 @@
             @Html.HiddenFor(model => model.PostIdSuggest)
 	        @Html.DropDownListFor(model => model.CategoryId, (IEnumerable<SelectListItem>)ViewBag.CategoryId, new { @class = "select" })
             @Html.ValidationMessageFor(model => model.CategoryId)
-            <div class="clear">
-            </div>
-        </div>
-        <div id="selectSearch">
             @Html.DropDownListFor(model => model.ProvinceId, (IEnumerable<SelectListItem>)ViewBag.ProvinceId, new { @class = "select" })
             @Html.ValidationMessageFor(model => model.ProvinceId)   
 	        @Html.DropDownListFor(model => model.DistrictId,
                 new SelectList(Enumerable.Empty<SelectListItem>(), "Id", "Name"), "Chọn Quận/Huyện",
-                new { @id = "DistrictId", @class = "select" })
+                new { @id = "DistrictId", @class = "select", @style="margin-right:0px" })
+            <div class="clear">
+            </div>
+        </div>
+        <div id="selectSearch">
 	        @Html.TextBoxFor(model => model.KeyWord, new { @id = "KeyWord", @class = "txt", @placeholder = "từ khóa thêm" })
             <input type="submit" id="btnSubmit" value=""/>
             <div class="clear">

@@ -130,7 +130,7 @@ body{
 }
 /*Intro*/
 #searchInfo{
-	width:600px;
+	width:650px;
 	margin:0 auto;
 	padding-bottom: 60px;
 }
@@ -138,6 +138,55 @@ body{
 {
 	margin-bottom: 20px;
 	position:relative;
+}
+#searchInfo #buttonSearch select.select
+{
+    margin-right: 17px;
+}
+#searchInfo #buttonSearch #CategoryId, #home-search-area #options #CategoryId
+{
+    width: 200px;
+}
+#searchInfo #buttonSearch #ProvinceId, #home-search-area #options #ProvinceId
+{
+    width: 214px;
+}
+#searchInfo #buttonSearch #DistrictId, #home-search-area #options #DistrictId
+{
+    width: 200px;
+}
+#home-search-area #options #spProvinceId
+{
+    background: url(../../Content/images/home_province.png) no-repeat;
+    left: 264px;
+    width: 214px;
+}
+#searchInfo #buttonSearch #spProvinceId
+{
+    background: url(../../Content/images/home_province.png) no-repeat;
+    left: 217px;
+    width: 214px;
+}
+#searchInfo #buttonSearch #spCategoryId, #home-search-area #options #spCategoryId
+{
+    background: url(../../Content/images/home_type.png) no-repeat;
+    width: 200px;
+}
+#home-search-area #options #spDistrictId
+{
+    background: url(../../Content/images/home_city.png) no-repeat;
+    left: 488px;
+    width: 200px;
+}
+#searchInfo #buttonSearch #spDistrictId
+{
+    background: url(../../Content/images/home_city.png) no-repeat;
+    left: 445px;
+}
+#searchInfo #selectSearch #KeyWord
+{
+    background: url(../../Content/images/landing_search_text.png) no-repeat;
+    width: 602px;
 }
 #searchInfo a
 {
@@ -196,7 +245,7 @@ select.select {
     margin-right: 11px;
     position: relative;
     float: left;
-    width: 164px !important;
+    width: 164px;
     z-index: 10;
     float: left;
 }
@@ -236,7 +285,7 @@ span.select {
 	float: left;
 	background: url("../../Content/images/bg_txt.png") no-repeat 0 0;
 	width: 200px;
-	height: 38px;
+	height: 36px;
 	line-height: 38px;
 	text-indent: 10px;
 	margin-left: 5px;
@@ -485,13 +534,18 @@ div.textbox
     padding: 10px;
     width: 93px;
 }
+#postnew_wrapper span.field-validation-error
+{
+    float:left;
+    padding: 10px 0;
+}
 span.field-validation-error
 {
     padding: 70px 0 20px 0;
 }
-span.field-validation-error > span, span.field-validation-error
+span.field-validation-error
 {
-    float:none !important;
+    float:none;
 }
 .login-regis .leftBlock {
     margin: 0 20px 0 85px;
@@ -555,6 +609,14 @@ span.field-validation-error > span, span.field-validation-error
 }
 .login-regis .lastBlock {
     margin-top: 10px;
+}
+#loginPanel .blockInfo span
+{
+    float:none;
+}
+#regisPanel .blockInfo span
+{
+    float:none;
 }
 .blockInfo #rAccept, .blockInfo span, .blockInfo #btnRegis {
     display: block;
@@ -652,7 +714,7 @@ span.field-validation-error > span, span.field-validation-error
 #options #btnShowList, #options select{
     display: block;
     float: left;
-    margin: 0 3px;
+    margin-right: 10px;
 }
 #options #btnShowList {
     width: 45px;
@@ -683,7 +745,7 @@ span.field-validation-error > span, span.field-validation-error
     left: 192px;
 }
 #options #spCategoryId {
-    left: 331px;
+    left: 53px;
 }
 #options #spddlPrice {
     left: 470px;
@@ -1164,6 +1226,11 @@ label {
 .pnew1 .pnRight {
     width: 415px;
 }
+#postnew_wrapper .infoElement
+{
+    width: 250px;
+    height: 60px;
+}
 .pnew1 .pnRight .map, .pnew1 .pnRight, .pnew1 .pnLeft, .pnRight h2, .pnRight .btnPlus, .pnew1 .infoElement, #postnew_wrapper .content h2 {
     display: block;
     float: left;
@@ -1222,14 +1289,14 @@ textarea#Description {
     background: url("../../Content/images/pnew_loaiTinDang_bg.png") no-repeat transparent 0 0;
 }
 .pnLeft .infoElement .city, #spProvinceId, #spDistrictId {
-    width: 233px !important;
+    width: 233px;
     height: 40px;
 }
 #postnew_wrapper div.content #spProvinceId {
     left: 0;
 }
 #postnew_wrapper div.content #spDistrictId {
-    left: 244px;
+    left: 248px;
 }
 #postnew_wrapper div.content #spProvinceId, #postnew_wrapper div.content #spDistrictId {
     background: url("../../Content/images/pnew_city_bg.png") no-repeat transparent 0 0;
@@ -1283,9 +1350,9 @@ textarea#Description {
     color: #5e5e5e;
 }
 .infoElement .electricPriceTbx {
-   background: url("../../Content/images/pnew_giaTienDien.png") no-repeat transparent 0 4px;
-    width: 177px;
-    height: 40px; 
+   background: url("../../Content/images/pnew_giaTienDien.png") no-repeat transparent 0 0px;
+    width: 167px;
+    height: 23px;
 }
 #pnew2_toggle .infoElement {
     display: block;
@@ -1324,10 +1391,19 @@ textarea#Description {
     width: 373px;
     padding: 10px;
 }
-.content #btnDangTinNgay {
-    background: url("../../Content/images/pnew_dangTinBtn.png") no-repeat transparent 0 0px;
+.content #btnSaveInfo, #regisPanel #btnSaveInfo {
+    background: url("../../Content/images/savepost.png") no-repeat transparent 0px 0px;
     height: 47px;
-    width: 145px;
+    width: 144px;
+    cursor: pointer;
+    float: right;
+    display: block;
+    margin: 10px 16px 10px 0;
+}
+.content #btnDangTinNgay {
+    background: url("../../Content/images/pnew_dangTinBtn.png") no-repeat transparent -1px 0px;
+    height: 47px;
+    width: 144px;
     cursor: pointer;
     float: right;
     display: block;
@@ -1780,13 +1856,19 @@ table th {
     -webkit-border-radius: 6px;
     border-radius: 6px;
 }
+.message-notification div {
+    display: block;
+    font-style: normal;
+    padding: 10px 20px 10px 36px;
+    line-height: 1.5em;
+}
 .message-information {
-    background: #dbe3ff url('../images/admin/icons/information.png');
+    background: #dbe3ff url('../images/information.png');
     border-color: #a2b4ee;
     color: #585b66;
 }
-.message-success {
-    background: #d5ffce url('../images/admin/icons/tick_circle.png');
+.success {
+    background: #d5ffce url('../images/tick_circle.png');
     border-color: #9adf8f;
     color: #556652;
 }
@@ -1796,7 +1878,7 @@ table th {
     position: absolute;
     right: 0px;
     top: 0px;
-    background: url('../images/admin/icons/cross_grey_small.png') no-repeat;
+    background: url('../images/cross_grey_small.png') no-repeat;
     width: 18px;
     height: 18px;
 }
