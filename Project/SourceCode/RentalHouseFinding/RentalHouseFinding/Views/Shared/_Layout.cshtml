@@ -30,6 +30,9 @@
                 height: 17
             });
             $('#header_panel').show();
+            $("a.close").click(function () {
+                $(this).parent().fadeOut();
+            });
         });
     </script>
     @*<link rel="stylesheet" type="text/css" href="@Url.Content("~/Content/style.css")">*@

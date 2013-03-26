@@ -7,96 +7,57 @@
 <script src="@Url.Content("~/Scripts/jquery.validate.min.js")" type="text/javascript"></script>
 <script src="@Url.Content("~/Scripts/jquery.validate.unobtrusive.min.js")" type="text/javascript"></script>
 
-@using (Html.BeginForm()) {
-    @Html.ValidationSummary(true)
-    <fieldset>
-        <legend>Cập nhật thông tin đăng kí</legend>
 
-        <div class="editor-label">
-            @Html.LabelFor(model => model.UserName)
+<div id="regisPanel" class="login-regis">
+@using (Html.BeginForm("Edit", "User", FormMethod.Post, new{ @style = "padding:100px" })) {
+@Html.ValidationSummary(true, "Thay đổi không thành công.")
+    <div class="blockInfo">
+        @Html.LabelFor(m => m.UserName)
+        <div class="clear"></div>
+        <div class="textbox">
+            @Html.DisplayFor(m => m.UserName, new { @class = "tbxRegister" })
         </div>
-        <div class="display-field">
-            @Html.DisplayFor(model => model.UserName)
+    </div>
+    <div class="clear"></div>
+    <div class="blockInfo">
+        @Html.LabelFor(m => m.Email)
+        <div class="clear"></div>
+        <div class="textbox">
+            @Html.TextBoxFor(m => m.Email, new { @class = "tbxRegister" })
+            @Html.ValidationMessageFor(m => m.Email)
         </div>
-
-        <div class="editor-label">
-            @Html.LabelFor(model => model.Email)
+    </div>
+    <div class="clear"></div>
+    <div class="blockInfo">
+        @Html.LabelFor(m => m.Name)
+        <div class="clear"></div>
+        <div class="textbox">
+            @Html.TextBoxFor(m => m.Name, new { @class = "tbxRegister" })
+            @Html.ValidationMessageFor(m => m.Name)
         </div>
-        <div class="editor-field">
-            @Html.EditorFor(model => model.Email)
-            @Html.ValidationMessageFor(model => model.Email)
+    </div>
+    <div class="clear"></div>
+    <div class="blockInfo">
+        @Html.LabelFor(m => m.PhoneNumber)
+        <div class="clear"></div>
+        <div class="textbox">
+            @Html.TextBoxFor(m => m.PhoneNumber, new { @class = "tbxRegister" })
+            @Html.ValidationMessageFor(m => m.PhoneNumber)
         </div>
-
-        <div class="editor-label">
-            @Html.LabelFor(model => model.Password)
+    </div>
+    <div class="clear"></div>
+    <div class="blockInfo">
+        @Html.LabelFor(m => m.Address)
+        <div class="clear"></div>
+        <div class="textbox">
+            @Html.TextBoxFor(m => m.Address, new { @class = "tbxRegister" })
+            @Html.ValidationMessageFor(m => m.Address)
         </div>
-        <div class="editor-field">
-            @Html.EditorFor(model => model.Password)
-            @Html.ValidationMessageFor(model => model.Password)
-        </div>
-
-        <div class="editor-label">
-            @Html.LabelFor(model => model.ConfirmPassword)
-        </div>
-        <div class="editor-field">
-            @Html.EditorFor(model => model.ConfirmPassword)
-            @Html.ValidationMessageFor(model => model.ConfirmPassword)
-        </div>
-
-        <div class="editor-label">
-            @Html.LabelFor(model => model.PhoneNumber)
-        </div>
-        <div class="editor-field">
-            @Html.EditorFor(model => model.PhoneNumber)
-            @Html.ValidationMessageFor(model => model.PhoneNumber)
-        </div>
-
-        <div class="editor-label">
-            @Html.LabelFor(model => model.Address)
-        </div>
-        <div class="editor-field">
-            @Html.EditorFor(model => model.Address)
-            @Html.ValidationMessageFor(model => model.Address)
-        </div>
-
-        <div class="editor-label">
-            @Html.LabelFor(model => model.Name)
-        </div>
-        <div class="editor-field">
-            @Html.EditorFor(model => model.Name)
-            @Html.ValidationMessageFor(model => model.Name)
-        </div>
-
-        <div class="editor-label">
-            @Html.LabelFor(model => model.DateOfBirth)
-        </div>
-        <div class="editor-field">
-            @Html.EditorFor(model => model.DateOfBirth)
-            @Html.ValidationMessageFor(model => model.DateOfBirth)
-        </div>
-
-        <div class="editor-label">
-            @Html.LabelFor(model => model.Sex)
-        </div>
-        <div class="editor-field">
-            @Html.EditorFor(model => model.Sex)
-            @Html.ValidationMessageFor(model => model.Sex)
-        </div>
-
-        <div class="editor-label">
-            @Html.LabelFor(model => model.Avatar)
-        </div>
-        <div class="editor-field">
-            @Html.EditorFor(model => model.Avatar)
-            @Html.ValidationMessageFor(model => model.Avatar)
-        </div>
-
-        <p>
-            <input type="submit" value="Save" />
-        </p>
-    </fieldset>
+    </div>
+    <div class="clear"></div>
+    <div class="blockInfo">
+        <div class="clear"></div>
+        <input type="submit" id="btnSaveInfo" value=""/>
+    </div>
 }
-
-<div>
-    @Html.ActionLink("Quay lại", "Index")
 </div>

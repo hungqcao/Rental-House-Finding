@@ -248,7 +248,7 @@
             <h1>1 | Thông tin cơ bản</h1>
             <div class="clear"></div>
             <div class="pnLeft">
-                <div class="infoElement">
+                <div class="infoElement" style="width:150px">
                     <h2>Loại tin đăng</h2>
                     <div class="clear"></div>
                     @Html.DropDownListFor(model => model.CategoryId, (IEnumerable<SelectListItem>)ViewBag.CategoryId, new { @class = "select" })
@@ -320,13 +320,13 @@
                     @Html.TextBoxFor(model => model.PhoneActive, new { @class = "tbx" })
                     @Html.ValidationMessageFor(model => model.PhoneActive)
                 </div>
-                <div class="clear"></div>
                 <div class="infoElement">
                     <h2>Email liên hệ</h2>
                     <div class="clear"></div>
                     @Html.TextBoxFor(model => model.Email, new { @class = "tbx" })
                     @Html.ValidationMessageFor(model => model.Email)
                 </div>
+                <div class="clear"></div>
                 <div class="infoElement">
                     <h2>Tài khoản Yahoo!</h2>
                     <div class="clear"></div>
@@ -340,7 +340,7 @@
                     @Html.ValidationMessageFor(model => model.Skype)
                 </div>
                 <div class="clear"></div>
-                <div class="infoElement">
+                <div class="infoElement" style="height:auto;">
                     <h2>Ghi chú</h2>
                     <div class="clear"></div>
                     @Html.TextAreaFor(model => model.Description, new { @cols="15", @rows="2"} )
@@ -388,25 +388,25 @@
                     <div class="infoElement">
                         <h2>Giá tiền điện (nghìn vnđ/số)</h2>
                         <div class="clear"></div>
-                        @Html.TextBoxFor(model => model.ElectricityFee, new { @class = "electricPriceTbx" })
+                        @Html.TextBoxFor(model => model.ElectricityFee, new { @class = "electricPriceTbx", @Value="0" })
                         @Html.ValidationMessageFor(model => model.ElectricityFee)
                     </div>
                     <div class="infoElement">
                         <h2>Giá tiền nước (nghìn vnđ/khối) </h2>
                         <div class="clear"></div>
-                        @Html.TextBoxFor(model => model.WaterFee, new { @class = "electricPriceTbx" })
+                        @Html.TextBoxFor(model => model.WaterFee, new { @class = "electricPriceTbx", @Value = "0" })
                         @Html.ValidationMessageFor(model => model.WaterFee)
                     </div>
                     <div class="infoElement">
                         <h2>Giờ đóng cửa, cổng (nếu có)</h2>
                         <div class="clear"></div>
-                        @Html.TextBoxFor(model => model.RestrictHours, new { @class = "electricPriceTbx" })
+                        @Html.TextBoxFor(model => model.RestrictHours, new { @class = "electricPriceTbx", @Value = "0" })
                         @Html.ValidationMessageFor(model => model.RestrictHours)
                     </div>
                     <div class="clear"></div>
                 </div>
                 <div class="clear"></div>
-                <div class="leftContent" style="margin-right: 144px;">
+                <div class="leftContent" style="margin-right: 144px; margin-top: 30px;">
                     <h1>Các dịch vụ & tiện ích</h1>
                     <div class="clear"></div>
                     <div class="partCol">
@@ -460,7 +460,7 @@
                         </div>
                     </div>
                 </div>
-                <div class="leftContent">
+                <div class="leftContent" style="margin-top: 30px;">
                     <h1>Các địa điểm nổi bật xung quanh</h1>
                     <div class="clear"></div>
                     <div class="ta_wrapper">

@@ -171,13 +171,15 @@ namespace RentalHouseFinding.Controllers
                     {
                         //2 for pending
                         postToCreate.StatusId = 2;
-                        TempData["MessageSuccessPostNew"] = "Bài đăng có chứa những từ không cho phép, chúng tôi sẽ duyệt trước khi đăng lên hệ thống";
+                        TempData["MessagePendingPostNew"] = "Bài đăng có chứa những từ không cho phép, chúng tôi sẽ duyệt trước khi đăng lên hệ thống";
+                        TempData["Pending"] = true;
                     }
                     else
                     {
                         //1 for submitted
                         postToCreate.StatusId = 1;
                         TempData["MessageSuccessPostNew"] = "Đăng bài thành công, chúng tôi sẽ gửi tin nhắn đến số điện thoại bạn đã cung cấp";
+                        TempData["Success"] = true;
                     }
 
                     int userId;

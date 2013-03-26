@@ -253,7 +253,7 @@
             <h1>1 | Thông tin cơ bản</h1>
             <div class="clear"></div>
             <div class="pnLeft">
-                <div class="infoElement">
+                <div class="infoElement" style="width:150px">
                     <h2>Loại tin đăng</h2>
                     <div class="clear"></div>
                     @Html.DropDownListFor(model => model.CategoryId, (IEnumerable<SelectListItem>)ViewBag.CategoryId, new { @class = "select" })
@@ -325,13 +325,13 @@
                     @Html.TextBoxFor(model => model.PhoneActive, new { @class = "tbx" })
                     @Html.ValidationMessageFor(model => model.PhoneActive)
                 </div>
-                <div class="clear"></div>
                 <div class="infoElement">
                     <h2>Email liên hệ</h2>
                     <div class="clear"></div>
                     @Html.TextBoxFor(model => model.Email, new { @class = "tbx" })
                     @Html.ValidationMessageFor(model => model.Email)
                 </div>
+                <div class="clear"></div>
                 <div class="infoElement">
                     <h2>Tài khoản Yahoo!</h2>
                     <div class="clear"></div>
@@ -345,7 +345,7 @@
                     @Html.ValidationMessageFor(model => model.Skype)
                 </div>
                 <div class="clear"></div>
-                <div class="infoElement">
+                <div class="infoElement" style="height:auto;">
                     <h2>Ghi chú</h2>
                     <div class="clear"></div>
                     @Html.TextAreaFor(model => model.Description, new { @cols="15", @rows="2"} )
@@ -474,7 +474,7 @@
                 </div>
                 <div class="clear"></div>
             </div>
-        <input id="btnDangTinNgay" type="submit" value=""/>
+        <input id="btnSaveInfo" type="submit" value=""/>
         <div class="clear"></div>
     </div>
 }

@@ -13,8 +13,9 @@
             <span class="title">Điện thoại cố định:</span><span class="info">@Model.User.PhoneNumber</span> 
             <span class="title">Thời điểm tạo:</span> <span class="info">@Model.User.CreatedDate</span> 
             <span class="title">Địa chỉ</span> <span class="info">@Model.User.Address</span>
-            @Html.ActionLink("Thay đổi thông tin tài khoản", "Edit", "User");
-            @Html.ActionLink("Đổi mật khẩu (dành cho tài khoản đăng ký tại hệ thống)", "ChangePassword", "Account");
+            @Html.ActionLink("Thay đổi thông tin tài khoản", "Edit", "User")
+            <div class="clear"></div>
+            @Html.ActionLink("Đổi mật khẩu (dành cho tài khoản đăng ký tại hệ thống)", "ChangePassword", "Account")
         </div>
 </div>
 <div id="rightInfo" class="left">
@@ -26,7 +27,7 @@
                 {
                     <div class="activityInfo">
                         <div class="activityDetail">
-                            @item.Message<br />
+                            @Html.Raw(HttpUtility.HtmlDecode(item.Message))<br />
                             lúc: @item.CreatedDate
                         </div>
                     </div>

@@ -9,6 +9,23 @@
     <link rel="stylesheet" type="text/css" href="@Url.Content("~/Content/style.css")">
     <link href="@Url.Content("~/Content/styles.css")" rel="stylesheet" type="text/css">
     <link href="@Url.Content("~/Content/admin_style.css")" rel="stylesheet" type="text/css">
+    <script src="@Url.Content("~/Content/js/jquery.mousewheel.js")" type="text/javascript"></script>
+    <script src="@Url.Content("~/Content/js/jquery.jscrollpane.min.js")" type="text/javascript"></script>
+    <script src="@Url.Content("~/Content/js/mwheelIntent.js")" type="text/javascript"></script>
+    <script src="@Url.Content("~/Content/js/jquery.screwdefaultbuttonsV2.min.js")" type="text/javascript"></script>
+    <script type="text/javascript">
+        $(function () {
+            $('input:checkbox').screwDefaultButtons({
+                image: 'url(@Url.Content("~/Content/images/index_cbx.png)")',
+                width: 17,
+                height: 17
+            });
+            $('#header_panel').show();
+            $("a.close").click(function () {
+                $(this).parent().fadeOut();
+            });
+        });
+    </script>
 </head>
 <body>
     <div class="page">
