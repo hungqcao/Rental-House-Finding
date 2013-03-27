@@ -3,6 +3,8 @@
 @{
     ViewBag.Title = "Log On";    
 }
+<script src="@Url.Content("~/Scripts/jquery.validate.min.js")" type="text/javascript"></script>
+<script src="@Url.Content("~/Scripts/jquery.validate.unobtrusive.min.js")" type="text/javascript"></script>
 <link href="@Url.Content("~/Content/openid-shadow.css")"
     rel="stylesheet" type="text/css" />
 <link href="@Url.Content("~/Content/openid.css")" 
@@ -33,26 +35,26 @@
         <div class="helloLine"></div>
     </div>
     <div class="clear"></div>
-    <div class="login-regis" id="loginPanel">
-        <div class="title">
-            <h1>Đăng nhập</h1>
-            <h2>Bạn đã có tài khoản, hãy đăng nhập ngay!</h2>
-        </div>
-        <div class="clear"></div>
-        <form action="Authenticate?ReturnUrl=@HttpUtility.UrlEncode(Request.QueryString["ReturnUrl"])" method="post" id="openid_form">
-            <input type="hidden" name="action" value="verify" />
-            <div class="socials">   
-                <h2>Đăng nhập nhanh với các tài khoản có sẵn của bạn tại:</h2>
-                <div class="openid_choice">
-                    <div id="openid_btns">
-                    </div>
-                </div>
-                <div id ="loading" style="display:none">
-                <img alt="login loading" src="/Content/images/loading.gif">
+<div class="login-regis" id="loginPanel">
+    <div class="title">
+        <h1>Đăng nhập</h1>
+        <h2>Bạn đã có tài khoản, hãy đăng nhập ngay!</h2>
+    </div>
+    <div class="clear"></div>
+    <form action="Authenticate?ReturnUrl=@HttpUtility.UrlEncode(Request.QueryString["ReturnUrl"])" method="post" id="openid_form">
+        <input type="hidden" name="action" value="verify" />
+        <div class="socials">   
+            <h2>Đăng nhập nhanh với các tài khoản có sẵn của bạn tại:</h2>
+            <div class="openid_choice">
+                <div id="openid_btns">
                 </div>
             </div>
-        </form>
-        <div class="clear"></div>
+            <div id ="loading" style="display:none">
+            <img alt="login loading" src="/Content/images/loading.gif">
+            </div>
+        </div>
+    </form>
+    <div class="clear"></div>
 @using (Html.BeginForm())
 {
         <div class="userInfo">

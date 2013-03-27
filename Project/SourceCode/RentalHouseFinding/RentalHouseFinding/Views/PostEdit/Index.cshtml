@@ -1,0 +1,57 @@
+﻿@model RentalHouseFinding.Models.PostEditModel
+@{
+    ViewBag.Title = "Index";
+}
+<script src="@Url.Content("~/Scripts/jquery.validate.min.js")" type="text/javascript"></script>
+<script src="@Url.Content("~/Scripts/jquery.validate.unobtrusive.min.js")" type="text/javascript"></script>
+<div class="helloText">
+    <div class="helloLine"></div>
+    <span>Chào bạn!</span>
+    <div class="helloLine"></div>
+</div>
+<div class="clear"></div>
+<div id="message-sv" style="width:320px; margin: 0 auto;">
+@if (TempData["MessageSuccessEdit"] != null)
+{
+    <div class="message-notification success">
+        <a class="close"></a>
+        <div>
+            @TempData["MessageSuccessEdit"]
+        </div>
+    </div>
+}
+</div>
+<div class="login-regis" id="loginPanel">
+@using (Html.BeginForm("Index","PostEdit",FormMethod.Post,new{@style="padding:70px"}))
+{
+    <div class="userInfo" style="width: 320px;margin: 0 auto;">
+        <h2>Nhập mã bài đăng cùng mật khẩu chúng tôi cung cấp cho bạn để chỉnh sửa bài viết</h2>
+        <div class="blockInfo">
+            @Html.LabelFor(m => m.PostId)
+            <div class="clear"></div>
+            <div class="textbox">
+                @Html.TextBoxFor(m => m.PostId, new { @class = "tbxRegister"})
+                @Html.ValidationMessageFor(m => m.PostId)
+            </div>
+        </div>
+        <div class="clear"></div>
+        <div class="blockInfo" style="margin-top:30px">
+            @Html.LabelFor(m => m.Password)
+            <div class="clear"></div>
+            <div class="textbox">
+                @Html.TextBoxFor(m => m.Password, new { @class = "tbxRegister" })
+                @Html.ValidationMessageFor(m => m.Password)
+            </div>
+        </div>
+        <div class="clear"></div>
+    </div>
+    <div class="clear"></div>
+    <div class="notification">
+        <img id="infoIcon" src="../../Content/images/login_infoIcon.png"/>
+        <span id="message" style="width: 300px">@Html.ValidationSummary(true, "Đăng nhập không thành công, xin vui lòng kiểm tra lại thông báo và thử lại.")</span>
+    </div>
+    <div class="buttons">
+        <input type="submit" id="btnLogin" value=""/>
+    </div>
+}
+</div>

@@ -108,6 +108,7 @@
     <Compile Include="Controllers\Admin\ManagePostsController.cs" />
     <Compile Include="Controllers\AdvancedSearchController.cs" />
     <Compile Include="Controllers\GUI\PostController.cs" />
+    <Compile Include="Controllers\GUI\PostEditController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\User\QuestionsController.cs" />
     <Compile Include="Controllers\User\SentQuestionController.cs" />
@@ -118,6 +119,7 @@
     <Compile Include="Models\FacebookLoginModel.cs" />
     <Compile Include="Models\InfoAndUserLogsViewModel.cs" />
     <Compile Include="Models\Picture.cs" />
+    <Compile Include="Models\PostEditModel.cs" />
     <Compile Include="Models\QuestionViewModel.cs" />
     <Compile Include="Common\CommonController.cs" />
     <Compile Include="Common\CommonModel.cs" />
@@ -801,6 +803,12 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="Views\Service\ComparePost.cshtml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Views\PostEdit\Index.cshtml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Views\PostEdit\Edit.cshtml" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <Import Project="$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v10.0\WebApplications\Microsoft.WebApplication.targets" />

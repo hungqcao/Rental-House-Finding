@@ -33,6 +33,15 @@
     window.onload = loadScript;
 </script>
 <div id="message-sv" style="width:320px; margin: 0 auto;">
+    @if (TempData["MessageSuccessEdit"] != null)
+    {
+        <div class="message-notification success">
+            <a class="close"></a>
+            <div>
+                @TempData["MessageSuccessEdit"]
+            </div>
+        </div>
+    }
     @if (TempData["Success"] != null)
     {
         if ((bool)TempData["Success"] && TempData["Success"] != null)
@@ -49,7 +58,7 @@
     {
         if ((bool)TempData["Pending"])
         {
-            <div class="message-notification .message-information">
+            <div class="message-notification message-information">
                 <a class="close"></a>
                 <div>
                     @TempData["MessagePendingPostNew"]
@@ -224,13 +233,20 @@
             <div class="clear"></div>
             <div class="title"><div class="plusBtn"></div>HỎI ĐÁP</div>
             <div id="Question">
-                @if (!Model.CreatedBy.Equals(User.Identity.Name, StringComparison.CurrentCultureIgnoreCase))
+                @if (!string.IsNullOrEmpty(Model.CreatedBy))
                 {
-                    @Html.Partial("_Question", new RentalHouseFinding.Models.QuestionViewModel())
+                    if (!Model.CreatedBy.Equals(User.Identity.Name, StringComparison.CurrentCultureIgnoreCase) || string.IsNullOrEmpty(User.Identity.Name))
+                    {
+                        @Html.Partial("_Question", new RentalHouseFinding.Models.QuestionViewModel())
+                    }
+                    else if (User.Identity.IsAuthenticated)
+                    {
+                        <text>Đây là bài viết của bạn ^^</text>
+                    }
                 }
-                else if (User.Identity.IsAuthenticated)
+                else
                 {
-                    <text>Đây là bài viết của bạn ^^</text>
+                    <text>Người đăng không cung cấp thông tin để liên lạc</text>
                 }
             </div>
         </div>
@@ -283,7 +299,7 @@
                 }
                 else if (ViewBag.RemoveFavorite == true)
                 {
-                    <div id="favorite" onclick="removeFavorite();" class="withOutLogin"><img src="@Url.Content("~/Content/images/triangle_fav.png")"/></div>
+                    <div id="favorite" onclick="removeFavorite();" class="withOutLogin"><img src="@Url.Content("~/Content/images/favorite_actived.png")"/></div>
                        
                 }
                 if (!User.Identity.IsAuthenticated)
