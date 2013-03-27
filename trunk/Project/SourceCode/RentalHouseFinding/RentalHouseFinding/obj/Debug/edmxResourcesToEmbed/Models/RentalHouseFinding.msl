@@ -19,6 +19,8 @@
           <ScalarProperty Name="OpenIdURL" ColumnName="OpenIdURL" />
           <ScalarProperty Name="RoleId" ColumnName="RoleId" />
           <ScalarProperty Name="Sex" ColumnName="Sex" />
+          <ScalarProperty Name="IsActive" ColumnName="IsActive" />
+          <ScalarProperty Name="KeyActive" ColumnName="KeyActive" />
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>
@@ -58,7 +60,7 @@
           <ScalarProperty Name="EditedDate" ColumnName="EditedDate" />
           <ScalarProperty Name="RenewDate" ColumnName="RenewDate" />
           <ScalarProperty Name="DistrictId" ColumnName="DistrictId" />
-          <ScalarProperty Name="Address" ColumnName="Address" />
+          <ScalarProperty Name="NumberAddress" ColumnName="NumberAddress" />
           <ScalarProperty Name="Price" ColumnName="Price" />
           <ScalarProperty Name="Area" ColumnName="Area" />
           <ScalarProperty Name="PhoneActive" ColumnName="PhoneActive" />
@@ -66,6 +68,9 @@
           <ScalarProperty Name="Lat" ColumnName="Lat" />
           <ScalarProperty Name="Lon" ColumnName="Lon" />
           <ScalarProperty Name="UserId" ColumnName="UserId" />
+          <ScalarProperty Name="Street" ColumnName="Street" />
+          <ScalarProperty Name="NearbyPlace" ColumnName="NearbyPlace" />
+          <ScalarProperty Name="ExpiredDate" ColumnName="ExpiredDate" />
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>
@@ -137,6 +142,7 @@
         <MappingFragment StoreEntitySet="BadWords">
           <ScalarProperty Name="Id" ColumnName="Id" />
           <ScalarProperty Name="Word" ColumnName="Word" />
+          <ScalarProperty Name="TypeId" ColumnName="TypeId" />
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>
@@ -159,6 +165,7 @@
           <ScalarProperty Name="RestrictHours" ColumnName="RestrictHours" />
           <ScalarProperty Name="HasSecurity" ColumnName="HasSecurity" />
           <ScalarProperty Name="Direction" ColumnName="Direction" />
+          <ScalarProperty Name="FacilityTemplateId" ColumnName="FacilityTemplateId" />
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>
@@ -170,6 +177,7 @@
           <ScalarProperty Name="Email" ColumnName="Email" />
           <ScalarProperty Name="Yahoo" ColumnName="Yahoo" />
           <ScalarProperty Name="Skype" ColumnName="Skype" />
+          <ScalarProperty Name="NameContact" ColumnName="NameContact" />
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>
@@ -180,6 +188,135 @@
           <ScalarProperty Name="PostId" ColumnName="PostId" />
           <ScalarProperty Name="Path" ColumnName="Path" />
           <ScalarProperty Name="IsDeleted" ColumnName="IsDeleted" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="ConfigurationRHFs">
+      <EntityTypeMapping TypeName="IsTypeOf(RentalHouseFinding.ConfigurationRHF)">
+        <MappingFragment StoreEntitySet="ConfigurationRHFs">
+          <ScalarProperty Name="Id" ColumnName="Id" />
+          <ScalarProperty Name="Name" ColumnName="Name" />
+          <ScalarProperty Name="Value" ColumnName="Value" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Questions">
+      <EntityTypeMapping TypeName="IsTypeOf(RentalHouseFinding.Questions)">
+        <MappingFragment StoreEntitySet="Questions">
+          <ScalarProperty Name="Id" ColumnName="Id" />
+          <ScalarProperty Name="Content" ColumnName="Content" />
+          <ScalarProperty Name="SenderId" ColumnName="SenderId" />
+          <ScalarProperty Name="CreatedDate" ColumnName="CreatedDate" />
+          <ScalarProperty Name="IsRead" ColumnName="IsRead" />
+          <ScalarProperty Name="IsDeleted" ColumnName="IsDeleted" />
+          <ScalarProperty Name="PostId" ColumnName="PostId" />
+          <ScalarProperty Name="Title" ColumnName="Title" />
+          <ScalarProperty Name="SenderEmail" ColumnName="SenderEmail" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Answers">
+      <EntityTypeMapping TypeName="IsTypeOf(RentalHouseFinding.Answers)">
+        <MappingFragment StoreEntitySet="Answers">
+          <ScalarProperty Name="Id" ColumnName="Id" />
+          <ScalarProperty Name="Content" ColumnName="Content" />
+          <ScalarProperty Name="CreatedDate" ColumnName="CreatedDate" />
+          <ScalarProperty Name="IsDeleted" ColumnName="IsDeleted" />
+          <ScalarProperty Name="QuestionId" ColumnName="QuestionId" />
+          <ScalarProperty Name="IsRead" ColumnName="IsRead" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="AdvanceSearchScores">
+      <EntityTypeMapping TypeName="IsTypeOf(RentalHouseFinding.AdvanceSearchScore)">
+        <MappingFragment StoreEntitySet="AdvanceSearchScores">
+          <ScalarProperty Name="Id" ColumnName="Id" />
+          <ScalarProperty Name="Name" ColumnName="Name" />
+          <ScalarProperty Name="Score" ColumnName="Score" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="FacilityTemplates">
+      <EntityTypeMapping TypeName="IsTypeOf(RentalHouseFinding.FacilityTemplates)">
+        <MappingFragment StoreEntitySet="FacilityTemplates">
+          <ScalarProperty Name="Id" ColumnName="Id" />
+          <ScalarProperty Name="Column1" ColumnName="Column1" />
+          <ScalarProperty Name="Column2" ColumnName="Column2" />
+          <ScalarProperty Name="Column3" ColumnName="Column3" />
+          <ScalarProperty Name="Column4" ColumnName="Column4" />
+          <ScalarProperty Name="Column5" ColumnName="Column5" />
+          <ScalarProperty Name="Column6" ColumnName="Column6" />
+          <ScalarProperty Name="Column7" ColumnName="Column7" />
+          <ScalarProperty Name="Column8" ColumnName="Column8" />
+          <ScalarProperty Name="Column9" ColumnName="Column9" />
+          <ScalarProperty Name="Column10" ColumnName="Column10" />
+          <ScalarProperty Name="Column11" ColumnName="Column11" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="BadWordTypes">
+      <EntityTypeMapping TypeName="IsTypeOf(RentalHouseFinding.BadWordTypes)">
+        <MappingFragment StoreEntitySet="BadWordTypes">
+          <ScalarProperty Name="Id" ColumnName="Id" />
+          <ScalarProperty Name="Name" ColumnName="Name" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Locations">
+      <EntityTypeMapping TypeName="IsTypeOf(RentalHouseFinding.Locations)">
+        <MappingFragment StoreEntitySet="Locations">
+          <ScalarProperty Name="Id" ColumnName="Id" />
+          <ScalarProperty Name="Name" ColumnName="Name" />
+          <ScalarProperty Name="DistrictId" ColumnName="DistrictId" />
+          <ScalarProperty Name="Lat" ColumnName="Lat" />
+          <ScalarProperty Name="Lon" ColumnName="Lon" />
+          <ScalarProperty Name="LocationTypeId" ColumnName="LocationTypeId" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="LocationTypes">
+      <EntityTypeMapping TypeName="IsTypeOf(RentalHouseFinding.LocationTypes)">
+        <MappingFragment StoreEntitySet="LocationTypes">
+          <ScalarProperty Name="Id" ColumnName="Id" />
+          <ScalarProperty Name="Name" ColumnName="Name" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="PostLocations">
+      <EntityTypeMapping TypeName="IsTypeOf(RentalHouseFinding.PostLocations)">
+        <MappingFragment StoreEntitySet="PostLocations">
+          <ScalarProperty Name="Id" ColumnName="Id" />
+          <ScalarProperty Name="PostId" ColumnName="PostId" />
+          <ScalarProperty Name="LocationId" ColumnName="LocationId" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Types">
+      <EntityTypeMapping TypeName="IsTypeOf(RentalHouseFinding.Types)">
+        <MappingFragment StoreEntitySet="Types">
+          <ScalarProperty Name="Id" ColumnName="Id" />
+          <ScalarProperty Name="Name" ColumnName="Name" />
+          <ScalarProperty Name="IsDeleted" ColumnName="IsDeleted" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="UserLogs">
+      <EntityTypeMapping TypeName="IsTypeOf(RentalHouseFinding.UserLogs)">
+        <MappingFragment StoreEntitySet="UserLogs">
+          <ScalarProperty Name="Id" ColumnName="Id" />
+          <ScalarProperty Name="Message" ColumnName="Message" />
+          <ScalarProperty Name="UserId" ColumnName="UserId" />
+          <ScalarProperty Name="IsRead" ColumnName="IsRead" />
+          <ScalarProperty Name="CreatedDate" ColumnName="CreatedDate" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="EmailTemplates">
+      <EntityTypeMapping TypeName="IsTypeOf(RentalHouseFinding.EmailTemplate)">
+        <MappingFragment StoreEntitySet="EmailTemplates">
+          <ScalarProperty Name="Id" ColumnName="Id" />
+          <ScalarProperty Name="Name" ColumnName="Name" />
+          <ScalarProperty Name="Template" ColumnName="Template" />
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>

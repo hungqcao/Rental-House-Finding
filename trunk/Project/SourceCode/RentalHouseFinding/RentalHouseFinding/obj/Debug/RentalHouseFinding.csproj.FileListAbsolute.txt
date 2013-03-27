@@ -20,3 +20,13 @@ E:\DO AN\RFS\Project\SourceCode\RentalHouseFinding\RentalHouseFinding\bin\Entity
 E:\DO AN\RFS\Project\SourceCode\RentalHouseFinding\RentalHouseFinding\obj\Debug\ResolveAssemblyReference.cache
 E:\DO AN\RFS\Project\SourceCode\RentalHouseFinding\RentalHouseFinding\obj\Debug\RentalHouseFinding.dll
 E:\DO AN\RFS\Project\SourceCode\RentalHouseFinding\RentalHouseFinding\obj\Debug\RentalHouseFinding.pdb
+D:\RHF\Project\SourceCode\RentalHouseFinding\RentalHouseFinding\bin\RentalHouseFinding.dll
+D:\RHF\Project\SourceCode\RentalHouseFinding\RentalHouseFinding\bin\RentalHouseFinding.pdb
+D:\RHF\Project\SourceCode\RentalHouseFinding\RentalHouseFinding\bin\DataAnnotationsExtensions.ClientValidation.dll
+D:\RHF\Project\SourceCode\RentalHouseFinding\RentalHouseFinding\bin\DataAnnotationsExtensions.dll
+D:\RHF\Project\SourceCode\RentalHouseFinding\RentalHouseFinding\bin\EntityFramework.dll
+D:\RHF\Project\SourceCode\RentalHouseFinding\RentalHouseFinding\bin\WebActivator.dll
+D:\RHF\Project\SourceCode\RentalHouseFinding\RentalHouseFinding\bin\EntityFramework.xml
+D:\RHF\Project\SourceCode\RentalHouseFinding\RentalHouseFinding\obj\Debug\ResolveAssemblyReference.cache
+D:\RHF\Project\SourceCode\RentalHouseFinding\RentalHouseFinding\obj\Debug\RentalHouseFinding.dll
+D:\RHF\Project\SourceCode\RentalHouseFinding\RentalHouseFinding\obj\Debug\RentalHouseFinding.pdb

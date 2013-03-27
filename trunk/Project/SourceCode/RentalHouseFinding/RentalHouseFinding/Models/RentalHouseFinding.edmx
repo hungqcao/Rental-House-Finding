@@ -1880,30 +1880,6 @@
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>
-          <FunctionImportMapping FunctionImportName="AdvancedSearchFacilities" FunctionName="RentalHouseFinding.Store.AdvancedSearchFacility">
-            <ResultMapping>
-              <ComplexTypeMapping TypeName="RentalHouseFinding.AdvancedSearchFacility_Result">
-                <ScalarProperty Name="Id" ColumnName="Id" />
-                <ScalarProperty Name="Score" ColumnName="Score" />
-              </ComplexTypeMapping>
-            </ResultMapping>
-          </FunctionImportMapping>
-          <FunctionImportMapping FunctionImportName="FullTextSearchPost" FunctionName="RentalHouseFinding.Store.FullTextSearchPost">
-            <ResultMapping>
-              <ComplexTypeMapping TypeName="RentalHouseFinding.FullTextSearchPost_ResultSuggestion">
-                <ScalarProperty Name="Id" ColumnName="Id" />
-                <ScalarProperty Name="Title" ColumnName="Title" />
-              </ComplexTypeMapping>
-            </ResultMapping>
-          </FunctionImportMapping>
-          <FunctionImportMapping FunctionImportName="FullTextSearchPostWithWeightenScore" FunctionName="RentalHouseFinding.Store.FullTextSearchPostWithWeightenScore">
-            <ResultMapping>
-              <ComplexTypeMapping TypeName="RentalHouseFinding.FullTextSearchPostWithWeightenScore_Result">
-                <ScalarProperty Name="Id" ColumnName="Id" />
-                <ScalarProperty Name="Title" ColumnName="Title" />
-              </ComplexTypeMapping>
-            </ResultMapping>
-          </FunctionImportMapping>
   </EntityContainerMapping>
 </Mapping></edmx:Mappings>
   </edmx:Runtime>
