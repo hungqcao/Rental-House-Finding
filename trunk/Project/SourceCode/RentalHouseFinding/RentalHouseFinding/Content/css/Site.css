@@ -102,9 +102,9 @@ body{
     padding: 30px 0 20px 0;
 }
 #header{
-	margin: 15px auto 0px;
+	margin: 20px auto 0px;
     max-width: 1054px;
-	height: 130px;
+	height: 120px;
 	font-family: Calibri, Arial,Helvetica,Sans-Serif;
     font-size: 14px;
 }
@@ -132,16 +132,17 @@ body{
 #searchInfo{
 	width:650px;
 	margin:0 auto;
-	padding-bottom: 60px;
+	padding-bottom: 30px;
 }
 #buttonSearch
 {
 	margin-bottom: 20px;
 	position:relative;
+	margin-left: 5px;
 }
 #searchInfo #buttonSearch select.select
 {
-    margin-right: 17px;
+    margin-right: 15px;
 }
 #searchInfo #buttonSearch #CategoryId, #home-search-area #options #CategoryId
 {
@@ -164,7 +165,7 @@ body{
 #searchInfo #buttonSearch #spProvinceId
 {
     background: url(../../Content/images/home_province.png) no-repeat;
-    left: 217px;
+    left: 215px;
     width: 214px;
 }
 #searchInfo #buttonSearch #spCategoryId, #home-search-area #options #spCategoryId
@@ -181,7 +182,7 @@ body{
 #searchInfo #buttonSearch #spDistrictId
 {
     background: url(../../Content/images/home_city.png) no-repeat;
-    left: 445px;
+    left: 443px;
 }
 #searchInfo #selectSearch #KeyWord
 {
@@ -288,7 +289,7 @@ span.select {
 	height: 36px;
 	line-height: 38px;
 	text-indent: 10px;
-	margin-left: 5px;
+	margin-left: 7px;
 	color: #646464;
 }
 #content h3
@@ -297,6 +298,7 @@ span.select {
 	font-weight: 700;
 	font-size: 22px;
 	font-family: Calibri, Arial,Helvetica,Sans-Serif;
+	margin:20px 0px 0px 10px;
 }
 #content
 {
@@ -350,6 +352,7 @@ span.select {
     color: #454343;
     font-family: Calibri, Arial,Helvetica,Sans-Serif;
     font-size: 18px;
+	text-align: justify;
 }
 #advanceSearch .detail b{
     font-weight: 700;
@@ -411,7 +414,7 @@ span.select {
     display: block;
     float: right;
     color: #646464;
-    margin: 20px 10px 0 0;
+    margin: 20px 5px 0 0;
 }
 
 #selectSearch #btnSubmit, #options #btnSubmit, #options #btnKinhLup {
@@ -428,6 +431,7 @@ span.select {
     background: url("../../Content/images/login_panel.png") no-repeat transparent 0 0;
     width: 842px;
     height: 607px;
+    margin: 0px 0px 0px 100px;
 }
 #regisPanel {
     background: url("../../Content/images/Register_bg_panel.png") no-repeat transparent -22px 0;
@@ -436,7 +440,7 @@ span.select {
 }
 div.textbox
 {
-    height: 80px;
+    height: 37px;
 }
 .login-regis {
     display: block;
@@ -541,7 +545,7 @@ div.textbox
 }
 span.field-validation-error
 {
-    padding: 70px 0 20px 0;
+    padding: 60px 0 20px 0;
 }
 span.field-validation-error
 {
@@ -583,7 +587,7 @@ span.field-validation-error
 .login-regis .buttons {
     display: block;
     float: right;
-    margin: 23px 80px 0 0;
+    margin: 47px 88px 0 0;
 }
 .checkbox, .buttons label
 {
@@ -792,12 +796,14 @@ span.field-validation-error
     margin-right: 10px;
     color: #717171;
     font-weight: 700;
+    padding-bottom: 27px;
 }
 #listInfo b {
     color: #52666e;
 }
 #infoMap {
-    width: 100%;
+   /* width: 100%;*/
+   width: 708px;
 }
 #listInfo label, #listInfo select {
     display: block;
@@ -1410,7 +1416,7 @@ textarea#Description {
     margin: 10px 16px 10px 0;
 }
 #pnew2_toggle {
-    display: none;
+    display: block;
 }
 /* End Post New */
 
@@ -1881,4 +1887,30 @@ table th {
     background: url('../images/cross_grey_small.png') no-repeat;
     width: 18px;
     height: 18px;
+}
+
+#fromPrice{
+   float:left;
+}
+#fromPrice span.field-validation-error {
+   display: none;
+}
+ 
+ #toPrice {
+ float: left; 
+}   
+#toPrice span.field-validation-error {
+   display: none;
+}
+#minArea  {
+  float:left;
+}
+#minArea span.field-validation-error {
+   display: none;
+}
+#maxArea  {
+  float:left;
+}
+#maxArea span.field-validation-error {
+   display: none;
 }

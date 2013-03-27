@@ -53,11 +53,11 @@
 }
 
 .openid_large_btn:hover {
-	margin: 4px 0 0 6px;
-	border: 2px solid #999;
+	/*margin: 4px 0 0 6px;*/
+	/*border: 2px solid #999;
 	box-shadow: none;
 	-moz-box-shadow: none;
-	-webkit-box-shadow: none;
+	-webkit-box-shadow: none;*/
 }
 
 .openid_small_btn {
