@@ -15,7 +15,7 @@ namespace RentalHouseFinding.Models
 {
     public class PostViewModel
     {
-        public int Id;
+        public int Id { get; set; }
 
         [Required(ErrorMessage = "Vui lòng nhập tiêu đề")]
         [Display(Name = "Tiêu đề")]
@@ -38,6 +38,7 @@ namespace RentalHouseFinding.Models
         public string NumberHouse { get; set; }
 
         [Display(Name = "Đường phố")]
+        [Required(ErrorMessage = "Xin vui lòng nhập tên đường phố.")]
         public string Street { get; set; }
 
         [Min(0, ErrorMessage = "Giá tiền phải lớn hơn hoặc bằng 0")]

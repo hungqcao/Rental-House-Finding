@@ -42,6 +42,7 @@ using System.Runtime.Serialization;
 [assembly: EdmRelationshipAttribute("RentalHouseFinding", "PostsQuestions", "Posts", System.Data.Metadata.Edm.RelationshipMultiplicity.One, typeof(RentalHouseFinding.Models.Posts), "Questions", System.Data.Metadata.Edm.RelationshipMultiplicity.Many, typeof(RentalHouseFinding.Models.Questions), true)]
 [assembly: EdmRelationshipAttribute("RentalHouseFinding", "UsersQuestions", "Users", System.Data.Metadata.Edm.RelationshipMultiplicity.ZeroOrOne, typeof(RentalHouseFinding.Models.Users), "Questions", System.Data.Metadata.Edm.RelationshipMultiplicity.Many, typeof(RentalHouseFinding.Models.Questions), true)]
 [assembly: EdmRelationshipAttribute("RentalHouseFinding", "UsersUserLogs", "Users", System.Data.Metadata.Edm.RelationshipMultiplicity.One, typeof(RentalHouseFinding.Models.Users), "UserLogs", System.Data.Metadata.Edm.RelationshipMultiplicity.Many, typeof(RentalHouseFinding.Models.UserLogs), true)]
+[assembly: EdmRelationshipAttribute("RentalHouseFinding", "PostsPostEdit", "Posts", System.Data.Metadata.Edm.RelationshipMultiplicity.One, typeof(RentalHouseFinding.Models.Posts), "PostEdit", System.Data.Metadata.Edm.RelationshipMultiplicity.One, typeof(RentalHouseFinding.Models.PostEdit), true)]
 
 #endregion
 
@@ -508,6 +509,22 @@ namespace RentalHouseFinding.Models
             }
         }
         private ObjectSet<EmailTemplate> _EmailTemplates;
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        public ObjectSet<PostEdit> PostEdits
+        {
+            get
+            {
+                if ((_PostEdits == null))
+                {
+                    _PostEdits = base.CreateObjectSet<PostEdit>("PostEdits");
+                }
+                return _PostEdits;
+            }
+        }
+        private ObjectSet<PostEdit> _PostEdits;
 
         #endregion
         #region AddTo Methods
@@ -718,6 +735,14 @@ namespace RentalHouseFinding.Models
         public void AddToEmailTemplates(EmailTemplate emailTemplate)
         {
             base.AddObject("EmailTemplates", emailTemplate);
+        }
+    
+        /// <summary>
+        /// Deprecated Method for adding a new object to the PostEdits EntitySet. Consider using the .Add method of the associated ObjectSet&lt;T&gt; property instead.
+        /// </summary>
+        public void AddToPostEdits(PostEdit postEdit)
+        {
+            base.AddObject("PostEdits", postEdit);
         }
 
         #endregion
@@ -4075,6 +4100,128 @@ namespace RentalHouseFinding.Models
     /// <summary>
     /// No Metadata Documentation available.
     /// </summary>
+    [EdmEntityTypeAttribute(NamespaceName="RentalHouseFinding", Name="PostEdit")]
+    [Serializable()]
+    [DataContractAttribute(IsReference=true)]
+    public partial class PostEdit : EntityObject
+    {
+        #region Factory Method
+    
+        /// <summary>
+        /// Create a new PostEdit object.
+        /// </summary>
+        /// <param name="postId">Initial value of the PostId property.</param>
+        /// <param name="password">Initial value of the Password property.</param>
+        public static PostEdit CreatePostEdit(global::System.Int32 postId, global::System.String password)
+        {
+            PostEdit postEdit = new PostEdit();
+            postEdit.PostId = postId;
+            postEdit.Password = password;
+            return postEdit;
+        }
+
+        #endregion
+        #region Primitive Properties
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=true, IsNullable=false)]
+        [DataMemberAttribute()]
+        public global::System.Int32 PostId
+        {
+            get
+            {
+                return _PostId;
+            }
+            set
+            {
+                if (_PostId != value)
+                {
+                    OnPostIdChanging(value);
+                    ReportPropertyChanging("PostId");
+                    _PostId = StructuralObject.SetValidValue(value);
+                    ReportPropertyChanged("PostId");
+                    OnPostIdChanged();
+                }
+            }
+        }
+        private global::System.Int32 _PostId;
+        partial void OnPostIdChanging(global::System.Int32 value);
+        partial void OnPostIdChanged();
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=false)]
+        [DataMemberAttribute()]
+        public global::System.String Password
+        {
+            get
+            {
+                return _Password;
+            }
+            set
+            {
+                OnPasswordChanging(value);
+                ReportPropertyChanging("Password");
+                _Password = StructuralObject.SetValidValue(value, false);
+                ReportPropertyChanged("Password");
+                OnPasswordChanged();
+            }
+        }
+        private global::System.String _Password;
+        partial void OnPasswordChanging(global::System.String value);
+        partial void OnPasswordChanged();
+
+        #endregion
+    
+        #region Navigation Properties
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [XmlIgnoreAttribute()]
+        [SoapIgnoreAttribute()]
+        [DataMemberAttribute()]
+        [EdmRelationshipNavigationPropertyAttribute("RentalHouseFinding", "PostsPostEdit", "Posts")]
+        public Posts Post
+        {
+            get
+            {
+                return ((IEntityWithRelationships)this).RelationshipManager.GetRelatedReference<Posts>("RentalHouseFinding.PostsPostEdit", "Posts").Value;
+            }
+            set
+            {
+                ((IEntityWithRelationships)this).RelationshipManager.GetRelatedReference<Posts>("RentalHouseFinding.PostsPostEdit", "Posts").Value = value;
+            }
+        }
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [BrowsableAttribute(false)]
+        [DataMemberAttribute()]
+        public EntityReference<Posts> PostReference
+        {
+            get
+            {
+                return ((IEntityWithRelationships)this).RelationshipManager.GetRelatedReference<Posts>("RentalHouseFinding.PostsPostEdit", "Posts");
+            }
+            set
+            {
+                if ((value != null))
+                {
+                    ((IEntityWithRelationships)this).RelationshipManager.InitializeRelatedReference<Posts>("RentalHouseFinding.PostsPostEdit", "Posts", value);
+                }
+            }
+        }
+
+        #endregion
+    }
+    
+    /// <summary>
+    /// No Metadata Documentation available.
+    /// </summary>
     [EdmEntityTypeAttribute(NamespaceName="RentalHouseFinding", Name="PostImages")]
     [Serializable()]
     [DataContractAttribute(IsReference=true)]
@@ -5353,6 +5500,44 @@ namespace RentalHouseFinding.Models
                 if ((value != null))
                 {
                     ((IEntityWithRelationships)this).RelationshipManager.InitializeRelatedCollection<Questions>("RentalHouseFinding.PostsQuestions", "Questions", value);
+                }
+            }
+        }
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [XmlIgnoreAttribute()]
+        [SoapIgnoreAttribute()]
+        [DataMemberAttribute()]
+        [EdmRelationshipNavigationPropertyAttribute("RentalHouseFinding", "PostsPostEdit", "PostEdit")]
+        public PostEdit PostEdits
+        {
+            get
+            {
+                return ((IEntityWithRelationships)this).RelationshipManager.GetRelatedReference<PostEdit>("RentalHouseFinding.PostsPostEdit", "PostEdit").Value;
+            }
+            set
+            {
+                ((IEntityWithRelationships)this).RelationshipManager.GetRelatedReference<PostEdit>("RentalHouseFinding.PostsPostEdit", "PostEdit").Value = value;
+            }
+        }
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [BrowsableAttribute(false)]
+        [DataMemberAttribute()]
+        public EntityReference<PostEdit> PostEditsReference
+        {
+            get
+            {
+                return ((IEntityWithRelationships)this).RelationshipManager.GetRelatedReference<PostEdit>("RentalHouseFinding.PostsPostEdit", "PostEdit");
+            }
+            set
+            {
+                if ((value != null))
+                {
+                    ((IEntityWithRelationships)this).RelationshipManager.InitializeRelatedReference<PostEdit>("RentalHouseFinding.PostsPostEdit", "PostEdit", value);
                 }
             }
         }

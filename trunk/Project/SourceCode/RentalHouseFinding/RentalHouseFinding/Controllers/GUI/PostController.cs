@@ -147,6 +147,7 @@ namespace RentalHouseFinding.Controllers
         {
             ViewBag.CategoryId = new SelectList(Repository.GetAllCategories(), "Id", "Name");
             ViewBag.ProvinceId = new SelectList(Repository.GetAllProvinces(), "Id", "Name");
+            ViewBag.DistrictId = new SelectList(Repository.GetAllDistricts(), "Id", "Name");
             return View();
         }
 
@@ -190,7 +191,16 @@ namespace RentalHouseFinding.Controllers
                     }
                     _db.Posts.AddObject(postToCreate);
                     _db.SaveChanges();
-                        
+
+                    if (string.IsNullOrEmpty(User.Identity.Name))
+                    {
+                        //Visitor post 
+                        PostEdit postEdit = new PostEdit();
+                        postEdit.PostId = postToCreate.Id;
+                        postEdit.Password = StringUtil.RandomStr();
+                        _db.PostEdits.AddObject(postEdit);
+                        _db.SaveChanges();
+                    }
                     //Nearby places
                     Dictionary<int, string> lstNearbyId = GetListNearbyLocations(model);
                     PostLocations postLocation;
@@ -245,6 +255,7 @@ namespace RentalHouseFinding.Controllers
             }
             ViewBag.CategoryId = new SelectList(Repository.GetAllCategories(), "Id", "Name", model.CategoryId);
             ViewBag.ProvinceId = new SelectList(Repository.GetAllProvinces(), "Id", "Name", model.ProvinceId);
+            ViewBag.DistrictId = new SelectList(Repository.GetAllDistricts().Where(d=>d.ProvinceId == model.ProvinceId), "Id", "Name", model.DistrictId);
             return View(model);
         }
 
@@ -253,8 +264,6 @@ namespace RentalHouseFinding.Controllers
 		[Authorize(Roles = "User, Admin")]
         public ActionResult Edit(int id)
         {
-            ViewBag.CategoryId = new SelectList(Repository.GetAllCategories(), "Id", "Name");
-            ViewBag.ProvinceId = new SelectList(Repository.GetAllProvinces(), "Id", "Name");
             int userId = CommonModel.GetUserIdByUsername(User.Identity.Name);
             var postModel = (from p in _db.Posts where (p.Id == id) 
                                  && (!p.IsDeleted)  && p.UserId == userId select p).FirstOrDefault();
@@ -269,6 +278,9 @@ namespace RentalHouseFinding.Controllers
             {
                 ViewBag.Images = images.ToList();
             }
+            ViewBag.CategoryId = new SelectList(Repository.GetAllCategories(), "Id", "Name", postModel.CategoryId);
+            ViewBag.ProvinceId = new SelectList(Repository.GetAllProvinces(), "Id", "Name", postModel.District.ProvinceId);
+            ViewBag.DistrictId = new SelectList(Repository.GetAllDistricts().Where(d=>d.ProvinceId == postModel.District.ProvinceId), "Id", "Name", postModel.DistrictId);
             return View(CommonModel.ConvertPostToPostViewModel(postModel));
         }
 
@@ -277,7 +289,7 @@ namespace RentalHouseFinding.Controllers
 
         [HttpPost]
         [Authorize(Roles = "User, Admin")]
-        public ActionResult Edit(int id, PostViewModel postViewModel, IEnumerable<HttpPostedFileBase> images)
+        public ActionResult Edit(PostViewModel postViewModel, IEnumerable<HttpPostedFileBase> images)
         {
             
             if (ModelState.IsValid)
@@ -285,7 +297,7 @@ namespace RentalHouseFinding.Controllers
                 try
                 {
                     int status = 0;
-                    var post = (from p in _db.Posts where (p.Id == id) select p).FirstOrDefault();
+                    var post = (from p in _db.Posts where (p.Id == postViewModel.Id) select p).FirstOrDefault();
                     if (CommonModel.FilterHasBadContent(postViewModel))
                     {
                         //2 for pending
@@ -303,11 +315,11 @@ namespace RentalHouseFinding.Controllers
                         {
                             if (image != null && image.ContentLength > 0)
                             {
-                                var path = Path.Combine(HttpContext.Server.MapPath("/Content/PostImages/"), id.ToString());
+                                var path = Path.Combine(HttpContext.Server.MapPath("/Content/PostImages/"), postViewModel.Id.ToString());
                                 //Check if image already exists
                                 var imagesPath = (from i in _db.PostImages 
                                                   where (i.Path == "/Content/PostImages/" 
-                                                        + id.ToString() + "/" + Path.GetFileName(image.FileName)) 
+                                                        + postViewModel.Id.ToString() + "/" + Path.GetFileName(image.FileName)) 
                                                   select i.Path).ToArray();
                                 if (imagesPath.Count() > 0)
                                 {
@@ -317,8 +329,8 @@ namespace RentalHouseFinding.Controllers
                                 string filePath = Path.Combine(path, Path.GetFileName(image.FileName));
                                 image.SaveAs(filePath);
                                 imageToCreate = new PostImages();
-                                imageToCreate.PostId = id;
-                                imageToCreate.Path = "/Content/PostImages/" + id.ToString() + "/" + Path.GetFileName(image.FileName);
+                                imageToCreate.PostId = postViewModel.Id;
+                                imageToCreate.Path = "/Content/PostImages/" + postViewModel.Id.ToString() + "/" + Path.GetFileName(image.FileName);
                                 imageToCreate.IsDeleted = false;
 
                                 _db.PostImages.AddObject(imageToCreate);
@@ -326,8 +338,8 @@ namespace RentalHouseFinding.Controllers
                             }
                         }
                     }
-                    TempData["MessageSuccessEdit"] = "Success";
-                    return RedirectToAction("Index/" + id);
+                    TempData["MessageSuccessEdit"] = "Thay đổi thông tin thành công!";
+                    return RedirectToAction("Details", new { Id = post.Id });
                 }
                 catch (Exception ex)
                 {
@@ -336,6 +348,7 @@ namespace RentalHouseFinding.Controllers
             }
             ViewBag.CategoryId = new SelectList(Repository.GetAllCategories(), "Id", "Name", postViewModel.CategoryId);
             ViewBag.ProvinceId = new SelectList(Repository.GetAllProvinces(), "Id", "Name", postViewModel.ProvinceId);
+            ViewBag.DistrictId = new SelectList(Repository.GetAllDistricts().Where(d => d.ProvinceId == postViewModel.ProvinceId) , "Id", "Name", postViewModel.DistrictId);
             return View(postViewModel);
         }
 
@@ -506,7 +519,10 @@ namespace RentalHouseFinding.Controllers
                 {
                     questionToCreate.SenderId = model.UserId;
                 }
-                questionToCreate.SenderId = null;
+                else
+                {
+                    questionToCreate.SenderId = null;
+                }
                 questionToCreate.SenderEmail = model.Email;
 
                 _db.Questions.AddObject(questionToCreate);
@@ -520,14 +536,16 @@ namespace RentalHouseFinding.Controllers
                     CommonModel.SendEmail(user.Email, message, "Bạn nhận được 1 câu hỏi", 0);
                 }
 
-                UserLogs log = new UserLogs();
-                log.UserId = user.Id;
-                log.Message = message;
-                log.IsRead = false;
-                log.CreatedDate = DateTime.Now;
-                _db.UserLogs.AddObject(log);
-                _db.SaveChanges();
-
+                if (user != null)
+                {
+                    UserLogs log = new UserLogs();
+                    log.UserId = user.Id;
+                    log.Message = message;
+                    log.IsRead = false;
+                    log.CreatedDate = DateTime.Now;
+                    _db.UserLogs.AddObject(log);
+                    _db.SaveChanges();
+                }
                 return Content("Thông tin đã được gửi đi", "text/html");
             }
             catch

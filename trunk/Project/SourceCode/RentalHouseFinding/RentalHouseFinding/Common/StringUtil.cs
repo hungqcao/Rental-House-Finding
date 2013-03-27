@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text.RegularExpressions;
 using System.Web;
+using System.IO;
 
 namespace RentalHouseFinding.Common
 {
@@ -73,6 +74,12 @@ namespace RentalHouseFinding.Common
 
             return str;
 
+        }
+        public static string RandomStr()
+        {
+            string rStr = Path.GetRandomFileName();
+            rStr = rStr.Replace(".", ""); // For Removing the .
+            return rStr;
         }
     }
 }

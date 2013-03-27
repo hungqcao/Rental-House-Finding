@@ -54,7 +54,7 @@
             select.empty();
             select.append($('<option/>', {
                 value: '',
-                text: '-- Chọn Quận/Huyện --'
+                text: 'Quận/Huyện'
             }));
             $.getJSON("@baseUri.ToString()" + "service/GetDistrictList", { id: idPro },
                 function (myData) {
@@ -77,7 +77,8 @@
                         });
                     });
                 });
-        });
+            });
+
         $("#DistrictId").change(function () {
             var idDis = $("#DistrictId  option:selected").val();
             $.getJSON("@baseUri.ToString()" + "service/GetLatLon", { id: idDis, type: "district" },
@@ -131,6 +132,7 @@
                 });
             }
         });
+        $("#DistrictId").val("@Model.DistrictId");
     }
 
     function loadScript() {
@@ -182,27 +184,26 @@
         });
 
         //For page postback
-//        var idPro = $("#ProvinceId option:selected").val();
-//        var select = $("#DistrictId");
-//        select.empty();
-//        select.append($('<option/>', {
-//            value: '',
-//            text: '-- Chọn Quận/Huyện --'
-//        }));
-//        if (idPro != 0) {
-//            $.getJSON("@baseUri.ToString()" + "service/GetDistrictList", { id: idPro },
-//            function (myData) {
-//                $.each(myData, function (index, itemData) {
-//                    if (itemData.Text.length != 0) {
-//                        select.append($('<option/>', {
-//                            value: itemData.Value,
-//                            text: itemData.Text
-//                        }));
-//                    }
-//                });
-//            });
-//        };
-
+        var idPro = $("#ProvinceId option:selected").val();
+        var select = $("#DistrictId");
+        select.empty();
+        select.append($('<option/>', {
+            value: '',
+            text: 'Quận/Huyện'
+        }));
+        if (idPro != 0) {
+            $.getJSON("@baseUri.ToString()" + "service/GetDistrictList", { id: idPro },
+            function (myData) {
+                $.each(myData, function (index, itemData) {
+                    if (itemData.Text.length != 0) {
+                        select.append($('<option/>', {
+                            value: itemData.Value,
+                            text: itemData.Text
+                        }));
+                    }
+                });
+            });
+        };
     });
 </script>
 <script type = "text/javascript">
@@ -237,9 +238,9 @@
 
 <div id="postnew_wrapper">
 @Html.ValidationSummary(true, "Vui lòng kiểm tra lại thông tin như thông báo bên dưới!", new { style = "color:red" })
-@using (Html.BeginForm("Edit", "Post", FormMethod.Post, new { enctype = "multipart/form-data" }))
+@using (Html.BeginForm("Edit", "PostEdit", FormMethod.Post, new { enctype = "multipart/form-data" }))
 {
-    @Html.HiddenFor(model => model.Id);
+    @Html.HiddenFor(model => model.Id)
     <div class="header">
         <a><img src="@Url.Content("~/Content/images/pnew_thongTinCoBan.png")"/></a>
         <img src="@Url.Content("~/Content/images/pnew_gachNgang.png")" id="separator"/>
@@ -257,7 +258,7 @@
                 <div class="infoElement" style="width:150px">
                     <h2>Loại tin đăng</h2>
                     <div class="clear"></div>
-                    @Html.DropDownListFor(model => model.CategoryId, null, new { @class = "select" })
+                    @Html.DropDownList("CategoryId", null, new { @class = "select" })
                     @Html.ValidationMessageFor(model => model.CategoryId)
                 </div>
                 <div class="infoElement infoTitle">
@@ -277,6 +278,9 @@
                     <h2>Quận huyện</h2>
                     <div class="clear"></div>
                     @Html.DropDownListFor(model => model.DistrictId, null, new { @class = "select city" })
+                    @*@Html.DropDownListFor(model => model.DistrictId,
+                        new SelectList(Enumerable.Empty<SelectListItem>(), "Id", "Name"), "Chọn Quận/Huyện",
+                        new { id = "DistrictId", @class = "select city" })*@
                     @Html.ValidationMessageFor(model => model.DistrictId)
                 </div>
                 <div class="clear"></div>
@@ -347,7 +351,7 @@
                 <div class="infoElement" style="height:auto;">
                     <h2>Ghi chú</h2>
                     <div class="clear"></div>
-                    @Html.TextAreaFor(model => model.Description, new { @cols = "15", @rows = "2" })
+                    @Html.TextAreaFor(model => model.Description, new { @cols="15", @rows="2"} )
                 </div>
                 <div class="clear"></div>
             </div>
@@ -473,6 +477,7 @@
                 </div>
                 <div class="clear"></div>
             </div>
+        <a href="@Url.Content("~/postedit/detele")" id="btnDelete">Xóa</a>
         <input id="btnSaveInfo" type="submit" value=""/>
         <div class="clear"></div>
     </div>

@@ -177,26 +177,26 @@
         });
 
         //For page postback
-        var idPro = $("#ProvinceId option:selected").val();
-        var select = $("#DistrictId");
-        select.empty();
-        select.append($('<option/>', {
-            value: '',
-            text: '-- Chọn Quận/Huyện --'
-        }));
-        if (idPro != 0) {
-            $.getJSON("@baseUri.ToString()" + "service/GetDistrictList", { id: idPro },
-            function (myData) {
-                $.each(myData, function (index, itemData) {
-                    if (itemData.Text.length != 0) {
-                        select.append($('<option/>', {
-                            value: itemData.Value,
-                            text: itemData.Text
-                        }));
-                    }
-                });
-            });
-        };
+//        var idPro = $("#ProvinceId option:selected").val();
+//        var select = $("#DistrictId");
+//        select.empty();
+//        select.append($('<option/>', {
+//            value: '',
+//            text: '-- Chọn Quận/Huyện --'
+//        }));
+//        if (idPro != 0) {
+//            $.getJSON("@baseUri.ToString()" + "service/GetDistrictList", { id: idPro },
+//            function (myData) {
+//                $.each(myData, function (index, itemData) {
+//                    if (itemData.Text.length != 0) {
+//                        select.append($('<option/>', {
+//                            value: itemData.Value,
+//                            text: itemData.Text
+//                        }));
+//                    }
+//                });
+//            });
+//        };
 
     });
 </script>
@@ -251,7 +251,7 @@
                 <div class="infoElement" style="width:150px">
                     <h2>Loại tin đăng</h2>
                     <div class="clear"></div>
-                    @Html.DropDownListFor(model => model.CategoryId, (IEnumerable<SelectListItem>)ViewBag.CategoryId, new { @class = "select" })
+                    @Html.DropDownListFor(model => model.CategoryId, null, new { @class = "select" })
                     @Html.ValidationMessageFor(model => model.CategoryId)
                 </div>
                 <div class="infoElement infoTitle">
@@ -264,14 +264,13 @@
                 <div class="infoElement">
                     <h2>Tỉnh, thành phố</h2>
                     <div class="clear"></div>
-                    @Html.DropDownListFor(model => model.ProvinceId, (IEnumerable<SelectListItem>)ViewBag.ProvinceId, new { @class = "select city" })
+                    @Html.DropDownListFor(model => model.ProvinceId, null, new { @class = "select city" })
                     @Html.ValidationMessageFor(model => model.ProvinceId)
                 </div>
                 <div class="infoElement">
                     <h2>Quận huyện</h2>
                     <div class="clear"></div>
-                    @Html.DropDownListFor(model => model.DistrictId,
-                        new SelectList(Enumerable.Empty<SelectListItem>(), "Id", "Name"), "Chọn Quận/Huyện",
+                    @Html.DropDownListFor(model => model.DistrictId, null,
                         new { id = "DistrictId", @class = "select city" })
                     @Html.ValidationMessageFor(model => model.DistrictId)
                 </div>

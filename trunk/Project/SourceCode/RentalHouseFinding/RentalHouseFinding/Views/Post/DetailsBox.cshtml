@@ -209,14 +209,29 @@
                 <div class="clear"></div>
                 <div class="title"><div class="plusBtn"></div>HỎI ĐÁP</div>
                 <div id="Question">
-                    @if (!Model.CreatedBy.Equals(User.Identity.Name, StringComparison.CurrentCultureIgnoreCase))
+                    @if (!string.IsNullOrEmpty(Model.CreatedBy))
+                    {
+                        if (!Model.CreatedBy.Equals(User.Identity.Name, StringComparison.CurrentCultureIgnoreCase) || string.IsNullOrEmpty(User.Identity.Name))
+                        {
+                            @Html.Partial("_Question", new RentalHouseFinding.Models.QuestionViewModel())
+                        }
+                        else if (User.Identity.IsAuthenticated)
+                        {
+                            <text>Đây là bài viết của bạn ^^</text>
+                        }
+                    }
+                    else
+                    {
+                        <text>Người đăng không cung cấp thông tin để liên lạc</text>
+                    }
+                    @*@if (!Model.CreatedBy.Equals(User.Identity.Name, StringComparison.CurrentCultureIgnoreCase) || string.IsNullOrEmpty(User.Identity.Name))
                     {
                         @Html.Partial("_Question", new RentalHouseFinding.Models.QuestionViewModel(), new ViewDataDictionary { { "userId", Model.UserId } })
                     }
                     else if (User.Identity.IsAuthenticated)
                     {
                         <text>Đây là bài viết của bạn ^^</text>
-                    }
+                    }*@
                 </div>
         </div>
         <div class="clear"></div>
@@ -267,7 +282,7 @@
                 }
                 else if (ViewBag.RemoveFavorite == true)
                 {
-                    <div id="favorite" onclick="removeFavorite();" class="withOutLogin"><img src="@Url.Content("~/Content/images/triangle_fav.png")"/></div>
+                    <div id="favorite" onclick="removeFavorite();" class="withOutLogin"><img src="@Url.Content("~/Content/images/favorite_actived.png")"/></div>
                        
                 }
                 if (!User.Identity.IsAuthenticated)
