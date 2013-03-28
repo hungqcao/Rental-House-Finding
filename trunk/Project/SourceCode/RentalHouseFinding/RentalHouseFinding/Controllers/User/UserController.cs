@@ -154,6 +154,7 @@ namespace RentalHouseFinding.Controllers
                 p.CreatedDate,
                 p.EditedDate,
                 p.RenewDate,
+                p.ExpiredDate,
                 PostStatus = (from stt in _db.PostStatuses
                               where (stt.Id == p.StatusId)
                               select stt.Name).FirstOrDefault()
