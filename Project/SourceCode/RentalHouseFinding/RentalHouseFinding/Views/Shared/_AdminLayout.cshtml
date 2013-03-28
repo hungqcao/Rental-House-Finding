@@ -15,11 +15,11 @@
     <script src="@Url.Content("~/Content/js/jquery.screwdefaultbuttonsV2.min.js")" type="text/javascript"></script>
     <script type="text/javascript">
         $(function () {
-            $('input:checkbox').screwDefaultButtons({
-                image: 'url(@Url.Content("~/Content/images/index_cbx.png)")',
-                width: 17,
-                height: 17
-            });
+//            $('input:checkbox').screwDefaultButtons({
+//                image: 'url(@Url.Content("~/Content/images/index_cbx.png)")',
+//                width: 17,
+//                height: 17
+//            });
             $('#header_panel').show();
             $("a.close").click(function () {
                 $(this).parent().fadeOut();
@@ -45,14 +45,13 @@
                 <li>@Html.ActionLink("Manage Posts", "Index", "ManagePosts")</li>
                 <li>@Html.ActionLink("Manage categories", "Index", "ManageCategories")</li>
                 <li>@Html.ActionLink("Manage roles", "Index", "ManageRoles")</li>
-                <li class='active has-sub'><a href="#">Manage locations</a>
+                <li class='has-sub'><a href="#">Manage locations</a>
                     <ul>
                         <li>@Html.ActionLink("View all city", "Index", "ManageProvinces")</li>
                         <li>@Html.ActionLink("View all district", "Index", "ManageDistrict")</li>
                     </ul>
                 </li>
-                <li>@Html.ActionLink("Manage moderators", "Index", "Moderator")</li>
-                <li class='active has-sub'><a href="#">Manage bad words</a>
+                <li class='has-sub'><a href="#">Manage bad words</a>
                     <ul>
                         <li>@Html.ActionLink("Badword types", "Index", "ManageBadwordType")</li>
                         <li>@Html.ActionLink("Badword", "Index", "ManageBadword")</li>

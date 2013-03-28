@@ -1,142 +1,29 @@
-﻿@model IEnumerable<RentalHouseFinding.Models.Posts>
-
-@{
+﻿@{
     ViewBag.Title = "Index";
     Layout = "~/Views/Shared/_AdminLayout.cshtml";
 }
 
-<h2>Index</h2>
-
-<p>
-    @Html.ActionLink("Create New", "Create")
-</p>
-<table>
-    <tr>
-        <th>
-            Title
-        </th>
-        <th>
-            Category
-        </th>
-        <th>
-            PostStatus
-        </th>
-        <th>
-            IsDeleted
-        </th>
-        <th>
-            Views
-        </th>
-        <th>
-            CreatedDate
-        </th>
-        <th>
-            EditedDate
-        </th>
-        <th>
-            RenewDate
-        </th>
-        <th>
-            District
-        </th>
-        <th>
-            NumberAddress
-        </th>
-        <th>
-            Price
-        </th>
-        <th>
-            Area
-        </th>
-        <th>
-            PhoneActive
-        </th>
-        <th>
-            Description
-        </th>
-        <th>
-            Lat
-        </th>
-        <th>
-            Lon
-        </th>
-        <th>
-            User
-        </th>
-        <th>
-            Street
-        </th>
-        <th>
-            NearbyPlace
-        </th>
-        <th></th>
-    </tr>
-
-@foreach (var item in Model) {
-    <tr>
-        <td>
-            @Html.DisplayFor(modelItem => item.Title)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.Category.Name)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.PostStatus.Name)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.IsDeleted)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.Views)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.CreatedDate)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.EditedDate)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.RenewDate)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.District.Name)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.NumberAddress)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.Price)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.Area)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.PhoneActive)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.Description)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.Lat)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.Lon)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.User.Username)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.Street)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.NearbyPlace)
-        </td>
-        <td>
-            @Html.ActionLink("Edit", "Edit", new { id=item.Id }) |
-            @Html.ActionLink("Details", "Details", new { id=item.Id }) |
-            @Html.ActionLink("Delete", "Delete", new { id=item.Id })
-        </td>
-    </tr>
+<div id="container-grid">
+@{
+    if (ViewBag.Grid != null && ViewBag.Grid.TotalRowCount > 0)
+    {
+        WebGrid grid = ViewBag.Grid;
+        @grid.GetHtml(tableStyle: "webGrid", mode: WebGridPagerModes.All,
+                            headerStyle: "header",
+                            alternatingRowStyle: "alt",
+                            htmlAttributes: new { id = "grid" },
+                            columns: grid.Columns(
+                                grid.Column("ID", "Id"),
+                                     grid.Column("UserId", "User Id"),
+                                     grid.Column(header:"Title", format: @<text>
+                                             <a href="@Url.Action("Details", 
+                                             "Post", 
+                                             new { id = @item.ID })">@item.Title</a></text>),
+                                    grid.Column("PostStatus", "Post Status"),
+                                    grid.Column("CreatedDate", "Created Date")));
+    }
+    else
+    {
+        <h2>Không có bài post vi phạm</h2>
+    }
 }
-
-</table>
