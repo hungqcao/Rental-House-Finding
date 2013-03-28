@@ -21,7 +21,10 @@
                     alternatingRowStyle: "alt",
                     htmlAttributes: new { id = "grid" },
                     columns: grid.Columns(
-                                grid.Column("Name", "Name"),
+                    grid.Column(header: "Name", format: @<text>
+                                             <a href="@Url.Action("Edit", 
+                                             "ManageDistrict", 
+                                             new { id = @item.ID })">@item.Name</a></text>),
                                 grid.Column("Lat", "Lat"),
                                 grid.Column("Lon", "Lon"),
                                 grid.Column("Province.Name", "Province")
