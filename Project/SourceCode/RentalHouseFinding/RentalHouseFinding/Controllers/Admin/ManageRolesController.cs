@@ -22,15 +22,6 @@ namespace RentalHouseFinding.Controllers
         }
 
         //
-        // GET: /ManageRoles/Details/5
-        [Authorize(Roles = "Admin")]
-        public ViewResult Details(int id)
-        {
-            Roles roles = db.Roles.Single(r => r.Id == id);
-            return View(roles);
-        }
-
-        //
         // GET: /ManageRoles/Create
         [Authorize(Roles = "Admin")]
         public ActionResult Create()
@@ -77,27 +68,6 @@ namespace RentalHouseFinding.Controllers
                 return RedirectToAction("Index");
             }
             return View(roles);
-        }
-
-        //
-        // GET: /ManageRoles/Delete/5
-        [Authorize(Roles = "Admin")]
-        public ActionResult Delete(int id)
-        {
-            Roles roles = db.Roles.Single(r => r.Id == id);
-            return View(roles);
-        }
-
-        //
-        // POST: /ManageRoles/Delete/5
-        [Authorize(Roles = "Admin")]
-        [HttpPost, ActionName("Delete")]
-        public ActionResult DeleteConfirmed(int id)
-        {            
-            Roles roles = db.Roles.Single(r => r.Id == id);
-            db.Roles.DeleteObject(roles);
-            db.SaveChanges();
-            return RedirectToAction("Index");
         }
 
         protected override void Dispose(bool disposing)

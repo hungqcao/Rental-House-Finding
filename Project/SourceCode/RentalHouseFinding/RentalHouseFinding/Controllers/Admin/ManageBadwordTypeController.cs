@@ -22,15 +22,6 @@ namespace RentalHouseFinding.Controllers.Admin
         }
 
         //
-        // GET: /ManageBadwordType/Details/5
-        [Authorize(Roles = "Admin")]
-        public ViewResult Details(int id)
-        {
-            BadWordTypes badwordtypes = db.BadWordTypes.Single(b => b.Id == id);
-            return View(badwordtypes);
-        }
-
-        //
         // GET: /ManageBadwordType/Create
         [Authorize(Roles = "Admin")]
         public ActionResult Create()
@@ -77,27 +68,6 @@ namespace RentalHouseFinding.Controllers.Admin
                 return RedirectToAction("Index");
             }
             return View(badwordtypes);
-        }
-
-        //
-        // GET: /ManageBadwordType/Delete/5
-        [Authorize(Roles = "Admin")]
-        public ActionResult Delete(int id)
-        {
-            BadWordTypes badwordtypes = db.BadWordTypes.Single(b => b.Id == id);
-            return View(badwordtypes);
-        }
-
-        //
-        // POST: /ManageBadwordType/Delete/5
-        [Authorize(Roles = "Admin")]
-        [HttpPost, ActionName("Delete")]
-        public ActionResult DeleteConfirmed(int id)
-        {            
-            BadWordTypes badwordtypes = db.BadWordTypes.Single(b => b.Id == id);
-            db.BadWordTypes.DeleteObject(badwordtypes);
-            db.SaveChanges();
-            return RedirectToAction("Index");
         }
 
         protected override void Dispose(bool disposing)

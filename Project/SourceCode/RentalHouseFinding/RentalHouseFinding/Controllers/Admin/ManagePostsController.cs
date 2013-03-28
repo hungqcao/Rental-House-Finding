@@ -57,6 +57,10 @@ namespace RentalHouseFinding.Controllers.Admin
             ViewBag.Districts = new SelectList(_db.Districts, "Id", "Name", form["DistrictId"]);
             ViewBag.Users = new SelectList(_db.Users, "Id", "Username", form["UserId"]);
 
+            TempData["DistrictId"] = null;
+            TempData["UserId"] = null;
+            TempData["ProvinceId"] = null;
+            TempData["ExpireDate"] = null;
 
             var filters = new Hashtable();
             filters.Add("DistrictId", form["DistrictId"]);
@@ -74,7 +78,7 @@ namespace RentalHouseFinding.Controllers.Admin
             IQueryable<Posts> postList = _db.Posts;
             if (filters["DistrictId"] != null)
             {
-                if (filters["DistrictId"] != "")
+                if (filters["DistrictId"].ToString() != "")
                 {
                     int districtId = Convert.ToInt32(filters["DistrictId"]);
                     if (districtId > 0)
@@ -86,7 +90,7 @@ namespace RentalHouseFinding.Controllers.Admin
             }
             if (filters["UserId"] != null)
             {
-                if (filters["UserId"] != "")
+                if (filters["UserId"].ToString() != "")
                 {
                     int userId = Convert.ToInt32(filters["UserId"]);
                     if (userId > 0)
@@ -98,7 +102,7 @@ namespace RentalHouseFinding.Controllers.Admin
             }
             if (filters["ProvinceId"] != null && (filters["DistrictId"] == null || filters["DistrictId"].ToString() == "0"))
             {
-                if (filters["ProvinceId"] != "")
+                if (filters["ProvinceId"].ToString() != "")
                 {
                     int provinceId = Convert.ToInt32(filters["ProvinceId"]);
                     if (provinceId > 0)

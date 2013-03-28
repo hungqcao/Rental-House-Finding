@@ -16,10 +16,41 @@ namespace RentalHouseFinding.Controllers.Admin
         //
         // GET: /ManageDistrict/
         [Authorize(Roles = "Admin")]
-        public ViewResult Index()
+        public ViewResult Index(int? provinceId)
         {
-            var districts = db.Districts.Include("Province");
-            return View(districts.ToList());
+            if (provinceId == null)
+            {
+                ViewBag.Provinces = new SelectList(db.Provinces, "Id", "Name");
+                var districts = db.Districts.Include("Province");
+                return View(districts.ToList());
+            }
+            else
+            {
+                ViewBag.Provinces = new SelectList(db.Provinces, "Id", "Name", provinceId);
+                var districts = db.Districts.Where(d => d.ProvinceId == provinceId).Include("Province");
+                return View(districts.ToList());
+            }
+        }
+
+        //
+        // POST: /ManageDistrict/
+        [Authorize(Roles = "Admin")]
+        [HttpPost]
+        public ViewResult Index(FormCollection form)
+        {
+            if (form["provinceId"] == null)
+            {
+                ViewBag.Provinces = new SelectList(db.Provinces, "Id", "Name");
+                var districts = db.Districts.Include("Province");
+                return View(districts.ToList());
+            }
+            else
+            {
+                int provinceId = Convert.ToInt32(form["provinceId"]);
+                ViewBag.Provinces = new SelectList(db.Provinces, "Id", "Name", provinceId);
+                var districts = db.Districts.Where(d => d.ProvinceId == provinceId).Include("Province");
+                return View(districts.ToList());
+            }
         }
 
         //
