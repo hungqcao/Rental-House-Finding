@@ -22,15 +22,6 @@ namespace RentalHouseFinding.Controllers
         }
 
         //
-        // GET: /ManagePostStatus/Details/5
-        [Authorize(Roles = "Admin")]
-        public ViewResult Details(int id)
-        {
-            PostStatuses poststatuses = db.PostStatuses.Single(p => p.Id == id);
-            return View(poststatuses);
-        }
-
-        //
         // GET: /ManagePostStatus/Create
         [Authorize(Roles = "Admin")]
         public ActionResult Create()
@@ -77,27 +68,6 @@ namespace RentalHouseFinding.Controllers
                 return RedirectToAction("Index");
             }
             return View(poststatuses);
-        }
-
-        //
-        // GET: /ManagePostStatus/Delete/5
-        [Authorize(Roles = "Admin")]
-        public ActionResult Delete(int id)
-        {
-            PostStatuses poststatuses = db.PostStatuses.Single(p => p.Id == id);
-            return View(poststatuses);
-        }
-
-        //
-        // POST: /ManagePostStatus/Delete/5
-        [Authorize(Roles = "Admin")]
-        [HttpPost, ActionName("Delete")]
-        public ActionResult DeleteConfirmed(int id)
-        {            
-            PostStatuses poststatuses = db.PostStatuses.Single(p => p.Id == id);
-            db.PostStatuses.DeleteObject(poststatuses);
-            db.SaveChanges();
-            return RedirectToAction("Index");
         }
 
         protected override void Dispose(bool disposing)
