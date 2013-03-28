@@ -23,6 +23,7 @@
     <link href="@Url.Content("~/Content/fancybox/jquery.fancybox-1.3.4.css")" rel="stylesheet" type="text/css" />
 
     <script type="text/javascript">
+        window.ROOT = '@Url.Content("~/")';
         $(function () {
             $('input:checkbox').screwDefaultButtons({
                 image: 'url(@Url.Content("~/Content/images/index_cbx.png)")',
