@@ -56,6 +56,7 @@
                 value: '',
                 text: 'Quận/Huyện'
             }));
+            select.next().text('Quận/Huyện');
             $.getJSON("@baseUri.ToString()" + "service/GetDistrictList", { id: idPro },
                 function (myData) {
                     $.each(myData, function (index, itemData) {
@@ -364,9 +365,11 @@
                     <div id="mapContainer" style="width:372px;height:340px;"></div>
                         <div class="editor-field">
                             @Html.HiddenFor(model => model.Lat)
+                            @Html.ValidationMessageFor(model => model.Lat)
                         </div>
                         <div class="editor-field">
                             @Html.HiddenFor(model => model.Lon)
+                            @Html.ValidationMessageFor(model => model.Lon)
                         </div>
                     </div>
                 <h2>Ảnh, video minh hoạ</h2>
