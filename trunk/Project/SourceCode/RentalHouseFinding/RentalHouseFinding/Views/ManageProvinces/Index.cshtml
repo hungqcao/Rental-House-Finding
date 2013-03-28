@@ -4,11 +4,6 @@
     ViewBag.Title = "Index"; Layout = "~/Views/Shared/_AdminLayout.cshtml";
 }
 
-<h2>Index</h2>
-
-<p>
-    @Html.ActionLink("Create New", "Create")
-</p>
 <table>
     <tr>
         <th>
@@ -20,16 +15,12 @@
         <th>
             Lon
         </th>
-        <th>
-            IsDeleted
-        </th>
-        <th></th>
     </tr>
 
 @foreach (var item in Model) {
     <tr>
         <td>
-            @Html.DisplayFor(modelItem => item.Name)
+            @Html.ActionLink(item.Name, "Edit", new { id=item.Id })
         </td>
         <td>
             @Html.DisplayFor(modelItem => item.Lat)
@@ -38,14 +29,13 @@
             @Html.DisplayFor(modelItem => item.Lon)
         </td>
         <td>
-            @Html.DisplayFor(modelItem => item.IsDeleted)
-        </td>
-        <td>
-            @Html.ActionLink("Edit", "Edit", new { id=item.Id }) |
-            @Html.ActionLink("Details", "Details", new { id=item.Id }) |
-            @Html.ActionLink("Delete", "Delete", new { id=item.Id })
+            @Html.ActionLink("Quận/Huyện", "Index", "ManageDistrict", new { provinceId = item.Id}, null)
         </td>
     </tr>
 }
 
 </table>
+<br/>
+<p>
+    @Html.ActionLink("Create New", "Create")
+</p>
