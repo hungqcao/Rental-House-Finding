@@ -118,8 +118,8 @@
                         else {
                             marker.setPosition(results[0].geometry.location);
                         }
-                        $('#Lat').val(results[0].geometry.location.kb);
-                        $('#Lon').val(results[0].geometry.location.lb);
+                        $('#Lat').val(results[0].geometry.location.lat());
+                        $('#Lon').val(results[0].geometry.location.lng());
                         google.maps.event.addListener(marker, 'dragend', function (event) {
                             $('#Lat').val(event.latLng.lat());
                             $('#Lon').val(event.latLng.lng());
