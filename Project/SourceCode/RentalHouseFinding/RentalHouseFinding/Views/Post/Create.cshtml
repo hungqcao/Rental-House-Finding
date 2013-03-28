@@ -49,8 +49,9 @@
           select.empty();
           select.append($('<option/>', {
               value: '',
-              text: '-- Chọn Quận/Huyện --'
+              text: 'Chọn Quận/Huyện'
           }));
+          select.next().text('Quận/Huyện');
           $.getJSON("@baseUri.ToString()" + "service/GetDistrictList", { id: idPro },
                 function (myData) {
                     $.each(myData, function (index, itemData) {
