@@ -1250,9 +1250,9 @@ label {
     position: relative;
 }
 .pnew1 .pnRight .btnPlus {
-    background: url("../../Content/images/pnew_greenPlusBtn.png") no-repeat transparent center center;
-    width: 135px;
-    height: 135px;
+    height: 260px;
+    overflow: auto;
+    width: 392px;
 }
 #postnew_wrapper .pnew1 .pnLeft {    
     position: relative;
@@ -1926,4 +1926,48 @@ table th {
 #blockBtnRegis #tbxCapcha span.field-validation-error
 {
     padding: 0px;
+}
+
+.removeImage
+{
+    background: url("../../Content/images/pnew_greenPlusBtn.png") no-repeat transparent center center;
+    display: block;
+    height: 35px;
+    width: 45px;
+    position: absolute;
+    right: 0px;
+    top: 0px;
+    font-size: 0px;
+}
+.addImage
+{
+    background: url("../../Content/images/pnew_greenPlusBtn.png") no-repeat transparent center center;
+    display: block;
+    height: 35px;
+    width: 45px;
+    position: absolute;
+    right: 0px;
+    top: 0px;
+    font-size: 0px;
+}
+#uploadFile, .uploadItem
+{
+    position:relative;
+    margin-top: 10px;
+}
+ul {
+    list-style: none outside none;
+}
+#imageList img
+{
+    margin: 5px;
+}
+#imageList img.delete
+{
+    background: url("../../Content/images/bg_transparent.png") repeat scroll 0 0 transparent;
+    cursor: pointer;
+    height: 9px;
+    padding: 1px;
+    position: absolute;
+    width: 9px;
 }

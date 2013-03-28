@@ -201,34 +201,6 @@
 
     });
 </script>
-<script type = "text/javascript">
-    var cellTemplates = new Array();
-    cellTemplates[0] = '<fieldset id="field{counter}"><label>Chọn ảnh: </label>';
-    cellTemplates[1] = '<input id="image{counter}" name="images" type="file" />';
-    cellTemplates[2] = '<a href="#" id="lnkRemoveFile{counter}" onclick="return removeFile(this);">Xóa</a></fieldset>';
-    var counter = 0;
-
-    //adds a file input row
-    function addFile(description) {
-        //increment counter
-        counter++;
-        var html = "";
-        for (var i = 0; i < cellTemplates.length; i++) {
-
-            //format the cell template text
-            html += cellTemplates[i].replace(/\{counter\}/g, counter).replace(/\{value\}/g,
-                    (description == null) ? '' : description);
-        }
-        $("#uploadFile").append(html);
-    }
-    //removes a file input row
-    function removeFile(obj) {
-        $('html, body').animate({
-            scrollTop: $("#uploadFile").offset().top
-        }, 500);
-        $(obj).parent().remove();
-    }
-   </script>
 <div id="postnew_wrapper">
 @Html.ValidationSummary(true, "Vui lòng kiểm tra lại thông tin như thông báo bên dưới!", new { style = "color:red" })
 @using (Html.BeginForm("create", "post", FormMethod.Post, new { enctype = "multipart/form-data" }))
@@ -367,7 +339,7 @@
                     <div id="uploadFile">
                         <label>Chọn ảnh: </label>
                         <input id="file0" name="images" type="file" />
-                        <a href="javascript:;" onclick="return addFile();" >Thêm ảnh</a>
+                        <a href="javascript:;" onclick="return addFile();" class="addImage">Thêm ảnh</a>
                     </div>
                 </div>
             </div>

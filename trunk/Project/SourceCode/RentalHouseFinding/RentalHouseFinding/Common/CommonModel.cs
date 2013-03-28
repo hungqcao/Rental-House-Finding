@@ -143,6 +143,26 @@ namespace RentalHouseFinding.Common
             return post;
         }
 
+        public static Dictionary<int, string> GetDictionaryNearybyPlace(int postId)
+        {
+            Dictionary<int, string> dictReturn = new System.Collections.Generic.Dictionary<int, string>();
+            using(RentalHouseFindingEntities db = new RentalHouseFindingEntities())
+            {
+                var lstNearyBy = db.PostLocations.Where(p => p.PostId == postId).ToList();
+                foreach (var item in lstNearyBy)
+                {
+                    try
+                    {
+                        dictReturn.Add(item.LocationId, item.Location.Name);
+                    }
+                    catch
+                    {
+                    }
+                }
+            }
+            return dictReturn;
+        }
+
         public static PostViewModel ConvertPostToPostViewModel(Posts model)
         {
             string createBy = model.UserId == null ? string.Empty : model.User.Username;
@@ -198,7 +218,8 @@ namespace RentalHouseFinding.Common
                 StayWithOwner = model.Facilities.IsStayWithOwner ? "Có" : "Không",
                 UserId = model.UserId,
                 NameContact = model.Contacts.NameContact,
-                NearByPlace = model.NearbyPlace
+                NearByPlace = model.NearbyPlace,
+                lstNearByPlace = GetDictionaryNearybyPlace(model.Id)
             };
         }
 

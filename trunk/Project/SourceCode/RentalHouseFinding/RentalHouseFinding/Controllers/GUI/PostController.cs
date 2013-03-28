@@ -8,11 +8,15 @@ using RentalHouseFinding.Common;
 using System.Data;
 using System.IO;
 using RentalHouseFinding.Caching;
+using log4net;
+using System.Reflection;
 
 namespace RentalHouseFinding.Controllers
 {
     public class PostController : Controller
     {
+        private readonly ILog log = LogManager.GetLogger(MethodBase.GetCurrentMethod().DeclaringType);
+
         RentalHouseFindingEntities _db = new RentalHouseFindingEntities();
 
         public ICacheRepository Repository { get; set; }
@@ -251,6 +255,7 @@ namespace RentalHouseFinding.Controllers
                 catch (Exception ex)
                 {
                     ModelState.AddModelError("", ex.InnerException);
+                    
                 }
             }
             ViewBag.CategoryId = new SelectList(Repository.GetAllCategories(), "Id", "Name", model.CategoryId);
@@ -272,16 +277,46 @@ namespace RentalHouseFinding.Controllers
             {
                 return RedirectToAction("Index", "Landing");
             }
-            //Get images
-            var images = (from i in _db.PostImages where (i.PostId == postModel.Id && !i.IsDeleted) select i);
-            if (images != null)
-            {
-                ViewBag.Images = images.ToList();
-            }
             ViewBag.CategoryId = new SelectList(Repository.GetAllCategories(), "Id", "Name", postModel.CategoryId);
             ViewBag.ProvinceId = new SelectList(Repository.GetAllProvinces(), "Id", "Name", postModel.District.ProvinceId);
             ViewBag.DistrictId = new SelectList(Repository.GetAllDistricts().Where(d=>d.ProvinceId == postModel.District.ProvinceId), "Id", "Name", postModel.DistrictId);
             return View(CommonModel.ConvertPostToPostViewModel(postModel));
+        }
+
+        [Authorize(Roles = "User, Admin")]
+        public bool DeleteImage(int id, int postId)
+        {
+            try
+            {
+                var post = _db.Posts.Where(p=>p.Id == postId).FirstOrDefault();
+                int userId = CommonModel.GetUserIdByUsername(User.Identity.Name);
+                if(post.UserId == userId)
+                {
+                    var postImage = _db.PostImages.Where(p => p.Id == id).FirstOrDefault();
+                    postImage.IsDeleted = true;
+
+                    _db.ObjectStateManager.ChangeObjectState(postImage, System.Data.EntityState.Modified);
+                    _db.SaveChanges();
+                    return true;
+                }
+                return false;
+            }
+            catch (Exception ex)
+            {
+                log.Error(ex.Message);
+                return false;
+            }
+        }
+
+        public ActionResult ViewImage(int id)
+        {
+            //Get images
+            var images = (from i in _db.PostImages where (i.PostId == id && !i.IsDeleted) select i);
+            if (images != null)
+            {
+                ViewBag.Images = images.ToList();
+            }
+            return View();
         }
 
         //
@@ -305,6 +340,31 @@ namespace RentalHouseFinding.Controllers
                         TempData["MessageSuccessEdit"] = "Bài đăng có chứa những từ không cho phép, chúng tôi sẽ duyệt trước khi đăng lên hệ thống";
                     }
                     post = CommonModel.ConvertPostViewModelToPost(post, postViewModel, post.CreatedDate, DateTime.Now, DateTime.Now);
+                    
+
+                    Dictionary<int, string> lstNearbyId = GetListNearbyLocations(postViewModel);
+                    PostLocations postLocation;
+                    string nearbyPlace = string.Empty;
+                    Locations loc = null;
+                    foreach (KeyValuePair<int, string> kvp in lstNearbyId)
+                    {
+                        loc = _db.Locations.Where(l => l.Id == kvp.Key).FirstOrDefault();
+                        if (loc == null)
+                        {
+                            postLocation = new PostLocations();
+                            postLocation.PostId = post.Id;
+                            postLocation.LocationId = kvp.Key;
+                            _db.PostLocations.AddObject(postLocation);
+                            _db.SaveChanges();
+                        }
+                        nearbyPlace += kvp.Value + ", ";
+                    }
+                    if (!string.IsNullOrEmpty(nearbyPlace))
+                    {
+                        nearbyPlace = nearbyPlace.Remove(nearbyPlace.Length - 2);
+                        post.NearbyPlace = nearbyPlace;
+                    }
+
                     _db.ObjectStateManager.ChangeObjectState(post, EntityState.Modified);
                     _db.SaveChanges();
 
@@ -385,25 +445,30 @@ namespace RentalHouseFinding.Controllers
                 Locations location;
                 for (int i = 0; i < Request.Form.Keys.Count; i++)
                 {
-                    if (Request.Form.Keys[i].Contains("idNearby"))
+                    if (Request.Form.Keys[i].Contains("tag["))
                     {
-                        int.TryParse(Request.Form.Keys[i].Split(':')[1], out id);
-                        if (id == -1)
+                        if (Request.Form.Keys[i].Equals("tag[]", StringComparison.CurrentCultureIgnoreCase))
                         {
-                            if(!string.IsNullOrEmpty(Request.Form.Keys[i].Split(':')[2].Trim()))
+                            string[] lstValue = Request.Form[i].Trim().Split(',');
+                            foreach (string item in lstValue)
                             {
-                                location = new Locations();
-                                location.DistrictId = model.DistrictId;
-                                //1 for Create by User
-                                location.LocationTypeId = 1;
-                                location.Name = Request.Form.Keys[i].Split(':')[2];
-                                _db.Locations.AddObject(location);
-                                _db.SaveChanges();
-                                lstReturn.Add(location.Id, location.Name);
+                                if (!string.IsNullOrEmpty(item))
+                                {
+                                    location = new Locations();
+                                    location.DistrictId = model.DistrictId;
+                                    //1 for Create by User
+                                    location.LocationTypeId = 1;
+                                    location.Name = item;
+                                    _db.Locations.AddObject(location);
+                                    _db.SaveChanges();
+                                    lstReturn.Add(location.Id, location.Name);
+                                }
                             }
                         }
                         else
                         {
+                            string idValue = Request.Form.Keys[i].Split('-')[0].Split('[')[1];
+                            int.TryParse(idValue, out id);
                             lstReturn.Add(id, Request.Form[i].Trim());
                         }
                     }
