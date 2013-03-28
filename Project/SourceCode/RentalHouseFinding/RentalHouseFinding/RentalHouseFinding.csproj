@@ -524,6 +524,7 @@
     <Content Include="Scripts\2012.1.419\telerik.treeview.min.js" />
     <Content Include="Scripts\2012.1.419\telerik.upload.min.js" />
     <Content Include="Scripts\2012.1.419\telerik.window.min.js" />
+    <Content Include="Scripts\AddOrRemoveInputFile.js" />
     <Content Include="Scripts\advSearch.js" />
     <Content Include="Scripts\DDLScripts.js" />
     <Content Include="Scripts\details_post.js" />
@@ -807,6 +808,9 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="Views\PostEdit\Edit.cshtml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Views\Post\ViewImage.cshtml" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <Import Project="$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v10.0\WebApplications\Microsoft.WebApplication.targets" />

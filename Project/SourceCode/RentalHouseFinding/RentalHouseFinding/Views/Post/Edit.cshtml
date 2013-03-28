@@ -14,6 +14,49 @@
 <script src="@Url.Content("~/Content/js/jquery.screwdefaultbuttonsV2.min.js")" type="text/javascript"></script>
 
 <script type="text/javascript">
+    function deleteGallery(obj) {
+        if (confirm("Bạn có muốn xóa ảnh này không?")) {
+            $.ajax({
+                url: ROOT + 'post/DeleteImage',
+                contentType: 'application/html; charset=utf-8',
+                type: 'GET',
+                dataType: 'html',
+                data: {
+                    id: obj.attr("id"),
+                    postId: '@Model.Id'
+                }
+            })
+            .success(function (result) {
+                if (result) {
+                    alert('Xóa thành công!');
+                    LoadGallery();
+                } else {
+                    alert('Bạn không thể thực hiện thao tác này');
+                }
+            })
+            .error(function (xhr, status) {
+                xhr.abort();
+            });
+        }
+    }
+
+    function LoadGallery() {
+        $.ajax({
+            url: ROOT + 'post/ViewImage',
+            contentType: 'application/html; charset=utf-8',
+            type: 'GET',
+            dataType: 'html',
+            data: {
+                id: '@Model.Id'
+            }
+        })
+        .success(function (result) {
+            $("#imageList").html(result);
+        })
+        .error(function (xhr, status) {
+            xhr.abort();
+        });
+    }
     function initialize() {
         var mapOptions = {
             zoom: 16,
@@ -146,20 +189,7 @@
 </script>
 <script type="text/javascript">
     $(document).ready(function () {
-        //        var map;
-        //        var mapProp = {
-        //            center: new google.maps.LatLng(21.04349121680354, 105.523681640625),
-        //            zoom: 8,
-        //            mapTypeId: google.maps.MapTypeId.ROADMAP
-        //        };
-        //        map = new google.maps.Map(document.getElementById("mapContainer"), mapProp);
-
-        //        $('input:checkbox').screwDefaultButtons({
-        //            image: "url(@Url.Content("~/Content/images/index_cbx.png)")",
-        //            width: 17,
-        //            height: 17
-        //        });
-
+        LoadGallery();
         //For tag input
         var source;
         $.getJSON("@baseUri.ToString()" + "service/GetLocation",
@@ -182,60 +212,8 @@
             allowDelete: false
         });
 
-        //For page postback
-//        var idPro = $("#ProvinceId option:selected").val();
-//        var select = $("#DistrictId");
-//        select.empty();
-//        select.append($('<option/>', {
-//            value: '',
-//            text: '-- Chọn Quận/Huyện --'
-//        }));
-//        if (idPro != 0) {
-//            $.getJSON("@baseUri.ToString()" + "service/GetDistrictList", { id: idPro },
-//            function (myData) {
-//                $.each(myData, function (index, itemData) {
-//                    if (itemData.Text.length != 0) {
-//                        select.append($('<option/>', {
-//                            value: itemData.Value,
-//                            text: itemData.Text
-//                        }));
-//                    }
-//                });
-//            });
-//        };
-
     });
 </script>
-<script type = "text/javascript">
-    var cellTemplates = new Array();
-    cellTemplates[0] = '<fieldset id="field{counter}"><label>Chọn ảnh: </label>';
-    cellTemplates[1] = '<input id="image{counter}" name="images" type="file" />';
-    cellTemplates[2] = '<a href="#" id="lnkRemoveFile{counter}" onclick="return removeFile(this);">Xóa</a></fieldset>';
-    var counter = 0;
-
-    //adds a file input row
-    function addFile(description) {
-        //increment counter
-        counter++;
-        var html = "";
-        for (var i = 0; i < cellTemplates.length; i++) {
-
-            //format the cell template text
-            html += cellTemplates[i].replace(/\{counter\}/g, counter).replace(/\{value\}/g,
-                    (description == null) ? '' : description);
-        }
-        $("#uploadFile").append(html);
-    }
-    //removes a file input row
-    function removeFile(obj) {
-        $('html, body').animate({
-            scrollTop: $("#uploadFile").offset().top
-        }, 500);
-        $(obj).parent().remove();
-    }
-   </script>
- 
-
 <div id="postnew_wrapper">
 @Html.ValidationSummary(true, "Vui lòng kiểm tra lại thông tin như thông báo bên dưới!", new { style = "color:red" })
 @using (Html.BeginForm("Edit", "Post", FormMethod.Post, new { enctype = "multipart/form-data" }))
@@ -371,10 +349,13 @@
                 <h2>Ảnh, video minh hoạ</h2>
                 <div class="clear"></div>
                 <div class="btnPlus">
+                    <ul id="imageList">
+                    </ul>
+                    <div class="clear"></div>
                     <div id="uploadFile">
                         <label>Chọn ảnh: </label>
                         <input id="file0" name="images" type="file" />
-                        <a href="javascript:;" onclick="return addFile();" >Thêm ảnh</a>
+                        <a href="javascript:;" onclick="return addFile();" class="addImage">Thêm ảnh</a>
                     </div>
                 </div>
             </div>
@@ -471,7 +452,10 @@
                     <h1>Các địa điểm nổi bật xung quanh</h1>
                     <div class="clear"></div>
                     <div class="ta_wrapper">
-                        <input id="osSites" type="text" name="tag[]" value="" class="tag"/>
+                        @foreach (KeyValuePair<int, string> kvp in Model.lstNearByPlace)
+                        {
+                            <input id="osSites" type="text" name="tag[@kvp.Key-a]" value="@kvp.Value" class="tag"/>
+                        }
                     </div>
                 </div>
                 <div class="clear"></div>

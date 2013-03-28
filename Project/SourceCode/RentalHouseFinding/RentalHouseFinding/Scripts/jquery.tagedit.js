@@ -179,8 +179,8 @@
 					                // Make a new tag in front the input
 					                html = '<li class="tagedit-listelement tagedit-listelement-old">';
 					                html += '<span dir="' + options.direction + '">' + $(this).val() + '</span>';
-					                //var name = oldValue ? baseName + '[' + id + options.addedPostfix + ']' : baseName + '[]';
-					                var name = oldValue ? 'idNearby:' + id : 'idNearby:-1:' + $(this).val();
+					                var name = oldValue ? baseName + '[' + id + options.addedPostfix + ']' : baseName + '[]';
+					                //var name = oldValue ? 'idNearby:' + id : 'idNearby:-1:' + $(this).val();
 					                html += '<input type="hidden" name="' + name + '" value="' + $(this).val() + '" />';
 					                html += '<a class="tagedit-close" title="' + options.texts.removeLinkTitle + '">x</a>';
 					                html += '</li>';
