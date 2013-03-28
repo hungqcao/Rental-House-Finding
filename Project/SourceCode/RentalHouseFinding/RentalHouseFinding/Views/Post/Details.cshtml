@@ -36,7 +36,7 @@
     @if (TempData["MessageSuccessEdit"] != null)
     {
         <div class="message-notification success">
-            <a class="close"></a>
+            <a class="close" id="btnCloseDiv"></a>
             <div>
                 @TempData["MessageSuccessEdit"]
             </div>
@@ -47,7 +47,7 @@
         if ((bool)TempData["Success"] && TempData["Success"] != null)
         {
             <div class="message-notification success">
-                <a class="close"></a>
+                <a class="close" id="btnCloseDiv"></a>
                 <div>
                     @TempData["MessageSuccessPostNew"]
                 </div>
@@ -59,7 +59,7 @@
         if ((bool)TempData["Pending"])
         {
             <div class="message-notification message-information">
-                <a class="close"></a>
+                <a class="close" id="btnCloseDiv"></a>
                 <div>
                     @TempData["MessagePendingPostNew"]
                 </div>

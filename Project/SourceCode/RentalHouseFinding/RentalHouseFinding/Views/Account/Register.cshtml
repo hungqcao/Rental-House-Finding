@@ -8,7 +8,9 @@
 <script src="@Url.Content("~/Scripts/jquery.validate.unobtrusive.min.js")" type="text/javascript"></script>
 <script src="@Url.Content("~/Scripts/jquery-ui-1.8.11.js")" type="text/javascript"></script>
 <link rel="stylesheet" href="http://code.jquery.com/ui/1.10.1/themes/base/jquery-ui.css" />
-
+<script type="text/javascript" language="javascript">
+    $.validator.unobtrusive.adapters.addBool("mandatory", "required");
+    </script>
 <link href="@Url.Content("~/Content/openid-shadow.css")"
     rel="stylesheet" type="text/css" />
 <link href="@Url.Content("~/Content/openid.css")" 
@@ -95,8 +97,7 @@
         </form>
        
         <div class="clear"></div>
-        @using (Html.BeginForm()) {
-    @Html.ValidationSummary(true, "Account creation was unsuccessful. Please correct the errors and try again.")
+    @using (Html.BeginForm()) {
         <div class="userInfo">
             <h2>Đăng kí tài khoản 5house.vn chỉ với 1 bước đơn giản</h2>
             <div class="blockInfo leftBlock" id="blockName">
@@ -150,16 +151,17 @@
                 </div>
             </div>
             <div class="clear"></div>
-            <div class="blockInfo leftBlock lastBlock">
+            <div class="blockInfo leftBlock lastBlock" id ="tbxCapcha">
                 <div class="textbox">   
                     @Html.Raw(Html.GenerateCaptcha("captcha", "clean"))
                     @Html.ValidationMessage("captcha")
                 </div>
             </div>
-            <div class="blockInfo lastBlock" id="blockBtnRegis">
+            <div class="blockInfo lastBlock" id="blockBtnRegis" style="width: 200px">
                 <div style="margin-top: 16px;">
-                    <input type="checkbox" id="rAccept"/>
+                    @Html.CheckBoxFor(model => model.IsTermsAccepted, new { @id = "rAccept" })
                     <label>Tôi đồng ý với <a href="/tos/">điều khoản sử dụng</a></label>
+                    @Html.ValidationMessageFor(model => model.IsTermsAccepted)
                 </div>
                 <div class="clear"></div>
                 <input type="submit" id="btnRegis" value="" style="float:right; margin-top: 28px;"/>

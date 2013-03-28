@@ -6,6 +6,8 @@ using System.Web.Mvc;
 using System.Web.Security;
 using System.Reflection;
 using System.Linq;
+using RentalHouseFinding.ValidateAttr;
+using System.ComponentModel;
 
 namespace RentalHouseFinding.Models
 {
@@ -50,9 +52,12 @@ namespace RentalHouseFinding.Models
 
     }
 
-    public class 
-        RegisterModel
+    public class RegisterModel
     {
+        [Mandatory(ErrorMessage = "Bạn phải đồng ý với các điều khoản của chúng tôi.")]
+        [DisplayName("Terms Accepted")]
+        public bool IsTermsAccepted { get; set; }
+
         [Required(ErrorMessage= "Xin vui lòng điền tên tài khoản.")]
         [Display(Name = "Tên tài khoản")]
         [MaxLength(50, ErrorMessage = "Không được vượt quá 50 ký tự, xin vui lòng nhập lại.")]
@@ -106,55 +111,6 @@ namespace RentalHouseFinding.Models
         public string Avatar { get; set; }
                 
     }
-
-    public class RequiredIfOtherFieldIsNullAttribute : ValidationAttribute, IClientValidatable
-    {
-        private readonly string _otherProperty;
-        public RequiredIfOtherFieldIsNullAttribute(string otherProperty)
-        {
-            _otherProperty = otherProperty;
-        }
-
-        protected override ValidationResult IsValid(object value, ValidationContext validationContext)
-        {
-            var property = validationContext.ObjectType.GetProperty(_otherProperty);
-            if (property == null)
-            {
-                return new ValidationResult(string.Format(
-                    CultureInfo.CurrentCulture,
-                    "Unknown property {0}",
-                    new[] { _otherProperty }
-                ));
-            }
-            var otherPropertyValue = property.GetValue(validationContext.ObjectInstance, null);
-
-            if (otherPropertyValue == null || otherPropertyValue as string == string.Empty)
-            {
-                if (value == null || value as string == string.Empty)
-                {
-                    return new ValidationResult(string.Format(
-                        CultureInfo.CurrentCulture,
-                        FormatErrorMessage(validationContext.DisplayName),
-                        new[] { _otherProperty }
-                    ));
-                }
-            }
-
-            return null;
-        }
-
-        public IEnumerable<ModelClientValidationRule> GetClientValidationRules(ModelMetadata metadata, ControllerContext context)
-        {
-            var rule = new ModelClientValidationRule
-            {
-                ErrorMessage = FormatErrorMessage(metadata.GetDisplayName()),
-                ValidationType = "requiredif",
-            };
-            rule.ValidationParameters.Add("other", _otherProperty);
-            yield return rule;
-        }
-    }
-
 
     public class UserDetailsModel
     {
