@@ -156,7 +156,7 @@ namespace RentalHouseFinding.Controllers
             int userId = CommonModel.GetUserIdByUsername(User.Identity.Name);
             try
             {
-                var result = _db.Favorites.Where(f => f.UserId == userId).ToList();
+                var result = _db.Favorites.Where(f => f.UserId == userId && !f.IsDeleted).ToList();
                 return View(result);
             }
             catch
