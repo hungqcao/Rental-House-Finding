@@ -1,0 +1,11 @@
+Admin Role Test: All : Chung
+
+Function & GUi Test
+Nam: 1,2, 4, 6, 8, 10, 11, 15, 17, 18 , 19       
+Hung: 3, 5, 12,14, 13(+Nam), 16,     
+Viet: 7, 9
+  
+Visitor Role Test
+Nam: 4, 6, 7, 10      
+Hung: 5    
+Viet: 3, 8, 9 
