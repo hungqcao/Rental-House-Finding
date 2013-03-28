@@ -113,8 +113,8 @@
                       else {
                           marker.setPosition(results[0].geometry.location);
                       }
-                      $('#Lat').val(results[0].geometry.location.kb);
-                      $('#Lon').val(results[0].geometry.location.lb);
+                      $('#Lat').val(results[0].geometry.location.lat());
+                      $('#Lon').val(results[0].geometry.location.lng());
                       google.maps.event.addListener(marker, 'dragend', function (event) {
                           $('#Lat').val(event.latLng.lat());
                           $('#Lon').val(event.latLng.lng());
@@ -228,8 +228,6 @@
         $(obj).parent().remove();
     }
    </script>
- 
-
 <div id="postnew_wrapper">
 @Html.ValidationSummary(true, "Vui lòng kiểm tra lại thông tin như thông báo bên dưới!", new { style = "color:red" })
 @using (Html.BeginForm("create", "post", FormMethod.Post, new { enctype = "multipart/form-data" }))
@@ -355,9 +353,11 @@
                     <div id="mapContainer" style="width:372px;height:340px;"></div>
                         <div class="editor-field">
                             @Html.HiddenFor(model => model.Lat)
+                            @Html.ValidationMessageFor(Model => Model.Lat)
                         </div>
                         <div class="editor-field">
                             @Html.HiddenFor(model => model.Lon)
+                            @Html.ValidationMessageFor(Model => Model.Lon)
                         </div>
                     </div>
                 <h2>Ảnh, video minh hoạ</h2>
