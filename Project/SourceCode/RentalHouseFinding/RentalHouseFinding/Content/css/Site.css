@@ -64,6 +64,7 @@ textarea
 {
     font-weight: bold;
     color: #ff0000;
+    margin-top: 8px;
 }
 
 .validation-summary-valid
@@ -142,11 +143,11 @@ body{
 }
 #searchInfo #buttonSearch select.select
 {
-    margin-right: 15px;
+    margin-right: 16px;
 }
 #searchInfo #buttonSearch #CategoryId, #home-search-area #options #CategoryId
 {
-    width: 200px;
+    width: 199px;
 }
 #searchInfo #buttonSearch #ProvinceId, #home-search-area #options #ProvinceId
 {
@@ -154,7 +155,7 @@ body{
 }
 #searchInfo #buttonSearch #DistrictId, #home-search-area #options #DistrictId
 {
-    width: 200px;
+    width: 198px;
 }
 #home-search-area #options #spProvinceId
 {
@@ -430,13 +431,13 @@ span.select {
 #loginPanel {
     background: url("../../Content/images/login_panel.png") no-repeat transparent 0 0;
     width: 842px;
-    height: 607px;
+    height: 565px;
     margin: 0px 0px 0px 100px;
 }
 #regisPanel {
     background: url("../../Content/images/Register_bg_panel.png") no-repeat transparent -22px 0;
     width: 880px;
-    height: 890px;
+    height: 832px;
 }
 div.textbox
 {
@@ -444,7 +445,7 @@ div.textbox
 }
 .login-regis {
     display: block;
-    margin: 30px auto;
+    margin: 0px auto;
 }
 .login-regis h1 {
     font-size: 22px;
@@ -473,7 +474,7 @@ div.textbox
     display: block;
     float: left;
     margin: 20px 0 0 85px;
-    padding: 50px 0;
+    padding: 30px 0;
     width: 672px;
     text-align: center;
 }
@@ -488,7 +489,7 @@ div.textbox
 .login-regis .blockInfo {
     display: block;
     float: left;
-    margin-bottom: 10px;
+  
 }
 
 .login-regis .blockInfo label{
@@ -545,7 +546,7 @@ div.textbox
 }
 span.field-validation-error
 {
-    padding: 60px 0 20px 0;
+    padding: 55px 0 20px 0;
 }
 span.field-validation-error
 {
@@ -587,7 +588,8 @@ span.field-validation-error
 .login-regis .buttons {
     display: block;
     float: right;
-    margin: 47px 88px 0 0;
+    margin: 19px 88px 0 0;
+    font-size: 14px;
 }
 .checkbox, .buttons label
 {
@@ -889,7 +891,7 @@ span.field-validation-error
 #addThis
 {
     float:left;
-    margin-top: 30px;
+    margin-top: 20px;
 }
 #popup_wrapper div, #popup_wrapper span {
     display: block;

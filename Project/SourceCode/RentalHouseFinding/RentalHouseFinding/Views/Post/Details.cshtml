@@ -83,13 +83,14 @@
             <!-- AddThis Button BEGIN -->
             <div class="addthis_toolbox addthis_default_style">
             <a class="addthis_button_facebook_like" fb:like:layout="button_count"></a>
-            <a class="addthis_button_tweet"></a>
+            @*<a class="addthis_button_tweet"></a>*@
             <a class="addthis_button_google_plusone" g:plusone:size="medium"></a>
             <a class="addthis_counter addthis_pill_style"></a>
             </div>
             <script type="text/javascript" src="//s7.addthis.com/js/300/addthis_widget.js#pubid=undefined"></script>
             <!-- AddThis Button END -->
         </div>
+        <div class="clear"></div>
     </div>
     <div class="clear"></div>
     <div class="popup_content">
@@ -102,12 +103,13 @@
             <span class="blockRightText"><b>Diện tích:</b>&nbsp;@Model.Area m2</span>
             <span class="blockLeftText"><b>Giá điện:</b>&nbsp;@Model.ElectricityFee triệu/tháng</span>
             <span class="blockRightText"><b>Giá nước:</b>&nbsp;@Model.WaterFee triệu/tháng</span>
-            <span class="blockLeftText"><b>Hướng nhà:</b>&nbsp;@Model.Direction</span>
-            <span class="blockRightText"><b>Ngày đăng:</b>&nbsp;@Model.CreatedDate</span>
+           @* <span class="blockLeftText"><b>Hướng nhà:</b>&nbsp;@Model.Direction</span>*@
+            <span class="blockLeftText" style="width: 100%;"><b>Ngày đăng:</b>&nbsp;@Model.CreatedDate</span>
             <span class="blockLeftText" style="margin-top:10px;"><b>Liên hệ:</b>&nbsp;@Model.NameContact</span>
             <div class="clear"></div>
             <span class="blockLeftText"><b>Di động:</b>&nbsp;@Model.PhoneContact</span>
-            <span class="blockRightText"><b>Yahoo!, Skype:</b>&nbsp;@Model.Skype</span>
+            <span class="blockLeftText"><b>Skype:</b>&nbsp;@Model.Skype</span>
+            <span class="blockRightText"><b>Yahoo!:</b>&nbsp;@Model.Yahoo</span>
             <span class="blockLeftText" style="width: 95%;"><b>Ghi chú:</b>&nbsp;@Model.Description</span>
         </div>
         <div class="blockInfo rightSide">
