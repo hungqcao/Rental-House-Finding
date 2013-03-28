@@ -15,7 +15,7 @@ namespace RentalHouseFinding.Controllers
 
         //
         // GET: /ManageCategories/
-
+        [Authorize(Roles = "Admin")]
         public ViewResult Index()
         {
             return View(db.Categories.ToList());
@@ -23,7 +23,7 @@ namespace RentalHouseFinding.Controllers
 
         //
         // GET: /ManageCategories/Details/5
-
+        [Authorize(Roles = "Admin")]
         public ViewResult Details(int id)
         {
             Categories categories = db.Categories.Single(c => c.Id == id);
@@ -32,7 +32,7 @@ namespace RentalHouseFinding.Controllers
 
         //
         // GET: /ManageCategories/Create
-
+        [Authorize(Roles = "Admin")]
         public ActionResult Create()
         {
             return View();
@@ -40,7 +40,7 @@ namespace RentalHouseFinding.Controllers
 
         //
         // POST: /ManageCategories/Create
-
+        [Authorize(Roles = "Admin")]
         [HttpPost]
         public ActionResult Create(Categories categories)
         {
@@ -56,7 +56,7 @@ namespace RentalHouseFinding.Controllers
         
         //
         // GET: /ManageCategories/Edit/5
- 
+        [Authorize(Roles = "Admin")]
         public ActionResult Edit(int id)
         {
             Categories categories = db.Categories.Single(c => c.Id == id);
@@ -65,7 +65,7 @@ namespace RentalHouseFinding.Controllers
 
         //
         // POST: /ManageCategories/Edit/5
-
+        [Authorize(Roles = "Admin")]
         [HttpPost]
         public ActionResult Edit(Categories categories)
         {
@@ -81,7 +81,7 @@ namespace RentalHouseFinding.Controllers
 
         //
         // GET: /ManageCategories/Delete/5
- 
+        [Authorize(Roles = "Admin")]
         public ActionResult Delete(int id)
         {
             Categories categories = db.Categories.Single(c => c.Id == id);
@@ -90,7 +90,7 @@ namespace RentalHouseFinding.Controllers
 
         //
         // POST: /ManageCategories/Delete/5
-
+        [Authorize(Roles = "Admin")]
         [HttpPost, ActionName("Delete")]
         public ActionResult DeleteConfirmed(int id)
         {            

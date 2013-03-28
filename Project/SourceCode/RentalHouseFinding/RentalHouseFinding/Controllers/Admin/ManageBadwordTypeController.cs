@@ -15,7 +15,7 @@ namespace RentalHouseFinding.Controllers.Admin
 
         //
         // GET: /ManageBadwordType/
-
+        [Authorize(Roles = "Admin")]
         public ViewResult Index()
         {
             return View(db.BadWordTypes.ToList());
@@ -23,7 +23,7 @@ namespace RentalHouseFinding.Controllers.Admin
 
         //
         // GET: /ManageBadwordType/Details/5
-
+        [Authorize(Roles = "Admin")]
         public ViewResult Details(int id)
         {
             BadWordTypes badwordtypes = db.BadWordTypes.Single(b => b.Id == id);
@@ -32,7 +32,7 @@ namespace RentalHouseFinding.Controllers.Admin
 
         //
         // GET: /ManageBadwordType/Create
-
+        [Authorize(Roles = "Admin")]
         public ActionResult Create()
         {
             return View();
@@ -40,7 +40,7 @@ namespace RentalHouseFinding.Controllers.Admin
 
         //
         // POST: /ManageBadwordType/Create
-
+        [Authorize(Roles = "Admin")]
         [HttpPost]
         public ActionResult Create(BadWordTypes badwordtypes)
         {
@@ -56,7 +56,7 @@ namespace RentalHouseFinding.Controllers.Admin
         
         //
         // GET: /ManageBadwordType/Edit/5
- 
+        [Authorize(Roles = "Admin")]
         public ActionResult Edit(int id)
         {
             BadWordTypes badwordtypes = db.BadWordTypes.Single(b => b.Id == id);
@@ -65,7 +65,7 @@ namespace RentalHouseFinding.Controllers.Admin
 
         //
         // POST: /ManageBadwordType/Edit/5
-
+        [Authorize(Roles = "Admin")]
         [HttpPost]
         public ActionResult Edit(BadWordTypes badwordtypes)
         {
@@ -81,7 +81,7 @@ namespace RentalHouseFinding.Controllers.Admin
 
         //
         // GET: /ManageBadwordType/Delete/5
- 
+        [Authorize(Roles = "Admin")]
         public ActionResult Delete(int id)
         {
             BadWordTypes badwordtypes = db.BadWordTypes.Single(b => b.Id == id);
@@ -90,7 +90,7 @@ namespace RentalHouseFinding.Controllers.Admin
 
         //
         // POST: /ManageBadwordType/Delete/5
-
+        [Authorize(Roles = "Admin")]
         [HttpPost, ActionName("Delete")]
         public ActionResult DeleteConfirmed(int id)
         {            

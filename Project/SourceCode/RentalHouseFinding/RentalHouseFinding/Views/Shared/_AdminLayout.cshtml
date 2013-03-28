@@ -40,9 +40,8 @@
     	        @Html.Partial("_LogOnPartial")
             </div>
         </div>
-        <div id='cssmenu'>
+        <div id='cssmenu' style="width: 1054px; margin: 0 auto">
             <ul>
-                <li>@Html.ActionLink("Home", "Index", "Home")</li>
                 <li>@Html.ActionLink("Manage Posts", "Index", "ManagePosts")</li>
                 <li>@Html.ActionLink("Manage categories", "Index", "ManageCategories")</li>
                 <li>@Html.ActionLink("Manage roles", "Index", "ManageRoles")</li>
@@ -62,12 +61,11 @@
                 <li>@Html.ActionLink("Manage bad posts", "Index", "ManageBadpost")</li>
                 <li>@Html.ActionLink("Manage Post status", "Index", "ManagePostStatus")</li>
                 <li>@Html.ActionLink("Manage payments", "Index", "ManagePayment")</li>
-                <li>@Html.ActionLink("About", "About", "Home")</li>
             </ul>
         </div>
-        <section id="main">
+        <div id="content">
             @RenderBody()
-        </section>
+        </div>
         <div id="footer">
             <p>Bản quyền thuộc về &copy; 2013 | 5house.vn</p>
         </div>

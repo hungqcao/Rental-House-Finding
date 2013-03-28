@@ -15,7 +15,7 @@ namespace RentalHouseFinding.Controllers
 
         //
         // GET: /ManageRoles/
-
+        [Authorize(Roles = "Admin")]
         public ViewResult Index()
         {
             return View(db.Roles.ToList());
@@ -23,7 +23,7 @@ namespace RentalHouseFinding.Controllers
 
         //
         // GET: /ManageRoles/Details/5
-
+        [Authorize(Roles = "Admin")]
         public ViewResult Details(int id)
         {
             Roles roles = db.Roles.Single(r => r.Id == id);
@@ -32,7 +32,7 @@ namespace RentalHouseFinding.Controllers
 
         //
         // GET: /ManageRoles/Create
-
+        [Authorize(Roles = "Admin")]
         public ActionResult Create()
         {
             return View();
@@ -40,7 +40,7 @@ namespace RentalHouseFinding.Controllers
 
         //
         // POST: /ManageRoles/Create
-
+        [Authorize(Roles = "Admin")]
         [HttpPost]
         public ActionResult Create(Roles roles)
         {
@@ -56,7 +56,7 @@ namespace RentalHouseFinding.Controllers
         
         //
         // GET: /ManageRoles/Edit/5
- 
+        [Authorize(Roles = "Admin")]
         public ActionResult Edit(int id)
         {
             Roles roles = db.Roles.Single(r => r.Id == id);
@@ -65,7 +65,7 @@ namespace RentalHouseFinding.Controllers
 
         //
         // POST: /ManageRoles/Edit/5
-
+        [Authorize(Roles = "Admin")]
         [HttpPost]
         public ActionResult Edit(Roles roles)
         {
@@ -81,7 +81,7 @@ namespace RentalHouseFinding.Controllers
 
         //
         // GET: /ManageRoles/Delete/5
- 
+        [Authorize(Roles = "Admin")]
         public ActionResult Delete(int id)
         {
             Roles roles = db.Roles.Single(r => r.Id == id);
@@ -90,7 +90,7 @@ namespace RentalHouseFinding.Controllers
 
         //
         // POST: /ManageRoles/Delete/5
-
+        [Authorize(Roles = "Admin")]
         [HttpPost, ActionName("Delete")]
         public ActionResult DeleteConfirmed(int id)
         {            

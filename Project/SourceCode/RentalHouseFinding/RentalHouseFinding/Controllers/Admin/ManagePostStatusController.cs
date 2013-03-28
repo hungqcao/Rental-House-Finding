@@ -15,7 +15,7 @@ namespace RentalHouseFinding.Controllers
 
         //
         // GET: /ManagePostStatus/
-
+        [Authorize(Roles = "Admin")]
         public ViewResult Index()
         {
             return View(db.PostStatuses.ToList());
@@ -23,7 +23,7 @@ namespace RentalHouseFinding.Controllers
 
         //
         // GET: /ManagePostStatus/Details/5
-
+        [Authorize(Roles = "Admin")]
         public ViewResult Details(int id)
         {
             PostStatuses poststatuses = db.PostStatuses.Single(p => p.Id == id);
@@ -32,7 +32,7 @@ namespace RentalHouseFinding.Controllers
 
         //
         // GET: /ManagePostStatus/Create
-
+        [Authorize(Roles = "Admin")]
         public ActionResult Create()
         {
             return View();
@@ -40,7 +40,7 @@ namespace RentalHouseFinding.Controllers
 
         //
         // POST: /ManagePostStatus/Create
-
+        [Authorize(Roles = "Admin")]
         [HttpPost]
         public ActionResult Create(PostStatuses poststatuses)
         {
@@ -56,7 +56,7 @@ namespace RentalHouseFinding.Controllers
         
         //
         // GET: /ManagePostStatus/Edit/5
- 
+        [Authorize(Roles = "Admin")]
         public ActionResult Edit(int id)
         {
             PostStatuses poststatuses = db.PostStatuses.Single(p => p.Id == id);
@@ -65,7 +65,7 @@ namespace RentalHouseFinding.Controllers
 
         //
         // POST: /ManagePostStatus/Edit/5
-
+        [Authorize(Roles = "Admin")]
         [HttpPost]
         public ActionResult Edit(PostStatuses poststatuses)
         {
@@ -81,7 +81,7 @@ namespace RentalHouseFinding.Controllers
 
         //
         // GET: /ManagePostStatus/Delete/5
- 
+        [Authorize(Roles = "Admin")]
         public ActionResult Delete(int id)
         {
             PostStatuses poststatuses = db.PostStatuses.Single(p => p.Id == id);
@@ -90,7 +90,7 @@ namespace RentalHouseFinding.Controllers
 
         //
         // POST: /ManagePostStatus/Delete/5
-
+        [Authorize(Roles = "Admin")]
         [HttpPost, ActionName("Delete")]
         public ActionResult DeleteConfirmed(int id)
         {            

@@ -15,7 +15,7 @@ namespace RentalHouseFinding.Controllers.Admin
 
         //
         // GET: /ManageBadpost/
-
+        [Authorize(Roles = "Admin")]
         public ViewResult Index()
         {
             var posts = db.Posts.Include("District").Include("Category").Include("PostStatus").Include("User").Where( p => p.StatusId == 2);
