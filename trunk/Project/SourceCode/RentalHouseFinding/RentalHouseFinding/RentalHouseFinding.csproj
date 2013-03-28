@@ -570,7 +570,6 @@
     </Content>
     <Content Include="Content\Site.css" />
     <Content Include="Views\_ViewStart.cshtml" />
-    <Content Include="Views\Landing\About.cshtml" />
     <Content Include="Views\Landing\Index.cshtml" />
     <Content Include="Views\Shared\Error.cshtml" />
     <Content Include="Views\Shared\_LogOnPartial.cshtml" />
@@ -706,9 +705,6 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="Views\Post\Details.cshtml" />
-  </ItemGroup>
-  <ItemGroup>
-    <Content Include="Views\Landing\_LayoutLanding.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Views\ManageBadword\Index.cshtml" />

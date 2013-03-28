@@ -15,7 +15,7 @@ namespace RentalHouseFinding.Controllers.Admin
 
         //
         // GET: /ManageBadword/
-
+        [Authorize(Roles = "Admin")]
         public ViewResult Index()
         {
             var badwords = db.BadWords.Include("BadWordType");
@@ -24,7 +24,7 @@ namespace RentalHouseFinding.Controllers.Admin
 
         //
         // GET: /ManageBadword/Details/5
-
+        [Authorize(Roles = "Admin")]
         public ViewResult Details(int id)
         {
             BadWords badwords = db.BadWords.Single(b => b.Id == id);
@@ -33,7 +33,7 @@ namespace RentalHouseFinding.Controllers.Admin
 
         //
         // GET: /ManageBadword/Create
-
+        [Authorize(Roles = "Admin")]
         public ActionResult Create()
         {
             ViewBag.TypeId = new SelectList(db.BadWordTypes, "Id", "Name");
@@ -42,7 +42,7 @@ namespace RentalHouseFinding.Controllers.Admin
 
         //
         // POST: /ManageBadword/Create
-
+        [Authorize(Roles = "Admin")]
         [HttpPost]
         public ActionResult Create(BadWords badwords)
         {
@@ -59,7 +59,7 @@ namespace RentalHouseFinding.Controllers.Admin
         
         //
         // GET: /ManageBadword/Edit/5
- 
+        [Authorize(Roles = "Admin")]
         public ActionResult Edit(int id)
         {
             BadWords badwords = db.BadWords.Single(b => b.Id == id);
@@ -69,7 +69,7 @@ namespace RentalHouseFinding.Controllers.Admin
 
         //
         // POST: /ManageBadword/Edit/5
-
+        [Authorize(Roles = "Admin")]
         [HttpPost]
         public ActionResult Edit(BadWords badwords)
         {
@@ -86,7 +86,7 @@ namespace RentalHouseFinding.Controllers.Admin
 
         //
         // GET: /ManageBadword/Delete/5
- 
+        [Authorize(Roles = "Admin")]
         public ActionResult Delete(int id)
         {
             BadWords badwords = db.BadWords.Single(b => b.Id == id);
@@ -95,7 +95,7 @@ namespace RentalHouseFinding.Controllers.Admin
 
         //
         // POST: /ManageBadword/Delete/5
-
+        [Authorize(Roles = "Admin")]
         [HttpPost, ActionName("Delete")]
         public ActionResult DeleteConfirmed(int id)
         {            

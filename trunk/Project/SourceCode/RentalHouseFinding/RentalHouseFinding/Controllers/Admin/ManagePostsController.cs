@@ -18,7 +18,7 @@ namespace RentalHouseFinding.Controllers.Admin
 
         //
         // GET: /ManagePosts/
-
+        [Authorize(Roles = "Admin")]
         public ActionResult Index(int? page)
         {
             ViewBag.Provinces = new SelectList(_db.Provinces, "Id", "Name", TempData["ProvinceId"]);
@@ -47,6 +47,8 @@ namespace RentalHouseFinding.Controllers.Admin
             ViewBag.Grid = grid;
             return View();
         }
+
+        [Authorize(Roles = "Admin")]
         [HttpPost]
         public ActionResult Index(int? page, FormCollection form)
         {
@@ -65,6 +67,8 @@ namespace RentalHouseFinding.Controllers.Admin
             
             return View();
         }
+
+        [Authorize(Roles = "Admin")]
         public WebGrid getGrid(Hashtable filters, int page)
         {
             IQueryable<Posts> postList = _db.Posts;

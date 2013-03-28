@@ -15,7 +15,7 @@ namespace RentalHouseFinding.Controllers
 
         //
         // GET: /ManageProvinces/
-
+        [Authorize(Roles = "Admin")]
         public ViewResult Index()
         {
             return View(db.Provinces.ToList());
@@ -23,7 +23,7 @@ namespace RentalHouseFinding.Controllers
 
         //
         // GET: /ManageProvinces/Details/5
-
+        [Authorize(Roles = "Admin")]
         public ViewResult Details(int id)
         {
             Provinces provinces = db.Provinces.Single(p => p.Id == id);
@@ -32,7 +32,7 @@ namespace RentalHouseFinding.Controllers
 
         //
         // GET: /ManageProvinces/Create
-
+        [Authorize(Roles = "Admin")]
         public ActionResult Create()
         {
             return View();
@@ -40,7 +40,7 @@ namespace RentalHouseFinding.Controllers
 
         //
         // POST: /ManageProvinces/Create
-
+        [Authorize(Roles = "Admin")]
         [HttpPost]
         public ActionResult Create(Provinces provinces)
         {
@@ -56,7 +56,7 @@ namespace RentalHouseFinding.Controllers
         
         //
         // GET: /ManageProvinces/Edit/5
- 
+        [Authorize(Roles = "Admin")]
         public ActionResult Edit(int id)
         {
             Provinces provinces = db.Provinces.Single(p => p.Id == id);
@@ -65,7 +65,7 @@ namespace RentalHouseFinding.Controllers
 
         //
         // POST: /ManageProvinces/Edit/5
-
+        [Authorize(Roles = "Admin")]
         [HttpPost]
         public ActionResult Edit(Provinces provinces)
         {
@@ -81,7 +81,7 @@ namespace RentalHouseFinding.Controllers
 
         //
         // GET: /ManageProvinces/Delete/5
- 
+        [Authorize(Roles = "Admin")]
         public ActionResult Delete(int id)
         {
             Provinces provinces = db.Provinces.Single(p => p.Id == id);
@@ -90,7 +90,7 @@ namespace RentalHouseFinding.Controllers
 
         //
         // POST: /ManageProvinces/Delete/5
-
+        [Authorize(Roles = "Admin")]
         [HttpPost, ActionName("Delete")]
         public ActionResult DeleteConfirmed(int id)
         {            
