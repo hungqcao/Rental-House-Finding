@@ -2,7 +2,7 @@
     Layout = "~/Views/Shared/_LayoutUser.cshtml";
 }
 
-<fieldset style="width: 500px;">
+<fieldset>
     <div id="container-grid">
         @{
             if (ViewBag.PostList != null)
@@ -13,9 +13,22 @@
                 @grid.GetHtml(tableStyle: "", mode: WebGridPagerModes.All, 
                                 headerStyle: "header",
                                 alternatingRowStyle: "alt",
-                                htmlAttributes: new { id = "grid"});
+                                htmlAttributes: new { id = "grid"},
+                                columns: grid.Columns(
+                                grid.Column("ID", "Id"),
+                                     grid.Column("UserId", "User Id"),
+                                      grid.Column(header: "Title", format: @<text>
+                                            <a href="@Url.Action("Details",
+                                            "Post",
+                                            new { id = @item.ID })">@item.Title</a></text>),
+                                            grid.Column("PostStatus", "Post Status"),
+                                            grid.Column("CreatedDate", "Created Date"),
+                                            grid.Column("EditedDate", "Edited Date"),
+                                            grid.Column("RenewDate", "Renew Date"),
+                                            grid.Column("ExpiredDate", "Expire Date")
+                                        ));
             }
-            else 
+            else
             {
                 <h2>Không có bài post</h2>
             }
