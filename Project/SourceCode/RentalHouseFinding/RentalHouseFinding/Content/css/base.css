@@ -10,8 +10,8 @@ a{color:white;}
 	.pika-thumbs li .clip {position:relative;height:100%;text-align: center; vertical-align: middle; overflow: hidden;}
 	
 /* The stage is the wrapper. The image fills 100% the height of the stage */
-.pika-stage, .pika-textnav {width: 400px;}
-.pika-stage {position: relative; background: #fafafa; border: 1px solid #e5e5e5; padding: 10px 10px 40px 10px; text-align:center; height:250px;}
+.pika-stage, .pika-textnav {width: 390px;}
+.pika-stage {position: relative; padding: 10px 10px 0px 10px; text-align:center; height:250px;}
 .pika-stage img{height:100%;}
 .pika-stage .caption {position: absolute; background: #000; background: rgba(0,0,0,0.75);  border: 1px solid #141414; font-size: 11px; 
 			color: #fafafa; padding: 10px; text-align: right; bottom: 50px; right: 10px;}
@@ -32,7 +32,7 @@ a{color:white;}
 
 /*for the tool tips*/
 .pika-tooltip{font-size:12px;position:absolute;color:white;padding:3px; background-color: rgba(0,0,0,0.7);border:3px solid black;}
-.pika-counter{position: absolute;bottom: 45px;left:15px;color:white;background:rgba(0,0,0,0.7);font-size:11px;padding:3px;-moz-border-radius: 5px;border-radius:5px;}
+.pika-counter{position: absolute;bottom: -30px;left:180px;right:180px;margin-top:0px; top:270px;color:white;background:rgba(0,0,0,0.7);font-size:12px; font-family:Calibri;padding:3px;-moz-border-radius: 5px;border-radius:5px;}
 
 /* If using user thumbnails there's a pause well the new large image loads. This is the loader for that */		
 .pika-loader{ background:url(loading.gif) 3px 3px no-repeat #000; background-color:rgba(0,0,0,0.9); color:white; width:60px; font-size:11px; padding:5px 3px; 
