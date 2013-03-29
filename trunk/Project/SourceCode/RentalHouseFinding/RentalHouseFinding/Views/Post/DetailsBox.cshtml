@@ -55,7 +55,7 @@
             <div><span class="highlight">@Model.Area</span><span class="rightText">m2</span></div>
         </div>
         <div class="clear"></div>
-        <div id="addThis">
+       @* <div id="addThis">
             <!-- AddThis Button BEGIN -->
             <div class="addthis_toolbox addthis_default_style">
             <a class="addthis_button_facebook_like" fb:like:layout="button_count"></a>
@@ -65,36 +65,36 @@
             </div>
             <script type="text/javascript" src="//s7.addthis.com/js/300/addthis_widget.js#pubid=undefined"></script>
             <!-- AddThis Button END -->
-        </div>
+        </div>*@
     </div>
     <div class="clear"></div>
     <div class="popup_content">
         <div class="blockInfo leftSide">
-            <div class="title"><div class="plusBtn"></div>THÔNG TIN CƠ BẢN</div>
+             <div class="title"><div class="plusBtn"></div>THÔNG TIN CƠ BẢN</div>
             <div class="clear"></div>
             <span class="blockLeftText" style="width: 100%;"><b>Địa chỉ:</b>&nbsp;@Model.NumberHouse @Model.Street </span>
             <div class="clear"></div>
             <span class="blockLeftText"><b>Giá nhà:</b>&nbsp;@Model.Price triệu/tháng</span>
-            <span class="blockRightText"><b>Diện tích:</b>&nbsp;@Model.Area m2</span>
+            <span class="blockLeftText"><b>Diện tích:</b>&nbsp;@Model.Area m2</span>
             <span class="blockLeftText"><b>Giá điện:</b>&nbsp;@Model.ElectricityFee triệu/tháng</span>
-            <span class="blockRightText"><b>Giá nước:</b>&nbsp;@Model.WaterFee triệu/tháng</span>
-            @*<span class="blockLeftText"><b>Hướng nhà:</b>&nbsp;@Model.Direction</span>*@
-            <span class="blockRightText"><b>Ngày đăng:</b>&nbsp;@Model.CreatedDate</span>
+            <span class="blockLeftText"><b>Giá nước:</b>&nbsp;@Model.WaterFee triệu/tháng</span>
+            <span class="blockLeftText" style="width: 100%;"><b>Ngày đăng:</b>&nbsp;@Model.CreatedDate</span>
             <span class="blockLeftText" style="margin-top:10px;"><b>Liên hệ:</b>&nbsp;@Model.NameContact</span>
             <div class="clear"></div>
             <span class="blockLeftText"><b>Di động:</b>&nbsp;@Model.PhoneContact</span>
-            <span class="blockRightText"><b>Yahoo!, Skype:</b>&nbsp;@Model.Skype</span>
-            <span class="blockLeftText" style="width: 95%;"><b>Ghi chú:</b>&nbsp;@Model.Description</span>
-        </div>
+            <span class="blockLeftText"><b>Skype:</b>&nbsp;@Model.Skype</span>
+            <span class="blockLeftText"><b>Yahoo!:</b>&nbsp;@Model.Yahoo</span>
+            <span class="blockLeftText" style=" width: 420px;word-wrap:break-word; height:100%;"><b>Ghi chú: </b>&nbsp;@Model.Description</span>
+          </div>
         <div class="blockInfo rightSide">
             <div class="title">
-                <div class="plusBtn"></div>HÌNH ẢNH
+                <div class="plusBtnImage"></div>HÌNH ẢNH
             </div>
             @Html.Partial("_ImagesPartial")
         </div>
         <div class="clear"></div>
         <div class="blockInfo leftSide">
-            <div class="title"><div class="plusBtn"></div>TIỆN ÍCH DỊCH VỤ BÊN TRONG</div>
+            <div class="title"><div class="plusBtnInterior"></div>TIỆN ÍCH DỊCH VỤ BÊN TRONG</div>
             <div class="clear"></div>
             <div class="colLeft">
                 @if (Model.HasInternet)
@@ -191,10 +191,10 @@
         </div>
         <div class="blockInfo rightSide" id="block4">
             <div class="clear"></div>
-            <div class="title"><div class="plusBtn"></div>VỊ TRÍ TRÊN BẢN ĐỒ</div>
+            <div class="title"><div class="plusBtnMap"></div>VỊ TRÍ TRÊN BẢN ĐỒ</div>
             <div class="map_wrapper" style="border:1px solid #bebebe">
                 <div class = "map" style="margin: 5px">
-                    <div id="mapContainer" style="width:400px;height:380px;"></div>
+                    <div id="mapContainer" style="width:400px;height:250px;"></div>
                         @Html.HiddenFor(model => model.Lat)
                         @Html.HiddenFor(model => model.Lon)
                 </div>
@@ -202,12 +202,12 @@
         </div>
         <div class="blockInfo leftSide" id="block5">
                 <div class="clear"></div>
-                <div class="title"><div class="plusBtn"></div>ĐỊA ĐIỂM LỚN XUNG QUANH</div>
-                <span class="desc">@Model.NearByPlace</span>
+                <div class="title"><div class="plusBtnOutside"></div>ĐỊA ĐIỂM LỚN XUNG QUANH</div>
+                <span class="desc" style="display:block;width:400px;word-wrap:break-word;height=100%;margin-left:43px;">@Model.NearByPlace</span>
         </div>
         <div class="blockInfo rightSide" id="block6">
                 <div class="clear"></div>
-                <div class="title"><div class="plusBtn"></div>HỎI ĐÁP</div>
+                <div class="title"><div class="plusBtnQA"></div>HỎI ĐÁP</div>
                 <div id="Question">
                     @if (!string.IsNullOrEmpty(Model.CreatedBy))
                     {
@@ -257,20 +257,18 @@
             else
             {    
                 <!-- Element to pop up -->
-                <div id="element_to_pop_up" class="login-form" style="margin: 0 auto; width: 635px;">
+                <div id="element_to_pop_up" class="login-regis" style="margin: 0 auto; width: 120px; height: 20 px;">
                     <a class="b-close">x</a>
-                    <div style="font-size:30px; color:Black">Bạn cần 
-                    <a style="color:Black;" href="@Request.Url.AbsoluteUri.Replace(@Request.Url.Authority, Request.Url.Authority + "/account/logon?returnUrl=")">đăng nhập</a>
-                    để sử dụng chức năng này</div>
-                    
-                    <div style="font-size:20px;color:Black">Đăng nhập nhanh chóng với tài khoản của Google, Yahoo, Facebook</div>
+                    <div class="tittle">Bạn cần 
+                    <a  href="@Request.Url.AbsoluteUri.Replace(@Request.Url.Authority, Request.Url.Authority + "/account/logon?returnUrl=")">đăng nhập</a>
+                    để sử dụng chức năng này</div>  
                 </div>
                 <div class="clear"></div>
             }
             </div>  
             <div id="reportWithoutLogin" class="withOutLoginReport"><img src="@Url.Content("~/Content/images/triangle_comment.png")"/></div>
             <div class="clear"></div>
-            <span>Gửi câu hỏi thắc mắc cho người đăng!</span>
+            <span>Báo cáo bài đăng vi phạm</span>
         </div>
         <div id="saveBookmark">
             @{

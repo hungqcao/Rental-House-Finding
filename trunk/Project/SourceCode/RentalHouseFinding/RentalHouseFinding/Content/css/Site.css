@@ -98,12 +98,12 @@ body{
 #footer {
     text-align: center;
     font-family: Calibri, Arial,Helvetica,Sans-Serif;
-    font-size: 14px;
+    font-size: 17px;
     color: #454545;
     padding: 30px 0 20px 0;
 }
 #header{
-	margin: 20px auto 0px;
+	margin: 10px auto 0px;
     max-width: 1054px;
 	height: 120px;
 	font-family: Calibri, Arial,Helvetica,Sans-Serif;
@@ -111,12 +111,13 @@ body{
 }
 #containerLogo{
 	background: url(../../Content/images/logo.png) no-repeat;
-	padding-top: 52px;
+	padding-top: 56px;
 }
 #logoText, #slogan{
 	padding-left: 110px;
 	display:block;
 	color: #454545;
+	font-weight:normal;
 }
 #containerLogin{
 	background: url(../../Content/images/user.png) no-repeat;
@@ -127,13 +128,13 @@ body{
 #containerLogin a{
 	text-decoration:none;
 	font-size: 14px;
-	color:#454545;
+	color:#017171;
 }
 /*Intro*/
 #searchInfo{
 	width:650px;
 	margin:0 auto;
-	padding-bottom: 30px;
+	padding-bottom: 6px;
 }
 #buttonSearch
 {
@@ -319,7 +320,7 @@ span.select {
 	margin-left: 50px;
     margin-top: 50px;
     cursor: pointer;
-    display:block;
+    display:none;
     font-size: 0px;
 }
 #linkDangtin
@@ -330,7 +331,7 @@ span.select {
 	margin-left: 80px;
     margin-top: 48px;
     cursor: pointer;
-    display:block;
+    display:none;
     font-size: 0px;
 }
 #advanceSearch
@@ -689,9 +690,9 @@ span.field-validation-error
     padding: 10px 20px;
     left: -107px;
     top: 45px;
-    font-family: Myriad Pro;
+    font-family: Calibri;
     color: #747474;
-    font-size: 12px;
+    font-size: 14px;
     z-index: 99;
 }
 
@@ -900,26 +901,27 @@ span.field-validation-error
 #popup_wrapper .popup_header {
     width: 911px;
     border-bottom: 1px solid #bebebe;
-    padding: 15px 40px 30px 15px;
+    padding: 15px 43px 20px 15px;
+    background-color:#017171;
 }
 .popup_header .type {
-    color: #839937;
+    color: white;
     font-weight: 700;
     font-size: 24px;
 }
 .popup_header .address {
-    color: #59595d;
+    color: white;
     font-weight: 700;
     font-size: 24px;
 }
 .popup_header .shortDesc {
-    font-style: italic;
-    color: #59595d;
+    font-style:normal;
+    color: white;
     font-size: 18px;
     margin-top: 5px;
 }
 .popup_header .highlight {
-    color: #d2530a;
+    color: white;
     font-size: 42px;
     font-weight: 700;
     margin-right: 7px;
@@ -930,7 +932,8 @@ span.field-validation-error
     font-weight: 700;
 }
 .popup_header .rightText {
-    margin-top: 22px
+    margin-top: 22px;
+    color: White;
 }
 .rightInfo div:first-child {
     margin-right: 20px;
@@ -940,11 +943,51 @@ span.field-validation-error
     padding: 40px 40px 23px;
 }
 .plusBtn {
-    background: url("../../Content/images/popup_plusBtn.png") no-repeat transparent 0 0;
+    background: url("../../Content/images/detail_BasicInfo.png") no-repeat transparent 0 0;
     width: 34px;
     height: 31px;
     margin-right: 10px;
+    margin-top: -7px;
 }
+
+.plusBtnImage {
+    background: url("../../Content/images/detail_Images.png") no-repeat transparent 0 0;
+    width: 34px;
+    height: 31px;
+    margin-right: 10px;
+    margin-top: -6px;
+}
+
+.plusBtnInterior {
+    background: url("../../Content/images/detail_Interior.png") no-repeat transparent 0 0;
+    width: 34px;
+    height: 31px;
+    margin-right: 10px;
+    margin-top: -7px;
+}
+
+.plusBtnMap {
+    background: url("../../Content/images/detail_Map.png") no-repeat transparent 0 0;
+    width: 34px;
+    height: 31px;
+    margin-right: 10px;
+    margin-top: -4px;
+}
+.plusBtnOutside {
+    background: url("../../Content/images/detail_Outside.png") no-repeat transparent 0 0;
+    width: 34px;
+    height: 31px;
+    margin-right: 10px;
+    margin-top: -3px;
+}
+.plusBtnQA {
+    background: url("../../Content/images/detail_QA.png") no-repeat transparent 0 0;
+    width: 34px;
+    height: 31px;
+    margin-right: 10px;
+    margin-top:-3px;
+}
+
 .blockInfo {
     font-size: 18px;
     color: #59595d;
@@ -954,6 +997,7 @@ span.field-validation-error
     font-size: 24px;
     margin-bottom: 15px;
     width: 100%;
+    color:#017171;
 }
 .blockInfo .blockLeftText {
     background: url("../../Content/images/round_shape.png") no-repeat transparent 0 4px;
@@ -1011,12 +1055,14 @@ span.field-validation-error
 }
 .blockInfo .colLeft {
     width: 160px;
+    margin-top:5px;
 }
 .blockInfo .colLeft span, .blockInfo .colRight span{
     margin: 0 0 15px 40px;
 }
 .blockInfo .colRight {
     width: 228px;
+    margin-top:5px;
 }
 .blockInfo {
     margin-bottom: 40px;
@@ -1057,6 +1103,7 @@ span.field-validation-error
     position: absolute;
     top: 10px;
     left: 10px;
+    margin-left:4px;
 }
 #saveBookmark a {
     position: absolute;
@@ -1066,7 +1113,7 @@ span.field-validation-error
 #saveBookmark div#favorite {
     position: absolute;
     top: 10px;
-    right: 10px;
+    right: 15px;
 }
 .leftSide
 {
@@ -1081,6 +1128,7 @@ div.title-ques
 {
     width: 100px;
     margin-right: 20px;
+    margin-top: 7px;
 }
 div.title-ques-input
 {
@@ -1089,8 +1137,8 @@ div.title-ques-input
 div.title-ques-input input
 {
     /*background: url("../../Content/images/tbxTileQuestion.png") no-repeat transparent 0 0;*/
-    width: 268px;
-    height: 34px;
+    width: 264px;
+   /* height: 34px;*/
     border: 1px solid #e1e1e1;
     -webkit-border-radius: 7px;
     -moz-border-radius: 7px;
@@ -1115,6 +1163,7 @@ input.btn-send-question
 {
     float: right;
     margin-top: 30px;
+    margin-right: 3px;
     background: url("../../Content/images/send_question.png") no-repeat transparent 0 0;
     display: block;
     width: 128px;
@@ -1620,7 +1669,9 @@ textarea#Description {
     float: left;
     display: block;
     margin: 5px 0px 10px 23px;
+ 
 }
+
 
 #leftInfo, #rightInfo {
     background: none repeat scroll 0 0 #FFFFFF;
@@ -1890,6 +1941,7 @@ table th {
     background: url('../images/cross_grey_small.png') no-repeat;
     width: 18px;
     height: 18px;
+    margin: 11px 11px 0px 0px;
 }
 
 #fromPrice{

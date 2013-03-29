@@ -65,13 +65,13 @@
                 Kết quả được hiện thị trực tiếp trên bản đồ thật giúp bạn có mắt nhìn trực quan
                 nhất về địa điểm bạn đang quan tâm.
             </div>
-            <img src="@Url.Content("~/Content/images/map.png")"  style="margin-left: 100px; margin-top: 35px;"/>
+            <img src="@Url.Content("~/Content/images/map.png")"  style="margin-left: 100px; margin-top: 35px; display:none;"/>
         </div>
         <div id="advanceSearch3" class="left">
             <h3>
-                Đăng tin nhanh chóng với 3 bước nhỏ</h3>
+                Đăng tin nhanh chóng với 2 bước nhỏ</h3>
             <div class="detail">
-                Bạn muốn đăng tin lên? <b>Không cần phải đăng kí</b>, đăng tin ngay trong 3 bước đơn giản.</div>
+                Bạn muốn đăng tin lên? <b>Không cần đăng kí</b>, <b><a  href="@Url.Content("~/post/create")" style="color:#017171;text-decoration:none;">đăng tin ngay</a></b> trong 2 bước đơn giản.</div>
             @Html.ActionLink("Đăng tin ngay", "Create", "Post", null, new { @id = "linkDangtin" })
         </div>
         <div class="clear">

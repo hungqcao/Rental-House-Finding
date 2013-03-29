@@ -11,12 +11,12 @@
         <script language="javascript">
             $(document).ready(
 		        function () {
-		            $("#pikame").PikaChoose({ carousel: false, autoPlay: false, carouselOptions: { wrap: 'circular'} });
+		            $("#pikame").PikaChoose({ carousel: true, autoPlay: true, carouselOptions: { wrap: 'circular'} });
 		        });
         </script>
 
         <div class="pikachoose">
-            <ul id="pikame" class="jcarousel-skin-pika" style="display:none">
+            <ul id="pikame" class="jcarousel-skin-pika" style="display:none;">
             @for (var i = 0; i < @ViewBag.Images.Count; i++)
             { 
                 <li><img src="@ViewBag.Images[i].Path" alt="" /></li>
