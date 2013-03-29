@@ -16,9 +16,15 @@
 <script src="http://www.google.com/jsapi"></script>
 <script type="text/javascript">
     function initialize() {
+        var latlon = '@ViewBag.latlon'.split('|')[0];
+        var centerMap = new google.maps.LatLng((latlon.split(',')[0]), (latlon.split(',')[1]));
+        var zoomMap = '@ViewBag.latlon'.split('|')[1];
+        var int_zoomMap = parseInt(zoomMap);
+        debugger;
         var mapOptions = {
             zoomControl: true,
-            zoom: 13,
+            center: centerMap,
+            zoom: int_zoomMap,
             mapTypeId: google.maps.MapTypeId.ROADMAP
         };
 
@@ -54,11 +60,11 @@
                             icon: markerImg,
                             animation: google.maps.Animation.DROP
                         });
-                        var latLonToSet = new google.maps.LatLng((itemData.Text.split('|')[0]), (itemData.Text.split('|')[1]));
-                        window.map.setOptions({
-                            center: latLonToSet,
-                            zoom: 14
-                        });
+//                        var latLonToSet = new google.maps.LatLng((itemData.Text.split('|')[0]), (itemData.Text.split('|')[1]));
+//                        window.map.setOptions({
+//                            center: latLonToSet,
+//                            zoom: 14
+//                        });
                         i++;
                         infowindow = new google.maps.InfoWindow();
                         google.maps.event.addListener(marker, 'click', (function (marker, i) {
@@ -83,9 +89,9 @@
                     }
                 });
                 var markerCluster = new MarkerClusterer(window.map, markers1, {
-                    zoomOnClick: false,
+                    zoomOnClick: true,
                     maxZoom: 18,
-                    gridSize: 50
+                    gridSize: 30
                 });
 
             });
@@ -151,16 +157,16 @@
 </script>
 <div id="home-search-area">
 @using (Html.BeginForm())
-{
+{    
     <div id="options">
         <div id="btnShowList" onclick="toggle_visibility('listInfo');" class="btnShowListClicked"></div>
-        @Html.DropDownListFor(model => model.CategoryId, (IEnumerable<SelectListItem>)ViewBag.CategoryId, new { @class = "select" })
+        @Html.DropDownListFor(model => model.CategoryId,null, new { @class = "select" })
         @Html.ValidationMessageFor(model => model.CategoryId)
-        @Html.DropDownListFor(model => model.ProvinceId, (IEnumerable<SelectListItem>)ViewBag.ProvinceId, new { @class = "select" })
+        @Html.DropDownListFor(model => model.ProvinceId, null, new { @class = "select" })
         @Html.ValidationMessageFor(model => model.ProvinceId)
-        @Html.DropDownListFor(model => model.DistrictId,
-            new SelectList(Enumerable.Empty<SelectListItem>(), "Id", "Name"), "Quận/Huyện",
-                    new { @id = "DistrictId", @class = "select" })
+        @Html.DropDownListFor(model => model.DistrictId, null, new { @class = "select" })
+            @*new SelectList(Enumerable.Empty<SelectListItem>(), "Id", "Name"),
+                    new { @id = "DistrictId", @class = "select" })*@
         <div class="textbox">
             @Html.TextBoxFor(model => model.KeyWord, new { @id = "KeyWord", @class = "searchMid", @placeholder = "từ khóa thêm", @style = "width: 305px; font-size: 12px;" })        
         </div>

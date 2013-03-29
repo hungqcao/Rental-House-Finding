@@ -110,15 +110,15 @@ namespace RentalHouseFinding.Models
         [Display(Name = "Có bảo vệ?")]
         public Boolean HasSecurity { get; set; }
 
-        [Required(ErrorMessage = "Xin vui lòng nhập số điện thoại.")]
+        [Required(ErrorMessage = "Xin vui lòng nhập số điện thoại liên lạc.")]
         [Display(Name = "Số điện thoại")]
         [MaxLength(15, ErrorMessage = "Không được vượt quá 15 ký tự, xin vui lòng nhập lại.")]
         [RegularExpression("(([0+])([0-9]+))", ErrorMessage = "Sai định dạng,xin vui lòng nhập lại")]
         public string PhoneContact { get; set; }
 
         [Display(Name = "Email liên lạc")]
-        [MaxLength(50, ErrorMessage = "Không được vượt quá 50 ký tự, xin vui lòng nhập lại.")]
-        [Required(ErrorMessage = "Xin vui lòng nhập email.")]
+        //[MaxLength(50, ErrorMessage = "Không được vượt quá 50 ký tự, xin vui lòng nhập lại.")]
+        //[Required(ErrorMessage = "Xin vui lòng nhập email.")]
         [RegularExpression(@"\w+([-+.']\w+)*@\w+([-.]\w+)*\.\w+([-.]\w+)*", ErrorMessage = "Email không hợp lệ.")]
         public string Email { get; set; }
 

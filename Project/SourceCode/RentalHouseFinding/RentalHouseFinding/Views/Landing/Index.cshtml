@@ -27,7 +27,7 @@
             @Html.DropDownListFor(model => model.ProvinceId, (IEnumerable<SelectListItem>)ViewBag.ProvinceId, new { @class = "select" })
             @Html.ValidationMessageFor(model => model.ProvinceId)   
 	        @Html.DropDownListFor(model => model.DistrictId,
-                new SelectList(Enumerable.Empty<SelectListItem>(), "Id", "Name"), "Chọn Quận/Huyện",
+                new SelectList(Enumerable.Empty<SelectListItem>(), "Id", "Name"), "Quận/Huyện",
                 new { @id = "DistrictId", @class = "select", @style="margin-right:0px" })
             <div class="clear">
             </div>
