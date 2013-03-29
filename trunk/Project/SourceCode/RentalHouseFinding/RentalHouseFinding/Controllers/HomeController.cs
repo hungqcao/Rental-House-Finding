@@ -29,8 +29,10 @@ namespace RentalHouseFinding.Controllers
 
         public ActionResult Index()
         {
-            ViewBag.CategoryId = new SelectList(_db.Categories, "Id", "Name");
-            ViewBag.ProvinceId = new SelectList(_db.Provinces, "Id", "Name");
+            ViewBag.CategoryId = new SelectList(_db.Categories, "Id", "Name", ((SearchViewModel)(Session["SearchViewModel"])).CategoryId);
+            ViewBag.ProvinceId = new SelectList(_db.Provinces, "Id", "Name", ((SearchViewModel)(Session["SearchViewModel"])).ProvinceId);
+            ViewBag.DistrictId = new SelectList(Repository.GetAllDistricts().Where(d => d.ProvinceId == ((SearchViewModel)(Session["SearchViewModel"])).ProvinceId), "Id", "Name", ((SearchViewModel)(Session["SearchViewModel"])).DistrictId);
+            ViewBag.latlon = ((SearchViewModel)(Session["SearchViewModel"])).CenterMap;
             Session["NumberSkip"] = null;
             Session["NumberResult"] = null;
             return View();
@@ -39,7 +41,7 @@ namespace RentalHouseFinding.Controllers
         [HttpPost]
         public ActionResult Index(SearchViewModel model)
         {
-            ViewBag.CategoryId = new SelectList(Repository.GetAllCategories(), "Id", "Name");
+            ViewBag.CategoryId = new SelectList(Repository.GetAllCategories(), "Id", "Name");            
             ViewBag.ProvinceId = new SelectList(Repository.GetAllProvinces(), "Id", "Name");
 
             if (model != null)
@@ -195,5 +197,7 @@ namespace RentalHouseFinding.Controllers
             }
             return null;
         }
+
+        
     }
 }

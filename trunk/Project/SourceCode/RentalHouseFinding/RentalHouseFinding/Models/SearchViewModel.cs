@@ -88,5 +88,7 @@ namespace RentalHouseFinding.Models
         [Display(Name = "Có bảo vệ?")]
         public Boolean HasSecurity { get; set; }
         public int HasSecurityScore { get; set; }
+
+        public string CenterMap { get; set; }
     }
 }
