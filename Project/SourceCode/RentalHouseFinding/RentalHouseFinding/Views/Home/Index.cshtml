@@ -20,7 +20,6 @@
         var centerMap = new google.maps.LatLng((latlon.split(',')[0]), (latlon.split(',')[1]));
         var zoomMap = '@ViewBag.latlon'.split('|')[1];
         var int_zoomMap = parseInt(zoomMap);
-        debugger;
         var mapOptions = {
             zoomControl: true,
             center: centerMap,
