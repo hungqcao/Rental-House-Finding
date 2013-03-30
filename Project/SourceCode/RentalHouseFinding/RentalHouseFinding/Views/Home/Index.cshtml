@@ -35,15 +35,13 @@
         var imageInactive = '@Url.Content("~/Content/images/inactive_marker.png")';
         var imageActive = '@Url.Content("~/Content/images/active_marker.png")';
 
-        //var bounds = new google.maps.LatLngBounds();
-        //        function initialize() {
-        
+        var scriptInfobox = document.createElement('script');
+        scriptInfobox.type = 'text/javascript';
+        scriptInfobox.src = '@Url.Content("~/Content/js/infobox.js")';
+
+        document.body.appendChild(scriptInfobox);
+
         var infowindow;
-        //=======For Group Marker=======
-
-        //===========End================
-
-
 
         $.getJSON("home/GetLatLonFromResult",
             function (myData) {
@@ -51,6 +49,7 @@
 
                 var markerImg = new google.maps.MarkerImage(imageInactive);
                 var altMarkerImg = new google.maps.MarkerImage(imageActive);
+                var ib = new InfoBox();
                 $.each(source, function (index, itemData) {
                     if (itemData.Text.length != 0) {
                         marker = new google.maps.Marker({
@@ -59,32 +58,63 @@
                             icon: markerImg,
                             animation: google.maps.Animation.DROP
                         });
-//                        var latLonToSet = new google.maps.LatLng((itemData.Text.split('|')[0]), (itemData.Text.split('|')[1]));
-//                        window.map.setOptions({
-//                            center: latLonToSet,
-//                            zoom: 14
-//                        });
                         i++;
-                        infowindow = new google.maps.InfoWindow();
+                        //infowindow = new google.maps.InfoWindow();
                         google.maps.event.addListener(marker, 'click', (function (marker, i) {
                             return function () {
                                 var valuePost = itemData.Text.split('|');
-                                infowindow.setContent('<div class="1">'
-                                + '<h3>' + valuePost[5] + '</h3>'
+//                                infowindow.setContent('<div class="1">'
+//                                + '<h3>' + valuePost[5] + '</h3>'
+//                                + '<br/>'
+//                                + '<h4>' + valuePost[4] + '<h4>'
+//                                + '<br/>'
+//                                + '<br/>'
+//                                + 'Diện tích:' + valuePost[2] + ' m2' + '  |  Giá:' + valuePost[3] + 'triệu VNĐ'
+//                                + '<br/>'
+//                                + '<a class="infoDetail left fancybox" href="/post/detailsbox/' + itemData.Value + '">Xem chi tiết</a>'
+//                                + '</div>');
+
+                                //Infobox
+                                var boxText = document.createElement("div");
+                                boxText.className = "infoBox-wrapper";
+                                boxText.innerHTML = '<div class="infoBox-item">'
+                                + '<label id="title">' + valuePost[5] + '</label>'
                                 + '<br/>'
-                                + '<h4>' + valuePost[4] + '<h4>'
+                                + '<label id="address">' + valuePost[4] + '</label>'
                                 + '<br/>'
                                 + '<br/>'
-                                + 'Diện tích:' + valuePost[2] + ' m2' + '  |  Giá:' + valuePost[3] + 'triệu VNĐ'
+                                + '<label id="area">Diện tích:' + valuePost[2] + ' m2' + '</label><br/><label id="price">Giá:' + valuePost[3] + 'triệu VNĐ</label>'
                                 + '<br/>'
-                                + '<a class="infoDetail left fancybox" href="/post/detailsbox/' + itemData.Value + '">Xem chi tiết</a>'
-                                + '</div>');
-                                infowindow.open(window.map, marker);
+                                + '<a class="infoDetail left fancybox" href="/post/details/' + itemData.Value + '">Xem chi tiết</a>'
+                                + '</div>';
+
+                                var url = '@Url.Content("~/Content/images/tipbox.gif")';
+                                var myOptions = {
+                                    content: boxText
+			                        , disableAutoPan: false
+			                        , maxWidth: 0
+			                        , pixelOffset: new google.maps.Size(-140, 0)
+			                        , zIndex: null
+			                        , boxStyle: {
+			                            background: "url("+ url + ") no-repeat"
+			                          , opacity: 1
+			                          , width: "280px"
+			                        }
+			                        , closeBoxMargin: "10px 2px 2px 2px"
+			                        , closeBoxURL: "http://www.google.com/intl/en_us/mapfiles/close.gif"
+			                        , infoBoxClearance: new google.maps.Size(1, 1)
+			                        , isHidden: false
+			                        , pane: "floatPane"
+			                        , enableEventPropagation: false
+                                };
+			                    //--End
+                                ib.close();
+                                ib.setOptions(myOptions)
+			                    ib.open(window.map, this);
                             }
                         })(marker, i));
                         markers.marker.push({ "id": itemData.Value, "value": marker });
                         markers1.push(marker);
-                        //bounds.extend(latLonToSet);
                     }
                 });
                 var markerCluster = new MarkerClusterer(window.map, markers1, {
@@ -117,6 +147,7 @@
         script.type = 'text/javascript';
         script.src = 'https://maps.googleapis.com/maps/api/js?v=3.exp&sensor=false&' +
             'callback=initialize';
+
         document.body.appendChild(script);
     }
 

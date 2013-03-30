@@ -12,7 +12,7 @@ namespace RentalHouseFinding.Controllers
     public class HomeController : Controller
     {
         private RentalHouseFindingEntities _db = new RentalHouseFindingEntities();
-
+        private string _noInfo;
         public ICacheRepository Repository { get; set; }
         public HomeController()
             : this(new CacheRepository())
@@ -22,6 +22,7 @@ namespace RentalHouseFinding.Controllers
         public HomeController(ICacheRepository repository)
         {
             this.Repository = repository;
+            this._noInfo = Repository.GetAllConfiguration().Where(c => c.Name.Equals(ConstantCommonString.NONE_INFORMATION, StringComparison.CurrentCultureIgnoreCase)).Select(c => c.Value).FirstOrDefault().ToString();
         }
 
         //
@@ -29,8 +30,8 @@ namespace RentalHouseFinding.Controllers
 
         public ActionResult Index()
         {
-            ViewBag.CategoryId = new SelectList(_db.Categories, "Id", "Name", ((SearchViewModel)(Session["SearchViewModel"])).CategoryId);
-            ViewBag.ProvinceId = new SelectList(_db.Provinces, "Id", "Name", ((SearchViewModel)(Session["SearchViewModel"])).ProvinceId);
+            ViewBag.CategoryId = new SelectList(Repository.GetAllCategories(), "Id", "Name", ((SearchViewModel)(Session["SearchViewModel"])).CategoryId);
+            ViewBag.ProvinceId = new SelectList(Repository.GetAllProvinces(), "Id", "Name", ((SearchViewModel)(Session["SearchViewModel"])).ProvinceId);
             ViewBag.DistrictId = new SelectList(Repository.GetAllDistricts().Where(d => d.ProvinceId == ((SearchViewModel)(Session["SearchViewModel"])).ProvinceId), "Id", "Name", ((SearchViewModel)(Session["SearchViewModel"])).DistrictId);
             ViewBag.latlon = ((SearchViewModel)(Session["SearchViewModel"])).CenterMap;
             Session["NumberSkip"] = null;
@@ -58,13 +59,94 @@ namespace RentalHouseFinding.Controllers
         {
             try
             {
-                var myData = Repository.GetAllPosts().Select(a => new SelectListItem()
+                if (Session["SearchViewModel"] != null)
                 {
-                    Text = a.Lat + "|" + a.Lon + "|" + a.Area.ToString() + "|" + a.Price.ToString() + "|" + a.NumberAddress.Trim() + " " + a.Street.Trim() + "|" + a.Title,
-                    Value = a.Id.ToString(),
-                });
+                    SearchViewModel _modelRequest = (SearchViewModel)Session["SearchViewModel"];
 
-                return Json(myData, JsonRequestBehavior.AllowGet);
+                    if (_modelRequest.IsNormalSearch)
+                    {
+                        using (FullTextSearchHelper fullTextHelp = new FullTextSearchHelper())
+                        {
+                            IEnumerable<int> list = new List<int>();
+
+                            var suggList = fullTextHelp.FullTextSearchPostWithWeightenScoreTakeAll(_modelRequest.CategoryId,
+                                                                                    _modelRequest.ProvinceId,
+                                                                                    _modelRequest.DistrictId,
+                                                                                    _modelRequest.KeyWord,
+                                                                                    int.Parse(Repository.GetAllConfiguration().Where(c => c.Name.Equals(ConstantColumnNameScoreNormalSearch.DESCRIPTION_COLUMN_SCORE_NAME, StringComparison.CurrentCultureIgnoreCase)).Select(c => c.Value).FirstOrDefault().ToString()),
+                                                                                    int.Parse(Repository.GetAllConfiguration().Where(c => c.Name.Equals(ConstantColumnNameScoreNormalSearch.TITLE_COLUMN_SCORE_NAME, StringComparison.CurrentCultureIgnoreCase)).Select(c => c.Value).FirstOrDefault().ToString()),
+                                                                                    int.Parse(Repository.GetAllConfiguration().Where(c => c.Name.Equals(ConstantColumnNameScoreNormalSearch.STREET_COLUMN_SCORE_NAME, StringComparison.CurrentCultureIgnoreCase)).Select(c => c.Value).FirstOrDefault().ToString()),
+                                                                                    int.Parse(Repository.GetAllConfiguration().Where(c => c.Name.Equals(ConstantColumnNameScoreNormalSearch.NEARBY_COLUMN_SCORE_NAME, StringComparison.CurrentCultureIgnoreCase)).Select(c => c.Value).FirstOrDefault().ToString()),
+                                                                                    int.Parse(Repository.GetAllConfiguration().Where(c => c.Name.Equals(ConstantColumnNameScoreNormalSearch.NUMBER_ADDRESS_COLUMN_SCORE_NAME, StringComparison.CurrentCultureIgnoreCase)).Select(c => c.Value).FirstOrDefault().ToString()),
+                                                                                    int.Parse(Repository.GetAllConfiguration().Where(c => c.Name.Equals(ConstantColumnNameScoreNormalSearch.DIRECTION_COLUMN_SCORE_NAME, StringComparison.CurrentCultureIgnoreCase)).Select(c => c.Value).FirstOrDefault().ToString()));
+                            List<Posts> query = new List<Posts>();
+                            if (suggList != null)
+                            {
+                                list = suggList.Select(p => p.Id).ToList();
+                                foreach (int i in list)
+                                {
+                                    query.Add((from p in _db.Posts
+                                               where p.Id == i
+                                               select p).FirstOrDefault());
+                                }
+                            }
+                            var lstPostViewModel = query.Select(p => CommonModel.ConvertPostToPostViewModel(p, _noInfo));
+                            var myData = lstPostViewModel.Select(a => new SelectListItem()
+                            {
+                                Text = a.Lat + "|" + a.Lon + "|" + a.Area.ToString() + "|" + a.Price.ToString() + "|" + a.NumberHouse.Trim() + " " + a.Street.Trim() + "|" + a.Title,
+                                Value = a.Id.ToString(),
+                            });
+
+                            return Json(myData, JsonRequestBehavior.AllowGet);
+                        }
+                    }
+
+                    if (_modelRequest.IsAdvancedSearch)
+                    {
+                        using (FullTextSearchHelper fullTextHelp = new FullTextSearchHelper())
+                        {
+                            IEnumerable<int> list = new List<int>();
+                            var suggList = fullTextHelp.AdvanceSearchTakeAll(_modelRequest.CategoryId,
+                                                                      _modelRequest.ProvinceId,
+                                                                      _modelRequest.DistrictId,
+                                                                      _modelRequest.AreaMax,
+                                                                      _modelRequest.AreaMin,
+                                                                      _modelRequest.PriceMax,
+                                                                      _modelRequest.PriceMin,
+                                                                      _modelRequest.HasAirConditionerScore,
+                                                                      _modelRequest.HasBedScore,
+                                                                      _modelRequest.HasGarageScore,
+                                                                      _modelRequest.HasInternetScore,
+                                                                      _modelRequest.HasMotorParkingScore,
+                                                                      _modelRequest.HasSecurityScore,
+                                                                      _modelRequest.HasTVCableScore,
+                                                                      _modelRequest.HasWaterHeaterScore,
+                                                                      _modelRequest.IsAllowCookingScore,
+                                                                      _modelRequest.IsStayWithOwnerScore,
+                                                                      _modelRequest.HasToiletScore);
+                            List<Posts> query = new List<Posts>();
+                            if (suggList != null)
+                            {
+                                list = suggList.Select(p => p.Id).ToList();
+                                foreach (int i in list)
+                                {
+                                    query.Add((from p in _db.Posts
+                                               where p.Id == i
+                                               select p).FirstOrDefault());
+                                }
+                            }
+                            var lstPostViewModel = query.Select(p => CommonModel.ConvertPostToPostViewModel(p, _noInfo));
+                            var myData = lstPostViewModel.Select(a => new SelectListItem()
+                            {
+                                Text = a.Lat + "|" + a.Lon + "|" + a.Area.ToString() + "|" + a.Price.ToString() + "|" + a.NumberHouse.Trim() + " " + a.Street.Trim() + "|" + a.Title,
+                                Value = a.Id.ToString(),
+                            });
+
+                            return Json(myData, JsonRequestBehavior.AllowGet);
+                        }
+                    }
+                }
+                return Json(new { message = "Fail" }, JsonRequestBehavior.AllowGet);
             }
             catch
             {
@@ -74,8 +156,8 @@ namespace RentalHouseFinding.Controllers
 
         public ActionResult GetSectionSideListPost(int skipNum, int takeNum)
         {
-            ViewBag.CategoryId = new SelectList(_db.Categories, "Id", "Name");
-            ViewBag.ProvinceId = new SelectList(_db.Provinces, "Id", "Name");
+            ViewBag.CategoryId = new SelectList(Repository.GetAllCategories(), "Id", "Name");
+            ViewBag.ProvinceId = new SelectList(Repository.GetAllProvinces(), "Id", "Name");
             if (!(Session["NumberSkip"] == null))
             {
                 skipNum += (int)Session["NumberSkip"];
@@ -114,8 +196,7 @@ namespace RentalHouseFinding.Controllers
                                              select p).FirstOrDefault());
                             }
                         }
-                        var lstPostViewModel = query.Select(p => CommonModel.ConvertPostToPostViewModel(p));
-                        Session["ResultPostViewModel"] = lstPostViewModel.ToList();
+                        var lstPostViewModel = query.Select(p => CommonModel.ConvertPostToPostViewModel(p, _noInfo));
                         if (Session["NumberResult"] == null)
                         {
                             Session["NumberResult"] = lstPostViewModel.Count();
@@ -172,8 +253,7 @@ namespace RentalHouseFinding.Controllers
                                            select p).FirstOrDefault());
                             }
                         }
-                        var lstPostViewModel = query.Select(p => CommonModel.ConvertPostToPostViewModel(p));
-                        Session["ResultPostViewModel"] = lstPostViewModel.ToList();
+                        var lstPostViewModel = query.Select(p => CommonModel.ConvertPostToPostViewModel(p, _noInfo));
                         if (Session["NumberResult"] == null)
                         {
                             Session["NumberResult"] = lstPostViewModel.Count();
@@ -197,7 +277,5 @@ namespace RentalHouseFinding.Controllers
             }
             return null;
         }
-
-        
     }
 }

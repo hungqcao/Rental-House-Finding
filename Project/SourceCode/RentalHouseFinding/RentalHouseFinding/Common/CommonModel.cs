@@ -97,9 +97,9 @@ namespace RentalHouseFinding.Common
             };
         }
 
-        public static Posts ConvertPostViewModelToPost(Posts post, PostViewModel model, DateTime createdDate, DateTime editedDate, DateTime renewDate)
+        public static Posts ConvertPostViewModelToPost(Posts post, PostViewModel model, DateTime createdDate, DateTime editedDate, DateTime renewDate, string noInformation)
         {
-            post.NumberAddress = model.NumberHouse;
+            post.NumberAddress = model.NumberHouse.Equals(noInformation, StringComparison.CurrentCultureIgnoreCase) ? string.Empty : model.NumberHouse;
             post.Street = model.Street;
             post.Area = model.Area;
             post.CategoryId = model.CategoryId;
@@ -108,10 +108,10 @@ namespace RentalHouseFinding.Common
             post.Contacts.Phone = model.PhoneContact;
             post.Contacts.Skype = model.Skype;
             post.Contacts.Yahoo = model.Yahoo;
-            post.Contacts.NameContact = model.NameContact;
+            post.Contacts.NameContact = model.NameContact.Equals(noInformation, StringComparison.CurrentCultureIgnoreCase) ? string.Empty : model.NameContact;
 
             post.CreatedDate = createdDate;
-            post.Description = model.Description;
+            post.Description = model.Description.Equals(noInformation, StringComparison.CurrentCultureIgnoreCase) ? string.Empty : model.Description;
             post.DistrictId = model.DistrictId;
             post.EditedDate = editedDate;
 
@@ -163,13 +163,13 @@ namespace RentalHouseFinding.Common
             return dictReturn;
         }
 
-        public static PostViewModel ConvertPostToPostViewModel(Posts model)
+        public static PostViewModel ConvertPostToPostViewModel(Posts model, string noInformation)
         {
             string createBy = model.UserId == null ? string.Empty : model.User.Username;
             return new PostViewModel
             {
                 Id = model.Id,
-                NumberHouse = model.NumberAddress,
+                NumberHouse = model.NumberAddress.Equals(noInformation, StringComparison.CurrentCultureIgnoreCase) ? string.Empty : model.NumberAddress,
                 Street = model.Street,
                 Address = String.Format("{0} {1}, {2}",model.NumberAddress,model.Street,model.District.Name),
                 Area = model.Area,
@@ -178,7 +178,7 @@ namespace RentalHouseFinding.Common
                 PhoneContact = model.Contacts.Phone,
                 Skype = model.Contacts.Skype,
                 Yahoo = model.Contacts.Yahoo,
-                Description = model.Description,
+                Description = model.Description.Equals(noInformation, StringComparison.CurrentCultureIgnoreCase) ? string.Empty : model.Description,
                 DistrictId = model.DistrictId,
                 Direction = model.Facilities.Direction,
                 ElectricityFee = model.Facilities.ElectricityFee,
@@ -217,7 +217,7 @@ namespace RentalHouseFinding.Common
                 AllowCooking = model.Facilities.IsAllowCooking ? "Có" : "Không",
                 StayWithOwner = model.Facilities.IsStayWithOwner ? "Có" : "Không",
                 UserId = model.UserId,
-                NameContact = model.Contacts.NameContact,
+                NameContact = model.Contacts.NameContact.Equals(noInformation, StringComparison.CurrentCultureIgnoreCase) ? string.Empty : model.Contacts.NameContact,
                 NearByPlace = model.NearbyPlace,
                 lstNearByPlace = GetDictionaryNearybyPlace(model.Id)
             };
