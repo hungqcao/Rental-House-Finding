@@ -18,6 +18,7 @@ namespace RentalHouseFinding.Controllers
         private readonly ILog log = LogManager.GetLogger(MethodBase.GetCurrentMethod().DeclaringType);
 
         RentalHouseFindingEntities _db = new RentalHouseFindingEntities();
+        private string _noInfo;
 
         public ICacheRepository Repository { get; set; }
         public PostController()
@@ -28,6 +29,7 @@ namespace RentalHouseFinding.Controllers
         public PostController(ICacheRepository repository)
         {
             this.Repository = repository;
+            this._noInfo = Repository.GetAllConfiguration().Where(c => c.Name.Equals(ConstantCommonString.NONE_INFORMATION, StringComparison.CurrentCultureIgnoreCase)).Select(c => c.Value).FirstOrDefault().ToString();
         }
 
         public ActionResult Index()
@@ -87,7 +89,7 @@ namespace RentalHouseFinding.Controllers
             Session["PostID"] = post.Id;
             Session["CreatedUserId"] = post.UserId;
 
-            return View(CommonModel.ConvertPostToPostViewModel(post));
+            return View(CommonModel.ConvertPostToPostViewModel(post, _noInfo));
         }
 
         public ActionResult DetailsBox(int id)
@@ -141,7 +143,7 @@ namespace RentalHouseFinding.Controllers
             Session["PostID"] = post.Id;
             Session["CreatedUserId"] = post.UserId;
 
-            return View(CommonModel.ConvertPostToPostViewModel(post));
+            return View(CommonModel.ConvertPostToPostViewModel(post, _noInfo));
         }
 
         //
@@ -150,8 +152,9 @@ namespace RentalHouseFinding.Controllers
         public ActionResult Create()
         {
             ViewBag.CategoryId = new SelectList(Repository.GetAllCategories(), "Id", "Name");
-            ViewBag.ProvinceId = new SelectList(Repository.GetAllProvinces(), "Id", "Name");
-            ViewBag.DistrictId = new SelectList(Repository.GetAllDistricts(), "Id", "Name");
+            //24 for Ha noi
+            ViewBag.ProvinceId = new SelectList(Repository.GetAllProvinces(), "Id", "Name", 24);
+            ViewBag.DistrictId = new SelectList(Repository.GetAllDistricts().Where(d => d.ProvinceId == 24), "Id", "Name");
             return View();
         }
 
@@ -170,7 +173,7 @@ namespace RentalHouseFinding.Controllers
                     int.TryParse(strExpiredDate, out numberExpiredDate);
                     Posts postToCreate = CommonModel.ConvertPostViewModelToPost(model, DateTime.Now, DateTime.Now, DateTime.Now, 
                                 DateTime.Now.AddDays(numberExpiredDate),
-                                Repository.GetAllConfiguration().Where( c => c.Name.Equals(ConstantCommonString.NONE_INFORMATION, StringComparison.CurrentCultureIgnoreCase)).Select(c => c.Value).FirstOrDefault().ToString());
+                                _noInfo);
 
                     if (CommonModel.FilterHasBadContent(model))
                     {
@@ -280,7 +283,7 @@ namespace RentalHouseFinding.Controllers
             ViewBag.CategoryId = new SelectList(Repository.GetAllCategories(), "Id", "Name", postModel.CategoryId);
             ViewBag.ProvinceId = new SelectList(Repository.GetAllProvinces(), "Id", "Name", postModel.District.ProvinceId);
             ViewBag.DistrictId = new SelectList(Repository.GetAllDistricts().Where(d=>d.ProvinceId == postModel.District.ProvinceId), "Id", "Name", postModel.DistrictId);
-            return View(CommonModel.ConvertPostToPostViewModel(postModel));
+            return View(CommonModel.ConvertPostToPostViewModel(postModel, _noInfo));
         }
 
         [Authorize(Roles = "User, Admin")]
@@ -331,15 +334,15 @@ namespace RentalHouseFinding.Controllers
             {
                 try
                 {
-                    int status = 0;
                     var post = (from p in _db.Posts where (p.Id == postViewModel.Id) select p).FirstOrDefault();
                     if (CommonModel.FilterHasBadContent(postViewModel))
                     {
                         //2 for pending
                         post.StatusId = 2;
-                        TempData["MessageSuccessEdit"] = "Bài đăng có chứa những từ không cho phép, chúng tôi sẽ duyệt trước khi đăng lên hệ thống";
+                        TempData["MessagePendingPostNew"] = "Bài đăng có chứa những từ không cho phép, chúng tôi sẽ duyệt trước khi đăng lên hệ thống";
+                        TempData["Pending"] = true;
                     }
-                    post = CommonModel.ConvertPostViewModelToPost(post, postViewModel, post.CreatedDate, DateTime.Now, DateTime.Now);
+                    post = CommonModel.ConvertPostViewModelToPost(post, postViewModel, post.CreatedDate, DateTime.Now, DateTime.Now, _noInfo);
                     
 
                     Dictionary<int, string> lstNearbyId = GetListNearbyLocations(postViewModel);
@@ -398,7 +401,8 @@ namespace RentalHouseFinding.Controllers
                             }
                         }
                     }
-                    TempData["MessageSuccessEdit"] = "Thay đổi thông tin thành công!";
+                    TempData["MessageSuccessPostNew"] = "Thay đổi thông tin thành công";
+                    TempData["Success"] = true;
                     return RedirectToAction("Details", new { Id = post.Id });
                 }
                 catch (Exception ex)

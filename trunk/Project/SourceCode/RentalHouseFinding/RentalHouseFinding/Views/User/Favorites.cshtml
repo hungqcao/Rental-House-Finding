@@ -5,9 +5,9 @@
 <fieldset style="width: 500px;">
     <div id="container-grid">
         @{
-            if (ViewBag.PostList != null)
+            if (ViewBag.FavoriteList != null)
             {
-                var grid = new WebGrid(ViewBag.PostList, ajaxUpdateContainerId: "container-grid", canSort: false
+                var grid = new WebGrid(ViewBag.FavoriteList, ajaxUpdateContainerId: "container-grid", canSort: false
                     );
         
                 @grid.GetHtml(tableStyle: "", mode: WebGridPagerModes.All, 

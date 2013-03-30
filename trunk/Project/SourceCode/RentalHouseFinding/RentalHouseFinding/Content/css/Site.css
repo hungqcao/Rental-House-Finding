@@ -827,7 +827,8 @@ span.field-validation-error
 #listInfo .infoDetail {
     display: block;
     float: left;
-    padding: 0 15px;
+    padding: 0 20px;
+    width: 280px;
 }
 #listInfo .infoDetail div, #listInfo .infoDetail img, #listInfo .infoDetail span {
     display: block;
@@ -1214,7 +1215,9 @@ label {
 
 #element_to_pop_up { 
     background-color:HighlightText;
-    border-radius:15px;
+    -webkit-border-radius: 7px;
+    -moz-border-radius: 7px;
+    border-radius: 7px;
     color:#000;
     display:none; 
     padding:20px;
@@ -1941,7 +1944,6 @@ table th {
     background: url('../images/cross_grey_small.png') no-repeat;
     width: 18px;
     height: 18px;
-    margin: 11px 11px 0px 0px;
 }
 
 #fromPrice{
@@ -2022,4 +2024,18 @@ ul {
     padding: 1px;
     position: absolute;
     width: 9px;
+}
+.infoBox-wrapper
+{
+    border: 1px solid black; 
+    margin-top: 8px; 
+    background: #fff; 
+    padding: 5px;
+    -webkit-border-radius: 7px;
+    -moz-border-radius: 7px;
+    border-radius: 7px;
+}
+.infoBox-item
+{
+    
 }

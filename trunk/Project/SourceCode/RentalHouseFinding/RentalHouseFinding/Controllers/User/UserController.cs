@@ -100,10 +100,6 @@ namespace RentalHouseFinding.Controllers
         [Authorize(Roles = "Admin, User")]
         public ActionResult Favorites()
         {
-            //Get post status list
-            var postStatusList = (from p in _db.PostStatuses
-                                  select p).ToList();
-            ViewBag.StatusList = postStatusList;
             //Get user ID
             int userId = CommonModel.GetUserIdByUsername(User.Identity.Name);
             //Get user's favorite list
@@ -111,7 +107,7 @@ namespace RentalHouseFinding.Controllers
                              where (f.UserId == userId && !f.IsDeleted)
                              select f.PostId).ToList();
             var favoriteList = (from f in _db.Posts
-                                where (!f.IsDeleted && lstPostId.Contains(f.Id))
+                                where (!f.IsDeleted && lstPostId.Contains(f.Id)) 
                                 select f).ToList();
 
             var postViewList = favoriteList.Select(p => new
@@ -122,9 +118,7 @@ namespace RentalHouseFinding.Controllers
                 p.CreatedDate,
                 p.EditedDate,
                 p.RenewDate,
-                PostStatus = (from stt in _db.PostStatuses
-                              where (stt.Id == p.StatusId)
-                              select stt.Name).FirstOrDefault()
+                PostStatus = p.PostStatus.Name
             });
 
             ViewBag.FavoriteList = postViewList;
