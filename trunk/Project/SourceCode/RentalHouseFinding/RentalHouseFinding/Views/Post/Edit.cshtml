@@ -239,7 +239,7 @@
                     @Html.DropDownListFor(model => model.CategoryId, null, new { @class = "select" })
                     @Html.ValidationMessageFor(model => model.CategoryId)
                 </div>
-                <div class="infoElement infoTitle">
+                <div class="infoElement infoTitle requireField">
                     <h2>Tiêu đề tin đăng</h2>
                     <div class="clear"></div>
                     @Html.TextBoxFor(model => model.Title, new { @class = "longTbx" })
@@ -259,7 +259,7 @@
                     @Html.ValidationMessageFor(model => model.DistrictId)
                 </div>
                 <div class="clear"></div>
-                <div class="infoElement">
+                <div class="infoElement requireField">
                     <h2>Đường, phố</h2>
                     <div class="clear"></div>
                     @Html.TextBoxFor(model => model.Street, new { @class = "tbx" })
@@ -272,13 +272,13 @@
                     @Html.ValidationMessageFor(model => model.NumberHouse)
                 </div>
                 <div class="clear"></div>
-                <div class="infoElement">
+                <div class="infoElement requireField">
                     <h2>Giá tiền (triệu VND/tháng)</h2>
                     <div class="clear"></div>
                     @Html.TextBoxFor(model => model.Price, new { @class = "tbx" })
                     @Html.ValidationMessageFor(model => model.Price)
                 </div>
-                <div class="infoElement">
+                <div class="infoElement requireField">
                     <h2>Diện tích (m2)</h2>
                     <div class="clear"></div>
                     @Html.TextBoxFor(model => model.Area, new { @class = "tbx" })
@@ -291,13 +291,13 @@
                     @Html.TextBoxFor(model => model.NameContact, new { @class = "tbx" })
                     @Html.ValidationMessageFor(model => model.NameContact)
                 </div>
-                <div class="infoElement">
+                <div class="infoElement requireField">
                     <h2>Điện thoại liên hệ</h2>
                     <div class="clear"></div>
                     @Html.TextBoxFor(model => model.PhoneContact, new { @class = "tbx" })
                     @Html.ValidationMessageFor(model => model.PhoneContact)
                 </div>
-                <div class="infoElement">
+                <div class="infoElement requireField">
                     <h2>Điện thoại kích hoạt</h2>
                     <div class="clear"></div>
                     @Html.TextBoxFor(model => model.PhoneActive, new { @class = "tbx" })
