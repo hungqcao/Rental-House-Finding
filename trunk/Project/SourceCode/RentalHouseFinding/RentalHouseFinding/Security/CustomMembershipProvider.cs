@@ -299,7 +299,7 @@ namespace RentalHouseFinding.Sercurity
 
         public override int MinRequiredPasswordLength
         {
-            get { return 6; }
+            get { return 8; }
         }
 
         public override int PasswordAttemptWindow
