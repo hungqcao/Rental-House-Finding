@@ -195,9 +195,9 @@ namespace RentalHouseFinding.Controllers
                         }
                     }
                 }
-                if (lstPost.Count == 0)
+                if (lstPost.Count < 2)
                 {
-                    return Content("Bạn cần chọn bài để so sánh", "text/html");
+                    return Content("Bạn cần chọn bài ít nhất 2 bài để so sánh", "text/html");
                 }
                 return View(lstPost);
             }
@@ -236,5 +236,7 @@ namespace RentalHouseFinding.Controllers
             }
 
         }
+
+
     }
 }

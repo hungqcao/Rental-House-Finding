@@ -10,7 +10,7 @@ using RentalHouseFinding.Models;
 namespace RentalHouseFinding.Common
 {
     public static class CommonController
-    {
+    {        
         public static string GetMD5Hash(string value)
         {
             MD5 md5Hasher = MD5.Create();
@@ -54,6 +54,23 @@ namespace RentalHouseFinding.Common
             {
                 return DateTime.Today;
             }
+        }
+
+        public static string GetCenterMap(SearchViewModel model)
+        {
+            RentalHouseFindingEntities _db = new RentalHouseFindingEntities();
+            string centerMap = String.Empty;
+            if (model.DistrictId == 0)
+            {
+                var province = (from p in _db.Provinces where p.Id == model.ProvinceId && !p.IsDeleted select p).FirstOrDefault();
+                centerMap = province.Lat + "," + province.Lon + "|11";
+            }
+            else
+            {
+                var district = (from p in _db.Districts where p.Id == model.DistrictId && !p.IsDeleted select p).FirstOrDefault();
+                centerMap = district.Lat + "," + district.Lon + "|14";
+            }
+            return centerMap;
         }
     }
 }

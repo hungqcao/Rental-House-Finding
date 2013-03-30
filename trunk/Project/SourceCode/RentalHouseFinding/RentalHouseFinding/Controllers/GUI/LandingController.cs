@@ -10,7 +10,7 @@ namespace RentalHouseFinding.Controllers
 {
     public class LandingController : Controller
     {
-        private RentalHouseFindingEntities _db = new RentalHouseFindingEntities();
+        public RentalHouseFindingEntities _db = new RentalHouseFindingEntities();
 
         public ICacheRepository Repository { get; set; }
         public LandingController()

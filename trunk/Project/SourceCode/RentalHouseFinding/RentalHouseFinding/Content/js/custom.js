@@ -42,9 +42,9 @@
     }
 }
 
-function ComparePost() {
+function ComparePost() {    
     if ($("input:checkbox:checked").length > 3) {
-        alert("Hiện tại chúng tôi chỉ hỗ trợ compare tối đa 3 sản phẩm");
+        alert("Hiện tại chúng tôi chỉ hỗ trợ so sánh tối đa 3 bài đăng");
         return false;
     } else {
         var data = "";

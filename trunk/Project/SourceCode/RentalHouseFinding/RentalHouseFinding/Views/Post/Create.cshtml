@@ -85,6 +85,8 @@
                         center: districtLatLon,
                         zoom: 14
                     });
+                    $('#Lat').val(itemData.Value.split(';')[0]);
+                    $('#Lon').val(itemData.Value.split(';')[1]);
                 });
             });
       });
@@ -123,7 +125,7 @@
                       });
                   }
                   else {
-                      alert("Lỗi kết nối đến máy chủ google: " + status);
+                      alert("Lỗi kết nối đến máy chủ google: " + status +". Vui lòng chọn vị trí của bạn bằng cách click trên bản đồ");
                   }
               });
           }

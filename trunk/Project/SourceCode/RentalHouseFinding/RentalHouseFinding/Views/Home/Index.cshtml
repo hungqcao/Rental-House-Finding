@@ -16,6 +16,12 @@
 <script src="http://www.google.com/jsapi"></script>
 <script type="text/javascript">
     function initialize() {
+        var selected = '@ViewBag.SelectedValue';
+        if (selected == 0) {
+            
+            $("#DistrictId").val(selected).attr('selected', true);
+            $("#DistrictId").next().text('Quận/Huyện');
+        }
         var latlon = '@ViewBag.latlon'.split('|')[0];
         var centerMap = new google.maps.LatLng((latlon.split(',')[0]), (latlon.split(',')[1]));
         var zoomMap = '@ViewBag.latlon'.split('|')[1];
@@ -25,20 +31,22 @@
             center: centerMap,
             zoom: int_zoomMap,
             mapTypeId: google.maps.MapTypeId.ROADMAP
-        };
+        };        
 
         window.map = new google.maps.Map(document.getElementById('infoMap'),
             mapOptions);
         var i = 0;
         var markers1 = [];
-        var markers = { marker: [] };
+        var markers = { marker: [] };         
         var imageInactive = '@Url.Content("~/Content/images/inactive_marker.png")';
         var imageActive = '@Url.Content("~/Content/images/active_marker.png")';
 
         var scriptInfobox = document.createElement('script');
         scriptInfobox.type = 'text/javascript';
         scriptInfobox.src = '@Url.Content("~/Content/js/infobox.js")';
-
+//        function markerOrder(marker, b) {
+//            return GOverlay.getZIndex(marker.getPoint().lat()) + marker.importance * 1000000;
+//        }
         document.body.appendChild(scriptInfobox);
 
         var infowindow;
@@ -119,9 +127,11 @@
                 });
                 var markerCluster = new MarkerClusterer(window.map, markers1, {
                     zoomOnClick: true,
-                    maxZoom: 18,
+                    maxZoom: 14,
                     gridSize: 30
-                });
+                });                                
+//                // onClick OVERRIDE
+//                markerCluster.onClickZoom = function () { return multiChoice(markerCluster); }
 
             });
 
@@ -141,6 +151,24 @@
             }
         });
     }
+//    function multiChoice(mc) {
+//        debugger;
+//        var cluster = mc.clusters_;
+//        // if more than 1 point shares the same lat/long
+//        // the size of the cluster array will be 1 AND
+//        // the number of markers in the cluster will be > 1
+//        // REMEMBER: maxZoom was already reached and we can't zoom in anymore
+//        if (cluster.length == 1 && cluster[0].markers_.length > 1) {
+//            var markers = cluster[0].markers_;
+//            for (var i = 0; i < markers.length; i++) {
+//                // you'll probably want to generate your list of options here...
+//            }
+
+//            return false;
+//        }
+
+//        return true;
+//    }
 
     function loadScript() {
         var script = document.createElement('script');
