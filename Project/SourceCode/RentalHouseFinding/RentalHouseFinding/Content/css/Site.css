@@ -2040,3 +2040,7 @@ ul {
 {
     
 }
+.requiredField label:after {
+    color: #FB6063;
+    content: " (*) ";
+}

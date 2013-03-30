@@ -8,19 +8,21 @@ var counter = 0;
 function addFile(description) {
     //increment counter
     counter++;
-    var html = "";
-    for (var i = 0; i < cellTemplates.length; i++) {
+    if (counter <= 11) {
+        var html = "";
+        for (var i = 0; i < cellTemplates.length; i++) {
 
-        //format the cell template text
-        html += cellTemplates[i].replace(/\{counter\}/g, counter).replace(/\{value\}/g,
+            //format the cell template text
+            html += cellTemplates[i].replace(/\{counter\}/g, counter).replace(/\{value\}/g,
                     (description == null) ? '' : description);
+        }
+        $("#uploadFile").append(html);
+    } else {
+        alert('Vượt quá số lượng file qui định');
     }
-    $("#uploadFile").append(html);
 }
 //removes a file input row
 function removeFile(obj) {
-    $('html, body').animate({
-        scrollTop: $("#uploadFile").offset().top
-    }, 500);
     $(obj).parent().remove();
+    return false;
 }
