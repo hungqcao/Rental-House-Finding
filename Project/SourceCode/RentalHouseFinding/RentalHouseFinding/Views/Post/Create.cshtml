@@ -222,7 +222,7 @@
             <h1>1 | Thông tin cơ bản</h1>
             <div class="clear"></div>
             <div class="pnLeft">
-                <div class="infoElement requiredField" style="width:150px">
+                <div class="infoElement" style="width:150px">
                     <label>Loại tin đăng</label>
 
                     <div class="clear"></div>
@@ -237,14 +237,14 @@
                     @Html.ValidationMessageFor(model => model.Title)
                 </div>
                 <div class="clear"></div>
-                <div class="infoElement requiredField">
+                <div class="infoElement">
                     <label>Tỉnh, thành phố</label>
 
                     <div class="clear"></div>
                     @Html.DropDownListFor(model => model.ProvinceId, null, new { @class = "select city" })
                     @Html.ValidationMessageFor(model => model.ProvinceId)
                 </div>
-                <div class="infoElement requiredField">
+                <div class="infoElement">
                     <label>Quận huyện</label>
 
                     <div class="clear"></div>
@@ -260,7 +260,7 @@
                     @Html.TextBoxFor(model => model.Street, new { @class = "tbx" })
                     @Html.ValidationMessageFor(model => model.Street)
                 </div>
-                <div class="infoElement requiredField">
+                <div class="infoElement">
                     <label>Ngách, số nhà</label>
 
                     <div class="clear"></div>
@@ -282,7 +282,7 @@
                     @Html.ValidationMessageFor(model => model.Area)
                 </div>
                 <div class="clear"></div>
-                <div class="infoElement requiredField">
+                <div class="infoElement">
                     <label>Tên người liên hệ</label>
 
                     <div class="clear"></div>
@@ -303,7 +303,7 @@
                     @Html.TextBoxFor(model => model.PhoneActive, new { @class = "tbx" })
                     @Html.ValidationMessageFor(model => model.PhoneActive)
                 </div>
-                <div class="infoElement requiredField">
+                <div class="infoElement">
                     <label>Email liên hệ</label>
 
                     <div class="clear"></div>
@@ -311,14 +311,14 @@
                     @Html.ValidationMessageFor(model => model.Email)
                 </div>
                 <div class="clear"></div>
-                <div class="infoElement requiredField">
+                <div class="infoElement">
                     <label>Tài khoản Yahoo!</label>
 
                     <div class="clear"></div>
                     @Html.TextBoxFor(model => model.Yahoo, new { @class = "shortTbx" })
                     @Html.ValidationMessageFor(model => model.Yahoo)
                 </div>
-                <div class="infoElement requiredField">
+                <div class="infoElement">
                     <label>Tài khoản Skype</label>
 
                     <div class="clear"></div>
