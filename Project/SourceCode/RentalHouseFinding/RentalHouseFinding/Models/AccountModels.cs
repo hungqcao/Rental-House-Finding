@@ -74,7 +74,7 @@ namespace RentalHouseFinding.Models
         public string Email { get; set; }
 
         [Required(ErrorMessage= "Xin vui lòng nhập mật khẩu")]
-        [StringLength(20, ErrorMessage = @"{0} phải tối thiểu là {2} ký tự.", MinimumLength = 6)]
+        [StringLength(20, ErrorMessage = @"{0} phải tối thiểu là {2} ký tự.", MinimumLength = 8)]
         [DataType(DataType.Password)]
         [Display(Name = "Mật khẩu")]
         public string Password { get; set; }
