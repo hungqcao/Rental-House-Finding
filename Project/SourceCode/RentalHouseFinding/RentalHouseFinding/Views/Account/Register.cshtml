@@ -125,7 +125,7 @@
     @using (Html.BeginForm()) {
         <div class="userInfo">
             <h2>Đăng kí tài khoản 5house.vn chỉ với 1 bước đơn giản</h2>
-            <div class="blockInfo leftBlock" id="blockName">
+            <div class="blockInfo leftBlock requiredField" requiredField" id="blockName">
                 <label>@Html.LabelFor(m => m.UserName)</label>
                 <div class="clear"></div>
                 <div class="textbox">
@@ -133,7 +133,7 @@
                     @Html.ValidationMessageFor(m => m.UserName)
                 </div>
             </div>
-            <div class="blockInfo" id="blockPhone">
+            <div class="blockInfo requiredField" id="blockPhone">
                 <label>@Html.LabelFor(m => m.Email)</label>
                 <div class="clear"></div>
                 <div class="textbox">
@@ -142,7 +142,7 @@
                 </div>
             </div>
             <div class="clear"></div>
-            <div class="blockInfo leftBlock" id="blockEmail">                
+            <div class="blockInfo leftBlock requiredField" id="blockEmail">                
                 <label>@Html.LabelFor(m => m.Password)</label>
                 <div class="clear"></div>
                 <div class="textbox">
@@ -150,7 +150,7 @@
                     @Html.ValidationMessageFor(m => m.Password)
                 </div>
             </div>
-            <div class="blockInfo" id="blockEmailRetype">
+            <div class="blockInfo requiredField" id="blockEmailRetype">
                 <label>@Html.LabelFor(m => m.ConfirmPassword)</label>
                 <div class="clear"></div>
                 <div class="textbox">
@@ -159,7 +159,7 @@
                 </div>
             </div>
             <div class="clear"></div>
-            <div class="blockInfo leftBlock" id="blockPassword">
+            <div class="blockInfo leftBlock requiredField" id="blockPassword">
                 <label>@Html.LabelFor(m => m.Name)</label>
                 <div class="clear"></div>
                 <div class="textbox">
@@ -167,7 +167,7 @@
                     @Html.ValidationMessageFor(m => m.Name)
                 </div>
             </div>
-            <div class="blockInfo" id="blockPasswordRetype">
+            <div class="blockInfo requiredField" id="blockPasswordRetype">
                 <label>@Html.LabelFor(m => m.PhoneNumber)</label>
                 <div class="clear"></div>
                 <div class="textbox">
@@ -176,13 +176,13 @@
                 </div>
             </div>
             <div class="clear"></div>
-            <div class="blockInfo leftBlock lastBlock" id ="tbxCapcha">
+            <div class="blockInfo leftBlock requiredField" lastBlock" id ="tbxCapcha">
                 <div class="textbox">   
                     @Html.Raw(Html.GenerateCaptcha("captcha", "clean"))
                     @Html.ValidationMessage("captcha")
                 </div>
             </div>
-            <div class="blockInfo lastBlock" id="blockBtnRegis" style="width: 200px">
+            <div class="blockInfo lastBlock requiredField" id="blockBtnRegis" style="width: 200px">
                 <div style="margin-top: 16px;">
                     @Html.CheckBoxFor(model => model.IsTermsAccepted, new { @id = "rAccept" })
                     @*<div>Tôi đồng ý với <a id ="showDK"  href="javascript:show();">khoản sử dụng</a> .
