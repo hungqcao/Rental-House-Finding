@@ -59,7 +59,7 @@
 {
         <div class="userInfo">
             <h2>Đăng nhập vào tài khoản 5house.vn của bạn ngay</h2>
-            <div class="blockInfo leftBlock" id="blockEmail">
+            <div class="blockInfo leftBlock requiredField" id="blockEmail">
                 @Html.LabelFor(m => m.UserName)
                 <div class="clear"></div>
                 <div class="textbox">
@@ -67,7 +67,7 @@
                     @Html.ValidationMessageFor(m => m.UserName)
                 </div>
             </div>
-            <div class="blockInfo" id="blockPassword">
+            <div class="blockInfo requiredField" id="blockPassword">
                 @Html.LabelFor(m => m.Password)
                 <div class="clear"></div>
                 <div class="textbox">

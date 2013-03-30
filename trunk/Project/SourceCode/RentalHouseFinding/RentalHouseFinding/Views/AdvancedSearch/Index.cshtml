@@ -27,7 +27,7 @@
                         new SelectList(Enumerable.Empty<SelectListItem>(), "Id", "Name"), "Chọn Quận/Huyện",
                      new { id = "ddlDistrict", @class = "select" })
             <div class="clear"></div>
-            <div class="field">
+            <div class="field requiredField">
                 <span>Giá tiền (triệu VND/tháng)</span>
                 <div class="clear"></div>
                 <div id="fromPrice">
@@ -39,7 +39,7 @@
                 @Html.ValidationMessageFor(model => model.PriceMax)
                 </div>
             </div>
-            <div class="field">
+            <div class="field requiredField">
                 <span>Diện tích (m2)</span>
                 <div class="clear"></div>
                 <div id="minArea">
