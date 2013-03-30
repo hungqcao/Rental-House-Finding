@@ -4,6 +4,7 @@ using System.Linq;
 using System.Web;
 using System.Web.Mvc;
 using RentalHouseFinding.Models;
+using RentalHouseFinding.Common;
 
 namespace RentalHouseFinding.Controllers
 {
@@ -33,6 +34,7 @@ namespace RentalHouseFinding.Controllers
             {
                 model.IsAdvancedSearch = true;
                 model.IsNormalSearch = false;
+                model.CenterMap = CommonController.GetCenterMap(model);
                 Session["SearchViewModel"] = model;
             }
             return RedirectToAction("Index", "Home");

@@ -10,7 +10,7 @@ $(document).ready(function () {
         text: 'Quận/Huyện'
     }));
     
-    select.next().text('Quận/Huyện');
+    //select.next().text('Quận/Huyện');
     if (idPro != 0) {
         $.getJSON("service/GetDistrictList", { id: idPro },
                 function (myData) {
@@ -30,7 +30,7 @@ $(document).ready(function () {
                         }
                     });
                 });
-            };
+    };
     $("#ProvinceId").change(function () {
         var idPro = $("#ProvinceId option:selected").val();
         var select = $("#DistrictId");
