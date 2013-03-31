@@ -86,30 +86,32 @@
                                 //Infobox
                                 var boxText = document.createElement("div");
                                 boxText.className = "infoBox-wrapper";
-                                boxText.innerHTML = '<div class="infoBox-item">'
-                                + '<label id="title">' + valuePost[5] + '</label>'
+                                boxText.innerHTML = '<a style="text-decoration:none;color:#124242; background-color: #fbfbfb; width: 158px;" class="infoDetail left fancybox" href="/post/details/' + itemData.Value + '">'
+                                + '<div class="infoBox-item"">'
+                                + '<div style="padding: 5px; border: 1px dashed;"><label id="title">' + valuePost[5] + '</label></div>'
+                                + '<div style="padding: 5px;">'
                                 + '<br/>'
                                 + '<label id="address">' + valuePost[4] + '</label>'
                                 + '<br/>'
+                                + '<label id="price"  style="font-size:18px;color:#F17612;">' + valuePost[3] + '</label>' + '<label>' + ' triệu VNĐ' + '</label>' + '   |   ' + '<label id="area" style="font-size:18px;color:#F17612;">' + valuePost[2] + '</label>' + '<label>' + ' m2' + '</label>'
                                 + '<br/>'
-                                + '<label id="area">Diện tích:' + valuePost[2] + ' m2' + '</label><br/><label id="price">Giá:' + valuePost[3] + 'triệu VNĐ</label>'
-                                + '<br/>'
-                                + '<a class="infoDetail left fancybox" href="/post/details/' + itemData.Value + '">Xem chi tiết</a>'
+                                + '</div>'
+                                + '</a>'
                                 + '</div>';
 
-                                var url = '@Url.Content("~/Content/images/tipbox.gif")';
+                                var url = '@Url.Content("~/Content/images/tipbox.png")';
                                 var myOptions = {
                                     content: boxText
 			                        , disableAutoPan: false
-			                        , maxWidth: 0
-			                        , pixelOffset: new google.maps.Size(-140, 0)
+			                        , maxWidth: 2000
+			                        , pixelOffset: new google.maps.Size(-77, 0)
 			                        , zIndex: null
 			                        , boxStyle: {
-			                            background: "url("+ url + ") no-repeat"
+			                            background: "url("+ url + ") no-repeat 71px 0px transparent"
 			                          , opacity: 1
-			                          , width: "280px"
+			                          , width: "152px"
 			                        }
-			                        , closeBoxMargin: "10px 2px 2px 2px"
+                                    , closeBoxMargin: "2px -22px 2px 2px"
 			                        , closeBoxURL: "http://www.google.com/intl/en_us/mapfiles/close.gif"
 			                        , infoBoxClearance: new google.maps.Size(1, 1)
 			                        , isHidden: false

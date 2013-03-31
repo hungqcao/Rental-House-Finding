@@ -440,6 +440,7 @@ span.select {
     width: 880px;
     height: 832px;
 }
+
 div.textbox
 {
     height: 37px;
@@ -494,11 +495,11 @@ div.textbox
 }
 
 .login-regis .blockInfo label{
-    color: #888;
+    /*color: #888;*/
     font-size: 12px;
     margin-bottom: 5px;
     display: block;
-    float: left;
+    /*float: left;*/
     font-weight: 700;
 }
 .leftTbx {
@@ -547,7 +548,7 @@ div.textbox
 }
 span.field-validation-error
 {
-    padding: 55px 0 20px 0;
+    /*padding: 55px 0 20px 0;*/
 }
 span.field-validation-error
 {
@@ -824,7 +825,9 @@ span.field-validation-error
     height: 20px !important;
     margin-left: 18px;
 }
-#listInfo .infoDetail {
+#listInfo .infoDetail 
+{
+    margin-top:5px;
     display: block;
     float: left;
     padding: 0 20px;
@@ -839,16 +842,17 @@ span.field-validation-error
     display: block;
     float: left;
     font-size: 24px;
+    margin-bottom:5px;
 }
 #listInfo .address {
     font-size: 14px;
-    font-style: italic;
     margin: 10px 0;
     width: 100%;
 }
 #listInfo .desc {
     margin-bottom: 7px;
     line-height: 18px;
+    color:#717171;
 }
 #listInfo .text {
     margin-right: 15px;
@@ -858,9 +862,10 @@ span.field-validation-error
     display: block;
     float: left;
     margin-top: 11px;
+    color:#717171;
 }
 #listInfo .thumbnail {
-    margin-top: 38px;
+    margin-top: 30px;
 }
 #listInfo .infoDetail:hover {
     background-color: #f1f0f1;
@@ -900,29 +905,30 @@ span.field-validation-error
     float: left;
 }
 #popup_wrapper .popup_header {
-    width: 911px;
-    border-bottom: 1px solid #bebebe;
+    width: 912px;
+    border-bottom: 1px dashed #bebebe;
     padding: 15px 43px 20px 15px;
-    background-color:#017171;
 }
 .popup_header .type {
-    color: white;
+    color: #E25F0D;
     font-weight: 700;
     font-size: 24px;
 }
 .popup_header .address {
-    color: white;
+    color: #717171;
     font-weight: 700;
     font-size: 24px;
 }
 .popup_header .shortDesc {
     font-style:normal;
-    color: white;
+    color: #717171;
     font-size: 18px;
     margin-top: 5px;
+    width:550px;
+    word-wrap:break-word;
 }
 .popup_header .highlight {
-    color: white;
+    color: orange;
     font-size: 42px;
     font-weight: 700;
     margin-right: 7px;
@@ -934,14 +940,14 @@ span.field-validation-error
 }
 .popup_header .rightText {
     margin-top: 22px;
-    color: White;
+    color: #717171;
 }
 .rightInfo div:first-child {
     margin-right: 20px;
 }
 .popup_content {
     width: 886px;
-    padding: 40px 40px 23px;
+    padding: 40px 40px 50px;
 }
 .plusBtn {
     background: url("../../Content/images/detail_BasicInfo.png") no-repeat transparent 0 0;
@@ -998,14 +1004,14 @@ span.field-validation-error
     font-size: 24px;
     margin-bottom: 15px;
     width: 100%;
-    color:#017171;
 }
 .blockInfo .blockLeftText {
     background: url("../../Content/images/round_shape.png") no-repeat transparent 0 4px;
     width: 240px;
     height: 25px;
     line-height: 20px;
-    padding-left: 20px;
+    padding-left: 25px;
+    margin-left:20px;
 }
 .blockInfo .blockRightText {
     width: 210px;
@@ -1087,10 +1093,14 @@ span.field-validation-error
     font-style: italic; font-size: 18px;
 }
 #sendQuestion span{
-    margin: 63px 0 0 100px;
+    margin: 25px 0 0 120px;
+    border:1px dashed;
+    padding:5px;
 }
 #saveBookmark span {
-    margin: 60px 107px 0 0;
+    margin: 25px 128px 0 0;
+    border:1px dashed;
+    padding:5px;
 }
 #saveBookmark {
     float: right !important;
@@ -1450,7 +1460,7 @@ textarea#Description {
     width: 373px;
     padding: 10px;
 }
-.content #btnSaveInfo, #regisPanel #btnSaveInfo {
+.content #btnSaveInfo, #regisPanel #btnSaveInfo, #btnSaveInfo {
     background: url("../../Content/images/savepost.png") no-repeat transparent 0px 0px;
     height: 47px;
     width: 144px;
@@ -1459,6 +1469,7 @@ textarea#Description {
     display: block;
     margin: 10px 16px 10px 0;
 }
+
 .content #btnDangTinNgay {
     background: url("../../Content/images/pnew_dangTinBtn.png") no-repeat transparent -1px 0px;
     height: 47px;
@@ -1625,7 +1636,7 @@ textarea#Description {
 
 #options #btnThongTin
 {
-    background: url("../../Content/images/btnThongTin.png") no-repeat transparent 0 0px;
+    background: url("../../Content/images/btn_thongtintk.png") no-repeat transparent 0 0px;
     height: 33px;
     width: 180px;
     float: left;
@@ -1633,9 +1644,18 @@ textarea#Description {
     margin: 5px 0px 10px 23px;
 }
 
+#options #btnThongTin:hover,#options #btnQuanLy:hover,#options #btnTinNhan:hover,#options #btnLichSu:hover,#options #btnDanhSach:hover
+{
+    background-position: 0 -34px;
+}
+#options #btnThongTin.active,#options #btnQuanLy.active,#options #btnTinNhan.active,#options #btnLichSu.active,#options #btnDanhSach.active
+{
+    background-position: 0 -68px;
+    font-style:normal;
+}
 #options #btnQuanLy
 {
-    background: url("../../Content/images/btnQuanLy.png") no-repeat transparent 0 0px;
+    background: url("../../Content/images/btn_quanlybaidang.png") no-repeat transparent 0 0px;
     height: 33px;
     width: 180px;
     float: left;
@@ -1645,7 +1665,7 @@ textarea#Description {
 
 #options #btnTinNhan
 {
-    background: url("../../Content/images/btnTinNhan.png") no-repeat transparent 0 0px;
+    background: url("../../Content/images/btn_tinnhan.png") no-repeat transparent 0 0px;
     height: 33px;
     width: 180px;
     float: left;
@@ -1653,9 +1673,10 @@ textarea#Description {
     margin: 5px 0px 10px 23px;
 }
 
+
 #options #btnLichSu
 {
-    background: url("../../Content/images/btnLichSu.png") no-repeat transparent 0 0px;
+    background: url("../../Content/images/btn_lichsu.png") no-repeat transparent 0 0px;
     height: 33px;
     width: 180px;
     float: left;
@@ -1665,13 +1686,12 @@ textarea#Description {
 
 #options #btnDanhSach
 {
-    background: url("../../Content/images/btnDanhSach.png") no-repeat transparent 0 0px;
+    background: url("../../Content/images/btn_danhsach.png") no-repeat transparent 0 0px;
     height: 33px;
     width: 180px;
     float: left;
     display: block;
     margin: 5px 0px 10px 23px;
- 
 }
 
 
@@ -2028,17 +2048,16 @@ ul {
 }
 .infoBox-wrapper
 {
-    border: 1px solid black; 
-    margin-top: 8px; 
-    background: #fff; 
+    margin-top: 4px; 
     padding: 5px;
-    -webkit-border-radius: 7px;
-    -moz-border-radius: 7px;
-    border-radius: 7px;
 }
 .infoBox-item
 {
-    
+    margin:0 5px;
+    font-family:Calibri, Sans-Serif;
+    font-size:12px;
+    color:#124242;
+    font-weight:bold;
 }
 .requiredField label:after {
     color: #FB6063;

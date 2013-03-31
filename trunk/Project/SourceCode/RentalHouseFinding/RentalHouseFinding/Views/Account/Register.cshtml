@@ -124,8 +124,8 @@
     @using (Html.BeginForm()) {
         <div class="userInfo">
             <h2>Đăng kí tài khoản 5house.vn chỉ với 1 bước đơn giản</h2>
-            <div class="blockInfo leftBlock requiredField" requiredField" id="blockName">
-                <label>@Html.LabelFor(m => m.UserName)</label>
+            <div class="blockInfo leftBlock requiredField" id="blockName">
+                @Html.LabelFor(m => m.UserName)
                 <div class="clear"></div>
                 <div class="textbox">
                     @Html.TextBoxFor(m => m.UserName, new { @class = "tbxRegister" })
@@ -133,7 +133,7 @@
                 </div>
             </div>
             <div class="blockInfo requiredField" id="blockPhone">
-                <label>@Html.LabelFor(m => m.Email)</label>
+                @Html.LabelFor(m => m.Email)
                 <div class="clear"></div>
                 <div class="textbox">
                     @Html.TextBoxFor(m => m.Email, new { @class = "tbxRegister" })
@@ -142,7 +142,7 @@
             </div>
             <div class="clear"></div>
             <div class="blockInfo leftBlock requiredField" id="blockEmail">                
-                <label>@Html.LabelFor(m => m.Password)</label>
+                @Html.LabelFor(m => m.Password)
                 <div class="clear"></div>
                 <div class="textbox">
                     @Html.PasswordFor(m => m.Password, new { @class = "tbxRegister" })
@@ -150,7 +150,7 @@
                 </div>
             </div>
             <div class="blockInfo requiredField" id="blockEmailRetype">
-                <label>@Html.LabelFor(m => m.ConfirmPassword)</label>
+                @Html.LabelFor(m => m.ConfirmPassword)
                 <div class="clear"></div>
                 <div class="textbox">
                     @Html.PasswordFor(m => m.ConfirmPassword, new { @class = "tbxRegister" })
@@ -159,7 +159,7 @@
             </div>
             <div class="clear"></div>
             <div class="blockInfo leftBlock requiredField" id="blockPassword">
-                <label>@Html.LabelFor(m => m.Name)</label>
+                @Html.LabelFor(m => m.Name)
                 <div class="clear"></div>
                 <div class="textbox">
                    @Html.TextBoxFor(m => m.Name, new { @class = "tbxRegister" })
@@ -167,7 +167,7 @@
                 </div>
             </div>
             <div class="blockInfo requiredField" id="blockPasswordRetype">
-                <label>@Html.LabelFor(m => m.PhoneNumber)</label>
+                @Html.LabelFor(m => m.PhoneNumber)
                 <div class="clear"></div>
                 <div class="textbox">
                     @Html.TextBoxFor(m => m.PhoneNumber, new { @class = "tbxRegister" })
@@ -175,7 +175,7 @@
                 </div>
             </div>
             <div class="clear"></div>
-            <div class="blockInfo leftBlock requiredField" lastBlock" id ="tbxCapcha">
+            <div class="blockInfo leftBlock requiredField" id ="tbxCapcha">
                 <div class="textbox">   
                     @Html.Raw(Html.GenerateCaptcha("captcha", "clean"))
                     @Html.ValidationMessage("captcha")
@@ -200,7 +200,7 @@
                     </div>  
                 </div>                
                 <div class="clear"></div>                
-                <input type="submit" id="btnRegis" value="" style="float:right; margin-top: 28px;"/>
+                <input type="submit" id="btnRegis" value="" style="float:right; margin-top: 10px;"/>
             </div>
         </div>
     

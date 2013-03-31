@@ -286,7 +286,7 @@
                 <div class="clear"></div>
             }
             </div>  
-            <div id="reportWithoutLogin" class="withOutLoginReport"><img src="@Url.Content("~/Content/images/triangle_comment.png")"/></div>
+            <div id="reportWithoutLogin" class="withOutLoginReport" style="cursor:pointer;"><img src="@Url.Content("~/Content/images/triangle_comment.png")"/></div>
             <div class="clear"></div>
          <span>Báo cáo bài đăng vị phạm</span>  
         </div>
@@ -294,17 +294,17 @@
             @{
                 if (ViewBag.RemoveFavorite == false)
                 {
-                    <div id="favorite" onclick="addFavorite();" class="withOutLogin"><img id="favoriteImg" src="@Url.Content("~/Content/images/triangle_fav.png")"/></div>
+                    <div id="favorite" onclick="addFavorite();" class="withOutLogin" style="cursor:pointer;"><img id="favoriteImg" src="@Url.Content("~/Content/images/triangle_fav.png")"/></div>
                     
                 }
                 else if (ViewBag.RemoveFavorite == true)
                 {
-                    <div id="favorite" onclick="removeFavorite();" class="withOutLogin"><img id="favoriteImg" src="@Url.Content("~/Content/images/favorite_actived.png")"/></div>
+                    <div id="favorite" onclick="removeFavorite();" class="withOutLogin" style="cursor:pointer;"><img id="favoriteImg" src="@Url.Content("~/Content/images/favorite_actived.png")"/></div>
                        
                 }
                 if (!User.Identity.IsAuthenticated)
                 {
-                    <div id="favorite" class="withOutLogin"><img id="favoriteImg" src="@Url.Content("~/Content/images/triangle_fav.png")"/></div>
+                    <div id="favorite" class="withOutLogin" style="cursor:pointer;"><img id="favoriteImg" src="@Url.Content("~/Content/images/triangle_fav.png")"/></div>
                 }
             }
             <span>Bạn quan tâm bài đăng này, bạn hãy lưu lại! </span>

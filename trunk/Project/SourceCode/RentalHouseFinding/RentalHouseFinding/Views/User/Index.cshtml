@@ -13,9 +13,11 @@
             <span class="title">Điện thoại cố định:</span><span class="info">@Model.User.PhoneNumber</span> 
             <span class="title">Thời điểm tạo:</span> <span class="info">@Model.User.CreatedDate</span> 
             <span class="title">Địa chỉ</span> <span class="info">@Model.User.Address</span>
-            @Html.ActionLink("Thay đổi thông tin tài khoản", "Edit", "User")
+         @*   @Html.ActionLink("Thay đổi thông tin TK", "Edit", "User")*@
+            <div style="margin-top:30px;"><a href="../User/Edit"><img src="../../Content/images/btn_changeinfo.png" /></a></div>
             <div class="clear"></div>
-            @Html.ActionLink("Đổi mật khẩu (dành cho tài khoản đăng ký tại hệ thống)", "ChangePassword", "Account")
+           @* @Html.ActionLink("Đổi mật khẩu (dành cho tài khoản đăng ký tại hệ thống)", "ChangePassword", "Account")*@
+          <div style="margin-top:30px;"><a href="../Account/ChangePassword"><img src="../../Content/images/btn_changepass.png" /></a></div>
         </div>
 </div>
 <div id="rightInfo" class="left">
@@ -38,3 +40,10 @@
 </div>
 <div class="clear">
 </div>
+
+<script type="text/javascript" >
+    $(document).ready(function () {
+        $("#options a").removeClass("active");
+        $("#btnThongTin").addClass('active');
+    });
+</script>
