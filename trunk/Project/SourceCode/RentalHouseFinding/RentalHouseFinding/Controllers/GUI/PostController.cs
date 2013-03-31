@@ -380,9 +380,10 @@ namespace RentalHouseFinding.Controllers
                             {
                                 var path = Path.Combine(HttpContext.Server.MapPath("/Content/PostImages/"), postViewModel.Id.ToString());
                                 //Check if image already exists
+                                string pathToCompare = "/Content/PostImages/" 
+                                                        + postViewModel.Id + "/" + Path.GetFileName(image.FileName) ;
                                 var imagesPath = (from i in _db.PostImages 
-                                                  where (i.Path == "/Content/PostImages/" 
-                                                        + postViewModel.Id.ToString() + "/" + Path.GetFileName(image.FileName)) 
+                                                  where (i.Path.Equals(pathToCompare, StringComparison.CurrentCultureIgnoreCase))
                                                   select i.Path).ToArray();
                                 if (imagesPath.Count() > 0)
                                 {
