@@ -11,15 +11,39 @@
 </div>
 <div class="clear"></div>
 <div id="message-sv" style="width:320px; margin: 0 auto;">
-@if (TempData["MessageSuccessEdit"] != null)
-{
-    <div class="message-notification success">
-        <a class="close" id="btnCloseDiv"></a>
-        <div>
-            @TempData["MessageSuccessEdit"]
+    @if (TempData["MessageSuccessEdit"] != null)
+    {
+        <div class="message-notification success">
+            <a class="close" id="btnCloseDiv"></a>
+            <div>
+                @TempData["MessageSuccessEdit"]
+            </div>
         </div>
-    </div>
-}
+    }
+    @if (TempData["Success"] != null)
+    {
+        if ((bool)TempData["Success"] && TempData["Success"] != null)
+        {
+            <div class="message-notification success">
+                <a class="close" id="btnCloseDiv"></a>
+                <div>
+                    @TempData["MessageSuccessPostNew"]
+                </div>
+            </div>
+        }
+    }
+    @if (TempData["Pending"] != null)
+    {
+        if ((bool)TempData["Pending"])
+        {
+            <div class="message-notification message-information">
+                <a class="close" id="btnCloseDiv"></a>
+                <div>
+                    @TempData["MessagePendingPostNew"]
+                </div>
+            </div>
+        }
+    }
 </div>
 <div class="login-regis" id="loginPanel">
 @using (Html.BeginForm("Index","PostEdit",FormMethod.Post,new{@style="padding:70px"}))

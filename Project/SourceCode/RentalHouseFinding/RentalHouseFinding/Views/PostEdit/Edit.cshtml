@@ -17,13 +17,12 @@
     function deleteGallery(obj) {
         if (confirm("Bạn có muốn xóa ảnh này không?")) {
             $.ajax({
-                url: ROOT + 'post/DeleteImage',
+                url: ROOT + 'postedit/DeleteImage',
                 contentType: 'application/html; charset=utf-8',
                 type: 'GET',
                 dataType: 'html',
                 data: {
-                    id: obj.attr("id"),
-                    postId: '@Model.Id'
+                    id: obj.attr("id")
                 }
             })
             .success(function (result) {
@@ -42,13 +41,10 @@
 
     function LoadGallery() {
         $.ajax({
-            url: ROOT + 'post/ViewImage',
+            url: ROOT + 'postedit/ViewImage',
             contentType: 'application/html; charset=utf-8',
             type: 'GET',
-            dataType: 'html',
-            data: {
-                id: '@Model.Id'
-            }
+            dataType: 'html'
         })
         .success(function (result) {
             $("#imageList").html(result);
@@ -97,7 +93,7 @@
             select.empty();
             select.append($('<option/>', {
                 value: '',
-                text: 'Chọn Quận/Huyện'
+                text: 'Quận/Huyện'
             }));
             select.next().text('Quận/Huyện');
             $.getJSON("@baseUri.ToString()" + "service/GetDistrictList", { id: idPro },
@@ -216,7 +212,7 @@
 </script>
 <div id="postnew_wrapper">
 @Html.ValidationSummary(true, "Vui lòng kiểm tra lại thông tin như thông báo bên dưới!", new { style = "color:red" })
-@using (Html.BeginForm("Edit", "Post", FormMethod.Post, new { enctype = "multipart/form-data" }))
+@using (Html.BeginForm("Edit", "PostEdit", FormMethod.Post, new { enctype = "multipart/form-data" }))
 {
     @Html.HiddenFor(model => model.Id);
     <div class="header">

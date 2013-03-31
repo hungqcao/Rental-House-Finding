@@ -99,6 +99,10 @@ namespace RentalHouseFinding.Common
 
         public static Posts ConvertPostViewModelToPost(Posts post, PostViewModel model, DateTime createdDate, DateTime editedDate, DateTime renewDate, string noInformation)
         {
+            if (string.IsNullOrEmpty(model.NumberHouse))
+            {
+                model.NumberHouse = noInformation;
+            }
             post.NumberAddress = model.NumberHouse.Equals(noInformation, StringComparison.CurrentCultureIgnoreCase) ? string.Empty : model.NumberHouse;
             post.Street = model.Street;
             post.Area = model.Area;
@@ -108,9 +112,17 @@ namespace RentalHouseFinding.Common
             post.Contacts.Phone = model.PhoneContact;
             post.Contacts.Skype = model.Skype;
             post.Contacts.Yahoo = model.Yahoo;
+            if (string.IsNullOrEmpty(model.NameContact))
+            {
+                model.NameContact = noInformation;
+            }
             post.Contacts.NameContact = model.NameContact.Equals(noInformation, StringComparison.CurrentCultureIgnoreCase) ? string.Empty : model.NameContact;
 
             post.CreatedDate = createdDate;
+            if (string.IsNullOrEmpty(model.Description))
+            {
+                model.Description = noInformation;
+            }
             post.Description = model.Description.Equals(noInformation, StringComparison.CurrentCultureIgnoreCase) ? string.Empty : model.Description;
             post.DistrictId = model.DistrictId;
             post.EditedDate = editedDate;

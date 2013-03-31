@@ -363,12 +363,20 @@
     <Content Include="Content\admin_page\gradient.png" />
     <Content Include="Content\admin_style.css" />
     <Content Include="Content\css\base.css" />
+    <Content Include="Content\css\basic.png" />
     <Content Include="Content\css\bottom.css" />
+    <Content Include="Content\css\fastf.png" />
     <Content Include="Content\css\loading.gif" />
+    <Content Include="Content\css\next-horizontal.png" />
+    <Content Include="Content\css\next-vertical.png" />
     <Content Include="Content\css\next.png" />
     <Content Include="Content\css\pause.png" />
+    <Content Include="Content\css\play.png" />
+    <Content Include="Content\css\prev-horizontal.png" />
+    <Content Include="Content\css\prev-vertical.png" />
     <Content Include="Content\css\prev.png" />
     <Content Include="Content\css\reset.css" />
+    <Content Include="Content\css\rewind.png" />
     <Content Include="Content\css\Site.css" />
     <Content Include="Content\fancybox\blank.gif" />
     <Content Include="Content\fancybox\fancybox-x.png" />
@@ -396,9 +404,9 @@
     <Content Include="Content\fancybox\jquery.fancybox-1.3.4.js" />
     <Content Include="Content\fancybox\jquery.fancybox-1.3.4.pack.js" />
     <Content Include="Content\fancybox\jquery.mousewheel-3.0.4.pack.js" />
-    <Content Include="Content\images.large\facebook.gif" />
-    <Content Include="Content\images.large\google.gif" />
-    <Content Include="Content\images.large\yahoo.gif" />
+    <Content Include="Content\images.large\facebook.png" />
+    <Content Include="Content\images.large\google.png" />
+    <Content Include="Content\images.large\yahoo.png" />
     <Content Include="Content\images\active.png" />
     <Content Include="Content\images\bg.jpg" />
     <Content Include="Content\images\bg_select.png" />
@@ -560,6 +568,93 @@
     <Content Include="Scripts\openid-en.js" />
     <Content Include="Scripts\openid-jquery.js" />
     <Content Include="Scripts\RHFScripts.js" />
+    <Content Include="Views\Account\Activation.cshtml" />
+    <Content Include="Views\Account\ChangePassword.cshtml" />
+    <Content Include="Views\Account\LogOn.cshtml" />
+    <Content Include="Views\Account\Register.cshtml" />
+    <Content Include="Views\Account\ShowUserDetails.cshtml" />
+    <Content Include="Views\Admin\Index.cshtml" />
+    <Content Include="Views\AdvancedSearch\Index.cshtml" />
+    <Content Include="Views\CreateFacilityTemplate\Index.cshtml" />
+    <Content Include="Views\Home\GetSectionSideListPost.cshtml" />
+    <Content Include="Views\Home\Index.cshtml">
+      <SubType>Code</SubType>
+    </Content>
+    <Content Include="Views\Landing\Index.cshtml">
+      <SubType>Code</SubType>
+    </Content>
+    <Content Include="Views\ManageBadpost\Index.cshtml" />
+    <Content Include="Views\ManageBadwordType\Create.cshtml" />
+    <Content Include="Views\ManageBadwordType\Edit.cshtml" />
+    <Content Include="Views\ManageBadwordType\Index.cshtml" />
+    <Content Include="Views\ManageBadword\Create.cshtml" />
+    <Content Include="Views\ManageBadword\Edit.cshtml" />
+    <Content Include="Views\ManageBadword\Index.cshtml" />
+    <Content Include="Views\ManageCategories\Create.cshtml" />
+    <Content Include="Views\ManageCategories\Edit.cshtml" />
+    <Content Include="Views\ManageCategories\Index.cshtml" />
+    <Content Include="Views\ManageDistrict\Create.cshtml" />
+    <Content Include="Views\ManageDistrict\Edit.cshtml" />
+    <Content Include="Views\ManageDistrict\Index.cshtml" />
+    <Content Include="Views\ManagePostStatus\Create.cshtml" />
+    <Content Include="Views\ManagePostStatus\Edit.cshtml" />
+    <Content Include="Views\ManagePostStatus\Index.cshtml" />
+    <Content Include="Views\ManagePosts\Index.cshtml" />
+    <Content Include="Views\ManageProvinces\Create.cshtml" />
+    <Content Include="Views\ManageProvinces\Edit.cshtml" />
+    <Content Include="Views\ManageProvinces\Index.cshtml" />
+    <Content Include="Views\ManageRoles\Create.cshtml" />
+    <Content Include="Views\ManageRoles\Edit.cshtml" />
+    <Content Include="Views\ManageRoles\Index.cshtml" />
+    <Content Include="Views\PostEdit\Edit.cshtml">
+      <SubType>Code</SubType>
+    </Content>
+    <Content Include="Views\PostEdit\Index.cshtml" />
+    <Content Include="Views\Post\Confirm.cshtml" />
+    <Content Include="Views\Post\Create.cshtml">
+      <SubType>Code</SubType>
+    </Content>
+    <Content Include="Views\Post\Details.cshtml">
+      <SubType>Code</SubType>
+    </Content>
+    <Content Include="Views\Post\DetailsBox.cshtml" />
+    <Content Include="Views\Post\Edit.cshtml">
+      <SubType>Code</SubType>
+    </Content>
+    <Content Include="Views\Post\Index.cshtml" />
+    <Content Include="Views\Post\ViewImage.cshtml" />
+    <Content Include="Views\Post\_ImagesPartial.cshtml" />
+    <Content Include="Views\Post\_Question.cshtml" />
+    <Content Include="Views\Questions\Details.cshtml" />
+    <Content Include="Views\Questions\Index.cshtml" />
+    <Content Include="Views\Questions\SendAnswer.cshtml" />
+    <Content Include="Views\Questions\_AnswerPartial.cshtml" />
+    <Content Include="Views\SentQuestion\Details.cshtml" />
+    <Content Include="Views\SentQuestion\Index.cshtml" />
+    <Content Include="Views\Service\ComparePost.cshtml" />
+    <Content Include="Views\Service\GetAllUserFavorite.cshtml" />
+    <Content Include="Views\Shared\EditorTemplates\DateTime.cshtml" />
+    <Content Include="Views\Shared\Error.cshtml" />
+    <Content Include="Views\Shared\_AdminLayout.cshtml" />
+    <Content Include="Views\Shared\_Layout.cshtml">
+      <SubType>Code</SubType>
+    </Content>
+    <Content Include="Views\Shared\_LayoutAuthen.cshtml" />
+    <Content Include="Views\Shared\_LayoutUser.cshtml" />
+    <Content Include="Views\Shared\_LogOnPartial.cshtml" />
+    <Content Include="Views\User\Edit.cshtml" />
+    <Content Include="Views\User\Favorites.cshtml">
+      <SubType>Code</SubType>
+    </Content>
+    <Content Include="Views\User\Index.cshtml" />
+    <Content Include="Views\User\Info.cshtml" />
+    <Content Include="Views\User\Posts.cshtml" />
+    <Content Include="Views\Web.config">
+      <SubType>Designer</SubType>
+    </Content>
+    <Content Include="Views\_ViewStart.cshtml">
+      <SubType>Code</SubType>
+    </Content>
     <Content Include="Web.config">
       <SubType>Designer</SubType>
     </Content>
@@ -570,14 +665,6 @@
       <DependentUpon>Web.config</DependentUpon>
     </Content>
     <Content Include="Content\Site.css" />
-    <Content Include="Views\_ViewStart.cshtml" />
-    <Content Include="Views\Landing\Index.cshtml" />
-    <Content Include="Views\Shared\Error.cshtml" />
-    <Content Include="Views\Shared\_LogOnPartial.cshtml" />
-    <Content Include="Views\Shared\_Layout.cshtml" />
-    <Content Include="Views\Web.config">
-      <SubType>Designer</SubType>
-    </Content>
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
@@ -586,231 +673,13 @@
     <Content Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="Views\Account\ChangePassword.cshtml" />
-    <Content Include="Views\Account\LogOn.cshtml" />
-    <Content Include="Views\Account\Register.cshtml" />
-  </ItemGroup>
-  <ItemGroup>
-    <Content Include="Views\Shared\_LayoutAuthen.cshtml" />
-  </ItemGroup>
-  <ItemGroup>
-    <Content Include="Views\Shared\EditorTemplates\DateTime.cshtml" />
-  </ItemGroup>
-  <ItemGroup>
-    <Content Include="Views\Admin\Index.cshtml" />
-  </ItemGroup>
-  <ItemGroup>
-    <Content Include="Views\ManageRoles\Index.cshtml" />
-  </ItemGroup>
-  <ItemGroup>
-    <Content Include="Views\ManageRoles\Details.cshtml" />
-  </ItemGroup>
-  <ItemGroup>
-    <Content Include="Views\ManageRoles\Create.cshtml" />
-  </ItemGroup>
-  <ItemGroup>
-    <Content Include="Views\ManageRoles\Edit.cshtml" />
-  </ItemGroup>
-  <ItemGroup>
-    <Content Include="Views\ManageRoles\Delete.cshtml" />
-  </ItemGroup>
-  <ItemGroup>
-    <Content Include="Views\Shared\_AdminLayout.cshtml" />
-  </ItemGroup>
-  <ItemGroup>
-    <Content Include="Views\ManageCategories\Index.cshtml" />
-  </ItemGroup>
-  <ItemGroup>
-    <Content Include="Views\ManageCategories\Details.cshtml" />
-  </ItemGroup>
-  <ItemGroup>
-    <Content Include="Views\ManageCategories\Create.cshtml" />
-  </ItemGroup>
-  <ItemGroup>
-    <Content Include="Views\ManageCategories\Edit.cshtml" />
-  </ItemGroup>
-  <ItemGroup>
-    <Content Include="Views\ManageCategories\Delete.cshtml" />
-  </ItemGroup>
-  <ItemGroup>
-    <Content Include="Views\ManageProvinces\Index.cshtml" />
-  </ItemGroup>
-  <ItemGroup>
-    <Content Include="Views\ManageProvinces\Details.cshtml" />
-  </ItemGroup>
-  <ItemGroup>
-    <Content Include="Views\ManageProvinces\Create.cshtml" />
-  </ItemGroup>
-  <ItemGroup>
-    <Content Include="Views\ManageProvinces\Edit.cshtml" />
-  </ItemGroup>
-  <ItemGroup>
-    <Content Include="Views\ManageProvinces\Delete.cshtml" />
-  </ItemGroup>
-  <ItemGroup>
-    <Content Include="Views\ManagePostStatus\Index.cshtml" />
-  </ItemGroup>
-  <ItemGroup>
-    <Content Include="Views\ManagePostStatus\Details.cshtml" />
-  </ItemGroup>
-  <ItemGroup>
-    <Content Include="Views\ManagePostStatus\Create.cshtml" />
-  </ItemGroup>
-  <ItemGroup>
-    <Content Include="Views\ManagePostStatus\Edit.cshtml" />
-  </ItemGroup>
-  <ItemGroup>
-    <Content Include="Views\ManagePostStatus\Delete.cshtml" />
-  </ItemGroup>
-  <ItemGroup>
     <EntityDeploy Include="Models\RentalHouseFinding.edmx">
       <Generator>EntityModelCodeGenerator</Generator>
       <LastGenOutput>RentalHouseFinding.Designer.cs</LastGenOutput>
     </EntityDeploy>
   </ItemGroup>
   <ItemGroup>
-    <Content Include="Views\Post\Index.cshtml" />
-  </ItemGroup>
-  <ItemGroup>
-    <Content Include="Views\Account\ShowUserDetails.cshtml" />
-  </ItemGroup>
-  <ItemGroup>
-    <Content Include="Views\User\Edit.cshtml" />
-    <Content Include="Views\User\Index.cshtml" />
-  </ItemGroup>
-  <ItemGroup>
-    <Content Include="Views\Home\Index.cshtml" />
-  </ItemGroup>
-  <ItemGroup>
-    <Content Include="Views\Post\Edit.cshtml">
-      <SubType>Code</SubType>
-    </Content>
-  </ItemGroup>
-  <ItemGroup>
-    <Content Include="Views\Home\GetSectionSideListPost.cshtml" />
-  </ItemGroup>
-  <ItemGroup>
-    <Content Include="Views\Post\_ImagesPartial.cshtml" />
-  </ItemGroup>
-  <ItemGroup>
-    <Content Include="Views\AdvancedSearch\Index.cshtml" />
-  </ItemGroup>
-  <ItemGroup>
-    <Content Include="Views\CreateFacilityTemplate\Index.cshtml" />
-  </ItemGroup>
-  <ItemGroup>
-    <Content Include="Views\Account\Activation.cshtml" />
-  </ItemGroup>
-  <ItemGroup>
-    <Content Include="Views\Post\Create.cshtml" />
-  </ItemGroup>
-  <ItemGroup>
-    <Content Include="Views\Post\Details.cshtml" />
-  </ItemGroup>
-  <ItemGroup>
-    <Content Include="Views\ManageBadword\Index.cshtml" />
-  </ItemGroup>
-  <ItemGroup>
-    <Content Include="Views\ManageBadword\Details.cshtml" />
-  </ItemGroup>
-  <ItemGroup>
-    <Content Include="Views\ManageBadword\Create.cshtml" />
-  </ItemGroup>
-  <ItemGroup>
-    <Content Include="Views\ManageBadword\Edit.cshtml" />
-  </ItemGroup>
-  <ItemGroup>
-    <Content Include="Views\ManageBadword\Delete.cshtml" />
-  </ItemGroup>
-  <ItemGroup>
-    <Content Include="Views\ManageBadwordType\Index.cshtml" />
-  </ItemGroup>
-  <ItemGroup>
-    <Content Include="Views\ManageBadwordType\Details.cshtml" />
-  </ItemGroup>
-  <ItemGroup>
-    <Content Include="Views\ManageBadwordType\Create.cshtml" />
-  </ItemGroup>
-  <ItemGroup>
-    <Content Include="Views\ManageBadwordType\Edit.cshtml" />
-  </ItemGroup>
-  <ItemGroup>
-    <Content Include="Views\ManageBadwordType\Delete.cshtml" />
-  </ItemGroup>
-  <ItemGroup>
-    <Content Include="Views\ManageBadpost\Index.cshtml" />
-  </ItemGroup>
-  <ItemGroup>
-    <Content Include="Views\ManageDistrict\Index.cshtml" />
-  </ItemGroup>
-  <ItemGroup>
-    <Content Include="Views\ManageDistrict\Details.cshtml" />
-  </ItemGroup>
-  <ItemGroup>
-    <Content Include="Views\ManageDistrict\Create.cshtml" />
-  </ItemGroup>
-  <ItemGroup>
-    <Content Include="Views\ManageDistrict\Edit.cshtml" />
-  </ItemGroup>
-  <ItemGroup>
-    <Content Include="Views\ManageDistrict\Delete.cshtml" />
-  </ItemGroup>
-  <ItemGroup>
-    <Content Include="Views\Post\_Question.cshtml" />
-  </ItemGroup>
-  <ItemGroup>
-    <Content Include="Views\Shared\_LayoutUser.cshtml" />
-  </ItemGroup>
-  <ItemGroup>
-    <Content Include="Views\User\Favorites.cshtml" />
-  </ItemGroup>
-  <ItemGroup>
-    <Content Include="Views\User\Posts.cshtml" />
-  </ItemGroup>
-  <ItemGroup>
-    <Content Include="Views\Questions\Index.cshtml" />
-  </ItemGroup>
-  <ItemGroup>
-    <Content Include="Views\Questions\Details.cshtml" />
-  </ItemGroup>
-  <ItemGroup>
-    <Content Include="Views\User\Info.cshtml" />
-  </ItemGroup>
-  <ItemGroup>
-    <Content Include="Views\Questions\_AnswerPartial.cshtml" />
-  </ItemGroup>
-  <ItemGroup>
-    <Content Include="Views\Questions\SendAnswer.cshtml" />
-  </ItemGroup>
-  <ItemGroup>
-    <Content Include="Views\SentQuestion\Index.cshtml" />
-  </ItemGroup>
-  <ItemGroup>
-    <Content Include="Views\SentQuestion\Details.cshtml" />
-  </ItemGroup>
-  <ItemGroup>
-    <Content Include="Views\Post\Confirm.cshtml" />
-  </ItemGroup>
-  <ItemGroup>
-    <Content Include="Views\Post\DetailsBox.cshtml" />
-  </ItemGroup>
-  <ItemGroup>
-    <Content Include="Views\ManagePosts\Index.cshtml" />
-  </ItemGroup>
-  <ItemGroup>
-    <Content Include="Views\Service\GetAllUserFavorite.cshtml" />
-  </ItemGroup>
-  <ItemGroup>
-    <Content Include="Views\Service\ComparePost.cshtml" />
-  </ItemGroup>
-  <ItemGroup>
-    <Content Include="Views\PostEdit\Index.cshtml" />
-  </ItemGroup>
-  <ItemGroup>
-    <Content Include="Views\PostEdit\Edit.cshtml" />
-  </ItemGroup>
-  <ItemGroup>
-    <Content Include="Views\Post\ViewImage.cshtml" />
+    <Content Include="Views\PostEdit\ViewImage.cshtml" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <Import Project="$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v10.0\WebApplications\Microsoft.WebApplication.targets" />
