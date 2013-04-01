@@ -230,7 +230,7 @@ namespace RentalHouseFinding.Common
                 StayWithOwner = model.Facilities.IsStayWithOwner ? "Có" : "Không",
                 UserId = model.UserId,
                 NameContact = model.Contacts.NameContact.Equals(noInformation, StringComparison.CurrentCultureIgnoreCase) ? string.Empty : model.Contacts.NameContact,
-                NearByPlace = model.NearbyPlace,
+                NearByPlace = model.NearbyPlace.Equals(noInformation, StringComparison.CurrentCultureIgnoreCase) ? string.Empty : model.NearbyPlace,
                 lstNearByPlace = GetDictionaryNearybyPlace(model.Id)
             };
         }

@@ -2074,3 +2074,7 @@ ul {
     margin-top:5px;
     margin-left:120px;
 }
+table#grid
+{
+    margin: 0 auto;
+}

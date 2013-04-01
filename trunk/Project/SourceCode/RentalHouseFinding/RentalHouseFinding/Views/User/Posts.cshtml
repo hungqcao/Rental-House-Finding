@@ -15,18 +15,20 @@
                                 alternatingRowStyle: "alt",
                                 htmlAttributes: new { id = "grid"},
                                 columns: grid.Columns(
-                                grid.Column("ID", "Id"),
-                                     grid.Column("UserId", "User Id"),
-                                      grid.Column(header: "Title", format: @<text>
-                                            <a href="@Url.Action("Edit",
-                                            "Post",
+                                       grid.Column(header: "Mã số bài đăng", format: @<text>
+                                            <a href="@Url.Action("details",
+                                            "post",
+                                            new { id = @item.ID })">@item.Id</a></text>),
+                                            grid.Column(header: "Tiêu đề", format: @<text>
+                                            <a href="@Url.Action("edit",
+                                            "post",
                                             new { id = @item.ID })">@item.Title</a></text>),
-                                            grid.Column("PostStatus", "Post Status"),
-                                            grid.Column("CreatedDate", "Created Date"),
-                                            grid.Column("EditedDate", "Edited Date"),
-                                            grid.Column("RenewDate", "Renew Date"),
-                                            grid.Column("ExpiredDate", "Expire Date")
-                                        ));
+                                                                                 grid.Column("PostStatus", "Trạng thái"),
+                                                                                 grid.Column("CreatedDate", "Ngày tạo"),
+                                                                                 grid.Column("EditedDate", "Lần cuối chỉnh sửa"),
+                                                                                 grid.Column("RenewDate", "Ngày làm mới"),
+                                                                                 grid.Column("ExpiredDate", "Ngày hết hạn")
+                                                                             ));
             }
             else
             {
@@ -38,7 +40,6 @@
         <br/>
     </div>
 </fieldset>
-@Html.ActionLink("Quay lại", "Index")
 
 <script type="text/javascript" >
     $(document).ready(function () {
