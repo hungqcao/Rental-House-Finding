@@ -1876,14 +1876,23 @@ table {
 
 table td {
     padding: 5px;
-    border: solid 1px #e1e1e1;
+    /*border: dashed 1px #e1e1e1;*/
+    padding: 15px 5px 15px 5px;
+    font-family:Calibri,Sans-Serif;
+    font-size:14px;
+    text-align: center;
 }
 
-table th {
-    padding: 6px 5px;
-    text-align: left;
-    background-color: #e1e1e1;
-    border: solid 1px #e1e1e1;
+table th 
+{
+    font-family:Calibri,Sans-Serif;
+    font-size:14px;
+    padding: 15px 5px 15px 5px;
+    text-align: center;
+    background-color: #FFCC00;
+    border: dashed 1px #4c6066;
+    color:black;
+    font-weight:bold;
 }
 
 /* Message UCP */
