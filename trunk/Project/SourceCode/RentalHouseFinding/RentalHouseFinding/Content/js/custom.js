@@ -52,7 +52,7 @@ function ComparePost() {
             data += $("input:checkbox:checked")[i].id + "|";
     }
     $.ajax({
-        url: 'service/ComparePost',
+        url: '/service/ComparePost',
         contentType: 'application/html; charset=utf-8',
         type: 'GET',
         dataType: 'html',
