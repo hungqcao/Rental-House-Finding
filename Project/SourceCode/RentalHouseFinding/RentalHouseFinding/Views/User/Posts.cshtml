@@ -18,7 +18,7 @@
                                 grid.Column("ID", "Id"),
                                      grid.Column("UserId", "User Id"),
                                       grid.Column(header: "Title", format: @<text>
-                                            <a href="@Url.Action("Details",
+                                            <a href="@Url.Action("Edit",
                                             "Post",
                                             new { id = @item.ID })">@item.Title</a></text>),
                                             grid.Column("PostStatus", "Post Status"),
