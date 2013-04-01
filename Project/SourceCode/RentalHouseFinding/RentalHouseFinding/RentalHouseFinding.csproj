@@ -443,6 +443,7 @@
     <Content Include="Content\img\undo.png" />
     <Content Include="Content\jquery.tagedit.css" />
     <Content Include="Content\js\custom.js" />
+    <Content Include="Content\js\infobox.js" />
     <Content Include="Content\js\jquery.jscrollpane.js" />
     <Content Include="Content\js\jquery.jscrollpane.min.js" />
     <Content Include="Content\js\jquery.mousewheel.js" />

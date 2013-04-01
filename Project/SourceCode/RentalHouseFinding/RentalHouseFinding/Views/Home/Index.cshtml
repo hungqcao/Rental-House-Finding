@@ -12,8 +12,29 @@
 <script src="@Url.Content("~/Scripts/RHFScripts.js")" type="text/javascript"></script> 
 <link rel="stylesheet" href="http://code.jquery.com/ui/1.10.1/themes/base/jquery-ui.css" />
 @*Group Marker*@
-<script src="http://www.google.com/jsapi"></script>
+@*<script src="http://www.google.com/jsapi"></script>*@
 <script type="text/javascript">
+    function bindMouseHoverMarker(){
+        var imageInactive = '@Url.Content("~/Content/images/inactive_marker.png")';
+        var imageActive = '@Url.Content("~/Content/images/active_marker.png")';
+
+        $("#ul-result li a").mouseover(function () {
+            var id = $(this).attr('id').split('-')[1];
+            for (var key in window.markers1.marker) {
+                if (window.markers1.marker[key].id == id) {
+                    window.markers1.marker[key].value.setIcon(imageActive);
+                }
+            }
+        }).mouseout(function () {
+            var id = $(this).attr('id').split('-')[1];
+            for (var key in window.markers1.marker) {
+                if (window.markers1.marker[key].id == id) {
+                    window.markers1.marker[key].value.setIcon(imageInactive);
+                }
+            }
+        });
+    }
+
     function initialize() {
         var selected = '@ViewBag.SelectedValue';
         if (selected == 0) {
@@ -36,14 +57,13 @@
             mapOptions);
         var i = 0;
         var markers = [];
-        var markers1 = { marker: [] };         
+        window.markers1 = { marker: [] };         
         var imageInactive = '@Url.Content("~/Content/images/inactive_marker.png")';
         var imageActive = '@Url.Content("~/Content/images/active_marker.png")';
 
         var scriptInfobox = document.createElement('script');
         scriptInfobox.type = 'text/javascript';
         scriptInfobox.src = '@Url.Content("~/Content/js/infobox.js")';
-        //     ==========================================================
         
 
 
@@ -71,21 +91,9 @@
                         google.maps.event.addListener(marker, 'click', (function (marker, i) {
                             return function () {
                                 var valuePost = itemData.Text.split('|');
-//                                infowindow.setContent('<div class="1">'
-//                                + '<h3>' + valuePost[5] + '</h3>'
-//                                + '<br/>'
-//                                + '<h4>' + valuePost[4] + '<h4>'
-//                                + '<br/>'
-//                                + '<br/>'
-//                                + 'Diện tích:' + valuePost[2] + ' m2' + '  |  Giá:' + valuePost[3] + 'triệu VNĐ'
-//                                + '<br/>'
-//                                + '<a class="infoDetail left fancybox" href="/post/detailsbox/' + itemData.Value + '">Xem chi tiết</a>'
-//                                + '</div>');
-
-                                //Infobox
                                 var boxText = document.createElement("div");
                                 boxText.className = "infoBox-wrapper";
-                                boxText.innerHTML = '<a style="text-decoration:none;color:#124242; background-color: #fbfbfb; width: 158px;" class="infoDetail left fancybox" href="/post/details/' + itemData.Value + '">'
+                                boxText.innerHTML = '<a style="text-decoration:none;color:#124242; background-color: #fbfbfb; width: 158px; border:1px solid #e1e1e1" class="infoDetail left fancybox" href="/post/details/' + itemData.Value + '">'
                                 + '<div class="infoBox-item"">'
                                 + '<div style="padding: 5px; border: 1px dashed;"><label id="title">' + valuePost[5] + '</label></div>'
                                 + '<div style="padding: 5px;">'
@@ -125,7 +133,8 @@
                         })(marker, i));
                         markers1.marker.push({ "id": itemData.Value, "value": marker });
                         markers.push(marker);
-                        //marker.setMap(marker)
+                        //marker.setMap(marker)
+
                     }
                 });
                 var markerCluster = new MarkerClusterer(window.map, markers, {
@@ -133,45 +142,10 @@
                     maxZoom: 14,
                     gridSize: 30
                 });                                
-//                // onClick OVERRIDE
-//                markerCluster.onClickZoom = function () { return multiChoice(markerCluster); }
 
             });
-
-        $("#ul-result li a").mouseover(function () {
-            var id = $(this).attr('id').split('-')[1];
-            for (var key in markers1.marker) {
-                if (markers1.marker[key].id == id) {
-                    markers1.marker[key].value.setIcon(imageActive);
-                }
-            }
-        }).mouseout(function () {
-            var id = $(this).attr('id').split('-')[1];
-            for (var key in markers1.marker) {
-                if (markers1.marker[key].id == id) {
-                    markers1.marker[key].value.setIcon(imageInactive);
-                }
-            }
-        });
+            bindMouseHoverMarker();
     }
-//    function multiChoice(mc) {
-//        debugger;
-//        var cluster = mc.clusters_;
-//        // if more than 1 point shares the same lat/long
-//        // the size of the cluster array will be 1 AND
-//        // the number of markers in the cluster will be > 1
-//        // REMEMBER: maxZoom was already reached and we can't zoom in anymore
-//        if (cluster.length == 1 && cluster[0].markers_.length > 1) {
-//            var markers = cluster[0].markers_;
-//            for (var i = 0; i < markers.length; i++) {
-//                // you'll probably want to generate your list of options here...
-//            }
-
-//            return false;
-//        }
-
-//        return true;
-//    }
 
     function loadScript() {
         var script = document.createElement('script');
@@ -209,7 +183,7 @@
                 'type': 'iframe'
             });
             UpdateNumberListItem();
-
+            bindMouseHoverMarker();
         })
         .error(function (xhr, status) {
             xhr.abort();
@@ -226,8 +200,6 @@
         @Html.DropDownListFor(model => model.ProvinceId, null, new { @class = "select" })
         @Html.ValidationMessageFor(model => model.ProvinceId)
         @Html.DropDownListFor(model => model.DistrictId, null, new { @class = "select" })
-           @* new SelectList(Enumerable.Empty<SelectListItem>(), "Id", "Name"),
-                    new { @id = "DistrictId", @class = "select" })*@
         <div class="textbox">
             @Html.TextBoxFor(model => model.KeyWord, new { @id = "KeyWord", @class = "searchMid", @placeholder = "từ khóa thêm", @style = "width: 305px; font-size: 12px;" })        
         </div>
@@ -297,6 +269,7 @@
                         });
                         $("#overlay").fadeOut();
                         UpdateNumberListItem();
+                        bindMouseHoverMarker();
                     })
                     .error(function (xhr, status) {
                         xhr.abort();
@@ -320,9 +293,6 @@
                     $(this).next().text(val);
                 })
             });
-            //            $(function () {
-            //                $('.scroll-pane').jScrollPane();
-            //            });
 
         });
         </script>

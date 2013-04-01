@@ -5,6 +5,8 @@ using System.Web;
 using System.Web.Mvc;
 using System.Web.Routing;
 using RentalHouseFinding.Common;
+using log4net;
+using System.Reflection;
 
 namespace RentalHouseFinding
 {
@@ -13,6 +15,8 @@ namespace RentalHouseFinding
 
     public class MvcApplication : System.Web.HttpApplication
     {
+        private readonly ILog log = LogManager.GetLogger(MethodBase.GetCurrentMethod().DeclaringType);
+
         public static void RegisterGlobalFilters(GlobalFilterCollection filters)
         {
             filters.Add(new HandleErrorAttribute());
@@ -36,6 +40,7 @@ namespace RentalHouseFinding
 
             RegisterGlobalFilters(GlobalFilters.Filters);
             RegisterRoutes(RouteTable.Routes);
+            log4net.Config.XmlConfigurator.Configure();
         }
     }
 }
