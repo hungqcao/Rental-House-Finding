@@ -831,7 +831,7 @@ span.field-validation-error
     display: block;
     float: left;
     padding: 0 20px;
-    width: 280px;
+    width: 260px;
 }
 #listInfo .infoDetail div, #listInfo .infoDetail img, #listInfo .infoDetail span {
     display: block;
@@ -856,7 +856,7 @@ span.field-validation-error
 }
 #listInfo .text {
     margin-right: 15px;
-    width: 180px;
+    width: 160px;
 }
 #listInfo .hlText {
     display: block;
