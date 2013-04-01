@@ -24,7 +24,7 @@
             @Html.DropDownListFor(model => model.CategoryId, (IEnumerable<SelectListItem>)ViewBag.CategoryId, new { @class = "select", @id = "ddlOptions" })
             @Html.DropDownListFor(model => model.ProvinceId, (IEnumerable<SelectListItem>)ViewBag.ProvinceId, new { @id = "ddlCity", @class="select"})
             @Html.DropDownListFor(model => model.DistrictId,
-                        new SelectList(Enumerable.Empty<SelectListItem>(), "Id", "Name"), "Chọn Quận/Huyện",
+                        new SelectList(Enumerable.Empty<SelectListItem>(), "Id", "Name"), "Quận/Huyện",
                      new { id = "ddlDistrict", @class = "select" })
             <div class="clear"></div>
             <div class="field requiredField">
