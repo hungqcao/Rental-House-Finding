@@ -37,9 +37,16 @@ q:before, q:after {
 	content: '';
 	content: none;
 }
-table {
-	border-collapse: collapse;
-	border-spacing: 0;
+table 
+{
+    background:white;
+	border: 1px solid #6699CC;
+    border-collapse: collapse;
+    font-family: "Lucida Sans Unicode","Lucida Grande",Sans-Serif;
+    font-size: 12px;
+    margin: 0px;
+    text-align: left;
+    width: 1055px;
 }
 
 /*
