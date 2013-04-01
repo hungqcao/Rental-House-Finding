@@ -314,7 +314,7 @@
                     @Html.ValidationMessageFor(model => model.Skype)
                 </div>
                 <div class="clear"></div>
-                <div class="infoElement requiredField" style="height:auto;">
+                <div class="infoElement" style="height:auto;">
                     <label>Ghi chú</label>
 
                     <div class="clear"></div>
@@ -364,21 +364,21 @@
             </div>
         <div id="pnew2_toggle">
                 <div>
-                    <div class="infoElement requiredField">
+                    <div class="infoElement">
                         <label>Giá tiền điện (nghìn vnđ/số)</label>
 
                         <div class="clear"></div>
                         @Html.TextBoxFor(model => model.ElectricityFee, new { @class = "electricPriceTbx", @Value="0" })
                         @Html.ValidationMessageFor(model => model.ElectricityFee)
                     </div>
-                    <div class="infoElement requiredField">
+                    <div class="infoElement">
                         <label>Giá tiền nước (nghìn vnđ/khối) </label>
 
                         <div class="clear"></div>
                         @Html.TextBoxFor(model => model.WaterFee, new { @class = "electricPriceTbx", @Value = "0" })
                         @Html.ValidationMessageFor(model => model.WaterFee)
                     </div>
-                    <div class="infoElement requiredField">
+                    <div class="infoElement">
                         <label>Giờ đóng cửa, cổng (nếu có)</label>
 
                         <div class="clear"></div>

@@ -158,7 +158,7 @@
                 </div>
             </div>
             <div class="clear"></div>
-            <div class="blockInfo leftBlock requiredField" id="blockPassword">
+            <div class="blockInfo leftBlock" id="blockPassword">
                 @Html.LabelFor(m => m.Name)
                 <div class="clear"></div>
                 <div class="textbox">
@@ -181,7 +181,7 @@
                     @Html.ValidationMessage("captcha")
                 </div>
             </div>
-            <div class="blockInfo lastBlock requiredField" id="blockBtnRegis" style="width: 200px">
+            <div class="blockInfo lastBlock" id="blockBtnRegis" style="width: 200px">
                 <div style="margin-top: 16px;">
                     @Html.CheckBoxFor(model => model.IsTermsAccepted, new { @id = "rAccept" })
                     @*<div>Tôi đồng ý với <a id ="showDK"  href="javascript:show();">khoản sử dụng</a> .

@@ -645,7 +645,7 @@ span.field-validation-error
     margin-right: 5px;
 }
 #blockBtnRegis label {
-    margin-right: 10px;
+    margin-right: 25px;
 }
 /* END LOGIN & REGIS PAGE */
 
@@ -865,7 +865,7 @@ span.field-validation-error
     color:#717171;
 }
 #listInfo .thumbnail {
-    margin-top: 30px;
+    margin: 30px 0px 15px 0px;
 }
 #listInfo .infoDetail:hover {
     background-color: #f1f0f1;
@@ -903,6 +903,8 @@ span.field-validation-error
 #popup_wrapper div, #popup_wrapper span {
     display: block;
     float: left;
+    font-family:Calibri,Sans-Serif;
+
 }
 #popup_wrapper .popup_header {
     width: 912px;
@@ -1143,7 +1145,7 @@ div.title-ques
 }
 div.title-ques-input
 {
-    margin-bottom: 10px;
+    margin:-28px 0px 10px 120px;
 }
 div.title-ques-input input
 {
@@ -1155,6 +1157,7 @@ div.title-ques-input input
     -moz-border-radius: 7px;
     border-radius: 7px;
     padding: 5px;
+
 }
 div.content-ques-input textarea, textarea#txtResion
 {
@@ -1169,6 +1172,8 @@ div.content-ques-input textarea, textarea#txtResion
     border-radius: 7px;
     resize: none;
     padding: 5px;
+    margin-left:120px;
+    margin-top:-20px;
 }
 input.btn-send-question
 {
@@ -2062,4 +2067,10 @@ ul {
 .requiredField label:after {
     color: #FB6063;
     content: " (*) ";
+}
+
+#rpMessage,#report-form
+{
+    margin-top:5px;
+    margin-left:120px;
 }
