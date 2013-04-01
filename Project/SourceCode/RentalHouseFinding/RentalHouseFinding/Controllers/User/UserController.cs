@@ -75,25 +75,24 @@ namespace RentalHouseFinding.Controllers
         [HttpPost]
         public ActionResult Edit(UserViewModel userViewModel)
         {
-            if (Membership.ValidateUser(userViewModel.UserName, CommonController.GetMD5Hash(userViewModel.Password)))
-            {
-                //Get user ID
-                int userId = CommonModel.GetUserIdByUsername(User.Identity.Name);
-                //Get user profile
-                var profile = (from p in _db.Users where (p.Id == userId) select p).FirstOrDefault();
+            //Get user ID
+            int userId = CommonModel.GetUserIdByUsername(User.Identity.Name);
 
-                profile.Username = userViewModel.UserName;
-                profile.PhoneNumber = userViewModel.PhoneNumber;
-                profile.Name = userViewModel.Name;
-                profile.Email = userViewModel.Email;
-                profile.DOB = userViewModel.DateOfBirth;
-                profile.Address = userViewModel.Address;
-                profile.Avatar = userViewModel.Avatar;
+            //Get user profile
+            var profile = (from p in _db.Users where (p.Id == userId) select p).FirstOrDefault();
 
-                _db.ObjectStateManager.ChangeObjectState(profile, System.Data.EntityState.Modified);
-                _db.SaveChanges();
-                TempData["ProfileChanged"] = true;
-            }
+            profile.Username = userViewModel.UserName;
+            profile.PhoneNumber = userViewModel.PhoneNumber;
+            profile.Name = userViewModel.Name;
+            profile.Email = userViewModel.Email;
+            profile.DOB = userViewModel.DateOfBirth;
+            profile.Address = userViewModel.Address;
+            profile.Avatar = userViewModel.Avatar;
+
+            _db.ObjectStateManager.ChangeObjectState(profile, System.Data.EntityState.Modified);
+            _db.SaveChanges();
+            TempData["ProfileChanged"] = true;
+
             return RedirectToAction("Index", "User");
         }
 
