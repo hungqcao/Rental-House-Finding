@@ -81,7 +81,7 @@ namespace RentalHouseFinding.Controllers
             //Get user profile
             var profile = (from p in _db.Users where (p.Id == userId) select p).FirstOrDefault();
 
-            profile.Username = userViewModel.UserName;
+            profile.Username = User.Identity.Name;
             profile.PhoneNumber = userViewModel.PhoneNumber;
             profile.Name = userViewModel.Name;
             profile.Email = userViewModel.Email;
