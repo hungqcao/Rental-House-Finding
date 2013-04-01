@@ -35,17 +35,17 @@
         window.map = new google.maps.Map(document.getElementById('infoMap'),
             mapOptions);
         var i = 0;
-        var markers1 = [];
-        var markers = { marker: [] };         
+        var markers = [];
+        var markers1 = { marker: [] };         
         var imageInactive = '@Url.Content("~/Content/images/inactive_marker.png")';
         var imageActive = '@Url.Content("~/Content/images/active_marker.png")';
 
         var scriptInfobox = document.createElement('script');
         scriptInfobox.type = 'text/javascript';
         scriptInfobox.src = '@Url.Content("~/Content/js/infobox.js")';
-//        function markerOrder(marker, b) {
-//            return GOverlay.getZIndex(marker.getPoint().lat()) + marker.importance * 1000000;
-//        }
+        //     ==========================================================
+        
+
 
         document.body.appendChild(scriptInfobox);
 
@@ -123,11 +123,12 @@
 			                    ib.open(window.map, this);
                             }
                         })(marker, i));
-                        markers.marker.push({ "id": itemData.Value, "value": marker });
-                        markers1.push(marker);
+                        markers1.marker.push({ "id": itemData.Value, "value": marker });
+                        markers.push(marker);
+                        //marker.setMap(marker)
                     }
                 });
-                var markerCluster = new MarkerClusterer(window.map, markers1, {
+                var markerCluster = new MarkerClusterer(window.map, markers, {
                     zoomOnClick: true,
                     maxZoom: 14,
                     gridSize: 30
@@ -139,16 +140,16 @@
 
         $("#ul-result li a").mouseover(function () {
             var id = $(this).attr('id').split('-')[1];
-            for (var key in markers.marker) {
-                if (markers.marker[key].id == id) {
-                    markers.marker[key].value.setIcon(imageActive);
+            for (var key in markers1.marker) {
+                if (markers1.marker[key].id == id) {
+                    markers1.marker[key].value.setIcon(imageActive);
                 }
             }
         }).mouseout(function () {
             var id = $(this).attr('id').split('-')[1];
-            for (var key in markers.marker) {
-                if (markers.marker[key].id == id) {
-                    markers.marker[key].value.setIcon(imageInactive);
+            for (var key in markers1.marker) {
+                if (markers1.marker[key].id == id) {
+                    markers1.marker[key].value.setIcon(imageInactive);
                 }
             }
         });

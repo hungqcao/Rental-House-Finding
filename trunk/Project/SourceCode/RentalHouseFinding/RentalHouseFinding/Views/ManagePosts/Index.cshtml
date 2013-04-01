@@ -43,7 +43,7 @@
                 "Chọn Tỉnh/Thành phố", new { @class = "select" })</td>
                 <td>@Html.DropDownList("DistrictId",
                 (IEnumerable<SelectListItem>)ViewBag.Districts,
-                "-- Chọn Quận/Huyện --", new { @class = "select" })</td>
+                "Quận/Huyện", new { @class = "select" })</td>
 
             <td>@Html.TextBox("ExpireDate", @TempData["ExpireDate"], 
                 new { @id = "expire_date", @readonly = "readonly" })</td>

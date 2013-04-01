@@ -1042,16 +1042,27 @@ function ClusterIcon(cluster, styles, opt_padding) {
 /**
  * Triggers the clusterclick event and zoom's if the option is set.
  */
-ClusterIcon.prototype.triggerClusterClick = function() {
-  var markerClusterer = this.cluster_.getMarkerClusterer();
 
-  // Trigger the clusterclick event.
-  google.maps.event.trigger(markerClusterer, 'clusterclick', this.cluster_);
+ClusterIcon.prototype.triggerClusterClick = function () {
+    var markerClusterer = this.cluster_.getMarkerClusterer();
 
-  if (markerClusterer.isZoomOnClick()) {
-    // Zoom into the cluster.
-    this.map_.fitBounds(this.cluster_.getBounds());
-  }
+    // Trigger the clusterclick event.
+//    google.maps.event.trigger(markerClusterer, 'clusterclick', this.cluster_);
+
+//    var zoom = this.map_.getZoom();
+//    var maxZoom = markerClusterer.getMaxZoom();
+//    // if we have reached the maxZoom and there is more than 1 marker in this cluster
+//    // use our onClick method to popup a list of options
+//    if (zoom >= maxZoom && this.cluster_.markers_.length > 1) {
+//        return markerClusterer.onClickZoom(this);
+//    }
+    google.maps.event.trigger(markerClusterer, 'clusterclick', this.cluster_);
+
+    if (markerClusterer.isZoomOnClick()) {
+        // Zoom into the cluster.
+        this.map_.fitBounds(this.cluster_.getBounds());
+        this.map_.setZoom(markerClusterer.getMaxZoom() + 1);
+    }
 };
 
 
@@ -1288,3 +1299,7 @@ Cluster.prototype['getMarkers'] = Cluster.prototype.getMarkers;
 ClusterIcon.prototype['onAdd'] = ClusterIcon.prototype.onAdd;
 ClusterIcon.prototype['draw'] = ClusterIcon.prototype.draw;
 ClusterIcon.prototype['onRemove'] = ClusterIcon.prototype.onRemove;
+
+MarkerClusterer.prototype.onClick = function () {
+    return true;
+};
