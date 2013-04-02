@@ -61,7 +61,6 @@ namespace RentalHouseFinding.Models
         [Required(ErrorMessage= "Xin vui lòng điền tên tài khoản.")]
         [Display(Name = "Tên tài khoản")]
         [MaxLength(50, ErrorMessage = "Không được vượt quá 50 ký tự, xin vui lòng nhập lại.")]
-        //[RegularExpression(@"\w+([-+.']\w+)*@\w+([-.]\w+)*\.\w+([-.]\w+)*", ErrorMessage = "Email không hợp lệ.")]
         [Remote("IsUserNameAvailable", "Validation")]
         public string UserName { get; set; }
 
@@ -127,5 +126,13 @@ namespace RentalHouseFinding.Models
         public int timezone { get; set; }
         //public FacebookLocation location { get; set; }
         public Picture picture { get; set; }
+    }
+
+    public class ForgotPassword
+    {
+        [Required(ErrorMessage = "Xin vui lòng điền tên tài khoản.")]
+        [Display(Name = "Tên tài khoản")]
+        [MaxLength(50, ErrorMessage = "Không được vượt quá 50 ký tự, xin vui lòng nhập lại.")]
+        public string Username { get; set; }
     }
 }

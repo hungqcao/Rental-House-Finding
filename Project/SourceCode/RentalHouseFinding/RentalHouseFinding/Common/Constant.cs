@@ -33,5 +33,7 @@ namespace RentalHouseFinding.Common
     {
         public const string RECEIVE_QUESTION = "YouReceiveQuestion";
         public const string RECEIVE_ANSWER = "YouReceiveMessage";
+        public const string RECEIVE_FORGOT_PASSWORD = "ReceiveForgotPassword";
+        public const string SUBJECT_RECEIVE_FORGOT_PASSWORD = "SubjectReceiveForgotPassword";
     }
 }

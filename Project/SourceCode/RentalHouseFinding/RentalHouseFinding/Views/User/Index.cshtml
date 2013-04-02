@@ -2,6 +2,17 @@
 @{
     Layout = "~/Views/Shared/_LayoutUser.cshtml";
 }
+<div id="message-sv" style="width:967px; margin: 0 auto;">
+    @if (TempData["MessageChangeUserInfoSuccess"] != null)
+    {
+        <div class="message-notification success">
+            <a class="close" id="btnCloseDiv"></a>
+            <div>
+                @TempData["MessageChangeUserInfoSuccess"]
+            </div>
+        </div>
+    }
+</div>
 <div id="leftInfo" class="left">
         <label style="margin-left: 15px; font-size: 14px;">
             Thông tin tài khoản</label>
