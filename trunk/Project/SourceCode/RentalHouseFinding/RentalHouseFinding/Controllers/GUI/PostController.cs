@@ -39,7 +39,7 @@ namespace RentalHouseFinding.Controllers
         
         //
         // GET: /Post/Details/5
-
+        [HttpGet]
         public ActionResult Details(int id)
         {
             var post = (from p in _db.Posts where p.Id == id select p).FirstOrDefault();
@@ -92,6 +92,7 @@ namespace RentalHouseFinding.Controllers
             return View(CommonModel.ConvertPostToPostViewModel(post, _noInfo));
         }
 
+        [HttpGet]
         public ActionResult DetailsBox(int id)
         {
             var post = (from p in _db.Posts where p.Id == id select p).FirstOrDefault();

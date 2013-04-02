@@ -2087,3 +2087,16 @@ table#grid
 {
     margin: 0 auto;
 }
+.markerInfo
+{
+    text-decoration:none;
+    color:#124242; 
+    background-color: #fbfbfb; 
+    width: 158px; 
+    border:1px solid #e1e1e1;
+    cursor: pointer;
+}
+.markerInfo label
+{
+    cursor: pointer;
+}

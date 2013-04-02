@@ -25,7 +25,7 @@
                 e.preventDefault();
 
                 // Triggering bPopup when click event is fired
-                $('.login-form').bPopup();
+                $('.login-regis').bPopup();
 
             });
 

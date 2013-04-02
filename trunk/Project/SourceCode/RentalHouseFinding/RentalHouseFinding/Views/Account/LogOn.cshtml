@@ -34,6 +34,17 @@
         <div class="helloLine"></div>
     </div>
     <div class="clear"></div>
+<div id="message-sv" style="width:800px; margin: 0 auto;">
+    @if (TempData["MessageForgotPassword"] != null)
+    {
+        <div class="message-notification success">
+            <a class="close" id="btnCloseDiv"></a>
+            <div>
+                @TempData["MessageForgotPassword"]
+            </div>
+        </div>
+    }
+</div>
 <div class="login-regis" id="loginPanel">
     <div class="title">
         <h1>Đăng nhập</h1>
@@ -57,7 +68,7 @@
 @using (Html.BeginForm())
 {
         <div class="userInfo">
-            <h2>Đăng nhập vào tài khoản 5house.vn của bạn ngay</h2>
+            <h2>Đăng nhập vào tài khoản 5house.vn của bạn ngay. Nếu bạn quên mật khẩu, vui lòng click vào @Html.ActionLink("đây", "forgotpassword", "account")</h2>
             <div class="blockInfo leftBlock requiredField" id="blockEmail">
                 @Html.LabelFor(m => m.UserName)
                 <div class="clear"></div>

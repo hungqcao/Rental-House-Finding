@@ -91,7 +91,7 @@ namespace RentalHouseFinding.Controllers
             _db.ObjectStateManager.ChangeObjectState(profile, System.Data.EntityState.Modified);
             _db.SaveChanges();
             TempData["ProfileChanged"] = true;
-
+            TempData["MessageChangeUserInfoSuccess"] = "Thay đổi thông tin thành công";
             return RedirectToAction("Index", "User");
         }
 

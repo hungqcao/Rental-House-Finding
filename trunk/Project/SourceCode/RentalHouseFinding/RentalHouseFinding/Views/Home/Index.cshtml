@@ -14,23 +14,38 @@
 @*Group Marker*@
 @*<script src="http://www.google.com/jsapi"></script>*@
 <script type="text/javascript">
+    function bindFancyBox(obj) {
+        $.fancybox({
+            'href': $(obj).attr("rel"),
+            'width': '85%',
+            'height': '100%',
+            'autoScale': false,
+            'transitionIn': 'none',
+            'transitionOut': 'none',
+            'type': 'iframe'
+        });  
+    }
     function bindMouseHoverMarker(){
         var imageInactive = '@Url.Content("~/Content/images/inactive_marker.png")';
         var imageActive = '@Url.Content("~/Content/images/active_marker.png")';
 
         $("#ul-result li a").mouseover(function () {
             var id = $(this).attr('id').split('-')[1];
-            for (var key in window.markers1.marker) {
-                if (window.markers1.marker[key].id == id) {
-                    window.markers1.marker[key].value.setIcon(imageActive);
+            if (window.markers1 != null) {
+                for (var key in window.markers1.marker) {
+                    if (window.markers1.marker[key].id == id) {
+                        window.markers1.marker[key].value.setIcon(imageActive);
+                    }
                 }
             }
         }).mouseout(function () {
             var id = $(this).attr('id').split('-')[1];
-            for (var key in window.markers1.marker) {
-                if (window.markers1.marker[key].id == id) {
-                    window.markers1.marker[key].value.setIcon(imageInactive);
-                }
+            if (window.markers1 != null) {
+                for (var key in window.markers1.marker) {
+                    if (window.markers1.marker[key].id == id) {
+                        window.markers1.marker[key].value.setIcon(imageInactive);
+                    }
+                } 
             }
         });
     }
@@ -64,12 +79,8 @@
         var scriptInfobox = document.createElement('script');
         scriptInfobox.type = 'text/javascript';
         scriptInfobox.src = '@Url.Content("~/Content/js/infobox.js")';
-        
-
 
         document.body.appendChild(scriptInfobox);
-
-        var infowindow;
 
         $.getJSON("home/GetLatLonFromResult",
             function (myData) {
@@ -87,13 +98,12 @@
                             animation: google.maps.Animation.DROP
                         });
                         i++;
-                        //infowindow = new google.maps.InfoWindow();
                         google.maps.event.addListener(marker, 'click', (function (marker, i) {
                             return function () {
                                 var valuePost = itemData.Text.split('|');
                                 var boxText = document.createElement("div");
                                 boxText.className = "infoBox-wrapper";
-                                boxText.innerHTML = '<a style="text-decoration:none;color:#124242; background-color: #fbfbfb; width: 158px; border:1px solid #e1e1e1" class="infoDetail left fancybox" href="/post/details/' + itemData.Value + '">'
+                                boxText.innerHTML = '<a onclick="bindFancyBox(this);" class="infoDetail left fancybox markerInfo" rel="/post/detailsbox/' + itemData.Value + '">'
                                 + '<div class="infoBox-item"">'
                                 + '<div style="padding: 5px; border: 1px dashed;"><label id="title">' + valuePost[5] + '</label></div>'
                                 + '<div style="padding: 5px;">'
@@ -128,13 +138,11 @@
 			                    //--End
                                 ib.close();
                                 ib.setOptions(myOptions)
-			                    ib.open(window.map, this);
+                                ib.open(window.map, this);
                             }
                         })(marker, i));
-                        markers1.marker.push({ "id": itemData.Value, "value": marker });
+                        window.markers1.marker.push({ "id": itemData.Value, "value": marker });
                         markers.push(marker);
-                        //marker.setMap(marker)
-
                     }
                 });
                 var markerCluster = new MarkerClusterer(window.map, markers, {
@@ -142,9 +150,8 @@
                     maxZoom: 14,
                     gridSize: 30
                 });                                
-
+                
             });
-            bindMouseHoverMarker();
     }
 
     function loadScript() {
@@ -156,14 +163,15 @@
         document.body.appendChild(script);
     }
 
-    window.onload = loadScript;
+    //window.onload = loadScript;
 </script>
 
 
 
 <script type="text/javascript">
     $(document).ready(function () {
-
+        loadScript();
+        bindMouseHoverMarker();
         var source;
         $.ajax({
             url: 'home/GetSectionSideListPost',
