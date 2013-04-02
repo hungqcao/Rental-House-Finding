@@ -5,7 +5,7 @@
 <fieldset>
     <div id="container-grid">
         @{
-            if (ViewBag.PostList != null)
+            if (ViewBag.PostList != null && ViewBag.PostList.Length > 0)
             {
                 var grid = new WebGrid(ViewBag.PostList, ajaxUpdateContainerId: "container-grid", canSort: false
                     );
@@ -20,19 +20,24 @@
                                             "post",
                                             new { id = @item.ID })">@item.Id</a></text>),
                                             grid.Column(header: "Tiêu đề", format: @<text>
-                                            <a href="@Url.Action("edit",
-                                            "post",
-                                            new { id = @item.ID })">@item.Title</a></text>),
-                                                                                 grid.Column("PostStatus", "Trạng thái"),
-                                                                                 grid.Column("CreatedDate", "Ngày tạo"),
-                                                                                 grid.Column("EditedDate", "Lần cuối chỉnh sửa"),
-                                                                                 grid.Column("RenewDate", "Ngày làm mới"),
-                                                                                 grid.Column("ExpiredDate", "Ngày hết hạn")
-                                                                             ));
+                                                <a href="@Url.Action("Edit", "Post",
+                                                new { id = @item.ID })">@item.Title</a></text>),
+                                            grid.Column("PostStatus", "Trạng thái"),
+                                            grid.Column("CreatedDate", "Ngày tạo"),
+                                            grid.Column("EditedDate", "Lần cuối chỉnh sửa"),
+                                            grid.Column("RenewDate", "Ngày làm mới"),
+                                            grid.Column("ExpiredDate", "Ngày hết hạn"),
+                                            grid.Column(header: "Edit", format: @<text>
+                                                <a href="@Url.Action("Edit",
+                                                "Post",
+                                                new { id = @item.ID })">Sửa</a></text>),
+                                            grid.Column(header: "Delete", format: @<text>
+                                                <a href="#" onclick="del(@item.ID);">Xóa</a></text>)
+                  ));
             }
             else
             {
-                <h2>Không có bài post</h2>
+                <h2>Không có bài đăng</h2>
             }
     
         }
@@ -46,4 +51,10 @@
         $("#options a").removeClass("active");
         $("#btnQuanLy").addClass('active');
     });
+            function del(id) {
+            if (!confirm("Xóa bài viết?")) {
+                return false;
+            }
+            location.href = "@Url.Action("Delete", "Post")/" + id;
+        }
 </script>
