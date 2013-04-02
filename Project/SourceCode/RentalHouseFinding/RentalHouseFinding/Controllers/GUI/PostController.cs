@@ -434,7 +434,7 @@ namespace RentalHouseFinding.Controllers
                     _db.ObjectStateManager.ChangeObjectState(post, EntityState.Modified);
                     _db.SaveChanges();
                 }
-                return RedirectToAction("Index", "User");
+                return RedirectToAction("Posts", "User");
             }
             catch
             {
