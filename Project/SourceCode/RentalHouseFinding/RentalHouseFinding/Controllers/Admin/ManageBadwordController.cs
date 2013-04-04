@@ -11,23 +11,59 @@ namespace RentalHouseFinding.Controllers.Admin
 { 
     public class ManageBadwordController : Controller
     {
-        private RentalHouseFindingEntities db = new RentalHouseFindingEntities();
+        private RentalHouseFindingEntities _db = new RentalHouseFindingEntities();
 
         //
         // GET: /ManageBadword/
         [Authorize(Roles = "Admin")]
-        public ViewResult Index()
+        public ViewResult Index(int? type)
         {
-            var badwords = db.BadWords.Include("BadWordType");
-            return View(badwords.ToList());
+            ViewBag.TypesList = new SelectList(_db.BadWordTypes, "Id", "Name");
+            if (type == null)
+            {
+                var badwords = _db.BadWords.Include("BadWordType");
+                return View(badwords.ToList());
+            }
+            else
+            {
+                var badwords = _db.BadWords.Include("BadWordType").Where(w => w.TypeId == type);
+                return View(badwords.ToList());
+            }
         }
 
+        [Authorize(Roles = "Admin")]
+        [HttpPost]
+        public ViewResult Index(FormCollection form)
+        {
+            ViewBag.TypesList = new SelectList(_db.BadWordTypes, "Id", "Name");
+            if (form["TypeId"] == null)
+            {
+                var badwords = _db.BadWords.Include("BadWordType");
+                ViewBag.ErrorMsg = null;
+                return View(badwords.ToList());
+            }
+            else
+            {
+                try
+                {
+                    int type = Convert.ToInt32(form["TypeId"]);
+                    ViewBag.ErrorMsg = null;
+                    var badwords = _db.BadWords.Include("BadWordType").Where(w => w.TypeId == type);
+                    return View(badwords.ToList());
+                }
+                catch(FormatException ex)
+                {
+                    ViewBag.ErrorMsg = "Mã phân loại không hợp lệ";
+                    return View();
+                }
+            }
+        }
         //
         // GET: /ManageBadword/Create
         [Authorize(Roles = "Admin")]
         public ActionResult Create()
         {
-            ViewBag.TypeId = new SelectList(db.BadWordTypes, "Id", "Name");
+            ViewBag.TypeId = new SelectList(_db.BadWordTypes, "Id", "Name");
             return View();
         } 
 
@@ -39,12 +75,12 @@ namespace RentalHouseFinding.Controllers.Admin
         {
             if (ModelState.IsValid)
             {
-                db.BadWords.AddObject(badwords);
-                db.SaveChanges();
+                _db.BadWords.AddObject(badwords);
+                _db.SaveChanges();
                 return RedirectToAction("Index");  
             }
 
-            ViewBag.TypeId = new SelectList(db.BadWordTypes, "Id", "Name", badwords.TypeId);
+            ViewBag.TypeId = new SelectList(_db.BadWordTypes, "Id", "Name", badwords.TypeId);
             return View(badwords);
         }
         
@@ -53,8 +89,8 @@ namespace RentalHouseFinding.Controllers.Admin
         [Authorize(Roles = "Admin")]
         public ActionResult Edit(int id)
         {
-            BadWords badwords = db.BadWords.Single(b => b.Id == id);
-            ViewBag.TypeId = new SelectList(db.BadWordTypes, "Id", "Name", badwords.TypeId);
+            BadWords badwords = _db.BadWords.Single(b => b.Id == id);
+            ViewBag.TypeId = new SelectList(_db.BadWordTypes, "Id", "Name", badwords.TypeId);
             return View(badwords);
         }
 
@@ -66,18 +102,18 @@ namespace RentalHouseFinding.Controllers.Admin
         {
             if (ModelState.IsValid)
             {
-                db.BadWords.Attach(badwords);
-                db.ObjectStateManager.ChangeObjectState(badwords, EntityState.Modified);
-                db.SaveChanges();
+                _db.BadWords.Attach(badwords);
+                _db.ObjectStateManager.ChangeObjectState(badwords, EntityState.Modified);
+                _db.SaveChanges();
                 return RedirectToAction("Index");
             }
-            ViewBag.TypeId = new SelectList(db.BadWordTypes, "Id", "Name", badwords.TypeId);
+            ViewBag.TypeId = new SelectList(_db.BadWordTypes, "Id", "Name", badwords.TypeId);
             return View(badwords);
         }
 
         protected override void Dispose(bool disposing)
         {
-            db.Dispose();
+            _db.Dispose();
             base.Dispose(disposing);
         }
     }

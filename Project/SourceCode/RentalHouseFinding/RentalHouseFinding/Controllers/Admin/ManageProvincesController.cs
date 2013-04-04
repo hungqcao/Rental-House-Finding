@@ -11,14 +11,14 @@ namespace RentalHouseFinding.Controllers
 { 
     public class ManageProvincesController : Controller
     {
-        private RentalHouseFindingEntities db = new RentalHouseFindingEntities();
+        private RentalHouseFindingEntities _db = new RentalHouseFindingEntities();
 
         //
         // GET: /ManageProvinces/
         [Authorize(Roles = "Admin")]
         public ViewResult Index()
         {
-            return View(db.Provinces.ToList());
+            return View(_db.Provinces.ToList());
         }
 
         //
@@ -37,8 +37,8 @@ namespace RentalHouseFinding.Controllers
         {
             if (ModelState.IsValid)
             {
-                db.Provinces.AddObject(provinces);
-                db.SaveChanges();
+                _db.Provinces.AddObject(provinces);
+                _db.SaveChanges();
                 return RedirectToAction("Index");  
             }
 
@@ -50,7 +50,7 @@ namespace RentalHouseFinding.Controllers
         [Authorize(Roles = "Admin")]
         public ActionResult Edit(int id)
         {
-            Provinces provinces = db.Provinces.Single(p => p.Id == id);
+            Provinces provinces = _db.Provinces.Single(p => p.Id == id);
             return View(provinces);
         }
 
@@ -62,9 +62,9 @@ namespace RentalHouseFinding.Controllers
         {
             if (ModelState.IsValid)
             {
-                db.Provinces.Attach(provinces);
-                db.ObjectStateManager.ChangeObjectState(provinces, EntityState.Modified);
-                db.SaveChanges();
+                _db.Provinces.Attach(provinces);
+                _db.ObjectStateManager.ChangeObjectState(provinces, EntityState.Modified);
+                _db.SaveChanges();
                 return RedirectToAction("Index");
             }
             return View(provinces);
@@ -72,7 +72,7 @@ namespace RentalHouseFinding.Controllers
 
         protected override void Dispose(bool disposing)
         {
-            db.Dispose();
+            _db.Dispose();
             base.Dispose(disposing);
         }
     }
