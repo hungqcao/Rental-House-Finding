@@ -4,7 +4,19 @@
     ViewBag.Title = "Index";
     Layout = "~/Views/Shared/_AdminLayout.cshtml";
 }
-
+@{
+    if (ViewBag.ErrorMsg != null)
+    {
+        @ViewBag.ErrorMsg
+    }
+}
+@using (Html.BeginForm("Index", "ManageBadword", FormMethod.Post))
+{
+    @Html.DropDownList("TypeId",
+        (IEnumerable<SelectListItem>)ViewBag.TypesList,
+            "Phân loại từ xấu", new { @class = "select" })
+            <input type="submit" name="Search" value="Search" />
+}
 <table>
     <tr>
         <th>
@@ -30,4 +42,8 @@
 <br/>
 <p>
     @Html.ActionLink("Create New", "Create")
+</p>
+<br />
+<p>
+    @Html.ActionLink("Danh sách phân loại từ xấu", "Index", "ManageBadwordType", null, null)
 </p>

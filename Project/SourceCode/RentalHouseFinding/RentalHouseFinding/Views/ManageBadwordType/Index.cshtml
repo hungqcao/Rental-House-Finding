@@ -9,12 +9,18 @@
         <th>
             Name
         </th>
+        <th>
+            Badword
+        </th>
     </tr>
 
 @foreach (var item in Model) {
     <tr>
         <td>
             @Html.ActionLink(item.Name, "Edit", new { id=item.Id })
+        </td>
+        <td>
+            @Html.ActionLink("Danh sách từ xấu", "Index","ManageBadword", new { id=item.Id }, null)
         </td>
     </tr>
 }
