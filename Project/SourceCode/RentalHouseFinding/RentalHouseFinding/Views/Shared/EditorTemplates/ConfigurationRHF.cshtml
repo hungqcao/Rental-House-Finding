@@ -1,0 +1,15 @@
+﻿@model RentalHouseFinding.Models.ConfigurationRHF
+           
+<tr>
+    @Html.HiddenFor(model => model.Id)
+    <td>
+        @Html.HiddenFor(model => model.Name)
+        @Html.DisplayFor(model => model.Name)
+    </td>
+    <td>
+        <div class="editor-field">
+            @Html.EditorFor(model => model.Value)
+            @Html.ValidationMessageFor(model => model.Value)
+        </div>
+    </td>
+</tr>
