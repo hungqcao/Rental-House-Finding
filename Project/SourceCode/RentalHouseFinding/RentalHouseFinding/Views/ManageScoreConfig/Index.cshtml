@@ -1,0 +1,29 @@
+﻿@model IEnumerable<RentalHouseFinding.Models.ConfigurationRHF>
+
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_AdminLayout.cshtml";
+}
+
+@using (Html.BeginForm())
+{
+    @Html.ValidationSummary(true)
+
+    <table>
+        <tr>
+            <th>
+                Name
+            </th>
+            <th>
+                Value
+            </th>
+        </tr>
+
+    @Html.EditorForModel()
+    </table>
+    
+    <input type="submit" value="Save"/>
+}
+<p>
+    @Html.ActionLink("Create New", "Create")
+</p>
