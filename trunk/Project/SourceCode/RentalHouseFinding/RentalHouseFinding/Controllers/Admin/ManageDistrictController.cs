@@ -11,7 +11,7 @@ namespace RentalHouseFinding.Controllers.Admin
 { 
     public class ManageDistrictController : Controller
     {
-        private RentalHouseFindingEntities db = new RentalHouseFindingEntities();
+        private RentalHouseFindingEntities _db = new RentalHouseFindingEntities();
 
         //
         // GET: /ManageDistrict/
@@ -20,14 +20,14 @@ namespace RentalHouseFinding.Controllers.Admin
         {
             if (provinceId == null)
             {
-                ViewBag.Provinces = new SelectList(db.Provinces, "Id", "Name");
-                var districts = db.Districts.Include("Province");
+                ViewBag.Provinces = new SelectList(_db.Provinces, "Id", "Name");
+                var districts = _db.Districts.Include("Province");
                 return View(districts.ToList());
             }
             else
             {
-                ViewBag.Provinces = new SelectList(db.Provinces, "Id", "Name", provinceId);
-                var districts = db.Districts.Where(d => d.ProvinceId == provinceId).Include("Province");
+                ViewBag.Provinces = new SelectList(_db.Provinces, "Id", "Name", provinceId);
+                var districts = _db.Districts.Where(d => d.ProvinceId == provinceId).Include("Province");
                 return View(districts.ToList());
             }
         }
@@ -40,15 +40,15 @@ namespace RentalHouseFinding.Controllers.Admin
         {
             if (form["provinceId"] == null)
             {
-                ViewBag.Provinces = new SelectList(db.Provinces, "Id", "Name");
-                var districts = db.Districts.Include("Province");
+                ViewBag.Provinces = new SelectList(_db.Provinces, "Id", "Name");
+                var districts = _db.Districts.Where( d => !d.IsDeleted).Include("Province");
                 return View(districts.ToList());
             }
             else
             {
                 int provinceId = Convert.ToInt32(form["provinceId"]);
-                ViewBag.Provinces = new SelectList(db.Provinces, "Id", "Name", provinceId);
-                var districts = db.Districts.Where(d => d.ProvinceId == provinceId).Include("Province");
+                ViewBag.Provinces = new SelectList(_db.Provinces, "Id", "Name", provinceId);
+                var districts = _db.Districts.Where(d => (d.ProvinceId == provinceId && !d.IsDeleted)).Include("Province");
                 return View(districts.ToList());
             }
         }
@@ -58,7 +58,7 @@ namespace RentalHouseFinding.Controllers.Admin
         [Authorize(Roles = "Admin")]
         public ViewResult Details(int id)
         {
-            Districts districts = db.Districts.Single(d => d.Id == id);
+            Districts districts = _db.Districts.Single(d => d.Id == id);
             return View(districts);
         }
 
@@ -67,7 +67,7 @@ namespace RentalHouseFinding.Controllers.Admin
         [Authorize(Roles = "Admin")]
         public ActionResult Create()
         {
-            ViewBag.ProvinceId = new SelectList(db.Provinces, "Id", "Name");
+            ViewBag.ProvinceId = new SelectList(_db.Provinces, "Id", "Name");
             return View();
         } 
 
@@ -79,12 +79,12 @@ namespace RentalHouseFinding.Controllers.Admin
         {
             if (ModelState.IsValid)
             {
-                db.Districts.AddObject(districts);
-                db.SaveChanges();
+                _db.Districts.AddObject(districts);
+                _db.SaveChanges();
                 return RedirectToAction("Index");  
             }
 
-            ViewBag.ProvinceId = new SelectList(db.Provinces, "Id", "Name", districts.ProvinceId);
+            ViewBag.ProvinceId = new SelectList(_db.Provinces, "Id", "Name", districts.ProvinceId);
             return View(districts);
         }
         
@@ -93,8 +93,8 @@ namespace RentalHouseFinding.Controllers.Admin
         [Authorize(Roles = "Admin")]
         public ActionResult Edit(int id)
         {
-            Districts districts = db.Districts.Single(d => d.Id == id);
-            ViewBag.ProvinceId = new SelectList(db.Provinces, "Id", "Name", districts.ProvinceId);
+            Districts districts = _db.Districts.Single(d => d.Id == id);
+            ViewBag.ProvinceId = new SelectList(_db.Provinces, "Id", "Name", districts.ProvinceId);
             return View(districts);
         }
 
@@ -106,39 +106,18 @@ namespace RentalHouseFinding.Controllers.Admin
         {
             if (ModelState.IsValid)
             {
-                db.Districts.Attach(districts);
-                db.ObjectStateManager.ChangeObjectState(districts, EntityState.Modified);
-                db.SaveChanges();
+                _db.Districts.Attach(districts);
+                _db.ObjectStateManager.ChangeObjectState(districts, EntityState.Modified);
+                _db.SaveChanges();
                 return RedirectToAction("Index");
             }
-            ViewBag.ProvinceId = new SelectList(db.Provinces, "Id", "Name", districts.ProvinceId);
+            ViewBag.ProvinceId = new SelectList(_db.Provinces, "Id", "Name", districts.ProvinceId);
             return View(districts);
-        }
-
-        //
-        // GET: /ManageDistrict/Delete/5
-        [Authorize(Roles = "Admin")]
-        public ActionResult Delete(int id)
-        {
-            Districts districts = db.Districts.Single(d => d.Id == id);
-            return View(districts);
-        }
-
-        //
-        // POST: /ManageDistrict/Delete/5
-        [Authorize(Roles = "Admin")]
-        [HttpPost, ActionName("Delete")]
-        public ActionResult DeleteConfirmed(int id)
-        {            
-            Districts districts = db.Districts.Single(d => d.Id == id);
-            db.Districts.DeleteObject(districts);
-            db.SaveChanges();
-            return RedirectToAction("Index");
         }
 
         protected override void Dispose(bool disposing)
         {
-            db.Dispose();
+            _db.Dispose();
             base.Dispose(disposing);
         }
     }

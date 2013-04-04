@@ -11,14 +11,14 @@ namespace RentalHouseFinding.Controllers
 { 
     public class ManageRolesController : Controller
     {
-        private RentalHouseFindingEntities db = new RentalHouseFindingEntities();
+        private RentalHouseFindingEntities _db = new RentalHouseFindingEntities();
 
         //
         // GET: /ManageRoles/
         [Authorize(Roles = "Admin")]
         public ViewResult Index()
         {
-            return View(db.Roles.ToList());
+            return View(_db.Roles.ToList());
         }
 
         //
@@ -37,8 +37,8 @@ namespace RentalHouseFinding.Controllers
         {
             if (ModelState.IsValid)
             {
-                db.Roles.AddObject(roles);
-                db.SaveChanges();
+                _db.Roles.AddObject(roles);
+                _db.SaveChanges();
                 return RedirectToAction("Index");  
             }
 
@@ -50,7 +50,7 @@ namespace RentalHouseFinding.Controllers
         [Authorize(Roles = "Admin")]
         public ActionResult Edit(int id)
         {
-            Roles roles = db.Roles.Single(r => r.Id == id);
+            Roles roles = _db.Roles.Single(r => r.Id == id);
             return View(roles);
         }
 
@@ -62,9 +62,9 @@ namespace RentalHouseFinding.Controllers
         {
             if (ModelState.IsValid)
             {
-                db.Roles.Attach(roles);
-                db.ObjectStateManager.ChangeObjectState(roles, EntityState.Modified);
-                db.SaveChanges();
+                _db.Roles.Attach(roles);
+                _db.ObjectStateManager.ChangeObjectState(roles, EntityState.Modified);
+                _db.SaveChanges();
                 return RedirectToAction("Index");
             }
             return View(roles);
@@ -72,7 +72,7 @@ namespace RentalHouseFinding.Controllers
 
         protected override void Dispose(bool disposing)
         {
-            db.Dispose();
+            _db.Dispose();
             base.Dispose(disposing);
         }
     }

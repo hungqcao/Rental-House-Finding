@@ -11,14 +11,14 @@ namespace RentalHouseFinding.Controllers.Admin
 { 
     public class ManageBadwordTypeController : Controller
     {
-        private RentalHouseFindingEntities db = new RentalHouseFindingEntities();
+        private RentalHouseFindingEntities _db = new RentalHouseFindingEntities();
 
         //
         // GET: /ManageBadwordType/
         [Authorize(Roles = "Admin")]
         public ViewResult Index()
         {
-            return View(db.BadWordTypes.ToList());
+            return View(_db.BadWordTypes.ToList());
         }
 
         //
@@ -37,8 +37,8 @@ namespace RentalHouseFinding.Controllers.Admin
         {
             if (ModelState.IsValid)
             {
-                db.BadWordTypes.AddObject(badwordtypes);
-                db.SaveChanges();
+                _db.BadWordTypes.AddObject(badwordtypes);
+                _db.SaveChanges();
                 return RedirectToAction("Index");  
             }
 
@@ -50,7 +50,7 @@ namespace RentalHouseFinding.Controllers.Admin
         [Authorize(Roles = "Admin")]
         public ActionResult Edit(int id)
         {
-            BadWordTypes badwordtypes = db.BadWordTypes.Single(b => b.Id == id);
+            BadWordTypes badwordtypes = _db.BadWordTypes.Single(b => b.Id == id);
             return View(badwordtypes);
         }
 
@@ -62,9 +62,9 @@ namespace RentalHouseFinding.Controllers.Admin
         {
             if (ModelState.IsValid)
             {
-                db.BadWordTypes.Attach(badwordtypes);
-                db.ObjectStateManager.ChangeObjectState(badwordtypes, EntityState.Modified);
-                db.SaveChanges();
+                _db.BadWordTypes.Attach(badwordtypes);
+                _db.ObjectStateManager.ChangeObjectState(badwordtypes, EntityState.Modified);
+                _db.SaveChanges();
                 return RedirectToAction("Index");
             }
             return View(badwordtypes);
@@ -72,7 +72,7 @@ namespace RentalHouseFinding.Controllers.Admin
 
         protected override void Dispose(bool disposing)
         {
-            db.Dispose();
+            _db.Dispose();
             base.Dispose(disposing);
         }
     }

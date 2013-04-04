@@ -11,14 +11,14 @@ namespace RentalHouseFinding.Controllers
 { 
     public class ManagePostStatusController : Controller
     {
-        private RentalHouseFindingEntities db = new RentalHouseFindingEntities();
+        private RentalHouseFindingEntities _db = new RentalHouseFindingEntities();
 
         //
         // GET: /ManagePostStatus/
         [Authorize(Roles = "Admin")]
         public ViewResult Index()
         {
-            return View(db.PostStatuses.ToList());
+            return View(_db.PostStatuses.ToList());
         }
 
         //
@@ -37,8 +37,8 @@ namespace RentalHouseFinding.Controllers
         {
             if (ModelState.IsValid)
             {
-                db.PostStatuses.AddObject(poststatuses);
-                db.SaveChanges();
+                _db.PostStatuses.AddObject(poststatuses);
+                _db.SaveChanges();
                 return RedirectToAction("Index");  
             }
 
@@ -50,7 +50,7 @@ namespace RentalHouseFinding.Controllers
         [Authorize(Roles = "Admin")]
         public ActionResult Edit(int id)
         {
-            PostStatuses poststatuses = db.PostStatuses.Single(p => p.Id == id);
+            PostStatuses poststatuses = _db.PostStatuses.Single(p => p.Id == id);
             return View(poststatuses);
         }
 
@@ -62,9 +62,9 @@ namespace RentalHouseFinding.Controllers
         {
             if (ModelState.IsValid)
             {
-                db.PostStatuses.Attach(poststatuses);
-                db.ObjectStateManager.ChangeObjectState(poststatuses, EntityState.Modified);
-                db.SaveChanges();
+                _db.PostStatuses.Attach(poststatuses);
+                _db.ObjectStateManager.ChangeObjectState(poststatuses, EntityState.Modified);
+                _db.SaveChanges();
                 return RedirectToAction("Index");
             }
             return View(poststatuses);
@@ -72,7 +72,7 @@ namespace RentalHouseFinding.Controllers
 
         protected override void Dispose(bool disposing)
         {
-            db.Dispose();
+            _db.Dispose();
             base.Dispose(disposing);
         }
     }

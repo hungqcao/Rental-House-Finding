@@ -11,14 +11,14 @@ namespace RentalHouseFinding.Controllers
 { 
     public class ManageCategoriesController : Controller
     {
-        private RentalHouseFindingEntities db = new RentalHouseFindingEntities();
+        private RentalHouseFindingEntities _db = new RentalHouseFindingEntities();
 
         //
         // GET: /ManageCategories/
         [Authorize(Roles = "Admin")]
         public ViewResult Index()
         {
-            return View(db.Categories.ToList());
+            return View(_db.Categories.ToList());
         }
 
         //
@@ -37,8 +37,8 @@ namespace RentalHouseFinding.Controllers
         {
             if (ModelState.IsValid)
             {
-                db.Categories.AddObject(categories);
-                db.SaveChanges();
+                _db.Categories.AddObject(categories);
+                _db.SaveChanges();
                 return RedirectToAction("Index");  
             }
 
@@ -50,7 +50,7 @@ namespace RentalHouseFinding.Controllers
         [Authorize(Roles = "Admin")]
         public ActionResult Edit(int id)
         {
-            Categories categories = db.Categories.Single(c => c.Id == id);
+            Categories categories = _db.Categories.Single(c => c.Id == id);
             return View(categories);
         }
 
@@ -62,9 +62,9 @@ namespace RentalHouseFinding.Controllers
         {
             if (ModelState.IsValid)
             {
-                db.Categories.Attach(categories);
-                db.ObjectStateManager.ChangeObjectState(categories, EntityState.Modified);
-                db.SaveChanges();
+                _db.Categories.Attach(categories);
+                _db.ObjectStateManager.ChangeObjectState(categories, EntityState.Modified);
+                _db.SaveChanges();
                 return RedirectToAction("Index");
             }
             return View(categories);
@@ -72,7 +72,7 @@ namespace RentalHouseFinding.Controllers
 
         protected override void Dispose(bool disposing)
         {
-            db.Dispose();
+            _db.Dispose();
             base.Dispose(disposing);
         }
     }
