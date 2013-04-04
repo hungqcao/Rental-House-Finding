@@ -152,11 +152,11 @@ namespace RentalHouseFinding.Controllers
 		
         public ActionResult Create()
         {
-            var listDistrict = new SelectList(Repository.GetAllDistricts().Where(d => d.ProvinceId == 24), "Id", "Name");
+            var listDistrict = new SelectList(Repository.GetAllDistricts().Where(d => d.ProvinceId == 2), "Id", "Name");
             ViewBag.CategoryId = new SelectList(Repository.GetAllCategories(), "Id", "Name");
             //24 for Ha noi
-            ViewBag.ProvinceId = new SelectList(Repository.GetAllProvinces(), "Id", "Name", 24);            
-            ViewBag.DistrictId = new SelectList(Repository.GetAllDistricts().Where(d => d.ProvinceId == 24), "Id", "Name");
+            ViewBag.ProvinceId = new SelectList(Repository.GetAllProvinces(), "Id", "Name", 2);            
+            ViewBag.DistrictId = new SelectList(Repository.GetAllDistricts().Where(d => d.ProvinceId == 2), "Id", "Name");
             return View();
         }
 
@@ -254,7 +254,8 @@ namespace RentalHouseFinding.Controllers
                             }
                         }
                     }
-
+                    //Send SMS RenewCode.
+                    CommonController.SendSMS(postToCreate.PhoneActive,String.Format("Ban da dang bai thanh cong.Ma kich hoat cua ban la: {0}",postToCreate.Code));
                     return RedirectToAction("Details", "Post", new { id = postToCreate.Id });
                 }
                 catch (Exception ex)

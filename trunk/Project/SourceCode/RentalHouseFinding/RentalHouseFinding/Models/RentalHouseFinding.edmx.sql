@@ -2,8 +2,8 @@
 -- --------------------------------------------------
 -- Entity Designer DDL Script for SQL Server 2005, 2008, and Azure
 -- --------------------------------------------------
--- Date Created: 03/27/2013 23:36:18
--- Generated from EDMX file: C:\RentalHouseFinding\Project\SourceCode\RentalHouseFinding\RentalHouseFinding\Models\RentalHouseFinding.edmx
+-- Date Created: 04/04/2013 10:48:08
+-- Generated from EDMX file: E:\DO AN\RFS\Project\SourceCode\RentalHouseFinding\RentalHouseFinding\Models\RentalHouseFinding.edmx
 -- --------------------------------------------------
 
 SET QUOTED_IDENTIFIER OFF;
@@ -17,145 +17,124 @@ GO
 -- Dropping existing FOREIGN KEY constraints
 -- --------------------------------------------------
 
-IF OBJECT_ID(N'[dbo].[FK_ProvincesDistricts]', 'F') IS NOT NULL
-    ALTER TABLE [dbo].[Districts] DROP CONSTRAINT [FK_ProvincesDistricts];
-GO
-IF OBJECT_ID(N'[dbo].[FK_DistrictsPosts]', 'F') IS NOT NULL
-    ALTER TABLE [dbo].[Posts] DROP CONSTRAINT [FK_DistrictsPosts];
+IF OBJECT_ID(N'[dbo].[FK_BadWordTypesBadWords]', 'F') IS NOT NULL
+    ALTER TABLE [dbo].[BadWords] DROP CONSTRAINT [FK_BadWordTypesBadWords];
 GO
 IF OBJECT_ID(N'[dbo].[FK_CategoriesPosts]', 'F') IS NOT NULL
     ALTER TABLE [dbo].[Posts] DROP CONSTRAINT [FK_CategoriesPosts];
 GO
-IF OBJECT_ID(N'[dbo].[FK_PostsPostImages]', 'F') IS NOT NULL
-    ALTER TABLE [dbo].[PostImages] DROP CONSTRAINT [FK_PostsPostImages];
+IF OBJECT_ID(N'[dbo].[FK_DistrictsLocations]', 'F') IS NOT NULL
+    ALTER TABLE [dbo].[Locations] DROP CONSTRAINT [FK_DistrictsLocations];
 GO
-IF OBJECT_ID(N'[dbo].[FK_UsersFavorites]', 'F') IS NOT NULL
-    ALTER TABLE [dbo].[Favorites] DROP CONSTRAINT [FK_UsersFavorites];
-GO
-IF OBJECT_ID(N'[dbo].[FK_PostsFavorites]', 'F') IS NOT NULL
-    ALTER TABLE [dbo].[Favorites] DROP CONSTRAINT [FK_PostsFavorites];
-GO
-IF OBJECT_ID(N'[dbo].[FK_PostsReportedPosts]', 'F') IS NOT NULL
-    ALTER TABLE [dbo].[ReportedPosts] DROP CONSTRAINT [FK_PostsReportedPosts];
-GO
-IF OBJECT_ID(N'[dbo].[FK_UsersReportedPosts]', 'F') IS NOT NULL
-    ALTER TABLE [dbo].[ReportedPosts] DROP CONSTRAINT [FK_UsersReportedPosts];
-GO
-IF OBJECT_ID(N'[dbo].[FK_RolesUsers]', 'F') IS NOT NULL
-    ALTER TABLE [dbo].[Users] DROP CONSTRAINT [FK_RolesUsers];
-GO
-IF OBJECT_ID(N'[dbo].[FK_PostsFacilities]', 'F') IS NOT NULL
-    ALTER TABLE [dbo].[Facilities] DROP CONSTRAINT [FK_PostsFacilities];
-GO
-IF OBJECT_ID(N'[dbo].[FK_PostsContacts]', 'F') IS NOT NULL
-    ALTER TABLE [dbo].[Contacts] DROP CONSTRAINT [FK_PostsContacts];
-GO
-IF OBJECT_ID(N'[dbo].[FK_PostsPostVideos]', 'F') IS NOT NULL
-    ALTER TABLE [dbo].[PostVideos] DROP CONSTRAINT [FK_PostsPostVideos];
-GO
-IF OBJECT_ID(N'[dbo].[FK_PostStatusesPosts]', 'F') IS NOT NULL
-    ALTER TABLE [dbo].[Posts] DROP CONSTRAINT [FK_PostStatusesPosts];
-GO
-IF OBJECT_ID(N'[dbo].[FK_UsersPosts]', 'F') IS NOT NULL
-    ALTER TABLE [dbo].[Posts] DROP CONSTRAINT [FK_UsersPosts];
-GO
-IF OBJECT_ID(N'[dbo].[FK_QuestionsAnswers]', 'F') IS NOT NULL
-    ALTER TABLE [dbo].[Answers] DROP CONSTRAINT [FK_QuestionsAnswers];
+IF OBJECT_ID(N'[dbo].[FK_DistrictsPosts]', 'F') IS NOT NULL
+    ALTER TABLE [dbo].[Posts] DROP CONSTRAINT [FK_DistrictsPosts];
 GO
 IF OBJECT_ID(N'[dbo].[FK_FacilityTemplatesFacilities]', 'F') IS NOT NULL
     ALTER TABLE [dbo].[Facilities] DROP CONSTRAINT [FK_FacilityTemplatesFacilities];
 GO
-IF OBJECT_ID(N'[dbo].[FK_BadWordTypesBadWords]', 'F') IS NOT NULL
-    ALTER TABLE [dbo].[BadWords] DROP CONSTRAINT [FK_BadWordTypesBadWords];
-GO
-IF OBJECT_ID(N'[dbo].[FK_DistrictsLocations]', 'F') IS NOT NULL
-    ALTER TABLE [dbo].[Locations] DROP CONSTRAINT [FK_DistrictsLocations];
+IF OBJECT_ID(N'[dbo].[FK_LocationsPostLocations]', 'F') IS NOT NULL
+    ALTER TABLE [dbo].[PostLocations] DROP CONSTRAINT [FK_LocationsPostLocations];
 GO
 IF OBJECT_ID(N'[dbo].[FK_LocationTypesLocations]', 'F') IS NOT NULL
     ALTER TABLE [dbo].[Locations] DROP CONSTRAINT [FK_LocationTypesLocations];
 GO
+IF OBJECT_ID(N'[dbo].[FK_PostsContacts]', 'F') IS NOT NULL
+    ALTER TABLE [dbo].[Contacts] DROP CONSTRAINT [FK_PostsContacts];
+GO
+IF OBJECT_ID(N'[dbo].[FK_PostsFacilities]', 'F') IS NOT NULL
+    ALTER TABLE [dbo].[Facilities] DROP CONSTRAINT [FK_PostsFacilities];
+GO
+IF OBJECT_ID(N'[dbo].[FK_PostsFavorites]', 'F') IS NOT NULL
+    ALTER TABLE [dbo].[Favorites] DROP CONSTRAINT [FK_PostsFavorites];
+GO
+IF OBJECT_ID(N'[dbo].[FK_PostsPayments]', 'F') IS NOT NULL
+    ALTER TABLE [dbo].[Payments] DROP CONSTRAINT [FK_PostsPayments];
+GO
+IF OBJECT_ID(N'[dbo].[FK_PostsPostEdit]', 'F') IS NOT NULL
+    ALTER TABLE [dbo].[PostEdits] DROP CONSTRAINT [FK_PostsPostEdit];
+GO
+IF OBJECT_ID(N'[dbo].[FK_PostsPostImages]', 'F') IS NOT NULL
+    ALTER TABLE [dbo].[PostImages] DROP CONSTRAINT [FK_PostsPostImages];
+GO
 IF OBJECT_ID(N'[dbo].[FK_PostsPostLocations]', 'F') IS NOT NULL
     ALTER TABLE [dbo].[PostLocations] DROP CONSTRAINT [FK_PostsPostLocations];
 GO
-IF OBJECT_ID(N'[dbo].[FK_LocationsPostLocations]', 'F') IS NOT NULL
-    ALTER TABLE [dbo].[PostLocations] DROP CONSTRAINT [FK_LocationsPostLocations];
+IF OBJECT_ID(N'[dbo].[FK_PostsPostVideos]', 'F') IS NOT NULL
+    ALTER TABLE [dbo].[PostVideos] DROP CONSTRAINT [FK_PostsPostVideos];
 GO
 IF OBJECT_ID(N'[dbo].[FK_PostsQuestions]', 'F') IS NOT NULL
     ALTER TABLE [dbo].[Questions] DROP CONSTRAINT [FK_PostsQuestions];
 GO
+IF OBJECT_ID(N'[dbo].[FK_PostsReportedPosts]', 'F') IS NOT NULL
+    ALTER TABLE [dbo].[ReportedPosts] DROP CONSTRAINT [FK_PostsReportedPosts];
+GO
+IF OBJECT_ID(N'[dbo].[FK_PostStatusesPosts]', 'F') IS NOT NULL
+    ALTER TABLE [dbo].[Posts] DROP CONSTRAINT [FK_PostStatusesPosts];
+GO
+IF OBJECT_ID(N'[dbo].[FK_ProvincesDistricts]', 'F') IS NOT NULL
+    ALTER TABLE [dbo].[Districts] DROP CONSTRAINT [FK_ProvincesDistricts];
+GO
+IF OBJECT_ID(N'[dbo].[FK_QuestionsAnswers]', 'F') IS NOT NULL
+    ALTER TABLE [dbo].[Answers] DROP CONSTRAINT [FK_QuestionsAnswers];
+GO
+IF OBJECT_ID(N'[dbo].[FK_RolesUsers]', 'F') IS NOT NULL
+    ALTER TABLE [dbo].[Users] DROP CONSTRAINT [FK_RolesUsers];
+GO
+IF OBJECT_ID(N'[dbo].[FK_UsersFavorites]', 'F') IS NOT NULL
+    ALTER TABLE [dbo].[Favorites] DROP CONSTRAINT [FK_UsersFavorites];
+GO
+IF OBJECT_ID(N'[dbo].[FK_UsersPosts]', 'F') IS NOT NULL
+    ALTER TABLE [dbo].[Posts] DROP CONSTRAINT [FK_UsersPosts];
+GO
 IF OBJECT_ID(N'[dbo].[FK_UsersQuestions]', 'F') IS NOT NULL
     ALTER TABLE [dbo].[Questions] DROP CONSTRAINT [FK_UsersQuestions];
 GO
+IF OBJECT_ID(N'[dbo].[FK_UsersReportedPosts]', 'F') IS NOT NULL
+    ALTER TABLE [dbo].[ReportedPosts] DROP CONSTRAINT [FK_UsersReportedPosts];
+GO
 IF OBJECT_ID(N'[dbo].[FK_UsersUserLogs]', 'F') IS NOT NULL
     ALTER TABLE [dbo].[UserLogs] DROP CONSTRAINT [FK_UsersUserLogs];
-GO
-IF OBJECT_ID(N'[dbo].[FK_PostsPostEdit]', 'F') IS NOT NULL
-    ALTER TABLE [dbo].[PostEdits] DROP CONSTRAINT [FK_PostsPostEdit];
 GO
 
 -- --------------------------------------------------
 -- Dropping existing tables
 -- --------------------------------------------------
 
-IF OBJECT_ID(N'[dbo].[Users]', 'U') IS NOT NULL
-    DROP TABLE [dbo].[Users];
-GO
-IF OBJECT_ID(N'[dbo].[Provinces]', 'U') IS NOT NULL
-    DROP TABLE [dbo].[Provinces];
-GO
-IF OBJECT_ID(N'[dbo].[Districts]', 'U') IS NOT NULL
-    DROP TABLE [dbo].[Districts];
-GO
-IF OBJECT_ID(N'[dbo].[Posts]', 'U') IS NOT NULL
-    DROP TABLE [dbo].[Posts];
-GO
-IF OBJECT_ID(N'[dbo].[Roles]', 'U') IS NOT NULL
-    DROP TABLE [dbo].[Roles];
-GO
-IF OBJECT_ID(N'[dbo].[Categories]', 'U') IS NOT NULL
-    DROP TABLE [dbo].[Categories];
-GO
-IF OBJECT_ID(N'[dbo].[PostImages]', 'U') IS NOT NULL
-    DROP TABLE [dbo].[PostImages];
-GO
-IF OBJECT_ID(N'[dbo].[PostStatuses]', 'U') IS NOT NULL
-    DROP TABLE [dbo].[PostStatuses];
-GO
-IF OBJECT_ID(N'[dbo].[Favorites]', 'U') IS NOT NULL
-    DROP TABLE [dbo].[Favorites];
-GO
-IF OBJECT_ID(N'[dbo].[ReportedPosts]', 'U') IS NOT NULL
-    DROP TABLE [dbo].[ReportedPosts];
-GO
-IF OBJECT_ID(N'[dbo].[BadWords]', 'U') IS NOT NULL
-    DROP TABLE [dbo].[BadWords];
-GO
-IF OBJECT_ID(N'[dbo].[Facilities]', 'U') IS NOT NULL
-    DROP TABLE [dbo].[Facilities];
-GO
-IF OBJECT_ID(N'[dbo].[Contacts]', 'U') IS NOT NULL
-    DROP TABLE [dbo].[Contacts];
-GO
-IF OBJECT_ID(N'[dbo].[PostVideos]', 'U') IS NOT NULL
-    DROP TABLE [dbo].[PostVideos];
-GO
-IF OBJECT_ID(N'[dbo].[ConfigurationRHFs]', 'U') IS NOT NULL
-    DROP TABLE [dbo].[ConfigurationRHFs];
-GO
-IF OBJECT_ID(N'[dbo].[Questions]', 'U') IS NOT NULL
-    DROP TABLE [dbo].[Questions];
+IF OBJECT_ID(N'[dbo].[AdvanceSearchScores]', 'U') IS NOT NULL
+    DROP TABLE [dbo].[AdvanceSearchScores];
 GO
 IF OBJECT_ID(N'[dbo].[Answers]', 'U') IS NOT NULL
     DROP TABLE [dbo].[Answers];
 GO
-IF OBJECT_ID(N'[dbo].[AdvanceSearchScores]', 'U') IS NOT NULL
-    DROP TABLE [dbo].[AdvanceSearchScores];
+IF OBJECT_ID(N'[dbo].[BadWords]', 'U') IS NOT NULL
+    DROP TABLE [dbo].[BadWords];
+GO
+IF OBJECT_ID(N'[dbo].[BadWordTypes]', 'U') IS NOT NULL
+    DROP TABLE [dbo].[BadWordTypes];
+GO
+IF OBJECT_ID(N'[dbo].[Categories]', 'U') IS NOT NULL
+    DROP TABLE [dbo].[Categories];
+GO
+IF OBJECT_ID(N'[dbo].[ConfigurationRHFs]', 'U') IS NOT NULL
+    DROP TABLE [dbo].[ConfigurationRHFs];
+GO
+IF OBJECT_ID(N'[dbo].[Contacts]', 'U') IS NOT NULL
+    DROP TABLE [dbo].[Contacts];
+GO
+IF OBJECT_ID(N'[dbo].[Districts]', 'U') IS NOT NULL
+    DROP TABLE [dbo].[Districts];
+GO
+IF OBJECT_ID(N'[dbo].[EmailTemplates]', 'U') IS NOT NULL
+    DROP TABLE [dbo].[EmailTemplates];
+GO
+IF OBJECT_ID(N'[dbo].[Facilities]', 'U') IS NOT NULL
+    DROP TABLE [dbo].[Facilities];
 GO
 IF OBJECT_ID(N'[dbo].[FacilityTemplates]', 'U') IS NOT NULL
     DROP TABLE [dbo].[FacilityTemplates];
 GO
-IF OBJECT_ID(N'[dbo].[BadWordTypes]', 'U') IS NOT NULL
-    DROP TABLE [dbo].[BadWordTypes];
+IF OBJECT_ID(N'[dbo].[Favorites]', 'U') IS NOT NULL
+    DROP TABLE [dbo].[Favorites];
 GO
 IF OBJECT_ID(N'[dbo].[Locations]', 'U') IS NOT NULL
     DROP TABLE [dbo].[Locations];
@@ -163,8 +142,38 @@ GO
 IF OBJECT_ID(N'[dbo].[LocationTypes]', 'U') IS NOT NULL
     DROP TABLE [dbo].[LocationTypes];
 GO
+IF OBJECT_ID(N'[dbo].[Payments]', 'U') IS NOT NULL
+    DROP TABLE [dbo].[Payments];
+GO
+IF OBJECT_ID(N'[dbo].[PostEdits]', 'U') IS NOT NULL
+    DROP TABLE [dbo].[PostEdits];
+GO
+IF OBJECT_ID(N'[dbo].[PostImages]', 'U') IS NOT NULL
+    DROP TABLE [dbo].[PostImages];
+GO
 IF OBJECT_ID(N'[dbo].[PostLocations]', 'U') IS NOT NULL
     DROP TABLE [dbo].[PostLocations];
+GO
+IF OBJECT_ID(N'[dbo].[Posts]', 'U') IS NOT NULL
+    DROP TABLE [dbo].[Posts];
+GO
+IF OBJECT_ID(N'[dbo].[PostStatuses]', 'U') IS NOT NULL
+    DROP TABLE [dbo].[PostStatuses];
+GO
+IF OBJECT_ID(N'[dbo].[PostVideos]', 'U') IS NOT NULL
+    DROP TABLE [dbo].[PostVideos];
+GO
+IF OBJECT_ID(N'[dbo].[Provinces]', 'U') IS NOT NULL
+    DROP TABLE [dbo].[Provinces];
+GO
+IF OBJECT_ID(N'[dbo].[Questions]', 'U') IS NOT NULL
+    DROP TABLE [dbo].[Questions];
+GO
+IF OBJECT_ID(N'[dbo].[ReportedPosts]', 'U') IS NOT NULL
+    DROP TABLE [dbo].[ReportedPosts];
+GO
+IF OBJECT_ID(N'[dbo].[Roles]', 'U') IS NOT NULL
+    DROP TABLE [dbo].[Roles];
 GO
 IF OBJECT_ID(N'[dbo].[Types]', 'U') IS NOT NULL
     DROP TABLE [dbo].[Types];
@@ -172,11 +181,8 @@ GO
 IF OBJECT_ID(N'[dbo].[UserLogs]', 'U') IS NOT NULL
     DROP TABLE [dbo].[UserLogs];
 GO
-IF OBJECT_ID(N'[dbo].[EmailTemplates]', 'U') IS NOT NULL
-    DROP TABLE [dbo].[EmailTemplates];
-GO
-IF OBJECT_ID(N'[dbo].[PostEdits]', 'U') IS NOT NULL
-    DROP TABLE [dbo].[PostEdits];
+IF OBJECT_ID(N'[dbo].[Users]', 'U') IS NOT NULL
+    DROP TABLE [dbo].[Users];
 GO
 
 -- --------------------------------------------------
@@ -248,7 +254,8 @@ CREATE TABLE [dbo].[Posts] (
     [UserId] int  NULL,
     [Street] nvarchar(50)  NOT NULL,
     [NearbyPlace] nvarchar(max)  NULL,
-    [ExpiredDate] datetime  NOT NULL
+    [ExpiredDate] datetime  NOT NULL,
+    [Code] nvarchar(max)  NOT NULL
 );
 GO
 
@@ -483,6 +490,15 @@ CREATE TABLE [dbo].[PostEdits] (
 );
 GO
 
+-- Creating table 'Payments'
+CREATE TABLE [dbo].[Payments] (
+    [Id] int IDENTITY(1,1) NOT NULL,
+    [PhoneNumber] nvarchar(20)  NOT NULL,
+    [CreatedDate] datetime  NOT NULL,
+    [PostsId] int  NOT NULL
+);
+GO
+
 -- --------------------------------------------------
 -- Creating all PRIMARY KEY constraints
 -- --------------------------------------------------
@@ -647,6 +663,12 @@ GO
 ALTER TABLE [dbo].[PostEdits]
 ADD CONSTRAINT [PK_PostEdits]
     PRIMARY KEY CLUSTERED ([PostId] ASC);
+GO
+
+-- Creating primary key on [Id] in table 'Payments'
+ALTER TABLE [dbo].[Payments]
+ADD CONSTRAINT [PK_Payments]
+    PRIMARY KEY CLUSTERED ([Id] ASC);
 GO
 
 -- --------------------------------------------------
@@ -986,6 +1008,20 @@ ADD CONSTRAINT [FK_PostsPostEdit]
     REFERENCES [dbo].[Posts]
         ([Id])
     ON DELETE NO ACTION ON UPDATE NO ACTION;
+GO
+
+-- Creating foreign key on [PostsId] in table 'Payments'
+ALTER TABLE [dbo].[Payments]
+ADD CONSTRAINT [FK_PostsPayments]
+    FOREIGN KEY ([PostsId])
+    REFERENCES [dbo].[Posts]
+        ([Id])
+    ON DELETE NO ACTION ON UPDATE NO ACTION;
+
+-- Creating non-clustered index for FOREIGN KEY 'FK_PostsPayments'
+CREATE INDEX [IX_FK_PostsPayments]
+ON [dbo].[Payments]
+    ([PostsId]);
 GO
 
 -- --------------------------------------------------

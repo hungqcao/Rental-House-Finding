@@ -34,6 +34,7 @@ namespace RentalHouseFinding.Common
 
         public static Posts ConvertPostViewModelToPost(PostViewModel model, DateTime createdDate, DateTime editedDate, DateTime renewDate, DateTime expiredDate, string noInformation)
         {
+            
             string facilityTempId = (model.HasAirConditioner ? "1" : "0") +
                                     (model.HasBed ? "1" : "0") +
                                     (model.HasGarage ? "1" : "0") +
@@ -45,7 +46,7 @@ namespace RentalHouseFinding.Common
                                     (model.HasWaterHeater ? "1" : "0") +
                                     (model.IsAllowCooking ? "1" : "0") + 
                                     (model.IsStayWithOwner ? "1" : "0");
-            int facTemId = Convert.ToInt32(facilityTempId, 2) + 1;
+            int facTemId = Convert.ToInt32(facilityTempId, 2) + 1;            
             return new Posts
             {
                 NumberAddress = string.IsNullOrEmpty(model.NumberHouse) ? noInformation : model.NumberHouse,
@@ -93,7 +94,8 @@ namespace RentalHouseFinding.Common
                 Title = model.Title,
                 Views = 0,
                 IsDeleted = false,
-                NearbyPlace = noInformation
+                NearbyPlace = noInformation,
+                Code = CommonController.CodeRenew()
             };
         }
 

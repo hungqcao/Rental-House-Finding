@@ -26,8 +26,8 @@
     <script src="@Url.Content("~/Scripts/AddOrRemoveInputFile.js")" type="text/javascript"></script>
 
     <script type="text/javascript">
-        window.ROOT = '@Url.Content("~/")';
         $(function () {
+            window.ROOT = '@Url.Content("~/")';
             $('input:checkbox').screwDefaultButtons({
                 image: 'url(@Url.Content("~/Content/images/index_cbx.png)")',
                 width: 17,
