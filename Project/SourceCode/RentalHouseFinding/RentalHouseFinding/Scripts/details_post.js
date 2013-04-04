@@ -111,7 +111,7 @@
         $.getJSON("/Post/AddFavorite", null, function (success) {
             if (success) {
                 alert('Đã thêm bài vào danh mục');
-                $("#favoriteImg").attr("src", ROOT + "Content/images/favorite_actived.png");
+                $("#favoriteImg").attr("src", window.ROOT + "Content/images/favorite_actived.png");
                 $("#favorite").attr('value', 'Gỡ khỏi danh mục');
                 $("#favorite").attr('onclick', 'removeFavorite();');
             }
@@ -121,7 +121,7 @@
         $.getJSON("/Post/RemoveFavorite", null, function (success) {
             if (success) {
                 alert('Đã xóa bài khỏi danh mục');
-                $("#favoriteImg").attr("src", ROOT + "Content/images/triangle_fav.png");
+                $("#favoriteImg").attr("src", window.ROOT + "Content/images/triangle_fav.png");
                 $("#favorite").attr('value', 'Thêm vào danh mục');
                 $("#favorite").attr('onclick', 'addFavorite();');
 

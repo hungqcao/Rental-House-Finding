@@ -19,6 +19,7 @@ namespace RentalHouseFinding.Common
     {
         public const string NONE_INFORMATION = "NoneOfInformationText";
         public const string EXPIRED_DATE = "ExpiredDate";
+        public const string EXPIRED_DATE_AFTER_RENEW = "ExpiredDateAfterRenew";
 
     }
 

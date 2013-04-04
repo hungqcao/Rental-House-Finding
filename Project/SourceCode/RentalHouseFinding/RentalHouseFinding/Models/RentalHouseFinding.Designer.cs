@@ -43,6 +43,7 @@ using System.Runtime.Serialization;
 [assembly: EdmRelationshipAttribute("RentalHouseFinding", "UsersQuestions", "Users", System.Data.Metadata.Edm.RelationshipMultiplicity.ZeroOrOne, typeof(RentalHouseFinding.Models.Users), "Questions", System.Data.Metadata.Edm.RelationshipMultiplicity.Many, typeof(RentalHouseFinding.Models.Questions), true)]
 [assembly: EdmRelationshipAttribute("RentalHouseFinding", "UsersUserLogs", "Users", System.Data.Metadata.Edm.RelationshipMultiplicity.One, typeof(RentalHouseFinding.Models.Users), "UserLogs", System.Data.Metadata.Edm.RelationshipMultiplicity.Many, typeof(RentalHouseFinding.Models.UserLogs), true)]
 [assembly: EdmRelationshipAttribute("RentalHouseFinding", "PostsPostEdit", "Posts", System.Data.Metadata.Edm.RelationshipMultiplicity.One, typeof(RentalHouseFinding.Models.Posts), "PostEdit", System.Data.Metadata.Edm.RelationshipMultiplicity.One, typeof(RentalHouseFinding.Models.PostEdit), true)]
+[assembly: EdmRelationshipAttribute("RentalHouseFinding", "PostsPayments", "Posts", System.Data.Metadata.Edm.RelationshipMultiplicity.One, typeof(RentalHouseFinding.Models.Posts), "Payments", System.Data.Metadata.Edm.RelationshipMultiplicity.Many, typeof(RentalHouseFinding.Models.Payments), true)]
 
 #endregion
 
@@ -525,6 +526,22 @@ namespace RentalHouseFinding.Models
             }
         }
         private ObjectSet<PostEdit> _PostEdits;
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        public ObjectSet<Payments> Payments
+        {
+            get
+            {
+                if ((_Payments == null))
+                {
+                    _Payments = base.CreateObjectSet<Payments>("Payments");
+                }
+                return _Payments;
+            }
+        }
+        private ObjectSet<Payments> _Payments;
 
         #endregion
         #region AddTo Methods
@@ -743,6 +760,14 @@ namespace RentalHouseFinding.Models
         public void AddToPostEdits(PostEdit postEdit)
         {
             base.AddObject("PostEdits", postEdit);
+        }
+    
+        /// <summary>
+        /// Deprecated Method for adding a new object to the Payments EntitySet. Consider using the .Add method of the associated ObjectSet&lt;T&gt; property instead.
+        /// </summary>
+        public void AddToPayments(Payments payments)
+        {
+            base.AddObject("Payments", payments);
         }
 
         #endregion
@@ -4100,6 +4125,180 @@ namespace RentalHouseFinding.Models
     /// <summary>
     /// No Metadata Documentation available.
     /// </summary>
+    [EdmEntityTypeAttribute(NamespaceName="RentalHouseFinding", Name="Payments")]
+    [Serializable()]
+    [DataContractAttribute(IsReference=true)]
+    public partial class Payments : EntityObject
+    {
+        #region Factory Method
+    
+        /// <summary>
+        /// Create a new Payments object.
+        /// </summary>
+        /// <param name="id">Initial value of the Id property.</param>
+        /// <param name="phoneNumber">Initial value of the PhoneNumber property.</param>
+        /// <param name="createdDate">Initial value of the CreatedDate property.</param>
+        /// <param name="postsId">Initial value of the PostsId property.</param>
+        public static Payments CreatePayments(global::System.Int32 id, global::System.String phoneNumber, global::System.DateTime createdDate, global::System.Int32 postsId)
+        {
+            Payments payments = new Payments();
+            payments.Id = id;
+            payments.PhoneNumber = phoneNumber;
+            payments.CreatedDate = createdDate;
+            payments.PostsId = postsId;
+            return payments;
+        }
+
+        #endregion
+        #region Primitive Properties
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=true, IsNullable=false)]
+        [DataMemberAttribute()]
+        public global::System.Int32 Id
+        {
+            get
+            {
+                return _Id;
+            }
+            set
+            {
+                if (_Id != value)
+                {
+                    OnIdChanging(value);
+                    ReportPropertyChanging("Id");
+                    _Id = StructuralObject.SetValidValue(value);
+                    ReportPropertyChanged("Id");
+                    OnIdChanged();
+                }
+            }
+        }
+        private global::System.Int32 _Id;
+        partial void OnIdChanging(global::System.Int32 value);
+        partial void OnIdChanged();
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=false)]
+        [DataMemberAttribute()]
+        public global::System.String PhoneNumber
+        {
+            get
+            {
+                return _PhoneNumber;
+            }
+            set
+            {
+                OnPhoneNumberChanging(value);
+                ReportPropertyChanging("PhoneNumber");
+                _PhoneNumber = StructuralObject.SetValidValue(value, false);
+                ReportPropertyChanged("PhoneNumber");
+                OnPhoneNumberChanged();
+            }
+        }
+        private global::System.String _PhoneNumber;
+        partial void OnPhoneNumberChanging(global::System.String value);
+        partial void OnPhoneNumberChanged();
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=false)]
+        [DataMemberAttribute()]
+        public global::System.DateTime CreatedDate
+        {
+            get
+            {
+                return _CreatedDate;
+            }
+            set
+            {
+                OnCreatedDateChanging(value);
+                ReportPropertyChanging("CreatedDate");
+                _CreatedDate = StructuralObject.SetValidValue(value);
+                ReportPropertyChanged("CreatedDate");
+                OnCreatedDateChanged();
+            }
+        }
+        private global::System.DateTime _CreatedDate;
+        partial void OnCreatedDateChanging(global::System.DateTime value);
+        partial void OnCreatedDateChanged();
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=false)]
+        [DataMemberAttribute()]
+        public global::System.Int32 PostsId
+        {
+            get
+            {
+                return _PostsId;
+            }
+            set
+            {
+                OnPostsIdChanging(value);
+                ReportPropertyChanging("PostsId");
+                _PostsId = StructuralObject.SetValidValue(value);
+                ReportPropertyChanged("PostsId");
+                OnPostsIdChanged();
+            }
+        }
+        private global::System.Int32 _PostsId;
+        partial void OnPostsIdChanging(global::System.Int32 value);
+        partial void OnPostsIdChanged();
+
+        #endregion
+    
+        #region Navigation Properties
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [XmlIgnoreAttribute()]
+        [SoapIgnoreAttribute()]
+        [DataMemberAttribute()]
+        [EdmRelationshipNavigationPropertyAttribute("RentalHouseFinding", "PostsPayments", "Posts")]
+        public Posts Post
+        {
+            get
+            {
+                return ((IEntityWithRelationships)this).RelationshipManager.GetRelatedReference<Posts>("RentalHouseFinding.PostsPayments", "Posts").Value;
+            }
+            set
+            {
+                ((IEntityWithRelationships)this).RelationshipManager.GetRelatedReference<Posts>("RentalHouseFinding.PostsPayments", "Posts").Value = value;
+            }
+        }
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [BrowsableAttribute(false)]
+        [DataMemberAttribute()]
+        public EntityReference<Posts> PostReference
+        {
+            get
+            {
+                return ((IEntityWithRelationships)this).RelationshipManager.GetRelatedReference<Posts>("RentalHouseFinding.PostsPayments", "Posts");
+            }
+            set
+            {
+                if ((value != null))
+                {
+                    ((IEntityWithRelationships)this).RelationshipManager.InitializeRelatedReference<Posts>("RentalHouseFinding.PostsPayments", "Posts", value);
+                }
+            }
+        }
+
+        #endregion
+    }
+    
+    /// <summary>
+    /// No Metadata Documentation available.
+    /// </summary>
     [EdmEntityTypeAttribute(NamespaceName="RentalHouseFinding", Name="PostEdit")]
     [Serializable()]
     [DataContractAttribute(IsReference=true)]
@@ -4608,7 +4807,8 @@ namespace RentalHouseFinding.Models
         /// <param name="lon">Initial value of the Lon property.</param>
         /// <param name="street">Initial value of the Street property.</param>
         /// <param name="expiredDate">Initial value of the ExpiredDate property.</param>
-        public static Posts CreatePosts(global::System.Int32 id, global::System.String title, global::System.Int32 categoryId, global::System.Int32 statusId, global::System.Boolean isDeleted, global::System.Int32 views, global::System.DateTime createdDate, global::System.DateTime editedDate, global::System.Int32 districtId, global::System.Double price, global::System.Double area, global::System.String phoneActive, global::System.Double lat, global::System.Double lon, global::System.String street, global::System.DateTime expiredDate)
+        /// <param name="code">Initial value of the Code property.</param>
+        public static Posts CreatePosts(global::System.Int32 id, global::System.String title, global::System.Int32 categoryId, global::System.Int32 statusId, global::System.Boolean isDeleted, global::System.Int32 views, global::System.DateTime createdDate, global::System.DateTime editedDate, global::System.Int32 districtId, global::System.Double price, global::System.Double area, global::System.String phoneActive, global::System.Double lat, global::System.Double lon, global::System.String street, global::System.DateTime expiredDate, global::System.String code)
         {
             Posts posts = new Posts();
             posts.Id = id;
@@ -4627,6 +4827,7 @@ namespace RentalHouseFinding.Models
             posts.Lon = lon;
             posts.Street = street;
             posts.ExpiredDate = expiredDate;
+            posts.Code = code;
             return posts;
         }
 
@@ -5139,6 +5340,30 @@ namespace RentalHouseFinding.Models
         private global::System.DateTime _ExpiredDate;
         partial void OnExpiredDateChanging(global::System.DateTime value);
         partial void OnExpiredDateChanged();
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=false)]
+        [DataMemberAttribute()]
+        public global::System.String Code
+        {
+            get
+            {
+                return _Code;
+            }
+            set
+            {
+                OnCodeChanging(value);
+                ReportPropertyChanging("Code");
+                _Code = StructuralObject.SetValidValue(value, false);
+                ReportPropertyChanged("Code");
+                OnCodeChanged();
+            }
+        }
+        private global::System.String _Code;
+        partial void OnCodeChanging(global::System.String value);
+        partial void OnCodeChanged();
 
         #endregion
     
@@ -5538,6 +5763,28 @@ namespace RentalHouseFinding.Models
                 if ((value != null))
                 {
                     ((IEntityWithRelationships)this).RelationshipManager.InitializeRelatedReference<PostEdit>("RentalHouseFinding.PostsPostEdit", "PostEdit", value);
+                }
+            }
+        }
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [XmlIgnoreAttribute()]
+        [SoapIgnoreAttribute()]
+        [DataMemberAttribute()]
+        [EdmRelationshipNavigationPropertyAttribute("RentalHouseFinding", "PostsPayments", "Payments")]
+        public EntityCollection<Payments> Payments
+        {
+            get
+            {
+                return ((IEntityWithRelationships)this).RelationshipManager.GetRelatedCollection<Payments>("RentalHouseFinding.PostsPayments", "Payments");
+            }
+            set
+            {
+                if ((value != null))
+                {
+                    ((IEntityWithRelationships)this).RelationshipManager.InitializeRelatedCollection<Payments>("RentalHouseFinding.PostsPayments", "Payments", value);
                 }
             }
         }
