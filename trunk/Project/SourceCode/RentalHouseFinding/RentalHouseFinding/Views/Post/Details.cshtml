@@ -69,248 +69,317 @@
     }
 </div>
 <div id="popup_wrapper">
-    <div class="popup_header">
-        <div>
-            <span class="type">[@Model.Category]</span><span class="address">&nbsp;@Model.NumberHouse @Model.Street</span>
-            <div class="clear"></div>
-            <span class="shortDesc">@Model.Title</span>
-        </div>
-        <div class="rightInfo" style="float: right;">
-            <div><span class="highlight">@Model.Price</span><span class="rightText">triệu VND</span></div>
-            <div><span class="highlight">@Model.Area</span><span class="rightText">m2</span></div>
-        </div>
-        <div class="clear"></div>
-
-        @*<div id="addThis">
-            <!-- AddThis Button BEGIN -->
-            <div class="addthis_toolbox addthis_default_style">
-            <a class="addthis_button_facebook_like" fb:like:layout="button_count"></a>
-            <a class="addthis_button_tweet"></a>
-            <a class="addthis_button_google_plusone" g:plusone:size="medium"></a>
-            <a class="addthis_counter addthis_pill_style"></a>
-            </div>
-            <script type="text/javascript" src="//s7.addthis.com/js/300/addthis_widget.js#pubid=undefined"></script>
-            <!-- AddThis Button END -->
-        </div>*@
-
-        <div class="clear"></div>
-    </div>
-    <div class="clear"></div>
-    <div class="popup_content">
-        <div class="blockInfo leftSide">
-            <div class="title"><div class="plusBtn"></div>THÔNG TIN CƠ BẢN</div>
-            <div class="clear"></div>
-            <span class="blockLeftText" style="width: 100%;"><b>Địa chỉ:</b>&nbsp;@Model.NumberHouse @Model.Street </span>
-            <div class="clear"></div>
-            <span class="blockLeftText"><b>Giá nhà:</b>&nbsp;@Model.Price triệu/tháng</span>
-            <span class="blockLeftText"><b>Diện tích:</b>&nbsp;@Model.Area m2</span>
-            <span class="blockLeftText"><b>Giá điện:</b>&nbsp;@Model.ElectricityFee triệu/tháng</span>
-            <span class="blockLeftText"><b>Giá nước:</b>&nbsp;@Model.WaterFee triệu/tháng</span>
-            <span class="blockLeftText" style="width: 100%;"><b>Ngày đăng:</b>&nbsp;@Model.CreatedDate</span>
-            <span class="blockLeftText" style="margin-top:10px;"><b>Liên hệ:</b>&nbsp;@Model.NameContact</span>
-            <div class="clear"></div>
-            <span class="blockLeftText"><b>Di động:</b>&nbsp;@Model.PhoneContact</span>
-            <span class="blockLeftText"><b>Skype:</b>&nbsp;@Model.Skype</span>
-            <span class="blockLeftText"><b>Yahoo!:</b>&nbsp;@Model.Yahoo</span>
-            <span class="blockLeftText" style=" width: 420px;word-wrap:break-word; height:100%;"><b>Ghi chú: </b>&nbsp;@Model.Description</span>
-        </div>
-        <div class="blockInfo rightSide">
-            <div class="title">
-                <div class="plusBtnImage"></div>HÌNH ẢNH
-            </div>
-            @Html.Partial("_ImagesPartial")
-        </div>
-        <div class="clear"></div>
-        <div class="blockInfo leftSide">
-            <div class="title"><div class="plusBtnInterior"></div>TIỆN ÍCH DỊCH VỤ BÊN TRONG</div>
-            <div class="clear"></div>
-            <div class="colLeft">
-                @if (Model.HasInternet)
-                {
-                    <span class="icon check">Internet</span>
-                }
-                else
-                {
-                    <span class="icon question">Internet</span>
-                }
-                @if (Model.HasBed)
-                {
-                    <span class="icon check">Giường, tủ</span>
-                }
-                else
-                {
-                    <span class="icon question">Giường, tủ</span>
-                }
-                @if (Model.HasSecurity)
-                {
-                    <span class="icon check">Bảo vệ</span>
-                }
-                else
-                {
-                    <span class="icon question">Bảo vệ</span>
-                }
-                @if (Model.HasToilet)
-                {
-                    <span class="icon check">WC riêng</span>
-                }
-                else
-                {
-                    <span class="icon question">WC riêng</span>
-                }
-                @if (Model.IsStayWithOwner)
-                {
-                    <span class="icon check">Chung chủ</span>
-                }
-                else
-                {
-                    <span class="icon question">Chung chủ</span>
-                }
-                @if (Model.HasAirConditioner)
-                {
-                    <span class="icon check">Điều hòa</span>
-                }
-                else
-                {
-                    <span class="icon question">Điều hòa</span>
-                }
-            </div>
-            <div class="colRight">
-                @if (Model.HasTVCable)
-                {
-                    <span class="icon check">Tivi, truyền hình cáp</span>
-                }
-                else
-                {
-                    <span class="icon question">Tivi, truyền hình cáp</span>
-                }
-                @if (Model.HasMotorParking)
-                {
-                    <span class="icon check">Bãi đỗ xe</span>
-                }
-                else
-                {
-                    <span class="icon question">Bãi đỗ xe</span>
-                }
-                @if (Model.IsAllowCooking)
-                {
-                    <span class="icon check">Cho phép nấu ăn</span>
-                }
-                else
-                {
-                    <span class="icon question">Cho phép nấu ăn</span>
-                }
-                @if (Model.HasWaterHeater)
-                {
-                    <span class="icon check">Bình nóng lạnh</span>
-                }
-                else
-                {
-                    <span class="icon question">Bình nóng lạnh</span>
-                }
-                @if (Model.HasGarage)
-                {
-                    <span class="icon check">Gara ôtô</span>
-                }
-                else
-                {
-                    <span class="icon question">Gara ôtô</span>
-                }
-            </div>
-        </div>
-        <div class="blockInfo rightSide" id="block4">
-            <div class="clear"></div>
-            <div class="title"><div class="plusBtnMap"></div>VỊ TRÍ TRÊN BẢN ĐỒ</div>
-            <div class="map_wrapper" style="border:1px solid #bebebe">
-                <div class = "map" style="margin: 5px">
-                    <div id="mapContainer" style="width:400px;height:250px;"></div>
-                        @Html.HiddenFor(model => model.Lat)
-                        @Html.HiddenFor(model => model.Lon)
-                </div>
-            </div>
-        </div>
-        <div class="blockInfo leftSide" id="block5">
-                <div class="clear"></div>
-                <div class="title"><div class="plusBtnOutside"></div>ĐỊA ĐIỂM LỚN XUNG QUANH</div>
-                <span class="desc" style="display:block;width:400px;word-wrap:break-word;height=100%;margin-left:43px;">@Model.NearByPlace</span>
-        </div>
-        <div class="blockInfo rightSide" id="block6">
-            <div class="clear"></div>
-            <div class="title"><div class="plusBtnQA"></div>HỎI ĐÁP</div>
-            <div id="Question">
-                @if (!string.IsNullOrEmpty(Model.CreatedBy))
-                {
-                    if (!Model.CreatedBy.Equals(User.Identity.Name, StringComparison.CurrentCultureIgnoreCase) || string.IsNullOrEmpty(User.Identity.Name))
-                    {
-                        @Html.Partial("_Question", new RentalHouseFinding.Models.QuestionViewModel())
-                    }
-                    else if (User.Identity.IsAuthenticated)
-                    {
-                        <text>Đây là bài viết của bạn ^^</text>
-                    }
-                }
-                else
-                {
-                    <text>Người đăng không cung cấp thông tin để liên lạc</text>
-                }
-            </div>
-        </div>
-        <div class="clear"></div>
-        <div class="clear"></div>
-        <div id="sendQuestion">
-            <div id = "ReportPost">
-            @if (User.Identity.IsAuthenticated)
-            {
-                <div class="reportpop pop" id="element_to_pop_up">
-                    <form method="post" id="new_message" action="/messages">                    
-                        <div class="display-label">Lý do:</div>
-                        <div><textarea rows="6" name="body" id="txtResion" cols="28"></textarea></div>
-                        <div id ="rpMessage" style="color:Red; display:none;">Vui lòng cung cấp lý do</div>
-                        <div id="report-form">
-
-                        <input class="button_report" type="button" value="Gửi" name="commit" id="message_submit"/> or <input type="button" class="close b-close button_report" value="Hủy" name="commit" id="message_cancel"/>
-                        </div>
-                        <div class="clear"></div>    
-                    </form>
-                </div>
+        <div id="popup_wrapper">
+            <div class="popup_header">
+                <div id="sendQuestion">
+                    <div id="ReportPost">
+                        @if (User.Identity.IsAuthenticated)
+                        {
+                            <div class="reportpop pop" id="element_to_pop_up">
+                                <form method="post" id="new_message" action="/messages">
+                                <div class="display-label">
+                                    Lý do:</div>
+                                <div>
+                                    <textarea rows="6" name="body" id="txtResion" cols="28"></textarea></div>
+                                <div id="rpMessage" style="color: Red; display: none;">
+                                    Vui lòng cung cấp lý do</div>
+                                <div id="report-form">
+                                    <input class="button_report" type="button" value="Gửi" name="commit" id="message_submit" />
+                                    or
+                                    <input type="button" class="close b-close button_report" value="Hủy" name="commit"
+                                        id="message_cancel" />
+                                </div>
+                                <div class="clear">
+                                </div>
+                                </form>
+                            </div>
                 
-                <div class="clear"></div>
-            }
-            else
-            {    
-                <!-- Element to pop up -->
-                <div id="element_to_pop_up" class="login-regis" style="margin: 0 auto; width: 120px; height: 20 px;">
-                    <a class="b-close">x</a>
-                    <div class="tittle">Bạn cần 
-                    <a  href="@Request.Url.AbsoluteUri.Replace(@Request.Url.Authority, Request.Url.Authority + "/account/logon?returnUrl=")">đăng nhập</a>
-                    để sử dụng chức năng này</div>  
+                            <div class="clear">
+                            </div>
+                        }
+                        else
+                        {    
+                            <!-- Element to pop up -->
+                            <div id="element_to_pop_up" class="login-regis" style="margin: 0 auto; width: 120px;
+                                height: 20 px;">
+                                <a class="b-close">x</a>
+                                <div class="tittle">
+                                    Bạn cần <a  href="@Request.Url.AbsoluteUri.Replace(@Request.Url.Authority, Request.Url.Authority + "/account/logon?returnUrl=")">
+                                        đăng nhập</a> để sử dụng chức năng này</div>
+                            </div>
+                            <div class="clear">
+                            </div>
+                        }
+                    </div>
+                    <div id="reportWithoutLogin" class="withOutLoginReport topBtnReport" style="cursor: pointer;"
+                        title="Báo cáo tin đăng không chính xác hoặc có vi phạm">
+                    </div>
+                    <div class="clear">
+                    </div>
                 </div>
-                <div class="clear"></div>
-            }
-            </div>  
-            <div id="reportWithoutLogin" class="withOutLoginReport" style="cursor:pointer;"><img src="@Url.Content("~/Content/images/triangle_comment.png")"/></div>
-            <div class="clear"></div>
-         <span>Báo cáo bài đăng vị phạm</span>  
-        </div>
-        <div id="saveBookmark">
-            @{
-                if (ViewBag.RemoveFavorite == false)
-                {
-                    <div id="favorite" onclick="addFavorite();" class="withOutLoginFav" style="cursor:pointer;"><img id="favoriteImg" src="@Url.Content("~/Content/images/triangle_fav.png")"/></div>
+                <div id="saveBookmark">
+                    @{
+                        if (ViewBag.RemoveFavorite == false)
+                        {
+                        <div id="favorite" onclick="addFavorite();" class="withOutLoginFav topBtnFavorite"
+                            title="Cho vào danh sách quan tâm của bạn">
+                            <img id="favoriteImg" src="../../Content/images/triangle_fav.png" />
+                        </div>
                     
-                }
-                else if (ViewBag.RemoveFavorite == true)
-                {
-                    <div id="favorite" onclick="removeFavorite();" class="withOutLoginFav" style="cursor:pointer;"><img id="favoriteImg" src="@Url.Content("~/Content/images/favorite_actived.png")"/></div>
+                        }
+                        else if (ViewBag.RemoveFavorite == true)
+                        {
+                        <div id="favorite" onclick="removeFavorite();" class="withOutLoginFav topBtnFavoriteActived"
+                            title="Xóa tin này khỏi danh sách quan tâm">
+                            <img id="favoriteImg" src="../../Content/images/favorite_actived.png" />
+                        </div>
                        
-                }
-                if (!User.Identity.IsAuthenticated)
-                {
-                    <div id="favorite" class="withOutLoginFav" style="cursor:pointer;"><img id="favoriteImg" src="@Url.Content("~/Content/images/triangle_fav.png")"/></div>
-                }
-            }
-            <span>Bạn quan tâm bài đăng này, bạn hãy lưu lại! </span>
+                        }
+                        if (!User.Identity.IsAuthenticated)
+                        {
+                        <div id="favorite" class="withOutLoginFav topBtnFavorite" title="Cho vào danh sách quan tâm của bạn">
+                            <img id="favoriteImg" src="../../Content/images/triangle_fav.png" />
+                        </div>
+                        }
+                    }
+                </div>
+                <div class="clear">
+                </div>
+                <div>
+                    <span class="type">[@Model.Category]</span><span class="shortDesc">@Model.Title</span>
+                    <div class="clear">
+                    </div>
+                    <span class="address">&nbsp;@Model.NumberHouse @Model.Street | @Model.Price triệu VNĐ
+                        | @Model.Area m2</span>
+                    @Html.HiddenFor(model => Model.Id)
+                </div>
+                <div class="clear">
+                </div>
+                <div id="addThis">
+                    <!-- AddThis Button BEGIN -->
+                    <div class="addthis_toolbox addthis_default_style">
+                        @* <a class="addthis_button_facebook_like" fb:like:layout="button_count"></a>*@
+                        @*  <a class="addthis_button_tweet"></a>*@ @*<a class="addthis_button_google_plusone" g:plusone:size="medium"></a>*@
+                        <a class="addthis_counter addthis_pill_style"></a>
+                    </div>
+                    <script type="text/javascript" src="//s7.addthis.com/js/300/addthis_widget.js#pubid=undefined"></script>
+                    <!-- AddThis Button END -->
+                </div>
+            </div>
+            <div class="clear">
+            </div>
+            <div class="popup_content">
+                <div class="blockInfo leftSide">
+                    <div class="title">
+                        <div class="plusBtn">
+                        </div>
+                        THÔNG TIN CƠ BẢN</div>
+                    <div class="clear">
+                    </div>
+                    <span class="blockLeftText" style="width: 100%;"><b>Địa chỉ:</b>&nbsp;@Model.NumberHouse
+                        @Model.Street </span>
+                    <div class="clear">
+                    </div>
+                    <span class="blockLeftText"><b>Giá nhà:</b>&nbsp;@Model.Price triệu/tháng</span>
+                    <span class="blockLeftText"><b>Diện tích:</b>&nbsp;@Model.Area m2</span> <span class="blockLeftText">
+                        <b>Giá điện:</b>&nbsp;@Model.ElectricityFee nghìn/số</span> <span class="blockLeftText">
+                            <b>Giá nước:</b>&nbsp;@Model.WaterFee nghìn/số</span> <span class="blockLeftText"
+                                style="width: 100%;"><b>Ngày đăng:</b>&nbsp;@Model.CreatedDate</span>
+                    <span class="blockLeftText" style="margin-top: 10px;"><b>Liên hệ:</b>&nbsp;@Model.NameContact</span>
+                    <div class="clear">
+                    </div>
+                    <span class="blockLeftText"><b>Di động:</b>&nbsp;@Model.PhoneContact</span> <span
+                        class="blockLeftText"><b>Email:</b>&nbsp;@Model.Email</span> <span class="blockLeftText">
+                            <b>Yahoo! & Skype:</b>&nbsp;<script type="text/javascript" src="//cdn.dev.skype.com/uri/skype-uri.js"></script>
+                            <div id="SkypeButton">
+                                <script type="text/javascript">
+                                    Skype.ui({
+                                        "name": "chat",
+                                        "element": "SkypeButton",
+                                        "participants": ["@Model.Skype"]
+                                    });
+                                </script>
+                            </div>
+                            <a href="ymsgr:sendIM?@Model.Yahoo">
+                                <img border="0" src="http://opi.yahoo.com/online?u=YahooID&m=g&t=5&l=us"></a></span>
+                    <span class="blockLeftText" style="width: 420px; word-wrap: break-word; height: 100%;">
+                        <b>Ghi chú: </b>&nbsp;@Model.Description</span>
+                </div>
+                <div class="blockInfo rightSide">
+                    <div class="title">
+                        <div class="plusBtnImage">
+                        </div>
+                        HÌNH ẢNH
+                    </div>
+                    @Html.Partial("_ImagesPartial")
+                </div>
+                <div class="clear">
+                </div>
+                <div class="blockInfo leftSide">
+                    <div class="title">
+                        <div class="plusBtnInterior">
+                        </div>
+                        TIỆN ÍCH DỊCH VỤ BÊN TRONG</div>
+                    <div class="clear">
+                    </div>
+                    <div id="facilityDes">
+                        <span class="icon check" style="margin-right: 70px;">Có hỗ trợ</span> <span class="icon question">
+                            Không có thông tin</span>
+                    </div>
+                    <div id="facilities">
+                        <div class="colLeft">
+                            @if (Model.HasInternet)
+                            {
+                                <span class="icon check">Internet</span>
+                            }
+                            else
+                            {
+                                <span class="icon question">Internet</span>
+                            }
+                            @if (Model.HasBed)
+                            {
+                                <span class="icon check">Giường, tủ</span>
+                            }
+                            else
+                            {
+                                <span class="icon question">Giường, tủ</span>
+                            }
+                            @if (Model.HasSecurity)
+                            {
+                                <span class="icon check">Bảo vệ</span>
+                            }
+                            else
+                            {
+                                <span class="icon question">Bảo vệ</span>
+                            }
+                            @if (Model.HasToilet)
+                            {
+                                <span class="icon check">WC riêng</span>
+                            }
+                            else
+                            {
+                                <span class="icon question">WC riêng</span>
+                            }
+                            @if (Model.IsStayWithOwner)
+                            {
+                                <span class="icon check">Chung chủ</span>
+                            }
+                            else
+                            {
+                                <span class="icon question">Chung chủ</span>
+                            }
+                            @if (Model.HasAirConditioner)
+                            {
+                                <span class="icon check">Điều hòa</span>
+                            }
+                            else
+                            {
+                                <span class="icon question">Điều hòa</span>
+                            }
+                        </div>
+                        <div class="colRight">
+                            @if (Model.HasTVCable)
+                            {
+                                <span class="icon check">Tivi, truyền hình cáp</span>
+                            }
+                            else
+                            {
+                                <span class="icon question">Tivi, truyền hình cáp</span>
+                            }
+                            @if (Model.HasMotorParking)
+                            {
+                                <span class="icon check">Bãi đỗ xe</span>
+                            }
+                            else
+                            {
+                                <span class="icon question">Bãi đỗ xe</span>
+                            }
+                            @if (Model.IsAllowCooking)
+                            {
+                                <span class="icon check">Cho phép nấu ăn</span>
+                            }
+                            else
+                            {
+                                <span class="icon question">Cho phép nấu ăn</span>
+                            }
+                            @if (Model.HasWaterHeater)
+                            {
+                                <span class="icon check">Bình nóng lạnh</span>
+                            }
+                            else
+                            {
+                                <span class="icon question">Bình nóng lạnh</span>
+                            }
+                            @if (Model.HasGarage)
+                            {
+                                <span class="icon check">Gara ôtô</span>
+                            }
+                            else
+                            {
+                                <span class="icon question">Gara ôtô</span>
+                            }
+                        </div>
+                    </div>
+                </div>
+                <div class="blockInfo rightSide" id="block4">
+                    <div class="clear">
+                    </div>
+                    <div class="title">
+                        <div class="plusBtnMap">
+                        </div>
+                        VỊ TRÍ TRÊN BẢN ĐỒ</div>
+                    <div class="map_wrapper">
+                        <div class="map">
+                            <div id="mapContainer">
+                            </div>
+                            @Html.HiddenFor(model => model.Lat)
+                            @Html.HiddenFor(model => model.Lon)
+                        </div>
+                    </div>
+                </div>
+                <div class="blockInfo leftSide" id="block5">
+                    <div class="clear">
+                    </div>
+                    <div class="title">
+                        <div class="plusBtnOutside">
+                        </div>
+                        ĐỊA ĐIỂM LỚN XUNG QUANH</div>
+                    @if (string.IsNullOrEmpty(Model.NearByPlace))
+                    {
+                        <span>Không có thông tin</span>}
+                    else
+                    {
+                        <span class="desc">@Model.NearByPlace</span>}
+                </div>
+                <div class="blockInfo rightSide" id="block6">
+                    <div class="clear">
+                    </div>
+                    <div class="title">
+                        <div class="plusBtnQA">
+                        </div>
+                        HỎI ĐÁP</div>
+                    <div id="Question">
+                        @if (!string.IsNullOrEmpty(Model.CreatedBy))
+                        {
+                            if (!Model.CreatedBy.Equals(User.Identity.Name, StringComparison.CurrentCultureIgnoreCase) || string.IsNullOrEmpty(User.Identity.Name))
+                            {
+                            @Html.Partial("_Question", new RentalHouseFinding.Models.QuestionViewModel())
+                            }
+                            else if (User.Identity.IsAuthenticated)
+                            {
+                            <text>Đây là bài viết của bạn ^^</text>
+                            }
+                        }
+                        else
+                        {
+                            <text>Người đăng không cung cấp thông tin để liên lạc</text>
+                        }
+                    </div>
+                </div>
+                <div class="clear">
+                </div>
+            </div>
+            <div class="clear">
+            </div>
         </div>
-        <div class="clear"></div>
-    </div>
-    <div class="clear"></div>
 </div>       
