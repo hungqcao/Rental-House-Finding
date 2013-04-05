@@ -64,7 +64,6 @@ namespace RentalHouseFinding.Controllers
         private static OpenIdRelyingParty openid = new OpenIdRelyingParty();
         public ActionResult Authenticate(string returnUrl)
         {
-
             var response = openid.GetResponse();
 
             if (response == null)

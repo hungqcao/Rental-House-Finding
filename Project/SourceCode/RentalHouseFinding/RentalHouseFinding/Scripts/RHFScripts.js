@@ -13,23 +13,23 @@ $(document).ready(function () {
     //select.next().text('Quận/Huyện');
     if (idPro != 0) {
         $.getJSON("service/GetDistrictList", { id: idPro },
-                function (myData) {
-                    $.each(myData, function (index, itemData) {
-                        if (itemData.Text.length != 0 && itemData.Value != idDis) {
-                            select.append($('<option/>', {
-                                value: itemData.Value,
-                                text: itemData.Text
-                            }));
-                        }
-                        if (itemData.Text.length != 0 && itemData.Value == idDis) {
-                            select.append($('<option/>', {
-                                value: itemData.Value,
-                                text: itemData.Text,
-                                selected: 'selected'
-                            }));
-                        }
-                    });
+            function (myData) {
+                $.each(myData, function (index, itemData) {
+                    if (itemData.Text.length != 0 && itemData.Value != idDis) {
+                        select.append($('<option/>', {
+                            value: itemData.Value,
+                            text: itemData.Text
+                        }));
+                    }
+                    if (itemData.Text.length != 0 && itemData.Value == idDis) {
+                        select.append($('<option/>', {
+                            value: itemData.Value,
+                            text: itemData.Text,
+                            selected: 'selected'
+                        }));
+                    }
                 });
+            });
     };
     $("#ProvinceId").change(function () {
         var idPro = $("#ProvinceId option:selected").val();

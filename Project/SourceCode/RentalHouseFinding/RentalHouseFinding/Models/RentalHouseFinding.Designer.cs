@@ -1043,8 +1043,7 @@ namespace RentalHouseFinding.Models
         /// <param name="streetScore">No Metadata Documentation available.</param>
         /// <param name="nearbyScore">No Metadata Documentation available.</param>
         /// <param name="numberAddressScore">No Metadata Documentation available.</param>
-        /// <param name="directionScore">No Metadata Documentation available.</param>
-        public ObjectResult<FullTextSearchPostWithWeightenScore_Result> FullTextSearchPostWithWeightenScore(Nullable<global::System.Int32> categoryIdPass, Nullable<global::System.Int32> provinceIdPass, Nullable<global::System.Int32> districtIdPass, global::System.String keyword, Nullable<global::System.Int32> titleScore, Nullable<global::System.Int32> descriptionScore, Nullable<global::System.Int32> streetScore, Nullable<global::System.Int32> nearbyScore, Nullable<global::System.Int32> numberAddressScore, Nullable<global::System.Int32> directionScore)
+        public ObjectResult<FullTextSearchPostWithWeightenScore_Result> FullTextSearchPostWithWeightenScore(Nullable<global::System.Int32> categoryIdPass, Nullable<global::System.Int32> provinceIdPass, Nullable<global::System.Int32> districtIdPass, global::System.String keyword, Nullable<global::System.Int32> titleScore, Nullable<global::System.Int32> descriptionScore, Nullable<global::System.Int32> streetScore, Nullable<global::System.Int32> nearbyScore, Nullable<global::System.Int32> numberAddressScore)
         {
             ObjectParameter categoryIdPassParameter;
             if (categoryIdPass.HasValue)
@@ -1136,17 +1135,7 @@ namespace RentalHouseFinding.Models
                 numberAddressScoreParameter = new ObjectParameter("NumberAddressScore", typeof(global::System.Int32));
             }
     
-            ObjectParameter directionScoreParameter;
-            if (directionScore.HasValue)
-            {
-                directionScoreParameter = new ObjectParameter("DirectionScore", directionScore);
-            }
-            else
-            {
-                directionScoreParameter = new ObjectParameter("DirectionScore", typeof(global::System.Int32));
-            }
-    
-            return base.ExecuteFunction<FullTextSearchPostWithWeightenScore_Result>("FullTextSearchPostWithWeightenScore", categoryIdPassParameter, provinceIdPassParameter, districtIdPassParameter, keywordParameter, titleScoreParameter, descriptionScoreParameter, streetScoreParameter, nearbyScoreParameter, numberAddressScoreParameter, directionScoreParameter);
+            return base.ExecuteFunction<FullTextSearchPostWithWeightenScore_Result>("FullTextSearchPostWithWeightenScore", categoryIdPassParameter, provinceIdPassParameter, districtIdPassParameter, keywordParameter, titleScoreParameter, descriptionScoreParameter, streetScoreParameter, nearbyScoreParameter, numberAddressScoreParameter);
         }
 
         #endregion

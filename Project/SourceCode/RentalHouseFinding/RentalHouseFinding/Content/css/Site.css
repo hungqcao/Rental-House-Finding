@@ -704,10 +704,15 @@ span.field-validation-error
 }
 
 #header #resultPanel .result {
-    border-bottom: 1px solid #ECF0F3;
+    /*border-bottom: 1px solid #ECF0F3;*/
     display: block;
     margin: 0 0 3px 15px;
     padding-bottom: 7px;
+}
+
+#header #resultPanel .result span{
+    width: 275px;
+    float: left;
 }
 
 #header #resultPanel .lastResult {
@@ -1568,7 +1573,7 @@ textarea#Description {
     cursor: pointer;
     float: right;
     display: block;
-    margin: 10px 70px 10px 0;
+    margin: 10px 23px 10px 0;
 }
 #pnew2_toggle {
     display: block;

@@ -112,7 +112,6 @@ namespace RentalHouseFinding.Controllers
                                                                                 int.Parse(Repository.GetAllConfiguration().Where(c => c.Name.Equals(ConstantColumnNameScoreNormalSearch.STREET_COLUMN_SCORE_NAME, StringComparison.CurrentCultureIgnoreCase)).Select(c => c.Value).FirstOrDefault().ToString()),
                                                                                 int.Parse(Repository.GetAllConfiguration().Where(c => c.Name.Equals(ConstantColumnNameScoreNormalSearch.NEARBY_COLUMN_SCORE_NAME, StringComparison.CurrentCultureIgnoreCase)).Select(c => c.Value).FirstOrDefault().ToString()),
                                                                                 int.Parse(Repository.GetAllConfiguration().Where(c => c.Name.Equals(ConstantColumnNameScoreNormalSearch.NUMBER_ADDRESS_COLUMN_SCORE_NAME, StringComparison.CurrentCultureIgnoreCase)).Select(c => c.Value).FirstOrDefault().ToString()),
-                                                                                int.Parse(Repository.GetAllConfiguration().Where(c => c.Name.Equals(ConstantColumnNameScoreNormalSearch.DIRECTION_COLUMN_SCORE_NAME, StringComparison.CurrentCultureIgnoreCase)).Select(c => c.Value).FirstOrDefault().ToString()),
                                                                                 skipNum, 
                                                                                 takeNum);
                 if (suggList != null)
@@ -135,6 +134,26 @@ namespace RentalHouseFinding.Controllers
             try
             {
                 var localtions = _db.Locations.ToList();
+                var myData = localtions.Select(a => new SelectListItem()
+                {
+                    Text = a.Name.ToString(),
+                    Value = a.Id.ToString(),
+                });
+
+                return Json(myData, JsonRequestBehavior.AllowGet);
+            }
+            catch
+            {
+                return Json(new { message = "Fail" });
+            }
+        }
+
+        [AcceptVerbs(HttpVerbs.Get)]
+        public JsonResult GetLocationWithDistrictId(int id)
+        {
+            try
+            {
+                var localtions = _db.Locations.Where(loc => loc.DistrictId == id).ToList();
                 var myData = localtions.Select(a => new SelectListItem()
                 {
                     Text = a.Name.ToString(),

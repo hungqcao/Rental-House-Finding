@@ -797,7 +797,6 @@
           <Parameter Name="StreetScore" Type="int" Mode="In" />
           <Parameter Name="NearbyScore" Type="int" Mode="In" />
           <Parameter Name="NumberAddressScore" Type="int" Mode="In" />
-          <Parameter Name="DirectionScore" Type="int" Mode="In" />
         </Function>
       </Schema></edmx:StorageModels>
     <!-- CSDL content -->
@@ -961,7 +960,6 @@
             <Parameter Name="StreetScore" Mode="In" Type="Int32" />
             <Parameter Name="NearbyScore" Mode="In" Type="Int32" />
             <Parameter Name="NumberAddressScore" Mode="In" Type="Int32" />
-            <Parameter Name="DirectionScore" Mode="In" Type="Int32" />
           </FunctionImport>
           <EntitySet Name="EmailTemplates" EntityType="RentalHouseFinding.EmailTemplate" />
           <EntitySet Name="PostEdits" EntityType="RentalHouseFinding.PostEdit" />
@@ -2005,19 +2003,19 @@
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>
-          <FunctionImportMapping FunctionImportName="AdvancedSearchFacilities" FunctionName="RentalHouseFinding.Store.AdvancedSearchFacility">
-            <ResultMapping>
-              <ComplexTypeMapping TypeName="RentalHouseFinding.AdvancedSearchFacility_Result">
-                <ScalarProperty Name="Id" ColumnName="Id" />
-                <ScalarProperty Name="Score" ColumnName="Score" />
-              </ComplexTypeMapping>
-            </ResultMapping>
-          </FunctionImportMapping>
           <FunctionImportMapping FunctionImportName="FullTextSearchPost" FunctionName="RentalHouseFinding.Store.FullTextSearchPost">
             <ResultMapping>
               <ComplexTypeMapping TypeName="RentalHouseFinding.FullTextSearchPost_ResultSuggestion">
                 <ScalarProperty Name="Id" ColumnName="Id" />
                 <ScalarProperty Name="Title" ColumnName="Title" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="AdvancedSearchFacilities" FunctionName="RentalHouseFinding.Store.AdvancedSearchFacility">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="RentalHouseFinding.AdvancedSearchFacility_Result">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="Score" ColumnName="Score" />
               </ComplexTypeMapping>
             </ResultMapping>
           </FunctionImportMapping>
@@ -2048,7 +2046,7 @@
     </edmx:Options>
     <!-- Diagram content (shape and connector positions) -->
     <edmx:Diagrams>
-      <Diagram Name="RentalHouseFinding" ZoomLevel="71" >
+      <Diagram Name="RentalHouseFinding" ZoomLevel="81" >
         <EntityTypeShape EntityType="RentalHouseFinding.Users" PointX="3" PointY="11.125" Width="1.5" Height="5.0571093750000031" IsExpanded="true" />
         <EntityTypeShape EntityType="RentalHouseFinding.Provinces" PointX="0.75" PointY="17.125" Width="1.5" Height="2.172587890624996" IsExpanded="true" />
         <EntityTypeShape EntityType="RentalHouseFinding.Districts" PointX="3" PointY="16.875" Width="1.5" Height="2.5571907552083317" IsExpanded="true" />
@@ -2113,7 +2111,7 @@
           <ConnectorPoint PointX="4.958333333333333" PointY="13.403595377604166" />
           <ConnectorPoint PointX="5.25" PointY="13.403595377604166" />
         </AssociationConnector>
-        <EntityTypeShape EntityType="RentalHouseFinding.BadWords" PointX="0.75" PointY="0.75" Width="1.5" Height="1.787985026041667" IsExpanded="true" />
+        <EntityTypeShape EntityType="RentalHouseFinding.BadWords" PointX="0.75" PointY="0.5" Width="1.5" Height="1.787985026041667" IsExpanded="true" />
         <AssociationConnector Association="RentalHouseFinding.RolesUsers">
           <ConnectorPoint PointX="2.25" PointY="13.490143229166666" />
           <ConnectorPoint PointX="3" PointY="13.490143229166666" />
@@ -2165,10 +2163,8 @@
         </AssociationConnector>
         <EntityTypeShape EntityType="RentalHouseFinding.BadWordTypes" Width="1.5" PointX="0.75" PointY="2.5" Height="1.5956835937499996" />
         <AssociationConnector Association="RentalHouseFinding.BadWordTypesBadWords">
-          <ConnectorPoint PointX="2.25" PointY="3.297841796875" />
-          <ConnectorPoint PointX="2.442" PointY="3.297841796875" />
-          <ConnectorPoint PointX="2.442" PointY="1.6439925130208337" />
-          <ConnectorPoint PointX="2.25" PointY="1.6439925130208337" />
+          <ConnectorPoint PointX="1.5" PointY="2.5" />
+          <ConnectorPoint PointX="1.5" PointY="2.287985026041667" />
         </AssociationConnector>
         <EntityTypeShape EntityType="RentalHouseFinding.Locations" Width="1.5" PointX="10" PointY="0.75" Height="2.7494921875" />
         <AssociationConnector Association="RentalHouseFinding.DistrictsLocations">

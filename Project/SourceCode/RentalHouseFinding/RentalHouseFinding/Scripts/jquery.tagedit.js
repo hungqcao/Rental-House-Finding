@@ -44,11 +44,33 @@
 */
 
 (function ($) {
-
     $.fn.tagedit = function (options) {
         /**
         * Merge Options with defaults
         */
+        $.fn.addNew = function (value, id) {
+            var oldValue = (typeof value != 'undefined' && value.length > 0);
+            var checkAutocomplete = oldValue == true ? false : true;
+            // check if the Value ist new
+            console.log(value);
+            var isNewResult = isNew(value, checkAutocomplete);
+            if (isNewResult[0] === true || (isNewResult[0] === false && typeof isNewResult[1] == 'string')) {
+                console.log('NEW: ' + value);
+
+                if (options.allowAdd == true) {
+                    // Make a new tag in front the input
+                    html = '<li class="tagedit-listelement tagedit-listelement-old">';
+                    html += '<span dir="' + options.direction + '">' + value + '</span>';
+                    var name = oldValue ? baseName + '[' + id + options.addedPostfix + ']' : baseName + '[]';
+                    html += '<input type="hidden" name="' + name + '" value="' + value + '" />';
+                    html += '<a class="tagedit-close" title="' + options.texts.removeLinkTitle + '">x</a>';
+                    html += '</li>';
+
+                    $('.tagedit-listelement-new').before(html);
+                }
+            } else { console.log('NOT NEW: ' + value) }
+            return this;
+        };
         options = $.extend(true, {
             // default options here
             autocompleteURL: null,
@@ -110,7 +132,7 @@
 
         // init elements
         inputsToList();
-
+        
         /**
         * Creates the tageditinput from a list of textinputs
         *

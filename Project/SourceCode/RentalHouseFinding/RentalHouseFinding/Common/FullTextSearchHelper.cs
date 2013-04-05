@@ -49,13 +49,12 @@ namespace RentalHouseFinding.Common
                                                                                                     int streetColumnScore,
                                                                                                     int nearbyColumnScore,
                                                                                                     int numberAddressColumnScore,
-                                                                                                    int directionColumnScore,
                                                                                                     int skip, 
                                                                                                     int take)
         {
             try
             {
-                var listSuggestion = _db.FullTextSearchPostWithWeightenScore(categoryId, provinceId, DistrictId, keyWords, titleColumnScore, descriptionColumnScore, streetColumnScore, nearbyColumnScore, numberAddressColumnScore, directionColumnScore).Skip(skip).Take(take);
+                var listSuggestion = _db.FullTextSearchPostWithWeightenScore(categoryId, provinceId, DistrictId, keyWords, titleColumnScore, descriptionColumnScore, streetColumnScore, nearbyColumnScore, numberAddressColumnScore).Skip(skip).Take(take);
 
                 return listSuggestion.ToList();
             }
@@ -123,12 +122,11 @@ namespace RentalHouseFinding.Common
                                                                                                     int titleColumnScore,
                                                                                                     int streetColumnScore,
                                                                                                     int nearbyColumnScore,
-                                                                                                    int numberAddressColumnScore,
-                                                                                                    int directionColumnScore)
+                                                                                                    int numberAddressColumnScore)
         {
             try
             {
-                var listSuggestion = _db.FullTextSearchPostWithWeightenScore(categoryId, provinceId, DistrictId, keyWords, titleColumnScore, descriptionColumnScore, streetColumnScore, nearbyColumnScore, numberAddressColumnScore, directionColumnScore);
+                var listSuggestion = _db.FullTextSearchPostWithWeightenScore(categoryId, provinceId, DistrictId, keyWords, titleColumnScore, descriptionColumnScore, streetColumnScore, nearbyColumnScore, numberAddressColumnScore);
 
                 return listSuggestion.ToList();
             }
