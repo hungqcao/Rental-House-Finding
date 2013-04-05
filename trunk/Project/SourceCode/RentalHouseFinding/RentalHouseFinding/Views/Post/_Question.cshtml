@@ -21,7 +21,7 @@
     );
     });
 </script>
-@using (Ajax.BeginForm("sendquestion", "post", new AjaxOptions { UpdateTargetId = "result" }))
+@using (Ajax.BeginForm("sendquestion", "questions", new AjaxOptions { UpdateTargetId = "result" }))
 {
     @Html.ValidationSummary(true)
     <div id="result" style="margin-bottom:10px" ><img src="@Url.Content("~/Content/images/ajax-loader.gif")" /></div>

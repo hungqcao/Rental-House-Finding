@@ -8,7 +8,7 @@
 {
     i++;
     <div class="result">
-        <span><b>@i.</b> <a href="@Url.Content("~/post/details/" + @item.PostId)">@item.Post.Title</a></span>
+        <span><b class="left">@i.</b> <a class="left" href="@Url.Content("~/post/details/" + @item.PostId)">@item.Post.Title</a><a class="remove-fav-item-list left" onclick="removeFavoriteInList(@item.PostId);">Xóa</a></span>
         <input id="@item.PostId" type="checkbox" class="styledCheckbox favItem" />
     </div>
 }

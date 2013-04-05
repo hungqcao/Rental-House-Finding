@@ -107,24 +107,24 @@
         }
     });
 
-    function addFavorite() {
-        $.getJSON("/Post/AddFavorite", null, function (success) {
+    function addFavorite(id) {
+        $.getJSON("/Post/AddFavorite", { id: id }, function (success) {
             if (success) {
                 alert('Đã thêm bài vào danh mục');
                 $("#favoriteImg").attr("src", window.ROOT + "Content/images/favorite_actived.png");
                 $("#favorite").attr('value', 'Gỡ khỏi danh mục');
-                $("#favorite").attr('onclick', 'removeFavorite();');
+                $("#favorite").attr('onclick', 'removeFavorite(' + id + ');');
                 $("#favorite").attr('title', 'Xóa tin này khỏi ngăn tin đăng quan tâm');
             }
         });
     }
-    function removeFavorite() {
-        $.getJSON("/Post/RemoveFavorite", null, function (success) {
+    function removeFavorite(id) {
+        $.getJSON("/Post/RemoveFavorite", { id: id }, function (success) {
             if (success) {
                 alert('Đã xóa bài khỏi danh mục');
                 $("#favoriteImg").attr("src", window.ROOT + "Content/images/triangle_fav.png");
                 $("#favorite").attr('value', 'Thêm vào danh mục');
-                $("#favorite").attr('onclick', 'addFavorite();');
+                $("#favorite").attr('onclick', 'addFavorite(' + id + ');');
                 $("#favorite").attr('title', 'Cho vào danh sách tin đăng quan tâm của bạn');
             }
         });
