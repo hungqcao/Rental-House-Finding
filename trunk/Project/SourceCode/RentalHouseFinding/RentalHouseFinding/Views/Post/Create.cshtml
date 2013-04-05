@@ -12,6 +12,10 @@
 <script type="text/javascript" src="@Url.Content("~/Scripts/jquery.autoGrowInput.js")"></script>
 <script type="text/javascript" src="@Url.Content("~/Scripts/jquery.tagedit.js")"></script>
 <script src="@Url.Content("~/Content/js/jquery.screwdefaultbuttonsV2.min.js")" type="text/javascript"></script>
+<link href="@Url.Content("~/Content/css/listbox.css")" rel="stylesheet">
+@*
+<script src="@Url.Content("~/Content/js/jquery.js")"></script>*@
+<script src="@Url.Content("~/Content/js/listbox.js")"></script>
 
 <script type="text/javascript">
     function initialize() {
@@ -89,6 +93,30 @@
                     $('#Lon').val(itemData.Value.split(';')[1]);
                 });
             });
+
+            //for locations
+            var idDis = $("#DistrictId option:selected").val();
+            var select = $("#locations");
+            select.empty();
+            $.getJSON("@baseUri.ToString()" + "service/GetLocationWithDistrictId", { id: idDis },
+                function (myData) {
+                    $.each(myData, function (index, itemData) {
+                        if (itemData.Text.length != 0 && itemData.Value != idDis) {
+                            select.append($('<option/>', {
+                                value: itemData.Value,
+                                text: itemData.Text
+                            }));
+                        }
+                    });
+                    select.listbox({
+                        'class': 'listBox',
+                        'searchbar': true,
+                        'multiselect': false
+                    })
+                    $('.listBox .lbjs-item').live('click', function () {
+                        $('input.tag').addNew($(this).html(), $(this).attr("id"));
+                    });
+                });
         });
 
         $("#Street").change(function () {
@@ -143,8 +171,12 @@
     window.onload = loadScript;
 </script>
 <script type="text/javascript">
-    $(document).ready(function () {       
-
+    $(document).ready(function () {
+        $('#locations').listbox({
+            'class': 'listBox',
+            'searchbar': true,
+            'multiselect': false
+        })
         //For tag input
         var source;
         $.getJSON("@baseUri.ToString()" + "service/GetLocation",
@@ -388,7 +420,7 @@
                     <div class="clear"></div>
                 </div>
                 <div class="clear"></div>
-                <div class="leftContent" style="margin-right: 144px; margin-top: 30px;">
+                <div class="leftContent" style="margin-top: 30px;">
                     <h1>Các dịch vụ & tiện ích</h1>
                     <div class="clear"></div>
                     <div class="partCol">
@@ -450,7 +482,11 @@
                 <div class="leftContent" style="margin-top: 30px;">
                     <h1>Các địa điểm nổi bật xung quanh</h1>
                     <div class="clear"></div>
-                    <div class="ta_wrapper">
+                    <div id="location-wrapper" class="left" style="margin-right: 10px">
+                        <select id="locations">
+                        </select>
+                    </div>
+                    <div class="ta_wrapper left">
                         <input id="osSites" type="text" name="tag[]" value="" class="tag"/>
                     </div>
                 </div>
