@@ -30,5 +30,54 @@ namespace RentalHouseFinding.Controllers
             return Json(true, JsonRequestBehavior.AllowGet);
         }
 
+        public JsonResult AreaMaxGreaterThanAreaMin(float AreaMax, float? AreaMin)
+        {
+            if (AreaMin == null)
+            {
+                AreaMin = 0;
+            }
+            if (AreaMax <= AreaMin)
+            {
+                return Json("Diện tích lớn nhất phải lớn hơn diện tích nhỏ nhất", JsonRequestBehavior.AllowGet);
+            }            
+            return Json(true, JsonRequestBehavior.AllowGet);
+        }
+        public JsonResult AreaMinLessThanAreaMax(float AreaMin, float? AreaMax)
+        {
+            if (AreaMax == null)
+            {
+                AreaMax = float.MaxValue;
+            }
+            if (AreaMax <= AreaMin)
+            {
+                return Json("Diện tích nhỏ nhất phải nhỏ hơn diện tích lớn nhất", JsonRequestBehavior.AllowGet);
+            }
+            return Json(true, JsonRequestBehavior.AllowGet);
+        }
+
+        public JsonResult PriceMaxGreaterThanPriceMin(float PriceMax, float? PriceMin)
+        {
+            if (PriceMin == null)
+            {
+                PriceMin = 0;
+            }
+            if (PriceMax <= PriceMin)
+            {
+                return Json("Giá cao nhất phải lớn hơn giá tiền thấp nhất", JsonRequestBehavior.AllowGet);
+            }            
+            return Json(true, JsonRequestBehavior.AllowGet);
+        }
+        public JsonResult PriceMinLessThanPriceMax(float PriceMin, float? PriceMax)
+        {
+            if (PriceMax == null)
+            {
+                PriceMax = float.MaxValue;
+            }
+            if (PriceMax <= PriceMin)
+            {
+                return Json("Giá thấp nhất phải nhỏ hơn giá cao nhất", JsonRequestBehavior.AllowGet);
+            }
+            return Json(true, JsonRequestBehavior.AllowGet);
+        }
     }
 }

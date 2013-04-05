@@ -8,6 +8,8 @@ using DataAnnotationsExtensions;
 using System.Runtime.Serialization.Json;
 using System.IO;
 using System.Text;
+using System.Collections;
+using System.ComponentModel;
 
 namespace RentalHouseFinding.Models
 {
@@ -35,14 +37,17 @@ namespace RentalHouseFinding.Models
 
         //Advanced search
         [Display(Name = "Diện tích lớn nhất")]
-        public float AreaMax { get; set; }
+        [Remote("AreaMaxGreaterThanAreaMin", "Validation", AdditionalFields = "AreaMin")]
+        public float? AreaMax { get; set; }
         [Display(Name = "Diện tích nhỏ nhất")]
-        public float AreaMin { get; set; }
-
+        [Remote("AreaMinLessThanAreaMax", "Validation", AdditionalFields = "AreaMax")]
+        public float? AreaMin { get; set; }
         [Display(Name = "Giá cao nhất")]
-        public float PriceMax { get; set; }
-        [Display(Name = "Giá thấp nhất")]
-        public float PriceMin { get; set; }
+        [Remote("PriceMaxGreaterThanPriceMin", "Validation", AdditionalFields = "PriceMin")]
+        public float? PriceMax { get; set; }
+        [Display(Name = "Giá thấp nhất")]        
+        [Remote("PriceMinLessThanPriceMax", "Validation", AdditionalFields = "PriceMax")]
+        public float? PriceMin { get; set; }
 
 
         [Display(Name = "Có Internet?")]
@@ -91,4 +96,82 @@ namespace RentalHouseFinding.Models
 
         public string CenterMap { get; set; }
     }
+
+    //public sealed class ComapreGreaterThanAttribute : ValidationAttribute
+    //{
+    //    private const string _defaultErrorMessage = "'{0}' must be greater than '{1}'";
+    //    private string _basePropertyName;
+    //    private Type _type;
+
+    //    public ComapreGreaterThanAttribute(string basePropertyName, Type type)
+    //        : base(_defaultErrorMessage)
+    //    {
+    //        _basePropertyName = basePropertyName;
+    //        _type = type;
+    //    }
+
+    //    //Override default FormatErrorMessage Method  
+    //    public override string FormatErrorMessage(string name)
+    //    {
+    //        return string.Format(_defaultErrorMessage, name, _basePropertyName);
+    //    }
+
+    //    //Override IsValid  
+    //    protected override ValidationResult IsValid(object value, ValidationContext validationContext)
+    //    {
+    //        //Get PropertyInfo Object
+    //        var basePropertyInfo = validationContext.ObjectType.GetProperty(_basePropertyName);
+
+    //        //Get Value of the property    
+    //        if (_type == typeof(int))
+    //        {
+    //            var otherField = (int)basePropertyInfo.GetValue(validationContext.ObjectInstance, null);
+    //            var thisField = (int)value;
+    //            //Actual comparision  
+    //            if (thisField <= otherField)
+    //            {
+    //                var message = FormatErrorMessage(validationContext.DisplayName);
+    //                return new ValidationResult(message);
+    //            }
+    //        }
+    //        if (_type == typeof(float))
+    //        {
+    //            var otherField = (float)basePropertyInfo.GetValue(validationContext.ObjectInstance, null);
+    //            var thisField = (float)value;
+    //            //Actual comparision  
+    //            if (thisField <= otherField)
+    //            {
+    //                var message = FormatErrorMessage(validationContext.DisplayName);
+    //                return new ValidationResult(message);
+    //            }
+    //        }
+    //        if (_type == typeof(DateTime))
+    //        {
+    //            var otherField = (DateTime)basePropertyInfo.GetValue(validationContext.ObjectInstance, null);
+    //            var thisField = (DateTime)value;
+    //            //Actual comparision  
+    //            if (thisField <= otherField)
+    //            {
+    //                var message = FormatErrorMessage(validationContext.DisplayName);
+    //                return new ValidationResult(message);
+    //            }
+    //        }
+
+
+    //        //Default return - This means there were no validation error  
+    //        return null;
+    //    }
+
+    //    public IEnumerable<ModelClientValidationRule> GetClientValidationRules(ModelMetadata metadata, ControllerContext context)
+    //    {
+    //        var rule = new ModelClientValidationRule
+    //        {
+    //            ErrorMessage = FormatErrorMessage(metadata.GetDisplayName()),
+    //            ValidationType = "requiredif",
+    //        };
+    //        rule.ValidationParameters.Add("other", _basePropertyName);
+    //        yield return rule;
+    //    }
+
+    //}
 }

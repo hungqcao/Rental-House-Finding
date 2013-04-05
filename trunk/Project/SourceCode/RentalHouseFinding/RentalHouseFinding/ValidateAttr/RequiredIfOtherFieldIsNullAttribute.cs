@@ -55,4 +55,5 @@ namespace RentalHouseFinding.ValidateAttr
             yield return rule;
         }
     }
+   
 }

@@ -7,6 +7,22 @@
 <script src="@Url.Content("~/Scripts/jquery.validate.unobtrusive.min.js")" type="text/javascript"></script>
 <link rel="stylesheet" href="http://code.jquery.com/ui/1.10.1/themes/base/jquery-ui.css" />
 <script src="@Url.Content("~/Scripts/advSearch.js")" type="text/javascript"></script>
+<script>
+    $(document).ready(function () {
+        $(".rangePrice").change(function () {
+            debugger;
+            $("#Price").find(".field-validation-error").children().css("display", "none");
+            $(".rangePrice").removeClass('input-validation-error')
+        });
+        $(".rangeArea").change(function () {
+            debugger;
+            $("#Area").find(".field-validation-error").children().css("display", "none");
+            $(".rangeArea").removeClass('input-validation-error')
+        });
+    });
+
+</script>
+
 @Html.ValidationSummary(true, "Vui lòng kiểm tra lại thông tin như thông báo bên dưới!", new { style = "color:red" })
 @using (Html.BeginForm())
 {
@@ -27,27 +43,27 @@
                         new SelectList(Enumerable.Empty<SelectListItem>(), "Id", "Name"), "Quận/Huyện",
                      new { id = "ddlDistrict", @class = "select" })
             <div class="clear"></div>
-            <div class="field requiredField">
+            <div id ="Price" class="field requiredField">
                 <span>Giá tiền (triệu VND/tháng)</span>
                 <div class="clear"></div>
                 <div id="fromPrice">
-                @Html.TextBoxFor(model => model.PriceMin, new { @id = "fromPrice", @class = "range", @placeholder = "từ" })
-                @Html.ValidationMessageFor(model => model.PriceMin)
-                </div>
-                <div id="toPrice">
-                @Html.TextBoxFor(model => model.PriceMax, new { @id = "toPrice", @class = "range", @placeholder = "tới" })
+                @Html.TextBoxFor(model => model.PriceMin, new { @id = "fromPrice", @class = "range rangePrice", @placeholder = "từ" })
                 @Html.ValidationMessageFor(model => model.PriceMax)
                 </div>
+                <div id="toPrice">
+                @Html.TextBoxFor(model => model.PriceMax, new { @id = "toPrice", @class = "range rangePrice", @placeholder = "tới" })                
+                @Html.ValidationMessageFor(model => model.PriceMin)
+                </div>                
             </div>
-            <div class="field requiredField">
+            <div id="Area" class="field requiredField">
                 <span>Diện tích (m2)</span>
                 <div class="clear"></div>
                 <div id="minArea">
-                @Html.TextBoxFor(model => model.AreaMin, new { @id = "fromArea", @class = "range", @placeholder = "từ" })
+                @Html.TextBoxFor(model => model.AreaMin, new { @id = "fromArea", @class = "range rangeArea", @placeholder = "từ" })
                 @Html.ValidationMessageFor(model => model.AreaMin)
                 </div>
                 <div id ="maxArea">
-                @Html.TextBoxFor(model => model.AreaMax, new { @id = "toArea", @class = "range", @placeholder = "tới" })
+                @Html.TextBoxFor(model => model.AreaMax, new { @id = "toArea", @class = "range rangeArea", @placeholder = "tới" })
                 @Html.ValidationMessageFor(model => model.AreaMax)
                 </div>
             </div>
