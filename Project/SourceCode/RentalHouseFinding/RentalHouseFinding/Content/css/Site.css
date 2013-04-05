@@ -2075,26 +2075,26 @@ table th
    float:left;
 }
 #fromPrice span.field-validation-error {
-   display: none;
+   display: block;
 }
  
  #toPrice {
  float: left; 
 }   
 #toPrice span.field-validation-error {
-   display: none;
+   display: block;
 }
 #minArea  {
   float:left;
 }
 #minArea span.field-validation-error {
-   display: none;
+   display: block;
 }
 #maxArea  {
   float:left;
 }
 #maxArea span.field-validation-error {
-   display: none;
+   display: block;
 }
 
 #blockBtnRegis span.field-validation-error
