@@ -701,6 +701,7 @@ span.field-validation-error
 #header #resultPanel label {
     margin-bottom: 10px;
     display: block;
+    font-weight: normal;
 }
 
 #header #resultPanel .result {
@@ -2190,4 +2191,30 @@ table#grid
 .markerInfo label
 {
     cursor: pointer;
+}
+#compare-button
+{
+    -webkit-border-radius: 6px;
+    -moz-border-radius: 6px;
+    border-radius: 6px;
+    color: #617279; 
+    text-decoration: none; 
+    display: block; 
+    float: right;
+    font-family:Calibri; 
+    font-size: 12px; 
+    font-weight: 700; 
+    cursor: pointer;
+    border: 1px solid #e1e1e1;
+    padding: 5px;
+    margin-top: 5px;
+}
+a.remove-fav-item-list
+{
+    background: url('../../Content/images/remove-fav-button.gif') no-repeat scroll 0 0 transparent;
+    font-size: 0;
+    margin-left: 10px;
+    display: block;
+    width: 24px;
+    height: 24px;
 }

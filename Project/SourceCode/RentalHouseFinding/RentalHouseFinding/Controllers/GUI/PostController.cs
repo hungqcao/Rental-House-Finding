@@ -490,39 +490,37 @@ namespace RentalHouseFinding.Controllers
         }
 
         [Authorize(Roles = "User, Admin")]
-        public JsonResult AddFavorite(PostViewModel postViewModel)
+        public JsonResult AddFavorite(int id)
         {
-            int userId = CommonModel.GetUserIdByUsername(User.Identity.Name);
-            int postId = Convert.ToInt32(TempData["PostID"]);
-
-            //Check if user has added this post to favorite, but deleted
-            var favorite = (from f in _db.Favorites
-                            where
-                                (f.PostId == postId && f.UserId == userId && f.IsDeleted)
-                            select f).FirstOrDefault();
-
-            //If user never added this post to favorite then add new entry
-            if (favorite == null)
-            {
-                favorite = new Favorites();
-                favorite.UserId = userId;
-                favorite.PostId = postId;
-                favorite.AddedDate = DateTime.Now;
-                favorite.IsDeleted = false;
-                _db.Favorites.Attach(favorite);
-                _db.ObjectStateManager.ChangeObjectState(favorite, EntityState.Added);
-            }
-            //If user has added this post to favorite before, set deleted to false
-            else 
-            {
-                favorite.IsDeleted = false;
-                _db.ObjectStateManager.ChangeObjectState(favorite, EntityState.Modified);
-            }
             var success = false;
             try
             {
-                //Temp data is reset so we have to set its value again
-                TempData["PostID"] = postId;
+                int userId = CommonModel.GetUserIdByUsername(User.Identity.Name);
+                int postId = id;
+
+                //Check if user has added this post to favorite, but deleted
+                var favorite = (from f in _db.Favorites
+                                where
+                                    (f.PostId == postId && f.UserId == userId && f.IsDeleted)
+                                select f).FirstOrDefault();
+
+                //If user never added this post to favorite then add new entry
+                if (favorite == null)
+                {
+                    favorite = new Favorites();
+                    favorite.UserId = userId;
+                    favorite.PostId = postId;
+                    favorite.AddedDate = DateTime.Now;
+                    favorite.IsDeleted = false;
+                    _db.Favorites.Attach(favorite);
+                    _db.ObjectStateManager.ChangeObjectState(favorite, EntityState.Added);
+                }
+                //If user has added this post to favorite before, set deleted to false
+                else 
+                {
+                    favorite.IsDeleted = false;
+                    _db.ObjectStateManager.ChangeObjectState(favorite, EntityState.Modified);
+                }
                 _db.SaveChanges();
                 success = true;
                 return Json(success, JsonRequestBehavior.AllowGet);
@@ -535,27 +533,25 @@ namespace RentalHouseFinding.Controllers
         }
 
         [Authorize(Roles = "User, Admin")]
-        public JsonResult RemoveFavorite()
+        public JsonResult RemoveFavorite(int id)
         {
-            int userId = CommonModel.GetUserIdByUsername(User.Identity.Name);
-            int postId = Convert.ToInt32(TempData["PostID"]);
             var success = false;
-
-            //Get favorite from db
-            var favorite = (from f in _db.Favorites where
-                                (f.PostId == postId && f.UserId == userId && !f.IsDeleted)
-                            select f).FirstOrDefault();
-
-            if (favorite == null)
-            {
-                return Json(success, JsonRequestBehavior.AllowGet);
-            }
-            favorite.IsDeleted = true;
-            
             try
             {
-                //Temp data is reset so we have to set its value again
-                TempData["PostID"] = postId;
+                int userId = CommonModel.GetUserIdByUsername(User.Identity.Name);
+                int postId = id;
+
+                //Get favorite from db
+                var favorite = (from f in _db.Favorites where
+                                    (f.PostId == postId && f.UserId == userId && !f.IsDeleted)
+                                select f).FirstOrDefault();
+
+                if (favorite == null)
+                {
+                    return Json(success, JsonRequestBehavior.AllowGet);
+                }
+                favorite.IsDeleted = true;
+            
                 _db.ObjectStateManager.ChangeObjectState(favorite, EntityState.Modified);
                 _db.SaveChanges();
                 success = true;
@@ -565,67 +561,6 @@ namespace RentalHouseFinding.Controllers
             {
                 return Json(success, JsonRequestBehavior.AllowGet);
             }
-        }
-
-        [HttpPost]
-        public ActionResult SendQuestion(QuestionViewModel model)
-        {
-            try
-            {
-                int postId = Convert.ToInt32(Session["PostID"]);
-                Users user = null;
-                
-                var post = _db.Posts.Where( p => p.Id == postId).FirstOrDefault();
-                if (post.UserId != null)
-                {
-                    user = _db.Users.Where(u => u.Id == post.UserId).FirstOrDefault();
-                }
-
-                Questions questionToCreate = new Questions();
-                questionToCreate.Content = model.ContentQuestion.Trim();
-                questionToCreate.Title = model.TitleQuestion.Trim();
-                questionToCreate.CreatedDate = DateTime.Now;
-                questionToCreate.IsDeleted = false;
-                questionToCreate.IsRead = false;
-                questionToCreate.PostId = postId;
-                if (model.UserId != 0)
-                {
-                    questionToCreate.SenderId = model.UserId;
-                }
-                else
-                {
-                    questionToCreate.SenderId = null;
-                }
-                questionToCreate.SenderEmail = model.Email;
-
-                _db.Questions.AddObject(questionToCreate);
-                _db.SaveChanges();
-
-                string message = string.Empty;
-                if (!(user == null))
-                {
-                    string emailTemplate = Repository.GetAllEmailTemplate().Where(e => e.Name.Equals(ConstantEmailTemplate.RECEIVE_QUESTION, StringComparison.CurrentCultureIgnoreCase)).Select(m => m.Template).FirstOrDefault();
-                    message = string.Format(emailTemplate, model.Email, model.TitleQuestion, model.ContentQuestion, post.Title);
-                    CommonModel.SendEmail(user.Email, message, "Bạn nhận được 1 câu hỏi", 0);
-                }
-
-                if (user != null)
-                {
-                    UserLogs log = new UserLogs();
-                    log.UserId = user.Id;
-                    log.Message = message;
-                    log.IsRead = false;
-                    log.CreatedDate = DateTime.Now;
-                    _db.UserLogs.AddObject(log);
-                    _db.SaveChanges();
-                }
-                return Content("Thông tin đã được gửi đi", "text/html");
-            }
-            catch
-            {
-                return Content("Có lỗi xảy ra!", "text/html");
-            }
-            
         }
     }
 }

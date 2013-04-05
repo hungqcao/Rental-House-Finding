@@ -56,6 +56,67 @@ namespace RentalHouseFinding.Controllers.User
         }
 
         [HttpPost]
+        public ActionResult SendQuestion(QuestionViewModel model)
+        {
+            try
+            {
+                int postId = Convert.ToInt32(Session["PostID"]);
+                Users user = null;
+
+                var post = _db.Posts.Where(p => p.Id == postId).FirstOrDefault();
+                if (post.UserId != null)
+                {
+                    user = _db.Users.Where(u => u.Id == post.UserId).FirstOrDefault();
+                }
+
+                Questions questionToCreate = new Questions();
+                questionToCreate.Content = model.ContentQuestion.Trim();
+                questionToCreate.Title = model.TitleQuestion.Trim();
+                questionToCreate.CreatedDate = DateTime.Now;
+                questionToCreate.IsDeleted = false;
+                questionToCreate.IsRead = false;
+                questionToCreate.PostId = postId;
+                if (model.UserId != 0)
+                {
+                    questionToCreate.SenderId = model.UserId;
+                }
+                else
+                {
+                    questionToCreate.SenderId = null;
+                }
+                questionToCreate.SenderEmail = model.Email;
+
+                _db.Questions.AddObject(questionToCreate);
+                _db.SaveChanges();
+
+                string message = string.Empty;
+                if (!(user == null))
+                {
+                    string emailTemplate = Repository.GetAllEmailTemplate().Where(e => e.Name.Equals(ConstantEmailTemplate.RECEIVE_QUESTION, StringComparison.CurrentCultureIgnoreCase)).Select(m => m.Template).FirstOrDefault();
+                    message = string.Format(emailTemplate, model.Email, model.TitleQuestion, model.ContentQuestion, post.Title);
+                    CommonModel.SendEmail(user.Email, message, "Bạn nhận được 1 câu hỏi", 0);
+                }
+
+                if (user != null)
+                {
+                    UserLogs log = new UserLogs();
+                    log.UserId = user.Id;
+                    log.Message = message;
+                    log.IsRead = false;
+                    log.CreatedDate = DateTime.Now;
+                    _db.UserLogs.AddObject(log);
+                    _db.SaveChanges();
+                }
+                return Content("Câu hỏi đã được gửi đi", "text/html");
+            }
+            catch
+            {
+                return Content("Có lỗi xảy ra!", "text/html");
+            }
+
+        }
+
+        [HttpPost]
         [Authorize(Roles = "User, Admin")]
         public ActionResult SendAnswer(AnswerViewModel model)
         {

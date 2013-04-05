@@ -41,7 +41,32 @@
         }
     }
 }
-
+function removeFavoriteInList(id) {
+    if (confirm("Bạn có chắc chắn muốn xóa bài này khỏi danh sách?")) {
+        $.getJSON("/Post/RemoveFavorite", { id: id }, function (success) {
+            if (success) {
+                $('#resultContent').html('<img src="/Content/images/ajax-loader.gif")" />');
+                $.ajax({
+                    url: '/service/GetAllUserFavorite',
+                    contentType: 'application/html; charset=utf-8',
+                    type: 'GET',
+                    dataType: 'html'
+                })
+            .success(function (result) {
+                $('#resultContent').html(result);
+                $('input:checkbox').screwDefaultButtons({
+                    image: 'url("/Content/images/index_cbx.png")',
+                    width: 17,
+                    height: 17
+                });
+            })
+            .error(function (xhr, status) {
+                xhr.abort();
+            });
+            }
+        });
+    }
+}
 function ComparePost() {    
     if ($("input:checkbox:checked").length > 3) {
         alert("Hiện tại chúng tôi chỉ hỗ trợ so sánh tối đa 3 bài đăng");

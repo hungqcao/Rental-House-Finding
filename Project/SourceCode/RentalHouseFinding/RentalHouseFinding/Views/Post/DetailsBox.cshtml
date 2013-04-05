@@ -95,7 +95,7 @@
                     @{
                         if (ViewBag.RemoveFavorite == false)
                         {
-                        <div id="favorite" onclick="addFavorite();" class="withOutLoginFav topBtnFavorite"
+                        <div id="favorite" onclick="addFavorite('@Model.Id');" class="withOutLoginFav topBtnFavorite"
                             title="Cho vào danh sách quan tâm của bạn">
                             <img id="favoriteImg" src="../../Content/images/triangle_fav.png" />
                         </div>
@@ -103,7 +103,7 @@
                         }
                         else if (ViewBag.RemoveFavorite == true)
                         {
-                        <div id="favorite" onclick="removeFavorite();" class="withOutLoginFav topBtnFavoriteActived"
+                        <div id="favorite" onclick="removeFavorite('@Model.Id');" class="withOutLoginFav topBtnFavoriteActived"
                             title="Xóa tin này khỏi danh sách quan tâm">
                             <img id="favoriteImg" src="../../Content/images/favorite_actived.png" />
                         </div>
