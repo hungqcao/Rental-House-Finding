@@ -114,6 +114,7 @@
                 $("#favoriteImg").attr("src", window.ROOT + "Content/images/favorite_actived.png");
                 $("#favorite").attr('value', 'Gỡ khỏi danh mục');
                 $("#favorite").attr('onclick', 'removeFavorite();');
+                $("#favorite").attr('title', 'Xóa tin này khỏi ngăn tin đăng quan tâm');
             }
         });
     }
@@ -124,7 +125,7 @@
                 $("#favoriteImg").attr("src", window.ROOT + "Content/images/triangle_fav.png");
                 $("#favorite").attr('value', 'Thêm vào danh mục');
                 $("#favorite").attr('onclick', 'addFavorite();');
-
+                $("#favorite").attr('title', 'Cho vào danh sách tin đăng quan tâm của bạn');
             }
         });
     }
