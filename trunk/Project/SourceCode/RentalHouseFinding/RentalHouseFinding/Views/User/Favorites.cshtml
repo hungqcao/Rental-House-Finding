@@ -1,22 +1,35 @@
 ﻿@{
     Layout = "~/Views/Shared/_LayoutUser.cshtml";
 }
-<div id="container-grid">
-    @{
-        if (ViewBag.FavoriteList != null)
-        {
-            var grid = new WebGrid(ViewBag.FavoriteList, ajaxUpdateContainerId: "container-grid", canSort: false
-                );
-        
-            @grid.GetHtml(tableStyle: "", mode: WebGridPagerModes.All, 
-                            headerStyle: "header",
-                            alternatingRowStyle: "alt",
-                            htmlAttributes: new { id = "grid"});
-        }
-        else 
-        {
-            <h2>Không có bài post</h2>
-        }
+
+<fieldset>
+    <div id="container-grid">
+        @{
+            if (ViewBag.Grid != null && ViewBag.Grid.TotalRowCount > 0)
+            {
+                var grid = new WebGrid(ViewBag.FavoriteList, ajaxUpdateContainerId: "container-grid", canSort: false
+                    );
+
+                @grid.GetHtml(tableStyle: "", mode: WebGridPagerModes.All, 
+                                headerStyle: "header",
+                                alternatingRowStyle: "alt",
+                                htmlAttributes: new { id = "grid"},
+                                columns: grid.Columns(
+                                        grid.Column(header: "STT", format: item => item.WebGrid.Rows.IndexOf(item) + 1 + ViewBag.Index),
+                                        grid.Column("ID", "Mã bài"),
+                                        grid.Column(header: "Tiêu đề", format: @<text>
+                                        <a href="@Url.Action("Details", "Post",
+                                        new { id = @item.ID })">@item.Title</a></text>),
+                                        grid.Column("PostStatus", "Trạng thái"),
+                                        grid.Column("CreatedDate", "Ngày tạo"),
+                                        grid.Column("EditedDate", "Lần cuối chỉnh sửa"),
+                                        grid.Column("RenewDate", "Ngày làm mới"),
+                                        grid.Column("ExpiredDate", "Ngày hết hạn")));
+            }
+            else 
+            {
+                <h2>Không có bài quan tâm</h2>
+            }
     
     }
     <br/>

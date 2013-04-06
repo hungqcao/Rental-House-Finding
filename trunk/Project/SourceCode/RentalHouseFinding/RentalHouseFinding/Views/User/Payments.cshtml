@@ -17,6 +17,8 @@
 </script>
 @using (Html.BeginForm("Payments", "User", FormMethod.Post))
 {
+    <span>Ngày giao dịch</span>
+    <br/>
     <div>Từ @Html.TextBoxFor(model => model.CreatedDateFrom,
                     new { @id = "created_date_from", @readonly = "readonly" })<br/><br/>
          Đến @Html.TextBoxFor(model => model.CreatedDateTo,
