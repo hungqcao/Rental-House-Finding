@@ -145,7 +145,7 @@
             var District = $("#DistrictId option:selected").text();
             var Province = $("#ProvinceId option:selected").text();
             var geocoder = new google.maps.Geocoder();
-            var address = Street + ' ' + District + ' ' + Province;
+            var address = Street + ' ' + District + ' ' + Province + ' Việt Nam';
 
             if (geocoder) {
                 geocoder.geocode({ 'address': address }, function (results, status) {
