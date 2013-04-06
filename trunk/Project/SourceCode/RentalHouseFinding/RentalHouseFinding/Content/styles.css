@@ -5,61 +5,43 @@
 /* Menu CSS */ 
 
 #cssmenu, #cssmenu > ul{
-	
 	background: url(images/highlight-bg.png) repeat;
 	padding-bottom: 3px;
-	font-family: 'Open Sans', sans-serif;
-	font-weight: 600;
-	
-	
 }
 
 #cssmenu:before, #cssmenu:after, #cssmenu > ul:before, #cssmenu > ul:after {
-
 	content: '';
 	display: table;
-	
 }
 
 
 #cssmenu:after, #cssmenu > ul:after {
-
 	clear: both;
-	
 }
 
 #cssmenu {
-
 	zoom:1;
-	
 }
 
 #cssmenu > ul{
-	
 	background: url(images/menu-bg.png) repeat;
 	margin: 0;
 	padding: 0;
 	position: relative;
-	
 }
 
 #cssmenu > ul li{
-	
 	margin: 0;
 	padding: 0;
 	list-style: none;
-	
 }
 
 #cssmenu > ul > li{
-
 	float: left;
 	position: relative;
-	
 }
 
 #cssmenu > ul > li > a{
-
 	padding: 23px 26px;
 	display: block;
 	color: white;
@@ -69,22 +51,17 @@
 	text-shadow: 0 -1px 0 #9e3825;
 	text-shadow: 0 -1px 0 rgba(116, 37, 2, .70);
 	line-height: 18px;
-	
 }
 
 
 #cssmenu > ul > li:hover > a{
-
 	background: url(images/hover.png) repeat;
 	text-shadow: 0 -1px 0 #97321f;
 	text-shadow: 0 -1px 0 rgba(122, 42, 26, .64);
-	
 }
 
 #cssmenu > ul > li > a > span{
-
 	line-height: 18px;
-	
 }
 
 #cssmenu > ul > li.active > a, #cssmenu > ul > li > a:active{

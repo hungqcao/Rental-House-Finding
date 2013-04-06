@@ -47,17 +47,5 @@ namespace RentalHouseFinding.Models
 
         [Display(Name = "Tên thật")]
         public string Name { get; set; }
-
-        [Display(Name = "Ngày sinh")]
-        [DataType(DataType.Date, ErrorMessage = "Xin vui lòng nhập đúng ngày tháng năm")]
-        public DateTime? DateOfBirth { get; set; }
-
-        [Display(Name = "Giới tính")]
-        [MaxLength(10, ErrorMessage = "Không được vượt quá 10 ký tự,xin vui lòng nhập lại")]
-        [UIHint("Sex")]
-        public string Sex { get; set; }
-
-        [Display(Name = "Avatar")]
-        public string Avatar { get; set; }
     }
 }

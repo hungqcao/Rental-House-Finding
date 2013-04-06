@@ -5,6 +5,7 @@ using System.Web;
 using System.Web.Mvc;
 using RentalHouseFinding.Models;
 using RentalHouseFinding.Caching;
+using RentalHouseFinding.Common;
 
 namespace RentalHouseFinding.Controllers
 {
@@ -27,7 +28,7 @@ namespace RentalHouseFinding.Controllers
         {
             ViewBag.CategoryId = new SelectList(Repository.GetAllCategories(), "Id", "Name");
             ViewBag.ProvinceId = new SelectList(Repository.GetAllProvinces(), "Id", "Name", 2);
-            ViewBag.DistrictId = new SelectList(Repository.GetAllDistricts().Where(d => d.ProvinceId == 2), "Id", "Name");
+            ViewBag.DistrictId = CommonController.AddDefaultOption(new SelectList(Repository.GetAllDistricts().Where(d => d.ProvinceId == 2), "Id", "Name"), "Quận huyện", "0");
             return View();
         }
 

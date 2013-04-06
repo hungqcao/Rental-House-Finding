@@ -680,58 +680,6 @@ namespace RentalHouseFinding.Models
         /// <param name="categoryIdPass">No Metadata Documentation available.</param>
         /// <param name="provinceIdPass">No Metadata Documentation available.</param>
         /// <param name="districtIdPass">No Metadata Documentation available.</param>
-        /// <param name="keyword">No Metadata Documentation available.</param>
-        public ObjectResult<FullTextSearchPost_ResultSuggestion> FullTextSearchPost(Nullable<global::System.Int32> categoryIdPass, Nullable<global::System.Int32> provinceIdPass, Nullable<global::System.Int32> districtIdPass, global::System.String keyword)
-        {
-            ObjectParameter categoryIdPassParameter;
-            if (categoryIdPass.HasValue)
-            {
-                categoryIdPassParameter = new ObjectParameter("CategoryIdPass", categoryIdPass);
-            }
-            else
-            {
-                categoryIdPassParameter = new ObjectParameter("CategoryIdPass", typeof(global::System.Int32));
-            }
-    
-            ObjectParameter provinceIdPassParameter;
-            if (provinceIdPass.HasValue)
-            {
-                provinceIdPassParameter = new ObjectParameter("ProvinceIdPass", provinceIdPass);
-            }
-            else
-            {
-                provinceIdPassParameter = new ObjectParameter("ProvinceIdPass", typeof(global::System.Int32));
-            }
-    
-            ObjectParameter districtIdPassParameter;
-            if (districtIdPass.HasValue)
-            {
-                districtIdPassParameter = new ObjectParameter("DistrictIdPass", districtIdPass);
-            }
-            else
-            {
-                districtIdPassParameter = new ObjectParameter("DistrictIdPass", typeof(global::System.Int32));
-            }
-    
-            ObjectParameter keywordParameter;
-            if (keyword != null)
-            {
-                keywordParameter = new ObjectParameter("Keyword", keyword);
-            }
-            else
-            {
-                keywordParameter = new ObjectParameter("Keyword", typeof(global::System.String));
-            }
-    
-            return base.ExecuteFunction<FullTextSearchPost_ResultSuggestion>("FullTextSearchPost", categoryIdPassParameter, provinceIdPassParameter, districtIdPassParameter, keywordParameter);
-        }
-    
-        /// <summary>
-        /// No Metadata Documentation available.
-        /// </summary>
-        /// <param name="categoryIdPass">No Metadata Documentation available.</param>
-        /// <param name="provinceIdPass">No Metadata Documentation available.</param>
-        /// <param name="districtIdPass">No Metadata Documentation available.</param>
         /// <param name="areaMax">No Metadata Documentation available.</param>
         /// <param name="areaMin">No Metadata Documentation available.</param>
         /// <param name="priceMax">No Metadata Documentation available.</param>
@@ -4396,7 +4344,6 @@ namespace RentalHouseFinding.Models
         /// <param name="categoryId">Initial value of the CategoryId property.</param>
         /// <param name="statusId">Initial value of the StatusId property.</param>
         /// <param name="isDeleted">Initial value of the IsDeleted property.</param>
-        /// <param name="views">Initial value of the Views property.</param>
         /// <param name="createdDate">Initial value of the CreatedDate property.</param>
         /// <param name="editedDate">Initial value of the EditedDate property.</param>
         /// <param name="districtId">Initial value of the DistrictId property.</param>
@@ -4408,7 +4355,7 @@ namespace RentalHouseFinding.Models
         /// <param name="street">Initial value of the Street property.</param>
         /// <param name="expiredDate">Initial value of the ExpiredDate property.</param>
         /// <param name="code">Initial value of the Code property.</param>
-        public static Posts CreatePosts(global::System.Int32 id, global::System.String title, global::System.Int32 categoryId, global::System.Int32 statusId, global::System.Boolean isDeleted, global::System.Int32 views, global::System.DateTime createdDate, global::System.DateTime editedDate, global::System.Int32 districtId, global::System.Double price, global::System.Double area, global::System.String phoneActive, global::System.Double lat, global::System.Double lon, global::System.String street, global::System.DateTime expiredDate, global::System.String code)
+        public static Posts CreatePosts(global::System.Int32 id, global::System.String title, global::System.Int32 categoryId, global::System.Int32 statusId, global::System.Boolean isDeleted, global::System.DateTime createdDate, global::System.DateTime editedDate, global::System.Int32 districtId, global::System.Double price, global::System.Double area, global::System.String phoneActive, global::System.Double lat, global::System.Double lon, global::System.String street, global::System.DateTime expiredDate, global::System.String code)
         {
             Posts posts = new Posts();
             posts.Id = id;
@@ -4416,7 +4363,6 @@ namespace RentalHouseFinding.Models
             posts.CategoryId = categoryId;
             posts.StatusId = statusId;
             posts.IsDeleted = isDeleted;
-            posts.Views = views;
             posts.CreatedDate = createdDate;
             posts.EditedDate = editedDate;
             posts.DistrictId = districtId;
@@ -4556,30 +4502,6 @@ namespace RentalHouseFinding.Models
         private global::System.Boolean _IsDeleted;
         partial void OnIsDeletedChanging(global::System.Boolean value);
         partial void OnIsDeletedChanged();
-    
-        /// <summary>
-        /// No Metadata Documentation available.
-        /// </summary>
-        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=false)]
-        [DataMemberAttribute()]
-        public global::System.Int32 Views
-        {
-            get
-            {
-                return _Views;
-            }
-            set
-            {
-                OnViewsChanging(value);
-                ReportPropertyChanging("Views");
-                _Views = StructuralObject.SetValidValue(value);
-                ReportPropertyChanged("Views");
-                OnViewsChanged();
-            }
-        }
-        private global::System.Int32 _Views;
-        partial void OnViewsChanging(global::System.Int32 value);
-        partial void OnViewsChanged();
     
         /// <summary>
         /// No Metadata Documentation available.
@@ -6671,8 +6593,7 @@ namespace RentalHouseFinding.Models
         /// <param name="lastUpdate">Initial value of the LastUpdate property.</param>
         /// <param name="isDeleted">Initial value of the IsDeleted property.</param>
         /// <param name="roleId">Initial value of the RoleId property.</param>
-        /// <param name="isActive">Initial value of the IsActive property.</param>
-        public static Users CreateUsers(global::System.Int32 id, global::System.String username, global::System.DateTime createdDate, global::System.DateTime lastUpdate, global::System.Boolean isDeleted, global::System.Int32 roleId, global::System.Boolean isActive)
+        public static Users CreateUsers(global::System.Int32 id, global::System.String username, global::System.DateTime createdDate, global::System.DateTime lastUpdate, global::System.Boolean isDeleted, global::System.Int32 roleId)
         {
             Users users = new Users();
             users.Id = id;
@@ -6681,7 +6602,6 @@ namespace RentalHouseFinding.Models
             users.LastUpdate = lastUpdate;
             users.IsDeleted = isDeleted;
             users.RoleId = roleId;
-            users.IsActive = isActive;
             return users;
         }
 
@@ -6816,30 +6736,6 @@ namespace RentalHouseFinding.Models
         /// </summary>
         [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=true)]
         [DataMemberAttribute()]
-        public global::System.String Address
-        {
-            get
-            {
-                return _Address;
-            }
-            set
-            {
-                OnAddressChanging(value);
-                ReportPropertyChanging("Address");
-                _Address = StructuralObject.SetValidValue(value, true);
-                ReportPropertyChanged("Address");
-                OnAddressChanged();
-            }
-        }
-        private global::System.String _Address;
-        partial void OnAddressChanging(global::System.String value);
-        partial void OnAddressChanged();
-    
-        /// <summary>
-        /// No Metadata Documentation available.
-        /// </summary>
-        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=true)]
-        [DataMemberAttribute()]
         public global::System.String Name
         {
             get
@@ -6858,54 +6754,6 @@ namespace RentalHouseFinding.Models
         private global::System.String _Name;
         partial void OnNameChanging(global::System.String value);
         partial void OnNameChanged();
-    
-        /// <summary>
-        /// No Metadata Documentation available.
-        /// </summary>
-        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=true)]
-        [DataMemberAttribute()]
-        public Nullable<global::System.DateTime> DOB
-        {
-            get
-            {
-                return _DOB;
-            }
-            set
-            {
-                OnDOBChanging(value);
-                ReportPropertyChanging("DOB");
-                _DOB = StructuralObject.SetValidValue(value);
-                ReportPropertyChanged("DOB");
-                OnDOBChanged();
-            }
-        }
-        private Nullable<global::System.DateTime> _DOB;
-        partial void OnDOBChanging(Nullable<global::System.DateTime> value);
-        partial void OnDOBChanged();
-    
-        /// <summary>
-        /// No Metadata Documentation available.
-        /// </summary>
-        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=true)]
-        [DataMemberAttribute()]
-        public global::System.String Avatar
-        {
-            get
-            {
-                return _Avatar;
-            }
-            set
-            {
-                OnAvatarChanging(value);
-                ReportPropertyChanging("Avatar");
-                _Avatar = StructuralObject.SetValidValue(value, true);
-                ReportPropertyChanged("Avatar");
-                OnAvatarChanged();
-            }
-        }
-        private global::System.String _Avatar;
-        partial void OnAvatarChanging(global::System.String value);
-        partial void OnAvatarChanged();
     
         /// <summary>
         /// No Metadata Documentation available.
@@ -7026,78 +6874,6 @@ namespace RentalHouseFinding.Models
         private global::System.Int32 _RoleId;
         partial void OnRoleIdChanging(global::System.Int32 value);
         partial void OnRoleIdChanged();
-    
-        /// <summary>
-        /// No Metadata Documentation available.
-        /// </summary>
-        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=true)]
-        [DataMemberAttribute()]
-        public global::System.String Sex
-        {
-            get
-            {
-                return _Sex;
-            }
-            set
-            {
-                OnSexChanging(value);
-                ReportPropertyChanging("Sex");
-                _Sex = StructuralObject.SetValidValue(value, true);
-                ReportPropertyChanged("Sex");
-                OnSexChanged();
-            }
-        }
-        private global::System.String _Sex;
-        partial void OnSexChanging(global::System.String value);
-        partial void OnSexChanged();
-    
-        /// <summary>
-        /// No Metadata Documentation available.
-        /// </summary>
-        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=false)]
-        [DataMemberAttribute()]
-        public global::System.Boolean IsActive
-        {
-            get
-            {
-                return _IsActive;
-            }
-            set
-            {
-                OnIsActiveChanging(value);
-                ReportPropertyChanging("IsActive");
-                _IsActive = StructuralObject.SetValidValue(value);
-                ReportPropertyChanged("IsActive");
-                OnIsActiveChanged();
-            }
-        }
-        private global::System.Boolean _IsActive;
-        partial void OnIsActiveChanging(global::System.Boolean value);
-        partial void OnIsActiveChanged();
-    
-        /// <summary>
-        /// No Metadata Documentation available.
-        /// </summary>
-        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=true)]
-        [DataMemberAttribute()]
-        public Nullable<global::System.Guid> KeyActive
-        {
-            get
-            {
-                return _KeyActive;
-            }
-            set
-            {
-                OnKeyActiveChanging(value);
-                ReportPropertyChanging("KeyActive");
-                _KeyActive = StructuralObject.SetValidValue(value);
-                ReportPropertyChanged("KeyActive");
-                OnKeyActiveChanged();
-            }
-        }
-        private Nullable<global::System.Guid> _KeyActive;
-        partial void OnKeyActiveChanging(Nullable<global::System.Guid> value);
-        partial void OnKeyActiveChanged();
 
         #endregion
     

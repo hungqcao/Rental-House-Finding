@@ -26,20 +26,6 @@ namespace RentalHouseFinding.Common
             }
         }
 
-        public List<FullTextSearchPost_ResultSuggestion> GetFullTextSuggestion(int categoryId, int provinceId, int DistrictId, string keyWords, int skip, int take)
-        {
-            try
-            {
-                var listSuggestion = _db.FullTextSearchPost(categoryId, provinceId, DistrictId, keyWords).Skip(skip).Take(take);
-               
-                return listSuggestion.ToList();
-            }
-            catch(Exception ex)
-            {
-                return null;
-            }
-        }
-
         public List<FullTextSearchPostWithWeightenScore_Result> FullTextSearchPostWithWeightenScore(int categoryId,
                                                                                                     int provinceId, 
                                                                                                     int DistrictId, 

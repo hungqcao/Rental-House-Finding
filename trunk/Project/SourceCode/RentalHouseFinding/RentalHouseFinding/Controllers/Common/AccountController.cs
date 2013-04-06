@@ -253,7 +253,7 @@ namespace RentalHouseFinding.Controllers
             {
                 if (Membership.ValidateUser(model.UserName, model.Password))
                 {
-                    var user = (from p in _db.Users where p.Username == model.UserName select new { p.IsActive , p.RoleId }).FirstOrDefault();
+                    var user = (from p in _db.Users where p.Username == model.UserName select new { p.RoleId }).FirstOrDefault();
                     FormsAuthentication.SetAuthCookie(model.UserName, model.RememberMe);
                     if (Url.IsLocalUrl(returnUrl) && returnUrl.Length > 1 && returnUrl.StartsWith("/")
                         && !returnUrl.StartsWith("//") && !returnUrl.StartsWith("/\\"))

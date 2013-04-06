@@ -91,7 +91,6 @@ namespace RentalHouseFinding.Common
                 Price = model.Price,
                 RenewDate = renewDate,
                 Title = model.Title,
-                Views = 0,
                 IsDeleted = false,
                 NearbyPlace = noInformation,
                 Code = CommonController.CodeRenew()
@@ -215,7 +214,6 @@ namespace RentalHouseFinding.Common
                 EditedDate = model.EditedDate,
                 CreatedBy = createBy,
                 Category = model.Category.Name,
-                Views = model.Views,
                 Internet = model.Facilities.HasInternet? "Có":"Không",
                 AirConditioner = model.Facilities.HasAirConditioner ? "Có" : "Không",
                 Bed = model.Facilities.HasBed ? "Có" : "Không",

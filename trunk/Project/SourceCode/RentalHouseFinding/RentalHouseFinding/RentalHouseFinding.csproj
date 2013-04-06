@@ -108,14 +108,13 @@
     <Compile Include="Controllers\Admin\ManagePaymentController.cs" />
     <Compile Include="Controllers\Admin\ManagePostsController.cs" />
     <Compile Include="Controllers\Admin\ManageScoreConfigController.cs" />
-    <Compile Include="Controllers\AdvancedSearchController.cs" />
-    <Compile Include="Controllers\GUI\PostController.cs" />
-    <Compile Include="Controllers\GUI\PostEditController.cs" />
-    <Compile Include="Controllers\HomeController.cs" />
+    <Compile Include="Controllers\Common\AdvancedSearchController.cs" />
+    <Compile Include="Controllers\Common\PostController.cs" />
+    <Compile Include="Controllers\Common\PostEditController.cs" />
+    <Compile Include="Controllers\Common\HomeController.cs" />
     <Compile Include="Controllers\User\QuestionsController.cs" />
-    <Compile Include="Controllers\User\SentQuestionController.cs" />
     <Compile Include="Controllers\User\UserController.cs" />
-    <Compile Include="Controllers\ValidationController.cs" />
+    <Compile Include="Controllers\Common\ValidationController.cs" />
     <Compile Include="Models\AnswerViewModel.cs" />
     <Compile Include="Models\CaptchaImageResult.cs" />
     <Compile Include="Models\FacebookLoginModel.cs" />
@@ -129,14 +128,14 @@
     <Compile Include="Common\HtmlHelper.cs" />
     <Compile Include="Common\PNGHandler.cs" />
     <Compile Include="Common\StringUtil.cs" />
-    <Compile Include="Controllers\AccountController.cs" />
+    <Compile Include="Controllers\Common\AccountController.cs" />
     <Compile Include="Controllers\Admin\AdminController.cs" />
-    <Compile Include="Controllers\GUI\LandingController.cs" />
+    <Compile Include="Controllers\Common\LandingController.cs" />
     <Compile Include="Controllers\Admin\ManageCategoriesController.cs" />
     <Compile Include="Controllers\Admin\ManagePostStatusController.cs" />
     <Compile Include="Controllers\Admin\ManageProvincesController.cs" />
     <Compile Include="Controllers\Admin\ManageRolesController.cs" />
-    <Compile Include="Controllers\ServiceController.cs" />
+    <Compile Include="Controllers\Common\ServiceController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
@@ -369,6 +368,7 @@
     <Content Include="Content\css\basic.png" />
     <Content Include="Content\css\bottom.css" />
     <Content Include="Content\css\fastf.png" />
+    <Content Include="Content\css\listbox.css" />
     <Content Include="Content\css\loading.gif" />
     <Content Include="Content\css\next-horizontal.png" />
     <Content Include="Content\css\next-vertical.png" />
@@ -626,7 +626,6 @@
     <Content Include="Views\Post\Edit.cshtml">
       <SubType>Code</SubType>
     </Content>
-    <Content Include="Views\Post\Index.cshtml" />
     <Content Include="Views\Post\ViewImage.cshtml" />
     <Content Include="Views\Post\_ImagesPartial.cshtml" />
     <Content Include="Views\Post\_Question.cshtml" />
@@ -634,8 +633,6 @@
     <Content Include="Views\Questions\Index.cshtml" />
     <Content Include="Views\Questions\SendAnswer.cshtml" />
     <Content Include="Views\Questions\_AnswerPartial.cshtml" />
-    <Content Include="Views\SentQuestion\Details.cshtml" />
-    <Content Include="Views\SentQuestion\Index.cshtml" />
     <Content Include="Views\Service\ComparePost.cshtml" />
     <Content Include="Views\Service\GetAllUserFavorite.cshtml" />
     <Content Include="Views\Shared\EditorTemplates\DateTime.cshtml" />

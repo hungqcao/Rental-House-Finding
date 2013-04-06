@@ -17,6 +17,7 @@ namespace RentalHouseFinding.Caching
         IEnumerable<Categories> GetAllCategories();
         IEnumerable<EmailTemplate> GetAllEmailTemplate();
         IEnumerable<PostStatuses> GetAllPostStatus();
+        IEnumerable<AdvanceSearchScore> GetAllAdvanceSearchScore();
     }
 
     public class CacheRepository : ICacheRepository
@@ -162,6 +163,26 @@ namespace RentalHouseFinding.Caching
             return data;
         }
 
+        public IEnumerable<AdvanceSearchScore> GetAllAdvanceSearchScore()
+        {
+            // First, check the cache
+            IEnumerable<AdvanceSearchScore> data = Cache.Get("AdvanceSearchScore") as IEnumerable<AdvanceSearchScore>;
+
+            // If it's not in the cache, we need to read it from the repository
+            if (data == null)
+            {
+                // Get the repository data
+                data = DataContext.AdvanceSearchScores.ToList();
+
+                if (data.Any())
+                {
+                    // Put this data into the cache for 30 minutes
+                    Cache.Set("AdvanceSearchScore", data, int.Parse(ConfigurationManager.AppSettings["TimeRefreshCache"]));
+                }
+            }
+
+            return data;
+        }
 
         public void ClearCache()
         {
@@ -171,6 +192,7 @@ namespace RentalHouseFinding.Caching
             Cache.Invalidate("categories");
             Cache.Invalidate("EmailTemplate");
             Cache.Invalidate("PostStatus");
+            Cache.Invalidate("AdvanceSearchScore");
         }
     }
 }

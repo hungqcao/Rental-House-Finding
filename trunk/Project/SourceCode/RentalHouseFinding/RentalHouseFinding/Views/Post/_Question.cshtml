@@ -24,7 +24,7 @@
 @using (Ajax.BeginForm("sendquestion", "questions", new AjaxOptions { UpdateTargetId = "result" }))
 {
     @Html.ValidationSummary(true)
-    <div id="result" style="margin-bottom:10px" ><img src="@Url.Content("~/Content/images/ajax-loader.gif")" /></div>
+    <div id="result" style="margin-bottom:10px; color: Red" ><img src="@Url.Content("~/Content/images/ajax-loader.gif")" /></div>
     <div class="clear"></div>
     <input id = "UserId" name="UserId" value="@userId" type="hidden" />
     <div class="title-ques" >
