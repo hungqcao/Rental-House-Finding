@@ -105,7 +105,9 @@
     <Compile Include="Controllers\Admin\ManageBadwordController.cs" />
     <Compile Include="Controllers\Admin\ManageBadwordTypeController.cs" />
     <Compile Include="Controllers\Admin\ManageDistrictController.cs" />
+    <Compile Include="Controllers\Admin\ManagePaymentController.cs" />
     <Compile Include="Controllers\Admin\ManagePostsController.cs" />
+    <Compile Include="Controllers\Admin\ManageScoreConfigController.cs" />
     <Compile Include="Controllers\AdvancedSearchController.cs" />
     <Compile Include="Controllers\GUI\PostController.cs" />
     <Compile Include="Controllers\GUI\PostEditController.cs" />
@@ -118,8 +120,9 @@
     <Compile Include="Models\CaptchaImageResult.cs" />
     <Compile Include="Models\FacebookLoginModel.cs" />
     <Compile Include="Models\InfoAndUserLogsViewModel.cs" />
+    <Compile Include="Models\ManagePaymentModel.cs" />
+    <Compile Include="Models\ManagePostsModel.cs" />
     <Compile Include="Models\Picture.cs" />
-    <Compile Include="Models\PostEditModel.cs" />
     <Compile Include="Models\QuestionViewModel.cs" />
     <Compile Include="Common\CommonController.cs" />
     <Compile Include="Common\CommonModel.cs" />
@@ -448,6 +451,7 @@
     <Content Include="Content\js\jquery.jscrollpane.min.js" />
     <Content Include="Content\js\jquery.mousewheel.js" />
     <Content Include="Content\js\jquery.screwdefaultbuttonsV2.min.js" />
+    <Content Include="Content\js\listbox.js" />
     <Content Include="Content\js\mwheelIntent.js" />
     <Content Include="Content\openid-shadow.css" />
     <Content Include="Content\openid.css" />
@@ -681,6 +685,19 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="Views\PostEdit\ViewImage.cshtml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Views\Account\ForgotPassword.cshtml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Views\ManageScoreConfig\Create.cshtml" />
+    <Content Include="Views\ManageScoreConfig\Index.cshtml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Views\ManagePayment\Index.cshtml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Views\User\Payments.cshtml" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <Import Project="$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v10.0\WebApplications\Microsoft.WebApplication.targets" />

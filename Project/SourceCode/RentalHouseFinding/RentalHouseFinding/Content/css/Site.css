@@ -2201,7 +2201,7 @@ a.remove-fav-item-list
 }
 
 /*Admin style*/
-#content input[type="submit"]
+#content.admin input[type="submit"]
 {
     background: url("../../Content/images/savepost.png") no-repeat transparent 0px 0px;
     height: 47px;

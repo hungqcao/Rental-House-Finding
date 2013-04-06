@@ -35,6 +35,7 @@ namespace RentalHouseFinding.Models
         public int DistrictId { get; set; }
 
         [Display(Name = "Địa chỉ cụ thể")]
+        [Required(ErrorMessage = "Vui lòng điền địa chỉ cụ thể")]
         public string NumberHouse { get; set; }
 
         [Display(Name = "Đường phố")]
@@ -103,9 +104,6 @@ namespace RentalHouseFinding.Models
 
         [Display(Name = "Giờ đóng cửa")]
         public double RestrictHours { get; set; }
-
-        [Display(Name = "Hướng nhà")]
-        public string Direction { get; set; }
 
         [Display(Name = "Có bảo vệ?")]
         public Boolean HasSecurity { get; set; }
