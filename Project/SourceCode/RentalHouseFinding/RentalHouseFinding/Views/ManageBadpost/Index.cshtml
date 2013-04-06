@@ -13,14 +13,15 @@
                             alternatingRowStyle: "alt",
                             htmlAttributes: new { id = "grid" },
                             columns: grid.Columns(
-                                grid.Column("ID", "Id"),
-                                     grid.Column("UserId", "User Id"),
-                                     grid.Column(header:"Title", format: @<text>
+                                          grid.Column(header: "STT", format: item => item.WebGrid.Rows.IndexOf(item) + 1 + ViewBag.Index),
+                                     grid.Column("ID", "Id"),
+                                     grid.Column("UserId", "Mã người dùng"),
+                                     grid.Column(header:"Tiều đề", format: @<text>
                                              <a href="@Url.Action("Details", 
                                              "Post", 
                                              new { id = @item.ID })">@item.Title</a></text>),
-                                    grid.Column("PostStatus", "Post Status"),
-                                    grid.Column("CreatedDate", "Created Date")));
+                                    grid.Column("PostStatus", "Trạng thái"),
+                                    grid.Column("CreatedDate", "Ngày tạo")));
     }
     else
     {

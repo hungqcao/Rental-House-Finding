@@ -7,33 +7,44 @@
 <table>
     <tr>
         <th>
-            Name
+            STT
         </th>
         <th>
-            Lat
+            Tên
         </th>
         <th>
-            Lon
+            Kinh độ
+        </th>
+        <th>
+            Vĩ độ
+        </th>
+        <th>
+            Quận/Huyện
         </th>
     </tr>
-
-@foreach (var item in Model) {
-    <tr>
-        <td>
-            @Html.ActionLink(item.Name, "Edit", new { id=item.Id })
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.Lat)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.Lon)
-        </td>
-        <td>
-            @Html.ActionLink("Quận/Huyện", "Index", "ManageDistrict", new { provinceId = item.Id}, null)
-        </td>
-    </tr>
+@{
+    int i = 1;
+    foreach (var item in Model) {
+        <tr>
+            <td>
+                @i
+            </td>
+            <td>
+                @Html.ActionLink(item.Name, "Edit", new { id=item.Id })
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Lat)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Lon)
+            </td>
+            <td>
+                @Html.ActionLink("Quận/Huyện", "Index", "ManageDistrict", new { provinceId = item.Id}, null)
+            </td>
+        </tr>
+        i += 1;
+    }
 }
-
 </table>
 <br/>
 <p>

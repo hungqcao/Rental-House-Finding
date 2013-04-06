@@ -12,7 +12,7 @@
     <fieldset>
 
         <div class="editor-label">
-            @Html.LabelFor(model => model.Name)
+            @Html.LabelFor(model => model.Name, "Phân loại")
         </div>
         <div class="editor-field">
             @Html.EditorFor(model => model.Name)
@@ -20,7 +20,7 @@
         </div>
 
         <div class="editor-label">
-            @Html.LabelFor(model => model.Description)
+            @Html.LabelFor(model => model.Description, "Mô tả")
         </div>
         <div class="editor-field">
             @Html.EditorFor(model => model.Description)
@@ -28,7 +28,7 @@
         </div>
 
         <div class="editor-label">
-            @Html.LabelFor(model => model.IsDeleted)
+            @Html.LabelFor(model => model.IsDeleted, "Đã xóa")
         </div>
         <div class="editor-field">
             @Html.EditorFor(model => model.IsDeleted)
@@ -36,11 +36,11 @@
         </div>
 
         <p>
-            <input type="submit" value="Create" />
+            <input type="submit" value="Tạo mới" />
         </p>
     </fieldset>
 }
 
 <div>
-    @Html.ActionLink("Back to List", "Index")
+    @Html.ActionLink("Quay về", "Index")
 </div>

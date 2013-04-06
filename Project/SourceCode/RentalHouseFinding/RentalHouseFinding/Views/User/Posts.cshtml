@@ -15,25 +15,22 @@
                                 alternatingRowStyle: "alt",
                                 htmlAttributes: new { id = "grid"},
                                 columns: grid.Columns(
-                                       grid.Column(header: "Mã số bài đăng", format: @<text>
-                                            <a href="@Url.Action("details",
-                                            "post",
-                                            new { id = @item.ID })">@item.Id</a></text>),
-                                            grid.Column(header: "Tiêu đề", format: @<text>
-                                                <a href="@Url.Action("Edit", "Post",
+                                        grid.Column("ID", "Mã bài"),
+                                             grid.Column(header: "Tiêu đề", format: @<text>
+                                                <a href="@Url.Action("Details", "Post",
                                                 new { id = @item.ID })">@item.Title</a></text>),
-                                            grid.Column("PostStatus", "Trạng thái"),
-                                            grid.Column("CreatedDate", "Ngày tạo"),
-                                            grid.Column("EditedDate", "Lần cuối chỉnh sửa"),
-                                            grid.Column("RenewDate", "Ngày làm mới"),
-                                            grid.Column("ExpiredDate", "Ngày hết hạn"),
-                                            grid.Column(header: "Edit", format: @<text>
+                                                                                     grid.Column("PostStatus", "Trạng thái"),
+                                                                                     grid.Column("CreatedDate", "Ngày tạo"),
+                                                                                     grid.Column("EditedDate", "Lần cuối chỉnh sửa"),
+                                                                                     grid.Column("RenewDate", "Ngày làm mới"),
+                                                                                     grid.Column("ExpiredDate", "Ngày hết hạn"),
+                                                                                     grid.Column(header: "Sửa", format: @<text>
                                                 <a href="@Url.Action("Edit",
                                                 "Post",
                                                 new { id = @item.ID })">Sửa</a></text>),
-                                            grid.Column(header: "Delete", format: @<text>
+                                                                                     grid.Column(header: "Xóa", format: @<text>
                                                 <a href="#" onclick="del(@item.ID);">Xóa</a></text>)
-                  ));
+                                                           ));
             }
             else
             {
