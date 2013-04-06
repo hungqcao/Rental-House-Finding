@@ -12,7 +12,27 @@
 <script type="text/javascript" src="@Url.Content("~/Scripts/jquery.autoGrowInput.js")"></script>
 <script type="text/javascript" src="@Url.Content("~/Scripts/jquery.tagedit.js")"></script>
 <script src="@Url.Content("~/Content/js/jquery.screwdefaultbuttonsV2.min.js")" type="text/javascript"></script>
-
+<script>
+    //for validate number message.
+    (function ($) {
+        // Walk through the adapters that connect unobstrusive validation to jQuery.validate.
+        // Look for all adapters that perform number validation
+        $.each($.validator.unobtrusive.adapters, function () {
+            if (this.name === "number") {
+                // Get the method called by the adapter, and replace it with one 
+                // that changes the message to the jQuery.validate default message
+                // that can be globalized. If that string contains a {0} placeholder, 
+                // it is replaced by the field name.
+                var baseAdapt = this.adapt;
+                this.adapt = function (options) {
+                    var fieldName = new RegExp("The field (.+) must be a number").exec(options.message)[1];
+                    options.message = $.validator.format($.validator.messages.number, fieldName);
+                    baseAdapt(options);
+                };
+            }
+        });
+    } (jQuery));
+</script>
 <script type="text/javascript">
     function deleteGallery(obj) {
         if (confirm("Bạn có muốn xóa ảnh này không?")) {

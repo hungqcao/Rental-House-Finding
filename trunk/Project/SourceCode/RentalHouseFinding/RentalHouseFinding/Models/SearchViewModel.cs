@@ -37,7 +37,7 @@ namespace RentalHouseFinding.Models
 
         //Advanced search
         [Display(Name = "Diện tích lớn nhất")]
-        [Remote("AreaMaxGreaterThanAreaMin", "Validation", AdditionalFields = "AreaMin")]
+        [Remote("AreaMaxGreaterThanAreaMin", "Validation", AdditionalFields = "AreaMin")]        
         public float? AreaMax { get; set; }
         [Display(Name = "Diện tích nhỏ nhất")]
         [Remote("AreaMinLessThanAreaMax", "Validation", AdditionalFields = "AreaMax")]

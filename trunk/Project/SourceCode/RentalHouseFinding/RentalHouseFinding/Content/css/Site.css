@@ -2076,6 +2076,9 @@ table th
 }
 #fromPrice span.field-validation-error {
    display: block;
+   position: absolute;
+   margin-top:40px;
+   
 }
  
  #toPrice {
@@ -2083,18 +2086,26 @@ table th
 }   
 #toPrice span.field-validation-error {
    display: block;
+   position: absolute;
+   margin-top:40px;
+   margin-left: -130px;
 }
 #minArea  {
   float:left;
 }
 #minArea span.field-validation-error {
    display: block;
+   margin-top:40px;
+   position: absolute;
 }
 #maxArea  {
   float:left;
 }
 #maxArea span.field-validation-error {
    display: block;
+   position: absolute;
+   margin-top:40px;
+   margin-left: -130px;
 }
 
 #blockBtnRegis span.field-validation-error
