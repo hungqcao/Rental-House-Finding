@@ -50,7 +50,7 @@ namespace RentalHouseFinding.Controllers
                 dynamic fbresult = client.Get("me?fields=id,email,first_name,last_name,gender,locale,link,username,timezone,location,picture");
 
                 UserDetailsModel facebookUser = Newtonsoft.Json.JsonConvert.DeserializeObject<UserDetailsModel>(fbresult.ToString());
-                return FBookOrOpenIdLogon(facebookUser, returnUrl);
+                return FBookOrOpenIdLogon(facebookUser,1, returnUrl);
             }
             else
             {
@@ -154,7 +154,7 @@ namespace RentalHouseFinding.Controllers
                         user_birthday = sDob
 
                     };
-                    return FBookOrOpenIdLogon(lm, returnUrl);
+                    return FBookOrOpenIdLogon(lm,2, returnUrl);
 
                 case AuthenticationStatus.Canceled:
                     ViewBag.Message = "Canceled at provider";
@@ -166,12 +166,12 @@ namespace RentalHouseFinding.Controllers
 
             return new EmptyResult();
         }
-        public ActionResult FBookOrOpenIdLogon(UserDetailsModel userDetail, string returnUrl)
+        public ActionResult FBookOrOpenIdLogon(UserDetailsModel userDetail, int type, string returnUrl)
         {
             // Attempt to register the user
             MembershipCreateStatus createStatus;
             CustomMembershipProvider customMP = new CustomMembershipProvider();
-            customMP.CreateUserForOpenID(userDetail, out createStatus);
+            customMP.CreateUserForOpenID(userDetail, type, out createStatus);
             if (createStatus == MembershipCreateStatus.Success ||createStatus == MembershipCreateStatus.DuplicateUserName)
             {
                 string userName = CommonModel.GetUserNameByOpenId(userDetail.id);
