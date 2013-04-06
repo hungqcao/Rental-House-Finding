@@ -1,31 +1,27 @@
 ﻿@{
     Layout = "~/Views/Shared/_LayoutUser.cshtml";
 }
-
-<fieldset style="width: 500px;">
-    <div id="container-grid">
-        @{
-            if (ViewBag.FavoriteList != null)
-            {
-                var grid = new WebGrid(ViewBag.FavoriteList, ajaxUpdateContainerId: "container-grid", canSort: false
-                    );
+<div id="container-grid">
+    @{
+        if (ViewBag.FavoriteList != null)
+        {
+            var grid = new WebGrid(ViewBag.FavoriteList, ajaxUpdateContainerId: "container-grid", canSort: false
+                );
         
-                @grid.GetHtml(tableStyle: "", mode: WebGridPagerModes.All, 
-                                headerStyle: "header",
-                                alternatingRowStyle: "alt",
-                                htmlAttributes: new { id = "grid"});
-            }
-            else 
-            {
-                <h2>Không có bài post</h2>
-            }
-    
+            @grid.GetHtml(tableStyle: "", mode: WebGridPagerModes.All, 
+                            headerStyle: "header",
+                            alternatingRowStyle: "alt",
+                            htmlAttributes: new { id = "grid"});
         }
-        <br/>
-        <br/>
-    </div>
-</fieldset>
-@Html.ActionLink("Quay lại", "Index")
+        else 
+        {
+            <h2>Không có bài post</h2>
+        }
+    
+    }
+    <br/>
+    <br/>
+</div>
 
 <script type="text/javascript" >
     $(document).ready(function () {

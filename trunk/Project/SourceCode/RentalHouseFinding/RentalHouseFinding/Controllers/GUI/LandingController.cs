@@ -26,18 +26,14 @@ namespace RentalHouseFinding.Controllers
         public ActionResult Index()
         {
             ViewBag.CategoryId = new SelectList(Repository.GetAllCategories(), "Id", "Name");
-            ViewBag.ProvinceId = new SelectList(Repository.GetAllProvinces(), "Id", "Name");
+            ViewBag.ProvinceId = new SelectList(Repository.GetAllProvinces(), "Id", "Name", 2);
+            ViewBag.DistrictId = new SelectList(Repository.GetAllDistricts().Where(d => d.ProvinceId == 2), "Id", "Name");
             return View();
         }
 
         [HttpPost]
         public ActionResult Index(SearchViewModel model)
         {
-            //ViewBag.CategoryId = new SelectList(Repository.GetAllCategories(), "Id", "Name", model.CategoryId);
-            //ViewBag.ProvinceId = new SelectList(Repository.GetAllProvinces(), "Id", "Name", model.ProvinceId);
-
-            //ViewBag.DistrictId = new SelectList(Repository.GetAllDistricts(), "Id", "Name", model.DistrictId);
-
             if(model != null)
             {
                 model.IsAdvancedSearch = false;

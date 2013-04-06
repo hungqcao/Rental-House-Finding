@@ -152,9 +152,8 @@ namespace RentalHouseFinding.Controllers
 		
         public ActionResult Create()
         {
-            var listDistrict = new SelectList(Repository.GetAllDistricts().Where(d => d.ProvinceId == 2), "Id", "Name");
             ViewBag.CategoryId = new SelectList(Repository.GetAllCategories(), "Id", "Name");
-            //24 for Ha noi
+            //2 for Ha noi
             ViewBag.ProvinceId = new SelectList(Repository.GetAllProvinces(), "Id", "Name", 2);            
             ViewBag.DistrictId = new SelectList(Repository.GetAllDistricts().Where(d => d.ProvinceId == 2), "Id", "Name");
             return View();

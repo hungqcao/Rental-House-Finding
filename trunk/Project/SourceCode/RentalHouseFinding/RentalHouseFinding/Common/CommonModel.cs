@@ -408,6 +408,26 @@ namespace RentalHouseFinding.Common
             return false;
         }
 
+        public static bool IsOpenIdOrFacebookAccount(int userId)
+        {
+            try
+            {
+                using (RentalHouseFindingEntities _db = new RentalHouseFindingEntities())
+                {
+                    var user = _db.Users.Where(u => u.Id == userId).FirstOrDefault();
+                    if (user != null)
+                    {
+                        return !string.IsNullOrEmpty(user.OpenIdURL);
+                    }
+                    return false;
+                }
+            }
+            catch(Exception ex) 
+            {
+                return false;
+            }
+        }
+
         public static int GetUserNotification(string name)
         {
             using (RentalHouseFindingEntities _db = new RentalHouseFindingEntities())

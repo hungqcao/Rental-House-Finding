@@ -5,6 +5,7 @@ using System.Web;
 using System.Web.Mvc;
 using RentalHouseFinding.Models;
 using RentalHouseFinding.Common;
+using RentalHouseFinding.Caching;
 
 namespace RentalHouseFinding.Controllers
 {
@@ -13,12 +14,23 @@ namespace RentalHouseFinding.Controllers
         RentalHouseFindingEntities _db = new RentalHouseFindingEntities();
         //
         // GET: /AdvancedSearch/
+        public ICacheRepository Repository { get; set; }
+        public AdvancedSearchController()
+            : this(new CacheRepository())
+        {
+        }
+
+        public AdvancedSearchController(ICacheRepository repository)
+        {
+            this.Repository = repository;
+        }
 
         public ActionResult Index()
         {
             ViewBag.Score = new SelectList(_db.AdvanceSearchScores, "Score", "Name");
-            ViewBag.CategoryId = new SelectList(_db.Categories, "Id", "Name");
-            ViewBag.ProvinceId = new SelectList(_db.Provinces, "Id", "Name");
+            ViewBag.CategoryId = new SelectList(Repository.GetAllCategories(), "Id", "Name");
+            ViewBag.ProvinceId = new SelectList(Repository.GetAllProvinces(), "Id", "Name", 2);
+            ViewBag.DistrictId = new SelectList(Repository.GetAllDistricts().Where(d => d.ProvinceId == 2), "Id", "Name");
 
             return View();
         }
@@ -26,10 +38,6 @@ namespace RentalHouseFinding.Controllers
         [HttpPost]
         public ActionResult Index(SearchViewModel model)
         {
-            ViewBag.Score = new SelectList(_db.AdvanceSearchScores, "Score", "Name");
-            ViewBag.CategoryId = new SelectList(_db.Categories, "Id", "Name");
-            ViewBag.ProvinceId = new SelectList(_db.Provinces, "Id", "Name");
-
             if (model != null)
             {
                 model.IsAdvancedSearch = true;

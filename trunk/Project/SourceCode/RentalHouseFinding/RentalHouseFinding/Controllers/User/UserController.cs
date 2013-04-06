@@ -26,7 +26,7 @@ namespace RentalHouseFinding.Controllers
             InfoAndUserLogsViewModel model = new InfoAndUserLogsViewModel();
             model.User = _db.Users.Where(u => u.Id == userId).FirstOrDefault();
             model.UserLogsList = _db.UserLogs.Where(u => u.UserId == userId).OrderBy(u => u.CreatedDate).ToList();
-
+            model.IsOpenIdOrFBAcc = CommonModel.IsOpenIdOrFacebookAccount(userId);
             return View(model);
         }
 

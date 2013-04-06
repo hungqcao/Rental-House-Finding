@@ -1,6 +1,7 @@
 ﻿@model RentalHouseFinding.Models.InfoAndUserLogsViewModel
 @{
     Layout = "~/Views/Shared/_LayoutUser.cshtml";
+    ViewBag.Title = "Trang tài khoản";
 }
 <div id="message-sv" style="width:967px; margin: 0 auto;">
     @if (TempData["MessageChangeUserInfoSuccess"] != null)
@@ -21,14 +22,17 @@
         <div id="accInfo">
             <span class="title">Email:</span> <span class="info">@Model.User.Email</span> 
             <span class="title">Họ tên:</span> <span class="info">@Model.User.Name</span> 
-            <span class="title">Điện thoại cố định:</span><span class="info">@Model.User.PhoneNumber</span> 
+            <span class="title">Điện thoại:</span><span class="info">@Model.User.PhoneNumber</span> 
             <span class="title">Thời điểm tạo:</span> <span class="info">@Model.User.CreatedDate</span> 
             <span class="title">Địa chỉ</span> <span class="info">@Model.User.Address</span>
          @*   @Html.ActionLink("Thay đổi thông tin TK", "Edit", "User")*@
-            <div style="margin-top:30px;"><a href="../User/Edit"><img src="../../Content/images/btn_changeinfo.png" /></a></div>
+            <div style="margin-top:30px;"><a href="/User/Edit"><img src="../../Content/images/btn_changeinfo.png" /></a></div>
             <div class="clear"></div>
            @* @Html.ActionLink("Đổi mật khẩu (dành cho tài khoản đăng ký tại hệ thống)", "ChangePassword", "Account")*@
-          <div style="margin-top:30px;"><a href="../Account/ChangePassword"><img src="../../Content/images/btn_changepass.png" /></a></div>
+           @if (!Model.IsOpenIdOrFBAcc)
+           {
+                <div style="margin-top:30px;"><a href="/Account/ChangePassword"><img src="../../Content/images/btn_changepass.png" /></a></div>
+           }
         </div>
 </div>
 <div id="rightInfo" class="left">
@@ -36,7 +40,7 @@
         <span class="detail left">Các hoạt động của tài khoản</span>
         <div style="overflow: hidden; width: 690px; height: 556px;">
             <div class="scroll-panel" style="overflow: auto; width: 710px; height: 556px;">
-                @foreach(var item in Model.UserLogsList)
+                @foreach (var item in Model.UserLogsList)
                 {
                     <div class="activityInfo">
                         <div class="activityDetail">

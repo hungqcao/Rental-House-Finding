@@ -207,23 +207,31 @@ namespace RentalHouseFinding.Controllers
         public ActionResult ForgotPassword(ForgotPassword model)
         {
             var user = _db.Users.Where(u => u.Username.Equals(model.Username, StringComparison.CurrentCultureIgnoreCase)).FirstOrDefault();
-            if (!string.IsNullOrEmpty(user.Email))
+            if (user != null)
             {
-                string newPassword = StringUtil.RandomStr();
-                user.Password = GetMD5Hash(newPassword);
-                _db.ObjectStateManager.ChangeObjectState(user, System.Data.EntityState.Modified);
-                _db.SaveChanges();
-                string emailTemplate = Repository.GetAllEmailTemplate().Where(e => e.Name.Equals(ConstantEmailTemplate.RECEIVE_FORGOT_PASSWORD, StringComparison.CurrentCultureIgnoreCase)).Select(m => m.Template).FirstOrDefault();
-                string subject = Repository.GetAllEmailTemplate().Where(e => e.Name.Equals(ConstantEmailTemplate.SUBJECT_RECEIVE_FORGOT_PASSWORD, StringComparison.CurrentCultureIgnoreCase)).Select(m => m.Template).FirstOrDefault();
-                string message = string.Format(emailTemplate, model.Username, DateTime.Now.ToString(), newPassword);
-                CommonModel.SendEmail(user.Email, message, subject, 0);
-            }
-            if (!string.IsNullOrEmpty(user.PhoneNumber))
-            {
+                if (!string.IsNullOrEmpty(user.Email))
+                {
+                    string newPassword = StringUtil.RandomStr();
+                    user.Password = GetMD5Hash(newPassword);
+                    _db.ObjectStateManager.ChangeObjectState(user, System.Data.EntityState.Modified);
+                    _db.SaveChanges();
+                    string emailTemplate = Repository.GetAllEmailTemplate().Where(e => e.Name.Equals(ConstantEmailTemplate.RECEIVE_FORGOT_PASSWORD, StringComparison.CurrentCultureIgnoreCase)).Select(m => m.Template).FirstOrDefault();
+                    string subject = Repository.GetAllEmailTemplate().Where(e => e.Name.Equals(ConstantEmailTemplate.SUBJECT_RECEIVE_FORGOT_PASSWORD, StringComparison.CurrentCultureIgnoreCase)).Select(m => m.Template).FirstOrDefault();
+                    string message = string.Format(emailTemplate, model.Username, DateTime.Now.ToString(), newPassword);
+                    CommonModel.SendEmail(user.Email, message, subject, 0);
+                }
+                if (!string.IsNullOrEmpty(user.PhoneNumber))
+                {
 
+                }
+                TempData["MessageForgotPassword"] = "Mật khẩu đã được gửi về email của bạn";
+                return RedirectToAction("LogOn");
             }
-            TempData["MessageForgotPassword"] = "Mật khẩu đã được gửi về email của bạn";
-            return RedirectToAction("LogOn");
+            else
+            {
+                ModelState.AddModelError("", "Tài khoản của bạn không tồn tại");
+                return View(model);
+            }
         }
 
         //
