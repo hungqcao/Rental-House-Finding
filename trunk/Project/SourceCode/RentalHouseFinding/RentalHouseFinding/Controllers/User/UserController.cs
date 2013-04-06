@@ -8,11 +8,14 @@ using RentalHouseFinding.Models;
 using System.Web.Security;
 using System.Text;
 using System.Security.Cryptography;
+using System.Data.Objects;
+using System.Web.Helpers;
 
 namespace RentalHouseFinding.Controllers
 {
     public class UserController : Controller
     {
+        private const int MAX_RECORD_PER_PAGE = 15;
         private readonly static RentalHouseFindingEntities _db = new RentalHouseFindingEntities();
         //
         // GET: /User/
@@ -156,5 +159,84 @@ namespace RentalHouseFinding.Controllers
             return View();
         }
 
+        [Authorize(Roles = "Admin, User")]
+        public ActionResult Payments(int? page, ManagePaymentModel model)
+        {
+            if (page == null)
+            {
+                ViewBag.Index = 0;
+                return View();
+            }
+            else
+            {
+                //Get user ID
+                int userId = CommonModel.GetUserIdByUsername(User.Identity.Name);
+
+                var userPostList = (from p in _db.Posts where (p.UserId == userId) select p.Id).ToList();
+                IQueryable<Payments> paymentList = (from p in _db.Payments 
+                                                    where (userPostList.Contains(p.PostsId)) 
+                                                    select p);
+
+                if (model.CreatedDateFrom != null)
+                {
+                    paymentList = paymentList.Where(p => (EntityFunctions
+                                .DiffDays(p.CreatedDate, model.CreatedDateFrom) <= 0));
+                }
+
+                if (model.CreatedDateTo != null)
+                {
+                    paymentList = paymentList.Where(p => (EntityFunctions
+                                .DiffDays(p.CreatedDate, model.CreatedDateTo) >= 0));
+                }
+
+                IQueryable<Payments> paymentViewList;
+                paymentViewList = (from p in paymentList select p)
+                    .OrderBy(p => p.Id)
+                    .Skip(MAX_RECORD_PER_PAGE * ((int)page - 1))
+                    .Take(MAX_RECORD_PER_PAGE);
+                var grid = new WebGrid(ajaxUpdateContainerId: "container-grid",
+                canSort: false, rowsPerPage: MAX_RECORD_PER_PAGE);
+                grid.Bind(paymentViewList, autoSortAndPage: false, rowCount: paymentList.Count());
+                model.Grid = grid;
+                ViewBag.Index = ((int)page - 1) * MAX_RECORD_PER_PAGE;
+                return View(model);
+            }
+        }
+        [Authorize(Roles = "Admin, User")]
+        [HttpPost]
+        public ActionResult Payments(ManagePaymentModel model)
+        {
+            //Get user ID
+            int userId = CommonModel.GetUserIdByUsername(User.Identity.Name);
+
+            var userPostList = (from p in _db.Posts where (p.UserId == userId) select p.Id).ToList();
+            IQueryable<Payments> paymentList = (from p in _db.Payments
+                                                where (userPostList.Contains(p.PostsId))
+                                                select p);
+
+            if (model.CreatedDateFrom != null)
+            {
+                paymentList = paymentList.Where(p => (EntityFunctions
+                            .DiffDays(p.CreatedDate, model.CreatedDateFrom) <= 0));
+            }
+
+            if (model.CreatedDateTo != null)
+            {
+                paymentList = paymentList.Where(p => (EntityFunctions
+                            .DiffDays(p.CreatedDate, model.CreatedDateTo) >= 0));
+            }
+
+            IQueryable<Payments> paymentViewList;
+            paymentViewList = (from p in paymentList select p)
+                .OrderBy(p => p.Id)
+                .Skip(0)
+                .Take(MAX_RECORD_PER_PAGE);
+            var grid = new WebGrid(ajaxUpdateContainerId: "container-grid",
+            canSort: false, rowsPerPage: MAX_RECORD_PER_PAGE);
+            grid.Bind(paymentViewList, autoSortAndPage: false, rowCount: paymentList.Count());
+            model.Grid = grid;
+            ViewBag.Index = 0;
+            return View(model);
+        }
     }
 }
