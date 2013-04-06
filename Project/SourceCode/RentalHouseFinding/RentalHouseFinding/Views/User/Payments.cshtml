@@ -17,12 +17,16 @@
 </script>
 @using (Html.BeginForm("Payments", "User", FormMethod.Post))
 {
-    <span>Ngày giao dịch</span>
-    <br/>
-    <div>Từ @Html.TextBoxFor(model => model.CreatedDateFrom,
-                    new { @id = "created_date_from", @readonly = "readonly" })<br/><br/>
-         Đến @Html.TextBoxFor(model => model.CreatedDateTo,
+
+    <div style="position:relative; left:67px;">
+         <label style="position:relative; right:5px;font-size: 15px; font-weight: 700;">Ngày giao dịch</label><br/>
+         <label style="padding-top: 5px; font-size: 14px; font-weight: 700;">Từ</label> 
+         <div style="padding-top: 5px;">@Html.TextBoxFor(model => model.CreatedDateFrom,
+                    new { @id = "created_date_from", @readonly = "readonly" })</div>
+         <label style="padding-top: 5px; font-size: 14px; font-weight: 700;">Đến</label> 
+         <div style="padding-top: 5px;">@Html.TextBoxFor(model => model.CreatedDateTo,
                     new { @id = "created_date_to", @readonly = "readonly" })</div>
+    </div>
     <input type="submit" value="Search" id="search"/>
 }
 <div id="container-grid">
@@ -44,7 +48,7 @@
                                 "Post",
                                 new { id = @item.PostsId })">@item.PostsId</a></text>)
         ));
-}
+    }
 }
 
 </div>
