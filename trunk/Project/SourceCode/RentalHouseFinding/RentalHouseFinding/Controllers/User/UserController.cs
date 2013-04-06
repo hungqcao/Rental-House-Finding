@@ -99,8 +99,12 @@ namespace RentalHouseFinding.Controllers
         }
 
         [Authorize(Roles = "Admin, User")]
-        public ActionResult Favorites()
+        public ActionResult Favorites(int? page)
         {
+            if (page == null)
+            {
+                page = 1;
+            }
             //Get user ID
             int userId = CommonModel.GetUserIdByUsername(User.Identity.Name);
             //Get user's favorite list
@@ -120,15 +124,23 @@ namespace RentalHouseFinding.Controllers
                 p.EditedDate,
                 p.RenewDate,
                 PostStatus = p.PostStatus.Name
-            });
+            }).OrderBy(p => p.Id).Skip(MAX_RECORD_PER_PAGE * ((int)page - 1)).Take(MAX_RECORD_PER_PAGE); ;
 
-            ViewBag.FavoriteList = postViewList;
+            var grid = new WebGrid(ajaxUpdateContainerId: "container-grid", canSort: false);
+            grid.Bind(postViewList, autoSortAndPage: false, rowCount: favoriteList.Count());
+            ViewBag.Grid = grid;
+            ViewBag.Index = ((int)page - 1) * MAX_RECORD_PER_PAGE;
+
             return View();
         }
 
         [Authorize(Roles = "Admin, User")]
-        public ActionResult Posts()
+        public ActionResult Posts(int? page)
         {
+            if (page == null)
+            {
+                page = 1;
+            }
             //Get user ID
             int userId = CommonModel.GetUserIdByUsername(User.Identity.Name);
             //Get post status list
@@ -153,9 +165,11 @@ namespace RentalHouseFinding.Controllers
                 PostStatus = (from stt in _db.PostStatuses
                               where (stt.Id == p.StatusId)
                               select stt.Name).FirstOrDefault()
-            });
-            ViewBag.PostList = postViewList.ToArray();
-            
+            }).OrderBy(p => p.Id).Skip(MAX_RECORD_PER_PAGE * ((int)page - 1)).Take(MAX_RECORD_PER_PAGE);
+            var grid = new WebGrid(ajaxUpdateContainerId: "container-grid", canSort: false);
+            grid.Bind(postViewList, autoSortAndPage: false, rowCount: postList.Count());
+            ViewBag.Grid = grid;
+            ViewBag.Index = ((int)page - 1) * MAX_RECORD_PER_PAGE;
             return View();
         }
 
