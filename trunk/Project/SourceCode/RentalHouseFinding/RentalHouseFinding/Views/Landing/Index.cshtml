@@ -7,7 +7,21 @@
 <script src="@Url.Content("~/Scripts/jquery.validate.unobtrusive.min.js")" type="text/javascript"></script>
 @*<script src="@Url.Content("~/Scripts/DDLScripts.js")" type="text/javascript"></script>*@
 <script src="@Url.Content("~/Scripts/RHFScripts.js")" type="text/javascript"></script> 
-<link rel="stylesheet" href="http://code.jquery.com/ui/1.10.1/themes/base/jquery-ui.css" />
+<link rel="stylesheet" href="http://code.jquery.com/ui/1.10.1/themes/base/jquery-ui.css"/>
+<script type="text/javascript">
+//    $(document).ready(function () {
+//        $(window).keypress(function (e) {
+//            var enterKey = 13;
+//            if (e.which == enterKey)
+//                $(this).closest("form").submit();
+//        });
+//    });
+    $(document.documentElement).keydown(function (e) {
+        var enterKey = 13;
+        if (e.which == enterKey)
+            $("form").submit();
+    });
+</script> 
 
 @Html.ValidationSummary(true, "Vui lòng kiểm tra lại thông tin như thông báo bên dưới!", new { style = "color:red" })
 @using (Html.BeginForm())
