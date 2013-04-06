@@ -34,7 +34,7 @@ namespace RentalHouseFinding.Controllers
 
         public ActionResult Index()
         {
-            return View();
+            return RedirectToAction("create");
         }
         
         //
@@ -154,8 +154,8 @@ namespace RentalHouseFinding.Controllers
         {
             ViewBag.CategoryId = new SelectList(Repository.GetAllCategories(), "Id", "Name");
             //2 for Ha noi
-            ViewBag.ProvinceId = new SelectList(Repository.GetAllProvinces(), "Id", "Name", 2);            
-            ViewBag.DistrictId = new SelectList(Repository.GetAllDistricts().Where(d => d.ProvinceId == 2), "Id", "Name");
+            ViewBag.ProvinceId = new SelectList(Repository.GetAllProvinces(), "Id", "Name", 2);
+            ViewBag.DistrictId = CommonController.AddDefaultOption(new SelectList(Repository.GetAllDistricts().Where(d => d.ProvinceId == 2), "Id", "Name"), "Quận huyện", "0");
             return View();
         }
 

@@ -8,6 +8,7 @@ using System.Text.RegularExpressions;
 using RentalHouseFinding.Models;
 using System.Net;
 using System.IO;
+using System.Web.Mvc;
 
 namespace RentalHouseFinding.Common
 {
@@ -24,6 +25,15 @@ namespace RentalHouseFinding.Common
             }
             return sBuilder.ToString();
         }
+
+        public static IEnumerable<SelectListItem> AddDefaultOption(IEnumerable<SelectListItem> list, string dataTextField, string selectedValue)
+        {
+            var items = new List<SelectListItem>();
+            items.Add(new SelectListItem() { Text = dataTextField, Value = selectedValue });
+            items.AddRange(list);
+            return items;
+        }
+
         public static Guid StringToGUID(string value)
         {
             // Create a new instance of the MD5CryptoServiceProvider object.

@@ -5,7 +5,7 @@
 <head>
 </head>
 <body>
-
+<div id="compare-content">
 <table class="CSSTable">
 @for (int i = 0; i < 20; i++)
 {
@@ -48,111 +48,111 @@
             case 5: <td>@item.Area</td> break;
             case 6: <td>@if (item.Facilities.HasInternet)
                 {
-                        <input type="checkbox" checked="checked" disabled="true"/>
+                        <span class="facilities-has"></span>
                 }
                 else
-                {
-                        <input type="checkbox" disabled="true"/>
-                }
+                        {
+                        <span class="facilities-no"></span>
+                        }
             </td> break;
             case 7: <td>
                     @if (item.Facilities.HasBed)
                     {
-                        <input type="checkbox" checked="checked" disabled="true"/>
+                        <span class="facilities-has"></span>
                     }
                     else
                     {
-                        <input type="checkbox" disabled="true"/>
+                        <span class="facilities-no"></span>
                     }
             </td> break;
             case 8: <td>
                     @if (item.Facilities.HasSecurity)
                     {
-                        <input type="checkbox" checked="checked" disabled="true"/>
+                        <span class="facilities-has"></span>
                     }
                     else
                     {
-                        <input type="checkbox" disabled="true"/>
+                        <span class="facilities-no"></span>
                     }
             </td> break;
             case 9: <td>
                     @if (item.Facilities.HasToilet)
                     {
-                        <input type="checkbox" checked="checked" disabled="true"/>
+                        <span class="facilities-has"></span>
                     }
                     else
                     {
-                        <input type="checkbox" disabled="true"/>
+                        <span class="facilities-no"></span>
                     }
             </td> break;
             case 10: <td>
                     @if (item.Facilities.IsStayWithOwner)
                     {
-                        <input type="checkbox" checked="checked" disabled="true"/>
+                        <span class="facilities-has"></span>
                     }
                     else
                     {
-                        <input type="checkbox" disabled="true"/>
+                        <span class="facilities-no"></span>
                     }
             </td> break;
             case 11: <td>
                     @if (item.Facilities.HasTVCable)
                     {
-                        <input type="checkbox" checked="checked" disabled="true"/>
+                        <span class="facilities-has"></span>
                     }
                     else
                     {
-                        <input type="checkbox" disabled="true"/>
+                        <span class="facilities-no"></span>
                     }
             </td> break;
             case 12: <td>
                     @if (item.Facilities.HasMotorParkingLot)
                     {
-                        <input type="checkbox" checked="checked" disabled="true"/>
+                        <span class="facilities-has"></span>
                     }
                     else
                     {
-                        <input type="checkbox" disabled="true"/>
+                        <span class="facilities-no"></span>
                     }
             </td> break;
             case 13: <td>
                     @if (item.Facilities.IsAllowCooking)
                     {
-                        <input type="checkbox" checked="checked" disabled="true"/>
+                        <span class="facilities-has"></span>
                     }
                     else
                     {
-                        <input type="checkbox" disabled="true"/>
+                        <span class="facilities-no"></span>
                     }
             </td> break;
             case 14: <td>
                     @if (item.Facilities.HasWaterHeater)
                     {
-                        <input type="checkbox" checked="checked" disabled="true"/>
+                        <span class="facilities-has"></span>
                     }
                     else
                     {
-                        <input type="checkbox" disabled="true"/>
+                        <span class="facilities-no"></span>
                     }
             </td> break;
             case 15: <td>
                     @if (item.Facilities.HasAirConditioner)
                     {
-                        <input type="checkbox" checked="checked" disabled="true"/>
+                        <span class="facilities-has"></span>
                     }
                     else
                     {
-                        <input type="checkbox" disabled="true"/>
+                        <span class="facilities-no"></span>
                     }
             </td> break;
             case 16: <td>
                     @if (item.Facilities.HasGarage)
                     {
-                        <input type="checkbox" checked="checked" disabled="true"/>
+                        <span class="facilities-has"></span>
                     }
                     else
                     {
-                        <input type="checkbox" disabled="true"/>
+                        <span class="facilities-no"></span>
                     }
             </td> break;
             case 17: <td>@item.Facilities.RestrictHours</td> break;
@@ -165,4 +165,5 @@
 }
 
 </table>
+</div>
 </body>

@@ -27,10 +27,10 @@ namespace RentalHouseFinding.Controllers
 
         public ActionResult Index()
         {
-            ViewBag.Score = new SelectList(_db.AdvanceSearchScores, "Score", "Name");
+            ViewBag.Score = new SelectList(Repository.GetAllAdvanceSearchScore(), "Score", "Name");
             ViewBag.CategoryId = new SelectList(Repository.GetAllCategories(), "Id", "Name");
             ViewBag.ProvinceId = new SelectList(Repository.GetAllProvinces(), "Id", "Name", 2);
-            ViewBag.DistrictId = new SelectList(Repository.GetAllDistricts().Where(d => d.ProvinceId == 2), "Id", "Name");
+            ViewBag.DistrictId = CommonController.AddDefaultOption(new SelectList(Repository.GetAllDistricts().Where(d => d.ProvinceId == 2), "Id", "Name"), "Quận huyện", "0");
 
             return View();
         }

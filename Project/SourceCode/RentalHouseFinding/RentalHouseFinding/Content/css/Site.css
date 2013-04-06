@@ -2199,7 +2199,22 @@ a.remove-fav-item-list
     width: 24px;
     height: 24px;
 }
-
+/*Compare content*/
+#compare-content span
+{
+    display: block;
+    height: 20px;
+    width: 20px;
+    margin: 0 auto;
+}
+#compare-content span.facilities-has
+{
+    background: url("../../Content/images/30.png") no-repeat transparent 0 0px;
+}
+#compare-content span.facilities-no
+{
+    background: url("../../Content/images/error_icon.png") no-repeat transparent 0 0px;
+}
 /*Admin style*/
 #content.admin input[type="submit"]
 {

@@ -4,11 +4,23 @@ using System.Linq;
 using RentalHouseFinding.Models;
 using System.Data;
 using RentalHouseFinding.Common;
+using RentalHouseFinding.Caching;
 
 namespace RentalHouseFinding.Sercurity
 {
     public class CustomMembershipProvider : MembershipProvider
     {
+        public ICacheRepository Repository { get; set; }
+        public CustomMembershipProvider()
+            : this(new CacheRepository())
+        {
+        }
+
+        public CustomMembershipProvider(ICacheRepository repository)
+        {
+            this.Repository = repository;
+        }
+
         public override string ApplicationName
         {
             get
@@ -90,14 +102,10 @@ namespace RentalHouseFinding.Sercurity
                         user.Email = model.Email == null? string.Empty :model.Email.ToLower();
                         user.CreatedDate = DateTime.Now;
                         user.LastUpdate = DateTime.Now;
-                        user.Address = model.Address;
-                        user.DOB = model.DateOfBirth;
-                        user.Avatar = model.Avatar;
                         user.PhoneNumber = model.PhoneNumber;
-                        user.RoleId = 3;
-                        user.Sex = model.Sex;
-                        //user.KeyActive = Guid.NewGuid(); // curently, not use.
 
+                        //3 for normal user
+                        user.RoleId = 3;
                         _db.AddToUsers(user);
 
                         _db.SaveChanges();
@@ -106,7 +114,9 @@ namespace RentalHouseFinding.Sercurity
                         //send mail welcome!
                         if (!String.IsNullOrEmpty(user.Email))
                         {
-                            CommonModel.SendEmail(user.Email, String.Format("Chào mừng bạn đến với HouseFinding!<br/>Thông tin tài khoản:<br/>-Tên tài khoản:{0}<br/>-Mật khẩu:{1}<br/> ", model.UserName, model.Password), "Chào mừng bạn!", 0);
+                            string emailTemplate = Repository.GetAllEmailTemplate().Where(e => e.Name.Equals(ConstantEmailTemplate.WELCOME, StringComparison.CurrentCultureIgnoreCase)).Select(m => m.Template).FirstOrDefault();
+                            string subject = Repository.GetAllEmailTemplate().Where(e => e.Name.Equals(ConstantEmailTemplate.SUBJECT_WELCOME, StringComparison.CurrentCultureIgnoreCase)).Select(m => m.Template).FirstOrDefault();
+                            CommonModel.SendEmail(user.Email, String.Format(emailTemplate, model.UserName, model.Password), subject, 0);
                         }
                         
 
@@ -160,22 +170,19 @@ namespace RentalHouseFinding.Sercurity
                         {
                             user.Username = String.IsNullOrEmpty(model.email) ? model.id : model.email.ToLower();
                         }
-                        user.Email = String.IsNullOrEmpty(model.email) ? String.Empty : model.email.ToLower();
-                        if(!String.IsNullOrEmpty(model.user_birthday))
-                        {
-                            user.DOB =  DateTime.Parse(model.user_birthday);
-                        }                        
+                        user.Email = String.IsNullOrEmpty(model.email) ? String.Empty : model.email.ToLower();             
                         user.CreatedDate = DateTime.Now;
                         user.LastUpdate = DateTime.Now;
-                        user.RoleId = 3;                        
-                        user.Sex = model.gender;
+                        user.RoleId = 3;               
 
                         _db.AddToUsers(user);
 
                         _db.SaveChanges();
 
                         status = MembershipCreateStatus.Success;
-                        CommonModel.SendEmail(user.Email, String.Format("Chào mừng bạn đến với HouseFinding!<br/>"), "Welcome!", 0);
+                        string emailTemplate = Repository.GetAllEmailTemplate().Where(e => e.Name.Equals(ConstantEmailTemplate.WELCOME_OPENID, StringComparison.CurrentCultureIgnoreCase)).Select(m => m.Template).FirstOrDefault();
+                        string subject = Repository.GetAllEmailTemplate().Where(e => e.Name.Equals(ConstantEmailTemplate.SUBJECT_WELCOME_OPENID, StringComparison.CurrentCultureIgnoreCase)).Select(m => m.Template).FirstOrDefault();
+                        CommonModel.SendEmail(user.Email, emailTemplate, subject, 0);
                         return true;
                     }
 
@@ -242,7 +249,7 @@ namespace RentalHouseFinding.Sercurity
                 try
                 {
                     var user = (from u in _db.Users 
-                                where u.Username.Equals(username, StringComparison.CurrentCultureIgnoreCase) && !u.IsDeleted && u.IsActive == true
+                                where u.Username.Equals(username, StringComparison.CurrentCultureIgnoreCase) && !u.IsDeleted
                                  select u)
                                  .FirstOrDefault();
  

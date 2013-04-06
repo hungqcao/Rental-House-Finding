@@ -42,11 +42,6 @@ namespace RentalHouseFinding.Controllers
             userViewModel.PhoneNumber = profile.PhoneNumber;
             userViewModel.Name = profile.Name;
             userViewModel.Email = profile.Email;
-            DateTime? dt = null;
-            userViewModel.DateOfBirth = profile.DOB.HasValue ? profile.DOB.Value : dt;
-            userViewModel.Address = profile.Address;
-            userViewModel.Avatar = profile.Avatar;
-            userViewModel.Sex = profile.Sex;
 
             return View(userViewModel);
         }
@@ -65,10 +60,6 @@ namespace RentalHouseFinding.Controllers
             userViewModel.PhoneNumber = profile.PhoneNumber;
             userViewModel.Name = profile.Name;
             userViewModel.Email = profile.Email;
-            DateTime? a = null;
-            userViewModel.DateOfBirth = profile.DOB.HasValue ? profile.DOB.Value : a; 
-            userViewModel.Address = profile.Address;
-            userViewModel.Avatar = profile.Avatar;
 
             return View(userViewModel);
         }
@@ -87,9 +78,6 @@ namespace RentalHouseFinding.Controllers
             profile.PhoneNumber = userViewModel.PhoneNumber;
             profile.Name = userViewModel.Name;
             profile.Email = userViewModel.Email;
-            profile.DOB = userViewModel.DateOfBirth;
-            profile.Address = userViewModel.Address;
-            profile.Avatar = userViewModel.Avatar;
 
             _db.ObjectStateManager.ChangeObjectState(profile, System.Data.EntityState.Modified);
             _db.SaveChanges();
