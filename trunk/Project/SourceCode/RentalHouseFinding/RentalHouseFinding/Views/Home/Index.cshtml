@@ -82,6 +82,8 @@
 
         document.body.appendChild(scriptInfobox);
 
+
+
         $.getJSON("home/GetLatLonFromResult",
             function (myData) {
                 source = myData;
@@ -166,7 +168,13 @@
     //window.onload = loadScript;
 </script>
 
-
+<script type="text/javascript">
+    $(document.documentElement).keydown(function (e) {
+        var enterKey = 13;
+        if (e.which == enterKey)
+            $("form").submit();
+    });
+</script> 
 
 <script type="text/javascript">
     $(document).ready(function () {

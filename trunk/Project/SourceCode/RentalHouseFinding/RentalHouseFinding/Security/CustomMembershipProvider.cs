@@ -127,8 +127,11 @@ namespace RentalHouseFinding.Sercurity
             return null;
         }
 
-        public bool CreateUserForOpenID(UserDetailsModel model, out MembershipCreateStatus status)
+        public bool CreateUserForOpenID(UserDetailsModel model,int type, out MembershipCreateStatus status)
         {
+            // type:
+            //     1: Facbook.
+            //     2: Gooogle&Yahoo.
             //check openid xem co ton tai chua
             int userID = CommonModel.GetUserIdByOpenId(model.id);
 
@@ -149,7 +152,14 @@ namespace RentalHouseFinding.Sercurity
                         user.OpenIdURL = model.id;
                         user.Name = model.first_name + " " + model.last_name;                        
                         user.IsDeleted = false;
-                        user.Username = String.IsNullOrEmpty(model.email) ?Guid.NewGuid().ToString() :model.email.ToLower();
+                        if (type == 1)
+                        {
+                            user.Username = model.id;
+                        }
+                        else
+                        {
+                            user.Username = String.IsNullOrEmpty(model.email) ? model.id : model.email.ToLower();
+                        }
                         user.Email = String.IsNullOrEmpty(model.email) ? String.Empty : model.email.ToLower();
                         if(!String.IsNullOrEmpty(model.user_birthday))
                         {
