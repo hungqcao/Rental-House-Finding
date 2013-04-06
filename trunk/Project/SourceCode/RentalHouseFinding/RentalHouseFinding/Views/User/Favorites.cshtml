@@ -35,10 +35,13 @@
     <br/>
     <br/>
 </div>
-
+</fieldset>
 <script type="text/javascript" >
     $(document).ready(function () {
         $("#options a").removeClass("active");
         $("#btnDanhSach").addClass('active');
+        $('a[href="#"]').live('click', function (event) {
+            event.preventDefault();
+        });
     });
 </script>
