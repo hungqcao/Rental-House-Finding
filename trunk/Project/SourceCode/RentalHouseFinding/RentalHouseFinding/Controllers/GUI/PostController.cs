@@ -200,15 +200,6 @@ namespace RentalHouseFinding.Controllers
                     _db.Posts.AddObject(postToCreate);
                     _db.SaveChanges();
 
-                    if (string.IsNullOrEmpty(User.Identity.Name))
-                    {
-                        //Visitor post 
-                        PostEdit postEdit = new PostEdit();
-                        postEdit.PostId = postToCreate.Id;
-                        postEdit.Password = StringUtil.RandomStr();
-                        _db.PostEdits.AddObject(postEdit);
-                        _db.SaveChanges();
-                    }
                     //Nearby places
                     Dictionary<int, string> lstNearbyId = GetListNearbyLocations(model);
                     PostLocations postLocation;
@@ -464,7 +455,7 @@ namespace RentalHouseFinding.Controllers
                                     location = new Locations();
                                     location.DistrictId = model.DistrictId;
                                     //1 for Create by User
-                                    location.LocationTypeId = 1;
+                                    location.IsCreatedByUser = true;
                                     location.Name = item;
                                     _db.Locations.AddObject(location);
                                     _db.SaveChanges();

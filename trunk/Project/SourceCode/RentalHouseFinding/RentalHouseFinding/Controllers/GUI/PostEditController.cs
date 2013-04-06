@@ -38,14 +38,14 @@ namespace RentalHouseFinding.Controllers.GUI
         }
 
         [HttpPost]
-        public ActionResult Index(PostEditModel model)
+        public ActionResult Index(string code)
         {
             if (ModelState.IsValid)
             {
-                var postEdit = _db.PostEdits.Where(p => p.PostId == model.PostId && p.Password.Equals(model.Password, StringComparison.CurrentCultureIgnoreCase)).FirstOrDefault();
+                var postEdit = _db.Posts.Where(p => p.Code.Equals(code)).FirstOrDefault();
                 if (postEdit != null)
                 {
-                    Session["PostIdToEdit"] = postEdit.PostId;
+                    Session["PostIdToEdit"] = postEdit.Id;
                     return RedirectToAction("Edit", "PostEdit");
                 }
                 else
@@ -53,7 +53,7 @@ namespace RentalHouseFinding.Controllers.GUI
                     ModelState.AddModelError("", "Đăng nhập không thành công, vui lòng kiểm tra lại thông tin");
                 }
             }
-            return View(model);
+            return View(code);
         }
 
         public ActionResult Edit()
@@ -256,7 +256,7 @@ namespace RentalHouseFinding.Controllers.GUI
                                     location = new Locations();
                                     location.DistrictId = model.DistrictId;
                                     //1 for Create by User
-                                    location.LocationTypeId = 1;
+                                    location.IsCreatedByUser = true;
                                     location.Name = item;
                                     _db.Locations.AddObject(location);
                                     _db.SaveChanges();

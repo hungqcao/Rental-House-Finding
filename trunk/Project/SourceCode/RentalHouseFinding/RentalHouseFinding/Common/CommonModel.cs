@@ -68,7 +68,6 @@ namespace RentalHouseFinding.Common
                 ExpiredDate = expiredDate,
                 Facilities = new Facilities()
                 {
-                    Direction = model.Direction,
                     ElectricityFee = model.ElectricityFee,
                     HasAirConditioner = model.HasAirConditioner,
                     HasBed = model.HasBed,
@@ -129,7 +128,6 @@ namespace RentalHouseFinding.Common
             post.DistrictId = model.DistrictId;
             post.EditedDate = editedDate;
 
-            post.Facilities.Direction = model.Direction;
             post.Facilities.ElectricityFee = model.ElectricityFee;
             post.Facilities.HasAirConditioner = model.HasAirConditioner;
             post.Facilities.HasBed = model.HasBed;
@@ -194,7 +192,6 @@ namespace RentalHouseFinding.Common
                 Yahoo = model.Contacts.Yahoo,
                 Description = model.Description.Equals(noInformation, StringComparison.CurrentCultureIgnoreCase) ? string.Empty : model.Description,
                 DistrictId = model.DistrictId,
-                Direction = model.Facilities.Direction,
                 ElectricityFee = model.Facilities.ElectricityFee,
                 HasAirConditioner = model.Facilities.HasAirConditioner,
                 HasBed = model.Facilities.HasBed,
