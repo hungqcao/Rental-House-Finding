@@ -19,237 +19,128 @@ namespace RentalHouseFinding.Controllers.Admin
         //
         // GET: /ManagePosts/
         [Authorize(Roles = "Admin")]
-        public ActionResult Index(int? page)
+        public ActionResult Index(int? page, ManagePostsModel model)
         {
             //Init/Retain filter values
-            ViewBag.Provinces = new SelectList(_db.Provinces, "Id", "Name", TempData["ProvinceId"]);
-            ViewBag.Districts = new SelectList(_db.Districts, "Id", "Name", TempData["DistrictId"]);
-            ViewBag.Users = new SelectList(_db.Users, "Id", "Username", TempData["UserId"]);
-            ViewBag.Categories = new SelectList(_db.Categories, "Id", "Name", TempData["CategoryId"]);
-            ViewBag.Statuses = new SelectList(_db.PostStatuses, "Id", "Name", TempData["StatusId"]);
+            ViewBag.Provinces = new SelectList(_db.Provinces, "Id", "Name", model.ProvinceId);
+            ViewBag.Districts = new SelectList(_db.Districts, "Id", "Name", model.DistrictId);
+            ViewBag.Users = new SelectList(_db.Users, "Id", "Username", model.UserId);
+            ViewBag.Categories = new SelectList(_db.Categories, "Id", "Name", model.CategoryId);
+            ViewBag.Statuses = new SelectList(_db.PostStatuses, "Id", "Name", model.StatusId);
 
-            //If visit page for the first time
-            if (TempData["ProvinceId"] == null && TempData["DistrictId"] == null && TempData["UserId"] == null
-                && TempData["CreatedDateFrom"] == null && TempData["CreatedDateTo"] == null
-                && TempData["EditedDateFrom"] == null && TempData["EditedDateTo"] == null
-                && TempData["RenewedDateFrom"] == null && TempData["RenewedDateTo"] == null 
-                && TempData["ExpireDateFrom"] == null && TempData["ExpireDateFrom"] == null)
+            if (page == null)
             {
                 return View();
             }
-
-            //Adding filter values
-            var filters = new Hashtable();
-            filters.Add("DistrictId", TempData["DistrictId"]);
-            filters.Add("UserId", TempData["UserId"]);
-            filters.Add("ProvinceId", TempData["ProvinceId"]);
-            filters.Add("StatusId", TempData["StatusId"]);
-            filters.Add("CreatedDateFrom", TempData["CreatedDateFrom"]);
-            filters.Add("CreatedDateTo", TempData["CreatedDateTo"]);
-            filters.Add("EditedDateFrom", TempData["EditedDateFrom"]);
-            filters.Add("EditedDateTo", TempData["EditedDateTo"]);
-            filters.Add("RenewedDateFrom", TempData["RenewedDateFrom"]);
-            filters.Add("RenewedDateTo", TempData["RenewedDateTo"]);
-            filters.Add("ExpireDateFrom", TempData["ExpireDateFrom"]);
-            filters.Add("ExpireDateTo", TempData["ExpireDateTo"]);
-            WebGrid grid;
-            if (page == null)
-            {
-                grid = getGrid(filters, 1);
-            }
             else
             {
-                grid = getGrid(filters, (int)page);
-            }
-            ViewBag.Grid = grid;
-            return View();
+                ViewBag.Index = ((int)page - 1) * MAX_RECORD_PER_PAGE;
+                model.Grid = getGrid(model, (int)page);
+                return View(model);
+            }  
+            
         }
 
         [Authorize(Roles = "Admin")]
         [HttpPost]
-        public ActionResult Index(int? page, FormCollection form)
+        public ActionResult Index(ManagePostsModel model)
         {
             //Retain filter values
-            ViewBag.Provinces = new SelectList(_db.Provinces, "Id", "Name", form["ProvinceId"]);
-            ViewBag.Districts = new SelectList(_db.Districts, "Id", "Name", form["DistrictId"]);
-            ViewBag.Users = new SelectList(_db.Users, "Id", "Username", form["UserId"]);
-            ViewBag.Categories = new SelectList(_db.Categories, "Id", "Name", form["CategoryId"]);
-            ViewBag.Statuses = new SelectList(_db.PostStatuses, "Id", "Name", form["StatusId"]);
+            ViewBag.Provinces = new SelectList(_db.Provinces, "Id", "Name", model.ProvinceId);
+            ViewBag.Districts = new SelectList(_db.Districts, "Id", "Name", model.DistrictId);
+            ViewBag.Users = new SelectList(_db.Users, "Id", "Username", model.UserId);
+            ViewBag.Categories = new SelectList(_db.Categories, "Id", "Name", model.CategoryId);
+            ViewBag.Statuses = new SelectList(_db.PostStatuses, "Id", "Name", model.StatusId);
 
-            //Reset temp data for accurate search results
-            TempData["DistrictId"] = null;
-            TempData["UserId"] = null;
-            TempData["ProvinceId"] = null;
-            TempData["StatusId"] = null;
-            TempData["CreatedDateFrom"] = null;
-            TempData["CreatedDateTo"] = null;
-            TempData["EditedDateFrom"] = null;
-            TempData["EditedDateTo"] = null;
-            TempData["RenewedDateFrom"] = null;
-            TempData["RenewedDateTo"] = null;
-            TempData["ExpireDateFrom"] = null;
-            TempData["ExpireDateTo"] = null;
+            ViewBag.Index = 0;
+            model.Grid = getGrid(model, 1);
 
-            //Adding filter values
-            var filters = new Hashtable();
-            filters.Add("DistrictId", form["DistrictId"]);
-            filters.Add("UserId", form["UserId"]);
-            filters.Add("ProvinceId", form["ProvinceId"]);
-            filters.Add("StatusId", form["StatusId"]);
-            filters.Add("CreatedDateFrom", form["CreatedDateFrom"]);
-            filters.Add("CreatedDateTo", form["CreatedDateTo"]);
-            filters.Add("EditedDateFrom", form["EditedDateFrom"]);
-            filters.Add("EditedDateTo", form["EditedDateTo"]);
-            filters.Add("RenewedDateFrom", form["RenewedDateFrom"]);
-            filters.Add("RenewedDateTo", form["RenewedDateTo"]);
-            filters.Add("ExpireDateFrom", form["ExpireDateFrom"]);
-            filters.Add("ExpireDateTo", form["ExpireDateTo"]);
-            ViewBag.Grid = getGrid(filters, 1);
-            
-            return View();
+            return View(model);
         }
 
         [Authorize(Roles = "Admin")]
-        public WebGrid getGrid(Hashtable filters, int page)
+        public WebGrid getGrid(ManagePostsModel model, int page)
         {
             IQueryable<Posts> postList = _db.Posts;
-            if (filters["DistrictId"] != null)
+            if (model.DistrictId != null)
             {
-                if (filters["DistrictId"].ToString() != "")
+                if (model.DistrictId > 0)
                 {
-                    int districtId = Convert.ToInt32(filters["DistrictId"]);
-                    if (districtId > 0)
-                    {
-                        postList = _db.Posts.Where(p => p.DistrictId == districtId);
-                    }
-                    TempData["DistrictId"] = districtId;
+                    postList = _db.Posts.Where(p => p.DistrictId == model.DistrictId);
                 }
             }
-            if (filters["UserId"] != null)
+            if (model.UserId != null)
             {
-                if (filters["UserId"].ToString() != "")
+                if (model.UserId > 0)
                 {
-                    int userId = Convert.ToInt32(filters["UserId"]);
-                    if (userId > 0)
-                    {
-                        postList = postList.Where(p => (p.UserId == userId));
-                    }
-                    TempData["UserId"] = userId;
+                    postList = postList.Where(p => (p.UserId == model.UserId));
                 }
             }
-            if (filters["ProvinceId"] != null && (filters["DistrictId"] == null || filters["DistrictId"].ToString() == "0"))
+            if (model.ProvinceId != null && (model.DistrictId == null))
             {
-                if (filters["ProvinceId"].ToString() != "")
+                if (model.ProvinceId > 0)
                 {
-                    int provinceId = Convert.ToInt32(filters["ProvinceId"]);
-                    if (provinceId > 0)
-                    {
-                        var dictricts = (from d in _db.Districts where (d.ProvinceId == provinceId) select d.Id).ToArray();
-                        postList = postList.Where(p => dictricts.Contains(p.DistrictId));
-                    }
-                    TempData["ProvinceId"] = provinceId;
+                    var dictricts = (from d in _db.Districts where (d.ProvinceId == model.ProvinceId) select d.Id).ToArray();
+                    postList = postList.Where(p => dictricts.Contains(p.DistrictId));
                 }
+
             }
 
-            if (filters["StatusId"] != null)
+            if (model.StatusId != null)
             {
-                if (filters["StatusId"].ToString() != "")
+                if (model.StatusId > 0)
                 {
-                    int statusId = Convert.ToInt32(filters["StatusId"]);
-                    if (statusId > 0)
-                    {
-                        postList = postList.Where(p => (p.StatusId == statusId));
-                    }
-                    TempData["StatusId"] = statusId;
+                    postList = postList.Where(p => (p.StatusId == model.StatusId));
                 }
+
             }
 
-            if (filters["CreatedDateFrom"] != null)
+            if (model.CreatedDateFrom != null)
             {
-                if (filters["CreatedDateFrom"].ToString() != "")
-                {
-                    DateTime CreatedDateFrom = DateTime.Parse(filters["CreatedDateFrom"].ToString());
-                    postList = postList.Where(p => (EntityFunctions
-                                .DiffDays(p.CreatedDate, CreatedDateFrom) <= 0));
-                    TempData["CreatedDateFrom"] = CreatedDateFrom.ToString("yyyy/MM/dd");
-                }
+                postList = postList.Where(p => (EntityFunctions
+                            .DiffDays(p.CreatedDate, model.CreatedDateFrom) <= 0));
             }
 
-            if (filters["CreatedDateTo"] != null)
+            if (model.CreatedDateTo != null)
             {
-                if (filters["CreatedDateTo"].ToString() != "")
-                {
-                    DateTime CreatedDateTo = DateTime.Parse(filters["CreatedDateTo"].ToString());
-                    postList = postList.Where(p => (EntityFunctions
-                                .DiffDays(p.CreatedDate, CreatedDateTo) >= 0));
-                    TempData["CreatedDateTo"] = CreatedDateTo.ToString("yyyy/MM/dd");
-                }
+                postList = postList.Where(p => (EntityFunctions
+                            .DiffDays(p.CreatedDate, model.CreatedDateTo) >= 0));
             }
 
-            if (filters["EditedDateFrom"] != null)
+            if (model.EditedDateFrom != null)
             {
-                if (filters["EditedDateFrom"].ToString() != "")
-                {
-                    DateTime EditedDateFrom = DateTime.Parse(filters["EditedDateFrom"].ToString());
-                    postList = postList.Where(p => (EntityFunctions
-                                .DiffDays(p.EditedDate, EditedDateFrom) <= 0));
-                    TempData["EditedDateFrom"] = EditedDateFrom.ToString("yyyy/MM/dd");
-                }
+                postList = postList.Where(p => (EntityFunctions
+                            .DiffDays(p.EditedDate, model.EditedDateFrom) <= 0));
             }
 
-            if (filters["EditedDateTo"] != null)
+            if (model.EditedDateTo != null)
             {
-                if (filters["EditedDateTo"].ToString() != "")
-                {
-                    DateTime EditedDateTo = DateTime.Parse(filters["EditedDateTo"].ToString());
-                    postList = postList.Where(p => (EntityFunctions
-                                .DiffDays(p.EditedDate, EditedDateTo) >= 0));
-                    TempData["EditedDateTo"] = EditedDateTo.ToString("yyyy/MM/dd");
-                }
+                postList = postList.Where(p => (EntityFunctions
+                            .DiffDays(p.EditedDate, model.EditedDateTo) >= 0));
             }
 
-            if (filters["RenewedDateFrom"] != null)
+            if (model.RenewedDateFrom != null)
             {
-                if (filters["RenewedDateFrom"].ToString() != "")
-                {
-                    DateTime RenewedDateFrom = DateTime.Parse(filters["RenewedDateFrom"].ToString());
-                    postList = postList.Where(p => (EntityFunctions
-                                .DiffDays(p.RenewDate, RenewedDateFrom) <= 0));
-                    TempData["RenewedDateFrom"] = RenewedDateFrom.ToString("yyyy/MM/dd");
-                }
+                postList = postList.Where(p => (EntityFunctions
+                            .DiffDays(p.RenewDate, model.RenewedDateFrom) <= 0));
             }
 
-            if (filters["RenewedDateTo"] != null)
+            if (model.RenewedDateTo != null)
             {
-                if (filters["RenewedDateTo"].ToString() != "")
-                {
-                    DateTime RenewedDateTo = DateTime.Parse(filters["RenewedDateTo"].ToString());
-                    postList = postList.Where(p => (EntityFunctions
-                                .DiffDays(p.RenewDate, RenewedDateTo) >= 0));
-                    TempData["RenewedDateTo"] = RenewedDateTo.ToString("yyyy/MM/dd");
-                }
+                postList = postList.Where(p => (EntityFunctions
+                            .DiffDays(p.RenewDate, model.RenewedDateTo) >= 0));
             }
 
-            if (filters["ExpireDateFrom"] != null)
+            if (model.ExpireDateFrom != null)
             {
-                if (filters["ExpireDateFrom"].ToString() != "")
-                {
-                    DateTime ExpireDateFrom = DateTime.Parse(filters["ExpireDateFrom"].ToString());
-                    postList = postList.Where(p => (EntityFunctions
-                                .DiffDays(p.ExpiredDate, ExpireDateFrom) <= 0));
-                    TempData["ExpireDateFrom"] = ExpireDateFrom.ToString("yyyy/MM/dd");
-                }
+                postList = postList.Where(p => (EntityFunctions
+                            .DiffDays(p.ExpiredDate, model.ExpireDateFrom) <= 0));
             }
 
-            if (filters["ExpireDateTo"] != null)
+            if (model.ExpireDateTo != null)
             {
-                if (filters["ExpireDateTo"].ToString() != "")
-                {
-                    DateTime ExpireDateTo = DateTime.Parse(filters["ExpireDateTo"].ToString());
-                    postList = postList.Where(p => (EntityFunctions
-                                .DiffDays(p.ExpiredDate, ExpireDateTo) >= 0));
-                    TempData["ExpireDateTo"] = ExpireDateTo.ToString("yyyy/MM/dd");
-                }
+                postList = postList.Where(p => (EntityFunctions
+                            .DiffDays(p.ExpiredDate, model.ExpireDateTo) >= 0));
             }
             var postViewList = postList.Select(p => new
             {
@@ -269,8 +160,8 @@ namespace RentalHouseFinding.Controllers.Admin
                             where (cat.Id == p.CategoryId) 
                             select cat.Name).FirstOrDefault()
             }).OrderBy(p => p.ID).Skip(MAX_RECORD_PER_PAGE * (page - 1)).Take(MAX_RECORD_PER_PAGE);
-            var grid = new WebGrid(ajaxUpdateContainerId: "container-grid", 
-                canSort: false, rowsPerPage: 15);
+            var grid = new WebGrid(ajaxUpdateContainerId: "container-grid",
+                canSort: false, rowsPerPage: MAX_RECORD_PER_PAGE);
             grid.Bind(postViewList, autoSortAndPage: false, rowCount: postList.Count());
             return grid;
         }
