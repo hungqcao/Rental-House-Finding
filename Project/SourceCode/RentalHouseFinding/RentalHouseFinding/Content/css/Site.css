@@ -1565,6 +1565,7 @@ textarea#Description {
     float: right;
     display: block;
     margin: 10px 16px 10px 0;
+    font-size: 0;
 }
 
 .content #btnDangTinNgay {
@@ -1698,6 +1699,7 @@ textarea#Description {
 {
     font-size: 14px;
     display: block;
+    margin: 10px 0;
 }
 
 #leftInfo #accInfo .info 
@@ -1840,12 +1842,6 @@ textarea#Description {
     cursor: pointer;
 }
 
-#leftInfo .title {
-    font-size: 14px;
-    font-style: italic;
-    margin: 10px 0;
-}
-
 #leftInfo .from {
     line-height: 18px;
     margin-bottom: 7px;
@@ -1960,32 +1956,6 @@ textarea#Description {
 
 /* TABLE
 ----------------------------------------------------------*/
-
-table {
-    border: solid 1px #e1e1e1;
-    border-collapse: collapse;
-}
-
-table td {
-    padding: 5px;
-    /*border: dashed 1px #e1e1e1;*/
-    padding: 15px 5px 15px 5px;
-    font-family:Calibri,Sans-Serif;
-    font-size:14px;
-    text-align: center;
-}
-
-table th 
-{
-    font-family:Calibri,Sans-Serif;
-    font-size:14px;
-    padding: 15px 5px 15px 5px;
-    text-align: center;
-    background-color: #FFCC00;
-    border: dashed 1px #4c6066;
-    color:black;
-    font-weight:bold;
-}
 
 /* Message UCP */
 #rightInfo .messages {
@@ -2228,4 +2198,25 @@ a.remove-fav-item-list
     display: block;
     width: 24px;
     height: 24px;
+}
+
+/*Admin style*/
+#content input[type="submit"]
+{
+    background: url("../../Content/images/savepost.png") no-repeat transparent 0px 0px;
+    height: 47px;
+    width: 144px;
+    cursor: pointer;
+    float: right;
+    display: block;
+    margin: 10px 16px 10px 0;
+    font-size: 0;
+}
+#content.admin input[type="text"]
+{
+    border: 1px solid #e1e1e1;
+    padding: 5px;
+    -webkit-border-radius: 5px;
+    -moz-border-radius: 5px;
+    border-radius: 5px;
 }

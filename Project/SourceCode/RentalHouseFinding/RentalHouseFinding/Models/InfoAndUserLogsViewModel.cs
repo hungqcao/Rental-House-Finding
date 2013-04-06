@@ -9,5 +9,6 @@ namespace RentalHouseFinding.Models
     {
         public Users User { get; set; }
         public IEnumerable<UserLogs> UserLogsList { get; set; }
+        public bool IsOpenIdOrFBAcc { get; set; }
     }
 }

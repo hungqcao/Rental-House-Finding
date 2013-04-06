@@ -64,11 +64,9 @@
         <h1 class="blockTitle">1. Thông tin cơ bản</h1>
         <div class="clear"></div>
         <div class="basicInfo">
-            @Html.DropDownListFor(model => model.CategoryId, (IEnumerable<SelectListItem>)ViewBag.CategoryId, new { @class = "select", @id = "ddlOptions" })
-            @Html.DropDownListFor(model => model.ProvinceId, (IEnumerable<SelectListItem>)ViewBag.ProvinceId, new { @id = "ddlCity", @class="select"})
-            @Html.DropDownListFor(model => model.DistrictId,
-                        new SelectList(Enumerable.Empty<SelectListItem>(), "Id", "Name"), "Quận/Huyện",
-                     new { id = "ddlDistrict", @class = "select" })
+            @Html.DropDownListFor(model => model.CategoryId, null, new { @class = "select", @id = "ddlOptions" })
+            @Html.DropDownListFor(model => model.ProvinceId, null, new { @id = "ddlCity", @class="select"})
+            @Html.DropDownListFor(model => model.DistrictId, null, new { id = "ddlDistrict", @class = "select" })
             <div class="clear"></div>
             <div id ="Price" class="field ">
                 <span>Giá tiền (triệu VND/tháng)</span>

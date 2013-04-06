@@ -29,13 +29,11 @@
         <div class="clear"></div>
         <div id="buttonSearch">
             @Html.HiddenFor(model => model.PostIdSuggest)
-	        @Html.DropDownListFor(model => model.CategoryId, (IEnumerable<SelectListItem>)ViewBag.CategoryId, new { @class = "select" })
+	        @Html.DropDownListFor(model => model.CategoryId, null, new { @class = "select" })
             @Html.ValidationMessageFor(model => model.CategoryId)
-            @Html.DropDownListFor(model => model.ProvinceId, (IEnumerable<SelectListItem>)ViewBag.ProvinceId, new { @class = "select" })
+            @Html.DropDownListFor(model => model.ProvinceId, null, new { @class = "select" })
             @Html.ValidationMessageFor(model => model.ProvinceId)   
-	        @Html.DropDownListFor(model => model.DistrictId,
-                new SelectList(Enumerable.Empty<SelectListItem>(), "Id", "Name"), "Quận/Huyện",
-                new { @id = "DistrictId", @class = "select", @style="margin-right:0px" })
+	        @Html.DropDownListFor(model => model.DistrictId, null, new { @id = "DistrictId", @class = "select", @style="margin-right:0px" })
             <div class="clear">
             </div>
         </div>

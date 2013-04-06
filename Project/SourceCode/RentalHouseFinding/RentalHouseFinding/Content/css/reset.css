@@ -39,16 +39,32 @@ q:before, q:after {
 }
 table 
 {
-    background:white;
-	border: 1px solid #6699CC;
-    border-collapse: collapse;
-    font-family: "Lucida Sans Unicode","Lucida Grande",Sans-Serif;
-    font-size: 12px;
-    margin: 0px;
-    text-align: left;
     width: 100%;
+    font-size: 12px;
+    text-align: left;
+    border-collapse: collapse;
+    background-color: White;
+}
+table thead tr
+{
+    background: none !important;
+}
+table th 
+{
+    font-size: 14px;
+    font-weight: bold;
+    padding: 10px 8px;
+    color: #039;
+}
+tr:nth-child(odd)
+{
+    background: #e8edff;
 }
 
+table td {
+    padding: 8px;
+    color: #669;
+}
 /*
  * CSS Styles that are needed by jScrollPane for it to operate correctly.
  *
