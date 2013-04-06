@@ -13,7 +13,7 @@
     <fieldset>
 
         <div class="editor-label">
-            @Html.LabelFor(model => model.Word)
+            @Html.LabelFor(model => model.Word, "Từ")
         </div>
         <div class="editor-field">
             @Html.EditorFor(model => model.Word)
@@ -21,7 +21,7 @@
         </div>
 
         <div class="editor-label">
-            @Html.LabelFor(model => model.TypeId, "BadWordType")
+            @Html.LabelFor(model => model.TypeId, "Phân loại")
         </div>
         <div class="editor-field">
             @Html.DropDownList("TypeId", String.Empty)
@@ -29,11 +29,11 @@
         </div>
 
         <p>
-            <input type="submit" value="Create" />
+            <input type="submit" value="Tạo mới" />
         </p>
     </fieldset>
 }
 
 <div>
-    @Html.ActionLink("Back to List", "Index")
+    @Html.ActionLink("Quay về", "Index")
 </div>

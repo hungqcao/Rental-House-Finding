@@ -14,34 +14,42 @@
 {
     @Html.DropDownList("TypeId",
         (IEnumerable<SelectListItem>)ViewBag.TypesList,
-            "Phân loại từ xấu", new { @class = "select" })
+            "Phân loại", new { @class = "select" })
             <input type="submit" name="Search" value="Search" />
 }
 <table>
     <tr>
         <th>
-            Word
+            STT
         </th>
         <th>
-            BadWordType
+            Từ
+        </th>
+        <th>
+            Phân loại
         </th>
     </tr>
-
-@foreach (var item in Model) {
-    <tr>
-        <td>
-            @Html.ActionLink(item.Word, "Edit", new { id=item.Id })
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.BadWordType.Name)
-        </td>
-    </tr>
+@{
+    int i = 1;
+    foreach (var item in Model) {
+        <tr>
+            <td>
+             @i
+            </td>
+            <td>
+                @Html.ActionLink(item.Word, "Edit", new { id=item.Id })
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.BadWordType.Name)
+            </td>
+        </tr>
+        i += 1;
+    }
 }
-
 </table>
 <br/>
 <p>
-    @Html.ActionLink("Create New", "Create")
+    @Html.ActionLink("Create New", "Tạo mới")
 </p>
 <br />
 <p>

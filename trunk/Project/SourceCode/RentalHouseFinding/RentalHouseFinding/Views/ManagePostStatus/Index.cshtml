@@ -8,27 +8,35 @@
 <table>
     <tr>
         <th>
-            Name
+            STT
         </th>
         <th>
-            Description
+            Phân loại
+        </th>
+        <th>
+            Mô tả
         </th>
     </tr>
-
-@foreach (var item in Model) {
-    <tr>
-        <td>
-            @Html.ActionLink(item.Name, "Edit", new { id=item.Id })
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.Description)
-        </td>
-    </tr>
+@{
+    int i = 1;
+    foreach (var item in Model) {
+        <tr>
+            <td>
+                @i
+            </td>
+            <td>
+                @Html.ActionLink(item.Name, "Edit", new { id=item.Id })
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Description)
+            </td>
+        </tr>
+        i += 1;
+    }
 }
-
 </table>
 <br/>
 
 <p>
-    @Html.ActionLink("Create New", "Create")
+    @Html.ActionLink("Tạo mới", "Create")
 </p>

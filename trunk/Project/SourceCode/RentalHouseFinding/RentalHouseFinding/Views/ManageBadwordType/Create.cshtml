@@ -13,7 +13,7 @@
         <legend>BadWordTypes</legend>
 
         <div class="editor-label">
-            @Html.LabelFor(model => model.Name)
+            @Html.LabelFor(model => model.Name, "Loại")
         </div>
         <div class="editor-field">
             @Html.EditorFor(model => model.Name)
@@ -21,11 +21,11 @@
         </div>
 
         <p>
-            <input type="submit" value="Create" />
+            <input type="submit" value="Tạo mới" />
         </p>
     </fieldset>
 }
 
 <div>
-    @Html.ActionLink("Back to List", "Index")
+    @Html.ActionLink("Quay về", "Index")
 </div>
