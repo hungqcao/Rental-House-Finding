@@ -129,6 +129,7 @@ body{
 	text-decoration:none;
 	font-size: 14px;
 	color:#017171;
+	font-weight:bold;
 }
 /*Intro*/
 #searchInfo{
@@ -240,7 +241,6 @@ a#link1:hover, a#link2:hover, a#link3:hover, a#link4:hover, a#link5:hover
 	position: relative;
 }
 select.select {
-    color: #B3B3B3;
     cursor: pointer;
     font-size: 12px;
     height: 36px !important;
@@ -668,7 +668,7 @@ span.field-validation-error
 }
 #header #favResult {
     background: url("../../Content/images/index_favResult.png") no-repeat transparent 0 0;
-    width: 104px;
+    width: 118px;
     height: 13px;
     cursor: pointer;
     display: block;
@@ -895,7 +895,7 @@ span.field-validation-error
 {
     position:absolute;
     left:226px;
-    top:406px;
+    top:431px;
     }
 /* POPUP */
 
