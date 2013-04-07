@@ -151,7 +151,7 @@ namespace RentalHouseFinding.Models
 
         public string NearByPlace { get; set; }
         public Dictionary<int, string> lstNearByPlace { set; get; }
-        public IEnumerable<HttpPostedFileBase> Images { get; set; }
+        public string ImagesPath { get; set; }
     } 
    
 }

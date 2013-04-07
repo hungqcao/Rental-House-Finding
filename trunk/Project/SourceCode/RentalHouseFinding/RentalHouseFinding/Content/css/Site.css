@@ -880,6 +880,8 @@ span.field-validation-error
 }
 #listInfo .thumbnail {
     margin: 30px 0px 15px 0px;
+    height: 58px;
+    width: 77px;
 }
 #listInfo .infoDetail:hover {
     background-color: #f1f0f1;

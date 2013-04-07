@@ -69,21 +69,23 @@ namespace RentalHouseFinding.Controllers
         [HttpPost]
         public ActionResult Edit(UserViewModel userViewModel)
         {
-            //Get user ID
-            int userId = CommonModel.GetUserIdByUsername(User.Identity.Name);
+            
+                //Get user ID
+                int userId = CommonModel.GetUserIdByUsername(User.Identity.Name);
 
-            //Get user profile
-            var profile = (from p in _db.Users where (p.Id == userId) select p).FirstOrDefault();
+                //Get user profile
+                var profile = (from p in _db.Users where (p.Id == userId) select p).FirstOrDefault();
 
-            profile.PhoneNumber = userViewModel.PhoneNumber;
-            profile.Name = userViewModel.Name;
-            profile.Email = userViewModel.Email;
+                profile.PhoneNumber = userViewModel.PhoneNumber;
+                profile.Name = userViewModel.Name;
+                profile.Email = userViewModel.Email;
 
-            _db.ObjectStateManager.ChangeObjectState(profile, System.Data.EntityState.Modified);
-            _db.SaveChanges();
-            TempData["ProfileChanged"] = true;
-            TempData["MessageChangeUserInfoSuccess"] = "Thay đổi thông tin thành công";
-            return RedirectToAction("Index", "User");
+                _db.ObjectStateManager.ChangeObjectState(profile, System.Data.EntityState.Modified);
+                _db.SaveChanges();
+                TempData["ProfileChanged"] = true;
+                TempData["MessageChangeUserInfoSuccess"] = "Thay đổi thông tin thành công";
+                return RedirectToAction("Index", "User");
+            
         }
 
         [Authorize(Roles = "Admin, User")]
