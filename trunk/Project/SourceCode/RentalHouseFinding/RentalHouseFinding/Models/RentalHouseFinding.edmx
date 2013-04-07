@@ -690,6 +690,9 @@
           <Parameter Name="IsAllowCookingScore" Type="int" Mode="In" />
           <Parameter Name="IsStayWithOwnerScore" Type="int" Mode="In" />
         </Function>
+        <Function Name="ChangeStatusPostWhenExpride" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="statusId" Type="int" Mode="In" />
+        </Function>
         <Function Name="FullTextSearchPostWithWeightenScore" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
           <Parameter Name="CategoryIdPass" Type="int" Mode="In" />
           <Parameter Name="ProvinceIdPass" Type="int" Mode="In" />

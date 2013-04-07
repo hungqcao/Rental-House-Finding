@@ -6,7 +6,9 @@
 }
 <script type="text/javascript">
     function OnSuccess() {
+        $.validator.unobtrusive.parse('form0');
         $("#result").fadeOut();
+        $("#ContentAnswer").val("");
     }
     function OnFailure(ajaxContext) {
         var response = ajaxContext.get_response();
@@ -27,7 +29,7 @@
     <div id="answers">
     @foreach (var item in Model.Answers) {
         <div class="line">
-            <span class="name">Tôi</span>
+            <span class="name">Trả lời:</span>
             <div class="clear"></div>
             <span class="text">@Html.DisplayFor(model => item.Content)</span>
             <span class="text">Ngày trả lời: @Html.DisplayFor(model => item.CreatedDate)</span>
