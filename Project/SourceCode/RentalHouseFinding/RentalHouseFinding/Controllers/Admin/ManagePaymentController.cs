@@ -21,37 +21,33 @@ namespace RentalHouseFinding.Controllers.Admin
         {
             if (page == null)
             {
-                ViewBag.Index = 0;
-                return View();
+                page = 1;
             }
-            else
+            IQueryable<Payments> paymentList = _db.Payments;
+
+            if (model.CreatedDateFrom != null)
             {
-                IQueryable<Payments> paymentList = _db.Payments;
-
-                if (model.CreatedDateFrom != null)
-                {
-                    paymentList = paymentList.Where(p => (EntityFunctions
-                                .DiffDays(p.CreatedDate, model.CreatedDateFrom) <= 0));
-                }
-
-                if (model.CreatedDateTo != null)
-                {
-                    paymentList = paymentList.Where(p => (EntityFunctions
-                                .DiffDays(p.CreatedDate, model.CreatedDateTo) >= 0));
-                }
-
-                IQueryable<Payments> paymentViewList;
-                paymentViewList = (from p in paymentList select p)
-                    .OrderBy(p => p.Id)
-                    .Skip(MAX_RECORD_PER_PAGE * ((int)page - 1))
-                    .Take(MAX_RECORD_PER_PAGE);
-                var grid = new WebGrid(ajaxUpdateContainerId: "container-grid",
-                canSort: false, rowsPerPage: MAX_RECORD_PER_PAGE);
-                grid.Bind(paymentViewList, autoSortAndPage: false, rowCount: paymentList.Count());
-                model.Grid = grid;
-                ViewBag.Index = ((int)page - 1) * MAX_RECORD_PER_PAGE;
-                return View(model);
+                paymentList = paymentList.Where(p => (EntityFunctions
+                            .DiffDays(p.CreatedDate, model.CreatedDateFrom) <= 0));
             }
+
+            if (model.CreatedDateTo != null)
+            {
+                paymentList = paymentList.Where(p => (EntityFunctions
+                            .DiffDays(p.CreatedDate, model.CreatedDateTo) >= 0));
+            }
+
+            IQueryable<Payments> paymentViewList;
+            paymentViewList = (from p in paymentList select p)
+                .OrderBy(p => p.Id)
+                .Skip(MAX_RECORD_PER_PAGE * ((int)page - 1))
+                .Take(MAX_RECORD_PER_PAGE);
+            var grid = new WebGrid(ajaxUpdateContainerId: "container-grid",
+            canSort: false, rowsPerPage: MAX_RECORD_PER_PAGE);
+            grid.Bind(paymentViewList, autoSortAndPage: false, rowCount: paymentList.Count());
+            model.Grid = grid;
+            ViewBag.Index = ((int)page - 1) * MAX_RECORD_PER_PAGE;
+            return View(model);
         }
         [HttpPost]
         public ActionResult Index(ManagePaymentModel model)
