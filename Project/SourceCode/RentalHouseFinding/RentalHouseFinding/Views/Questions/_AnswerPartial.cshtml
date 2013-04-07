@@ -2,12 +2,16 @@
 @{
     int questionId = Convert.ToInt32(ViewData["questionId"]);
 }
+<script src="@Url.Content("~/Scripts/jquery.validate.min.js")" type="text/javascript"></script>
+<script src="@Url.Content("~/Scripts/jquery.validate.unobtrusive.min.js")" type="text/javascript"></script>
 <script src="@Url.Content("~/Scripts/jquery.unobtrusive-ajax.min.js")" type="text/javascript"></script>
 <script type="text/javascript">
     $(document).ready(function () {
         $("#result").fadeOut();
         $("#sendBtn").click(function () {
-            $("#result").fadeIn();
+            if ($("#ContentAnswer").val().length != 0) {
+                $("#result").fadeIn();
+            }
             return true;
         }
     );
@@ -19,8 +23,11 @@
     <div class="clear"></div>
     @Html.ValidationSummary(true)
     <input id = "QuestionId" name="QuestionId" value="@questionId" type="hidden" />
-    @Html.TextBoxFor(model => model.ContentAnswer, new { @id = "messageInput" })
-    @Html.ValidationMessageFor(model => model.ContentAnswer)
+    @Html.TextBoxFor(model => model.ContentAnswer)
     <input type="submit" value="" id="sendBtn"/>
+    <div class="clear"></div>
+    <div style="margin-left:25px;">
+        @Html.ValidationMessageFor(model => model.ContentAnswer)
+    </div>
 }
 

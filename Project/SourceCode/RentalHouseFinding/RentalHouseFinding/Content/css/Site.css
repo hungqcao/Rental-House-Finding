@@ -2356,3 +2356,12 @@ a.button-link:active {
     background: #2E5481;
     border: solid 1px #e1e1e1;
 }
+.state-read-False
+{
+    background-color: #FFCC99;
+    border-bottom: 1px solid #fff;
+}
+.state-read-True
+{
+    background-color: #FFF;
+}

@@ -109,14 +109,17 @@
     <Compile Include="Controllers\Admin\ManagePostsController.cs" />
     <Compile Include="Controllers\Admin\ManageScoreConfigController.cs" />
     <Compile Include="Controllers\Common\AdvancedSearchController.cs" />
+    <Compile Include="Controllers\Common\ErrorController.cs" />
     <Compile Include="Controllers\Common\PostController.cs" />
     <Compile Include="Controllers\Common\PostEditController.cs" />
     <Compile Include="Controllers\Common\HomeController.cs" />
+    <Compile Include="Controllers\Common\SMSController.cs" />
     <Compile Include="Controllers\User\QuestionsController.cs" />
     <Compile Include="Controllers\User\UserController.cs" />
     <Compile Include="Controllers\Common\ValidationController.cs" />
     <Compile Include="Models\AnswerViewModel.cs" />
     <Compile Include="Models\CaptchaImageResult.cs" />
+    <Compile Include="Models\ErrorModel.cs" />
     <Compile Include="Models\FacebookLoginModel.cs" />
     <Compile Include="Models\InfoAndUserLogsViewModel.cs" />
     <Compile Include="Models\ManagePaymentModel.cs" />
@@ -149,6 +152,7 @@
       <AutoGen>True</AutoGen>
     </Compile>
     <Compile Include="Models\SearchViewModel.cs" />
+    <Compile Include="Models\SMSModel.cs" />
     <Compile Include="Models\UserViewModel.cs">
       <SubType>Code</SubType>
     </Compile>
@@ -701,6 +705,10 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="Views\ManageBadpost\ViewImage.cshtml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Views\SMS\Index.cshtml" />
+    <Content Include="Views\SMS\SMSActive.cshtml" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <Import Project="$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v10.0\WebApplications\Microsoft.WebApplication.targets" />

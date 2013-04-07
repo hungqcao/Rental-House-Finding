@@ -7,9 +7,10 @@
     $(function () {
         $('.infoDetail').click(function () {
             $('#rightInfo').html('<strong>Loading...</strong>');
-                $.post('@Url.Content("~/Questions/Details/")' + $(this).attr("id"), function (data) {
-                    $('#rightInfo').html(data);
-                });
+            $.post('@Url.Content("~/Questions/Details/")' + $(this).attr("id"), function (data) {
+                $('#rightInfo').html(data);
+            });
+            $(this).removeClass('state-read-False');
         });
     });
     
@@ -23,9 +24,10 @@
         <div class="scroll-panel" style="overflow: auto; width: 340px; height: 556px;">
             @foreach (var item in Model)
             {
-                <div id="@item.Id" class="infoDetail left" style="font-size:13px;">
+                <div id="@item.Id" class="infoDetail left state-read-@item.IsRead" style="font-size:13px;">
                     <div class="text left">
-                        <span class="title left" style="width:100%"><strong>@item.Title</strong></span>
+                        <span class="title left" style="width:100%; font-size:15px;margin-bottom: 10px"><strong>@item.Title</strong></span>
+                        
                         <span class="from left">Từ bài đăng: @item.Post.Title</span> 
                         <span class="time left">Thời gian: @item.CreatedDate</span>
                         <span class="sender left">Người gửi: @item.SenderEmail</span>
