@@ -9,8 +9,10 @@ namespace RentalHouseFinding.Models
 {
     public class SMSModel
     {
-        [Required(ErrorMessage = "Xin vui lòng nhập Số điện thoại")]
+        [Required(ErrorMessage = "Xin vui lòng nhập số điện thoại.")]
         [Display(Name = "Số điện thoại")]
+        [MaxLength(15, ErrorMessage = "Không được vượt quá 15 ký tự, xin vui lòng nhập lại.")]
+        [RegularExpression("(([0+])([0-9]+))", ErrorMessage = "Sai định dạng,xin vui lòng nhập lại")]
         public string PhoneNumber { get; set; }
 
         [Required(ErrorMessage = "Xin vui lòng nhập nội dung theo cú pháp: MS Mã tin")]
