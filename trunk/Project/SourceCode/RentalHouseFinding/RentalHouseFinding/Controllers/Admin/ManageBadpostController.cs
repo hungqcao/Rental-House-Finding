@@ -63,7 +63,7 @@ namespace RentalHouseFinding.Controllers.Admin
             var grid = new WebGrid(ajaxUpdateContainerId: "container-grid",
             canSort: false, rowsPerPage: MAX_RECORD_PER_PAGE);
             grid.Bind(postViewList, autoSortAndPage: false, rowCount: postsList.Count());
-
+            ViewBag.Index = ((int)page - 1) * MAX_RECORD_PER_PAGE;
             ViewBag.Grid = grid;
             return View();
         }
