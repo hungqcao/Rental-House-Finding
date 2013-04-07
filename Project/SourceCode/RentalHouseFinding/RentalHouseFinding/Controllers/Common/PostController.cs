@@ -169,6 +169,7 @@ namespace RentalHouseFinding.Controllers
             {
                 try
                 {
+                    bool suscess = false;
                     string strExpiredDate = Repository.GetAllConfiguration().Where(c => c.Name.Equals(ConstantCommonString.EXPIRED_DATE, StringComparison.CurrentCultureIgnoreCase)).Select(c => c.Value).FirstOrDefault().ToString();
                     int numberExpiredDate = 0;
                     int.TryParse(strExpiredDate, out numberExpiredDate);
@@ -189,6 +190,7 @@ namespace RentalHouseFinding.Controllers
                         postToCreate.StatusId = 1;
                         TempData["MessageSuccessPostNew"] = "Đăng bài thành công, chúng tôi sẽ gửi tin nhắn đến số điện thoại bạn đã cung cấp";
                         TempData["Success"] = true;
+                        suscess = true;                        
                     }
 
                     int userId;
@@ -244,8 +246,11 @@ namespace RentalHouseFinding.Controllers
                             }
                         }
                     }
-                    //Send SMS RenewCode.
-                    CommonController.SendSMS(postToCreate.PhoneActive,String.Format("Ban da dang bai thanh cong.Ma kich hoat cua ban la: {0}",postToCreate.Code));
+                    if (suscess)
+                    {
+                        //Send SMS RenewCode.
+                        CommonController.SendSMS(postToCreate.PhoneActive, String.Format("Ban da dang bai thanh cong.Ma kich hoat cua ban la: {0}", postToCreate.Code));
+                    }
                     return RedirectToAction("Details", "Post", new { id = postToCreate.Id });
                 }
                 catch (Exception ex)

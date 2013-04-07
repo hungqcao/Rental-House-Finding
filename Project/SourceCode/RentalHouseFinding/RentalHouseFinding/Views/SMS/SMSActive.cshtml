@@ -1,0 +1,26 @@
+﻿@model RentalHouseFinding.Models.SMSModel
+@{
+    ViewBag.Title = "SMSActive";
+}
+<script src="@Url.Content("~/Scripts/jquery.validate.min.js")" type="text/javascript"></script>
+<script src="@Url.Content("~/Scripts/jquery.validate.unobtrusive.min.js")" type="text/javascript"></script>
+<h2>SMSActive</h2>
+@using (Html.BeginForm()) {
+    @Html.ValidationSummary(true)
+    <fieldset>        
+   @Html.LabelFor(model => model.PhoneNumber)
+        <div class="editor-label">
+            @Html.TextBoxFor(model => model.PhoneNumber)
+             @Html.ValidationMessageFor(model => model.PhoneNumber)
+        </div>
+        @Html.LabelFor(model => model.ContentSMS)
+        <div class="editor-field">
+            @Html.TextAreaFor(model => model.ContentSMS, new { @placeholder = "Cú pháp: MS [Mã tin] Vd: MS jhKs" })
+            @Html.ValidationMessageFor(model => model.ContentSMS)
+        </div>
+
+        <p>
+            <input type="submit" value="Send" style="cursor:pointer" />
+        </p>
+    </fieldset>
+}

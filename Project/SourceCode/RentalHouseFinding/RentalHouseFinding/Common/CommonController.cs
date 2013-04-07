@@ -87,29 +87,7 @@ namespace RentalHouseFinding.Common
 
         public static bool SendSMS(string phoneNumber, string message)
         {
-            //phoneNumber = phoneNumber.Remove(0, 1);
-            ////string appID = "rn6q83R8ua5ApnNZ";
-            ////string accessToken = "vgm40ZxtuKNGMolu";
-            ////string senderName = "5HOUSE";
-            ////string URL = String.Format("https://secure.hoiio.com/open/sms/send?app_id={0}&access_token={1}&sender_name={2}&dest=%2B84{3}&msg={4}",appID,accessToken,senderName,phoneNumber,message);
-            ////HttpWebRequest r = (HttpWebRequest)WebRequest.Create(URL);
-            ////WebProxy myproxy = new WebProxy("proxy", 8080);
-            ////r.Proxy = myproxy;
-            ////r.Method = "Get";
-            ////HttpWebResponse res = (HttpWebResponse)r.GetResponse();
-            ////Stream dataStream = res.GetResponseStream();
-            ////// Open the stream using a StreamReader for easy access.
-            ////StreamReader reader = new StreamReader(dataStream);
-            ////// Read the content.
-            ////string responseFromServer = reader.ReadToEnd();
-            ////// Display the content.
-            //////Console.WriteLine(responseFromServer);
-            ////// Cleanup the streams and the response.
-
-            ////reader.Close();
-            ////dataStream.Close();
-            ////res.Close();
-
+            //phoneNumber = phoneNumber.Remove(0, 1);            
             //string URLString = "http://api.gateway160.com/client/sendmessage";
             ////string[] param = new string[] { "MyAccount", "key", "16472876789", "US", Url.Encode("Hello world"), "0" };
             //string account = "5house";
