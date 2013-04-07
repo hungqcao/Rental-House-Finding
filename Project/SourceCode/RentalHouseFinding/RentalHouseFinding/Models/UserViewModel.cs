@@ -9,6 +9,7 @@ namespace RentalHouseFinding.Models
     using System.ComponentModel.DataAnnotations;
     using System.Runtime.Serialization;
     using System.Web.Mvc;
+    using RentalHouseFinding.ValidateAttr;
     [KnownType(typeof(UserViewModel))]
     public class UserViewModel
     {
@@ -22,8 +23,11 @@ namespace RentalHouseFinding.Models
         public string UserName { get; set; }
 
         [Display(Name = "Email")]
+        [RequiredIfOtherFieldIsNull("PhoneNumber")]
         [MaxLength(50, ErrorMessage = "Không được vượt quá 50 ký tự, xin vui lòng nhập lại.")]
+        //[Required(ErrorMessage = "Xin vui lòng nhập email.")]
         [RegularExpression(@"\w+([-+.']\w+)*@\w+([-.]\w+)*\.\w+([-.]\w+)*", ErrorMessage = "Email không hợp lệ.")]
+        [Remote("IsEmailEditAvailable", "Validation", AdditionalFields = "UserName")]
         public string Email { get; set; }
 
         [Required(ErrorMessage = "Xin vui lòng nhập mật khẩu.")]
@@ -40,6 +44,7 @@ namespace RentalHouseFinding.Models
         [Display(Name = "Số điện thoại")]
         [MaxLength(15, ErrorMessage = "Không được vượt quá 15 ký tự, xin vui lòng nhập lại.")]
         [RegularExpression("(([0+])([0-9]+))", ErrorMessage = "Sai định dạng,xin vui lòng nhập lại")]
+        [RequiredIfOtherFieldIsNull("Email")]
         public string PhoneNumber { get; set; }
 
         [Display(Name = "Địa chỉ")]

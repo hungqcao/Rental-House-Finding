@@ -14,7 +14,15 @@
                 <div  class="left"><span class="highlight">@Html.DisplayFor(modelItem => item.Price)</span><span class="hlText">&nbsp;triệu VND</span></div>
                 <div class="right"><span class="highlight">@Html.DisplayFor(modelItem => item.Area)</span><span class="hlText">&nbsp;m2</span></div>
             </div>
-            <img class="thumbnail right" src="@Url.Content("~/Content/images/thumbSample.png")" alt="image_sample"/>
+            @if (String.IsNullOrEmpty(item.ImagesPath))
+            {
+                <img class="thumbnail right" src="@Url.Content("~/Content/images/thumbSample.png")" alt="image_sample"/>
+            }
+            else
+            {
+                <img class="thumbnail right" src="@Url.Content(String.Format("~/{0}",item.ImagesPath))" alt="image_sample"/>
+            } 
+            
         </a>
     </li>
 }

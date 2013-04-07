@@ -176,7 +176,9 @@ namespace RentalHouseFinding.Common
 
         public static PostViewModel ConvertPostToPostViewModel(Posts model, string noInformation)
         {
+            RentalHouseFindingEntities _db = new RentalHouseFindingEntities();
             string createBy = model.UserId == null ? string.Empty : model.User.Username;
+            var imagesPath = (from i in _db.PostImages where (i.PostId == model.Id && !i.IsDeleted) select i.Path).FirstOrDefault();
             return new PostViewModel
             {
                 Id = model.Id,
@@ -228,7 +230,8 @@ namespace RentalHouseFinding.Common
                 UserId = model.UserId,
                 NameContact = model.Contacts.NameContact.Equals(noInformation, StringComparison.CurrentCultureIgnoreCase) ? string.Empty : model.Contacts.NameContact,
                 NearByPlace = model.NearbyPlace.Equals(noInformation, StringComparison.CurrentCultureIgnoreCase) ? string.Empty : model.NearbyPlace,
-                lstNearByPlace = GetDictionaryNearybyPlace(model.Id)
+                lstNearByPlace = GetDictionaryNearybyPlace(model.Id),
+                ImagesPath = imagesPath
             };
         }
 
@@ -344,7 +347,28 @@ namespace RentalHouseFinding.Common
                 }
                 else
                 {
-
+                    return false;
+                }
+            }
+        }
+        //check Email exit in Edit user info page.
+        public static bool CheckEmail(string email, string userName)
+        {
+            using (RentalHouseFindingEntities _db = new RentalHouseFindingEntities())
+            {
+                var userId = (from u in _db.Users
+                              where u.Email.Equals(email, StringComparison.CurrentCultureIgnoreCase) && !u.IsDeleted
+                              select u.Id).FirstOrDefault();
+                var currentUserId = (from u in _db.Users
+                              where u.Username.Equals(userName) && !u.IsDeleted
+                              select u.Id).FirstOrDefault();
+                if (userId != 0 && userId != currentUserId)
+                {
+                    //UserName is existed 
+                    return true;
+                }
+                else
+                {
                     return false;
                 }
             }

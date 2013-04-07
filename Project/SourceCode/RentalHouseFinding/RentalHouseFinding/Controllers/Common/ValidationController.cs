@@ -29,6 +29,15 @@ namespace RentalHouseFinding.Controllers
             }
             return Json(true, JsonRequestBehavior.AllowGet);
         }
+        //for validate email at Edit user info.
+        public JsonResult IsEmailEditAvailable(string Email, string UserName)
+        {
+            if (CommonModel.CheckEmail(Email, UserName))
+            {
+                return Json("Địa chỉ Email này đã được sử dụng", JsonRequestBehavior.AllowGet);
+            }
+            return Json(true, JsonRequestBehavior.AllowGet);
+        }
 
         public JsonResult AreaMaxGreaterThanAreaMin(float AreaMax, float? AreaMin)
         {

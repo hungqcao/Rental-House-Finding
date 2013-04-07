@@ -89,10 +89,24 @@
         $.getJSON("home/GetLatLonFromResult",
             function (myData) {
                 source = myData;
-                var oms = new OverlappingMarkerSpiderfier(window.map);
+                var oms = new OverlappingMarkerSpiderfier(window.map,
+        { markersWontMove: true, markersWontHide: true });
+
+                
                 var markerImg = new google.maps.MarkerImage(imageInactive);
                 var altMarkerImg = new google.maps.MarkerImage(imageActive);
                 var ib = new InfoBox();
+                oms.addListener('spiderfy', function (markers) {
+                    for (var i = 0; i < markers.length; i++) {
+                        markers[i].setShadow(null);
+                    }
+                    ib.close();
+                });
+                oms.addListener('unspiderfy', function (markers) {
+                    for (var i = 0; i < markers.length; i++) {
+                        markers[i].setShadow(markerImg);
+                    }
+                });
                 $.each(source, function (index, itemData) {
                     if (itemData.Text.length != 0) {
                         marker = new google.maps.Marker({
