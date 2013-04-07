@@ -160,7 +160,18 @@ namespace RentalHouseFinding.Sercurity
                         //add user info
                         Users user = new Users();
                         user.OpenIdURL = model.id;
-                        user.Name = model.first_name + " " + model.last_name;                        
+                        // try get name.
+                        string name = String.Format("{0} {1}", model.first_name ,model.last_name).Trim();
+                        if (name.Length >= 3)
+                        {
+                            user.Name = name;
+                        }
+                        else
+                        {
+                            // cant get Name. Split email pass to name.
+                            user.Name = String.IsNullOrEmpty(model.email) ? model.id : model.email.ToLower().Split('@')[0];
+                        }
+                        
                         user.IsDeleted = false;
                         if (type == 1)
                         {

@@ -8,7 +8,6 @@
 <script src="@Url.Content("~/Scripts/jquery.validate.unobtrusive.min.js")" type="text/javascript"></script>
 <script src="@Url.Content("~/Scripts/jquery-ui-1.8.11.min.js")" type="text/javascript"></script>
 <script src="@Url.Content("~/Scripts/markerclusterer.js")" type="text/javascript"></script>
-
 <script src="@Url.Content("~/Scripts/RHFScripts.js")" type="text/javascript"></script> 
 <link rel="stylesheet" href="http://code.jquery.com/ui/1.10.1/themes/base/jquery-ui.css" />
 @*Group Marker*@
@@ -81,13 +80,16 @@
         scriptInfobox.src = '@Url.Content("~/Content/js/infobox.js")';
 
         document.body.appendChild(scriptInfobox);
+        var scriptOverlap = document.createElement('script');
+        scriptOverlap.type = 'text/javascript';
+        scriptOverlap.src = '@Url.Content("~/Content/js/oms.min.js")';
 
-
-
+        document.body.appendChild(scriptOverlap);        
+        
         $.getJSON("home/GetLatLonFromResult",
             function (myData) {
                 source = myData;
-
+                var oms = new OverlappingMarkerSpiderfier(window.map);
                 var markerImg = new google.maps.MarkerImage(imageInactive);
                 var altMarkerImg = new google.maps.MarkerImage(imageActive);
                 var ib = new InfoBox();
@@ -126,7 +128,7 @@
 			                        , pixelOffset: new google.maps.Size(-77, 0)
 			                        , zIndex: null
 			                        , boxStyle: {
-			                            background: "url("+ url + ") no-repeat 71px 0px transparent"
+			                            background: "url(" + url + ") no-repeat 71px 0px transparent"
 			                          , opacity: 1
 			                          , width: "152px"
 			                        }
@@ -137,7 +139,7 @@
 			                        , pane: "floatPane"
 			                        , enableEventPropagation: false
                                 };
-			                    //--End
+                                //--End
                                 ib.close();
                                 ib.setOptions(myOptions)
                                 ib.open(window.map, this);
@@ -145,14 +147,15 @@
                         })(marker, i));
                         window.markers1.marker.push({ "id": itemData.Value, "value": marker });
                         markers.push(marker);
+                        oms.addMarker(marker);
                     }
                 });
                 var markerCluster = new MarkerClusterer(window.map, markers, {
                     zoomOnClick: true,
                     maxZoom: 14,
                     gridSize: 30
-                });                                
-                
+                });
+
             });
     }
 
