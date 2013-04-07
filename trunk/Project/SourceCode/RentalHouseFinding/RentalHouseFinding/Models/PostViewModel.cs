@@ -103,7 +103,8 @@ namespace RentalHouseFinding.Models
         public Boolean IsStayWithOwner { get; set; }
 
         [Display(Name = "Giờ đóng cửa")]
-        public double RestrictHours { get; set; }
+        [MaxLength(50, ErrorMessage = "Không được vượt quá 50 ký tự, xin vui lòng nhập lại.")]
+        public string RestrictHours { get; set; }
 
         [Display(Name = "Có bảo vệ?")]
         public Boolean HasSecurity { get; set; }

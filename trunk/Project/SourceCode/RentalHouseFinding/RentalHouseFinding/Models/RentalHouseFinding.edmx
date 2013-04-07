@@ -220,7 +220,7 @@
           <Property Name="HasAirConditioner" Type="bit" Nullable="false" />
           <Property Name="HasGarage" Type="bit" Nullable="false" />
           <Property Name="IsStayWithOwner" Type="bit" Nullable="false" />
-          <Property Name="RestrictHours" Type="float" Nullable="false" />
+          <Property Name="RestrictHours" Type="nvarchar" MaxLength="50" />
           <Property Name="HasSecurity" Type="bit" Nullable="false" />
           <Property Name="PostIdFacilities" Type="int" Nullable="false" />
           <Property Name="FacilityTemplateId" Type="int" Nullable="false" />
@@ -1137,7 +1137,7 @@
           <Property Name="HasAirConditioner" Nullable="false" Type="Boolean" />
           <Property Name="HasGarage" Nullable="false" Type="Boolean" />
           <Property Name="IsStayWithOwner" Nullable="false" Type="Boolean" />
-          <Property Name="RestrictHours" Nullable="false" Type="Double" />
+          <Property Name="RestrictHours" Nullable="true" Type="String" MaxLength="50" />
           <Property Name="HasSecurity" Nullable="false" Type="Boolean" />
           <Property Name="PostIdFacilities" Nullable="false" Type="Int32" />
           <NavigationProperty Name="Post" Relationship="RentalHouseFinding.PostsFacilities" FromRole="Facilities" ToRole="Posts" />

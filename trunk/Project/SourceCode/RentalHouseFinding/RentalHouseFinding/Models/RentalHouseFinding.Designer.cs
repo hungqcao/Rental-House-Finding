@@ -2467,11 +2467,10 @@ namespace RentalHouseFinding.Models
         /// <param name="hasAirConditioner">Initial value of the HasAirConditioner property.</param>
         /// <param name="hasGarage">Initial value of the HasGarage property.</param>
         /// <param name="isStayWithOwner">Initial value of the IsStayWithOwner property.</param>
-        /// <param name="restrictHours">Initial value of the RestrictHours property.</param>
         /// <param name="hasSecurity">Initial value of the HasSecurity property.</param>
         /// <param name="postIdFacilities">Initial value of the PostIdFacilities property.</param>
         /// <param name="facilityTemplateId">Initial value of the FacilityTemplateId property.</param>
-        public static Facilities CreateFacilities(global::System.Boolean hasInternet, global::System.Double electricityFee, global::System.Double waterFee, global::System.Boolean hasTVCable, global::System.Boolean hasBed, global::System.Boolean hasWaterHeater, global::System.Boolean isAllowCooking, global::System.Boolean hasMotorParkingLot, global::System.Boolean hasToilet, global::System.Boolean hasAirConditioner, global::System.Boolean hasGarage, global::System.Boolean isStayWithOwner, global::System.Double restrictHours, global::System.Boolean hasSecurity, global::System.Int32 postIdFacilities, global::System.Int32 facilityTemplateId)
+        public static Facilities CreateFacilities(global::System.Boolean hasInternet, global::System.Double electricityFee, global::System.Double waterFee, global::System.Boolean hasTVCable, global::System.Boolean hasBed, global::System.Boolean hasWaterHeater, global::System.Boolean isAllowCooking, global::System.Boolean hasMotorParkingLot, global::System.Boolean hasToilet, global::System.Boolean hasAirConditioner, global::System.Boolean hasGarage, global::System.Boolean isStayWithOwner, global::System.Boolean hasSecurity, global::System.Int32 postIdFacilities, global::System.Int32 facilityTemplateId)
         {
             Facilities facilities = new Facilities();
             facilities.HasInternet = hasInternet;
@@ -2486,7 +2485,6 @@ namespace RentalHouseFinding.Models
             facilities.HasAirConditioner = hasAirConditioner;
             facilities.HasGarage = hasGarage;
             facilities.IsStayWithOwner = isStayWithOwner;
-            facilities.RestrictHours = restrictHours;
             facilities.HasSecurity = hasSecurity;
             facilities.PostIdFacilities = postIdFacilities;
             facilities.FacilityTemplateId = facilityTemplateId;
@@ -2787,9 +2785,9 @@ namespace RentalHouseFinding.Models
         /// <summary>
         /// No Metadata Documentation available.
         /// </summary>
-        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=false)]
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=true)]
         [DataMemberAttribute()]
-        public global::System.Double RestrictHours
+        public global::System.String RestrictHours
         {
             get
             {
@@ -2799,13 +2797,13 @@ namespace RentalHouseFinding.Models
             {
                 OnRestrictHoursChanging(value);
                 ReportPropertyChanging("RestrictHours");
-                _RestrictHours = StructuralObject.SetValidValue(value);
+                _RestrictHours = StructuralObject.SetValidValue(value, true);
                 ReportPropertyChanged("RestrictHours");
                 OnRestrictHoursChanged();
             }
         }
-        private global::System.Double _RestrictHours;
-        partial void OnRestrictHoursChanging(global::System.Double value);
+        private global::System.String _RestrictHours;
+        partial void OnRestrictHoursChanging(global::System.String value);
         partial void OnRestrictHoursChanged();
     
         /// <summary>

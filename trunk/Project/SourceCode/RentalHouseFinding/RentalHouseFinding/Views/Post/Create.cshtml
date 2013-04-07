@@ -337,7 +337,7 @@
                     @Html.ValidationMessageFor(model => model.PhoneContact)
                 </div>
                 <div class="infoElement requiredField">
-                    <label>Điện thoại kích hoạt</label>
+                    <label>Điện thoại nhận mã kích hoạt</label>
 
                     <div class="clear"></div>
                     @Html.TextBoxFor(model => model.PhoneActive, new { @class = "tbx" })
@@ -376,8 +376,6 @@
             </div>
             <div class="pnRight">
                 <label>Vị trí trên bản đồ</label>
-
-                <br />
                 <h2 style="color: #888888; font-weight: 400; font-style: italic; margin-top: 5px;">Hệ thống sẽ tự động xác định địa chỉ bạn cung cấp. Bạn có thể chọn một cách chính xác vị trí bạn mong muốn trên bản đồ dưới đây:</h2>
                 <div class="clear"></div>
                 <div class="map">
@@ -391,7 +389,7 @@
                             @Html.ValidationMessageFor(Model => Model.Lon)
                         </div>
                     </div>
-                <label>Ảnh, video minh hoạ</label>
+                <label>Hình ảnh minh hoạ</label>
 
                 <div class="clear"></div>
                 <div class="btnPlus">
@@ -410,7 +408,7 @@
                 <div class="tips">
                     <span id="tip1">Để có bài đăng chi tiết và hiệu quả nhất hãy hoàn thành phần thông tin chi tiết này.</span>
                     <br/>
-                    <span id="tip2">Ấn nút mũi tên màu bạc để tiếp tục cung cấp thông tin hoặc ấn nút màu cam để bỏ qua bước này và đăng tin ngay!</span>
+                    <span id="tip2">Hãy tiếp tục cung cấp thông tin chi tiết hơn cho bài đăng hoặc ấn nút màu cam để bỏ qua bước này và đăng tin ngay!</span>
                 </div>
                 <div class="clear"></div>
             </div>
