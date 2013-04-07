@@ -1,9 +1,18 @@
-﻿@model System.Web.Mvc.HandleErrorInfo
+﻿@model RentalHouseFinding.Models.ErrorModel
 
 @{
-    ViewBag.Title = "Error";
+    Layout = "~/Views/Shared/_Layout.cshtml";
 }
+ 
+<h3>Có lỗi xảy ra trong quá trình xử lí</h3>
 
-<h2>
-    Sorry, an error occurred while processing your request.
-</h2>
+<br/>
+
+<h2>@Model.ErrorTitle</h2>
+ 
+<br />
+ 
+@if (Model.ExceptionDetail != null)
+{
+      @Model.ExceptionDetail.Message
+}
