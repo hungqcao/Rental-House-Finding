@@ -452,12 +452,16 @@
                         {
                             <input id="osSites" type="text" name="tag[@kvp.Key-a]" value="@kvp.Value" class="tag"/>
                         }
+                        @if (Model.lstNearByPlace.Count == 0)
+                        {
+                            <input id="osSites" type="text" name="tag[]" value="" class="tag"/>
+                        }
                     </div>
                 </div>
                 <div class="clear"></div>
             </div>
-        <a id="btnDelete" href="/postedit/delete/@Model.Id" onclick=" return confirm('Bạn có chắc chắn muốn xóa bài viết này?');" >Xóa</a>
-        <input id="btnSaveInfo" type="submit" value=""/>
+        <input id="btnSaveInfo" type="submit" class="button-link right" value="Chấp nhận"/>
+        <a id="btnDelete" href="/postedit/delete/@Model.Id" onclick=" return confirm('Bạn có chắc chắn muốn xóa bài viết này?');" class="button-link right">Xóa</a>
         <div class="clear"></div>
     </div>
 }

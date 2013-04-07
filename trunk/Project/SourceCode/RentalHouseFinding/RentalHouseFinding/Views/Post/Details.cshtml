@@ -43,9 +43,9 @@
             </div>
         </div>
     }
-    @if (TempData["Success"] != null)
+    else if(TempData["Success"] != null)
     {
-        if ((bool)TempData["Success"] && TempData["Success"] != null)
+        if ((bool)TempData["Success"] && TempData["MessageSuccessPostNew"] != null)
         {
             <div class="message-notification success">
                 <a class="close" id="btnCloseDiv"></a>
@@ -55,9 +55,9 @@
             </div>
         }
     }
-    @if (TempData["Pending"] != null)
+    @if(TempData["Success"] != null)
     {
-        if ((bool)TempData["Pending"])
+        if ((bool)TempData["Pending"] && TempData["MessagePendingPostNew"] != null)
         {
             <div class="message-notification message-information">
                 <a class="close" id="btnCloseDiv"></a>

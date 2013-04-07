@@ -15,8 +15,6 @@ namespace RentalHouseFinding
 
     public class MvcApplication : System.Web.HttpApplication
     {
-        private readonly ILog log = LogManager.GetLogger(MethodBase.GetCurrentMethod().DeclaringType);
-
         public static void RegisterGlobalFilters(GlobalFilterCollection filters)
         {
             filters.Add(new HandleErrorAttribute());

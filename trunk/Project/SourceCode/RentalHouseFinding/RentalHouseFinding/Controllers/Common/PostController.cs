@@ -183,6 +183,7 @@ namespace RentalHouseFinding.Controllers
                         postToCreate.StatusId = 2;
                         TempData["MessagePendingPostNew"] = "Bài đăng có chứa những từ không cho phép, chúng tôi sẽ duyệt trước khi đăng lên hệ thống";
                         TempData["Pending"] = true;
+                        TempData["Success"] = false;
                     }
                     else
                     {
@@ -191,6 +192,7 @@ namespace RentalHouseFinding.Controllers
                         TempData["MessageSuccessPostNew"] = "Đăng bài thành công, chúng tôi sẽ gửi tin nhắn đến số điện thoại bạn đã cung cấp";
                         TempData["Success"] = true;
                         suscess = true;                        
+                        TempData["Pending"] = false;
                     }
 
                     int userId;
@@ -203,7 +205,7 @@ namespace RentalHouseFinding.Controllers
                     _db.SaveChanges();
 
                     //Nearby places
-                    Dictionary<int, string> lstNearbyId = GetListNearbyLocations(model);
+                    Dictionary<int, string> lstNearbyId = CommonController.GetListNearbyLocations(model, Request);
                     PostLocations postLocation;
                     string nearbyPlace = string.Empty;
                     foreach (KeyValuePair<int,string> kvp in lstNearbyId)
@@ -213,11 +215,11 @@ namespace RentalHouseFinding.Controllers
                         postLocation.LocationId = kvp.Key;
                         _db.PostLocations.AddObject(postLocation);
                         _db.SaveChanges();
-                        nearbyPlace += kvp.Value + ",";
+                        nearbyPlace += kvp.Value + ", ";
                     }
                     if (!string.IsNullOrEmpty(nearbyPlace))
                     {
-                        nearbyPlace = nearbyPlace.Remove(nearbyPlace.Length - 1);
+                        nearbyPlace = nearbyPlace.Remove(nearbyPlace.Length - 2);
                         postToCreate.NearbyPlace = nearbyPlace;
                         _db.ObjectStateManager.ChangeObjectState(postToCreate, System.Data.EntityState.Modified);
                         _db.SaveChanges();
@@ -339,11 +341,12 @@ namespace RentalHouseFinding.Controllers
                         post.StatusId = 2;
                         TempData["MessagePendingPostNew"] = "Bài đăng có chứa những từ không cho phép, chúng tôi sẽ duyệt trước khi đăng lên hệ thống";
                         TempData["Pending"] = true;
+                        TempData["Success"] = false;
                     }
                     post = CommonModel.ConvertPostViewModelToPost(post, postViewModel, post.CreatedDate, DateTime.Now, DateTime.Now, _noInfo);
                     
 
-                    Dictionary<int, string> lstNearbyId = GetListNearbyLocations(postViewModel);
+                    Dictionary<int, string> lstNearbyId = CommonController.GetListNearbyLocations(postViewModel, Request);
                     PostLocations postLocation;
                     string nearbyPlace = string.Empty;
                     Locations loc = null;
@@ -435,52 +438,8 @@ namespace RentalHouseFinding.Controllers
             }
             catch
             {
-                return View();
-            }
-        }
-
-        private Dictionary<int, string> GetListNearbyLocations(PostViewModel model)
-        {
-            try
-            {
-                Dictionary<int, string> lstReturn = new Dictionary<int, string>();
-                int id;
-                Locations location;
-                for (int i = 0; i < Request.Form.Keys.Count; i++)
-                {
-                    if (Request.Form.Keys[i].Contains("tag["))
-                    {
-                        if (Request.Form.Keys[i].Equals("tag[]", StringComparison.CurrentCultureIgnoreCase))
-                        {
-                            string[] lstValue = Request.Form[i].Trim().Split(',');
-                            foreach (string item in lstValue)
-                            {
-                                if (!string.IsNullOrEmpty(item))
-                                {
-                                    location = new Locations();
-                                    location.DistrictId = model.DistrictId;
-                                    //1 for Create by User
-                                    location.IsCreatedByUser = true;
-                                    location.Name = item;
-                                    _db.Locations.AddObject(location);
-                                    _db.SaveChanges();
-                                    lstReturn.Add(location.Id, location.Name);
-                                }
-                            }
-                        }
-                        else
-                        {
-                            string idValue = Request.Form.Keys[i].Split('-')[0].Split('[')[1];
-                            int.TryParse(idValue, out id);
-                            lstReturn.Add(id, Request.Form[i].Trim());
-                        }
-                    }
-                }
-                return lstReturn;
-            }
-            catch
-            {
-                return null;
+                //Error
+                return RedirectToAction("Posts", "User");
             }
         }
 
