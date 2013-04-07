@@ -20,6 +20,11 @@ fieldset
     margin:0 0 1.5em 0;
 }
 
+input
+{
+    color:#3a3a3d;
+    }
+
 legend 
 {
     font-size:1.2em;
@@ -47,6 +52,7 @@ textarea
 .field-validation-error
 {
     color: #ff0000;
+    font-size:14px;
 }
 
 .field-validation-valid
@@ -563,7 +569,7 @@ span.field-validation-error
 }
 .textbox input{
     font-size: 18px;
-    color: #989898;
+    color: #3A3A3D;
     font-weight: 700;
 }
 .login-regis .notification {
@@ -880,11 +886,18 @@ span.field-validation-error
     /*border: 1px solid #d6d6d6;*/
     cursor: pointer;
 }
-.scroll-pane {
+.scroll-pane 
+{
+    margin-top:8px;
     width: 100% !important;
-    height: 520px !important;
+    height: 545px !important;
     overflow: auto !important;
 } 
+#overlay
+{
+    display: none;
+    margin-left: 140px;
+    }
 
 #numberItem
 {
@@ -894,9 +907,12 @@ span.field-validation-error
     
 #SkypeButton
 {
-    position:absolute;
+   /* position:absolute;
     left:170px;
-    top:431px;
+    top:431px;*/
+    left: -13px;
+    position: relative;
+    top: -13px;
     }
 /* POPUP */
 #detailContainer
@@ -921,6 +937,29 @@ span.field-validation-error
     position:relative;
      background: url("../../Content/images/detail_footer.png") no-repeat white bottom center;
 }
+#skype
+{
+     position:relative;
+      width:120px; 
+      height:55px;
+       left:40px;
+    }
+#yahoo
+{
+    position:relative;
+     height:55px; 
+     width :80px; 
+     left:60px;
+     margin-top:10px;
+    }    
+#noImage
+{
+     background: url("../../Content/images/no_image_big.png") no-repeat white bottom center;
+     width:360px;
+     height:180px;
+     margin-top:30px;;
+
+    }
 #addThis
 {
     float:left;
@@ -1144,6 +1183,7 @@ span.field-validation-error
     padding-left: 25px;
     margin-left:25px;
     text-indent:10px;
+    text-align:justify;
 }
 
 .blockInfo .blockRightText {
@@ -1272,10 +1312,14 @@ div.title-ques-input
 {
     margin:-28px 0px 10px 120px;
 }
+div.content-ques-input span
+{
+    margin-left:60px;
+}
 div.title-ques-input input
 {
     /*background: url("../../Content/images/tbxTileQuestion.png") no-repeat transparent 0 0;*/
-    width: 264px;
+    width: 210px;
    /* height: 34px;*/
     border: 1px solid #e1e1e1;
     -webkit-border-radius: 7px;
@@ -1289,7 +1333,7 @@ div.content-ques-input textarea, textarea#txtResion
     /*background: url("../../Content/images/tbxContentQues.png") no-repeat transparent 0 0;*/
     max-width: 264px;
     max-height: 104px;
-    width: 264px;
+    width: 210px;
     height: 104px;
     border: 1px solid #e1e1e1;
     -webkit-border-radius: 7px;
@@ -1299,6 +1343,7 @@ div.content-ques-input textarea, textarea#txtResion
     padding: 5px;
     margin-left:120px;
     margin-top:-20px;
+    font-family:Calibri,Sans-Serif;
 }
 input.btn-send-question
 {
@@ -1425,6 +1470,7 @@ label {
 }
 .pnew1 .pnRight {
     width: 415px;
+    margin-top:20px;
 }
 #postnew_wrapper .infoElement
 {
