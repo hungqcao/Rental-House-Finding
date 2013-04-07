@@ -52,8 +52,8 @@
     function initialize() {
         var selected = '@ViewBag.SelectedValue';
         if (selected == 0) {
-            
-            $("#DistrictId").val(selected).attr('selected', true);
+            $("#DistrictId option").removeAttr('selected');
+            $("#DistrictId").val(selected).attr('selected', 'selected');
             $("#DistrictId").next().text('Quận/Huyện');
         }
         var latlon = '@ViewBag.latlon'.split('|')[0];
