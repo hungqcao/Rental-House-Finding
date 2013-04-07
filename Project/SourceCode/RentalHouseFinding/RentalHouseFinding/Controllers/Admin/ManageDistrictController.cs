@@ -11,25 +11,37 @@ namespace RentalHouseFinding.Controllers.Admin
 { 
     public class ManageDistrictController : Controller
     {
+        private const int MAX_RECORD_PER_PAGE = 15;
         private RentalHouseFindingEntities _db = new RentalHouseFindingEntities();
 
         //
         // GET: /ManageDistrict/
         [Authorize(Roles = "Admin")]
-        public ViewResult Index(int? provinceId)
+        public ViewResult Index(int? provinceId, int? page)
         {
+            if (page == null)
+            {
+                page = 1;
+            }
+            ViewBag.Index = ((int)page - 1) * MAX_RECORD_PER_PAGE;
+            ViewBag.TotalRowCount = _db.Districts.Count();
             if (provinceId == null)
             {
                 ViewBag.Provinces = new SelectList(_db.Provinces, "Id", "Name");
-                var districts = _db.Districts.Include("Province");
+                var districts = _db.Districts.Include("Province")
+                    .OrderBy(p => p.Id).Skip(MAX_RECORD_PER_PAGE * ((int)page - 1))
+                    .Take(MAX_RECORD_PER_PAGE);
                 return View(districts.ToList());
             }
             else
             {
                 ViewBag.Provinces = new SelectList(_db.Provinces, "Id", "Name", provinceId);
-                var districts = _db.Districts.Where(d => d.ProvinceId == provinceId).Include("Province");
+                var districts = _db.Districts.Where(d => d.ProvinceId == provinceId).Include("Province")
+                    .OrderBy(p => p.Id).Skip(MAX_RECORD_PER_PAGE * ((int)page - 1))
+                    .Take(MAX_RECORD_PER_PAGE);
                 return View(districts.ToList());
             }
+            
         }
 
         //

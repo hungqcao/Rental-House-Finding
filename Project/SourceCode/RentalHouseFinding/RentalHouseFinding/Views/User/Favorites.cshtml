@@ -7,8 +7,7 @@
         @{
             if (ViewBag.Grid != null && ViewBag.Grid.TotalRowCount > 0)
             {
-                var grid = new WebGrid(ViewBag.FavoriteList, ajaxUpdateContainerId: "container-grid", canSort: false
-                    );
+                var grid = (WebGrid)ViewBag.Grid;
 
                 @grid.GetHtml(tableStyle: "", mode: WebGridPagerModes.All, 
                                 headerStyle: "header",
@@ -23,8 +22,7 @@
                                         grid.Column("PostStatus", "Trạng thái"),
                                         grid.Column("CreatedDate", "Ngày tạo"),
                                         grid.Column("EditedDate", "Lần cuối chỉnh sửa"),
-                                        grid.Column("RenewDate", "Ngày làm mới"),
-                                        grid.Column("ExpiredDate", "Ngày hết hạn")));
+                                        grid.Column("RenewDate", "Ngày làm mới")));
             }
             else 
             {
