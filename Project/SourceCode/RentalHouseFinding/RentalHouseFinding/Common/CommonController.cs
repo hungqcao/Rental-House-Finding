@@ -9,6 +9,7 @@ using RentalHouseFinding.Models;
 using System.Net;
 using System.IO;
 using System.Web.Mvc;
+using System.Web;
 
 namespace RentalHouseFinding.Common
 {
@@ -24,6 +25,54 @@ namespace RentalHouseFinding.Common
                 sBuilder.Append(data[i].ToString("x2"));
             }
             return sBuilder.ToString();
+        }
+
+        public static Dictionary<int, string> GetListNearbyLocations(PostViewModel model, HttpRequestBase Request)
+        {
+            try
+            {
+                using (RentalHouseFindingEntities _db = new RentalHouseFindingEntities())
+                {
+                    Dictionary<int, string> lstReturn = new Dictionary<int, string>();
+                    int id;
+                    Locations location;
+                    for (int i = 0; i < Request.Form.Keys.Count; i++)
+                    {
+                        if (Request.Form.Keys[i].Contains("tag["))
+                        {
+                            if (Request.Form.Keys[i].Equals("tag[]", StringComparison.CurrentCultureIgnoreCase))
+                            {
+                                string[] lstValue = Request.Form[i].Trim().Split(',');
+                                foreach (string item in lstValue)
+                                {
+                                    if (!string.IsNullOrEmpty(item))
+                                    {
+                                        location = new Locations();
+                                        location.DistrictId = model.DistrictId;
+                                        //1 for Create by User
+                                        location.IsCreatedByUser = true;
+                                        location.Name = item;
+                                        _db.Locations.AddObject(location);
+                                        _db.SaveChanges();
+                                        lstReturn.Add(location.Id, location.Name);
+                                    }
+                                }
+                            }
+                            else
+                            {
+                                string idValue = Request.Form.Keys[i].Split('-')[0].Split('[')[1];
+                                int.TryParse(idValue, out id);
+                                lstReturn.Add(id, Request.Form[i].Trim());
+                            }
+                        }
+                    }
+                    return lstReturn;
+                }
+            }
+            catch
+            {
+                return null;
+            }
         }
 
         public static IEnumerable<SelectListItem> AddDefaultOption(IEnumerable<SelectListItem> list, string dataTextField, string selectedValue)

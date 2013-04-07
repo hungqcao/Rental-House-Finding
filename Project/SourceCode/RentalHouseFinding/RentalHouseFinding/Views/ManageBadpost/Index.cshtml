@@ -3,6 +3,17 @@
     Layout = "~/Views/Shared/_AdminLayout.cshtml";
 }
 
+<div id="message-sv" style="width:967px; margin: 0 auto;">
+    @if (TempData["MessageSuccessSaveBadPost"] != null)
+    {
+        <div class="message-notification success">
+            <a class="close" id="btnCloseDiv"></a>
+            <div>
+                @TempData["MessageSuccessSaveBadPost"]
+            </div>
+        </div>
+    }
+</div>
 <div id="container-grid">
 @{
     if (ViewBag.Grid != null && ViewBag.Grid.TotalRowCount > 0)
@@ -17,8 +28,8 @@
                                      grid.Column("ID", "Id"),
                                      grid.Column("UserId", "Mã người dùng"),
                                      grid.Column(header:"Tiều đề", format: @<text>
-                                             <a href="@Url.Action("Details", 
-                                             "Post", 
+                                             <a href="@Url.Action("edit", 
+                                             "managebadpost", 
                                              new { id = @item.ID })">@item.Title</a></text>),
                                     grid.Column("PostStatus", "Trạng thái"),
                                     grid.Column("CreatedDate", "Ngày tạo")));

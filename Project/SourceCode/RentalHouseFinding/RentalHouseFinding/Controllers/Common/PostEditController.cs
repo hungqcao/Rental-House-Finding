@@ -102,6 +102,7 @@ namespace RentalHouseFinding.Controllers.GUI
             {
                 TempData["MessagePendingPostNew"] = "Phiên làm việc của bạn đã hết, mời bạn đăng nhập lại";
                 TempData["Pending"] = true;
+                TempData["Success"] = false;
                 return RedirectToAction("Index");
             }
             //Get images
@@ -126,6 +127,7 @@ namespace RentalHouseFinding.Controllers.GUI
                     {
                         TempData["MessagePendingPostNew"] = "Phiên làm việc của bạn đã hết, mời bạn đăng nhập lại";
                         TempData["Pending"] = true;
+                        TempData["Success"] = false;
                         return RedirectToAction("Index");
                     }
                     var post = (from p in _db.Posts where (p.Id == postViewModel.Id) select p).FirstOrDefault();
@@ -135,11 +137,12 @@ namespace RentalHouseFinding.Controllers.GUI
                         post.StatusId = 2;
                         TempData["MessagePendingPostNew"] = "Bài đăng có chứa những từ không cho phép, chúng tôi sẽ duyệt trước khi đăng lên hệ thống";
                         TempData["Pending"] = true;
+                        TempData["Success"] = false;
                     }
                     post = CommonModel.ConvertPostViewModelToPost(post, postViewModel, post.CreatedDate, DateTime.Now, DateTime.Now, _noInfo);
                     
 
-                    Dictionary<int, string> lstNearbyId = GetListNearbyLocations(postViewModel);
+                    Dictionary<int, string> lstNearbyId = CommonController.GetListNearbyLocations(postViewModel, Request);
                     PostLocations postLocation;
                     string nearbyPlace = string.Empty;
                     Locations loc = null;
@@ -220,6 +223,7 @@ namespace RentalHouseFinding.Controllers.GUI
                 {
                     TempData["MessagePendingPostNew"] = "Phiên làm việc của bạn đã hết, mời bạn đăng nhập lại";
                     TempData["Pending"] = true;
+                    TempData["Success"] = false;
                     return RedirectToAction("Index");
                 }
                 int postId = (int)Session["PostIdToEdit"];
@@ -234,52 +238,6 @@ namespace RentalHouseFinding.Controllers.GUI
                 return View();
             }
         }
-
-        private Dictionary<int, string> GetListNearbyLocations(PostViewModel model)
-        {
-            try
-            {
-                Dictionary<int, string> lstReturn = new Dictionary<int, string>();
-                int id;
-                Locations location;
-                for (int i = 0; i < Request.Form.Keys.Count; i++)
-                {
-                    if (Request.Form.Keys[i].Contains("tag["))
-                    {
-                        if (Request.Form.Keys[i].Equals("tag[]", StringComparison.CurrentCultureIgnoreCase))
-                        {
-                            string[] lstValue = Request.Form[i].Trim().Split(',');
-                            foreach (string item in lstValue)
-                            {
-                                if (!string.IsNullOrEmpty(item))
-                                {
-                                    location = new Locations();
-                                    location.DistrictId = model.DistrictId;
-                                    //1 for Create by User
-                                    location.IsCreatedByUser = true;
-                                    location.Name = item;
-                                    _db.Locations.AddObject(location);
-                                    _db.SaveChanges();
-                                    lstReturn.Add(location.Id, location.Name);
-                                }
-                            }
-                        }
-                        else
-                        {
-                            string idValue = Request.Form.Keys[i].Split('-')[0].Split('[')[1];
-                            int.TryParse(idValue, out id);
-                            lstReturn.Add(id, Request.Form[i].Trim());
-                        }
-                    }
-                }
-                return lstReturn;
-            }
-            catch
-            {
-                return null;
-            }
-        }
-
     }
 
 }

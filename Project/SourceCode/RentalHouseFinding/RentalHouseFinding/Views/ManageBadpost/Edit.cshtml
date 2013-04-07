@@ -37,7 +37,7 @@
     function deleteGallery(obj) {
         if (confirm("Bạn có muốn xóa ảnh này không?")) {
             $.ajax({
-                url: ROOT + 'post/DeleteImage',
+                url: '@baseUri.ToString()' + 'managebadpost/DeleteImage',
                 contentType: 'application/html; charset=utf-8',
                 type: 'GET',
                 dataType: 'html',
@@ -62,7 +62,7 @@
 
     function LoadGallery() {
         $.ajax({
-            url: ROOT + 'post/ViewImage',
+            url: '@baseUri.ToString()' + 'managebadpost/ViewImage',
             contentType: 'application/html; charset=utf-8',
             type: 'GET',
             dataType: 'html',
@@ -128,7 +128,7 @@
                                 value: itemData.Value,
                                 text: itemData.Text
                             }));
-                                                             
+
                         }
                     });
                 });
@@ -237,7 +237,7 @@
 </script>
 <div id="postnew_wrapper">
 @Html.ValidationSummary(true, "Vui lòng kiểm tra lại thông tin như thông báo bên dưới!", new { style = "color:red" })
-@using (Html.BeginForm("Edit", "Post", FormMethod.Post, new { enctype = "multipart/form-data" }))
+@using (Html.BeginForm("edit", "managebadpost", FormMethod.Post, new { enctype = "multipart/form-data" }))
 {
     @Html.HiddenFor(model => model.Id);
     <div class="header">
@@ -486,7 +486,7 @@
                 <div class="clear"></div>
             </div>
         <input id="btnSaveInfo" type="submit" class="button-link right" value="Chấp nhận"/>
-        <a id="btnDelete" href="/post/delete/@Model.Id" onclick=" return confirm('Bạn có chắc chắn muốn xóa bài viết này?');" class="button-link right">Xóa</a>
+        <a id="btnDelete" href="/managebadpost/delete/@Model.Id" onclick=" return confirm('Bạn có chắc chắn muốn xóa bài viết này?');" class="button-link right">Xóa</a>
         <div class="clear"></div>
     </div>
 }

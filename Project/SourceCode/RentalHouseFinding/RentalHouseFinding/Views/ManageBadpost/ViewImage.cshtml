@@ -1,0 +1,20 @@
+﻿@{
+    Layout = null;
+}
+@{
+    if (ViewBag.Images == null || ViewBag.Images.Count == 0)
+    {
+        <span>Không có hình ảnh</span>
+    }
+    else
+    {
+        for (var i = 0; i < @ViewBag.Images.Count; i++)
+        { 
+            <li style="float:left">
+                <span>
+                    <img onclick="deleteGallery($(this).parent().next())" src="@Url.Content("~/Content/images/icon_delete_small.gif")" class="delete" title="Xóa ảnh"></span>
+                    <img src="@ViewBag.Images[i].Path" alt="" id="@ViewBag.Images[i].Id" width="70px" height="50px" />
+            </li>
+        }
+    }
+}
