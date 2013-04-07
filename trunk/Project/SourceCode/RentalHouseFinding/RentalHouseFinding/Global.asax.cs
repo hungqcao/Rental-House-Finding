@@ -7,6 +7,7 @@ using System.Web.Routing;
 using RentalHouseFinding.Common;
 using log4net;
 using System.Reflection;
+using RentalHouseFinding.Controllers.Common;
 
 namespace RentalHouseFinding
 {
@@ -40,5 +41,43 @@ namespace RentalHouseFinding
             RegisterRoutes(RouteTable.Routes);
             log4net.Config.XmlConfigurator.Configure();
         }
+
+        /// <summary>
+        /// Handle application error on a global level.
+        /// Passes handling off to the ErrorController
+        /// </summary>
+        protected void Application_Error()
+        {
+            var exception = Server.GetLastError();
+            var httpException = exception as HttpException;
+            Response.Clear();
+            Server.ClearError();
+            var routeData = new RouteData();
+            routeData.Values["controller"] = "Errors";
+            routeData.Values["action"] = "General";
+            routeData.Values["exception"] = exception;
+            Response.StatusCode = 500;
+
+            if (httpException != null)
+            {
+                Response.StatusCode = httpException.GetHttpCode();
+
+                switch (Response.StatusCode)
+                {
+                    case 403:
+                        routeData.Values["action"] = "Http403";
+                        break;
+
+                    case 404:
+                        routeData.Values["action"] = "Http404";
+                        break;
+                }
+            }
+
+            IController errorsController = new ErrorController();
+            var rc = new RequestContext(new HttpContextWrapper(Context), routeData);
+            errorsController.Execute(rc);
+        }
+
     }
 }
