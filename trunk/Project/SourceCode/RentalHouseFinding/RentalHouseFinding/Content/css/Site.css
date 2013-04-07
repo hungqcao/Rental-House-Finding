@@ -258,7 +258,7 @@ select.select {
 }
 span.select {
     background: url("../../Content/images/bg_select.png") no-repeat 0 0;
-    color: #717171;
+    color: #3a3a3d;
     cursor: default;
     float: left;
     font-family: Calibri, Arial,Helvetica,Sans-Serif;
@@ -604,6 +604,7 @@ span.field-validation-error
     float: left;
     margin: 17px 10px 0 0;
 }
+
 .login-regis #btnLogin {
     background: url("../../Content/images/login_btnDangNhap.png") no-repeat transparent 0 0;
     width: 120px;
@@ -894,10 +895,15 @@ span.field-validation-error
 #SkypeButton
 {
     position:absolute;
-    left:226px;
+    left:170px;
     top:431px;
     }
 /* POPUP */
+#detailContainer
+{
+    position:relative;
+    background: url("../../Content/images/detail_banner.png") no-repeat scroll top center transparent;
+    }
 
 #popup_wrapper .clear {
     clear: both;
@@ -906,17 +912,20 @@ span.field-validation-error
 #popup_wrapper {
     width: 967px;
     border: 1px solid #bebebe;
+    border-bottom: 0px;
     border-radius: 2px;
+    background-color:White;
     font-family: Calibri, Arial,Helvetica,Sans-Serif;
-    background-color: #FFF;
     margin: 0 auto;
     overflow:hidden;
     position:relative;
+     background: url("../../Content/images/detail_footer.png") no-repeat white bottom center;
 }
 #addThis
 {
     float:left;
-    margin: 5px 0px 0px 5px;
+    left: 848px;
+    top: 68px;
     position:absolute;
 }
 #popup_wrapper div, #popup_wrapper span {
@@ -927,33 +936,36 @@ span.field-validation-error
 }
 #popup_wrapper .popup_header 
 {
-    background: url("../../Content/images/bg_baner.png") repeat-x transparent 0 0;
     width: 912px;
     padding: 15px 43px 20px 15px;
     height:70px;
+    border-bottom: 1px solid #BEBEBE;
 }
 .popup_header .type {
-    color: orange;
+    color: #f88014;
     font-weight: 700;
     font-size: 24px;
+    margin-left:20px;
+    margin-top: 3px;
 }
-.popup_header .address {
+.popup_header .shortDesc {
    font-style:normal;
-    color: white;
+    color: #3a3a3d;
     font-size: 19px;
     margin-top: 5px;
     width:550px;
     word-wrap:break-word;
-    margin-left:134px;
+    margin-left:21px;
 }
-.popup_header .shortDesc {
-    
-     color: white;
+.popup_header .address {
+        margin-top: 3px;
+     color: #3a3a3d;
     font-weight: 700;
     font-size: 24px;
-    width:650px;
+    width:550px;
     text-align:justify;
     margin-left:5px;
+    word-wrap:break-word;
 }
 .popup_header .highlight {
     color: orange;
@@ -962,7 +974,7 @@ span.field-validation-error
     margin-right: 7px;
 }
 .popup_header .rightInfo {
-    color: #59595d;
+    color: #3a3a3d;
     font-size: 18px;
     font-weight: 700;
 }
@@ -977,7 +989,7 @@ span.field-validation-error
     width: 886px;
     padding: 40px 40px 70px 40px;
 }
-/*
+
 .plusBtn {
     background: url("../../Content/images/detail_BasicInfo.png") no-repeat transparent 0 0;
     width: 34px;
@@ -1023,15 +1035,30 @@ span.field-validation-error
     margin-right: 10px;
     margin-top:-3px;
 }
-*/
+
 .desc
 {
     display:block;
     /*width:400px;*/
     word-wrap:break-word;
     height=100%;
+  
 
     }
+    .detailDesc
+{
+    display:block;
+    /*width:400px;*/
+    word-wrap:break-word;
+    height=100%;
+  
+      margin-left:58px;
+    }
+
+    #Question 
+    {
+        margin-left:58px;
+        }
 #facilityDes
 {
     position:relative;
@@ -1049,8 +1076,7 @@ span.field-validation-error
     position:absolute;
     width:40px;
     height:40px;
-    left:-77px;
-    top:-5px;
+    left:745px;
     cursor:pointer;
     
     }
@@ -1060,18 +1086,16 @@ span.field-validation-error
     position:absolute;
     width:40px;
     height:40px;
-    left:-77px;
-    top:-5px;
+    left:745px;
     cursor:pointer;
     }
 .topBtnReport
 {
     background: url("../../Content/images/report.png") no-repeat transparent 0 0 ;
     position:absolute;
-    width:40px;
+    width:96px;
     height:40px;
-    left: 950px;
-    top: 30px;
+    left: 845px;
     cursor:pointer;
     }    
  #detailFooter
@@ -1085,7 +1109,7 @@ span.field-validation-error
      }
   #facilities
   {
-      margin-top:18px;
+      margin-top:0px;
       } 
 .map_wrapper{
     border:1px solid #bebebe;
@@ -1100,13 +1124,17 @@ span.field-validation-error
     }
 .blockInfo {
     font-size: 18px;
-    color: #59595d;
+    color: #3a3a3d;
 }
 .blockInfo .title {
     font-weight: 700;
     font-size: 24px;
     margin-bottom: 15px;
     width: 100%;
+    margin-left:14px;
+}
+.blockInfo .title span{
+    margin-left:58px;
 }
 .blockInfo .blockLeftText {
     background: url("../../Content/images/round_shape.png") no-repeat transparent 0 4px;
@@ -1114,8 +1142,10 @@ span.field-validation-error
     height: 25px;
     line-height: 20px;
     padding-left: 25px;
-    margin-left:20px;
+    margin-left:25px;
+    text-indent:10px;
 }
+
 .blockInfo .blockRightText {
     width: 210px;
 }
@@ -1168,7 +1198,10 @@ span.field-validation-error
     margin-top:5px;
 }
 .blockInfo .colLeft span, .blockInfo .colRight span{
-    margin: 0 0 15px 40px;
+    /*margin: 0 0 15px 40px;*/
+    margin-left: 23px;
+    margin-bottom:15px;
+    padding-left: 38px;
 }
 .blockInfo .colRight {
     width: 228px;
@@ -1183,15 +1216,17 @@ span.field-validation-error
 #block4 .desc {
     margin: 0 0 3px 65px;
 }
-#sendQuestion, #saveBookmark {
-    position: relative;
+/*#saveBookmark {
+     width:96px;
+     height:36px;
+     position:relative;
 }
 #sendQuestion {
-    margin-left: -57px;
+    width:96px;
+    height:36px;
+    position:relative;
 }
-#saveBookmark {
-    margin-right: -56px;
-}
+*/
 #sendQuestion span, #saveBookmark span{
     font-style: italic; font-size: 18px;
 }
@@ -1205,9 +1240,7 @@ span.field-validation-error
     border:1px dashed;
     padding:5px;
 }
-#saveBookmark {
-    float: right !important;
-}
+
 #sendQuestion a {
     position: absolute;
     top: 10px;
@@ -1222,7 +1255,7 @@ span.field-validation-error
 
 .leftSide
 {
-    width: 475px; 
+    width: 470px; 
     margin-right: 10px;
 }
 .rightSide
@@ -1535,7 +1568,7 @@ textarea#Description {
 }
 #pnew2_toggle .leftContent .part span {
     font-size: 16px;
-    color: #59595d;
+    color: #3a3a3d;
     line-height: 16px;
     margin-left: 10px;
 }
@@ -1644,7 +1677,7 @@ textarea#Description {
     float: left;
 }
 #as_wrapper .row h2 {
-    color: #59595D;
+    color: #3a3a3d;
     font-size: 18px;
     line-height: 31px;
     text-align: left;

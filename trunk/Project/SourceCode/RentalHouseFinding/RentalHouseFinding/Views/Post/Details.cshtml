@@ -68,7 +68,9 @@
         }
     }
 </div>
-<div id="popup_wrapper">
+   <div id="detailContainer">
+
+    <div id="popup_wrapper">
         <div id="popup_wrapper">
             <div class="popup_header">
                 <div id="sendQuestion">
@@ -146,12 +148,12 @@
                 <div class="clear">
                 </div>
                 <div>
-                    <span class="type">[@Model.Category]</span><span class="shortDesc">@Model.Title</span>
-                    <div class="clear">
-                    </div>
-                    <span class="address">&nbsp;@Model.NumberHouse @Model.Street | @Model.Price triệu VNĐ
+                     <span class="type">[@Model.Category]</span><span class="address">&nbsp;@Model.NumberHouse @Model.Street | @Model.Price triệu VNĐ
                         | @Model.Area m2</span>
                     @Html.HiddenFor(model => Model.Id)
+                    <div class="clear">
+                    </div>
+                   <span class="shortDesc">@Model.Title</span>
                 </div>
                 <div class="clear">
                 </div>
@@ -180,22 +182,24 @@
                         @Model.Street </span>
                     <div class="clear">
                     </div>
-                    <span class="blockLeftText"><b>Giá nhà:</b></t>&nbsp;@Model.Price triệu/tháng</span>
-                    <span class="blockLeftText"><b>Diện tích:</b>&nbsp;@Model.Area m2</span> 
-                    <span class="blockLeftText">
-                        <b>Giá điện:</b>&nbsp;@Model.ElectricityFee nghìn/số</span> 
-                        <span class="blockLeftText">
-                            <b>Giá nước:</b>&nbsp;@Model.WaterFee nghìn/số</span> 
-                     <span class="blockLeftText">
-                            <b>Giờ giới nghiêm:</b>&nbsp;@Model.RestrictHours h</span>
-                             <span class="blockLeftText"
+                    <span class="blockLeftText"><b>Giá nhà:</b>&nbsp;@Model.Price triệu/tháng</span>
+                    <span class="blockLeftText"><b>Diện tích:</b>&nbsp;@Model.Area m2</span> <span class="blockLeftText">
+                        <b>Giá điện:</b>&nbsp;@Model.ElectricityFee nghìn/số</span> <span class="blockLeftText">
+                            <b>Giá nước:</b>&nbsp;@Model.WaterFee nghìn/số</span> <span class="blockLeftText">
+                            <b>Giờ giới nghiêm:</b>&nbsp;@Model.RestrictHours h</span><span class="blockLeftText"
                                 style="width: 100%;"><b>Ngày đăng:</b>&nbsp;@Model.CreatedDate</span>
                     <span class="blockLeftText" style="margin-top: 10px;"><b>Liên hệ:</b>&nbsp;@Model.NameContact</span>
                     <div class="clear">
                     </div>
                     <span class="blockLeftText"><b>Di động:</b>&nbsp;@Model.PhoneContact</span> <span
-                        class="blockLeftText"><b>Email:</b>&nbsp;@Model.Email</span> <span class="blockLeftText">
-                            <b>Yahoo! & Skype:</b>&nbsp;<script type="text/javascript" src="//cdn.dev.skype.com/uri/skype-uri.js"></script>
+                        class="blockLeftText"><b>Email:</b>&nbsp;@Model.Email</span>     
+                            &nbsp;
+                            @* Check Yahoo & Skype*@
+                            @if(!string.IsNullOrEmpty(Model.Yahoo)|!string.IsNullOrEmpty(Model.Skype)){
+                                <span class="blockLeftText">
+                            @if (!string.IsNullOrEmpty(Model.Skype))
+                            {
+                            <script type="text/javascript" src="//cdn.dev.skype.com/uri/skype-uri.js"></script>
                             <div id="SkypeButton">
                                 <script type="text/javascript">
                                     Skype.ui({
@@ -205,8 +209,16 @@
                                     });
                                 </script>
                             </div>
+                            }
+                            @if (!string.IsNullOrEmpty(Model.Yahoo))
+                            {
+                                
+                            
                             <a href="ymsgr:sendIM?@Model.Yahoo">
-                                <img border="0" src="http://opi.yahoo.com/online?u=YahooID&m=g&t=5&l=us"></a></span>
+                                <img border="0" src="http://opi.yahoo.com/online?u=YahooID&m=g&t=1&l=us"></a>}</span>
+                            
+                            }
+
                     <span class="blockLeftText" style="width: 420px; word-wrap: break-word; height: 100%;">
                         <b>Ghi chú: </b>&nbsp;@Model.Description</span>
                 </div>
@@ -227,10 +239,10 @@
                         TIỆN ÍCH DỊCH VỤ BÊN TRONG</div>
                     <div class="clear">
                     </div>
-                    <div id="facilityDes">
-                        <span class="icon check" style="margin-right: 70px;">Có hỗ trợ</span> <span class="icon question">
+                    @*<div id="facilityDes">
+                        Ghi chú: <span class="icon check" style="margin-right: 70px;">Có hỗ trợ</span> <span class="icon question">
                             Không có thông tin</span>
-                    </div>
+                    </div>*@
                     <div id="facilities">
                         <div class="colLeft">
                             @if (Model.HasInternet)
@@ -351,10 +363,10 @@
                         ĐỊA ĐIỂM LỚN XUNG QUANH</div>
                     @if (string.IsNullOrEmpty(Model.NearByPlace))
                     {
-                        <span>Không có thông tin</span>}
+                        <span class="detailDesc">Không có thông tin</span>}
                     else
                     {
-                        <span class="desc">@Model.NearByPlace</span>}
+                        <span class="detailDesc">@Model.NearByPlace</span>}
                 </div>
                 <div class="blockInfo rightSide" id="block6">
                     <div class="clear">
@@ -382,9 +394,12 @@
                     </div>
                 </div>
                 <div class="clear">
+            <div class="clear"></div>
                 </div>
             </div>
             <div class="clear">
             </div>
         </div>
-</div>       
+        </div>
+        </div>
+     
