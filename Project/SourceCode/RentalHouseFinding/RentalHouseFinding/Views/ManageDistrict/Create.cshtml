@@ -1,7 +1,7 @@
 ﻿@model RentalHouseFinding.Models.Districts
 
 @{
-    ViewBag.Title = "Create";
+    ViewBag.Title = "Thêm quận/huyện";
     Layout = "~/Views/Shared/_AdminLayout.cshtml";
 }
 
@@ -44,15 +44,6 @@
             @Html.DropDownList("ProvinceId", String.Empty)
             @Html.ValidationMessageFor(model => model.ProvinceId)
         </div>
-
-        <div class="editor-label">
-            @Html.LabelFor(model => model.IsDeleted, "Đã xóa")
-        </div>
-        <div class="editor-field">
-            @Html.EditorFor(model => model.IsDeleted)
-            @Html.ValidationMessageFor(model => model.IsDeleted)
-        </div>
-
         <p>
             <input type="submit" value="Tạo mới" />
         </p>

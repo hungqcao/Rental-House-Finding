@@ -3,7 +3,7 @@
     Uri auxBaseUri = new Uri(Request.Url.GetLeftPart(UriPartial.Authority));
     Uri baseUri = new Uri(auxBaseUri, Url.Content("~"));
     Layout = "~/Views/Shared/_AdminLayout.cshtml";
-    ViewBag.Title = "Managa Posts";
+    ViewBag.Title = "Quản lí bài đăng";
 }
 <script>
     $(document).ready(function () {
@@ -112,7 +112,7 @@
 <br>
 <div id="container-grid">
 @{
-    if (Model != null)
+    if (Model != null && Model.Grid.TotalRowCount > 0)
     {
         WebGrid grid = Model.Grid;
         <span>Tìm thấy @grid.TotalRowCount bài post</span>
@@ -124,7 +124,7 @@
                                      grid.Column(header: "STT", format: item => item.WebGrid.Rows.IndexOf(item) + 1 + ViewBag.Index),
                                      //grid.Column("ID", "Id"),
                                      grid.Column("User", "Người đăng", format: (item) => String.IsNullOrEmpty(item.User)?"Khách":item.User),
-                                grid.Column(header: "Tiêu đề", format: @<text>
+                                grid.Column(columnName:"Title", header: "Tiêu đề", format: @<text>
                                         <a href="@Url.Action("Details",
                                         "Post",
                                         new { id = @item.ID })">@item.Title</a></text>),
@@ -141,6 +141,10 @@
                                 grid.Column("CountRenew", "Số lần đã gia hạn")
                                     
                                 ));
+    }
+    else
+    {
+        <h2>Không có bài</h2>
     }
 }
 

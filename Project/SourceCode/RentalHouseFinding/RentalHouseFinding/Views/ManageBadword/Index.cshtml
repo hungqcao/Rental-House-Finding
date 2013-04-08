@@ -17,7 +17,11 @@
             "Phân loại", new { @class = "select" })
             <input type="submit" name="Search" value="Search" />
 }
+
 <table>
+    @{
+    if (Model != null)
+    {
     <tr>
         <th>
             STT
@@ -29,7 +33,7 @@
             Phân loại
         </th>
     </tr>
-@{
+
     int i = 1;
     foreach (var item in Model) {
         <tr>
@@ -45,8 +49,14 @@
         </tr>
         i += 1;
     }
+    }
+    else
+    {
+        <h2>Không có từ xấu</h2>
+    }
 }
 </table>
+
 <br/>
 <p>
     @Html.ActionLink("Create New", "Tạo mới")
