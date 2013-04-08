@@ -146,12 +146,16 @@ namespace RentalHouseFinding.Controllers
             var postViewList = postList.Select(p => new
             {
                 p.Id,
+                p.Code,
                 p.UserId,
                 p.Title,
                 p.CreatedDate,
                 p.EditedDate,
                 p.RenewDate,
                 p.ExpiredDate,
+                CountRenew = (from pay in _db.Payments 
+                              where (pay.PostsId == p.Id)
+                                  select pay.Id).Count(),
                 PostStatus = (from stt in _db.PostStatuses
                               where (stt.Id == p.StatusId)
                               select stt.Name).FirstOrDefault()

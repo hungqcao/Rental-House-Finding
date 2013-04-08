@@ -15,7 +15,7 @@ namespace RentalHouseFinding.Models
         [RegularExpression("(([0+])([0-9]+))", ErrorMessage = "Sai định dạng,xin vui lòng nhập lại")]
         public string PhoneNumber { get; set; }
 
-        [Required(ErrorMessage = "Xin vui lòng nhập nội dung theo cú pháp: MS Mã tin")]
+        [Required(ErrorMessage = "Xin vui lòng nhập nội dung theo cú pháp: MS Mã tin")]        
         [Display(Name = "Nội dung")]
         public string ContentSMS { get; set; }
         

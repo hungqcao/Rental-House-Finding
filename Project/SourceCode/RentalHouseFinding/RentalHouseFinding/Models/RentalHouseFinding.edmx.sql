@@ -2,8 +2,8 @@
 -- --------------------------------------------------
 -- Entity Designer DDL Script for SQL Server 2005, 2008, and Azure
 -- --------------------------------------------------
--- Date Created: 04/07/2013 23:10:24
--- Generated from EDMX file: C:\RentalHouseFinding\Project\SourceCode\RentalHouseFinding\RentalHouseFinding\Models\RentalHouseFinding.edmx
+-- Date Created: 04/09/2013 10:07:16
+-- Generated from EDMX file: E:\DO AN\RFS\Project\SourceCode\RentalHouseFinding\RentalHouseFinding\Models\RentalHouseFinding.edmx
 -- --------------------------------------------------
 
 SET QUOTED_IDENTIFIER OFF;
@@ -213,7 +213,7 @@ CREATE TABLE [dbo].[Posts] (
     [StatusId] int  NOT NULL,
     [IsDeleted] bit  NOT NULL,
     [CreatedDate] datetime  NOT NULL,
-    [EditedDate] datetime  NOT NULL,
+    [EditedDate] datetime  NULL,
     [RenewDate] datetime  NULL,
     [DistrictId] int  NOT NULL,
     [NumberAddress] nvarchar(max)  NULL,
