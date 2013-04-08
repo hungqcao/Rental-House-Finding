@@ -149,6 +149,9 @@ namespace RentalHouseFinding.Controllers.Admin
                         where (usr.Id == p.UserId)
                         select usr.Name).FirstOrDefault(),
                 p.Title,
+                CountRenew = (from pay in _db.Payments
+                              where (pay.PostsId == p.Id)
+                              select p.Id).Count(),
                 p.CreatedDate,
                 p.EditedDate,
                 p.RenewDate,

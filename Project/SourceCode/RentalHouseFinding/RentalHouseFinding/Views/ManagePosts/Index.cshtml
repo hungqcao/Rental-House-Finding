@@ -137,7 +137,9 @@
                                 grid.Column("RenewDate", "Lần gia hạn cuối",
                                     format: (item) => item.RenewDate == null ? "" : string.Format("{0:yyyy-MM-dd HH:mm:ss}", item.RenewDate)),
                                 grid.Column("ExpiredDate", "Ngày hết hạn", 
-                                    format: (item) => string.Format("{0:yyyy-MM-dd HH:mm:ss}", item.ExpiredDate))
+                                    format: (item) => string.Format("{0:yyyy-MM-dd HH:mm:ss}", item.ExpiredDate)),
+                                grid.Column("CountRenew", "Số lần đã gia hạn")
+                                    
                                 ));
     }
 }
