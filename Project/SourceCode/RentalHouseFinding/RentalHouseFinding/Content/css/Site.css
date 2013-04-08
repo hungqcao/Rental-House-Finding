@@ -961,25 +961,23 @@ span.field-validation-error
 #yahoo
 {
     position:relative;
-     height:55px; 
-     width :80px; 
-     left:60px;
-     margin-top:10px;
-    }    
+    height:55px; 
+    width :80px; 
+    left:60px;
+    margin-top:10px;
+}    
 #noImage
 {
      background: url("../../Content/images/no_image_big.png") no-repeat white bottom center;
      width:360px;
      height:180px;
-     margin-top:30px;;
+     margin-top:30px;
 
-    }
-#addThis
+}
+#popup_wrapper div#addThis
 {
-    float:left;
-    left: 848px;
-    top: 68px;
-    position:absolute;
+    float: right;
+    margin-right: 7px;
 }
 #popup_wrapper div, #popup_wrapper span {
     display: block;
@@ -1126,29 +1124,26 @@ span.field-validation-error
 .topBtnFavorite
 {
     /*background: url("../../Content/images/favorite.png") no-repeat transparent 0 0 ;*/
-    position:absolute;
-    width:40px;
+    /*position:absolute;*/
     height:40px;
-    left:745px;
+    /*left:745px;*/
     cursor:pointer;
-    
-    }
+}
 .topBtnFavoriteActived
 {
    /* background: url("../../Content/images/favorited.png") no-repeat transparent 0 0 ;*/
-    position:absolute;
-    width:40px;
+    /*position:absolute;*/
     height:40px;
-    left:745px;
+    /*left:745px;*/
     cursor:pointer;
     }
 .topBtnReport
 {
     background: url("../../Content/images/report.png") no-repeat transparent 0 0 ;
-    position:absolute;
+    /*position:absolute;*/
     width:96px;
     height:40px;
-    left: 845px;
+    /*left: 845px;*/
     cursor:pointer;
     }    
  #detailFooter
@@ -2385,10 +2380,42 @@ a.button-link:active {
 }
 .state-read-False
 {
-    background-color: #FFCC99;
-    border-bottom: 1px solid #fff;
+    background: url("../../Content/images/exclamation-mark-yellow-icon.png") no-repeat transparent 0px 40px;
 }
 .state-read-True
 {
     background-color: #FFF;
+}
+ul.tabs {
+	margin: 0;
+	padding: 0;
+	float: left;
+	list-style: none;
+	height: 32px;
+	width: 320px;
+}
+ul.tabs li {
+	float: left;
+	margin: 0;
+	cursor: pointer;
+	padding: 0px 21px ;
+	height: 31px;
+	line-height: 31px;
+	border-left: none;
+	font-weight: bold;
+	background: #EEEEEE;
+	overflow: hidden;
+	width: 118px;
+    text-align: center;
+}
+ul.tabs li:hover {
+	background: #CCCCCC;
+}	
+ul.tabs li.active{
+	background: #FFFFFF;
+	border-bottom: 1px #EEE solid;
+}
+#container.questions #leftInfo
+{
+	padding: 0 0 30px 0;
 }
