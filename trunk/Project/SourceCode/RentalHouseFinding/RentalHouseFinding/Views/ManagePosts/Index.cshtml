@@ -114,7 +114,7 @@
 @{
     if (Model != null)
     {
-        WebGrid grid = null;
+        WebGrid grid = Model.Grid;
         <span>Tìm thấy @grid.TotalRowCount bài post</span>
         @grid.GetHtml(tableStyle: "webGrid", mode: WebGridPagerModes.All,
                             headerStyle: "header",
