@@ -114,7 +114,7 @@ namespace RentalHouseFinding.Controllers
                 p.EditedDate,
                 p.RenewDate,
                 PostStatus = p.PostStatus.Name
-            }).OrderBy(p => p.Id).Skip(MAX_RECORD_PER_PAGE * ((int)page - 1)).Take(MAX_RECORD_PER_PAGE);
+            }).OrderByDescending(p => p.CreatedDate).Skip(MAX_RECORD_PER_PAGE * ((int)page - 1)).Take(MAX_RECORD_PER_PAGE);
 
             var grid = new WebGrid(ajaxUpdateContainerId: "container-grid", canSort: false);
             grid.Bind(postViewList, autoSortAndPage: false, rowCount: favoriteList.Count());
@@ -125,7 +125,7 @@ namespace RentalHouseFinding.Controllers
         }
 
         [Authorize(Roles = "Admin, User")]
-        public ActionResult Posts(int? page)
+        public ActionResult Posts(int? page, string sort, string sortdir)
         {
             if (page == null)
             {
@@ -159,8 +159,72 @@ namespace RentalHouseFinding.Controllers
                 PostStatus = (from stt in _db.PostStatuses
                               where (stt.Id == p.StatusId)
                               select stt.Name).FirstOrDefault()
-            }).OrderBy(p => p.Id).Skip(MAX_RECORD_PER_PAGE * ((int)page - 1)).Take(MAX_RECORD_PER_PAGE);
-            var grid = new WebGrid(ajaxUpdateContainerId: "container-grid", canSort: false);
+            }).OrderByDescending(p => p.CreatedDate)
+                        .Skip(MAX_RECORD_PER_PAGE * ((int)page - 1)).Take(MAX_RECORD_PER_PAGE);
+            //Custom sort
+            if (sortdir == "DESC")
+            {
+                if (sort == "ID")
+                {
+                    postViewList = postViewList.OrderByDescending(p => p.Id);
+                }
+                if (sort == "UserId")
+                {
+                    postViewList = postViewList.OrderByDescending(p => p.UserId);
+                }
+                if (sort == "Title")
+                {
+                    postViewList = postViewList.OrderByDescending(p => p.Title);
+                }
+                if (sort == "CreatedDate")
+                {
+                    postViewList = postViewList.OrderByDescending(p => p.CreatedDate);
+                }
+                if (sort == "EditedDate")
+                {
+                    postViewList = postViewList.OrderByDescending(p => p.EditedDate);
+                }
+                if (sort == "RenewDate")
+                {
+                    postViewList = postViewList.OrderByDescending(p => p.RenewDate);
+                }
+                if (sort == "ExpiredDate")
+                {
+                    postViewList = postViewList.OrderByDescending(p => p.ExpiredDate);
+                }
+            }
+            else
+            {
+                if (sort == "ID")
+                {
+                    postViewList = postViewList.OrderBy(p => p.Id);
+                }
+                if (sort == "UserId")
+                {
+                    postViewList = postViewList.OrderBy(p => p.UserId);
+                }
+                if (sort == "Title")
+                {
+                    postViewList = postViewList.OrderBy(p => p.Title);
+                }
+                if (sort == "CreatedDate")
+                {
+                    postViewList = postViewList.OrderBy(p => p.CreatedDate);
+                }
+                if (sort == "EditedDate")
+                {
+                    postViewList = postViewList.OrderBy(p => p.EditedDate);
+                }
+                if (sort == "RenewDate")
+                {
+                    postViewList = postViewList.OrderBy(p => p.RenewDate);
+                }
+                if (sort == "ExpiredDate")
+                {
+                    postViewList = postViewList.OrderBy(p => p.ExpiredDate);
+                }
+            }
+            var grid = new WebGrid(ajaxUpdateContainerId: "container-grid", canSort: true);
             grid.Bind(postViewList, autoSortAndPage: false, rowCount: postList.Count());
             ViewBag.Grid = grid;
             ViewBag.Index = ((int)page - 1) * MAX_RECORD_PER_PAGE;
@@ -197,7 +261,7 @@ namespace RentalHouseFinding.Controllers
 
             IQueryable<Payments> paymentViewList;
             paymentViewList = (from p in paymentList select p)
-                .OrderBy(p => p.Id)
+                .OrderByDescending(p => p.CreatedDate)
                 .Skip(MAX_RECORD_PER_PAGE * ((int)page - 1))
                 .Take(MAX_RECORD_PER_PAGE);
             var grid = new WebGrid(ajaxUpdateContainerId: "container-grid",
@@ -233,7 +297,7 @@ namespace RentalHouseFinding.Controllers
 
             IQueryable<Payments> paymentViewList;
             paymentViewList = (from p in paymentList select p)
-                .OrderBy(p => p.Id)
+                .OrderByDescending(p => p.CreatedDate)
                 .Skip(0)
                 .Take(MAX_RECORD_PER_PAGE);
             var grid = new WebGrid(ajaxUpdateContainerId: "container-grid",
