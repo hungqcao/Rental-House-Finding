@@ -258,6 +258,18 @@ select.select {
     z-index: 10;
     float: left;
 }
+ #as_wrapper .row select{
+    cursor: pointer;
+    font-size: 12px;
+    height: 36px !important;
+    line-height: 36px;
+    margin-left: 20px;
+    position: relative;
+    float: left;
+    width: 164px;
+    z-index: 10;
+    float: left;
+}
 #searchInfo span#spCategoryId
 {
     background: url("../../Content/images/bg_select.png") no-repeat 0 0;
@@ -1381,7 +1393,11 @@ div#sendQuestion div#element_to_pop_up
 {
     display: none;
 }
-
+labelAd 
+{
+    text-align:left;
+    color:#888;
+    }
 label {
     /*display: block;
     margin-bottom: 3px;
@@ -1708,10 +1724,10 @@ textarea#Description {
     text-align: left;
 }
 #as_wrapper .basicInfo .field {
-    color: #888;
+    color: #3a3a3d;
     font-size: 14px;
     font-weight: 700;
-    margin: 20px 52px 0 0;
+    margin: 10px 20px 0 0;
 }
 #as_wrapper .field input {
     padding: 0 5px;
@@ -1719,6 +1735,7 @@ textarea#Description {
 }
 #as_wrapper .field span {
     margin-bottom: 7px;
+    margin-top:5px;
 }
 #as_wrapper .col, #as_wrapper .row, #as_wrapper .row h2, #as_wrapper .row select {
     display: block;
@@ -1728,8 +1745,8 @@ textarea#Description {
     color: #3a3a3d;
     font-size: 18px;
     line-height: 31px;
-    text-align: left;
-    width: 150px;
+    text-align: right;
+    width: 130px;
 }
 .otherInfo .col {
     width: 380px;
@@ -1738,6 +1755,7 @@ textarea#Description {
 .otherInfo .row {
     margin-bottom: 10px;
 }
+
 #spddlInternet, #spddlGiuongTu, #spddlBaoVe, #spddlWcRieng, #spddlDoXe, #spddlNauAn {
     left: 310px;
 }
@@ -2122,9 +2140,7 @@ textarea#Description {
     height: 18px;
 }
 
-#fromPrice{
-   float:left;
-}
+
 #fromPrice span.field-validation-error {
    display: block;
    position: absolute;
@@ -2132,8 +2148,12 @@ textarea#Description {
    
 }
  
- #toPrice {
+ #toPrice,#fromPrice,#minArea,#maxArea {
  float: left; 
+ width:130px;
+ color:#888;
+ height:55px;
+ 
 }   
 #toPrice span.field-validation-error {
    display: block;
@@ -2141,16 +2161,15 @@ textarea#Description {
    margin-top:40px;
    margin-left: -130px;
 }
-#minArea  {
-  float:left;
-}
+
 #minArea span.field-validation-error {
    display: block;
    margin-top:40px;
    position: absolute;
 }
-#maxArea  {
-  float:left;
+
+#maxArea input,#minArea input,#fromPrice input,#toPrice input{
+  color:#3a3a3d;
 }
 #maxArea span.field-validation-error {
    display: block;

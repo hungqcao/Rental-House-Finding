@@ -68,7 +68,7 @@
         }
     }
 </div>
-   <div id="detailContainer">
+      <div id="detailContainer">
 
     <div id="popup_wrapper">
         <div id="popup_wrapper">
@@ -186,11 +186,10 @@
                     <span class="blockLeftText"><b>Diện tích:</b>&nbsp;@Model.Area m2</span> <span class="blockLeftText">
                         <b>Giá điện:</b>&nbsp;@Model.ElectricityFee nghìn/số</span> <span class="blockLeftText">
                             <b>Giá nước:</b>&nbsp;@Model.WaterFee nghìn/số</span> 
-                              @if (!string.IsNullOrEmpty(Model.RestrictHours))
+                              @if (!Model.RestrictHours.Equals("0"))
                               {
                             <span class="blockLeftText">
-                            <b>Giờ đóng cửa,cổng:</b>&nbsp;@Model.RestrictHours h</span>}
-                                                                                        
+                            <b>Giờ đóng cửa:</b>&nbsp;@Model.RestrictHours </span>}
                             <span class="blockLeftText"
                                 style="width: 100%;"><b>Ngày đăng:</b>&nbsp;@Model.CreatedDate</span>
                     <span class="blockLeftText" style="margin-top: 10px;"><b>Liên hệ:</b>&nbsp;@Model.NameContact</span>
@@ -231,8 +230,9 @@
                             
                             }
 
-                    <span class="blockLeftText" style="width: 420px; word-wrap: break-word; height: 100%;">
-                        <b>Ghi chú: </b>&nbsp;@Model.Description</span>
+                   @if (!string.IsNullOrEmpty(Model.Description))
+                   {<span class="blockLeftText" style="width: 420px; word-wrap: break-word; height: 100%;">
+                        <b>Ghi chú: </b>&nbsp;@Model.Description</span>}
                 </div>
                 <div class="blockInfo rightSide">
                     <div class="title">
@@ -414,4 +414,4 @@
         </div>
         </div>
         </div>
-     
+   
