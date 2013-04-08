@@ -254,6 +254,25 @@ namespace RentalHouseFinding.Common
             }
         }
 
+        public static Users GetUserByUsername(string userName)
+        {
+            using (RentalHouseFindingEntities _db = new RentalHouseFindingEntities())
+            {
+                var user = (from u in _db.Users
+                            where u.Username.Equals(userName, StringComparison.CurrentCultureIgnoreCase) && !u.IsDeleted
+                            select u).FirstOrDefault();
+                if (user != null)
+                {
+                    return user;
+                }
+                else
+                {
+                    //Error
+                    return null;
+                }
+            }
+        }
+
         //get UserId by OpenId
         public static int GetUserIdByOpenId(string openId)
         {
@@ -471,6 +490,26 @@ namespace RentalHouseFinding.Common
                     }
                 }
                 return numOfUnreadAnswer + numOfUnreadQuestion;
+            }
+        }
+
+        public static string GetNameOfUser(string name)
+        {
+            using (RentalHouseFindingEntities _db = new RentalHouseFindingEntities())
+            {
+                Users user = CommonModel.GetUserByUsername(name);
+                if (user != null)
+                {
+                    if (!string.IsNullOrEmpty(user.Name))
+                    {
+                        return user.Name;
+                    }
+                    if (!string.IsNullOrEmpty(user.Username))
+                    {
+                        return user.Username;
+                    }
+                }
+                return string.Empty;
             }
         }
 
