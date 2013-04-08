@@ -72,12 +72,12 @@
                 <span>Giá tiền (triệu VND/tháng)</span>
                 <div class="clear"></div>
                 <div id="fromPrice">
-                @Html.Label("fromP", "Từ")
-                @Html.TextBoxFor(model => model.PriceMin, new { @id = "fromPrice", @class = "range rangePrice", @placeholder = "" })
+                <span>Từ</span>
+                <div>@Html.TextBoxFor(model => model.PriceMin, new { @id = "fromPrice", @class = "range rangePrice", @placeholder = "" })</div>
                 @Html.ValidationMessageFor(model => model.PriceMax)
                 </div>
                 <div id="toPrice">
-                @Html.Label("toP", "Tới")
+                <span>Tới</span>
                 @Html.TextBoxFor(model => model.PriceMax, new { @id = "toPrice", @class = "range rangePrice", @placeholder = "" })                
                 @Html.ValidationMessageFor(model => model.PriceMin)
                 </div>                
@@ -86,12 +86,12 @@
                 <span>Diện tích (m2)</span>
                 <div class="clear"></div>
                 <div id="minArea">
-                @Html.Label("fromA", "Từ")
+                <span>Từ</span>
                 @Html.TextBoxFor(model => model.AreaMin, new { @id = "fromArea", @class = "range rangeArea", @placeholder = "" })
                 @Html.ValidationMessageFor(model => model.AreaMin)
                 </div>
                 <div id ="maxArea">
-                @Html.Label("toA", "Tới")
+                <span>Tới</span>
                 @Html.TextBoxFor(model => model.AreaMax, new { @id = "toArea", @class = "range rangeArea", @placeholder = "" })
                 @Html.ValidationMessageFor(model => model.AreaMax)
                 </div>
