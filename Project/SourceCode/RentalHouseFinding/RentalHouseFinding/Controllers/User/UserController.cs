@@ -153,75 +153,88 @@ namespace RentalHouseFinding.Controllers
                 p.EditedDate,
                 p.RenewDate,
                 p.ExpiredDate,
-                CountRenew = (from pay in _db.Payments 
+                CountRenew = (from pay in _db.Payments
                               where (pay.PostsId == p.Id)
-                                  select pay.Id).Count(),
+                              select pay.Id).Count(),
                 PostStatus = (from stt in _db.PostStatuses
                               where (stt.Id == p.StatusId)
                               select stt.Name).FirstOrDefault()
-            }).OrderByDescending(p => p.CreatedDate)
-                        .Skip(MAX_RECORD_PER_PAGE * ((int)page - 1)).Take(MAX_RECORD_PER_PAGE);
+            });
             //Custom sort
             if (sortdir == "DESC")
             {
                 if (sort == "ID")
                 {
-                    postViewList = postViewList.OrderByDescending(p => p.Id);
+                    postViewList = postViewList.OrderByDescending(p => p.Id)
+                        .Skip(MAX_RECORD_PER_PAGE * ((int)page - 1)).Take(MAX_RECORD_PER_PAGE);
                 }
                 if (sort == "UserId")
                 {
-                    postViewList = postViewList.OrderByDescending(p => p.UserId);
+                    postViewList = postViewList.OrderByDescending(p => p.UserId)
+                        .Skip(MAX_RECORD_PER_PAGE * ((int)page - 1)).Take(MAX_RECORD_PER_PAGE);
                 }
                 if (sort == "Title")
                 {
-                    postViewList = postViewList.OrderByDescending(p => p.Title);
+                    postViewList = postViewList.OrderByDescending(p => p.Title)
+                        .Skip(MAX_RECORD_PER_PAGE * ((int)page - 1)).Take(MAX_RECORD_PER_PAGE);
                 }
                 if (sort == "CreatedDate")
                 {
-                    postViewList = postViewList.OrderByDescending(p => p.CreatedDate);
+                    postViewList = postViewList.OrderByDescending(p => p.CreatedDate)
+                        .Skip(MAX_RECORD_PER_PAGE * ((int)page - 1)).Take(MAX_RECORD_PER_PAGE);
                 }
                 if (sort == "EditedDate")
                 {
-                    postViewList = postViewList.OrderByDescending(p => p.EditedDate);
+                    postViewList = postViewList.OrderByDescending(p => p.EditedDate)
+                        .Skip(MAX_RECORD_PER_PAGE * ((int)page - 1)).Take(MAX_RECORD_PER_PAGE);
                 }
                 if (sort == "RenewDate")
                 {
-                    postViewList = postViewList.OrderByDescending(p => p.RenewDate);
+                    postViewList = postViewList.OrderByDescending(p => p.RenewDate)
+                        .Skip(MAX_RECORD_PER_PAGE * ((int)page - 1)).Take(MAX_RECORD_PER_PAGE);
                 }
                 if (sort == "ExpiredDate")
                 {
-                    postViewList = postViewList.OrderByDescending(p => p.ExpiredDate);
+                    postViewList = postViewList.OrderByDescending(p => p.ExpiredDate)
+                        .Skip(MAX_RECORD_PER_PAGE * ((int)page - 1)).Take(MAX_RECORD_PER_PAGE);
                 }
             }
             else
             {
                 if (sort == "ID")
                 {
-                    postViewList = postViewList.OrderBy(p => p.Id);
+                    postViewList = postViewList.OrderBy(p => p.Id)
+                        .Skip(MAX_RECORD_PER_PAGE * ((int)page - 1)).Take(MAX_RECORD_PER_PAGE);
                 }
                 if (sort == "UserId")
                 {
-                    postViewList = postViewList.OrderBy(p => p.UserId);
+                    postViewList = postViewList.OrderBy(p => p.UserId)
+                        .Skip(MAX_RECORD_PER_PAGE * ((int)page - 1)).Take(MAX_RECORD_PER_PAGE);
                 }
                 if (sort == "Title")
                 {
-                    postViewList = postViewList.OrderBy(p => p.Title);
+                    postViewList = postViewList.OrderBy(p => p.Title)
+                        .Skip(MAX_RECORD_PER_PAGE * ((int)page - 1)).Take(MAX_RECORD_PER_PAGE);
                 }
                 if (sort == "CreatedDate")
                 {
-                    postViewList = postViewList.OrderBy(p => p.CreatedDate);
+                    postViewList = postViewList.OrderBy(p => p.CreatedDate)
+                        .Skip(MAX_RECORD_PER_PAGE * ((int)page - 1)).Take(MAX_RECORD_PER_PAGE);
                 }
                 if (sort == "EditedDate")
                 {
-                    postViewList = postViewList.OrderBy(p => p.EditedDate);
+                    postViewList = postViewList.OrderBy(p => p.EditedDate)
+                        .Skip(MAX_RECORD_PER_PAGE * ((int)page - 1)).Take(MAX_RECORD_PER_PAGE);
                 }
                 if (sort == "RenewDate")
                 {
-                    postViewList = postViewList.OrderBy(p => p.RenewDate);
+                    postViewList = postViewList.OrderBy(p => p.RenewDate)
+                        .Skip(MAX_RECORD_PER_PAGE * ((int)page - 1)).Take(MAX_RECORD_PER_PAGE);
                 }
                 if (sort == "ExpiredDate")
                 {
-                    postViewList = postViewList.OrderBy(p => p.ExpiredDate);
+                    postViewList = postViewList.OrderBy(p => p.ExpiredDate)
+                        .Skip(MAX_RECORD_PER_PAGE * ((int)page - 1)).Take(MAX_RECORD_PER_PAGE);
                 }
             }
             var grid = new WebGrid(ajaxUpdateContainerId: "container-grid", canSort: true);
