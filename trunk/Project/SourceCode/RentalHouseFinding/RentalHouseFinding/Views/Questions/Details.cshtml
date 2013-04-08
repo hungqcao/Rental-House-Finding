@@ -29,7 +29,7 @@
     <div id="answers">
     @foreach (var item in Model.Answers) {
         <div class="line">
-            <span class="name">Trả lời:</span>
+            <span class="name">@item.Question.Post.User.Email:</span>
             <div class="clear"></div>
             <span class="text">@Html.DisplayFor(model => item.Content)</span>
             <span class="text">Ngày trả lời: @Html.DisplayFor(model => item.CreatedDate)</span>

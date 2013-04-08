@@ -73,6 +73,22 @@ namespace RentalHouseFinding.Common
         {
             try
             {
+                if (areaMax == null)
+                {
+                    areaMax = 0;
+                }
+                if (areaMin == null)
+                {
+                    areaMin = 0;
+                }
+                if (priceMax == null)
+                {
+                    priceMax = 0;
+                }
+                if (priceMin == null)
+                {
+                    priceMin = 0;
+                }
                 var listSuggestion = _db.AdvancedSearchFacilities(categoryId, 
                                                                 provinceId, 
                                                                 DistrictId, 

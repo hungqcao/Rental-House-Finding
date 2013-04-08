@@ -3,7 +3,7 @@
     Layout = null;
 }
 <div class="line">
-    <span class="name">Trả lời:</span>
+    <span class="name">@User.Identity.Name:</span>
     <div class="clear"></div>
     <span class="text">@Html.DisplayFor(model => model.Content)</span>
     <span class="text">Lúc: @Html.DisplayFor(model => model.CreatedDate)</span>
