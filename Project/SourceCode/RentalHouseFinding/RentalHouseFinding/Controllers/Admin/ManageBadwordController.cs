@@ -36,7 +36,7 @@ namespace RentalHouseFinding.Controllers.Admin
         public ViewResult Index(FormCollection form)
         {
             ViewBag.TypesList = new SelectList(_db.BadWordTypes, "Id", "Name");
-            if (form["TypeId"] == null)
+            if (String.IsNullOrEmpty(form["TypeId"]))
             {
                 var badwords = _db.BadWords.Include("BadWordType");
                 ViewBag.ErrorMsg = null;
