@@ -107,6 +107,7 @@
     <Compile Include="Controllers\Admin\ManageDistrictController.cs" />
     <Compile Include="Controllers\Admin\ManagePaymentController.cs" />
     <Compile Include="Controllers\Admin\ManagePostsController.cs" />
+    <Compile Include="Controllers\Admin\ManageReportPostController.cs" />
     <Compile Include="Controllers\Admin\ManageScoreConfigController.cs" />
     <Compile Include="Controllers\Common\AdvancedSearchController.cs" />
     <Compile Include="Controllers\Common\ErrorController.cs" />
@@ -709,6 +710,15 @@
   <ItemGroup>
     <Content Include="Views\SMS\Index.cshtml" />
     <Content Include="Views\SMS\SMSActive.cshtml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Views\ManageReportPost\Index.cshtml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Views\ManageReportPost\Edit.cshtml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Views\ManageReportPost\ViewImage.cshtml" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <Import Project="$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v10.0\WebApplications\Microsoft.WebApplication.targets" />

@@ -1,0 +1,531 @@
+﻿@model RentalHouseFinding.Models.PostViewModel
+@{
+    ViewBag.Title = "Chỉnh sửa bài " + Model.Title;
+    Uri auxBaseUri = new Uri(Request.Url.GetLeftPart(UriPartial.Authority));
+    Uri baseUri = new Uri(auxBaseUri, Url.Content("~"));  
+}
+<script src="@Url.Content("~/Scripts/jquery.validate.min.js")" type="text/javascript"></script>
+<script src="@Url.Content("~/Scripts/jquery.validate.unobtrusive.min.js")" type="text/javascript"></script>
+<link rel="StyleSheet" href="@Url.Content("~/Content/ui-lightness/jquery-ui-1.8.6.custom.css")" type="text/css" media="all"/>
+<link rel="StyleSheet" href="@Url.Content("~/Content/jquery.tagedit.css")" type="text/css" media="all"/>
+<script type="text/javascript" src="@Url.Content("~/Scripts/jquery-ui-1.8.6.custom.min.js")"></script>
+<script type="text/javascript" src="@Url.Content("~/Scripts/jquery.autoGrowInput.js")"></script>
+<script type="text/javascript" src="@Url.Content("~/Scripts/jquery.tagedit.js")"></script>
+<script src="@Url.Content("~/Content/js/jquery.screwdefaultbuttonsV2.min.js")" type="text/javascript"></script>
+<script>
+    //for validate number message.
+    (function ($) {
+        // Walk through the adapters that connect unobstrusive validation to jQuery.validate.
+        // Look for all adapters that perform number validation
+        $.each($.validator.unobtrusive.adapters, function () {
+            if (this.name === "number") {
+                // Get the method called by the adapter, and replace it with one 
+                // that changes the message to the jQuery.validate default message
+                // that can be globalized. If that string contains a {0} placeholder, 
+                // it is replaced by the field name.
+                var baseAdapt = this.adapt;
+                this.adapt = function (options) {
+                    var fieldName = new RegExp("The field (.+) must be a number").exec(options.message)[1];
+                    options.message = $.validator.format($.validator.messages.number, fieldName);
+                    baseAdapt(options);
+                };
+            }
+        });
+    } (jQuery));
+</script>
+<script type="text/javascript">
+    function deleteGallery(obj) {
+        if (confirm("Bạn có muốn xóa ảnh này không?")) {
+            $.ajax({
+                url: '@baseUri.ToString()' + 'managereportpost/DeleteImage',
+                contentType: 'application/html; charset=utf-8',
+                type: 'GET',
+                dataType: 'html',
+                data: {
+                    id: obj.attr("id"),
+                    postId: '@Model.Id'
+                }
+            })
+            .success(function (result) {
+                if (result) {
+                    alert('Xóa thành công!');
+                    LoadGallery();
+                } else {
+                    alert('Bạn không thể thực hiện thao tác này');
+                }
+            })
+            .error(function (xhr, status) {
+                xhr.abort();
+            });
+        }
+    }
+
+    function LoadGallery() {
+        $.ajax({
+            url: '@baseUri.ToString()' + 'managereportpost/ViewImage',
+            contentType: 'application/html; charset=utf-8',
+            type: 'GET',
+            dataType: 'html',
+            data: {
+                id: '@Model.Id'
+            }
+        })
+        .success(function (result) {
+            $("#imageList").html(result);
+        })
+        .error(function (xhr, status) {
+            xhr.abort();
+        });
+    }
+    function initialize() {
+        var mapOptions = {
+            zoom: 16,
+            center: new google.maps.LatLng($('#Lat').val(), $('#Lon').val()),
+            mapTypeId: google.maps.MapTypeId.ROADMAP
+        };
+
+        var map = new google.maps.Map(document.getElementById('mapContainer'),
+            mapOptions);
+        var marker;
+        marker = new google.maps.Marker({
+            position: new google.maps.LatLng($('#Lat').val(), $('#Lon').val()),
+            map: map,
+            draggable: true
+        });
+        google.maps.event.addListener(map, 'click', function (event) {
+            if (marker == null) {
+                marker = new google.maps.Marker({
+                    position: event.latLng,
+                    map: map,
+                    draggable: true
+                });
+
+            } else {
+                marker.setPosition(event.latLng);
+            }
+            $('#Lat').val(event.latLng.lat());
+            $('#Lon').val(event.latLng.lng());
+            google.maps.event.addListener(marker, 'dragend', function (event) {
+                $('#Lat').val(event.latLng.lat());
+                $('#Lon').val(event.latLng.lng());
+            });
+        });
+
+        $("#ProvinceId").change(function () {
+            var idPro = $("#ProvinceId option:selected").val();
+            var select = $("#DistrictId");
+            select.empty();
+            select.append($('<option/>', {
+                value: '',
+                text: 'Quận/Huyện'
+            }));
+            select.next().text('Quận/Huyện');
+            $.getJSON("@baseUri.ToString()" + "service/GetDistrictList", { id: idPro },
+                function (myData) {
+                    $.each(myData, function (index, itemData) {
+                        if (itemData.Text.lenght != 0) {
+                            select.append($('<option/>', {
+                                value: itemData.Value,
+                                text: itemData.Text
+                            }));
+
+                        }
+                    });
+                });
+            $.getJSON("@baseUri.ToString()" + "service/GetLatLon", { id: idPro, type: "province" },
+                function (myData) {
+                    $.each(myData, function (index, itemData) {
+                        var provinceLatLon = new google.maps.LatLng(itemData.Value.split(';')[0], itemData.Value.split(';')[1]);
+                        map.setOptions({
+                            center: provinceLatLon,
+                            zoom: 11
+                        });
+                    });
+                });
+        });
+        $("#DistrictId").change(function () {
+            var idDis = $("#DistrictId  option:selected").val();
+            $.getJSON("@baseUri.ToString()" + "service/GetLatLon", { id: idDis, type: "district" },
+            function (myData) {
+                $.each(myData, function (index, itemData) {
+                    var districtLatLon = new google.maps.LatLng(itemData.Value.split(';')[0], itemData.Value.split(';')[1]);
+                    map.setOptions({
+                        center: districtLatLon,
+                        zoom: 14
+                    });
+                });
+            });
+        });
+
+        $("#Street").change(function () {
+            //var NumberHouse = $('#NumberHouse').val();
+            var Street = $(this).val();
+            var District = $("#DistrictId option:selected").text();
+            var Province = $("#ProvinceId option:selected").text();
+            var geocoder = new google.maps.Geocoder();
+            var address = Street + ' ' + District + ' ' + Province;
+
+            if (geocoder) {
+                geocoder.geocode({ 'address': address }, function (results, status) {
+                    if (status == google.maps.GeocoderStatus.OK) {
+                        map.setOptions({
+
+                            center: results[0].geometry.location,
+                            zoom: 16
+                        });
+                        if (marker == null) {
+                            marker = new google.maps.Marker({
+                                position: results[0].geometry.location,
+                                map: map,
+                                draggable: true
+                            });
+                        }
+                        else {
+                            marker.setPosition(results[0].geometry.location);
+                        }
+                        $('#Lat').val(results[0].geometry.location.lat());
+                        $('#Lon').val(results[0].geometry.location.lng());
+                        google.maps.event.addListener(marker, 'dragend', function (event) {
+                            $('#Lat').val(event.latLng.lat());
+                            $('#Lon').val(event.latLng.lng());
+                        });
+                    }
+                    else {
+                        alert("Lỗi kết nối đến máy chủ google: " + status);
+                    }
+                });
+            }
+        });
+    }
+
+    function loadScript() {
+        var script = document.createElement('script');
+        script.type = 'text/javascript';
+        script.src = 'https://maps.googleapis.com/maps/api/js?v=3.exp&sensor=false&' +
+            'callback=initialize';
+        document.body.appendChild(script);
+    }
+
+    window.onload = loadScript;
+</script>
+<script type="text/javascript">
+    $(document).ready(function () {
+        LoadGallery();
+        //For tag input
+        var source;
+        $.getJSON("@baseUri.ToString()" + "service/GetLocation",
+            function (myData) {
+                source = myData;
+            });
+        $('input.tag').tagedit({
+            autocompleteOptions: {
+                source: function (request, response) {
+                    var data = [];
+                    $.each(source, function (index, itemData) {
+                        if (itemData.Text.length != 0) {
+                            data.push({ "id": itemData.Value, "label": itemData.Text, "value": itemData.Text });
+                        }
+                    });
+                    return response($.ui.autocomplete.filter(data, request.term));
+                }
+            },
+            allowEdit: false,
+            allowDelete: false
+        });
+
+    });
+</script>
+<div id="postnew_wrapper">
+@Html.ValidationSummary(true, "Vui lòng kiểm tra lại thông tin như thông báo bên dưới!", new { style = "color:red" })
+@using (Html.BeginForm("edit", "managereportpost", FormMethod.Post, new { enctype = "multipart/form-data" }))
+{
+    @Html.HiddenFor(model => model.Id);
+    <div class="header">
+        <a><img src="@Url.Content("~/Content/images/pnew_thongTinCoBan.png")"/></a>
+        <img src="@Url.Content("~/Content/images/pnew_gachNgang.png")" id="separator"/>
+        <a href="#" onclick="scrollTo('pnew2_header'); $('.collapseBtn').click();"><img src="@Url.Content("~/Content/images/pnew_thongTinChiTiet.png")"/></a>
+    </div>
+    <div class="content">
+        <div class="title">
+            <h1>Đăng tin mới</h1>
+            <h2>Ngay sau bước đầu tiên bạn đã có thể đăng tin được ngay. 5house.vn khuyên bạn nên hoàn thành cả 2 bước để có bài đăng chi tiết và hiệu quả nhất.</h2>
+        </div>
+        <div class="pnew1">
+            <h1>1 | Thông tin cơ bản</h1>
+            <div class="clear"></div>
+            <div class="pnLeft">
+                <div class="infoElement" style="width:150px">
+                    <h2>Loại tin đăng</h2>
+                    <div class="clear"></div>
+                    @Html.DropDownListFor(model => model.CategoryId, null, new { @class = "select" })
+                    @Html.ValidationMessageFor(model => model.CategoryId)
+                </div>
+                <div class="infoElement infoTitle requireField">
+                    <h2>Tiêu đề tin đăng</h2>
+                    <div class="clear"></div>
+                    @Html.TextBoxFor(model => model.Title, new { @class = "longTbx" })
+                    @Html.ValidationMessageFor(model => model.Title)
+                </div>
+                <div class="clear"></div>
+                <div class="infoElement">
+                    <h2>Tỉnh, thành phố</h2>
+                    <div class="clear"></div>
+                    @Html.DropDownListFor(model => model.ProvinceId, null, new { @class = "select city" })
+                    @Html.ValidationMessageFor(model => model.ProvinceId)
+                </div>
+                <div class="infoElement">
+                    <h2>Quận huyện</h2>
+                    <div class="clear"></div>
+                    @Html.DropDownListFor(model => model.DistrictId, null, new { @class = "select city" })
+                    @Html.ValidationMessageFor(model => model.DistrictId)
+                </div>
+                <div class="clear"></div>
+                <div class="infoElement requireField">
+                    <h2>Đường, phố</h2>
+                    <div class="clear"></div>
+                    @Html.TextBoxFor(model => model.Street, new { @class = "tbx" })
+                    @Html.ValidationMessageFor(model => model.Street)
+                </div>
+                <div class="infoElement">
+                    <h2>Ngách, số nhà</h2>
+                    <div class="clear"></div>
+                    @Html.TextBoxFor(model => model.NumberHouse, new { @class = "tbx" })
+                    @Html.ValidationMessageFor(model => model.NumberHouse)
+                </div>
+                <div class="clear"></div>
+                <div class="infoElement requireField">
+                    <h2>Giá tiền (triệu VND/tháng)</h2>
+                    <div class="clear"></div>
+                    @Html.TextBoxFor(model => model.Price, new { @class = "tbx" })
+                    @Html.ValidationMessageFor(model => model.Price)
+                </div>
+                <div class="infoElement requireField">
+                    <h2>Diện tích (m2)</h2>
+                    <div class="clear"></div>
+                    @Html.TextBoxFor(model => model.Area, new { @class = "tbx" })
+                    @Html.ValidationMessageFor(model => model.Area)
+                </div>
+                <div class="clear"></div>
+                <div class="infoElement">
+                    <h2>Tên người liên hệ</h2>
+                    <div class="clear"></div>
+                    @Html.TextBoxFor(model => model.NameContact, new { @class = "tbx" })
+                    @Html.ValidationMessageFor(model => model.NameContact)
+                </div>
+                <div class="infoElement requireField">
+                    <h2>Điện thoại liên hệ</h2>
+                    <div class="clear"></div>
+                    @Html.TextBoxFor(model => model.PhoneContact, new { @class = "tbx" })
+                    @Html.ValidationMessageFor(model => model.PhoneContact)
+                </div>
+                <div class="infoElement requireField">
+                    <h2>Điện thoại kích hoạt</h2>
+                    <div class="clear"></div>
+                    @Html.TextBoxFor(model => model.PhoneActive, new { @class = "tbx" })
+                    @Html.ValidationMessageFor(model => model.PhoneActive)
+                </div>
+                <div class="infoElement">
+                    <h2>Email liên hệ</h2>
+                    <div class="clear"></div>
+                    @Html.TextBoxFor(model => model.Email, new { @class = "tbx" })
+                    @Html.ValidationMessageFor(model => model.Email)
+                </div>
+                <div class="clear"></div>
+                <div class="infoElement">
+                    <h2>Tài khoản Yahoo!</h2>
+                    <div class="clear"></div>
+                    @Html.TextBoxFor(model => model.Yahoo, new { @class = "shortTbx" })
+                    @Html.ValidationMessageFor(model => model.Yahoo)
+                </div>
+                <div class="infoElement">
+                    <h2>Tài khoản Skype</h2>
+                    <div class="clear"></div>
+                    @Html.TextBoxFor(model => model.Skype, new { @class = "shortTbx" })
+                    @Html.ValidationMessageFor(model => model.Skype)
+                </div>
+                <div class="clear"></div>
+                <div class="infoElement" style="height:auto;">
+                    <h2>Ghi chú</h2>
+                    <div class="clear"></div>
+                    @Html.TextAreaFor(model => model.Description, new { @cols = "15", @rows = "2" })
+                </div>
+                <div class="clear"></div>
+            </div>
+            <div class="pnRight">
+                <h2>Vị trí trên bản đồ</h2>
+                <br />
+                <h2 style="color: #888888; font-weight: 400; font-style: italic; margin-top: 5px;">Hệ thống sẽ tự động xác định địa chỉ bạn cung cấp. Bạn có thể chọn một cách chính xác vị trí bạn mong muốn trên bản đồ dưới đây:</h2>
+                <div class="clear"></div>
+                <div class="map">
+                    <div id="mapContainer" style="width:372px;height:340px;"></div>
+                        <div class="editor-field">
+                            @Html.HiddenFor(model => model.Lat)
+                            @Html.ValidationMessageFor(model => model.Lat)
+                        </div>
+                        <div class="editor-field">
+                            @Html.HiddenFor(model => model.Lon)
+                            @Html.ValidationMessageFor(model => model.Lon)
+                        </div>
+                    </div>
+                <h2>Ảnh, video minh hoạ</h2>
+                <div class="clear"></div>
+                <div class="btnPlus">
+                    <ul id="imageList">
+                    </ul>
+                    <div class="clear"></div>
+                    <div id="uploadFile">
+                        <label>Chọn ảnh: </label>
+                        <input id="file0" name="images" type="file" />
+                        <a href="javascript:;" onclick="return addFile();" class="addImage">Thêm ảnh</a>
+                    </div>
+                </div>
+            </div>
+            <div class="clear"></div>
+        </div>
+        <div id="pnew2_header">
+                <div class="collapseBtn" onclick="toggleP2();"></div>
+                <h1>2 | Thông tin chi tiết</h1>
+                <div class="tips">
+                    <span id="tip1">Để có bài đăng chi tiết và hiệu quả nhất hãy hoàn thành phần thông tin chi tiết này.</span>
+                    <br/>
+                    <span id="tip2">Ấn nút mũi tên màu bạc để tiếp tục cung cấp thông tin hoặc ấn nút màu cam để bỏ qua bước này và đăng tin ngay!</span>
+                </div>
+                <div class="clear"></div>
+            </div>
+        <div id="pnew2_toggle">
+                <div>
+                    <div class="infoElement">
+                        <h2>Giá tiền điện (nghìn vnđ/số)</h2>
+                        <div class="clear"></div>
+                        @Html.TextBoxFor(model => model.ElectricityFee, new { @class = "electricPriceTbx" })
+                        @Html.ValidationMessageFor(model => model.ElectricityFee)
+                    </div>
+                    <div class="infoElement">
+                        <h2>Giá tiền nước (nghìn vnđ/khối) </h2>
+                        <div class="clear"></div>
+                        @Html.TextBoxFor(model => model.WaterFee, new { @class = "electricPriceTbx" })
+                        @Html.ValidationMessageFor(model => model.WaterFee)
+                    </div>
+                    <div class="infoElement">
+                        <h2>Giờ đóng cửa, cổng (nếu có)</h2>
+                        <div class="clear"></div>
+                        @Html.TextBoxFor(model => model.RestrictHours, new { @class = "electricPriceTbx" })
+                        @Html.ValidationMessageFor(model => model.RestrictHours)
+                    </div>
+                    <div class="clear"></div>
+                </div>
+                <div class="clear"></div>
+                <div class="leftContent" style="margin-right: 144px;">
+                    <h1>Các dịch vụ & tiện ích</h1>
+                    <div class="clear"></div>
+                    <div class="partCol">
+                        <div class="part">
+                            @Html.CheckBoxFor(model => model.HasInternet, new { @class = "styledCheckbox" })
+                            <span>Internet</span>
+                        </div>
+                        <div class="part">
+                            @Html.CheckBoxFor(model => model.HasBed, new { @class = "styledCheckbox" })
+                            <span>Giường, tủ</span>
+                        </div>
+                        <div class="part">
+                            @Html.CheckBoxFor(model => model.IsAllowCooking, new { @class = "styledCheckbox" })
+                            <span>Cho phép nấu ăn</span>
+                        </div>
+                        <div class="part">
+                            @Html.CheckBoxFor(model => model.HasWaterHeater, new { @class = "styledCheckbox" })
+                            <span>Bình nóng lạnh</span>
+                        </div>
+                        <div class="part">
+                            @Html.CheckBoxFor(model => model.HasSecurity, new { @class = "styledCheckbox" })
+                            <span>Bảo vệ</span>
+                        </div>
+                        <div class="clear"></div>
+                        <div class="part">
+                            @Html.CheckBoxFor(model => model.HasToilet, new { @class = "styledCheckbox" })
+                            <span>WC riêng</span>
+                        </div>
+                    </div>
+                    <div class="partCol">
+                        <div class="part">
+                            @Html.CheckBoxFor(model => model.HasMotorParking, new { @class = "styledCheckbox" })
+                            <span>Bãi đỗ xe</span>
+                        </div>
+                        <div class="part">
+                            @Html.CheckBoxFor(model => model.IsStayWithOwner, new { @class = "styledCheckbox" })
+                            <span>Chung chủ</span>
+                        </div>
+                        <div class="part">
+                            @Html.CheckBoxFor(model => model.HasGarage, new { @class = "styledCheckbox" })
+                            <span>Gara ôtô</span>
+                        </div>
+                        <div class="clear"></div>
+                        <div class="part">
+                            @Html.CheckBoxFor(model => model.HasAirConditioner, new { @class = "styledCheckbox" })
+                            <span>Điều hòa</span>
+                        </div>
+                        <div class="part">
+                            @Html.CheckBoxFor(model => model.HasTVCable, new { @class = "styledCheckbox" })
+                            <span>Tivi, truyền hình cáp</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="leftContent">
+                    <h1>Các địa điểm nổi bật xung quanh</h1>
+                    <div class="clear"></div>
+                    <div class="ta_wrapper">
+                        @foreach (KeyValuePair<int, string> kvp in Model.lstNearByPlace)
+                        {
+                            <input id="osSites" type="text" name="tag[@kvp.Key-a]" value="@kvp.Value" class="tag"/>
+                        }
+                        @if (Model.lstNearByPlace.Count == 0)
+                        {
+                            <input id="osSites" type="text" name="tag[]" value="" class="tag"/>
+                        }
+                    </div>
+                </div>
+                <div class="clear"></div>
+            </div>
+        <input id="btnSaveInfo" type="submit" class="button-link right" value="Chấp nhận"/>
+        <a id="btnDelete" href="/managereportpost/delete/@Model.Id" onclick=" return confirm('Bạn có chắc chắn muốn xóa bài viết này?');" class="button-link right">Xóa</a>
+        <div class="clear"></div>
+    </div>
+}
+@section head{
+    <script type="text/javascript">
+        $(document).ready(function () {
+            $('select.select').each(function () {
+                var title = $(this).attr('title');
+                var id = $(this).attr('id');
+                if ($('option:selected', this).val() != '') {
+                    title = $('option:selected', this).text();
+                } else {
+                    $('option:selected', this).val('0');
+                    title = $('option:selected', this).val('0').text();
+                }
+                $(this)
+                .css({ 'opacity': 0 })
+                .after('<span class="select" id="sp' + id + '">' + title + '</span>')
+                .change(function () {
+                    val = $('option:selected', this).text();
+                    $(this).next().text(val);
+                })
+            });
+        });
+
+        function toggleP2() {
+            $('#pnew2_toggle').toggle();
+            if (!$('#pnew2_toggle').is(':hidden')) {
+                $('.collapseBtn').css('background-position', '0 -50px');
+            } else {
+                $('.collapseBtn').css('background-position', '0 0');
+            }
+        }
+
+        function scrollTo(id) {
+            $('html, body').animate({
+                scrollTop: $('#' + id).offset().top
+            }, 1000);
+        }
+        
+    </script>
+}
