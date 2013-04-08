@@ -162,7 +162,7 @@ namespace RentalHouseFinding.Sercurity
                         user.OpenIdURL = model.id;
                         // try get name.
                         string name = String.Format("{0} {1}", model.first_name ,model.last_name).Trim();
-                        if (name.Length >= 3)
+                        if (!String.IsNullOrEmpty(name))
                         {
                             user.Name = name;
                         }

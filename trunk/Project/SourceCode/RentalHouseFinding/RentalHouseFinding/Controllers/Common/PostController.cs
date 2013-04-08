@@ -173,7 +173,7 @@ namespace RentalHouseFinding.Controllers
                     string strExpiredDate = Repository.GetAllConfiguration().Where(c => c.Name.Equals(ConstantCommonString.EXPIRED_DATE, StringComparison.CurrentCultureIgnoreCase)).Select(c => c.Value).FirstOrDefault().ToString();
                     int numberExpiredDate = 0;
                     int.TryParse(strExpiredDate, out numberExpiredDate);
-                    Posts postToCreate = CommonModel.ConvertPostViewModelToPost(model, DateTime.Now, DateTime.Now, DateTime.Now, 
+                    Posts postToCreate = CommonModel.ConvertPostViewModelToPost(model, DateTime.Now, null, null, 
                                 DateTime.Now.AddDays(numberExpiredDate),
                                 _noInfo);
 
@@ -343,7 +343,7 @@ namespace RentalHouseFinding.Controllers
                         TempData["Pending"] = true;
                         TempData["Success"] = false;
                     }
-                    post = CommonModel.ConvertPostViewModelToPost(post, postViewModel, post.CreatedDate, DateTime.Now, DateTime.Now, _noInfo);
+                    post = CommonModel.ConvertPostViewModelToPost(post, postViewModel, post.CreatedDate, DateTime.Now,null, _noInfo);
                     
 
                     Dictionary<int, string> lstNearbyId = CommonController.GetListNearbyLocations(postViewModel, Request);

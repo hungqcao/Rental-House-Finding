@@ -133,9 +133,9 @@
                                 grid.Column("CreatedDate", "Ngày tạo",
                                     format: (item) => string.Format("{0:yyyy-MM-dd HH:mm:ss}", item.CreatedDate)),
                                 grid.Column("EditedDate", "Lần sửa cuối",
-                                    format: (item) => string.Format("{0:yyyy-MM-dd HH:mm:ss}", item.EditedDate)),
+                                    format: (item) => item.EditedDate == null ? "" : string.Format("{0:yyyy-MM-dd HH:mm:ss}", item.EditedDate)),
                                 grid.Column("RenewDate", "Lần gia hạn cuối",
-                                    format: (item) => string.Format("{0:yyyy-MM-dd HH:mm:ss}", item.RenewDate)),
+                                    format: (item) => item.RenewDate == null ? "" : string.Format("{0:yyyy-MM-dd HH:mm:ss}", item.RenewDate)),
                                 grid.Column("ExpiredDate", "Ngày hết hạn", 
                                     format: (item) => string.Format("{0:yyyy-MM-dd HH:mm:ss}", item.ExpiredDate))
                                 ));

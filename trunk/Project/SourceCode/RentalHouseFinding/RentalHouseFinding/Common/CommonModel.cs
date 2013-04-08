@@ -32,7 +32,7 @@ namespace RentalHouseFinding.Common
             }
         }
 
-        public static Posts ConvertPostViewModelToPost(PostViewModel model, DateTime createdDate, DateTime editedDate, DateTime renewDate, DateTime expiredDate, string noInformation)
+        public static Posts  ConvertPostViewModelToPost(PostViewModel model, DateTime createdDate, DateTime? editedDate, DateTime? renewDate, DateTime expiredDate, string noInformation)
         {
             
             string facilityTempId = (model.HasAirConditioner ? "1" : "0") +
@@ -97,7 +97,7 @@ namespace RentalHouseFinding.Common
             };
         }
 
-        public static Posts ConvertPostViewModelToPost(Posts post, PostViewModel model, DateTime createdDate, DateTime editedDate, DateTime renewDate, string noInformation)
+        public static Posts ConvertPostViewModelToPost(Posts post, PostViewModel model, DateTime createdDate, DateTime editedDate, DateTime? renewDate, string noInformation)
         {
             if (string.IsNullOrEmpty(model.NumberHouse))
             {

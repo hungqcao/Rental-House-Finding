@@ -131,7 +131,7 @@ namespace RentalHouseFinding.Models
         public string Skype { get; set; }        
         public int Views { get; set; }
         public DateTime CreatedDate { get; set; }
-        public DateTime EditedDate { get; set; }
+        public DateTime? EditedDate { get; set; }
         public string CreatedBy { get; set; }
         public string Category { get; set; }
         public string Internet { get; set; }
