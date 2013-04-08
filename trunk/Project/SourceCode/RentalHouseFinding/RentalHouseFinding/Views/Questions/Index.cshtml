@@ -1,10 +1,19 @@
-﻿@model IEnumerable<RentalHouseFinding.Models.Questions>
-
-@{
+﻿@{
     Layout = "~/Views/Shared/_LayoutUser.cshtml";
 }
 <script type="text/javascript">
     $(function () {
+        $(".tab_content").hide();
+        $(".tab_content:first").show();
+
+        $("ul.tabs li").click(function () {
+            $("ul.tabs li").removeClass("active");
+            $(this).addClass("active");
+            $(".tab_content").hide();
+            var activeTab = $(this).attr("rel");
+            $("#" + activeTab).fadeIn();
+        });
+
         $('.infoDetail').click(function () {
             $('#rightInfo').html('<strong>Loading...</strong>');
             $.post('@Url.Content("~/Questions/Details/")' + $(this).attr("id"), function (data) {
@@ -15,29 +24,62 @@
     });
     
 </script>
-<div id="leftInfo" class="left">
-    <label style="margin-left: 15px; font-size: 14px;">
-        Các câu hỏi bạn có liên quan</label>
-    <div class="clear">
-    </div>
-    <div style="overflow: hidden; width: 320px; height: 556px;">
-        <div class="scroll-panel" style="overflow: auto; width: 340px; height: 556px;">
-            @foreach (var item in Model)
-            {
-                <div id="@item.Id" class="infoDetail left state-read-@item.IsRead" style="font-size:13px;">
-                    <div class="text left">
-                        <span class="title left" style="width:100%; font-size:15px;margin-bottom: 10px"><strong>@item.Title</strong></span>
+<div id="container" class="questions">
+    <div id="leftInfo" class="tab_container left" style="overflow: hidden; width: 320px; height: 576px;"> 
+          <ul class="tabs"> 
+                <li class="active" rel="tab1">Nhận</li>
+                <li rel="tab2"> Gửi</li>
+          </ul>
+          <div class="clear"></div>
+
+         <div id="tab1" class="tab_content"> 
+ 
+             <div class="scroll-panel" style="overflow: auto; width: 340px; height: 576px;">
+                @foreach (var item in (IEnumerable<RentalHouseFinding.Models.Questions>)ViewBag.Question)
+                {
+                    <div id="@item.Id" class="infoDetail left state-read-@item.IsRead" style="font-size:13px;">
+                        <div class="text left">
+                            <span class="title left" style="width:100%; font-size:15px;margin-bottom: 10px"><strong>@item.Title</strong></span>
                         
-                        <span class="from left">Từ bài đăng: @item.Post.Title</span> 
-                        <span class="time left">Thời gian: @item.CreatedDate</span>
-                        <span class="sender left">Người gửi: @item.SenderEmail</span>
+                            <span class="from left">Từ bài đăng: @item.Post.Title</span> 
+                            <span class="time left">Thời gian: @item.CreatedDate</span>
+                            <span class="sender left">Người gửi: @item.SenderEmail</span>
+                        </div>
+                        <div class="clear">
+                        </div>
                     </div>
-                    <div class="clear">
+                }
+            </div>
+
+         </div><!-- #tab1 -->
+         <div id="tab2" class="tab_content"> 
+
+           <div class="scroll-panel" style="overflow: auto; width: 340px; height: 576px;">
+                @foreach (var item in (IEnumerable<RentalHouseFinding.Models.Questions>)ViewBag.SentQuestion)
+                {
+                    bool isRead = true;
+                    foreach (var mess in item.Answers)
+                    {
+                        if (!mess.IsRead)
+                        {
+                            isRead = false;
+                        }
+                    }
+                    <div id="@item.Id" class="infoDetail left state-read-@isRead" style="font-size:13px;">
+                        <div class="text left">
+                            <span class="title left" style="width:100%; font-size:15px;margin-bottom: 10px"><strong>@item.Title</strong></span>
+                        
+                            <span class="from left">Từ bài đăng: @item.Post.Title</span> 
+                            <span class="time left">Thời gian: @item.CreatedDate</span>
+                            <span class="sender left">Người gửi: @item.SenderEmail</span>
+                        </div>
+                        <div class="clear">
+                        </div>
                     </div>
-                </div>
-            }
-        </div>
-    </div>
+                }
+            </div>
+     </div>
+</div> 
 </div>
 <div id="rightInfo" class="left">
     

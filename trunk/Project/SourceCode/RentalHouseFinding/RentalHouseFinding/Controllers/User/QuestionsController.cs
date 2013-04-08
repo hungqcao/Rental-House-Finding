@@ -37,9 +37,9 @@ namespace RentalHouseFinding.Controllers.User
 
             var lstQuestion = _db.Questions.Where(q => lstPostId.Contains(q.PostId) && !q.IsDeleted).OrderByDescending(q=>q.CreatedDate).ToList();
             var lstSentQuestion = _db.Questions.Where(q => q.SenderId == userId && !q.IsDeleted).OrderByDescending(q=>q.CreatedDate).ToList();
-            lstQuestion.AddRange(lstSentQuestion);
-            lstQuestion.OrderByDescending(q => q.CreatedDate);
-            return View(lstQuestion);
+            ViewBag.Question = lstQuestion;
+            ViewBag.SentQuestion = lstSentQuestion;
+            return View();
         }
 
         //
@@ -51,6 +51,12 @@ namespace RentalHouseFinding.Controllers.User
 
             questions.IsRead = true;
             _db.ObjectStateManager.ChangeObjectState(questions, System.Data.EntityState.Modified);
+
+            foreach (var item in questions.Answers)
+            {
+                item.IsRead = true;
+                _db.ObjectStateManager.ChangeObjectState(questions, System.Data.EntityState.Modified);
+            }
             _db.SaveChanges();
             return View(questions);
         }

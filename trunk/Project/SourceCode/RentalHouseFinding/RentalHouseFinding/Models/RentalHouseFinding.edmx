@@ -1804,7 +1804,7 @@
     </edmx:Options>
     <!-- Diagram content (shape and connector positions) -->
     <edmx:Diagrams>
-      <Diagram Name="RentalHouseFinding" ZoomLevel="75" >
+      <Diagram Name="RentalHouseFinding" ZoomLevel="85" >
         <EntityTypeShape EntityType="RentalHouseFinding.Users" PointX="3" PointY="11.125" Width="1.5" Height="4.2879036458333335" IsExpanded="true" />
         <EntityTypeShape EntityType="RentalHouseFinding.Provinces" PointX="0.75" PointY="17.125" Width="1.5" Height="2.172587890624996" IsExpanded="true" />
         <EntityTypeShape EntityType="RentalHouseFinding.Districts" PointX="3" PointY="16.875" Width="1.5" Height="2.5571907552083317" IsExpanded="true" />

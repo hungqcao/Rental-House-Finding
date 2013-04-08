@@ -52,7 +52,7 @@
             </div>
         </div>
     }
-    else if(TempData["Success"] != null)
+    else if (TempData["Success"] != null)
     {
         if ((bool)TempData["Success"] && TempData["MessageSuccessPostNew"] != null)
         {
@@ -64,7 +64,7 @@
             </div>
         }
     }
-    @if(TempData["Success"] != null)
+    @if (TempData["Success"] != null)
     {
         if ((bool)TempData["Pending"] && TempData["MessagePendingPostNew"] != null)
         {
@@ -82,81 +82,7 @@
     <div id="popup_wrapper">
         <div id="popup_wrapper">
             <div class="popup_header">
-                <div id="sendQuestion">
-                    <div id="ReportPost">
-                        @if (User.Identity.IsAuthenticated)
-                        {
-                            <div class="reportpop pop" id="element_to_pop_up">
-                                <form method="post" id="new_message" action="/messages">
-                                <div class="display-label">
-                                    Lý do:</div>
-                                <div>
-                                    <textarea rows="6" name="body" id="txtResion" cols="28"></textarea></div>
-                                <div id="rpMessage" style="color: Red; display: none;">
-                                    Vui lòng cung cấp lý do</div>
-                                <div id="report-form">
-                                    <input class="button_report" type="button" value="Gửi" name="commit" id="message_submit" />
-                                    or
-                                    <input type="button" class="close b-close button_report" value="Hủy" name="commit"
-                                        id="message_cancel" />
-                                </div>
-                                <div class="clear">
-                                </div>
-                                </form>
-                            </div>
-                
-                            <div class="clear">
-                            </div>
-                        }
-                        else
-                        {    
-                            <!-- Element to pop up -->
-                            <div id="element_to_pop_up" class="login-regis" style="margin: 0 auto; width: 120px;
-                                height: 20 px;">
-                                <a class="b-close">x</a>
-                                <div class="tittle">
-                                    Bạn cần <a  href="@Request.Url.AbsoluteUri.Replace(@Request.Url.Authority, Request.Url.Authority + "/account/logon?returnUrl=")">
-                                        đăng nhập</a> để sử dụng chức năng này</div>
-                            </div>
-                            <div class="clear">
-                            </div>
-                        }
-                    </div>
-                    <div id="reportWithoutLogin" class="withOutLoginReport topBtnReport" style="cursor: pointer;"
-                        title="Báo cáo tin đăng không chính xác hoặc có vi phạm">
-                    </div>
-                    <div class="clear">
-                    </div>
-                </div>
-                <div id="saveBookmark">
-                    @{
-                        if (ViewBag.RemoveFavorite == false)
-                        {
-                        <div id="favorite" onclick="addFavorite('@Model.Id');" class="withOutLoginFav topBtnFavorite"
-                            title="Cho vào danh sách quan tâm của bạn">
-                            <img id="favoriteImg" src="../../Content/images/triangle_fav.png" />
-                        </div>
-                    
-                        }
-                        else if (ViewBag.RemoveFavorite == true)
-                        {
-                        <div id="favorite" onclick="removeFavorite('@Model.Id');" class="withOutLoginFav topBtnFavoriteActived"
-                            title="Xóa tin này khỏi danh sách quan tâm">
-                            <img id="favoriteImg" src="../../Content/images/favorite_actived.png" />
-                        </div>
-                       
-                        }
-                        if (!User.Identity.IsAuthenticated)
-                        {
-                        <div id="favorite" class="withOutLoginFav topBtnFavorite" title="Cho vào danh sách quan tâm của bạn">
-                            <img id="favoriteImg" src="../../Content/images/triangle_fav.png" />
-                        </div>
-                        }
-                    }
-                </div>
-                <div class="clear">
-                </div>
-                <div>
+                <div class="left">
                      <span class="type">[@Model.Category]</span><span class="address">&nbsp;@Model.NumberHouse @Model.Street | @Model.Price triệu VNĐ
                         | @Model.Area m2</span>
                     @Html.HiddenFor(model => Model.Id)
@@ -164,8 +90,96 @@
                     </div>
                    <span class="shortDesc">@Model.Title</span>
                 </div>
+                @if (User.Identity.IsAuthenticated)
+                {
+                    if (Model.UserId == CommonModel.GetUserIdByUsername(User.Identity.Name))
+                    {
+                        <div id="button-detail" class="right">
+                            <a href="/post/edit/@Model.Id" class="button-link left" style="padding: 5px 20px;">Chỉnh sửa</a>
+                            <a href="/post/delete/@Model.Id" onclick="return confirm('Bạn có chắc chắn muốn xóa bài này?');" class="button-link left" style="padding: 5px 20px;width: 45px;">Xóa</a>
+                        </div>
+                    }
+                    else
+                    {
+                        <div id="sendQuestion">
+                            <div id="ReportPost">
+                                @if (User.Identity.IsAuthenticated)
+                                {
+                                    <div class="reportpop pop" id="element_to_pop_up">
+                                        <form method="post" id="new_message" action="/messages">
+                                        <div class="display-label">
+                                            Lý do:</div>
+                                        <div>
+                                            <textarea rows="6" name="body" id="txtResion" cols="28"></textarea></div>
+                                        <div id="rpMessage" style="color: Red; display: none;">
+                                            Vui lòng cung cấp lý do</div>
+                                        <div id="report-form">
+                                            <input class="button_report" type="button" value="Gửi" name="commit" id="message_submit" />
+                                            or
+                                            <input type="button" class="close b-close button_report" value="Hủy" name="commit"
+                                                id="message_cancel" />
+                                        </div>
+                                        <div class="clear">
+                                        </div>
+                                        </form>
+                                    </div>
+                                    <div class="clear">
+                                    </div>
+                                }
+                                else
+                                {
+                                }
+                            </div>
+                            <div id="reportWithoutLogin" class="withOutLoginReport topBtnReport" style="cursor: pointer;"
+                                title="Báo cáo tin đăng không chính xác hoặc có vi phạm">
+                            </div>
+                            <div class="clear">
+                            </div>
+                        </div>
+                        <div id="saveBookmark">
+                            @{
+                                if (ViewBag.RemoveFavorite == false)
+                                {
+                                <div id="favorite" onclick="addFavorite('@Model.Id');" class="withOutLoginFav topBtnFavorite"
+                                    title="Cho vào danh sách quan tâm của bạn">
+                                    <img id="favoriteImg" src="../../Content/images/triangle_fav.png" />
+                                </div>
+                    
+                                }
+                                else if (ViewBag.RemoveFavorite == true)
+                                {
+                                <div id="favorite" onclick="removeFavorite('@Model.Id');" class="withOutLoginFav topBtnFavoriteActived"
+                                    title="Xóa tin này khỏi danh sách quan tâm">
+                                    <img id="favoriteImg" src="../../Content/images/favorite_actived.png" />
+                                </div>
+                       
+                                }
+                                if (!User.Identity.IsAuthenticated)
+                                {
+                                <div id="favorite" class="withOutLoginFav topBtnFavorite" title="Cho vào danh sách quan tâm của bạn">
+                                    <img id="favoriteImg" src="../../Content/images/triangle_fav.png" />
+                                </div>
+                                }
+                            }
+                        </div>
+                    }
+                }
+                else
+                {
+                    <!-- Element to pop up -->
+                    <div id="element_to_pop_up" class="login-regis" style="margin: 0 auto; width: 120px;
+                        height: 20 px;">
+                        <a class="b-close">x</a>
+                        <div class="tittle">
+                            Bạn cần <a  href="@Request.Url.AbsoluteUri.Replace(@Request.Url.Authority, Request.Url.Authority + "/account/logon?returnUrl=")">
+                                đăng nhập</a> để sử dụng chức năng này</div>
+                    </div>
+                    <div class="clear">
+                    </div>
+                }
                 <div class="clear">
                 </div>
+                
                 <div id="addThis">
                     <!-- AddThis Button BEGIN -->
                     <div class="addthis_toolbox addthis_default_style">
@@ -208,7 +222,8 @@
                         class="blockLeftText" style="width:380px;"><b>Email:</b>&nbsp;@Model.Email</span>     
                             &nbsp;
                             @* Check Yahoo & Skype*@
-                            @if(!string.IsNullOrEmpty(Model.Yahoo)|!string.IsNullOrEmpty(Model.Skype)){
+                            @if (!string.IsNullOrEmpty(Model.Yahoo) | !string.IsNullOrEmpty(Model.Skype))
+                            {
                                 <span >
                           
                             @if (!string.IsNullOrEmpty(Model.Yahoo))
@@ -218,10 +233,10 @@
                             <a href="ymsgr:sendIM?@Model.Yahoo">
                                 <img border="0" width="52px" src="http://opi.yahoo.com/online?u=YahooID&m=g&t=14&l=us"></a></div>
                                 
-                                }
+                            }
                                 
                                   @if (!string.IsNullOrEmpty(Model.Skype))
-                            {
+                                  {
                             <script type="text/javascript" src="//cdn.dev.skype.com/uri/skype-uri.js"></script>
                             <div id="skype">    
                             <div id="SkypeButton">
@@ -235,7 +250,7 @@
                                 </script>
                             </div>
                             </div>
-                            }</span>
+                                  }</span>
                             
                             }
 
