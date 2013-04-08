@@ -9,17 +9,18 @@
     $(document).ready(function () {
         $("#result").fadeOut();
         $("#sendBtn").click(function () {
-            if ($("#ContentAnswer").val().length != 0) {
-                $("#result").fadeIn();
+                if ($("#ContentAnswer").val().length != 0) {
+                    $("#result").fadeIn();
+                }
+                return true;
             }
-            return true;
-        }
-        $('form0').submit(function () {
+        );
+
+        $('form').submit(function () {
             if ($(this).valid()) {
                 $(':submit', this).attr('disabled', 'disabled');
             }
         });
-    );
     });
 </script>
 @using (Ajax.BeginForm("sendanswer", "questions", new AjaxOptions { UpdateTargetId = "answers", InsertionMode = InsertionMode.InsertAfter, OnSuccess = "OnSuccess", OnFailure = "OnFailure" }))
