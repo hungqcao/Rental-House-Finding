@@ -6,6 +6,7 @@ using System.Linq;
 using System.Web;
 using System.Web.Mvc;
 using RentalHouseFinding.Models;
+using System.Web.Helpers;
 
 namespace RentalHouseFinding.Controllers.Admin
 { 
@@ -24,22 +25,21 @@ namespace RentalHouseFinding.Controllers.Admin
                 page = 1;
             }
             ViewBag.Index = ((int)page - 1) * MAX_RECORD_PER_PAGE;
-            ViewBag.TotalRowCount = _db.Districts.Count();
             if (provinceId == null)
             {
                 ViewBag.Provinces = new SelectList(_db.Provinces, "Id", "Name");
-                var districts = _db.Districts.Include("Province")
-                    .OrderBy(p => p.Id).Skip(MAX_RECORD_PER_PAGE * ((int)page - 1))
-                    .Take(MAX_RECORD_PER_PAGE);
-                return View(districts.ToList());
+                var districts = _db.Districts.Include("Province");
+                var grid = new WebGrid(districts, ajaxUpdateContainerId: "container-grid");
+                ViewBag.Grid = grid;
+                return View();
             }
             else
             {
                 ViewBag.Provinces = new SelectList(_db.Provinces, "Id", "Name", provinceId);
-                var districts = _db.Districts.Where(d => d.ProvinceId == provinceId).Include("Province")
-                    .OrderBy(p => p.Id).Skip(MAX_RECORD_PER_PAGE * ((int)page - 1))
-                    .Take(MAX_RECORD_PER_PAGE);
-                return View(districts.ToList());
+                var districts = _db.Districts.Where(d => d.ProvinceId == provinceId).Include("Province");
+                var grid = new WebGrid(districts, ajaxUpdateContainerId: "container-grid");
+                ViewBag.Grid = grid;
+                return View();
             }
             
         }
@@ -54,14 +54,19 @@ namespace RentalHouseFinding.Controllers.Admin
             {
                 ViewBag.Provinces = new SelectList(_db.Provinces, "Id", "Name");
                 var districts = _db.Districts.Where( d => !d.IsDeleted).Include("Province");
-                return View(districts.ToList());
+                var grid = new WebGrid(districts, ajaxUpdateContainerId: "container-grid");
+                ViewBag.Grid = grid;
+                return View();
             }
             else
             {
                 int provinceId = Convert.ToInt32(form["provinceId"]);
                 ViewBag.Provinces = new SelectList(_db.Provinces, "Id", "Name", provinceId);
-                var districts = _db.Districts.Where(d => (d.ProvinceId == provinceId && !d.IsDeleted)).Include("Province");
-                return View(districts.ToList());
+                var districts = _db.Districts.Where(d => 
+                    (d.ProvinceId == provinceId && !d.IsDeleted)).Include("Province");
+                var grid = new WebGrid(districts, ajaxUpdateContainerId: "container-grid");
+                ViewBag.Grid = grid;
+                return View();
             }
         }
 
