@@ -47,10 +47,8 @@ namespace RentalHouseFinding.Models
         [RequiredIfOtherFieldIsNull("Email")]
         public string PhoneNumber { get; set; }
 
-        [Display(Name = "Địa chỉ")]
-        public string Address { get; set; }
-
-        [Display(Name = "Tên thật")]
+        [Display(Name = "Họ và tên")]
+        [StringLength(50, ErrorMessage = @"{0} phải tối thiểu là {2} ký tự.", MinimumLength = 50)]
         public string Name { get; set; }
     }
 }

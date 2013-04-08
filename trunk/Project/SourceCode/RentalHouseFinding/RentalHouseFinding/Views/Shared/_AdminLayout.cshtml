@@ -70,25 +70,26 @@
         </div>
         <div id='cssmenu' style="width: 1054px; margin: 0 auto">
             <ul>
-                <li>@Html.ActionLink("Bài đăng", "Index", "ManagePosts")</li>
-                <li>@Html.ActionLink("Giao dịch", "Index", "ManagePayment")</li>
-                <li>@Html.ActionLink("Loại bài đăng", "Index", "ManageCategories")</li>
-                <li>@Html.ActionLink("Phân loại người dùng", "Index", "ManageRoles")</li>
+                <li>@Html.ActionLink("Bài đăng", "index", "manageposts")</li>
+                <li>@Html.ActionLink("Giao dịch", "index", "managepayment")</li>
+                <li>@Html.ActionLink("Loại bài đăng", "index", "managecategories")</li>
+                <li>@Html.ActionLink("Phân loại người dùng", "index", "manageroles")</li>
                 <li class='has-sub'><a href="#">Địa điểm</a>
                     <ul>
-                        <li>@Html.ActionLink("Tỉnh/Thành", "Index", "ManageProvinces")</li>
-                        <li>@Html.ActionLink("Quận/Huyện", "Index", "ManageDistrict")</li>
+                        <li>@Html.ActionLink("Tỉnh/Thành", "index", "manageprovinces")</li>
+                        <li>@Html.ActionLink("Quận/Huyện", "index", "managedistrict")</li>
                     </ul>
                 </li>
                 <li class='has-sub'><a href="#">Từ xấu</a>
                     <ul>
-                        <li>@Html.ActionLink("Phân loại từ xấu", "Index", "ManageBadwordType")</li>
-                        <li>@Html.ActionLink("Từ xấu", "Index", "ManageBadword")</li>
+                        <li>@Html.ActionLink("Phân loại từ xấu", "index", "managebadwordtype")</li>
+                        <li>@Html.ActionLink("Từ xấu", "index", "managebadword")</li>
                     </ul>
                 </li>
-                <li>@Html.ActionLink("Bài không hợp lệ", "Index", "ManageBadpost")</li>
-                <li>@Html.ActionLink("Trạng thái bài đăng", "Index", "ManagePostStatus")</li>
-                <li>@Html.ActionLink("Trọng số các tiêu chí phụ", "Index", "ManageScoreConfig")</li>
+                <li>@Html.ActionLink("Bài không hợp lệ", "index", "managebadpost")</li>
+                <li>@Html.ActionLink("Bài bị report", "index", "managereportpost")</li>
+                <li>@Html.ActionLink("Trạng thái bài đăng", "index", "managepoststatus")</li>
+                <li>@Html.ActionLink("Trọng số các tiêu chí phụ", "index", "managescoreconfig")</li>
             </ul>
         </div>
         <div id="content" class="admin">

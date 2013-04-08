@@ -1,21 +1,20 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Data;
-using System.Data.Entity;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
-using RentalHouseFinding.Models;
-using System.Web.Helpers;
-using RentalHouseFinding.Caching;
-using RentalHouseFinding.Common;
 using log4net;
 using System.Reflection;
+using RentalHouseFinding.Models;
+using RentalHouseFinding.Caching;
+using RentalHouseFinding.Common;
+using System.Web.Helpers;
+using System.Data;
 using System.IO;
 
 namespace RentalHouseFinding.Controllers.Admin
-{ 
-    public class ManageBadpostController : Controller
+{
+    public class ManageReportPostController : Controller
     {
         private readonly ILog log = LogManager.GetLogger(MethodBase.GetCurrentMethod().DeclaringType);
         private RentalHouseFindingEntities _db = new RentalHouseFindingEntities();
@@ -24,12 +23,12 @@ namespace RentalHouseFinding.Controllers.Admin
         private string _noInfo;
 
         public ICacheRepository Repository { get; set; }
-        public ManageBadpostController()
+        public ManageReportPostController()
             : this(new CacheRepository())
         {
         }
 
-        public ManageBadpostController(ICacheRepository repository)
+        public ManageReportPostController(ICacheRepository repository)
         {
             this.Repository = repository;
             this._noInfo = Repository.GetAllConfiguration().Where(c => c.Name.Equals(ConstantCommonString.NONE_INFORMATION, StringComparison.CurrentCultureIgnoreCase)).Select(c => c.Value).FirstOrDefault().ToString();
@@ -44,20 +43,16 @@ namespace RentalHouseFinding.Controllers.Admin
             {
                 page = 1;
             }
-            var postsList = (from p in _db.Posts where (p.StatusId == 2) select p);
+            var postsList = (from p in _db.ReportedPosts where (p.IsIgnored == false) select p);
 
             var postViewList = postsList.Select(p => new
             {
                 ID = p.Id,
-                p.UserId,
-                p.Title,
-                p.CreatedDate,
-                p.EditedDate,
-                p.RenewDate,
-                p.ExpiredDate,
-                PostStatus = (from stt in _db.PostStatuses
-                              where (stt.Id == p.StatusId)
-                              select stt.Name).FirstOrDefault()
+                p.PostId,
+                p.Post.Title,
+                p.Reason,
+                p.User.Username,
+                p.ReportedDate
             }).OrderBy(p => p.ID).Skip(MAX_RECORD_PER_PAGE * ((int)page - 1)).Take(MAX_RECORD_PER_PAGE);
 
             var grid = new WebGrid(ajaxUpdateContainerId: "container-grid",
@@ -69,7 +64,7 @@ namespace RentalHouseFinding.Controllers.Admin
         }
 
         [Authorize(Roles = "Admin")]
-        public ActionResult Edit(int id)
+        public ActionResult Edit(int id, int reportId)
         {
             var postModel = (from p in _db.Posts
                              where (p.Id == id)
@@ -78,6 +73,7 @@ namespace RentalHouseFinding.Controllers.Admin
             ViewBag.CategoryId = new SelectList(Repository.GetAllCategories(), "Id", "Name", postModel.CategoryId);
             ViewBag.ProvinceId = new SelectList(Repository.GetAllProvinces(), "Id", "Name", postModel.District.ProvinceId);
             ViewBag.DistrictId = new SelectList(Repository.GetAllDistricts().Where(d => d.ProvinceId == postModel.District.ProvinceId), "Id", "Name", postModel.DistrictId);
+            TempData["ReportId"] = reportId;
             return View(CommonModel.ConvertPostToPostViewModel(postModel, _noInfo));
         }
 
@@ -131,8 +127,6 @@ namespace RentalHouseFinding.Controllers.Admin
                 {
                     var post = (from p in _db.Posts where (p.Id == postViewModel.Id) select p).FirstOrDefault();
                     post = CommonModel.ConvertPostViewModelToPost(post, postViewModel, post.CreatedDate, DateTime.Now, DateTime.Now, _noInfo);
-
-                    post.StatusId = 1;
 
                     Dictionary<int, string> lstNearbyId = CommonController.GetListNearbyLocations(postViewModel, Request);
                     PostLocations postLocation;
@@ -192,6 +186,12 @@ namespace RentalHouseFinding.Controllers.Admin
                         }
                     }
                     TempData["MessageSuccessSaveBadPost"] = "Thay đổi thông tin thành công";
+                    var reportPost = _db.ReportedPosts.Where(p => p.Id == (int)TempData["ReportId"]).FirstOrDefault();
+                    reportPost.IsIgnored = true;
+
+                    _db.ObjectStateManager.ChangeObjectState(reportPost, System.Data.EntityState.Modified);
+                    _db.SaveChanges();
+
                     return RedirectToAction("Index");
                 }
                 catch (Exception ex)
@@ -238,5 +238,6 @@ namespace RentalHouseFinding.Controllers.Admin
             _db.Dispose();
             base.Dispose(disposing);
         }
+
     }
 }

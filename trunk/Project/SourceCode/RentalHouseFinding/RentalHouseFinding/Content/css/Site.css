@@ -2375,6 +2375,14 @@ a.button-link:active {
     background: #2E5481;
     border: solid 1px #e1e1e1;
 }
+#btnDelete.button-link
+{
+    background: #FF5050;
+}
+#btnDelete.button-link:HOVER
+{
+    background: #CC4040;
+}
 .state-read-False
 {
     background-color: #FFCC99;

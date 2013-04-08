@@ -14,6 +14,11 @@
             }
             return true;
         }
+        $('form0').submit(function () {
+            if ($(this).valid()) {
+                $(':submit', this).attr('disabled', 'disabled');
+            }
+        });
     );
     });
 </script>
