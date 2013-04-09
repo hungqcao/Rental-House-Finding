@@ -40,13 +40,18 @@ namespace RentalHouseFinding.Controllers
         //
         // GET: /Post/Details/5
         [HttpGet]
-        public ActionResult Details(int id)
+        public ActionResult Details(int id, string name)
         {
             var post = (from p in _db.Posts where p.Id == id select p).FirstOrDefault();
             if (post == null)
             {
-                return View();
+                return null;
             }
+            if (!StringUtil.ToSeoUrl(StringUtil.RemoveSign4VietnameseString(post.Title)).Equals(name, StringComparison.CurrentCultureIgnoreCase))
+            {
+                return RedirectToActionPermanent("Details", new { id = id, name = StringUtil.ToSeoUrl(StringUtil.RemoveSign4VietnameseString(post.Title)) });
+            }
+
             var districtAndProvinceName = Repository.GetAllDistricts().Where(d => d.Id == post.DistrictId).Select(d => new { districtName = d.Name, provinceName = d.Province.Name }).FirstOrDefault();
                    
             ViewBag.Address = districtAndProvinceName.districtName + ", " + districtAndProvinceName.provinceName;
@@ -258,7 +263,10 @@ namespace RentalHouseFinding.Controllers
                 catch (Exception ex)
                 {
                     ModelState.AddModelError("", ex.InnerException);
-                    
+
+                    ViewBag.CategoryId = new SelectList(Repository.GetAllCategories(), "Id", "Name", model.CategoryId);
+                    ViewBag.ProvinceId = new SelectList(Repository.GetAllProvinces(), "Id", "Name", model.ProvinceId);
+                    ViewBag.DistrictId = new SelectList(Repository.GetAllDistricts().Where(d => d.ProvinceId == model.ProvinceId), "Id", "Name", model.DistrictId);
                 }
             }
             ViewBag.CategoryId = new SelectList(Repository.GetAllCategories(), "Id", "Name", model.CategoryId);

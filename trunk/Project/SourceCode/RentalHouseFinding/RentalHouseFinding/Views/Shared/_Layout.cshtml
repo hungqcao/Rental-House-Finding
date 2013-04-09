@@ -64,7 +64,7 @@
                 </div>
             </div>
             <div id="header_panel" class="right" style="margin-top: 20px; display: none;">
-                <div class="left"><a href="@Url.Content("~/post/create")" id="newPost"></a></div>
+                <div class="left">@Html.ActionLink(" ", "Create", "Post", null, new { @id = "newPost" })</div>
                 <div class="separator left"></div>
                 @if(@User.Identity.IsAuthenticated)
                 {

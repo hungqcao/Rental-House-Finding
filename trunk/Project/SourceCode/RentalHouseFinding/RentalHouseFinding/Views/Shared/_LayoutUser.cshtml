@@ -80,11 +80,11 @@
                 <div class="wrapper">
                     <div id="options">
                         <a id="btnKinhLup" href="@Url.Content("~")" />
-                        <a href="@Url.Content("~/user/")" id="btnThongTin"></a>
-                        <a href="@Url.Content("~/user/posts")" id="btnQuanLy"></a>
-                        <a href="@Url.Content("~/questions")" id="btnTinNhan"></a>
-                        <a href="@Url.Content("~/user/payments")" id="btnLichSu"></a>
-                        <a href="@Url.Content("~/user/favorites")" id="btnDanhSach"></a>
+                        @Html.ActionLink("userinfo", "Index", "User", null, new { @id = "btnThongTin", @class="font-size-0"})
+                        @Html.ActionLink("Posts", "posts", "User", null, new { @id = "btnQuanLy", @class = "font-size-0" })
+                        @Html.ActionLink("questions", "Index", "questions", null, new { @id = "btnTinNhan", @class = "font-size-0" })
+                        @Html.ActionLink("payments", "payments", "User", null, new { @id = "btnLichSu", @class = "font-size-0" })
+                        @Html.ActionLink("favorites", "favorites", "User", null, new { @id = "btnDanhSach", @class = "font-size-0" })
                     </div>
                     <div class="clear">
                     </div>

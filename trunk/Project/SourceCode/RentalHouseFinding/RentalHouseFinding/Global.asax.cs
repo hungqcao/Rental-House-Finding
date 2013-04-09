@@ -25,6 +25,103 @@ namespace RentalHouseFinding
         {
             routes.IgnoreRoute("{resource}.axd/{*pathInfo}");
 
+            //Tai khoan
+            routes.MapRoute(
+                "AccountFBUserDetail",
+                "tai-khoan/FacebookUserDetail/",
+                new { controller = "Account", action = "FacebookUserDetail" }
+            );
+            routes.MapRoute(
+                "AccountLogOn",
+                "tai-khoan/dang-nhap",
+                new { controller = "Account", action = "LogOn" }
+            );
+            routes.MapRoute(
+                "AccountRegister",
+                "tai-khoan/dang-ky",
+                new { controller = "Account", action = "Register" }
+            );
+            routes.MapRoute(
+                "AccountForgot",
+                "tai-khoan/tim-lai-mat-khau",
+                new { controller = "Account", action = "Forgotpassword" }
+            );
+            //End
+
+            //Trang ca nhan
+            routes.MapRoute(
+                "UserControlPanel",
+                "trang-ca-nhan",
+                new { controller = "User", action = "Index"}
+            );
+            routes.MapRoute(
+                "UserControlPanelPos",
+                "trang-ca-nhan/quan-ly-bai-dang",
+                new { controller = "User", action = "Posts" }
+            );
+            routes.MapRoute(
+                "UserControlPanelPayment",
+                "trang-ca-nhan/quan-ly-giao-dich",
+                new { controller = "User", action = "Payments" }
+            );
+            routes.MapRoute(
+                "UserControlPanelFavorite",
+                "trang-ca-nhan/danh-sach-quan-tam",
+                new { controller = "User", action = "Favorites" }
+            );
+            routes.MapRoute(
+                "UserControlPanelEdit",
+                "trang-ca-nhan/chinh-sua-thong-tin",
+                new { controller = "User", action = "Edit" }
+            );
+            routes.MapRoute(
+                "UserControlPanelQuestion",
+                "trang-ca-nhan/tin-nhan",
+                new { controller = "Questions", action = "Index" }
+            );
+            //End trang ca nhan
+
+            //Post
+            routes.MapRoute(
+                "PostDetailbox",
+                "bai-dang-box/{id}/{name}",
+                new { controller = "Post", action = "DetailsBox", name = UrlParameter.Optional },
+                new { id = @"^\d+$" }
+            );
+
+            routes.MapRoute(
+                "PostCreate",
+                "tao-bai-dang",
+                new { controller = "Post", action = "Create"}
+            );
+
+            routes.MapRoute(
+                "PostDetails",
+                "bai-dang/{id}/{name}",
+                new { controller = "Post", action = "Details", name = UrlParameter.Optional },
+                new { id = @"^\d+$" }
+            );
+
+            routes.MapRoute(
+                "PostEdit",
+                "chinh-sua-bai-dang/{id}/{name}",
+                new { controller = "Post", action = "Edit", name = UrlParameter.Optional },
+                new { id = @"^\d+$" }
+            );
+
+            //End post
+
+            routes.MapRoute(
+                "AdvSearchResult",
+                "tim-kiem-nang-cao",
+                new { controller = "AdvanceSearch", action = "Index" }
+            );
+
+            routes.MapRoute(
+                "SearchResult",
+                "ket-qua-tim-kiem",
+                new { controller = "Home", action = "Index"}
+            );
             routes.MapRoute(
                 "Default", // Route name
                 "{controller}/{action}/{id}", // URL with parameters
