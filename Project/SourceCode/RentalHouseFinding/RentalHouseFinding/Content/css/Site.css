@@ -47,6 +47,11 @@ textarea
 }
 
 
+table th a{
+    
+    color:#3a3a3d;
+}
+
 /* Styles for validation helpers
 -----------------------------------------------------------*/
 .field-validation-error
@@ -406,6 +411,17 @@ span.select {
 	background: url("../../Content/images/icon3.png") no-repeat 0 10px;
 }
 
+#linkAdvancedSearch
+{
+    float:right; 
+    margin-bottom:5px;
+     margin-right:9px;
+}
+#linkAdvancedSearch a
+{
+    color:#646464;
+}
+
 .helloText {
     color: #717171;
     font-family: Calibri, Arial,Helvetica,Sans-Serif;
@@ -470,7 +486,17 @@ span.select {
     width: 880px;
     height: 832px;
 }
-
+#userPanel {
+    background: url("../../Content/images/user_panel.png") no-repeat transparent -22px 0;
+    width: 462px;
+    height: 607px;
+    margin:0 auto;
+}
+#userInfoPage
+{
+    padding-left: 47px;
+    padding-top: 92px;
+    }
 div.textbox
 {
     height: 37px;
@@ -745,6 +771,7 @@ span.field-validation-error
 #header #resultPanel .result span{
     width: 260px;
     float: left;
+    line-height:16px;
 }
 
 #header #resultPanel .lastResult {
@@ -989,7 +1016,7 @@ span.field-validation-error
 #popup_wrapper div#addThis
 {
     float: right;
-    margin-right: 7px;
+    margin-right: 14px;
 }
 #popup_wrapper div, #popup_wrapper span {
     display: block;
@@ -2303,7 +2330,7 @@ table#grid
 }
 a.remove-fav-item-list
 {
-    background: url('../../Content/images/remove-fav-button.gif') no-repeat scroll 0 0 transparent;
+    background: url('../../Content/images/error_icon.png') no-repeat scroll 0 0 transparent;
     font-size: 0;
     margin-left: 10px;
     display: block;
@@ -2333,9 +2360,9 @@ a.remove-fav-item-list
     height: 30px;
     width: 128px;
     cursor: pointer;
-    float: right;
+    float: left;
     display: block;
-    margin: 10px 0px 10px 0;
+    margin: 10px 0px 10px 5px;
     font-size: 0;
 }
 #content.admin input[type="text"]
@@ -2389,7 +2416,7 @@ a.button-link:active {
 }
 #btnDelete.button-link
 {
-    background: #FF5050;
+    background: red;
 }
 #btnDelete.button-link:HOVER
 {

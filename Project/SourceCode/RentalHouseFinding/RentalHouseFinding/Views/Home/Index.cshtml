@@ -225,10 +225,12 @@
 </script>
 <div id="home-search-area">
 @using (Html.BeginForm())
-{    
+{   
+   <div id="linkAdvancedSearch"> <a id="advanceSearchText" href="/AdvancedSearch">Tìm kiếm nâng cao</a> </div>
+    <div class="clear"></div>
     <div id="options">
         <div id="btnShowList" onclick="toggle_visibility('listInfo');" class="btnShowListClicked"></div>
-        @Html.DropDownListFor(model => model.CategoryId,null, new { @class = "select" })
+        @Html.DropDownListFor(model => model.CategoryId, null, new { @class = "select" })
         @Html.ValidationMessageFor(model => model.CategoryId)
         @Html.DropDownListFor(model => model.ProvinceId, null, new { @class = "select" })
         @Html.ValidationMessageFor(model => model.ProvinceId)

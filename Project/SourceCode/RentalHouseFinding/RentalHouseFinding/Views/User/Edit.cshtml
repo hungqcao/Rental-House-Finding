@@ -44,10 +44,10 @@
 </script>
 
 
-<div class="login-regis" id="regisPanel">
-@using (Html.BeginForm("Edit", "User", FormMethod.Post, new{ @style = "padding:100px" })) {
+<div class="login-regis" id="userPanel">
+@using (Html.BeginForm("Edit", "User", FormMethod.Post)) {
 @Html.ValidationSummary(true, "Thay đổi không thành công.")
-    <div style="margin-left:150px;">
+    <div id="userInfoPage">
     <div class="blockInfo">
         @Html.LabelFor(m => m.UserName)
         @Html.HiddenFor(m => m.UserName)
@@ -87,7 +87,11 @@
     
     <div class="blockInfo">
         <div class="clear"></div>
-        <input type="submit" id="btnSaveInfo" value=""/>
+        <a href="Index"><img src="../../Content/images/btn_cancel.png" /></a>
+    </div>
+      <div class="blockInfo">
+        <div class="clear"></div>
+        <input type="submit" class="saveChange" value=""/>
     </div>
     </div>
 }
