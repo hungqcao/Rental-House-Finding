@@ -34,9 +34,17 @@ namespace RentalHouseFinding.Controllers
             {
                 ViewBag.CategoryId = new SelectList(_db.Categories, "Id", "Name", ((SearchViewModel)(Session["SearchViewModel"])).CategoryId);
                 ViewBag.ProvinceId = new SelectList(_db.Provinces, "Id", "Name", ((SearchViewModel)(Session["SearchViewModel"])).ProvinceId);
-                ViewBag.DistrictId = new SelectList(Repository.GetAllDistricts().Where(d => d.ProvinceId == ((SearchViewModel)(Session["SearchViewModel"])).ProvinceId), "Id", "Name", ((SearchViewModel)(Session["SearchViewModel"])).DistrictId);
+                int SelectedValue = ((SearchViewModel)(Session["SearchViewModel"])).DistrictId;
+                if (SelectedValue == 0)
+                {
+                    ViewBag.DistrictId = CommonController.AddDefaultOption(new SelectList(Repository.GetAllDistricts().Where(d => d.ProvinceId == ((SearchViewModel)(Session["SearchViewModel"])).ProvinceId), "Id", "Name"), "Quận/Huyện", "0");
+                }
+                else
+                {
+                    ViewBag.DistrictId = new SelectList(Repository.GetAllDistricts().Where(d => d.ProvinceId == ((SearchViewModel)(Session["SearchViewModel"])).ProvinceId), "Id", "Name", SelectedValue);
+                }
                 ViewBag.latlon = ((SearchViewModel)(Session["SearchViewModel"])).CenterMap;
-                ViewBag.SelectedValue = ((SearchViewModel)(Session["SearchViewModel"])).DistrictId;
+                
                 Session["NumberSkip"] = null;
                 Session["NumberResult"] = null;
                 return View();
