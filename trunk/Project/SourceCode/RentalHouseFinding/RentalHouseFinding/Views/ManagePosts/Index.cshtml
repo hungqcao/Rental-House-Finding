@@ -86,24 +86,24 @@
         </tr>
         <tr>
             <td>@Html.TextBoxFor(model => model.CreatedDateFrom, 
-                        new { @id = "created_date_from", @readonly = "readonly",@placeholder = "Từ" })<br/>
+                        new { @id = "created_date_from", @placeholder = "Từ" })<br/>
                 @Html.TextBoxFor(model => model.CreatedDateTo,
-             new { @id = "created_date_to", @readonly = "readonly", @placeholder = "Đến" })</td>
+             new { @id = "created_date_to", @placeholder = "Đến" })</td>
 
             <td>@Html.TextBoxFor(model => model.EditedDateFrom,
-              new { @id = "edited_date_from", @readonly = "readonly", @placeholder = "Từ" })<br/>
+              new { @id = "edited_date_from", @placeholder = "Từ" })<br/>
                 @Html.TextBoxFor(model => model.EditedDateTo,
-                    new { @id = "edited_date_to", @readonly = "readonly",@placeholder = "Đến" })</td>
+                    new { @id = "edited_date_to", @placeholder = "Đến" })</td>
 
             <td>@Html.TextBoxFor(model => model.RenewedDateFrom,
-                        new { @id = "renewed_date_from", @readonly = "readonly",@placeholder = "Từ" })<br/>
+                        new { @id = "renewed_date_from", @placeholder = "Từ" })<br/>
                 @Html.TextBoxFor(model => model.RenewedDateTo,
-                    new { @id = "renewed_date_to", @readonly = "readonly",@placeholder = "Đến" })</td>
+                    new { @id = "renewed_date_to", @placeholder = "Đến" })</td>
 
             <td>@Html.TextBoxFor(model => model.ExpireDateFrom,
-                        new { @id = "expire_date_from", @readonly = "readonly",@placeholder = "Từ" })<br/>
+                        new { @id = "expire_date_from", @placeholder = "Từ" })<br/>
                 @Html.TextBoxFor(model => model.ExpireDateTo,
-             new { @id = "expire_date_to", @readonly = "readonly", @placeholder = "Đến" })</td>
+             new { @id = "expire_date_to", @placeholder = "Đến" })</td>
         </tr>
         </table>
         <input type="submit" class="searchLink" value="Search" id="search"/>
