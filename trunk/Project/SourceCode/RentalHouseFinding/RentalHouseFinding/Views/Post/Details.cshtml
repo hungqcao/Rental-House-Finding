@@ -90,9 +90,7 @@
                     </div>
                    <span class="shortDesc">@Model.Title</span>
                 </div>
-                @if (User.Identity.IsAuthenticated)
-                {
-                    if (Model.UserId == CommonModel.GetUserIdByUsername(User.Identity.Name))
+                    @if (Model.UserId == CommonModel.GetUserIdByUsername(User.Identity.Name))
                     {
                         <div id="button-detail" class="right">
                             <a href="/post/edit/@Model.Id" class="button-link left" style="padding: 5px 20px;">Chỉnh sửa</a>
@@ -128,6 +126,16 @@
                                 }
                                 else
                                 {
+                                    <!-- Element to pop up -->
+                                    <div id="element_to_pop_up" class="login-regis" style="margin: 0 auto; width: 120px;
+                                        height: 20 px;">
+                                        <a class="b-close">x</a>
+                                        <div class="tittle">
+                                            Bạn cần <a  href="@Request.Url.AbsoluteUri.Replace(@Request.Url.Authority, Request.Url.Authority + "/account/logon?returnUrl=")">
+                                                đăng nhập</a> để sử dụng chức năng này</div>
+                                    </div>
+                                    <div class="clear">
+                                    </div>
                                 }
                             </div>
                             <div id="reportWithoutLogin" class="withOutLoginReport topBtnReport" style="cursor: pointer;"
@@ -163,20 +171,6 @@
                             }
                         </div>
                     }
-                }
-                else
-                {
-                    <!-- Element to pop up -->
-                    <div id="element_to_pop_up" class="login-regis" style="margin: 0 auto; width: 120px;
-                        height: 20 px;">
-                        <a class="b-close">x</a>
-                        <div class="tittle">
-                            Bạn cần <a  href="@Request.Url.AbsoluteUri.Replace(@Request.Url.Authority, Request.Url.Authority + "/account/logon?returnUrl=")">
-                                đăng nhập</a> để sử dụng chức năng này</div>
-                    </div>
-                    <div class="clear">
-                    </div>
-                }
                 <div class="clear">
                 </div>
                 
@@ -208,11 +202,12 @@
                     <span class="blockLeftText"><b>Giá nhà:</b>&nbsp;@Model.Price triệu/tháng</span>
                     <span class="blockLeftText"><b>Diện tích:</b>&nbsp;@Model.Area m2</span> 
                      @* Check Yahoo & Skype*@
-                     @if(Model.ElectricityFee !=0)
+                     @if (Model.ElectricityFee != 0)
                      {
                        <span class="blockLeftText"> <b>Giá điện:</b>&nbsp;@Model.ElectricityFee nghìn/số</span>
                      }
-                     @if(Model.WaterFee !=0){
+                     @if (Model.WaterFee != 0)
+                     {
                        <span class="blockLeftText"><b>Giá nước:</b>&nbsp;@Model.WaterFee nghìn/số</span> 
                      }
                            
@@ -227,7 +222,8 @@
                     </div>
                     <span class="blockLeftText"><b>Di động:</b>&nbsp;@Model.PhoneContact</span> 
                     @*Check Email*@
-                    @if(!string.IsNullOrEmpty(Model.Email)){
+                    @if (!string.IsNullOrEmpty(Model.Email))
+                    {
                     <span class="blockLeftText" style="width:380px;"><b>Email:</b>&nbsp;@Model.Email</span>
                     }
                             &nbsp;

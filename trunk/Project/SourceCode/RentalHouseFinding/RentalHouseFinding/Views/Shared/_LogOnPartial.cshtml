@@ -1,6 +1,6 @@
 ﻿@if(Request.IsAuthenticated) {
-    <text>Chào mừng <strong>@Html.ActionLink(RentalHouseFinding.Common.CommonModel.GetNameOfUser(User.Identity.Name), "Index", "User")</strong>! ( @Html.ActionLink(RentalHouseFinding.Common.CommonModel.GetUserNotification(User.Identity.Name) + " thông báo", "Index", "Questions", new { @style = "color:red" }) )
-     | @Html.ActionLink("Trang admin", "Index", "Admin").If(User.IsInRole("Admin"))
+    <text>Chào mừng <strong>@Html.ActionLink(RentalHouseFinding.Common.CommonModel.GetNameOfUser(User.Identity.Name), "Index", "User")</strong>! ( @Html.ActionLink(RentalHouseFinding.Common.CommonModel.GetUserNotification(User.Identity.Name) + " thông báo", "Index", "Questions", null, new { @style = "color:red" }) )
+     @Html.ActionLink(" | Trang admin", "Index", "Admin").If(User.IsInRole("Admin"))
     | @Html.ActionLink("Thoát", "LogOff", "Account")</text>
 }
 else {

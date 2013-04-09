@@ -9,11 +9,11 @@
     $(document).ready(function () {
         $("#result").fadeOut();
         $("#sendBtn").click(function () {
-                if ($("#ContentAnswer").val().length != 0) {
-                    $("#result").fadeIn();
-                }
-                return true;
+            if ($("#ContentAnswer").val().length != 0) {
+                $("#result").fadeIn();
             }
+            return true;
+        }
         );
 
         $('form').submit(function () {
@@ -23,7 +23,7 @@
         });
     });
 </script>
-@using (Ajax.BeginForm("sendanswer", "questions", new AjaxOptions { UpdateTargetId = "answers", InsertionMode = InsertionMode.InsertAfter, OnSuccess = "OnSuccess", OnFailure = "OnFailure" }))
+@using (Ajax.BeginForm("sendanswer", "questions", new AjaxOptions { UpdateTargetId = "answers", OnSuccess = "OnSuccess", OnFailure = "OnFailure" }))
 {
     <div id="result" style="margin-left:25px;" ><img src="@Url.Content("~/Content/images/ajax-loader.gif")" /></div>
     <div class="clear"></div>

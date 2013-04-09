@@ -155,9 +155,9 @@ namespace RentalHouseFinding.Controllers.User
                     _db.UserLogs.AddObject(log);
                     _db.SaveChanges();
                 }
-                
 
-                return View(answerToCreate);
+                Questions questions = _db.Questions.Single(q => q.Id == model.QuestionId);
+                return View(questions);
             }
             catch
             {
