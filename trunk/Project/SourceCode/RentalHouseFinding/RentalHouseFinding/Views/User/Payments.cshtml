@@ -48,3 +48,14 @@
 }
 
 </div>
+
+
+<script type="text/javascript" >
+    $(document).ready(function () {
+        $("#options a").removeClass("active");
+        $("#btnLichSu").addClass('active');
+        $('a[href="#"]').live('click', function (event) {
+            event.preventDefault();
+        });
+    });
+</script>

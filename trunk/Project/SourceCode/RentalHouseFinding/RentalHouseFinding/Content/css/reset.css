@@ -58,7 +58,7 @@ table th
 }
 tr:nth-child(odd)
 {
-    background: seashell;
+    background: whitesmoke;
 }
 
 table td {
