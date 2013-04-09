@@ -19,9 +19,9 @@
 {
  <div>
     <div style=" float:left; margin-top:5px; ">Thời gian @Html.TextBoxFor(model => model.CreatedDateFrom,
-                        new { @id = "created_date_from", @readonly = "readonly", @placeholder = "từ" })
+                        new { @id = "created_date_from", @placeholder = "từ" })
                 @Html.TextBoxFor(model => model.CreatedDateTo,
-                    new { @id = "created_date_to", @readonly = "readonly", @placeholder = "đến" })</div>
+                    new { @id = "created_date_to", @placeholder = "đến" })</div>
     <input type="submit" class="searchLink" value="Search" id="search"/> </div>
     <div class="clear"></div>
 }
