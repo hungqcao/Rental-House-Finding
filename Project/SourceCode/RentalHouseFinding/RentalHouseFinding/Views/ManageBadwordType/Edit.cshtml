@@ -12,7 +12,7 @@
     <fieldset>
 
         @Html.HiddenFor(model => model.Id)
-
+<div class="rolesManageDiv">
         <div class="editor-label">
             @Html.LabelFor(model => model.Name, "Loại")
         </div>
@@ -20,13 +20,16 @@
             @Html.EditorFor(model => model.Name)
             @Html.ValidationMessageFor(model => model.Name)
         </div>
-
+</div>
+<div class="rolesManageSubmit">
         <p>
-            <input type="submit" value="Lưu" />
+            <input type="submit" class="saveChange" value="Lưu" />
         </p>
+        </div>
     </fieldset>
 }
 
-<div>
-    @Html.ActionLink("Quay về", "Index")
-</div>
+
+<a href="../../ManageBadwordtype">
+    <div class="backLink">
+    </div></a>

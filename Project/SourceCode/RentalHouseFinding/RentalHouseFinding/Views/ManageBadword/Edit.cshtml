@@ -14,7 +14,7 @@
     <fieldset>
 
         @Html.HiddenFor(model => model.Id)
-
+ <div class="rolesManageDiv">
         <div class="editor-label">
             @Html.LabelFor(model => model.Word, "Từ")
         </div>
@@ -22,7 +22,8 @@
             @Html.EditorFor(model => model.Word)
             @Html.ValidationMessageFor(model => model.Word)
         </div>
-
+</div>
+<div class="rolesManageTextBox">
         <div class="editor-label">
             @Html.LabelFor(model => model.TypeId, "Phân loại")
         </div>
@@ -30,13 +31,15 @@
             @Html.DropDownList("TypeId", String.Empty)
             @Html.ValidationMessageFor(model => model.TypeId)
         </div>
-
+</div>
+<div class="rolesManageSubmit">
         <p>
-            <input type="submit" value="Lưu" />
+            <input type="submit" class="saveChange" value="Lưu" />
         </p>
+        </div>
     </fieldset>
 }
 
-<div>
-    @Html.ActionLink("Quay lại", "Index")
-</div>
+<a href="../../ManageBadword">
+    <div class="backLink">
+    </div></a>

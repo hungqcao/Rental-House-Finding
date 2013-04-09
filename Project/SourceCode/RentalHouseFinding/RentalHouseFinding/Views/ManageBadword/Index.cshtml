@@ -12,10 +12,16 @@
 }
 @using (Html.BeginForm("Index", "ManageBadword", FormMethod.Post))
 {
+    <div class="districtDiv">
+    <div id="districtSelect">
     @Html.DropDownList("TypeId",
         (IEnumerable<SelectListItem>)ViewBag.TypesList,
-            "Phân loại", new { @class = "select" })
-            <input type="submit" name="Search" value="Search" />
+            "Phân loại", new { @class = "selectAd" })
+            </div>
+            <div id="districtSubmit">
+            <input type="submit" name="Search" class="searchLink" value="Search" />
+            </div>
+            </div>
 }
 
 <table>
@@ -58,10 +64,10 @@
 </table>
 
 <br/>
-<p>
-    @Html.ActionLink("Create New", "Tạo mới")
-</p>
-<br />
-<p>
-    @Html.ActionLink("Danh sách phân loại từ xấu", "Index", "ManageBadwordType", null, null)
-</p>
+ <a href="../../ManageBadword/Create">
+    <div class="createLink">
+    </div></a>
+
+<a href="../../ManageBadwordType">
+    <div class="listbadword">
+    </div></a>

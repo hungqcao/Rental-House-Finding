@@ -2458,6 +2458,14 @@ ul.tabs li.active{
         cursor:pointer;
         margin-left:135px;
         }
+             .listbadword
+    {
+        background: url("../../Content/images/listbadword.png") no-repeat transparent 0 0px;
+        width:158px;
+        height:40px;
+        cursor:pointer;
+        margin-left:135px;
+        }
         
          .saveChange
     {
@@ -2494,7 +2502,14 @@ ul.tabs li.active{
              float:left;
              margin:3px 0 0 15px;
              }
-             
+               
+         .rolesManageTextBox
+         {
+             width:110px;
+             float:left;
+             margin:5px 0 0 15px;
+             }
+          
           .rolesManageSubmit
           {
               float:left;
