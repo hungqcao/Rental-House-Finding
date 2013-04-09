@@ -42,7 +42,7 @@ table
     width: 100%;
     font-size: 12px;
     text-align: left;
-    border-collapse: collapse;
+   border-collapse: collapse;
     background-color: White;
 }
 table thead tr
@@ -54,16 +54,17 @@ table th
     font-size: 14px;
     font-weight: bold;
     padding: 10px 8px;
-    color: #039;
+    color: black;
 }
 tr:nth-child(odd)
 {
-    background: #e8edff;
+    background: seashell;
 }
 
 table td {
     padding: 8px;
     color: #669;
+    font-size:14px;
 }
 /*
  * CSS Styles that are needed by jScrollPane for it to operate correctly.

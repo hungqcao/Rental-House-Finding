@@ -48,24 +48,24 @@
             <td>@Html.DropDownListFor(model => model.UserId, 
                     (IEnumerable<SelectListItem>)ViewBag.Users, 
                     "User", 
-                    new {@class="select"})
+                    new {@class="selectAd"})
                 @Html.ValidationMessageFor(model => model.UserId)</td>
             <td>@Html.DropDownListFor(model => model.ProvinceId, 
                     (IEnumerable<SelectListItem>)ViewBag.Provinces,
                     "Tỉnh/Thành phố", 
-                    new {@class="select"})
+                    new {@class="selectAd"})
                 @Html.ValidationMessageFor(model => model.ProvinceId)</td>
             <td>@Html.DropDownListFor(model => model.DistrictId,
                     (IEnumerable<SelectListItem>)ViewBag.Districts,
-                    "Chọn Quận/Huyện", new { @class = "select" })
+                    "Chọn Quận/Huyện", new { @class="selectAd" })
                 @Html.ValidationMessageFor(model => model.DistrictId)</td>
             <td>@Html.DropDownListFor(model => model.CategoryId,
                     (IEnumerable<SelectListItem>)ViewBag.Categories,
-                    "Phân loại", new { @class = "select" })
+                    "Phân loại", new { @class="selectAd" })
                 @Html.ValidationMessageFor(model => model.CategoryId)</td>
             <td>@Html.DropDownListFor(model => model.StatusId,
                     (IEnumerable<SelectListItem>)ViewBag.Statuses,
-                    "Trạng thái", new { @class = "select" })
+                    "Trạng thái", new { @class="selectAd" })
                 @Html.ValidationMessageFor(model => model.StatusId)</td>
             </tr>
         </table>
@@ -85,28 +85,28 @@
             </th>
         </tr>
         <tr>
-            <td>Từ @Html.TextBoxFor(model => model.CreatedDateFrom, 
-                        new { @id = "created_date_from", @readonly = "readonly" })<br/>
-                Đến @Html.TextBoxFor(model => model.CreatedDateTo,
-                    new { @id = "created_date_to", @readonly = "readonly" })</td>
+            <td>@Html.TextBoxFor(model => model.CreatedDateFrom, 
+                        new { @id = "created_date_from", @readonly = "readonly",@placeholder = "Từ" })<br/>
+                @Html.TextBoxFor(model => model.CreatedDateTo,
+             new { @id = "created_date_to", @readonly = "readonly", @placeholder = "Đến" })</td>
 
-            <td>Từ @Html.TextBoxFor(model => model.EditedDateFrom, 
-                        new { @id = "edited_date_from", @readonly = "readonly" })<br/>
-                Đến @Html.TextBoxFor(model => model.EditedDateTo,
-                    new { @id = "edited_date_to", @readonly = "readonly" })</td>
+            <td>@Html.TextBoxFor(model => model.EditedDateFrom,
+              new { @id = "edited_date_from", @readonly = "readonly", @placeholder = "Từ" })<br/>
+                @Html.TextBoxFor(model => model.EditedDateTo,
+                    new { @id = "edited_date_to", @readonly = "readonly",@placeholder = "Đến" })</td>
 
-            <td>Từ @Html.TextBoxFor(model => model.RenewedDateFrom,
-                        new { @id = "renewed_date_from", @readonly = "readonly" })<br/>
-                Đến @Html.TextBoxFor(model => model.RenewedDateTo,
-                    new { @id = "renewed_date_to", @readonly = "readonly" })</td>
+            <td>@Html.TextBoxFor(model => model.RenewedDateFrom,
+                        new { @id = "renewed_date_from", @readonly = "readonly",@placeholder = "Từ" })<br/>
+                @Html.TextBoxFor(model => model.RenewedDateTo,
+                    new { @id = "renewed_date_to", @readonly = "readonly",@placeholder = "Đến" })</td>
 
-            <td>Từ @Html.TextBoxFor(model => model.ExpireDateFrom,
-                        new { @id = "expire_date_from", @readonly = "readonly" })<br/>
-                Đến @Html.TextBoxFor(model => model.ExpireDateTo,
-                    new { @id = "expire_date_to", @readonly = "readonly" })</td>
+            <td>@Html.TextBoxFor(model => model.ExpireDateFrom,
+                        new { @id = "expire_date_from", @readonly = "readonly",@placeholder = "Từ" })<br/>
+                @Html.TextBoxFor(model => model.ExpireDateTo,
+             new { @id = "expire_date_to", @readonly = "readonly", @placeholder = "Đến" })</td>
         </tr>
         </table>
-        <input type="submit" value="Search" id="search"/>
+        <input type="submit" class="searchLink" value="Search" id="search"/>
     </fieldset>
 }
 <br>
@@ -115,7 +115,7 @@
     if (Model != null && Model.Grid.TotalRowCount > 0)
     {
         WebGrid grid = Model.Grid;
-        <span>Tìm thấy @grid.TotalRowCount bài post</span>
+        <div id="adminResultText">Tìm thấy @grid.TotalRowCount bài đăng phù hợp</div>
         @grid.GetHtml(tableStyle: "webGrid", mode: WebGridPagerModes.All,
                             headerStyle: "header",
                             alternatingRowStyle: "alt",

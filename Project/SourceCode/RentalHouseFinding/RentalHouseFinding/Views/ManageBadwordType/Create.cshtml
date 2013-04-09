@@ -11,22 +11,24 @@
 @using (Html.BeginForm()) {
     @Html.ValidationSummary(true)
     <fieldset>
-        <legend>BadWordTypes</legend>
+         <div class="districtDiv">
 
         <div class="editor-label">
-            @Html.LabelFor(model => model.Name, "Loại")
+            @Html.LabelFor(model => model.Name, "Loại từ xấu mới")
         </div>
-        <div class="editor-field">
+        <div class="editor-field text-box single-line" id="Name">
             @Html.EditorFor(model => model.Name)
             @Html.ValidationMessageFor(model => model.Name)
         </div>
-
+</div>
+  <div class="rolesManageSubmit">
         <p>
-            <input type="submit" value="Tạo mới" />
+            <input type="submit" class="createLink" value="Tạo mới" />
         </p>
+        </div>
     </fieldset>
 }
 
-<div>
-    @Html.ActionLink("Quay về", "Index")
-</div>
+ <a href="../ManageBadWordType/Index">
+    <div class="backLink">
+    </div></a>
