@@ -68,8 +68,8 @@
                     @if (Model.UserId == CommonModel.GetUserIdByUsername(User.Identity.Name))
                     {
                         <div id="button-detail" class="right">
-                            <a href="/post/edit/@Model.Id" class="button-link left" style="padding: 5px 20px;">Chỉnh sửa</a>
-                            <a href="/post/delete/@Model.Id" onclick="return confirm('Bạn có chắc chắn muốn xóa bài này?');" class="button-link left" style="padding: 5px 20px;width: 45px;">Xóa</a>
+                            @Html.ActionLink("Chỉnh sửa", "edit", "post", new { id = Model.Id }, new { @class = "button-link left", @style = "padding: 5px 20px;"})
+                            @Html.ActionLink("Xóa", "detele", "post", new { id = Model.Id }, new { @class = "button-link left", @style = "padding: 5px 20px;", @onclick = "return confirm('Bạn có chắc chắn muốn xóa bài này?');" })
                         </div>
                     }
                     else
