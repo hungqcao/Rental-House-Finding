@@ -6,9 +6,8 @@
 }
 <script type="text/javascript">
     function OnSuccess() {
-        $.validator.unobtrusive.parse('form0');
         $("#result").fadeOut();
-        $("#ContentAnswer").val(""); 
+        $("#ContentAnswer").val("");
         $('input[type="submit"]').removeAttr('disabled');
     }
     function OnFailure(ajaxContext) {

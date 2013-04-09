@@ -1,11 +1,14 @@
-﻿@model RentalHouseFinding.Models.Answers
+﻿@model RentalHouseFinding.Models.Questions
 @{
     Layout = null;
 }
-<div class="line">
-    <span class="name">@User.Identity.Name:</span>
-    <div class="clear"></div>
-    <span class="text">@Html.DisplayFor(model => model.Content)</span>
-    <span class="text">Lúc: @Html.DisplayFor(model => model.CreatedDate)</span>
-</div>
+@foreach (var item in Model.Answers.OrderBy(m=>m.CreatedDate)) {
+        <div class="line">
+            <span class="name">@item.Question.Post.User.Email:</span>
+            <div class="clear"></div>
+            <span class="text">@Html.DisplayFor(model => item.Content)</span>
+            <span class="text">Ngày trả lời: @Html.DisplayFor(model => item.CreatedDate)</span>
+        </div>
+        <div class="clear"></div>
+    }
 <div class="clear"></div>
