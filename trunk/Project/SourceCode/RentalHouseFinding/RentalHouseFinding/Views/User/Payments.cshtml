@@ -15,23 +15,9 @@
         $("#created_date_to").datepicker({ dateFormat: 'yy/mm/dd', changeMonth: true, changeYear: true });
     });
 </script>
-@using (Html.BeginForm("Payments", "User", FormMethod.Post))
-{
-
-    <div style="position:relative; left:67px;">
-         <label style="position:relative; right:5px;font-size: 15px; font-weight: 700;">Ngày giao dịch</label><br/>
-         <label style="padding-top: 5px; font-size: 14px; font-weight: 700;">Từ</label> 
-         <div style="padding-top: 5px;">@Html.TextBoxFor(model => model.CreatedDateFrom,
-                    new { @id = "created_date_from", @readonly = "readonly" })</div>
-         <label style="padding-top: 5px; font-size: 14px; font-weight: 700;">Đến</label> 
-         <div style="padding-top: 5px;">@Html.TextBoxFor(model => model.CreatedDateTo,
-                    new { @id = "created_date_to", @readonly = "readonly" })</div>
-    </div>
-    <input type="submit" value="Search" id="search"/>
-}
 <div id="container-grid">
 @{
-    if (Model != null)
+    if (ViewBag.Grid != null && ViewBag.Grid.TotalRowCount > 0)
     {
         WebGrid grid = Model.Grid;
         @grid.GetHtml(tableStyle: "webGrid", mode: WebGridPagerModes.All,
@@ -48,6 +34,17 @@
                                 grid.Column("PhoneNumber", "Số điện thoại giao dịch")
         ));
     }
+    else
+            {
+                <div id="message-sv" style="width:967px; margin: 0 auto;">
+                    <div class="message-notification message-information">
+                        <a class="close" id="btnCloseDiv"></a>
+                        <div>
+                            Bạn chưa có giao dịch nào :)
+                        </div>
+                    </div>
+                </div>
+            }
 }
 
 </div>

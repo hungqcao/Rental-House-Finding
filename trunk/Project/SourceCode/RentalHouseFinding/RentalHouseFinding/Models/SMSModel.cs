@@ -11,7 +11,7 @@ namespace RentalHouseFinding.Models
     {
         [Required(ErrorMessage = "Xin vui lòng nhập số điện thoại.")]
         [Display(Name = "Số điện thoại")]
-        [MaxLength(15, ErrorMessage = "Không được vượt quá 15 ký tự, xin vui lòng nhập lại.")]
+        [MaxLength(11, ErrorMessage = "Sai định dạng,xin vui lòng nhập lại")]
         [RegularExpression("(([0+])([0-9]+))", ErrorMessage = "Sai định dạng,xin vui lòng nhập lại")]
         public string PhoneNumber { get; set; }
 

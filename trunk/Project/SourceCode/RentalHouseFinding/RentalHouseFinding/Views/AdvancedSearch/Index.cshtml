@@ -1,6 +1,6 @@
 ﻿@model RentalHouseFinding.Models.SearchViewModel
 @{
-    ViewBag.Title = "Advanced search";
+    ViewBag.Title = "Tìm kiếm nâng cao";
 }
 <script src="@Url.Content("~/Scripts/jquery-ui-1.8.11.min.js")" type="text/javascript"></script>
 <script src="@Url.Content("~/Scripts/jquery.validate.min.js")" type="text/javascript"></script>
@@ -74,12 +74,12 @@
                 <div id="fromPrice">
                 <span>Từ</span>
                 <div>@Html.TextBoxFor(model => model.PriceMin, new { @id = "fromPrice", @class = "range rangePrice", @placeholder = "" })</div>
-                @Html.ValidationMessageFor(model => model.PriceMax)
+                
                 </div>
                 <div id="toPrice">
                 <span>Tới</span>
                 @Html.TextBoxFor(model => model.PriceMax, new { @id = "toPrice", @class = "range rangePrice", @placeholder = "" })                
-                @Html.ValidationMessageFor(model => model.PriceMin)
+                
                 </div>                
             </div>
             <div id="Area" class="field ">
@@ -88,12 +88,12 @@
                 <div id="minArea">
                 <span>Từ</span>
                 @Html.TextBoxFor(model => model.AreaMin, new { @id = "fromArea", @class = "range rangeArea", @placeholder = "" })
-                @Html.ValidationMessageFor(model => model.AreaMin)
+                
                 </div>
                 <div id ="maxArea">
                 <span>Tới</span>
                 @Html.TextBoxFor(model => model.AreaMax, new { @id = "toArea", @class = "range rangeArea", @placeholder = "" })
-                @Html.ValidationMessageFor(model => model.AreaMax)
+                
                 </div>
             </div>
         </div>
