@@ -13,7 +13,7 @@
 @using (Html.BeginForm()) {
     @Html.ValidationSummary(true)
     <fieldset>
-
+     <div class="rolesManageDiv">
         <div class="editor-label">
             @Html.LabelFor(model => model.Name, "Tiêu chí")
         </div>
@@ -21,7 +21,8 @@
             @Html.EditorFor(model => model.Name)
             @Html.ValidationMessageFor(model => model.Name)
         </div>
-
+</div>
+ <div class="rolesManageDiv">
         <div class="editor-label">
             @Html.LabelFor(model => model.Value, "Giá trị")
         </div>
@@ -29,13 +30,15 @@
             @Html.EditorFor(model => model.Value)
             @Html.ValidationMessageFor(model => model.Value)
         </div>
-
+</div>
+ <div class="rolesManageSubmit">
         <p>
-            <input type="submit" value="Tạo mới" />
+            <input type="submit" value="Tạo mới"  class="createLink"/>
         </p>
+        </div>
     </fieldset>
 }
 
-<div>
-    @Html.ActionLink("Quay lại", "Index")
-</div>
+   
+    <div class="backLink"><a href="../ManageScoreConfig/Index"><img src="../../Content/images/Back.png" /></a>
+    </div>
