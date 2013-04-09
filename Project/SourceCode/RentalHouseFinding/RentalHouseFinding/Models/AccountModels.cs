@@ -21,7 +21,7 @@ namespace RentalHouseFinding.Models
 
 
         [Required(ErrorMessage = "Xin vui lòng nhập mật khẩu mới")]
-        [StringLength(100, ErrorMessage = @"{0} phải có ít nhất {2} kí tự.", MinimumLength = 8)]
+        [StringLength(100, ErrorMessage = @"{0} phải có ít nhất {2} kí tự. Vui lòng nhập lại.", MinimumLength = 8)]
         [DataType(DataType.Password)]
         [Display(Name = "Mật khẩu mới")]
         public string NewPassword { get; set; }
@@ -60,13 +60,13 @@ namespace RentalHouseFinding.Models
 
         [Required(ErrorMessage= "Xin vui lòng điền tên tài khoản.")]
         [Display(Name = "Tên tài khoản")]
-        [MaxLength(50, ErrorMessage = "Không được vượt quá 50 ký tự, xin vui lòng nhập lại.")]
+        [StringLength(50, ErrorMessage = @"{0} tối đa là {1} ký tự. Vui lòng nhập lại")]
         [Remote("IsUserNameAvailable", "Validation")]
         public string UserName { get; set; }
 
         [Display(Name = "Email")]
         [RequiredIfOtherFieldIsNull("PhoneNumber")]
-        [MaxLength(50, ErrorMessage = "Không được vượt quá 50 ký tự, xin vui lòng nhập lại.")]       
+        [StringLength(50, ErrorMessage = @"{0} tối đa là {1} ký tự.")]
         //[Required(ErrorMessage = "Xin vui lòng nhập email.")]
         [RegularExpression(@"\w+([-+.']\w+)*@\w+([-.]\w+)*\.\w+([-.]\w+)*", ErrorMessage = "Email không hợp lệ.")]
         [Remote("IsEmailAvailable", "Validation")]
@@ -85,29 +85,14 @@ namespace RentalHouseFinding.Models
 
         //[Required(ErrorMessage = "Xin vui lòng nhập số điện thoại.")]
         [Display(Name = "Số điện thoại")]
-        [MaxLength(15, ErrorMessage = "Không được vượt quá 15 ký tự, xin vui lòng nhập lại.")]
+        [StringLength(15, ErrorMessage = @"{0} tối đa là {1} ký tự. Vui lòng nhập lại")]
         [RegularExpression("(([0+])([0-9]+))", ErrorMessage = "Sai định dạng,xin vui lòng nhập lại")]
         [RequiredIfOtherFieldIsNull("Email")]
         public string PhoneNumber { get; set; }
 
-        [Display(Name = "Địa chỉ")]
-        public string Address { get; set; }
-
         [Display(Name = "Họ tên")]
+        [StringLength(50, ErrorMessage = @"{0} tối đa là {1} ký tự. Vui lòng nhập lại")]
         public string Name { get; set; }
-
-        [Display(Name = "Ngày sinh")]
-        [DataType(DataType.Date, ErrorMessage = "Xin vui lòng nhập đúng ngày tháng năm")]
-        public DateTime? DateOfBirth { get; set; }
-
-        [Display(Name = "Giới tính")]
-        //[Required(ErrorMessage = @"Xin vui lòng chọn giới tính!")]
-        [MaxLength(10, ErrorMessage = "Không được vượt quá 10 ký tự,xin vui lòng nhập lại")]
-        [UIHint("Sex")]
-        public string Sex { get; set; }
-
-        [Display(Name = "Avatar")]        
-        public string Avatar { get; set; }
                 
     }
 
@@ -132,7 +117,7 @@ namespace RentalHouseFinding.Models
     {
         [Required(ErrorMessage = "Xin vui lòng điền tên tài khoản.")]
         [Display(Name = "Tên tài khoản")]
-        [MaxLength(50, ErrorMessage = "Không được vượt quá 50 ký tự, xin vui lòng nhập lại.")]
+        [StringLength(50, ErrorMessage = @"{0} tối đa là {1} ký tự. Vui lòng nhập lại")]
         public string Username { get; set; }
     }
 }
