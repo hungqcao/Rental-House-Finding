@@ -1,5 +1,8 @@
 ﻿@model RentalHouseFinding.Models.PostViewModel
 @{
+    ViewBag.Title = Model.Address;
+}
+@{
     this.Layout = null;
 }
 <!DOCTYPE html>
@@ -178,9 +181,17 @@
                     <div class="clear">
                     </div>
                     <span class="blockLeftText"><b>Giá nhà:</b>&nbsp;@Model.Price triệu/tháng</span>
-                    <span class="blockLeftText"><b>Diện tích:</b>&nbsp;@Model.Area m2</span> <span class="blockLeftText">
-                        <b>Giá điện:</b>&nbsp;@Model.ElectricityFee nghìn/số</span> <span class="blockLeftText">
-                            <b>Giá nước:</b>&nbsp;@Model.WaterFee nghìn/số</span> 
+                    <span class="blockLeftText"><b>Diện tích:</b>&nbsp;@Model.Area m2</span> 
+                     @* Check Yahoo & Skype*@
+                     @if (Model.ElectricityFee != 0)
+                     {
+                       <span class="blockLeftText"> <b>Giá điện:</b>&nbsp;@Model.ElectricityFee nghìn/số</span>
+                     }
+                     @if (Model.WaterFee != 0)
+                     {
+                       <span class="blockLeftText"><b>Giá nước:</b>&nbsp;@Model.WaterFee nghìn/số</span> 
+                     }
+                           
                               @if (!Model.RestrictHours.Equals("0"))
                               {
                             <span class="blockLeftText">
@@ -190,11 +201,16 @@
                     <span class="blockLeftText" style="margin-top: 10px;"><b>Liên hệ:</b>&nbsp;@Model.NameContact</span>
                     <div class="clear">
                     </div>
-                    <span class="blockLeftText"><b>Di động:</b>&nbsp;@Model.PhoneContact</span> <span
-                        class="blockLeftText" style="width:380px;"><b>Email:</b>&nbsp;@Model.Email</span>     
+                    <span class="blockLeftText"><b>Di động:</b>&nbsp;@Model.PhoneContact</span> 
+                    @*Check Email*@
+                    @if (!string.IsNullOrEmpty(Model.Email))
+                    {
+                    <span class="blockLeftText" style="width:380px;"><b>Email:</b>&nbsp;@Model.Email</span>
+                    }
                             &nbsp;
                             @* Check Yahoo & Skype*@
-                            @if(!string.IsNullOrEmpty(Model.Yahoo)|!string.IsNullOrEmpty(Model.Skype)){
+                            @if (!string.IsNullOrEmpty(Model.Yahoo) | !string.IsNullOrEmpty(Model.Skype))
+                            {
                                 <span >
                           
                             @if (!string.IsNullOrEmpty(Model.Yahoo))
@@ -204,10 +220,10 @@
                             <a href="ymsgr:sendIM?@Model.Yahoo">
                                 <img border="0" width="52px" src="http://opi.yahoo.com/online?u=YahooID&m=g&t=14&l=us"></a></div>
                                 
-                                }
+                            }
                                 
                                   @if (!string.IsNullOrEmpty(Model.Skype))
-                            {
+                                  {
                             <script type="text/javascript" src="//cdn.dev.skype.com/uri/skype-uri.js"></script>
                             <div id="skype">    
                             <div id="SkypeButton">
@@ -221,7 +237,7 @@
                                 </script>
                             </div>
                             </div>
-                            }</span>
+                                  }</span>
                             
                             }
 

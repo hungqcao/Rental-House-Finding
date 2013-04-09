@@ -3,9 +3,10 @@
     ViewBag.Title = "Quản lí bài đăng";
 }
 
+
 <fieldset>
     <div id="container-grid">
-        @{
+        @{            
             if (ViewBag.Grid != null && ViewBag.Grid.TotalRowCount > 0)
             {
                 var grid = (WebGrid)ViewBag.Grid;
@@ -23,14 +24,14 @@
                                         grid.Column("CreatedDate", "Ngày tạo",
                                             format: (item) => string.Format("{0:yyyy-MM-dd HH:mm:ss}", item.CreatedDate)),
                                         grid.Column("EditedDate", "Lần sửa cuối",
-                                        format: (item) => item.EditedDate==null? "" :string.Format("{0:yyyy-MM-dd HH:mm:ss}", item.EditedDate)),
+                                        format: (item) => item.EditedDate == null ? "" : string.Format("{0:yyyy-MM-dd HH:mm:ss}", item.EditedDate)),
                                         grid.Column("RenewDate", "Lần gia hạn cuối",
                                             format: (item) => item.RenewDate == null ? "" : string.Format("{0:yyyy-MM-dd HH:mm:ss}", item.RenewDate)),
                                         grid.Column("ExpiredDate", "Ngày hết hạn",
                                             format: (item) => string.Format("{0:yyyy-MM-dd HH:mm:ss}", item.ExpiredDate)),
                                         grid.Column("CountRenew", "Số lần đã gia hạn")
-                                            
-                ));
+
+                ))
             }
             else
             {

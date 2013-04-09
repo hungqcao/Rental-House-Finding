@@ -98,26 +98,23 @@ namespace RentalHouseFinding.Controllers
             //Get user ID
             int userId = CommonModel.GetUserIdByUsername(User.Identity.Name);
             //Get user's favorite list
-            var lstPostId = (from f in _db.Favorites
+            var lstPost = (from f in _db.Favorites
                              where (f.UserId == userId && !f.IsDeleted)
-                             select f.PostId).ToList();
-            var favoriteList = (from f in _db.Posts
-                                where (!f.IsDeleted && lstPostId.Contains(f.Id)) 
-                                select f).ToList();
+                             select f).ToList();            
 
-            var postViewList = favoriteList.Select(p => new
+            var postViewList = lstPost.Select(p => new
             {
-                p.Id,
-                p.UserId,
-                p.Title,
-                p.CreatedDate,
-                p.EditedDate,
-                p.RenewDate,
-                PostStatus = p.PostStatus.Name
-            }).OrderByDescending(p => p.CreatedDate).Skip(MAX_RECORD_PER_PAGE * ((int)page - 1)).Take(MAX_RECORD_PER_PAGE);
+                p.Post.Id,
+                Address = String.Format("{0} {1} {2}",p.Post.NumberAddress,p.Post.District.Name,p.Post.District.Province.Name),
+                p.User.Username,
+                p.AddedDate,
+                p.Post.Title,
+                p.Post.RenewDate,
+                PostStatus = p.Post.PostStatus.Name
+            }).OrderByDescending(p => p.AddedDate).Skip(MAX_RECORD_PER_PAGE * ((int)page - 1)).Take(MAX_RECORD_PER_PAGE);
 
             var grid = new WebGrid(ajaxUpdateContainerId: "container-grid", canSort: false);
-            grid.Bind(postViewList, autoSortAndPage: false, rowCount: favoriteList.Count());
+            grid.Bind(postViewList, autoSortAndPage: false, rowCount: lstPost.Count());
             ViewBag.Grid = grid;
             ViewBag.Index = ((int)page - 1) * MAX_RECORD_PER_PAGE;
 
