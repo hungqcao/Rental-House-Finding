@@ -45,12 +45,14 @@
 	padding: 23px 26px;
 	display: block;
 	color: white;
-	font-size: 13px;
+	font-size: 14px;
 	text-decoration: none;
 	text-transform: uppercase;
 	text-shadow: 0 -1px 0 #9e3825;
 	text-shadow: 0 -1px 0 rgba(116, 37, 2, .70);
 	line-height: 18px;
+	font-family:Calibri,San-Serif;
+	font-weight:bold;
 }
 
 
@@ -135,6 +137,7 @@
 	-ms-transition: all .35s ease-in-out;
 	transition: all .35s ease-in-out;
 	text-shadow: 0 1px 0 white;
+	font-family:Calibri,San-Serif;
 
 }
 
@@ -144,6 +147,7 @@
 	background: url(images/hover.png) repeat;
 	color: white;
 	text-shadow: 0 1px 0 black;
+	font-family:Calibri,San-Serif;
 
 }
 

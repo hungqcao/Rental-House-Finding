@@ -4,10 +4,16 @@
 }
 @using (Html.BeginForm("Index", "ManageDistrict", FormMethod.Post))
 {
+   <div class="districtDiv">
+    <div id="districtSelect">
     @Html.DropDownList("ProvinceId",
         (IEnumerable<SelectListItem>)ViewBag.Provinces,
-            "Chọn Tỉnh/Thành phố", new { @class = "select" })
-            <input type="submit" name="Search" value="Search" />
+            "Chọn Tỉnh/Thành phố", new { @class = "selectAd"})
+</div>
+    <div id="districtSubmit">
+            <input type="submit" class="searchLink" name="Search" value="Search" />
+            </div>
+            </div>
 }
 <div id="container-grid">
 
@@ -33,10 +39,10 @@
     }
 </div>
 <br/>
-<p>
-    @Html.ActionLink("Tạo mới", "Create")
-</p>
-<br />
-<p>
-    @Html.ActionLink("Danh sách tỉnh/thành", "Index", "ManageProvinces", null, null)
-</p>
+ <a href="../ManageRoles/Create">
+    <div class="createLink">
+    </div></a>
+
+<a href="../../ManageProvinces">
+    <div class="listDistrict">
+    </div></a>

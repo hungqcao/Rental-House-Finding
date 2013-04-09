@@ -17,12 +17,13 @@
 </script>
 @using (Html.BeginForm("Index", "ManagePayment", FormMethod.Post))
 {
-    <span>Ngày giao dịch</span>
-    <div>Từ @Html.TextBoxFor(model => model.CreatedDateFrom,
-                        new { @id = "created_date_from", @readonly = "readonly" })<br/>
-                Đến @Html.TextBoxFor(model => model.CreatedDateTo,
-                    new { @id = "created_date_to", @readonly = "readonly" })</div>
-    <input type="submit" value="Search" id="search"/>
+ <div>
+    <div style=" float:left; margin-top:5px; ">Thời gian @Html.TextBoxFor(model => model.CreatedDateFrom,
+                        new { @id = "created_date_from", @readonly = "readonly", @placeholder = "từ" })
+                @Html.TextBoxFor(model => model.CreatedDateTo,
+                    new { @id = "created_date_to", @readonly = "readonly", @placeholder = "đến" })</div>
+    <input type="submit" class="searchLink" value="Search" id="search"/> </div>
+    <div class="clear"></div>
 }
 <div id="container-grid">
 @{
@@ -47,7 +48,7 @@
     }
     else
     {
-        <h2>Không có giao dịch</h2>
+        <h2>Chưa có giao dịch</h2>
     }
 }
 

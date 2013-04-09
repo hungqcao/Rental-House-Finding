@@ -9,7 +9,7 @@
 @using (Html.BeginForm()) {
     @Html.ValidationSummary(true)
     <fieldset>
-
+    <div class="rolesManageDiv">
         <div class="editor-label">
             @Html.LabelFor(model => model.Name, "Tên")
         </div>
@@ -17,7 +17,8 @@
             @Html.EditorFor(model => model.Name)
             @Html.ValidationMessageFor(model => model.Name)
         </div>
-
+</div>
+  <div class="rolesManageDiv">
         <div class="editor-label">
             @Html.LabelFor(model => model.Lat, "Kinh độ")
         </div>
@@ -25,7 +26,8 @@
             @Html.EditorFor(model => model.Lat)
             @Html.ValidationMessageFor(model => model.Lat)
         </div>
-
+</div>
+  <div class="rolesManageDiv">
         <div class="editor-label">
             @Html.LabelFor(model => model.Lon, "Vĩ độ")
         </div>
@@ -33,7 +35,8 @@
             @Html.EditorFor(model => model.Lon)
             @Html.ValidationMessageFor(model => model.Lon)
         </div>
-
+</div>
+ <div class="rolesManageCheck">
         <div class="editor-label">
             @Html.LabelFor(model => model.IsDeleted, "Đã xóa")
         </div>
@@ -41,13 +44,16 @@
             @Html.EditorFor(model => model.IsDeleted)
             @Html.ValidationMessageFor(model => model.IsDeleted)
         </div>
-
+</div>
+<div class="rolesManageSubmit">
         <p>
-            <input type="submit" value="Tạo mới" />
+            <input type="submit" class="createLink" value="Tạo mới" />
         </p>
+        </div>
     </fieldset>
 }
 
-<div>
-    @Html.ActionLink("Quay lại", "Index")
-</div>
+
+ <a href="../ManageProvinces/Index">
+    <div class="backLink">
+    </div></a>
