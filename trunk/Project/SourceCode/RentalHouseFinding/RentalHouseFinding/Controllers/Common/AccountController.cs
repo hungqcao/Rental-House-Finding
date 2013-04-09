@@ -366,21 +366,25 @@ namespace RentalHouseFinding.Controllers
                                         a.Username.Equals(User.Identity.Name) &&
                                         a.Password.Equals(oldPassword)
                                     select a).FirstOrDefault();
-                    if (account == null) changePasswordSucceeded = false;
+                    if (account == null)
+                    {
+                        changePasswordSucceeded = false;
+                        error = "Mật khẩu cung cấp không phù hợp hoặc mật khẩu mới không đúng.";
+                    }
                     else
                     {
                         account.Password = CommonController.GetMD5Hash(model.NewPassword);
                         _db.SaveChanges();
                         changePasswordSucceeded = true;
                         success = "Thay đổi mật khẩu thành công";
-                        CommonModel.SendEmail(account.Email,"Mật khẩu của tài khoản " + account.Username + " đã được đổi thành " + model.NewPassword,"Đổi mật khẩu thành công!", 0);
+                        CommonModel.SendEmail(account.Email, "Mật khẩu của tài khoản " + account.Username + " đã được đổi thành " + model.NewPassword, "Đổi mật khẩu thành công!", 0);
                     }
                     
                 }
                 catch (Exception)
                 {
                     changePasswordSucceeded = false;
-                    error = "Thay đổi mật khẩu không thành công";
+                    error = "Mật khẩu cũ bạn nhập không đúng. Vui lòng nhập lại";
                 }
 
                 if (changePasswordSucceeded)
@@ -390,7 +394,7 @@ namespace RentalHouseFinding.Controllers
                 }
                 else
                 {
-                    ModelState.AddModelError("", @"Mật khẩu cung cấp không phù hợp hoặc mật khẩu mới không đúng");
+                    ModelState.AddModelError("", "Mật khẩu cung cấp không phù hợp hoặc mật khẩu mới không đúng");
                 }
             }
 
