@@ -415,14 +415,14 @@
         <div id="pnew2_toggle">
                 <div>
                     <div class="infoElement">
-                        <label>Giá tiền điện (nghìn vnđ/số)</label>
+                        <label>Giá tiền điện (VNĐ/số)</label>
 
                         <div class="clear"></div>
                         @Html.TextBoxFor(model => model.ElectricityFee, new { @class = "electricPriceTbx", @Value="0" })
                         @Html.ValidationMessageFor(model => model.ElectricityFee)
                     </div>
                     <div class="infoElement">
-                        <label>Giá tiền nước (nghìn vnđ/khối) </label>
+                        <label>Giá tiền nước (VNĐ/khối) </label>
 
                         <div class="clear"></div>
                         @Html.TextBoxFor(model => model.WaterFee, new { @class = "electricPriceTbx", @Value = "0" })

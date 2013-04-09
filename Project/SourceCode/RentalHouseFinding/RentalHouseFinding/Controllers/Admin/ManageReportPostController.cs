@@ -186,7 +186,10 @@ namespace RentalHouseFinding.Controllers.Admin
                         }
                     }
                     TempData["MessageSuccessSaveBadPost"] = "Thay đổi thông tin thành công";
-                    var reportPost = _db.ReportedPosts.Where(p => p.Id == (int)TempData["ReportId"]).FirstOrDefault();
+                    int reportId = (int)TempData["ReportId"];
+                    var reportPost = (from rp in _db.ReportedPosts
+                                      where (rp.Id == reportId)
+                                      select rp).FirstOrDefault();//_db.ReportedPosts.Where(p => p.Id == (int)TempData["ReportId"]).FirstOrDefault();
                     reportPost.IsIgnored = true;
 
                     _db.ObjectStateManager.ChangeObjectState(reportPost, System.Data.EntityState.Modified);
