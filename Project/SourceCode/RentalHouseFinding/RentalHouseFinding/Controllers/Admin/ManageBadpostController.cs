@@ -192,6 +192,8 @@ namespace RentalHouseFinding.Controllers.Admin
                         }
                     }
                     TempData["MessageSuccessSaveBadPost"] = "Thay đổi thông tin thành công";
+                    //send sms to phone active.
+                    CommonController.SendSMS(post.PhoneActive,String.Format("Bai cua ban da duoc Admin duyet. Ma kich hoat cua ban la :{0}",post.Code));
                     return RedirectToAction("Index");
                 }
                 catch (Exception ex)

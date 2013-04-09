@@ -31,7 +31,7 @@ namespace RentalHouseFinding.Models
         public string Email { get; set; }
 
         [Required(ErrorMessage = "Xin vui lòng nhập mật khẩu.")]
-        [StringLength(20, ErrorMessage = @"{0} phải tối thiểu là {2} ký tự.", MinimumLength = 6)]
+        [StringLength(20, ErrorMessage = @"{0} tối đa là {2} ký tự.", MinimumLength = 6)]
         [DataType(DataType.Password)]
         [Display(Name = "Mật khẩu")]
         public string Password { get; set; }
@@ -48,7 +48,7 @@ namespace RentalHouseFinding.Models
         public string PhoneNumber { get; set; }
 
         [Display(Name = "Họ và tên")]
-        [StringLength(50, ErrorMessage = @"{0} phải tối thiểu là {2} ký tự.", MinimumLength = 50)]
+        [StringLength(50, ErrorMessage = @"{0} tối đa là {2} ký tự.", MinimumLength = 0)]
         public string Name { get; set; }
     }
 }
