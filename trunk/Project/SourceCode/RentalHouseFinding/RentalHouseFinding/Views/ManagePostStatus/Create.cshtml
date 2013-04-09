@@ -10,7 +10,7 @@
 @using (Html.BeginForm()) {
     @Html.ValidationSummary(true)
     <fieldset>
-
+<div class="rolesManageDiv">
         <div class="editor-label">
             @Html.LabelFor(model => model.Name, "Trạng thái")
         </div>
@@ -18,7 +18,8 @@
             @Html.EditorFor(model => model.Name)
             @Html.ValidationMessageFor(model => model.Name)
         </div>
-
+</div>
+<div class="rolesManageDiv">
         <div class="editor-label">
             @Html.LabelFor(model => model.Description, "Mô tả")
         </div>
@@ -26,10 +27,12 @@
             @Html.EditorFor(model => model.Description)
             @Html.ValidationMessageFor(model => model.Description)
         </div>
-
+</div>
+<div class="rolesManageSubmit">
         <p>
             <input class="createLink" type="submit" value="Tạo mới" />
         </p>
+        </div>
     </fieldset>
 }
 

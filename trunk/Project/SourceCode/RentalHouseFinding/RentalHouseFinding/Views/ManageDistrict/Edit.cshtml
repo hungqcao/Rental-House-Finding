@@ -13,7 +13,7 @@
     <fieldset>
 
         @Html.HiddenFor(model => model.Id)
-
+           <div class="rolesManageDiv">
         <div class="editor-label">
             @Html.LabelFor(model => model.Name, "Tên")
         </div>
@@ -21,7 +21,8 @@
             @Html.EditorFor(model => model.Name)
             @Html.ValidationMessageFor(model => model.Name)
         </div>
-
+</div>
+   <div class="rolesManageDiv">
         <div class="editor-label">
             @Html.LabelFor(model => model.Lat, "Kinh độ")
         </div>
@@ -29,7 +30,8 @@
             @Html.EditorFor(model => model.Lat)
             @Html.ValidationMessageFor(model => model.Lat)
         </div>
-
+</div>
+   <div class="rolesManageDiv">
         <div class="editor-label">
             @Html.LabelFor(model => model.Lon, "Vĩ độ")
         </div>
@@ -37,7 +39,8 @@
             @Html.EditorFor(model => model.Lon)
             @Html.ValidationMessageFor(model => model.Lon)
         </div>
-
+</div>
+   <div class="rolesManageTextBox">
         <div class="editor-label">
             @Html.LabelFor(model => model.ProvinceId, "Tỉnh/Thành")
         </div>
@@ -45,7 +48,8 @@
             @Html.DropDownList("ProvinceId", String.Empty)
             @Html.ValidationMessageFor(model => model.ProvinceId)
         </div>
-
+</div>
+   <div class="rolesManageCheck">
         <div class="editor-label">
             @Html.LabelFor(model => model.IsDeleted, "Đã xóa")
         </div>
@@ -53,13 +57,15 @@
             @Html.EditorFor(model => model.IsDeleted)
             @Html.ValidationMessageFor(model => model.IsDeleted)
         </div>
-
+</div>
+<div class="rolesManageSubmit">
         <p>
-            <input type="submit" value="Lưu" />
+            <input type="submit" class="saveChange" value="Lưu" />
         </p>
+        </div>
     </fieldset>
 }
 
-<div>
-    @Html.ActionLink("Quay về", "Index")
-</div>
+<a href="../../ManageDistrict">
+    <div class="backLink">
+    </div></a>
