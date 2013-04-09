@@ -17,7 +17,7 @@
 </script>
 <div id="container-grid">
 @{
-    if (ViewBag.Grid != null && ViewBag.Grid.TotalRowCount > 0)
+    if (Model != null && Model.Grid.TotalRowCount > 0)
     {
         WebGrid grid = Model.Grid;
         @grid.GetHtml(tableStyle: "webGrid", mode: WebGridPagerModes.All,
