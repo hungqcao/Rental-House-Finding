@@ -50,12 +50,13 @@
             else {
                 var mydata = { postId: $("#Id").val(), resion: $("#txtResion").val() };
                 SendRepost(mydata);
-                alert("Cảm ơn sự đóng góp của bạn!");
                 deselect();
+                alert("Cảm ơn sự đóng góp của bạn!");                
                 $("#report").addClass("reported");
                 $("#txtResion").val('');
                 $(this).addClass("b-close");
                 $("#rpMessage").css("display", "none");
+                
             }
 
         });
@@ -65,20 +66,16 @@
             });
         }
 
-        $("#report").live('click', function () {
-            $("#txtResion").val('');
+        $("#report").live('click', function () {        
+            
             if ($(this).hasClass("reported")) {
                 alert("Báo cáo hoàn tất! Ban quan trị sẽ kiểm tra lại trong thời gian sớm nhất.");
             }
             else {
-                if ($(this).hasClass("selected")) {
-                    deselect();
-                } else {
-                    $(this).addClass("selected");
-                    $(".pop").slideFadeToggle(function () {
-                        $("#resion").focus();
-                    });
-                }
+                $('#element_to_pop_up').bPopup();
+                $("#txtResion").val('');
+                $("#rpMessage").css("display","none");
+                $("#txtResion").focus();
             }
             return false;
         });
