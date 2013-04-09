@@ -23,7 +23,8 @@
                                         grid.Column("UserName", "Người đăng"),
                                         grid.Column("PostStatus", "Trạng thái"),
                                         grid.Column("AddedDate", "Ngày thêm",
-                                        format: (item) => string.Format("{0:yyyy-MM-dd HH:mm:ss}", item.AddedDate))
+                                        format: (item) => string.Format("{0:yyyy-MM-dd HH:mm:ss}", item.AddedDate)),
+                                        grid.Column(header: "Gỡ", format: item => @Html.ActionLink("Gỡ khỏi danh mục", "", null, new {id = item.ID}))
                                 ));
             }
             else
@@ -50,5 +51,22 @@
         $('a[href="#"]').live('click', function (event) {
             event.preventDefault();
         });
+        $('a[href="/user"]').live('click', function (event) {
+            event.preventDefault();
+            removeFavorite($(this).prop('id'));
+            $(this).parent().parent().remove();
+        });
     });
+    
+    function removeFavorite(id) {
+        if (!confirm("Xóa khỏi danh mục?")) {
+            return false;
+        }
+        $.getJSON("/Post/RemoveFavorite", { id: id }, function (success) {
+            if (success) {
+                alert('Đã xóa bài khỏi danh mục');
+            }
+        });
+        
+    }
 </script>
