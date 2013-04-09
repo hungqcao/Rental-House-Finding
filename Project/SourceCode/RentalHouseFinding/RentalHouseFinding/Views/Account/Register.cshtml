@@ -106,7 +106,7 @@
             <h2>Bạn nên đăng kí để có những tiện ích hỗ trợ tốt nhất.</h2>
         </div>
         <div class="clear"></div>
-        <form action="Authenticate?ReturnUrl=@HttpUtility.UrlEncode(Request.QueryString["ReturnUrl"])" method="post" id="openid_form">
+        <form action="@Url.Content("~/Account/")Authenticate?ReturnUrl=@HttpUtility.UrlEncode(Request.QueryString["ReturnUrl"])" method="post" id="openid_form">
             <input type="hidden" name="action" value="verify" />
             <div class="socials">   
                 <h2>Đăng nhập nhanh với các tài khoản có sẵn của bạn tại:</h2>

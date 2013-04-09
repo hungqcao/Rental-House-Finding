@@ -7,7 +7,7 @@ using System.IO;
 
 namespace RentalHouseFinding.Common
 {
-    public class StringUtil
+    public static class StringUtil
     {
         private static readonly string[] VietnameseSigns = new string[]
 
@@ -80,6 +80,29 @@ namespace RentalHouseFinding.Common
             string rStr = Path.GetRandomFileName();
             rStr = rStr.Replace(".", ""); // For Removing the .
             return rStr;
+        }
+
+        public static string ToSeoUrl(this string url)
+        {
+            // make the url lowercase
+            string encodedUrl = (url ?? "").ToLower();
+
+            // replace & with and
+            encodedUrl = Regex.Replace(encodedUrl, @"\&+", "and");
+
+            // remove characters
+            encodedUrl = encodedUrl.Replace("'", "");
+
+            // remove invalid characters
+            encodedUrl = Regex.Replace(encodedUrl, @"[^a-z0-9]", "-");
+
+            // remove duplicates
+            encodedUrl = Regex.Replace(encodedUrl, @"-+", "-");
+
+            // trim leading & trailing characters
+            encodedUrl = encodedUrl.Trim('-');
+
+            return encodedUrl;
         }
     }
 }

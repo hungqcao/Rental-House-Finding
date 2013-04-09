@@ -25,13 +25,13 @@
             <span class="title">Họ tên:</span> <span class="info">@Model.User.Name</span> 
             <span class="title">Điện thoại:</span><span class="info">@Model.User.PhoneNumber</span> 
             <span class="title">Thời điểm tạo:</span> <span class="info">@Model.User.CreatedDate</span> 
-         @*   @Html.ActionLink("Thay đổi thông tin TK", "Edit", "User")*@
-            <div style="margin-top:30px;"><a href="/User/Edit"><img src="../../Content/images/btn_changeinfo.png" /></a></div>
+            
+            <div style="margin-top:30px;">@Html.ActionLink("Thay đổi thông tin TK", "Edit", "User", new { @id = "btnChangeInfo"})</div>
             <div class="clear"></div>
-           @* @Html.ActionLink("Đổi mật khẩu (dành cho tài khoản đăng ký tại hệ thống)", "ChangePassword", "Account")*@
+           
            @if (!Model.IsOpenIdOrFBAcc)
            {
-                <div style="margin-top:30px;"><a href="/Account/ChangePassword"><img src="../../Content/images/btn_changepass.png" /></a></div>
+                <div style="margin-top:30px;">@Html.ActionLink("Đổi mật khẩu (dành cho tài khoản đăng ký tại hệ thống)", "ChangePassword", "Account", new { @id = "btnChangePass"})</div>
            }
         </div>
 </div>

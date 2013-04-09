@@ -714,6 +714,7 @@ span.field-validation-error
     height: 34px;
     display: block;
     float: left;
+    font-size: 0;
     margin-right: 10px;
 }
 #header #helloUser {
@@ -2465,82 +2466,82 @@ ul.tabs li.active{
 }
 #adminResultText
 {
-    margin-bottom:10px;
-    color:black;
-    font-weight:bold;
-    }
-    .createLink
-    {
-        background: url("../../Content/images/createnew.png") no-repeat transparent 0 0px;
-        width:128px;
-        height:40px;
-        cursor:pointer;
-        float:left;
-        }
-         .listDistrict
-    {
-        background: url("../../Content/images/listdistrict.png") no-repeat transparent 0 0px;
-        width:156px;
-        height:40px;
-        cursor:pointer;
-        margin-left:135px;
-        }
-             .listbadword
-    {
-        background: url("../../Content/images/listbadword.png") no-repeat transparent 0 0px;      
-        width:128px;
-        height:40px;
-        cursor:pointer;
-        margin-left:135px;
-        }
+margin-bottom:10px;
+color:black;
+font-weight:bold;
+}
+.createLink
+{
+background: url("../../Content/images/createnew.png") no-repeat transparent 0 0px;
+width:128px;
+height:40px;
+cursor:pointer;
+float:left;
+}
+.listDistrict
+{
+background: url("../../Content/images/listdistrict.png") no-repeat transparent 0 0px;
+width:156px;
+height:40px;
+cursor:pointer;
+margin-left:135px;
+}
+.listbadword
+{
+background: url("../../Content/images/listbadword.png") no-repeat transparent 0 0px;      
+width:128px;
+height:40px;
+cursor:pointer;
+margin-left:135px;
+}
         
-         .saveChange
-    {
-        background: url("../../Content/images/savechange.png") no-repeat transparent 0 0px;
-        width:128px;
-        height:40px;
-        cursor:pointer;
-        }
-           .searchLink
-    {
-        background: url("../../Content/images/timkiem.png") no-repeat transparent 0 0px;
-        width:128px;
-        height:40px;
-        cursor:pointer;
-        }
-           .backLink
-    {        
-        width:128px;
-        height:40px;
-        cursor:pointer;
-        margin-top:10px;
-        }
+.saveChange
+{
+background: url("../../Content/images/savechange.png") no-repeat transparent 0 0px;
+width:128px;
+height:40px;
+cursor:pointer;
+}
+.searchLink
+{
+background: url("../../Content/images/timkiem.png") no-repeat transparent 0 0px;
+width:128px;
+height:40px;
+cursor:pointer;
+}
+.backLink
+{        
+width:128px;
+height:40px;
+cursor:pointer;
+margin-top:10px;
+}
         
-        .rolesManageDiv
-        {
-            width:200px;
-            float:left;
-            }
+.rolesManageDiv
+{
+width:200px;
+float:left;
+}
             
-         .rolesManageCheck
-         {
-             width:60px;
-             float:left;
-             margin:3px 0 0 15px;
-             }
+.rolesManageCheck
+{
+width:60px;
+float:left;
+margin:3px 0 0 15px;
+}
                
-         .rolesManageTextBox
-         {
-             width:110px;
-             float:left;
-             margin:5px 0 0 15px;
-             }
+.rolesManageTextBox
+{
+width:110px;
+float:left;
+margin:5px 0 0 15px;
+}
           
-          .rolesManageSubmit
-          {
-              float:left;
-              margin-top:35px;
-              }
+.rolesManageSubmit
+{
+float:left;
+margin-top:35px;
+}
 .districtDiv{              
     width:100%;
     height:40px;
@@ -2556,3 +2557,23 @@ ul.tabs li.active{
 {
     float:left;
     }
+.font-size-0
+{
+    font-size: 0;
+}
+#btnChangePass
+{
+    background: url('../../Content/images/btn_changepass.png') no-repeat transparent 0 0;
+    height: 40px;
+    width: 184px;
+    display: block;
+    font-size: 0px;  
+}
+#btnChangeInfo
+{
+    background: url('../../Content/images/btn_changeinfo.png') no-repeat transparent 0 0;
+    height: 40px;
+    width: 184px;
+    display: block;
+    font-size: 0px;
+}
