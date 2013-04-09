@@ -2445,7 +2445,7 @@ ul.tabs li.active{
     .createLink
     {
         background: url("../../Content/images/createnew.png") no-repeat transparent 0 0px;
-        width:156px;
+        width:128px;
         height:40px;
         cursor:pointer;
         float:left;
@@ -2453,15 +2453,15 @@ ul.tabs li.active{
          .listDistrict
     {
         background: url("../../Content/images/listdistrict.png") no-repeat transparent 0 0px;
-        width:158px;
+        width:156px;
         height:40px;
         cursor:pointer;
         margin-left:135px;
         }
              .listbadword
     {
-        background: url("../../Content/images/listbadword.png") no-repeat transparent 0 0px;
-        width:158px;
+        background: url("../../Content/images/listbadword.png") no-repeat transparent 0 0px;      
+        width:128px;
         height:40px;
         cursor:pointer;
         margin-left:135px;
@@ -2470,21 +2470,20 @@ ul.tabs li.active{
          .saveChange
     {
         background: url("../../Content/images/savechange.png") no-repeat transparent 0 0px;
-        width:156px;
+        width:128px;
         height:40px;
         cursor:pointer;
         }
            .searchLink
     {
         background: url("../../Content/images/timkiem.png") no-repeat transparent 0 0px;
-        width:156px;
+        width:128px;
         height:40px;
         cursor:pointer;
         }
            .backLink
-    {
-        background: url("../../Content/images/Back.png") no-repeat transparent 0 0px;
-        width:156px;
+    {        
+        width:128px;
         height:40px;
         cursor:pointer;
         margin-top:10px;
