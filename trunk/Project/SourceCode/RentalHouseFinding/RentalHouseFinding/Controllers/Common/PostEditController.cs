@@ -132,6 +132,27 @@ namespace RentalHouseFinding.Controllers.GUI
                         return RedirectToAction("Index");
                     }
                     var post = (from p in _db.Posts where (p.Id == postViewModel.Id) select p).FirstOrDefault();
+                    bool isPending = false;
+                    int currentPostStatusID = post.StatusId;
+                    TimeSpan keepPendingDay;
+                    DateTime expiredDate = DateTime.Now;
+
+                    if (currentPostStatusID == 2)
+                    {
+                        if (post.EditedDate == null)
+                        {
+                            keepPendingDay = DateTime.Now - post.CreatedDate;
+                        }
+                        else
+                        {
+                            keepPendingDay = DateTime.Now - (DateTime)post.EditedDate;
+                        }
+                        expiredDate = post.ExpiredDate.AddDays(keepPendingDay.Days);
+                    }
+                    else
+                    {
+                        expiredDate = post.ExpiredDate;
+                    }
                     if (CommonModel.FilterHasBadContent(postViewModel))
                     {
                         //2 for pending
@@ -139,9 +160,27 @@ namespace RentalHouseFinding.Controllers.GUI
                         TempData["MessagePendingPostNew"] = "Bài đăng có chứa những từ không cho phép, chúng tôi sẽ duyệt trước khi đăng lên hệ thống";
                         TempData["Pending"] = true;
                         TempData["Success"] = false;
+                        isPending = true;
                     }
+                    bool pendingToActive = false;
+                    if (isPending)
+                    {
+                        post.StatusId = 2;
+                    }
+                    else
+                    {
+                        if (currentPostStatusID == 2)
+                        {
+                            post.StatusId = 1;
+                            pendingToActive = true;
+                        }
+                        else
+                        {
+                            post.StatusId = currentPostStatusID;
 
-                    post = CommonModel.ConvertPostViewModelToPost(post, postViewModel, post.CreatedDate, DateTime.Now, post.RenewDate,post.ExpiredDate,_noInfo);
+                        }
+                    }
+                    post = CommonModel.ConvertPostViewModelToPost(post, postViewModel, post.CreatedDate, DateTime.Now, post.RenewDate, expiredDate, _noInfo);
                     
 
                     Dictionary<int, string> lstNearbyId = CommonController.GetListNearbyLocations(postViewModel, Request);
@@ -201,8 +240,16 @@ namespace RentalHouseFinding.Controllers.GUI
                             }
                         }
                     }
-                    TempData["MessageSuccessPostNew"] = "Thay đổi thông tin thành công";
-                    TempData["Success"] = true;
+                    if (pendingToActive)
+                    {
+                        TempData["MessageSuccessEdit"] = "Đăng bài thành công, chúng tôi sẽ gửi tin nhắn đến số điện thoại bạn đã cung cấp.";
+                        TempData["Success"] = true;
+                    }
+                    else if (!isPending)
+                    {
+                        TempData["MessageSuccessEdit"] = "Thay đổi thông tin thành công";
+                        TempData["Success"] = true;
+                    }
                     return RedirectToAction("Index");
                 }
                 catch (Exception ex)
@@ -233,7 +280,8 @@ namespace RentalHouseFinding.Controllers.GUI
                 post.IsDeleted = true;
                 _db.ObjectStateManager.ChangeObjectState(post, EntityState.Modified);
                 _db.SaveChanges();
-                return RedirectToAction("Index", "User");
+                TempData["MessageDeletePost"] = "Xóa thành công!";
+                return RedirectToAction("Index");
             }
             catch
             {

@@ -43,7 +43,7 @@ namespace RentalHouseFinding.Controllers.Admin
             {
                 page = 1;
             }
-            var postsList = (from p in _db.ReportedPosts where (p.IsIgnored == false) select p);
+            var postsList = (from p in _db.ReportedPosts where (p.IsIgnored == false && !p.Post.IsDeleted) select p);
 
             var postViewList = postsList.Select(p => new
             {
@@ -224,8 +224,8 @@ namespace RentalHouseFinding.Controllers.Admin
                 post.IsDeleted = true;
                 _db.ObjectStateManager.ChangeObjectState(post, EntityState.Modified);
                 _db.SaveChanges();
-                
-                TempData["MessageSuccessSaveBadPost"] = "Xóa thành công";
+
+                TempData["MessageSuccessSaveBadPost"] = "Xóa thành công!";
                 return RedirectToAction("Index");
             }
             catch (Exception ex)
