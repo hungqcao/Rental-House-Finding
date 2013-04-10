@@ -134,7 +134,7 @@
     <Compile Include="Common\StringUtil.cs" />
     <Compile Include="Controllers\Common\AccountController.cs" />
     <Compile Include="Controllers\Admin\AdminController.cs" />
-    <Compile Include="Controllers\Common\LandingController.cs" />
+    <Compile Include="Controllers\Common\SearchController.cs" />
     <Compile Include="Controllers\Admin\ManageCategoriesController.cs" />
     <Compile Include="Controllers\Admin\ManagePostStatusController.cs" />
     <Compile Include="Controllers\Admin\ManageProvincesController.cs" />
@@ -458,6 +458,7 @@
     <Content Include="Content\js\jquery.screwdefaultbuttonsV2.min.js" />
     <Content Include="Content\js\listbox.js" />
     <Content Include="Content\js\mwheelIntent.js" />
+    <Content Include="Content\js\oms.min.js" />
     <Content Include="Content\openid-shadow.css" />
     <Content Include="Content\openid.css" />
     <Content Include="Content\PostImages\2\Koala.jpg" />
@@ -590,7 +591,7 @@
     <Content Include="Views\Home\Index.cshtml">
       <SubType>Code</SubType>
     </Content>
-    <Content Include="Views\Landing\Index.cshtml">
+    <Content Include="Views\Search\Index.cshtml">
       <SubType>Code</SubType>
     </Content>
     <Content Include="Views\ManageBadpost\Index.cshtml" />

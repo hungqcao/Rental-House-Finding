@@ -9,17 +9,17 @@ using RentalHouseFinding.Common;
 
 namespace RentalHouseFinding.Controllers
 {
-    public class LandingController : Controller
+    public class SearchController : Controller
     {
         public RentalHouseFindingEntities _db = new RentalHouseFindingEntities();
 
         public ICacheRepository Repository { get; set; }
-        public LandingController()
+        public SearchController()
             : this(new CacheRepository())
         {
         }
 
-        public LandingController(ICacheRepository repository)
+        public SearchController(ICacheRepository repository)
         {
             this.Repository = repository;
         }
@@ -46,10 +46,6 @@ namespace RentalHouseFinding.Controllers
             return RedirectToAction("Index", "Home");
         }
 
-        public ActionResult About()
-        {
-            return View();
-        }
         public string GetCenterMap(SearchViewModel model)
         {
             string centerMap = String.Empty;
