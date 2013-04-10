@@ -111,13 +111,13 @@ namespace RentalHouseFinding
 
             routes.MapRoute(
                 "PostEditForGuest",
-                "sua-bai-dang-khach",
+                "sua",
                 new { controller = "PostEdit", action = "Index"}
             );
 
             routes.MapRoute(
                 "PostEditForGuestEditPage",
-                "sua-bai-dang-khach/{id}/{name}",
+                "sua/{id}/{name}",
                 new { controller = "PostEdit", action = "Edit", name = UrlParameter.Optional },
                 new { id = @"^\d+$" }
             );
