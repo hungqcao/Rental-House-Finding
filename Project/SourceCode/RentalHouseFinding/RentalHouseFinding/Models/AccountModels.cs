@@ -62,6 +62,7 @@ namespace RentalHouseFinding.Models
         [Display(Name = "Tên tài khoản")]
         [StringLength(50, ErrorMessage = @"{0} tối đa là {1} ký tự. Vui lòng nhập lại")]
         [Remote("IsUserNameAvailable", "Validation")]
+        [RegularExpression(@"(\S)+", ErrorMessage = "Không thể sử dụng khoảng trắng")]
         public string UserName { get; set; }
 
         [Display(Name = "Email")]
