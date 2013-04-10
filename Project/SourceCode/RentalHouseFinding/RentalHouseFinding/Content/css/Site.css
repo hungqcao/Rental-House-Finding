@@ -2590,3 +2590,11 @@ margin-top:35px;
     display: block;
     font-size: 0px;
 }
+#userBtnCancel
+{
+    background: url('../../Content/images/btn_cancel.png') no-repeat transparent 0 0;
+    height: 40px;
+    width: 130px;
+    display: block;
+    font-size:0px;
+    }
