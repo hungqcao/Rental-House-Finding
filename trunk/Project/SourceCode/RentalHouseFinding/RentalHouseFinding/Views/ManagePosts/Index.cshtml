@@ -27,7 +27,7 @@
 <script>
     $(document).ready(function () {
         $("#grid th")[5].setAttribute('id', '8');
-        $('#8').prepend('<img id="theImg" src="../../Content/images/down.jpg" />')
+        $('#8').prepend('<img id="theImg" src="../../Content/images/down.png" />')
     });
 </script>
 
@@ -66,21 +66,21 @@
             i = 9;
             if (dir == 'Ascending') {
                 $("#grid th")[i].setAttribute('id', '8');
-                $('#8').prepend('<img id="theImg" src="../../Content/images/down.jpg" />')
+                $('#8').prepend('<img id="theImg" src="../../Content/images/down.png" />')
             }
             if (dir == 'Descending') {
                 $("#grid th")[i].setAttribute('id', '8');
-                $('#8').prepend('<img id="theImg" src="../../Content/images/up.jpg" />')
+                $('#8').prepend('<img id="theImg" src="../../Content/images/up.png" />')
             }
             return;
         }
         if (dir == 'Ascending') {
             $("#grid th")[i].setAttribute('id', '8');
-            $('#8').prepend('<img id="theImg" src="../../Content/images/up.jpg" />')
+            $('#8').prepend('<img id="theImg" src="../../Content/images/up.png" />')
         }
         if (dir == 'Descending') {
             $("#grid th")[i].setAttribute('id', '8');
-            $('#8').prepend('<img id="theImg" src="../../Content/images/down.jpg" />')
+            $('#8').prepend('<img id="theImg" src="../../Content/images/down.png" />')
         }
     };
 </script>
