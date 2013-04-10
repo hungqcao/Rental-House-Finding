@@ -421,7 +421,7 @@ span.select {
 {
     float:right; 
     margin-bottom:5px;
-     margin-right:9px;
+     margin-right:0px;
 }
 #linkAdvancedSearch a
 {
@@ -468,7 +468,7 @@ span.select {
     display: block;
     float: right;
     color: #646464;
-    margin: 20px 5px 0 0;
+    margin: 5px 5px 0 0;
 }
 
 #selectSearch #btnSubmit, #options #btnSubmit, #options #btnKinhLup {
@@ -506,6 +506,7 @@ span.select {
 div.textbox
 {
     height: 37px;
+    width:320px;
 }
 .login-regis {
     display: block;
@@ -680,6 +681,7 @@ span.field-validation-error
 }
 .login-regis .lastBlock {
     margin-top: 10px;
+    margin-left:122px;
 }
 #loginPanel .blockInfo span
 {

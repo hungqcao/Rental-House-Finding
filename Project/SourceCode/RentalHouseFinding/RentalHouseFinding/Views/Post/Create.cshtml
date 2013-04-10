@@ -382,11 +382,13 @@
                     <div id="mapContainer" style="width:372px;height:340px;"></div>
                         <div class="editor-field">
                             @Html.HiddenFor(model => model.Lat)
-                            @Html.ValidationMessageFor(Model => Model.Lat)
+                            <div style="display:none">
+                            @Html.ValidationMessageFor(Model => Model.Lat)</div>
                         </div>
                         <div class="editor-field">
                             @Html.HiddenFor(model => model.Lon)
-                            @Html.ValidationMessageFor(Model => Model.Lon)
+                             <div style="display:none">
+                            @Html.ValidationMessageFor(Model => Model.Lon)</div>
                         </div>
                     </div>
                 <label>Hình ảnh minh hoạ</label>
@@ -499,6 +501,7 @@
                 </div>
                 <div class="leftContent" style="margin-top: 30px;">
                     <h1>Các địa điểm nổi bật xung quanh</h1>
+                    <span>fkdsjflsjdfklsljfsdj</span>
                     <div class="clear"></div>
                     <div id="location-wrapper" class="left" style="margin-right: 10px">
                         <select id="locations">

@@ -106,10 +106,13 @@
              new { @id = "expire_date_to", @placeholder = "Đến" })</td>
         </tr>
         </table>
-        <input type="submit" class="searchLink" value="Search" id="search"/>
-        
-         @Html.CheckBoxFor(model => model.IsDelete, new { @class = "styledCheckbox" })
-         <span>Bài đã bị xóa</span>
+          <div style="float:left;width:100%;background:white;">
+        <div style="float:left;"><input type="submit" class="searchLink" value="Search" id="search"/></div>
+         <div style="float:left; margin-left:20px;margin-top:20px;">
+         @Html.CheckBoxFor(model => model.IsDelete, new { @class = "styledCheckbox" })<div style="margin-top: -3px;
+    width: 115px;">Bài viết đã xóa&nbsp<br /></div>
+         </div>  
+         </div>
     </fieldset>
 }
 <br>

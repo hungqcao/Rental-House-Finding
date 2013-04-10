@@ -247,8 +247,8 @@
     </div>
     <div class="content">
         <div class="title">
-            <h1>Đăng tin mới</h1>
-            <h2>Ngay sau bước đầu tiên bạn đã có thể đăng tin được ngay. 5house.vn khuyên bạn nên hoàn thành cả 2 bước để có bài đăng chi tiết và hiệu quả nhất.</h2>
+            <h1>Sửa bài đăng</h1>
+            <h2>SNgay sau bước đầu tiên bạn đã có thể đăng tin bạn sửa được ngay. 5house.vn khuyên bạn nên xem lại thông tin cả 2 bước để có bài đăng chi tiết và hiệu quả nhất.</h2>
         </div>
         <div class="pnew1">
             <h1>1 | Thông tin cơ bản</h1>
@@ -360,14 +360,17 @@
                     <div id="mapContainer" style="width:372px;height:340px;"></div>
                         <div class="editor-field">
                             @Html.HiddenFor(model => model.Lat)
-                            @Html.ValidationMessageFor(model => model.Lat)
+                            <div style="display:none">
+                            @Html.ValidationMessageFor(model => model.Lat)</div>
                         </div>
                         <div class="editor-field">
                             @Html.HiddenFor(model => model.Lon)
+                            <div style="display:none">
                             @Html.ValidationMessageFor(model => model.Lon)
+                            </div>
                         </div>
                     </div>
-                <h2>Ảnh, video minh hoạ</h2>
+                <h2>Hình ảnh minh hoạ</h2>
                 <div class="clear"></div>
                 <div class="btnPlus">
                     <ul id="imageList">
@@ -383,12 +386,12 @@
             <div class="clear"></div>
         </div>
         <div id="pnew2_header">
-                <div class="collapseBtn" onclick="toggleP2();"></div>
+                
                 <h1>2 | Thông tin chi tiết</h1>
                 <div class="tips">
-                    <span id="tip1">Để có bài đăng chi tiết và hiệu quả nhất hãy hoàn thành phần thông tin chi tiết này.</span>
+                    <span id="tip1">Để có bài đăng chi tiết và hiệu quả nhất hãy xem lại hoặc điền thêm nội dung cho phần thông tin chi tiết này.</span>
                     <br/>
-                    <span id="tip2">Ấn nút mũi tên màu bạc để tiếp tục cung cấp thông tin hoặc ấn nút màu cam để bỏ qua bước này và đăng tin ngay!</span>
+                    <span id="tip2">Ấn nút màu cam để đăng tin ngay!</span>
                 </div>
                 <div class="clear"></div>
             </div>
