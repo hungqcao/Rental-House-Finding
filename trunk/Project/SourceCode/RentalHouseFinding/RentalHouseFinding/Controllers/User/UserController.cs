@@ -165,32 +165,32 @@ namespace RentalHouseFinding.Controllers
                     postViewList = postViewList.OrderBy(p => p.Id)
                         .Skip(MAX_RECORD_PER_PAGE * ((int)page - 1)).Take(MAX_RECORD_PER_PAGE);
                 }
-                if (sort == "UserId")
+                else if (sort == "UserId")
                 {
                     postViewList = postViewList.OrderBy(p => p.UserId)
                         .Skip(MAX_RECORD_PER_PAGE * ((int)page - 1)).Take(MAX_RECORD_PER_PAGE);
                 }
-                if (sort == "Title")
+                else if (sort == "Title")
                 {
                     postViewList = postViewList.OrderBy(p => p.Title)
                         .Skip(MAX_RECORD_PER_PAGE * ((int)page - 1)).Take(MAX_RECORD_PER_PAGE);
                 }
-                if (sort == "CreatedDate")
+                else if (sort == "CreatedDate")
                 {
                     postViewList = postViewList.OrderBy(p => p.CreatedDate)
                         .Skip(MAX_RECORD_PER_PAGE * ((int)page - 1)).Take(MAX_RECORD_PER_PAGE);
                 }
-                if (sort == "EditedDate")
+                else if (sort == "EditedDate")
                 {
                     postViewList = postViewList.OrderBy(p => p.EditedDate)
                         .Skip(MAX_RECORD_PER_PAGE * ((int)page - 1)).Take(MAX_RECORD_PER_PAGE);
                 }
-                if (sort == "RenewDate")
+                else if (sort == "RenewDate")
                 {
                     postViewList = postViewList.OrderBy(p => p.RenewDate)
                         .Skip(MAX_RECORD_PER_PAGE * ((int)page - 1)).Take(MAX_RECORD_PER_PAGE);
                 }
-                if (sort == "ExpiredDate")
+                else if (sort == "ExpiredDate")
                 {
                     postViewList = postViewList.OrderBy(p => p.ExpiredDate)
                         .Skip(MAX_RECORD_PER_PAGE * ((int)page - 1)).Take(MAX_RECORD_PER_PAGE);
@@ -203,32 +203,32 @@ namespace RentalHouseFinding.Controllers
                     postViewList = postViewList.OrderByDescending(p => p.Id)
                         .Skip(MAX_RECORD_PER_PAGE * ((int)page - 1)).Take(MAX_RECORD_PER_PAGE);
                 }
-                if (sort == "UserId")
+                else if (sort == "UserId")
                 {
                     postViewList = postViewList.OrderByDescending(p => p.UserId)
                         .Skip(MAX_RECORD_PER_PAGE * ((int)page - 1)).Take(MAX_RECORD_PER_PAGE);
                 }
-                if (sort == "Title")
+                else if (sort == "Title")
                 {
                     postViewList = postViewList.OrderByDescending(p => p.Title)
                         .Skip(MAX_RECORD_PER_PAGE * ((int)page - 1)).Take(MAX_RECORD_PER_PAGE);
                 }
-                if (sort == "CreatedDate")
+                else if (sort == "CreatedDate")
                 {
                     postViewList = postViewList.OrderByDescending(p => p.CreatedDate)
                         .Skip(MAX_RECORD_PER_PAGE * ((int)page - 1)).Take(MAX_RECORD_PER_PAGE);
                 }
-                if (sort == "EditedDate")
+                else if (sort == "EditedDate")
                 {
                     postViewList = postViewList.OrderByDescending(p => p.EditedDate)
                         .Skip(MAX_RECORD_PER_PAGE * ((int)page - 1)).Take(MAX_RECORD_PER_PAGE);
                 }
-                if (sort == "RenewDate")
+                else if (sort == "RenewDate")
                 {
                     postViewList = postViewList.OrderByDescending(p => p.RenewDate)
                         .Skip(MAX_RECORD_PER_PAGE * ((int)page - 1)).Take(MAX_RECORD_PER_PAGE);
                 }
-                if (sort == "ExpiredDate")
+                else if (sort == "ExpiredDate")
                 {
                     postViewList = postViewList.OrderByDescending(p => p.ExpiredDate)
                         .Skip(MAX_RECORD_PER_PAGE * ((int)page - 1)).Take(MAX_RECORD_PER_PAGE);
