@@ -11,6 +11,38 @@
         });
     });
 </script>
+<script>
+    $(document).ready(function () {
+        $("#grid th")[3].setAttribute('id', '8');
+        $('#8').find('a').prepend('<img id="theImg" src="../../Content/images/down.png" />')
+    });
+</script>
+<script type="text/javascript">
+
+    function setArrows() {
+        var dir = $('#dir').val();
+        var col = $('#col').val();
+        var header = $('th a[href*=' + col + ']');
+        var i = -1;
+        if (col == 'PostTitle') {
+            i = 2;
+        }        
+        if (col == 'CreatedDate') {
+            i = 3;
+        }
+        if (col == 'PhoneNumber') {
+            i = 4;
+        }
+        if (dir == 'Ascending') {
+            $("#grid th")[i].setAttribute('id', '8');
+            $('#8').find('a').prepend('<img id="theImg" src="../../Content/images/up.png" />')
+        }
+        if (dir == 'Descending') {
+            $("#grid th")[i].setAttribute('id', '8');
+            $('#8').find('a').prepend('<img id="theImg" src="../../Content/images/down.png" />')
+        }
+    };
+</script>
 <div id="container-grid">
 @{
     if (ViewBag.Grid != null && ViewBag.Grid.TotalRowCount > 0)
@@ -22,17 +54,17 @@
                             htmlAttributes: new { id = "grid" },
                             columns: grid.Columns(
                                      grid.Column(header: "STT", format: item => item.WebGrid.Rows.IndexOf(item) + 1 + ViewBag.Index),
-                                     grid.Column(columnName: "Code", header: "Mã bài đăng"),  
+                                     grid.Column("Code", "Mã bài", canSort: false),  
                                      grid.Column(columnName: "PostTitle", header: "Tên bài", format: @<text>
                                 <a href="@Url.Action("Details",
                                 "Post",
                                 new { id = @item.PostsId })">@item.PostTitle</a></text>),
                                 grid.Column("CreatedDate", "Ngày giao dịch"),                                
                                 grid.Column("PhoneNumber", "Số điện thoại giao dịch")
-        ));
+                                         ))@Html.Hidden("dir", grid.SortDirection) @Html.Hidden("col", grid.SortColumn);
     }
     else
-            {
+    {
                 <div id="message-sv" style="width:967px; margin: 0 auto;">
                     <div class="message-notificationUser message-informationUser">
                         <a class="close" id="btnCloseDiv"></a>

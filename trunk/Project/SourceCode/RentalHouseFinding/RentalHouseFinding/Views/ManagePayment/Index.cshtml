@@ -15,16 +15,9 @@
         $("#created_date_to").datepicker({ dateFormat: 'yy/mm/dd', changeMonth: true, changeYear: true });
     });
 </script>
+
 @using (Html.BeginForm("Index", "ManagePayment", FormMethod.Post))
 {
- <div id="paymentDiv">
-    <div style=" float:left; margin-top:5px; ">Thời gian @Html.TextBoxFor(model => model.CreatedDateFrom,
-                        new { @id = "created_date_from", @placeholder = "từ" })
-                @Html.TextBoxFor(model => model.CreatedDateTo,
-                    new { @id = "created_date_to", @placeholder = "đến" })</div>
-    <input type="submit" class="searchLink" value="Search" id="search"/> </div>
-    <div class="clear"></div>
-}
 <div id="container-grid">
 @{
     if (Model != null && Model.Grid.TotalRowCount > 0)
@@ -48,7 +41,14 @@
     }
     else
     {
-        <h2>Chưa có giao dịch</h2>
+        <div id="message-sv" style="width:967px; margin: 0 auto;">
+                    <div class="message-notificationUser message-informationUser">
+                        <a class="close" id="btnCloseDiv"></a>
+                        <div>
+                            Bạn chưa có giao dịch nào :)
+                        </div>
+                    </div>
+                </div>
     }
 }
 
