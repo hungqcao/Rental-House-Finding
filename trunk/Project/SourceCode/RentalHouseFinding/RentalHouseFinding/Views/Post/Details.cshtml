@@ -83,7 +83,7 @@
         <div id="popup_wrapper">
             <div class="popup_header">
                 <div class="left">
-                     <span class="type">[@Model.Category]</span><span class="address">&nbsp;@Model.NumberHouse @Model.Street | @Model.Price triệu VNĐ
+                     <span class="type">[@Model.Category]</span><span class="address" style="width:485px;">&nbsp;@Model.NumberHouse @Model.Street | @Model.Price triệu VNĐ
                         | @Model.Area m2</span>
                     @Html.HiddenFor(model => Model.Id)
                     <div class="clear">
@@ -93,8 +93,8 @@
                     @if (Model.UserId == CommonModel.GetUserIdByUsername(User.Identity.Name))
                     {
                         <div id="button-detail" class="right">
-                            @Html.ActionLink("Chỉnh sửa", "edit", "post", new { id = Model.Id }, new { @class = "button-link left", @style = "padding: 5px 20px;" })
-                            @Html.ActionLink("Xóa", "delete", "post", new { id = Model.Id }, new { @class = "button-link left", @style = "padding: 5px 20px;", @onclick = "return confirm('Bạn có chắc chắn muốn xóa bài này?');" }) 
+                            @Html.ActionLink("Chỉnh sửa", "edit", "post", new { id = Model.Id }, new { @class = "button-link_Edit left" })
+                            @Html.ActionLink("Xóa", "delete", "post", new { id = Model.Id }, new { @class = "button-link_Del left", @onclick = "return confirm('Bạn có chắc chắn muốn xóa bài này?');" }) 
                         </div>
                     }
                     else

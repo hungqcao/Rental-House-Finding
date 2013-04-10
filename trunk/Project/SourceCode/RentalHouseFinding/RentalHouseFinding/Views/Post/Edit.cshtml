@@ -12,6 +12,8 @@
 <script type="text/javascript" src="@Url.Content("~/Scripts/jquery.autoGrowInput.js")"></script>
 <script type="text/javascript" src="@Url.Content("~/Scripts/jquery.tagedit.js")"></script>
 <script src="@Url.Content("~/Content/js/jquery.screwdefaultbuttonsV2.min.js")" type="text/javascript"></script>
+<link href="@Url.Content("~/Content/css/listbox.css")" rel="stylesheet">
+
 <script>
     //for validate number message.
     (function ($) {
@@ -33,6 +35,7 @@
         });
     } (jQuery));
 </script>
+<script src="@Url.Content("~/Content/js/listbox.js")"></script>
 <script type="text/javascript">
     function deleteGallery(obj) {
         if (confirm("Bạn có muốn xóa ảnh này không?")) {
@@ -155,6 +158,29 @@
                     });
                 });
             });
+ //for locations
+            var idDis = $("#DistrictId option:selected").val();
+            var select = $("#locations");
+            select.empty();
+            $.getJSON("@baseUri.ToString()" + "service/GetLocationWithDistrictId", { id: idDis },
+                function (myData) {
+                    $.each(myData, function (index, itemData) {
+                        if (itemData.Text.length != 0 && itemData.Value != idDis) {
+                            select.append($('<option/>', {
+                                value: itemData.Value,
+                                text: itemData.Text
+                            }));
+                        }
+                    });
+                    select.listbox({
+                        'class': 'listBox',
+                        'searchbar': true,
+                        'multiselect': false
+                    })
+                    $('.listBox .lbjs-item').live('click', function () {
+                        $('input.tag').addNew($(this).html(), $(this).attr("id"));
+                    });
+                });
         });
 
         $("#Street").change(function () {
@@ -163,7 +189,7 @@
             var District = $("#DistrictId option:selected").text();
             var Province = $("#ProvinceId option:selected").text();
             var geocoder = new google.maps.Geocoder();
-            var address = Street + ' ' + District + ' ' + Province;
+            var address = Street + ' ' + District + ' ' + Province+ ' Việt Nam';
 
             if (geocoder) {
                 geocoder.geocode({ 'address': address }, function (results, status) {
@@ -210,6 +236,11 @@
 </script>
 <script type="text/javascript">
     $(document).ready(function () {
+		 $('#locations').listbox({
+            'class': 'listBox',
+            'searchbar': true,
+            'multiselect': false
+        })
         LoadGallery();
         //For tag input
         var source;
@@ -248,112 +279,112 @@
     <div class="content">
         <div class="title">
             <h1>Sửa bài đăng</h1>
-            <h2>SNgay sau bước đầu tiên bạn đã có thể đăng tin bạn sửa được ngay. 5house.vn khuyên bạn nên xem lại thông tin cả 2 bước để có bài đăng chi tiết và hiệu quả nhất.</h2>
+            <h2>Ngay sau bước đầu tiên bạn đã có thể đăng tin bạn sửa được ngay. 5house.vn khuyên bạn nên xem lại thông tin cả 2 bước để có bài đăng chi tiết và hiệu quả nhất.</h2>
         </div>
         <div class="pnew1">
             <h1>1 | Thông tin cơ bản</h1>
             <div class="clear"></div>
             <div class="pnLeft">
                 <div class="infoElement" style="width:150px">
-                    <h2>Loại tin đăng</h2>
+                     <label>Loại tin đăng</label>
                     <div class="clear"></div>
                     @Html.DropDownListFor(model => model.CategoryId, null, new { @class = "select" })
                     @Html.ValidationMessageFor(model => model.CategoryId)
                 </div>
-                <div class="infoElement infoTitle requireField">
-                    <h2>Tiêu đề tin đăng</h2>
+                <div class="infoElement infoTitle requiredField">
+                    <label>Tiêu đề tin đăng</label>
                     <div class="clear"></div>
                     @Html.TextBoxFor(model => model.Title, new { @class = "longTbx" })
                     @Html.ValidationMessageFor(model => model.Title)
                 </div>
                 <div class="clear"></div>
                 <div class="infoElement">
-                    <h2>Tỉnh, thành phố</h2>
+                     <label>Tỉnh, thành phố</label>
                     <div class="clear"></div>
                     @Html.DropDownListFor(model => model.ProvinceId, null, new { @class = "select city" })
                     @Html.ValidationMessageFor(model => model.ProvinceId)
                 </div>
                 <div class="infoElement">
-                    <h2>Quận huyện</h2>
+                   <label>Quận huyện</label>
                     <div class="clear"></div>
                     @Html.DropDownListFor(model => model.DistrictId, null, new { @class = "select city" })
                     @Html.ValidationMessageFor(model => model.DistrictId)
                 </div>
                 <div class="clear"></div>
-                <div class="infoElement requireField">
-                    <h2>Đường, phố</h2>
+                <div class="infoElement requiredField">
+                   <label>Đường, phố</label>
                     <div class="clear"></div>
                     @Html.TextBoxFor(model => model.Street, new { @class = "tbx" })
                     @Html.ValidationMessageFor(model => model.Street)
                 </div>
-                <div class="infoElement">
-                    <h2>Ngách, số nhà</h2>
+                <div class="infoElement requiredField">
+                   <label>Ngách, số nhà</label>
                     <div class="clear"></div>
                     @Html.TextBoxFor(model => model.NumberHouse, new { @class = "tbx" })
                     @Html.ValidationMessageFor(model => model.NumberHouse)
                 </div>
                 <div class="clear"></div>
                 <div class="infoElement requireField">
-                    <h2>Giá tiền (triệu VND/tháng)</h2>
+                  <label>Giá tiền (triệu VND/tháng)</label>
                     <div class="clear"></div>
                     @Html.TextBoxFor(model => model.Price, new { @class = "tbx" })
                     @Html.ValidationMessageFor(model => model.Price)
                 </div>
-                <div class="infoElement requireField">
-                    <h2>Diện tích (m2)</h2>
+                <div class="infoElement requiredField">
+                     <label>Diện tích (m2)</label>
+
                     <div class="clear"></div>
                     @Html.TextBoxFor(model => model.Area, new { @class = "tbx" })
                     @Html.ValidationMessageFor(model => model.Area)
                 </div>
                 <div class="clear"></div>
                 <div class="infoElement">
-                    <h2>Tên người liên hệ</h2>
+                    <label>Tên người liên hệ</label>
                     <div class="clear"></div>
                     @Html.TextBoxFor(model => model.NameContact, new { @class = "tbx" })
                     @Html.ValidationMessageFor(model => model.NameContact)
                 </div>
-                <div class="infoElement requireField">
-                    <h2>Điện thoại liên hệ</h2>
+                <div class="infoElement requiredField">
+                    <label>Điện thoại liên hệ</label>
                     <div class="clear"></div>
                     @Html.TextBoxFor(model => model.PhoneContact, new { @class = "tbx" })
                     @Html.ValidationMessageFor(model => model.PhoneContact)
                 </div>
-                <div class="infoElement requireField">
-                    <h2>Điện thoại kích hoạt</h2>
+                <div class="infoElement requiredField">
+                     <label>Điện thoại nhận mã kích hoạt</label>
                     <div class="clear"></div>
                     @Html.TextBoxFor(model => model.PhoneActive, new { @class = "tbx" })
                     @Html.ValidationMessageFor(model => model.PhoneActive)
                 </div>
                 <div class="infoElement">
-                    <h2>Email liên hệ</h2>
+                     <label>Email liên hệ</label>
                     <div class="clear"></div>
                     @Html.TextBoxFor(model => model.Email, new { @class = "tbx" })
                     @Html.ValidationMessageFor(model => model.Email)
                 </div>
                 <div class="clear"></div>
                 <div class="infoElement">
-                    <h2>Tài khoản Yahoo!</h2>
+                     <label>Tài khoản Yahoo!</label>
                     <div class="clear"></div>
                     @Html.TextBoxFor(model => model.Yahoo, new { @class = "shortTbx" })
                     @Html.ValidationMessageFor(model => model.Yahoo)
                 </div>
                 <div class="infoElement">
-                    <h2>Tài khoản Skype</h2>
+                    <label>Tài khoản Skype</label>
                     <div class="clear"></div>
                     @Html.TextBoxFor(model => model.Skype, new { @class = "shortTbx" })
                     @Html.ValidationMessageFor(model => model.Skype)
                 </div>
                 <div class="clear"></div>
                 <div class="infoElement" style="height:auto;">
-                    <h2>Ghi chú</h2>
+                    <label>Ghi chú</label>
                     <div class="clear"></div>
                     @Html.TextAreaFor(model => model.Description, new { @cols = "15", @rows = "2" })
                 </div>
                 <div class="clear"></div>
             </div>
             <div class="pnRight">
-                <h2>Vị trí trên bản đồ</h2>
-                <br />
+                <label>Vị trí trên bản đồ</label>
                 <h2 style="color: #888888; font-weight: 400; font-style: italic; margin-top: 5px;">Hệ thống sẽ tự động xác định địa chỉ bạn cung cấp. Bạn có thể chọn một cách chính xác vị trí bạn mong muốn trên bản đồ dưới đây:</h2>
                 <div class="clear"></div>
                 <div class="map">
@@ -370,7 +401,7 @@
                             </div>
                         </div>
                     </div>
-                <h2>Hình ảnh minh hoạ</h2>
+                <label>Hình ảnh minh hoạ</label>
                 <div class="clear"></div>
                 <div class="btnPlus">
                     <ul id="imageList">
@@ -398,19 +429,19 @@
         <div id="pnew2_toggle">
                 <div>
                     <div class="infoElement">
-                        <h2>Giá tiền điện (VNĐ/số)</h2>
+                         <label>Giá tiền điện (VNĐ/số)</label>
                         <div class="clear"></div>
                         @Html.TextBoxFor(model => model.ElectricityFee, new { @class = "electricPriceTbx" })
                         @Html.ValidationMessageFor(model => model.ElectricityFee)
                     </div>
                     <div class="infoElement">
-                        <h2>Giá tiền nước (VNĐ/khối) </h2>
+                        <label>Giá tiền nước (VNĐ/khối) </label>
                         <div class="clear"></div>
                         @Html.TextBoxFor(model => model.WaterFee, new { @class = "electricPriceTbx" })
                         @Html.ValidationMessageFor(model => model.WaterFee)
                     </div>
                     <div class="infoElement">
-                        <h2>Giờ đóng cửa, cổng (nếu có)</h2>
+                        <label>Giờ đóng cửa, cổng (nếu có)</label>
                         <div class="clear"></div>
                         @Html.TextBoxFor(model => model.RestrictHours, new { @class = "electricPriceTbx" })
                         @Html.ValidationMessageFor(model => model.RestrictHours)
@@ -418,7 +449,7 @@
                     <div class="clear"></div>
                 </div>
                 <div class="clear"></div>
-                <div class="leftContent" style="margin-right: 144px;">
+                <div class="leftContent" style="margin-top: 30px;">
                     <h1>Các dịch vụ & tiện ích</h1>
                     <div class="clear"></div>
                     <div class="partCol">
@@ -468,29 +499,27 @@
                         </div>
                         <div class="part">
                             @Html.CheckBoxFor(model => model.HasTVCable, new { @class = "styledCheckbox" })
-                            <span>Tivi, truyền hình cáp</span>
+                            <span>Tivi, TH cáp</span>
                         </div>
                     </div>
                 </div>
-                <div class="leftContent">
-                    <h1>Các địa điểm nổi bật xung quanh</h1>
+                  <div class="leftContent NearByWrapper">
+                    <h1 style="width:562px;">Các địa điểm nổi bật xung quanh</h1>
+                    <div class="NearByDes">* Ghi chú: Bạn hãy chọn địa điểm tương ứng hoặc gõ địa điểm bạn muốn vào ô bên phải.<br /> Mỗi địa điểm cách nhau bằng nút Enter.</div>
                     <div class="clear"></div>
-                    <div class="ta_wrapper">
-                        @foreach (KeyValuePair<int, string> kvp in Model.lstNearByPlace)
-                        {
-                            <input id="osSites" type="text" name="tag[@kvp.Key-a]" value="@kvp.Value" class="tag"/>
-                        }
-                        @if (Model.lstNearByPlace.Count == 0)
-                        {
-                            <input id="osSites" type="text" name="tag[]" value="" class="tag"/>
-                        }
+                    <div id="location-wrapper" class="left" style="margin-right: 10px">
+                        <select id="locations">
+                        </select>
+                    </div>
+                    <div class="ta_wrapper left">
+                        <input id="osSites" type="text" name="tag[]" value="" class="tag"/>
                     </div>
                 </div>
-                <div class="clear"></div>
-            </div>
+              <div class="clear"></div>
         <input id="btnSaveInfo" type="submit" class="button-link right" value="Chấp nhận"/>
-        <a id="btnDelete" href="/post/delete/@Model.Id" onclick=" return confirm('Bạn có chắc chắn muốn xóa bài viết này?');" class="button-link right">Xóa</a>
+        <div id="button-link_Cancel"><a href="javascript:history.back()"><img src="../../Content/images/btnCancelEdit.png" /></a></div>
         <div class="clear"></div>
+    </div>
     </div>
 }
 @section head{

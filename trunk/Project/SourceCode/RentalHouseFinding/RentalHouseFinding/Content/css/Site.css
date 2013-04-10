@@ -2185,6 +2185,7 @@ textarea#Description {
     background: url('../images/cross_grey_small.png') no-repeat;
     width: 18px;
     height: 18px;
+    cursor:pointer;
 }
 
 
@@ -2345,6 +2346,7 @@ a.remove-fav-item-list
     display: block;
     width: 24px;
     height: 24px;
+    cursor:pointer;
 }
 /*Compare content*/
 #compare-content span
@@ -2390,7 +2392,7 @@ a.remove-fav-item-list
     border-radius: 5px;
     margin-top:5px;
 }
-
+/*
 a.button-link {
     background: #F88014;
     color: #FFF;
@@ -2429,7 +2431,34 @@ a.button-link:active {
     box-shadow: inset 0 1px 4px rgba(0, 0, 0, 0.6);
     background: #2E5481;
     border: solid 1px #e1e1e1;
-}
+}*/
+.button-link_Edit
+{
+    background: url('../../Content/images/btnEditPost.png');
+    cursor:pointer;
+    width:128px;
+    height:30px;
+    font-size:0px;
+    }
+    .button-link_Del
+{
+    background: url('../../Content/images/btnDelPost.png');
+    cursor:pointer;
+    width:128px;
+    height:30px;
+    font-size:0px;
+    }
+    #button-link_Cancel
+{
+    background: url('../../Content/images/btnCancelEdit.png');
+    cursor:pointer;
+    width:87px;
+    height:30px;
+    font-size:0px;
+    float:right;
+     margin-right: 10px;
+    margin-top: 10px;
+    }
 #btnDelete.button-link
 {
     background: red;
@@ -2628,3 +2657,28 @@ margin-top:35px;
     margin-left: 20px;
     margin-top: 10px;   
      }
+     
+ #smsSuccess
+ {
+     margin:0 auto;
+     width:363px;
+     height:291px;
+     display:block;
+     cursor:pointer;
+     }
+.NearByWrapper
+{
+    margin-top: 30px; 
+    float: left; 
+    width: 562px; 
+    margin-left:16px;
+    }
+.NearByDes
+{
+    width:550px;
+    word-wrap:word-break;
+     font-weight:400;
+      padding:10px;
+      font-size:15px;
+       font-style:italic;
+    }
