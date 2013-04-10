@@ -337,7 +337,7 @@ span.select {
 }
 #content h3
 {
-	color: #717171;
+	color: #3a3a3d;
 	font-weight: 700;
 	font-size: 22px;
 	font-family: Calibri, Arial,Helvetica,Sans-Serif;
@@ -1682,7 +1682,7 @@ textarea#Description {
 }
 #pnew2_toggle .leftContent .partCol {
     width: 170px;
-    margin: 15px 0 0 35px;
+    margin: 20px 0 0 26px;
 }
 #pnew2_toggle .leftContent input#osSites {
     width: 359px;
@@ -1695,7 +1695,7 @@ textarea#Description {
 #pnew2_toggle .leftContent .ta_wrapper {
     background: url("../../Content/images/pnew_diaDiemNoiBat.png") no-repeat transparent 0 4px;
     height: 232px;
-    width: 373px;
+    width: 350px;
     padding: 10px;
 }
 .content #btnSaveInfo, #regisPanel #btnSaveInfo, #btnSaveInfo {
