@@ -104,24 +104,19 @@ namespace RentalHouseFinding.Controllers
 
             var postViewList = lstPost.Select(p => new
             {
-                p.Post.Id,
+                Id = p.Post.Id,
                 Address = String.Format("{0} {1} {2}", p.Post.NumberAddress, p.Post.District.Name, p.Post.District.Province.Name),
                 Username = p.Post.UserId != null ? p.Post.User.Name : "Khách", // != null? p.User.Username: "Khách",
                 p.AddedDate,
-                p.Post.Title,
-                p.Post.RenewDate,
+                Title = p.Post.Title,
+                RenewDate = p.Post.RenewDate,
                 PostStatus = p.Post.PostStatus.Name
             });
 
             //Custom sort
             if (sortdir == "ASC")
             {
-                if (sort == "ID")
-                {
-                    postViewList = postViewList.OrderBy(p => p.Id)
-                        .Skip(MAX_RECORD_PER_PAGE * ((int)page - 1)).Take(MAX_RECORD_PER_PAGE);
-                }
-                else if (sort == "Title")
+                if (sort == "Title")
                 {
                     postViewList = postViewList.OrderBy(p => p.Title)
                         .Skip(MAX_RECORD_PER_PAGE * ((int)page - 1)).Take(MAX_RECORD_PER_PAGE);
@@ -144,12 +139,7 @@ namespace RentalHouseFinding.Controllers
             }
             else
             {
-                if (sort == "ID")
-                {
-                    postViewList = postViewList.OrderByDescending(p => p.Id)
-                        .Skip(MAX_RECORD_PER_PAGE * ((int)page - 1)).Take(MAX_RECORD_PER_PAGE);
-                }
-                else if (sort == "Title")
+                if (sort == "Title")
                 {
                     postViewList = postViewList.OrderByDescending(p => p.Title)
                         .Skip(MAX_RECORD_PER_PAGE * ((int)page - 1)).Take(MAX_RECORD_PER_PAGE);
@@ -171,7 +161,7 @@ namespace RentalHouseFinding.Controllers
                 }
             }
 
-            var grid = new WebGrid(ajaxUpdateContainerId: "container-grid", canSort: false);
+            var grid = new WebGrid(ajaxUpdateContainerId: "container-grid");
             grid.Bind(postViewList, autoSortAndPage: false, rowCount: lstPost.Count());
             ViewBag.Grid = grid;
             ViewBag.Index = ((int)page - 1) * MAX_RECORD_PER_PAGE;
@@ -315,7 +305,7 @@ namespace RentalHouseFinding.Controllers
         }
 
         [Authorize(Roles = "Admin, User")]
-        public ActionResult Payments(int? page, string sort, string sortdir, ManagePaymentModel model)
+        public ActionResult Payments(int? page, string sort, string sortdir)
         {
             if (page == null)
             {
@@ -325,38 +315,29 @@ namespace RentalHouseFinding.Controllers
             //Get user ID
             int userId = CommonModel.GetUserIdByUsername(User.Identity.Name);
 
-            var userPostList = (from p in _db.Posts where (p.UserId == userId) select p.Id).ToList();
-            IQueryable<Payments> paymentList = (from p in _db.Payments 
+            var userPostList = (from p in _db.Posts 
+                                where (p.UserId == userId) 
+                                select p.Id).ToList();
+            var paymentList = (from p in _db.Payments 
                                                 where (userPostList.Contains(p.PostsId)) 
                                                 select p);
 
-            if (model.CreatedDateFrom != null)
-            {
-                paymentList = paymentList.Where(p => (EntityFunctions
-                            .DiffDays(p.CreatedDate, model.CreatedDateFrom) <= 0));
-            }
-
-            if (model.CreatedDateTo != null)
-            {
-                paymentList = paymentList.Where(p => (EntityFunctions
-                            .DiffDays(p.CreatedDate, model.CreatedDateTo) >= 0));
-            }
-
             var paymentViewList = paymentList.Select(p => new
             {
-                Coce = p.Post.Code,
+                Code = p.Post.Code,
                 p.CreatedDate,
                 p.PhoneNumber,
-                Title = (from post in _db.Posts 
+                PostTitle = (from post in _db.Posts 
                          where (post.Id == p.PostsId && !post.IsDeleted) 
-                         select post.Title)
+                         select post.Title).FirstOrDefault(),
+                p.PostsId
             });
             //Custom sort
             if (sortdir == "ASC")
             {
                 if (sort == "PostTitle")
                 {
-                    paymentViewList = paymentViewList.OrderBy(p => p.Title)
+                    paymentViewList = paymentViewList.OrderBy(p => p.PostTitle)
                         .Skip(MAX_RECORD_PER_PAGE * ((int)page - 1)).Take(MAX_RECORD_PER_PAGE);
                 }
                 else if (sort == "CreatedDate")
@@ -369,21 +350,20 @@ namespace RentalHouseFinding.Controllers
             {
                 if (sort == "PostTitle")
                 {
-                    paymentViewList = paymentViewList.OrderByDescending(p => p.Title)
+                    paymentViewList = paymentViewList.OrderByDescending(p => p.PostTitle)
                         .Skip(MAX_RECORD_PER_PAGE * ((int)page - 1)).Take(MAX_RECORD_PER_PAGE);
                 }
                 else
                 {
-                    paymentList = paymentList.OrderByDescending(p => p.CreatedDate)
+                    paymentViewList = paymentViewList.OrderByDescending(p => p.CreatedDate)
                         .Skip(MAX_RECORD_PER_PAGE * ((int)page - 1)).Take(MAX_RECORD_PER_PAGE);
                 }
             }
-            var grid = new WebGrid(ajaxUpdateContainerId: "container-grid",
-            canSort: false, rowsPerPage: MAX_RECORD_PER_PAGE);
+            var grid = new WebGrid(ajaxUpdateContainerId: "container-grid",  canSort: true);
             grid.Bind(paymentViewList, autoSortAndPage: false, rowCount: paymentList.Count());
-            model.Grid = grid;
+            ViewBag.Grid = grid;
             ViewBag.Index = ((int)page - 1) * MAX_RECORD_PER_PAGE;
-            return View(model);
+            return View();
         }
         //[Authorize(Roles = "Admin, User")]
         ////[HttpPost]
