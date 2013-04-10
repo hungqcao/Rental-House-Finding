@@ -2606,3 +2606,25 @@ margin-top:35px;
         float:right;
         padding: 4px 0 15px;
         }
+#errorPage
+{
+    margin: 0 auto;
+    width: 670px;
+    height:452px;
+    }
+    
+ .btnActive
+ {
+      background: url('../../Content/images/btnActive.png') no-repeat transparent 0 0;
+    height: 40px;
+    width: 130px;
+    display: block;
+    font-size:0px;
+    margin-top:20px;
+ }
+ #SMSActive
+ {
+   font-size: 14px;
+    margin-left: 20px;
+    margin-top: 10px;   
+     }

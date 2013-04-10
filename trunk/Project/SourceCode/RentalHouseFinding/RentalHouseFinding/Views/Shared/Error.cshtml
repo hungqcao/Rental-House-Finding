@@ -4,10 +4,8 @@
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
  
-<h3>Bạn vừa truy cập vào liên kết không có thật hoặc có lỗi trong quá trình xử lý của hệ thống. Bạn có thể làm theo 1 số gợi ý dưới đây của 5house.vn:</h3>
-
-<br/>
-
+<div id="errorPage"><a href="javascript:history.back()"><img src="../../Content/images/errorPage.png" /></a></div>
+@*
 <h2>@Model.ErrorTitle</h2>
  
 <br />
@@ -15,4 +13,4 @@
 @if (Model.ExceptionDetail != null)
 {
       @Model.ExceptionDetail.Message
-}
+}*@
