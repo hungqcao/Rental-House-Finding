@@ -68,12 +68,38 @@
                     @if (Model.UserId == CommonModel.GetUserIdByUsername(User.Identity.Name))
                     {
                         <div id="button-detail" class="right">
-                            @Html.ActionLink("Chỉnh sửa", "edit", "post", new { id = Model.Id }, new { @class = "button-link left", @style = "padding: 5px 20px;"})
+                            @Html.ActionLink("Chỉnh sửa", "edit", "post", new { id = Model.Id }, new { @class = "button-link left", @style = "padding: 5px 20px;" })
                             @Html.ActionLink("Xóa", "detele", "post", new { id = Model.Id }, new { @class = "button-link left", @style = "padding: 5px 20px;", @onclick = "return confirm('Bạn có chắc chắn muốn xóa bài này?');" })
                         </div>
                     }
                     else
                     {
+                        <div id="saveBookmark">
+                            @{
+                        if (ViewBag.RemoveFavorite == false)
+                        {
+                                <div id="favorite" onclick="addFavorite('@Model.Id');" class="withOutLoginFav topBtnFavorite"
+                                    title="Cho vào danh sách quan tâm của bạn">
+                                    <img id="favoriteImg" src="../../Content/images/triangle_fav.png" />
+                                </div>
+                    
+                        }
+                        else if (ViewBag.RemoveFavorite == true)
+                        {
+                                <div id="favorite" onclick="removeFavorite('@Model.Id');" class="withOutLoginFav topBtnFavoriteActived"
+                                    title="Xóa tin này khỏi danh sách quan tâm">
+                                    <img id="favoriteImg" src="../../Content/images/favorite_actived.png" />
+                                </div>
+                       
+                        }
+                        if (!User.Identity.IsAuthenticated)
+                        {
+                                <div id="favorite" class="withOutLoginFav topBtnFavorite" title="Cho vào danh sách quan tâm của bạn">
+                                    <img id="favoriteImg" src="../../Content/images/triangle_fav.png" />
+                                </div>
+                        }
+                            }
+                        </div>
                         <div id="sendQuestion">
                             <div id="ReportPost">
                                 @if (User.Identity.IsAuthenticated)
@@ -119,32 +145,7 @@
                             <div class="clear">
                             </div>
                         </div>
-                        <div id="saveBookmark">
-                            @{
-                                if (ViewBag.RemoveFavorite == false)
-                                {
-                                <div id="favorite" onclick="addFavorite('@Model.Id');" class="withOutLoginFav topBtnFavorite"
-                                    title="Cho vào danh sách quan tâm của bạn">
-                                    <img id="favoriteImg" src="../../Content/images/triangle_fav.png" />
-                                </div>
-                    
-                                }
-                                else if (ViewBag.RemoveFavorite == true)
-                                {
-                                <div id="favorite" onclick="removeFavorite('@Model.Id');" class="withOutLoginFav topBtnFavoriteActived"
-                                    title="Xóa tin này khỏi danh sách quan tâm">
-                                    <img id="favoriteImg" src="../../Content/images/favorite_actived.png" />
-                                </div>
-                       
-                                }
-                                if (!User.Identity.IsAuthenticated)
-                                {
-                                <div id="favorite" class="withOutLoginFav topBtnFavorite" title="Cho vào danh sách quan tâm của bạn">
-                                    <img id="favoriteImg" src="../../Content/images/triangle_fav.png" />
-                                </div>
-                                }
-                            }
-                        </div>
+                        
                     }
                 <div class="clear">
                 </div>
