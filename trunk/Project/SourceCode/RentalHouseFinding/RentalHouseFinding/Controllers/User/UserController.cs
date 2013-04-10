@@ -99,7 +99,7 @@ namespace RentalHouseFinding.Controllers
             int userId = CommonModel.GetUserIdByUsername(User.Identity.Name);
             //Get user's favorite list
             var lstPost = (from f in _db.Favorites
-                             where (f.UserId == userId && !f.IsDeleted)
+                             where (f.UserId == userId && !f.IsDeleted && !f.Post.IsDeleted)
                              select f).ToList();            
 
             var postViewList = lstPost.Select(p => new
@@ -239,7 +239,7 @@ namespace RentalHouseFinding.Controllers
                         .Skip(MAX_RECORD_PER_PAGE * ((int)page - 1)).Take(MAX_RECORD_PER_PAGE);
                 }
             }
-            var grid = new WebGrid(ajaxUpdateContainerId: "container-grid", canSort: true);
+            var grid = new WebGrid(ajaxUpdateContainerId: "container-grid", ajaxUpdateCallback: "setArrows", canSort: true);
             grid.Bind(postViewList, autoSortAndPage: false, rowCount: postList.Count());
             ViewBag.Grid = grid;
             ViewBag.Index = ((int)page - 1) * MAX_RECORD_PER_PAGE;

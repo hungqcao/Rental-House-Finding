@@ -23,6 +23,61 @@
 <script src="@Url.Content("~/Scripts/RHFScripts.js")" type="text/javascript"></script>
 <script src="@Url.Content("~/Scripts/jquery-ui-1.8.11.min.js")" type="text/javascript"></script>
 <link rel="stylesheet" href="http://code.jquery.com/ui/1.10.2/themes/smoothness/jquery-ui.css" />
+
+<script type="text/javascript">
+
+    function setArrows() {
+        var dir = $('#dir').val();
+        var col = $('#col').val();
+        var header = $('th a[href*=' + col + ']');
+        var i = -1;
+        if (col == 'User') {
+            i = 1;
+        }
+        if (col == 'Title') {
+            i = 2;
+        }
+        if (col == 'Category') {
+            i = 3;
+        }
+        if (col == 'PostStatus') {
+            i = 4;
+        }
+        if (col == 'CreatedDate') {
+            i = 5
+        }
+        if (col == 'EditedDate') {
+            i = 6;
+        }
+        if (col == 'RenewDate') {
+            i = 7;
+        }
+        if (col == 'ExpiredDate') {
+            i = 8;
+        }
+        if (col == 'CountRenew') {
+            i = 9;
+            if (dir == 'Ascending') {
+                $("#grid th")[i].setAttribute('id', '8');
+                $('#8').prepend('<img id="theImg" src="../../Content/images/down.jpg" />')
+            }
+            if (dir == 'Descending') {
+                $("#grid th")[i].setAttribute('id', '8');
+                $('#8').prepend('<img id="theImg" src="../../Content/images/up.jpg" />')
+            }
+            return;
+        }
+        if (dir == 'Ascending') {
+            $("#grid th")[i].setAttribute('id', '8');
+            $('#8').prepend('<img id="theImg" src="../../Content/images/up.jpg" />')
+        }
+        if (dir == 'Descending') {
+            $("#grid th")[i].setAttribute('id', '8');
+            $('#8').prepend('<img id="theImg" src="../../Content/images/down.jpg" />')
+        }
+    };
+</script>
+
 @using (Html.BeginForm("Index", "ManagePosts", FormMethod.Post))
 {
     <fieldset>
@@ -145,8 +200,8 @@
                                 grid.Column("ExpiredDate", "Ngày hết hạn", 
                                     format: (item) => string.Format("{0:yyyy-MM-dd HH:mm:ss}", item.ExpiredDate)),
                                 grid.Column("CountRenew", "Số lần đã gia hạn")
-                                    
-                                ));
+
+                                                                         ))@Html.Hidden("dir", grid.SortDirection) @Html.Hidden("col", grid.SortColumn);
     }
     else
     {

@@ -214,16 +214,12 @@ namespace RentalHouseFinding.Controllers.Admin
         public ActionResult Delete(int id)
         {
             try
-            {
-                int userId = CommonModel.GetUserIdByUsername(User.Identity.Name);
+            {                
                 var post = (from p in _db.Posts where (p.Id == id) select p).FirstOrDefault();
-                //Check if the post belongs to current user
-                if (post.UserId == userId)
-                {
-                    post.IsDeleted = true;
-                    _db.ObjectStateManager.ChangeObjectState(post, EntityState.Modified);
-                    _db.SaveChanges();
-                }
+                post.IsDeleted = true;
+                _db.ObjectStateManager.ChangeObjectState(post, EntityState.Modified);
+                _db.SaveChanges();
+                
                 TempData["MessageSuccessPostNew"] = "Xóa thành công";
                 return RedirectToAction("Index");
             }
