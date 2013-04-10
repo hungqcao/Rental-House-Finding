@@ -15,6 +15,21 @@
         $("#created_date_to").datepicker({ dateFormat: 'yy/mm/dd', changeMonth: true, changeYear: true });
     });
 </script>
+@using (Html.BeginForm("Payments", "User", FormMethod.Post))
+{
+
+    <div style="position:relative; left:67px;">
+         <label style="position:relative; right:5px;font-size: 15px; font-weight: 700;">Ngày giao dịch</label><br/>
+         <label style="padding-top: 5px; font-size: 14px; font-weight: 700;">Từ</label> 
+         <div style="padding-top: 5px;">@Html.TextBoxFor(model => model.CreatedDateFrom,
+                    new { @id = "created_date_from"})</div>
+         <label style="padding-top: 5px; font-size: 14px; font-weight: 700;">Đến</label> 
+         <div style="padding-top: 5px;">@Html.TextBoxFor(model => model.CreatedDateTo,
+                    new { @id = "created_date_to"})</div>
+    </div>
+    <input type="submit" value="Search" id="search"/>
+}
+
 <div id="container-grid">
 @{
     if (Model != null && Model.Grid.TotalRowCount > 0)
@@ -25,11 +40,12 @@
                             alternatingRowStyle: "alt",
                             htmlAttributes: new { id = "grid" },
                             columns: grid.Columns(
-                                     grid.Column(header: "STT", format: item => item.WebGrid.Rows.IndexOf(item) + 1 + ViewBag.Index),                                
-                                grid.Column(header: "Mã bài đăng", format: @<text>
+                                     grid.Column(header: "STT", format: item => item.WebGrid.Rows.IndexOf(item) + 1 + ViewBag.Index),
+                                     grid.Column(columnName: "Code", header: "Mã bài đăng"),  
+                                     grid.Column(columnName: "PostTitle", header: "Tên bài", format: @<text>
                                 <a href="@Url.Action("Details",
                                 "Post",
-                                new { id = @item.PostsId })">@item.Post.Code</a></text>),
+                                new { id = @item.PostsId })">@item.Post.Title</a></text>),
                                 grid.Column("CreatedDate", "Ngày giao dịch"),                                
                                 grid.Column("PhoneNumber", "Số điện thoại giao dịch")
         ));
@@ -48,8 +64,6 @@
 }
 
 </div>
-
-
 <script type="text/javascript" >
     $(document).ready(function () {
         $("#options a").removeClass("active");
