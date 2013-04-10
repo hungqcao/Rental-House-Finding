@@ -10,6 +10,7 @@ using System.Net;
 using System.IO;
 using System.Web.Mvc;
 using System.Web;
+using RentalHouseFinding.Caching;
 
 namespace RentalHouseFinding.Common
 {
@@ -119,16 +120,16 @@ namespace RentalHouseFinding.Common
 
         public static string GetCenterMap(SearchViewModel model)
         {
-            RentalHouseFindingEntities _db = new RentalHouseFindingEntities();
+            ICacheRepository Repository = new CacheRepository();
             string centerMap = String.Empty;
             if (model.DistrictId == 0)
             {
-                var province = (from p in _db.Provinces where p.Id == model.ProvinceId && !p.IsDeleted select p).FirstOrDefault();
+                var province = Repository.GetAllProvinces().Where(p => p.Id == model.ProvinceId && !p.IsDeleted).FirstOrDefault();
                 centerMap = province.Lat + "," + province.Lon + "|10";
             }
             else
             {
-                var district = (from p in _db.Districts where p.Id == model.DistrictId && !p.IsDeleted select p).FirstOrDefault();
+                var district = Repository.GetAllDistricts().Where(p => p.Id == model.DistrictId && !p.IsDeleted).FirstOrDefault();
                 centerMap = district.Lat + "," + district.Lon + "|14";
             }
             return centerMap;

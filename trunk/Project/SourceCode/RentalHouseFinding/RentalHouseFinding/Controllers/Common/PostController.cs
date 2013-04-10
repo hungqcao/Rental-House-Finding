@@ -424,7 +424,7 @@ namespace RentalHouseFinding.Controllers
                     foreach (KeyValuePair<int, string> kvp in lstNearbyId)
                     {
                         loc = _db.Locations.Where(l => l.Id == kvp.Key).FirstOrDefault();
-                        if (loc == null)
+                        if (loc != null)
                         {
                             postLocation = new PostLocations();
                             postLocation.PostId = post.Id;
