@@ -16,6 +16,17 @@ namespace RentalHouseFinding.Common
 {
     public static class CommonModel
     {
+        public static string Trim(string input)
+        {
+            for (int i = 0; i < input.Length; i++)
+            {
+                if (input[i] == ' ' && input[i + 1] == ' ')
+                {
+                    input.Replace(input[i].ToString(), "");
+                }
+            }
+            return input;
+        }
         public static string BuildRegexBadWord()
         {
             using (RentalHouseFindingEntities _db = new RentalHouseFindingEntities()) 
@@ -32,7 +43,7 @@ namespace RentalHouseFinding.Common
             }
         }
 
-        public static Posts  ConvertPostViewModelToPost(PostViewModel model, DateTime createdDate, DateTime? editedDate, DateTime? renewDate, DateTime expiredDate, string noInformation)
+        public static Posts ConvertPostViewModelToPost(PostViewModel model, DateTime createdDate, DateTime? editedDate, DateTime? renewDate, DateTime expiredDate, string noInformation)
         {
             
             string facilityTempId = (model.HasAirConditioner ? "1" : "0") +
