@@ -26,17 +26,17 @@ namespace RentalHouseFinding.Controllers.Admin
                     binaryString = "0" + binaryString;
                 }
                 objToCreate = new FacilityTemplates();
-                objToCreate.Column11 = binaryString[10].ToString().Equals("0") ? false : true;
-                objToCreate.Column10 = binaryString[9].ToString().Equals("0") ? false : true;
-                objToCreate.Column9 = binaryString[8].ToString().Equals("0") ? false : true;
-                objToCreate.Column8 = binaryString[7].ToString().Equals("0") ? false : true;
-                objToCreate.Column7 = binaryString[6].ToString().Equals("0") ? false : true;
-                objToCreate.Column6 = binaryString[5].ToString().Equals("0") ? false : true;
-                objToCreate.Column5 = binaryString[4].ToString().Equals("0") ? false : true;
-                objToCreate.Column4 = binaryString[3].ToString().Equals("0") ? false : true;
-                objToCreate.Column3 = binaryString[2].ToString().Equals("0") ? false : true;
-                objToCreate.Column2 = binaryString[1].ToString().Equals("0") ? false : true;
-                objToCreate.Column1 = binaryString[0].ToString().Equals("0") ? false : true;
+                objToCreate.IsStayWithOwner = binaryString[10].ToString().Equals("0") ? false : true;
+                objToCreate.IsAllowCooking = binaryString[9].ToString().Equals("0") ? false : true;
+                objToCreate.HasWaterHeater = binaryString[8].ToString().Equals("0") ? false : true;
+                objToCreate.HasTVCable = binaryString[7].ToString().Equals("0") ? false : true;
+                objToCreate.HasToilet = binaryString[6].ToString().Equals("0") ? false : true;
+                objToCreate.HasSecurity = binaryString[5].ToString().Equals("0") ? false : true;
+                objToCreate.HasMotorParking = binaryString[4].ToString().Equals("0") ? false : true;
+                objToCreate.HasInternet = binaryString[3].ToString().Equals("0") ? false : true;
+                objToCreate.HasGarage = binaryString[2].ToString().Equals("0") ? false : true;
+                objToCreate.HasBed = binaryString[1].ToString().Equals("0") ? false : true;
+                objToCreate.HasAirConditioner = binaryString[0].ToString().Equals("0") ? false : true;
                 _db.FacilityTemplates.AddObject(objToCreate);
                 
             }
