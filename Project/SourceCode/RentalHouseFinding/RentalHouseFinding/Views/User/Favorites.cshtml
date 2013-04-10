@@ -1,8 +1,45 @@
 ﻿@{
     Layout = "~/Views/Shared/_LayoutUser.cshtml";
-    ViewBag.Title = "Lịch sử giao dịch";
+    ViewBag.Title = "Danh sách quan tâm";
 }
+<script type="text/javascript">
+    $(document).ready(function () {
+        $("#grid th")[5].setAttribute('id', '8');
+        $('#8').find('a').prepend('<img id="theImg" src="../../Content/images/down.png" />')
+    });
+</script>
+<script type="text/javascript">
 
+    function setArrows() {
+        var dir = $('#dir').val();
+        var col = $('#col').val();
+        var header = $('th a[href*=' + col + ']');
+        var i = -1;
+        if (col == 'Title') {
+            i = 1;
+        }
+        if (col == 'Address') {
+            i = 2;
+        }
+        if (col == 'UserName') {
+            i = 3;
+        }
+        if (col == 'PostStatus') {
+            i = 4;
+        }
+        if (col == 'AddedDate') {
+            i = 5;
+        }
+        if (dir == 'Ascending') {
+            $("#grid th")[i].setAttribute('id', '8');
+            $('#8').find('a').prepend('<img id="theImg" src="../../Content/images/up.png" />')
+        }
+        if (dir == 'Descending') {
+            $("#grid th")[i].setAttribute('id', '8');
+            $('#8').find('a').prepend('<img id="theImg" src="../../Content/images/down.png" />')
+        }
+    };
+</script>
 <fieldset>
     <div id="container-grid">
         @{
@@ -24,10 +61,10 @@
                                         grid.Column("PostStatus", "Trạng thái"),
                                         grid.Column("AddedDate", "Ngày thêm",
                                         format: (item) => string.Format("{0:yyyy-MM-dd HH:mm:ss}", item.AddedDate)),
-                                        grid.Column(header: "Gỡ", format: 
-                                        item => @Html.ActionLink("Gỡ khỏi danh mục", "", null, 
+                                        grid.Column(header: "Xóa", format: 
+                                        item => @Html.ActionLink("Xóa", "", null, 
                                             new {@id = item.ID, @class="remove_favorite"}))
-                                ));
+                                                                 ))@Html.Hidden("dir", grid.SortDirection) @Html.Hidden("col", grid.SortColumn);
             }
             else
             {

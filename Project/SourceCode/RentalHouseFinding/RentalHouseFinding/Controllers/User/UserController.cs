@@ -108,8 +108,7 @@ namespace RentalHouseFinding.Controllers
                 Address = String.Format("{0} {1} {2}", p.Post.NumberAddress, p.Post.District.Name, p.Post.District.Province.Name),
                 Username = p.Post.UserId != null ? p.Post.User.Name : "Khách", // != null? p.User.Username: "Khách",
                 p.AddedDate,
-                Title = p.Post.Title,
-                RenewDate = p.Post.RenewDate,
+                Title = p.Post.Title,                
                 PostStatus = p.Post.PostStatus.Name
             });
 
@@ -136,6 +135,11 @@ namespace RentalHouseFinding.Controllers
                     postViewList = postViewList.OrderBy(p => p.AddedDate)
                         .Skip(MAX_RECORD_PER_PAGE * ((int)page - 1)).Take(MAX_RECORD_PER_PAGE);
                 }
+                else if (sort == "PostStatus")
+                {
+                    postViewList = postViewList.OrderBy(p => p.AddedDate)
+                        .Skip(MAX_RECORD_PER_PAGE * ((int)page - 1)).Take(MAX_RECORD_PER_PAGE);
+                }
             }
             else
             {
@@ -154,6 +158,11 @@ namespace RentalHouseFinding.Controllers
                     postViewList = postViewList.OrderByDescending(p => p.Username)
                         .Skip(MAX_RECORD_PER_PAGE * ((int)page - 1)).Take(MAX_RECORD_PER_PAGE);
                 }
+                else if (sort == "PostStatus")
+                {
+                    postViewList = postViewList.OrderByDescending(p => p.Username)
+                        .Skip(MAX_RECORD_PER_PAGE * ((int)page - 1)).Take(MAX_RECORD_PER_PAGE);
+                }
                 else
                 {
                     postViewList = postViewList.OrderByDescending(p => p.AddedDate)
@@ -161,7 +170,7 @@ namespace RentalHouseFinding.Controllers
                 }
             }
 
-            var grid = new WebGrid(ajaxUpdateContainerId: "container-grid");
+            var grid = new WebGrid(ajaxUpdateContainerId: "container-grid", ajaxUpdateCallback: "setArrows", canSort: true);
             grid.Bind(postViewList, autoSortAndPage: false, rowCount: lstPost.Count());
             ViewBag.Grid = grid;
             ViewBag.Index = ((int)page - 1) * MAX_RECORD_PER_PAGE;
@@ -315,11 +324,11 @@ namespace RentalHouseFinding.Controllers
             //Get user ID
             int userId = CommonModel.GetUserIdByUsername(User.Identity.Name);
 
-            var userPostList = (from p in _db.Posts 
-                                where (p.UserId == userId) 
-                                select p.Id).ToList();
+            //var userPostList = (from p in _db.Posts 
+            //                    where (p.UserId == userId && !p.IsDeleted) 
+            //                    select p.Id).ToList();
             var paymentList = (from p in _db.Payments 
-                                                where (userPostList.Contains(p.PostsId)) 
+                                                where (p.Post.UserId == userId && !p.Post.IsDeleted) 
                                                 select p);
 
             var paymentViewList = paymentList.Select(p => new
@@ -327,9 +336,7 @@ namespace RentalHouseFinding.Controllers
                 Code = p.Post.Code,
                 p.CreatedDate,
                 p.PhoneNumber,
-                PostTitle = (from post in _db.Posts 
-                         where (post.Id == p.PostsId && !post.IsDeleted) 
-                         select post.Title).FirstOrDefault(),
+                PostTitle = p.Post.Title,
                 p.PostsId
             });
             //Custom sort
@@ -345,10 +352,20 @@ namespace RentalHouseFinding.Controllers
                     paymentViewList = paymentViewList.OrderBy(p => p.CreatedDate)
                         .Skip(MAX_RECORD_PER_PAGE * ((int)page - 1)).Take(MAX_RECORD_PER_PAGE);
                 }
+                else if (sort == "PhoneNumber")
+                {
+                    paymentViewList = paymentViewList.OrderBy(p => p.CreatedDate)
+                        .Skip(MAX_RECORD_PER_PAGE * ((int)page - 1)).Take(MAX_RECORD_PER_PAGE);
+                }
             }
             else
             {
                 if (sort == "PostTitle")
+                {
+                    paymentViewList = paymentViewList.OrderByDescending(p => p.PostTitle)
+                        .Skip(MAX_RECORD_PER_PAGE * ((int)page - 1)).Take(MAX_RECORD_PER_PAGE);
+                }
+                if (sort == "PhoneNumber")
                 {
                     paymentViewList = paymentViewList.OrderByDescending(p => p.PostTitle)
                         .Skip(MAX_RECORD_PER_PAGE * ((int)page - 1)).Take(MAX_RECORD_PER_PAGE);
@@ -359,7 +376,7 @@ namespace RentalHouseFinding.Controllers
                         .Skip(MAX_RECORD_PER_PAGE * ((int)page - 1)).Take(MAX_RECORD_PER_PAGE);
                 }
             }
-            var grid = new WebGrid(ajaxUpdateContainerId: "container-grid",  canSort: true);
+            var grid = new WebGrid(ajaxUpdateContainerId: "container-grid",ajaxUpdateCallback: "setArrows",  canSort: true);
             grid.Bind(paymentViewList, autoSortAndPage: false, rowCount: paymentList.Count());
             ViewBag.Grid = grid;
             ViewBag.Index = ((int)page - 1) * MAX_RECORD_PER_PAGE;
