@@ -2600,3 +2600,9 @@ margin-top:35px;
     display: block;
     font-size:0px;
     }
+    
+    #theImg
+    {
+        float:right;
+        padding: 4px 0 15px;
+        }
