@@ -253,6 +253,11 @@ namespace RentalHouseFinding.Controllers
                     postViewList = postViewList.OrderBy(p => p.ExpiredDate)
                         .Skip(MAX_RECORD_PER_PAGE * ((int)page - 1)).Take(MAX_RECORD_PER_PAGE);
                 }
+                else if (sort == "CountRenew")
+                {
+                    postViewList = postViewList.OrderBy(p => p.CountRenew)
+                        .Skip(MAX_RECORD_PER_PAGE * ((int)page - 1)).Take(MAX_RECORD_PER_PAGE);
+                }
             }
             else
             {
@@ -289,6 +294,11 @@ namespace RentalHouseFinding.Controllers
                 else if (sort == "ExpiredDate")
                 {
                     postViewList = postViewList.OrderByDescending(p => p.ExpiredDate)
+                        .Skip(MAX_RECORD_PER_PAGE * ((int)page - 1)).Take(MAX_RECORD_PER_PAGE);
+                }
+                else if (sort == "CountRenew")
+                {
+                    postViewList = postViewList.OrderByDescending(p => p.CountRenew)
                         .Skip(MAX_RECORD_PER_PAGE * ((int)page - 1)).Take(MAX_RECORD_PER_PAGE);
                 }
                 else
