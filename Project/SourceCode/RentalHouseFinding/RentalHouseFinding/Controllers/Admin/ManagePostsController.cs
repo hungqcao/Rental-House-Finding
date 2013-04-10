@@ -191,6 +191,11 @@ namespace RentalHouseFinding.Controllers.Admin
                     postViewList = postViewList.OrderBy(p => p.Title)
                         .Skip(MAX_RECORD_PER_PAGE * ((int)page - 1)).Take(MAX_RECORD_PER_PAGE);
                 }
+                else if (sort == "PostStatus")
+                {
+                    postViewList = postViewList.OrderBy(p => p.PostStatus)
+                        .Skip(MAX_RECORD_PER_PAGE * ((int)page - 1)).Take(MAX_RECORD_PER_PAGE);
+                }
                 else if (sort == "CreatedDate")
                 {
                     postViewList = postViewList.OrderBy(p => p.CreatedDate)
@@ -211,6 +216,12 @@ namespace RentalHouseFinding.Controllers.Admin
                     postViewList = postViewList.OrderBy(p => p.ExpiredDate)
                         .Skip(MAX_RECORD_PER_PAGE * ((int)page - 1)).Take(MAX_RECORD_PER_PAGE);
                 }
+                else if (sort == "CountRenew")
+                {
+                    postViewList = postViewList.OrderBy(p => p.CountRenew)
+                        .Skip(MAX_RECORD_PER_PAGE * ((int)page - 1)).Take(MAX_RECORD_PER_PAGE);
+                }
+
             }
             else
             {
@@ -227,6 +238,11 @@ namespace RentalHouseFinding.Controllers.Admin
                 else if (sort == "Title")
                 {
                     postViewList = postViewList.OrderByDescending(p => p.Title)
+                        .Skip(MAX_RECORD_PER_PAGE * ((int)page - 1)).Take(MAX_RECORD_PER_PAGE);
+                }
+                else if (sort == "PostStatus")
+                {
+                    postViewList = postViewList.OrderBy(p => p.PostStatus)
                         .Skip(MAX_RECORD_PER_PAGE * ((int)page - 1)).Take(MAX_RECORD_PER_PAGE);
                 }
                 else if (sort == "CreatedDate")
@@ -247,6 +263,16 @@ namespace RentalHouseFinding.Controllers.Admin
                 else if (sort == "ExpiredDate")
                 {
                     postViewList = postViewList.OrderByDescending(p => p.ExpiredDate)
+                        .Skip(MAX_RECORD_PER_PAGE * ((int)page - 1)).Take(MAX_RECORD_PER_PAGE);
+                }
+                else if (sort == "CreatedDate")
+                {
+                    postViewList = postViewList.OrderByDescending(p => p.CreatedDate)
+                        .Skip(MAX_RECORD_PER_PAGE * ((int)page - 1)).Take(MAX_RECORD_PER_PAGE);
+                }
+                else if (sort == "CountRenew")
+                {
+                    postViewList = postViewList.OrderByDescending(p => p.CountRenew)
                         .Skip(MAX_RECORD_PER_PAGE * ((int)page - 1)).Take(MAX_RECORD_PER_PAGE);
                 }
                 else
