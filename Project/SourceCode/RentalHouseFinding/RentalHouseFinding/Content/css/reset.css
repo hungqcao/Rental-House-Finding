@@ -42,7 +42,7 @@ table
     width: 100%;
     font-size: 12px;
     text-align: left;
-   border-collapse: collapse;
+   border-collapse: separate;
     background-color: White;
 }
 table thead tr
