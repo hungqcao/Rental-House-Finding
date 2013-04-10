@@ -53,6 +53,7 @@
         });
         $('a[href="/user"]').live('click', function (event) {
             event.preventDefault();
+            debugger;
             removeFavorite($(this).prop('id'));
             $(this).parent().parent().remove();
         });
