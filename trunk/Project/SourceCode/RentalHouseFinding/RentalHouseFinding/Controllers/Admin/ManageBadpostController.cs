@@ -129,6 +129,7 @@ namespace RentalHouseFinding.Controllers.Admin
             {
                 try
                 {
+                    postViewModel = (PostViewModel)CommonModel.TrimObjectProperties(postViewModel);
                     var post = (from p in _db.Posts where (p.Id == postViewModel.Id) select p).FirstOrDefault();
                     post = CommonModel.ConvertPostViewModelToPost(post, postViewModel, post.CreatedDate, DateTime.Now, post.RenewDate, DateTime.Now.AddDays(2) ,_noInfo);
 
