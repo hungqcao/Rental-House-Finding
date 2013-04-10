@@ -138,7 +138,7 @@ namespace RentalHouseFinding
             routes.MapRoute(
                 "Default", // Route name
                 "{controller}/{action}/{id}", // URL with parameters
-                new { controller = "Landing", action = "Index", id = UrlParameter.Optional } // Parameter defaults
+                new { controller = "Search", action = "Index", id = UrlParameter.Optional } // Parameter defaults
             );
 
         }
