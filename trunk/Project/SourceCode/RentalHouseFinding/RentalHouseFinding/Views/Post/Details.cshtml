@@ -102,8 +102,8 @@
                         if (CommonModel.GetUserIdByUsername(User.Identity.Name) == 1)
                         {
                             <div id="button-detail" class="right">
-                            <a href="/post/edit/@Model.Id" class="button-link left" style="padding: 5px 20px;">Chỉnh sửa</a>
-                            <a href="/post/delete/@Model.Id" onclick="return confirm('Bạn có chắc chắn muốn xóa bài này?');" class="button-link left" style="padding: 5px 20px;width: 45px;">Xóa</a>
+                            <a href="/post/edit/@Model.Id" class="button-link_Edit left">Chỉnh sửa</a>
+                            <a href="/post/delete/@Model.Id" onclick="return confirm('Bạn có chắc chắn muốn xóa bài này?');" class="button-link_Del left">Xóa</a>
                         </div>
                         }
                         else
@@ -214,11 +214,11 @@
                      @* Check Yahoo & Skype*@
                      @if (Model.ElectricityFee != 0)
                      {
-                       <span class="blockLeftText"> <b>Giá điện:</b>&nbsp;@Model.ElectricityFee nghìn/số</span>
+                       <span class="blockLeftText"> <b>Giá điện:</b>&nbsp;@Model.ElectricityFee VNĐ/số</span>
                      }
                      @if (Model.WaterFee != 0)
                      {
-                       <span class="blockLeftText"><b>Giá nước:</b>&nbsp;@Model.WaterFee nghìn/số</span> 
+                       <span class="blockLeftText"><b>Giá nước:</b>&nbsp;@Model.WaterFee VNĐ/số</span> 
                      }
                            
                               @if (!Model.RestrictHours.Equals("0"))

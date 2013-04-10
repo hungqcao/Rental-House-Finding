@@ -157,7 +157,7 @@
             </td> break;
             case 17: <td>@item.Facilities.RestrictHours</td> break;
             case 18: <td>@item.Description</td> break;
-            case 19: <td>@item.NearbyPlace</td> break;
+            case 19: <td style="text-align:left;padding:10px 0px 10px 50px;">@Html.Raw(Html.Encode(@item.NearbyPlace).Replace(",", "<br />"))</td> break;
             default: break;
         }
     }

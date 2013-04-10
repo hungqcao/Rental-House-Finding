@@ -68,8 +68,9 @@
                     @if (Model.UserId == CommonModel.GetUserIdByUsername(User.Identity.Name))
                     {
                         <div id="button-detail" class="right">
-                            @Html.ActionLink("Chỉnh sửa", "edit", "post", new { id = Model.Id }, new { @class = "button-link left", @style = "padding: 5px 20px;" })
-                            @Html.ActionLink("Xóa", "detele", "post", new { id = Model.Id }, new { @class = "button-link left", @style = "padding: 5px 20px;", @onclick = "return confirm('Bạn có chắc chắn muốn xóa bài này?');" })
+                            @Html.ActionLink("Chỉnh sửa", "edit", "post", new { id = Model.Id }, new { @class = "button-link_Edit left" })
+                            @Html.ActionLink("Xóa", "delete", "post", new { id = Model.Id }, new { @class = "button-link_Del left", @onclick = "return confirm('Bạn có chắc chắn muốn xóa bài này?');" }) 
+                 
                         </div>
                     }
                     else
@@ -180,11 +181,11 @@
                      @* Check Yahoo & Skype*@
                      @if (Model.ElectricityFee != 0)
                      {
-                       <span class="blockLeftText"> <b>Giá điện:</b>&nbsp;@Model.ElectricityFee nghìn/số</span>
+                       <span class="blockLeftText"> <b>Giá điện:</b>&nbsp;@Model.ElectricityFee VNĐ/số</span>
                      }
                      @if (Model.WaterFee != 0)
                      {
-                       <span class="blockLeftText"><b>Giá nước:</b>&nbsp;@Model.WaterFee nghìn/số</span> 
+                       <span class="blockLeftText"><b>Giá nước:</b>&nbsp;@Model.WaterFee VNĐ/số</span> 
                      }
                            
                               @if (!Model.RestrictHours.Equals("0"))
