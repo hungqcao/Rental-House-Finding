@@ -4344,6 +4344,7 @@ namespace RentalHouseFinding.Models
         /// <param name="isDeleted">Initial value of the IsDeleted property.</param>
         /// <param name="createdDate">Initial value of the CreatedDate property.</param>
         /// <param name="districtId">Initial value of the DistrictId property.</param>
+        /// <param name="numberAddress">Initial value of the NumberAddress property.</param>
         /// <param name="price">Initial value of the Price property.</param>
         /// <param name="area">Initial value of the Area property.</param>
         /// <param name="phoneActive">Initial value of the PhoneActive property.</param>
@@ -4352,7 +4353,7 @@ namespace RentalHouseFinding.Models
         /// <param name="street">Initial value of the Street property.</param>
         /// <param name="expiredDate">Initial value of the ExpiredDate property.</param>
         /// <param name="code">Initial value of the Code property.</param>
-        public static Posts CreatePosts(global::System.Int32 id, global::System.String title, global::System.Int32 categoryId, global::System.Int32 statusId, global::System.Boolean isDeleted, global::System.DateTime createdDate, global::System.Int32 districtId, global::System.Double price, global::System.Double area, global::System.String phoneActive, global::System.Double lat, global::System.Double lon, global::System.String street, global::System.DateTime expiredDate, global::System.String code)
+        public static Posts CreatePosts(global::System.Int32 id, global::System.String title, global::System.Int32 categoryId, global::System.Int32 statusId, global::System.Boolean isDeleted, global::System.DateTime createdDate, global::System.Int32 districtId, global::System.String numberAddress, global::System.Double price, global::System.Double area, global::System.String phoneActive, global::System.Double lat, global::System.Double lon, global::System.String street, global::System.DateTime expiredDate, global::System.String code)
         {
             Posts posts = new Posts();
             posts.Id = id;
@@ -4362,6 +4363,7 @@ namespace RentalHouseFinding.Models
             posts.IsDeleted = isDeleted;
             posts.CreatedDate = createdDate;
             posts.DistrictId = districtId;
+            posts.NumberAddress = numberAddress;
             posts.Price = price;
             posts.Area = area;
             posts.PhoneActive = phoneActive;
@@ -4598,7 +4600,7 @@ namespace RentalHouseFinding.Models
         /// <summary>
         /// No Metadata Documentation available.
         /// </summary>
-        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=true)]
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=false)]
         [DataMemberAttribute()]
         public global::System.String NumberAddress
         {
@@ -4610,7 +4612,7 @@ namespace RentalHouseFinding.Models
             {
                 OnNumberAddressChanging(value);
                 ReportPropertyChanging("NumberAddress");
-                _NumberAddress = StructuralObject.SetValidValue(value, true);
+                _NumberAddress = StructuralObject.SetValidValue(value, false);
                 ReportPropertyChanged("NumberAddress");
                 OnNumberAddressChanged();
             }

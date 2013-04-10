@@ -302,7 +302,7 @@
           <Property Name="EditedDate" Type="datetime" />
           <Property Name="RenewDate" Type="datetime" />
           <Property Name="DistrictId" Type="int" Nullable="false" />
-          <Property Name="NumberAddress" Type="nvarchar(max)" />
+          <Property Name="NumberAddress" Type="nvarchar(max)" Nullable="false" />
           <Property Name="Price" Type="float" Nullable="false" />
           <Property Name="Area" Type="float" Nullable="false" />
           <Property Name="PhoneActive" Type="nvarchar" Nullable="false" MaxLength="20" />
@@ -693,12 +693,6 @@
         <Function Name="ChangeStatusPostWhenExpride" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
           <Parameter Name="statusId" Type="int" Mode="In" />
         </Function>
-        <Function Name="FullTextSearchPost" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
-          <Parameter Name="CategoryIdPass" Type="int" Mode="In" />
-          <Parameter Name="ProvinceIdPass" Type="int" Mode="In" />
-          <Parameter Name="DistrictIdPass" Type="int" Mode="In" />
-          <Parameter Name="Keyword" Type="nvarchar" Mode="In" />
-        </Function>
         <Function Name="FullTextSearchPostWithWeightenScore" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
           <Parameter Name="CategoryIdPass" Type="int" Mode="In" />
           <Parameter Name="ProvinceIdPass" Type="int" Mode="In" />
@@ -935,7 +929,7 @@
           <Property Name="EditedDate" Nullable="true" Type="DateTime" />
           <Property Name="RenewDate" Nullable="true" Type="DateTime" />
           <Property Name="DistrictId" Nullable="false" Type="Int32" />
-          <Property Name="NumberAddress" Nullable="true" MaxLength="Max" Unicode="true" Type="String" />
+          <Property Name="NumberAddress" Nullable="false" MaxLength="Max" Unicode="true" Type="String" />
           <Property Name="Price" Nullable="false" Type="Double" />
           <Property Name="Area" Nullable="false" Type="Double" />
           <Property Name="PhoneActive" Nullable="false" MaxLength="20" Type="String" />
