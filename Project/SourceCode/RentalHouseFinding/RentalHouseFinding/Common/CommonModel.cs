@@ -18,11 +18,20 @@ namespace RentalHouseFinding.Common
     {
         public static string Trim(string input)
         {
-            for (int i = 0; i < input.Length; i++)
+            while (true)
             {
-                if (input[i] == ' ' && input[i + 1] == ' ')
+                bool valid = true;
+                for (int i = 0; i < input.Length; i++)
                 {
-                    input.Replace(input[i].ToString(), "");
+                    if (input[i] == ' ' && input[i + 1] == ' ')
+                    {
+                        input.Replace(input[i].ToString(), "");
+                        valid = false;
+                    }
+                }
+                if (valid)
+                {
+                    break;
                 }
             }
             return input;
