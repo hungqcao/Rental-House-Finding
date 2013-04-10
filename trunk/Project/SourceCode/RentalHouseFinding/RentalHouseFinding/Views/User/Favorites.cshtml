@@ -55,22 +55,15 @@
         });
         $('a[class="remove_favorite"]').live('click', function (event) {
             event.preventDefault();
-            if (removeFavorite($(this).prop('id'))) {
-                $(this).parent().parent().remove();
+            if (!confirm("Xóa khỏi danh mục?")) {
+                return false;
             }
+            $.getJSON("/Post/RemoveFavorite", { id: $(this).prop('id') }, function (success) {
+                if (success) {
+                    alert('Đã xóa bài khỏi danh mục');
+                }
+            });
+            $(this).parent().parent().remove();
         });
     });
-    
-    function removeFavorite(id) {
-        if (!confirm("Xóa khỏi danh mục?")) {
-            return false;
-        }
-        $.getJSON("/Post/RemoveFavorite", { id: id }, function (success) {
-            if (success) {
-                alert('Đã xóa bài khỏi danh mục');
-                return true;
-            }
-        });
-        
-    }
 </script>
