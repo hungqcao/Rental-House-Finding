@@ -20,6 +20,12 @@ fieldset
     margin:0 0 1.5em 0;
 }
 
+#fieldsetAd 
+{
+    background:white;
+    padding:15px 0 30px 30px;
+}
+
 input
 {
     color:#3a3a3d;
@@ -2366,6 +2372,13 @@ a.remove-fav-item-list
     margin: 10px 0px 10px 5px;
     font-size: 0;
 }
+#paymentDiv
+{
+    background: none repeat scroll 0 0 white;
+    height: 45px;
+    margin-bottom: 10px;
+    padding: 15px;
+    }
 #content.admin input[type="text"]
 {
     border: 1px solid #e1e1e1;
