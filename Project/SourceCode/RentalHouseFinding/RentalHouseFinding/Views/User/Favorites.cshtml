@@ -55,8 +55,9 @@
         });
         $('a[class="remove_favorite"]').live('click', function (event) {
             event.preventDefault();
-            removeFavorite($(this).prop('id'));
-            $(this).parent().parent().remove();
+            if (removeFavorite($(this).prop('id'))) {
+                $(this).parent().parent().remove();
+            }
         });
     });
     
@@ -67,6 +68,7 @@
         $.getJSON("/Post/RemoveFavorite", { id: id }, function (success) {
             if (success) {
                 alert('Đã xóa bài khỏi danh mục');
+                return true;
             }
         });
         
