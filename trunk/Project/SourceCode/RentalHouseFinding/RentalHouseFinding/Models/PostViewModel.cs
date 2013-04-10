@@ -17,20 +17,20 @@ namespace RentalHouseFinding.Models
     {
         public int Id { get; set; }
 
-        [Required(ErrorMessage = "Vui lòng nhập tiêu đề")]
+        [Required(ErrorMessage = "Xin vui lòng nhập tiêu đề")]
         [Display(Name = "Tiêu đề")]
         [StringLength(100, ErrorMessage = @"{0} tối đa là {1} ký tự. Vui lòng nhập lại")]
         public string Title { get; set; }
 
-        [Required(ErrorMessage = "Vui lòng chọn thể loại")]
+        [Required(ErrorMessage = "Xin vui lòng chọn thể loại")]
         [Display(Name = "Thể loại")]
         public int CategoryId { get; set; }
 
-        [Required(ErrorMessage = "Vui lòng chọn tỉnh thành phố")]
+        [Required(ErrorMessage = " Xin vui lòng chọn tỉnh thành phố")]
         [Display(Name = "Tỉnh, thành phố")]
         public int ProvinceId { get; set; }
 
-        [Required(ErrorMessage = "Vui lòng chọn quận, huyện")]
+        [Required(ErrorMessage = "Xin vui lòng chọn quận, huyện")]
         [Display(Name = "Quận, huyện")]
         public int DistrictId { get; set; }
 
