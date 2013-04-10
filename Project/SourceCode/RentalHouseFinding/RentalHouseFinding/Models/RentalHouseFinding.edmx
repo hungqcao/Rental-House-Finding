@@ -1108,7 +1108,7 @@
             <PropertyRef Name="Id" />
           </Key>
           <Property Name="Id" Nullable="false" annotation:StoreGeneratedPattern="Identity" Type="Int32" />
-          <Property Name="Word" Nullable="false" Type="String" />
+          <Property Name="Word" Nullable="false" Type="String" Unicode="true" MaxLength="100" />
           <Property Type="Int32" Name="TypeId" Nullable="false" />
           <NavigationProperty Name="BadWordType" Relationship="RentalHouseFinding.BadWordTypesBadWords" FromRole="BadWords" ToRole="BadWordTypes" />
         </EntityType>
@@ -1151,13 +1151,13 @@
           <Key>
             <PropertyRef Name="PostIdContacts" />
           </Key>
-          <Property Name="Phone" Nullable="false" Type="String" />
-          <Property Name="Email" Nullable="true" Type="String" />
-          <Property Name="Yahoo" Nullable="true" Type="String" />
-          <Property Name="Skype" Nullable="true" Type="String" />
+          <Property Name="Phone" Nullable="false" Type="String" MaxLength="20" />
+          <Property Name="Email" Nullable="true" Type="String" MaxLength="50" />
+          <Property Name="Yahoo" Nullable="true" Type="String" MaxLength="50" />
+          <Property Name="Skype" Nullable="true" Type="String" MaxLength="50" />
           <Property Name="PostIdContacts" Nullable="false" Type="Int32" />
           <NavigationProperty Name="Post" Relationship="RentalHouseFinding.PostsContacts" FromRole="Contacts" ToRole="Posts" />
-          <Property Type="String" Name="NameContact" Nullable="false" />
+          <Property Type="String" Name="NameContact" Nullable="false" MaxLength="50" Unicode="true" />
         </EntityType>
         <Association Name="PostsFacilities">
           <End Type="RentalHouseFinding.Posts" Multiplicity="1" Role="Posts" />
@@ -1212,15 +1212,15 @@
             <PropertyRef Name="Id" />
           </Key>
           <Property Type="Int32" Name="Id" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Type="String" Name="Name" Nullable="false" />
-          <Property Type="String" Name="Value" Nullable="false" />
+          <Property Type="String" Name="Name" Nullable="false" MaxLength="20" />
+          <Property Type="String" Name="Value" Nullable="false" MaxLength="20" />
           </EntityType>
         <EntityType Name="Questions">
           <Key>
             <PropertyRef Name="Id" />
           </Key>
           <Property Type="Int32" Name="Id" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Type="String" Name="Content" Nullable="false" MaxLength="Max" />
+          <Property Type="String" Name="Content" Nullable="false" MaxLength="Max" Unicode="true" />
           <Property Type="Int32" Name="SenderId" Nullable="true" />
           <Property Type="DateTime" Name="CreatedDate" Nullable="false" />
           <Property Type="Boolean" Name="IsRead" Nullable="false" />
@@ -1229,8 +1229,8 @@
           <Property Type="Int32" Name="PostId" Nullable="false" />
           <NavigationProperty Name="Post" Relationship="RentalHouseFinding.PostsQuestions" FromRole="Questions" ToRole="Posts" />
           <NavigationProperty Name="User" Relationship="RentalHouseFinding.UsersQuestions" FromRole="Questions" ToRole="Users" />
-          <Property Type="String" Name="Title" Nullable="false" />
-          <Property Type="String" Name="SenderEmail" Nullable="false" />
+          <Property Type="String" Name="Title" Nullable="false" Unicode="true" MaxLength="50" />
+          <Property Type="String" Name="SenderEmail" Nullable="false" MaxLength="50" />
           </EntityType>
         <ComplexType Name="FullTextSearchPost_ResultSuggestion">
           <Property Type="Int32" Name="Id" Nullable="false" />
@@ -1241,7 +1241,7 @@
             <PropertyRef Name="Id" />
           </Key>
           <Property Type="Int32" Name="Id" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Type="String" Name="Content" Nullable="false" MaxLength="Max" />
+          <Property Type="String" Name="Content" Nullable="false" MaxLength="Max" Unicode="true" />
           <Property Type="DateTime" Name="CreatedDate" Nullable="false" />
           <Property Type="Boolean" Name="IsDeleted" Nullable="false" />
           <Property Type="Int32" Name="QuestionId" Nullable="false" />
@@ -1307,7 +1307,7 @@
             <PropertyRef Name="Id" />
           </Key>
           <Property Type="Int32" Name="Id" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Type="String" Name="Name" Nullable="false" />
+          <Property Type="String" Name="Name" Nullable="false" Unicode="true" MaxLength="50" />
           <NavigationProperty Name="BadWords" Relationship="RentalHouseFinding.BadWordTypesBadWords" FromRole="BadWordTypes" ToRole="BadWords" />
           </EntityType>
         <Association Name="BadWordTypesBadWords">

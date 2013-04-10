@@ -90,7 +90,7 @@
                     </div>
                    <span class="shortDesc">@Model.Title</span>
                 </div>
-                    @if (Model.UserId == CommonModel.GetUserIdByUsername(User.Identity.Name))
+                    @if (Model.UserId == CommonModel.GetUserIdByUsername(User.Identity.Name) || User.IsInRole("Admin"))
                     {
                         <div id="button-detail" class="right">
                             @Html.ActionLink("Chỉnh sửa", "edit", "post", new { id = Model.Id }, new { @class = "button-link_Edit left" })
@@ -99,15 +99,6 @@
                     }
                     else
                     {
-                        if (CommonModel.GetUserIdByUsername(User.Identity.Name) == 1)
-                        {
-                            <div id="button-detail" class="right">
-                            <a href="/post/edit/@Model.Id" class="button-link_Edit left">Chỉnh sửa</a>
-                            <a href="/post/delete/@Model.Id" onclick="return confirm('Bạn có chắc chắn muốn xóa bài này?');" class="button-link_Del left">Xóa</a>
-                        </div>
-                        }
-                        else
-                        {
                         <div id="saveBookmark">
                             @{
                         if (ViewBag.RemoveFavorite == false)
@@ -179,7 +170,6 @@
                             <div class="clear">
                             </div>
                         </div>
-                        }
                     }
                 <div class="clear">
                 </div>

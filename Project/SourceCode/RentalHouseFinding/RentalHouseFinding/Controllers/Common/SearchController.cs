@@ -39,27 +39,11 @@ namespace RentalHouseFinding.Controllers
             {
                 model.IsAdvancedSearch = false;
                 model.IsNormalSearch = true;
-                model.CenterMap = GetCenterMap(model);                
+                model.CenterMap = CommonController.GetCenterMap(model);                
                
                 Session["SearchViewModel"] = model;
             }
             return RedirectToAction("Index", "Home");
-        }
-
-        public string GetCenterMap(SearchViewModel model)
-        {
-            string centerMap = String.Empty;
-            if (model.DistrictId == 0)
-            {
-                var province = (from p in _db.Provinces where p.Id == model.ProvinceId && !p.IsDeleted select p).FirstOrDefault();
-                centerMap = province.Lat + "," + province.Lon + "|11" ;
-            }
-            else
-            {
-                var district = (from p in _db.Districts where p.Id == model.DistrictId && !p.IsDeleted select p).FirstOrDefault();
-                centerMap = district.Lat + "," + district.Lon + "|14";
-            }
-            return centerMap;
         }
     }
 }
