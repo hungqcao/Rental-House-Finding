@@ -181,7 +181,7 @@ namespace RentalHouseFinding.Controllers
                 {
                     return Redirect(returnUrl);
                 }
-                return RedirectToAction("Index", "Landing");
+                return RedirectToAction("Index", "Search");
             }
             else
             {
@@ -266,7 +266,7 @@ namespace RentalHouseFinding.Controllers
                     }
                     else
                     {
-                        return RedirectToAction("Index", "Landing");
+                        return RedirectToAction("Index", "Search");
                     }
                 }
                 else
@@ -284,7 +284,7 @@ namespace RentalHouseFinding.Controllers
         {
             FormsAuthentication.SignOut();
 
-            return RedirectToAction("Index", "Landing");
+            return RedirectToAction("Index", "Search");
         }
 
         //
@@ -319,7 +319,7 @@ namespace RentalHouseFinding.Controllers
                     if (createStatus == MembershipCreateStatus.Success)
                     {
                         FormsAuthentication.SetAuthCookie(model.UserName, false /* createPersistentCookie */);
-                        return RedirectToAction("Index", "Landing");
+                        return RedirectToAction("Index", "Search");
                     }
                     else
                     {

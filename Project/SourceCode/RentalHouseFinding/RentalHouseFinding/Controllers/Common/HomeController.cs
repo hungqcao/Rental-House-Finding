@@ -51,7 +51,7 @@ namespace RentalHouseFinding.Controllers
             }
             else
             {
-                return RedirectToAction("Index", "Landing");               
+                return RedirectToAction("Index", "Search");               
                 
             }
             

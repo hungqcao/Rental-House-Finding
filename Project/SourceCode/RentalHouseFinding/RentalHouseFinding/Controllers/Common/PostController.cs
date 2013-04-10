@@ -293,7 +293,7 @@ namespace RentalHouseFinding.Controllers
             //Check if the post belongs to current user
             if (postModel == null)
             {
-                return RedirectToAction("Index", "Landing");
+                return RedirectToAction("Index", "Search");
             }
             ViewBag.CategoryId = new SelectList(Repository.GetAllCategories(), "Id", "Name", postModel.CategoryId);
             ViewBag.ProvinceId = new SelectList(Repository.GetAllProvinces(), "Id", "Name", postModel.District.ProvinceId);
