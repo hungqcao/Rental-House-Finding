@@ -142,6 +142,16 @@ namespace RentalHouseFinding.Controllers.Admin
                 postList = postList.Where(p => (EntityFunctions
                             .DiffDays(p.ExpiredDate, model.ExpireDateTo) >= 0));
             }
+            if (model.IsDelete)
+            {
+                postList = postList.Where(p => p.IsDeleted);
+            }
+            else
+            {
+                postList = postList.Where(p => !p.IsDeleted);
+            }
+            ////check isDelete
+            //postList = postList.Where(p => !p.IsDeleted);
             var postViewList = postList.Select(p => new
             {
                 ID = p.Id,

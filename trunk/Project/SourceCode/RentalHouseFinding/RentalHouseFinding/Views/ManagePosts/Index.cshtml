@@ -107,6 +107,9 @@
         </tr>
         </table>
         <input type="submit" class="searchLink" value="Search" id="search"/>
+        
+         @Html.CheckBoxFor(model => model.IsDelete, new { @class = "styledCheckbox" })
+         <span>Bài đã bị xóa</span>
     </fieldset>
 }
 <br>

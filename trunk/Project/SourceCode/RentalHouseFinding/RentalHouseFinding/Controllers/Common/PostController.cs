@@ -42,7 +42,7 @@ namespace RentalHouseFinding.Controllers
         [HttpGet]
         public ActionResult Details(int id, string name)
         {
-            var post = (from p in _db.Posts where p.Id == id select p).FirstOrDefault();
+            var post = (from p in _db.Posts where (p.Id == id && !p.IsDeleted) select p).FirstOrDefault();
             if (post == null)
             {
                 return null;
@@ -283,6 +283,13 @@ namespace RentalHouseFinding.Controllers
             int userId = CommonModel.GetUserIdByUsername(User.Identity.Name);
             var postModel = (from p in _db.Posts where (p.Id == id) 
                                  && (!p.IsDeleted)  && p.UserId == userId select p).FirstOrDefault();
+            if (CommonModel.GetUserIdByUsername(User.Identity.Name) == 1)// Admin logged.
+            {
+                postModel = (from p in _db.Posts
+                              where (p.Id == id)
+                                  && (!p.IsDeleted)
+                              select p).FirstOrDefault();
+            }
             //Check if the post belongs to current user
             if (postModel == null)
             {
@@ -301,7 +308,7 @@ namespace RentalHouseFinding.Controllers
             {
                 var post = _db.Posts.Where(p=>p.Id == postId).FirstOrDefault();
                 int userId = CommonModel.GetUserIdByUsername(User.Identity.Name);
-                if(post.UserId == userId)
+                if (post.UserId == userId || userId==1)// User of this post or Admin logged.
                 {
                     var postImage = _db.PostImages.Where(p => p.Id == id).FirstOrDefault();
                     postImage.IsDeleted = true;
@@ -351,8 +358,15 @@ namespace RentalHouseFinding.Controllers
                         TempData["Pending"] = true;
                         TempData["Success"] = false;
                     }
-                    post = CommonModel.ConvertPostViewModelToPost(post, postViewModel, post.CreatedDate, DateTime.Now, post.RenewDate, _noInfo);
-                    
+                    if (CommonModel.GetUserIdByUsername(User.Identity.Name) == 1 && post.UserId != 1)// Admin logged. This post is not Admin's post.
+                    {
+                        // Admin edit post of user. Edited Date not change.
+                        post = CommonModel.ConvertPostViewModelToPost(post, postViewModel, post.CreatedDate, post.EditedDate, post.RenewDate, post.ExpiredDate, _noInfo);
+                    }
+                    else
+                    {
+                        post = CommonModel.ConvertPostViewModelToPost(post, postViewModel, post.CreatedDate, DateTime.Now, post.RenewDate, post.ExpiredDate, _noInfo);
+                    }
 
                     Dictionary<int, string> lstNearbyId = CommonController.GetListNearbyLocations(postViewModel, Request);
                     PostLocations postLocation;
@@ -392,7 +406,7 @@ namespace RentalHouseFinding.Controllers
                                 string pathToCompare = "/Content/PostImages/" 
                                                         + postViewModel.Id + "/" + Path.GetFileName(image.FileName) ;
                                 var imagesPath = (from i in _db.PostImages 
-                                                  where (i.Path.Equals(pathToCompare, StringComparison.CurrentCultureIgnoreCase))
+                                                  where (i.Path.Equals(pathToCompare, StringComparison.CurrentCultureIgnoreCase) && !i.IsDeleted)
                                                   select i.Path).ToArray();
                                 if (imagesPath.Count() > 0)
                                 {
@@ -411,7 +425,7 @@ namespace RentalHouseFinding.Controllers
                             }
                         }
                     }
-                    TempData["MessageSuccessPostNew"] = "Thay đổi thông tin thành công";
+                    TempData["MessageSuccessEdit"] = "Thay đổi thông tin thành công";
                     TempData["Success"] = true;
                     return RedirectToAction("Details", new { Id = post.Id });
                 }
@@ -436,13 +450,20 @@ namespace RentalHouseFinding.Controllers
                 int userId = CommonModel.GetUserIdByUsername(User.Identity.Name);
                 var post = (from p in _db.Posts where (p.Id == id) select p).FirstOrDefault();
                 //Check if the post belongs to current user
-                if (post.UserId == userId)
+                if (post.UserId == userId || userId == 1)
                 {
                     post.IsDeleted = true;
                     _db.ObjectStateManager.ChangeObjectState(post, EntityState.Modified);
                     _db.SaveChanges();
                 }
-                return RedirectToAction("Posts", "User");
+                if (userId == 1 && post.UserId != userId)
+                {
+                    return RedirectToAction("Index", "ManagePosts");
+                }
+                else
+                {
+                    return RedirectToAction("Posts", "User");
+                }
             }
             catch
             {
