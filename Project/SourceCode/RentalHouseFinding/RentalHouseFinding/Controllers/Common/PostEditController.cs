@@ -50,10 +50,10 @@ namespace RentalHouseFinding.Controllers.GUI
                 }
                 else
                 {
-                    ModelState.AddModelError("", "Đăng nhập không thành công, vui lòng kiểm tra lại thông tin");
+                    ModelState.AddModelError("", "");
                 }
             }
-            return View(code);
+            return View();
         }
 
         public ActionResult Edit()
