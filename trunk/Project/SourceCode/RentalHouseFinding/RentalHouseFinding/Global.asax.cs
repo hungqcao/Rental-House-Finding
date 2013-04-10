@@ -109,12 +109,25 @@ namespace RentalHouseFinding
                 new { id = @"^\d+$" }
             );
 
+            routes.MapRoute(
+                "PostEditForGuest",
+                "sua-bai-dang-khach",
+                new { controller = "PostEdit", action = "Index"}
+            );
+
+            routes.MapRoute(
+                "PostEditForGuestEditPage",
+                "sua-bai-dang-khach/{id}/{name}",
+                new { controller = "PostEdit", action = "Edit", name = UrlParameter.Optional },
+                new { id = @"^\d+$" }
+            );
+
             //End post
 
             routes.MapRoute(
                 "AdvSearchResult",
                 "tim-kiem-nang-cao",
-                new { controller = "AdvanceSearch", action = "Index" }
+                new { controller = "AdvancedSearch", action = "Index" }
             );
 
             routes.MapRoute(

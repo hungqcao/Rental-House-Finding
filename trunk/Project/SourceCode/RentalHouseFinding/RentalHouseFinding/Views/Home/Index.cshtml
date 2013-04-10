@@ -226,7 +226,7 @@
 <div id="home-search-area">
 @using (Html.BeginForm())
 {   
-   <div id="linkAdvancedSearch"> <a id="advanceSearchText" href="/AdvancedSearch">Tìm kiếm nâng cao</a> </div>
+   <div id="linkAdvancedSearch"> @Html.ActionLink("Tìm kiếm nâng cao", "Index", "AdvancedSearch", null, new { @id = "advanceSearchText" }) </div>
     <div class="clear"></div>
     <div id="options">
         <div id="btnShowList" onclick="toggle_visibility('listInfo');" class="btnShowListClicked"></div>
