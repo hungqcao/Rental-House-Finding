@@ -2,6 +2,60 @@
     Layout = "~/Views/Shared/_LayoutUser.cshtml";
     ViewBag.Title = "Quản lí bài đăng";
 }
+<script>
+    $(document).ready(function () {
+        $("#grid th")[4].setAttribute('id', '8');
+        $('#8').prepend('<img id="theImg" src="../../Content/images/down.jpg" />')
+    });
+</script>
+
+<script type="text/javascript">
+
+    function setArrows() {
+        var dir = $('#dir').val();
+        var col = $('#col').val();
+        var header = $('th a[href*=' + col + ']');
+        var i = -1;        
+        if (col == 'Title') {
+            i =2;
+        }
+        if (col == 'PostStatus') {
+            i = 3;
+        }
+        if (col == 'CreatedDate') {
+            i = 4;
+        }
+        if (col == 'EditedDate') {
+            i = 5;
+        }
+        if (col == 'RenewDate') {
+            i = 6;
+        }
+        if (col == 'ExpiredDate') {
+            i = 7;
+        }
+        if (col == 'CountRenew') {
+            i = 8;
+            if (dir == 'Ascending') {
+                $("#grid th")[i].setAttribute('id', '8');
+                $('#8').prepend('<img id="theImg" src="../../Content/images/down.jpg" />')
+            }
+            if (dir == 'Descending') {
+                $("#grid th")[i].setAttribute('id', '8');
+                $('#8').prepend('<img id="theImg" src="../../Content/images/up.jpg" />')
+            }
+            return;
+        }
+        if (dir == 'Ascending') {
+            $("#grid th")[i].setAttribute('id', '8');
+            $('#8').prepend('<img id="theImg" src="../../Content/images/up.jpg" />')
+        }
+        if (dir == 'Descending') {
+            $("#grid th")[i].setAttribute('id', '8');
+            $('#8').prepend('<img id="theImg" src="../../Content/images/down.jpg" />')
+        }
+    };
+</script>
 
 
 <fieldset>
@@ -10,13 +64,14 @@
             if (ViewBag.Grid != null && ViewBag.Grid.TotalRowCount > 0)
             {
                 var grid = (WebGrid)ViewBag.Grid;
+                
                 @grid.GetHtml(tableStyle: "", mode: WebGridPagerModes.All,
                                 headerStyle: "header",
                                 alternatingRowStyle: "alt",
                                 htmlAttributes: new { id = "grid" },
                                 columns: grid.Columns(
                                         grid.Column(header: "STT", format: item => item.WebGrid.Rows.IndexOf(item) + 1 + ViewBag.Index),
-                                        grid.Column("Code", "Mã bài"),
+                                        grid.Column("Code", "Mã bài", canSort: false),
                                         grid.Column(header: "Tiêu đề", columnName: "Title", format: @<text>
                                         <a href="@Url.Action("Details", "Post",
                                         new { id = @item.ID })">@item.Title</a></text>),
@@ -31,7 +86,7 @@
                                             format: (item) => string.Format("{0:yyyy-MM-dd HH:mm:ss}", item.ExpiredDate)),
                                         grid.Column("CountRenew", "Số lần đã gia hạn")
 
-                ))
+                                                 ))@Html.Hidden("dir", grid.SortDirection) @Html.Hidden("col", grid.SortColumn)
             }
             else
             {

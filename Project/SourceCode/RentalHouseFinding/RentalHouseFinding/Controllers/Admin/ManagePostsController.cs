@@ -256,7 +256,7 @@ namespace RentalHouseFinding.Controllers.Admin
                 }
             }
             
-            var grid = new WebGrid(ajaxUpdateContainerId: "container-grid",
+            var grid = new WebGrid(ajaxUpdateContainerId: "container-grid", ajaxUpdateCallback: "setArrows",
                 canSort: true, rowsPerPage: MAX_RECORD_PER_PAGE);
             grid.Bind(postViewList, autoSortAndPage: false, rowCount: postList.Count());
             return grid;
