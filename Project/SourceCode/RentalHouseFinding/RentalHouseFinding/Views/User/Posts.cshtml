@@ -48,7 +48,17 @@
     };
 </script>
 
-
+<div id="message-sv" style="width:967px; margin: 0 auto;">
+    @if (TempData["MessageDeletePost"] != null)
+    {
+        <div class="message-notification success">
+            <a class="close" id="btnCloseDiv"></a>
+            <div>
+                @TempData["MessageDeletePost"]
+            </div>
+        </div>
+    }
+</div>
 <fieldset>
     <div id="container-grid">
         @{            

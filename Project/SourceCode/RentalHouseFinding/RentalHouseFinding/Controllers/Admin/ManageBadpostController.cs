@@ -44,7 +44,7 @@ namespace RentalHouseFinding.Controllers.Admin
             {
                 page = 1;
             }
-            var postsList = (from p in _db.Posts where (p.StatusId == 2) select p);
+            var postsList = (from p in _db.Posts where (p.StatusId == 2 && !p.IsDeleted) select p);
 
             var postViewList = postsList.Select(p => new
             {
@@ -131,7 +131,27 @@ namespace RentalHouseFinding.Controllers.Admin
                 {
                     postViewModel = (PostViewModel)CommonModel.TrimObjectProperties(postViewModel);
                     var post = (from p in _db.Posts where (p.Id == postViewModel.Id) select p).FirstOrDefault();
-                    post = CommonModel.ConvertPostViewModelToPost(post, postViewModel, post.CreatedDate, DateTime.Now, post.RenewDate, DateTime.Now.AddDays(2) ,_noInfo);
+                    int currentPostStatusID = post.StatusId;
+                    TimeSpan keepPendingDay;
+                    DateTime expiredDate = DateTime.Now;
+
+                    if (currentPostStatusID == 2)
+                    {
+                        if (post.EditedDate == null)
+                        {
+                            keepPendingDay = DateTime.Now - post.CreatedDate;
+                        }
+                        else
+                        {
+                            keepPendingDay = DateTime.Now - (DateTime)post.EditedDate;
+                        }
+                        expiredDate = post.ExpiredDate.AddDays(keepPendingDay.Days);
+                    }
+                    else
+                    {
+                        expiredDate = post.ExpiredDate;
+                    }
+                    post = CommonModel.ConvertPostViewModelToPost(post, postViewModel, post.CreatedDate, DateTime.Now, post.RenewDate, expiredDate, _noInfo);
 
                     post.StatusId = 1;
 
@@ -192,7 +212,7 @@ namespace RentalHouseFinding.Controllers.Admin
                             }
                         }
                     }
-                    TempData["MessageSuccessSaveBadPost"] = "Thay đổi thông tin thành công";
+                    TempData["MessageSuccessSaveBadPost"] = "Duyệt bài thành công";
                     //send sms to phone active.
                     CommonController.SendSMS(post.PhoneActive,String.Format("Bai cua ban da duoc Admin duyet. Ma kich hoat cua ban la :{0}",post.Code));
                     return RedirectToAction("Index");
@@ -220,8 +240,8 @@ namespace RentalHouseFinding.Controllers.Admin
                 post.IsDeleted = true;
                 _db.ObjectStateManager.ChangeObjectState(post, EntityState.Modified);
                 _db.SaveChanges();
-                
-                TempData["MessageSuccessPostNew"] = "Xóa thành công";
+
+                TempData["MessageSuccessSaveBadPost"] = "Xóa thành công!";
                 return RedirectToAction("Index");
             }
             catch (Exception ex)

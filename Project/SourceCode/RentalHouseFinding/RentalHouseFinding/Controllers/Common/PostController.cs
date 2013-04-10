@@ -36,7 +36,7 @@ namespace RentalHouseFinding.Controllers
         {
             return RedirectToAction("create");
         }
-        
+
         //
         // GET: /Post/Details/5
         [HttpGet]
@@ -53,7 +53,7 @@ namespace RentalHouseFinding.Controllers
             }
 
             var districtAndProvinceName = Repository.GetAllDistricts().Where(d => d.Id == post.DistrictId).Select(d => new { districtName = d.Name, provinceName = d.Province.Name }).FirstOrDefault();
-                   
+
             ViewBag.Address = districtAndProvinceName.districtName + ", " + districtAndProvinceName.provinceName;
             ViewBag.Internet = post.Facilities.HasInternet ? "Có" : "Không";
             ViewBag.AirConditioner = post.Facilities.HasAirConditioner ? "Có" : "Không";
@@ -77,8 +77,10 @@ namespace RentalHouseFinding.Controllers
             if (User.Identity.IsAuthenticated)
             {
                 int userId = CommonModel.GetUserIdByUsername(User.Identity.Name);
-                var favorite = (from f in _db.Favorites where 
-                                    (f.PostId == post.Id && f.UserId == userId && !f.IsDeleted) select f).ToList();
+                var favorite = (from f in _db.Favorites
+                                where
+                                    (f.PostId == post.Id && f.UserId == userId && !f.IsDeleted)
+                                select f).ToList();
                 if (favorite.Count > 0)
                 {
                     ViewBag.RemoveFavorite = true;
@@ -106,7 +108,7 @@ namespace RentalHouseFinding.Controllers
                 return View();
             }
             var districtAndProvinceName = Repository.GetAllDistricts().Where(d => d.Id == post.DistrictId).Select(d => new { districtName = d.Name, provinceName = d.Province.Name }).FirstOrDefault();
-                 
+
             ViewBag.Address = districtAndProvinceName.districtName + ", " + districtAndProvinceName.provinceName;
             ViewBag.Internet = post.Facilities.HasInternet ? "Có" : "Không";
             ViewBag.AirConditioner = post.Facilities.HasAirConditioner ? "Có" : "Không";
@@ -154,7 +156,7 @@ namespace RentalHouseFinding.Controllers
 
         //
         // GET: /Post/Create
-		
+
         public ActionResult Create()
         {
             ViewBag.CategoryId = new SelectList(Repository.GetAllCategories(), "Id", "Name");
@@ -174,12 +176,12 @@ namespace RentalHouseFinding.Controllers
             {
                 try
                 {
-                    model = (PostViewModel)CommonModel.TrimObjectProperties(model);                    
+                    model = (PostViewModel)CommonModel.TrimObjectProperties(model);
                     bool suscess = false;
                     string strExpiredDate = Repository.GetAllConfiguration().Where(c => c.Name.Equals(ConstantCommonString.EXPIRED_DATE, StringComparison.CurrentCultureIgnoreCase)).Select(c => c.Value).FirstOrDefault().ToString();
                     int numberExpiredDate = 0;
                     int.TryParse(strExpiredDate, out numberExpiredDate);
-                    Posts postToCreate = CommonModel.ConvertPostViewModelToPost(model, DateTime.Now, null, null, 
+                    Posts postToCreate = CommonModel.ConvertPostViewModelToPost(model, DateTime.Now, null, null,
                                 DateTime.Now.AddDays(numberExpiredDate),
                                 _noInfo);
 
@@ -197,7 +199,7 @@ namespace RentalHouseFinding.Controllers
                         postToCreate.StatusId = 1;
                         TempData["MessageSuccessPostNew"] = "Đăng bài thành công, chúng tôi sẽ gửi tin nhắn đến số điện thoại bạn đã cung cấp";
                         TempData["Success"] = true;
-                        suscess = true;                        
+                        suscess = true;
                         TempData["Pending"] = false;
                     }
 
@@ -214,7 +216,7 @@ namespace RentalHouseFinding.Controllers
                     Dictionary<int, string> lstNearbyId = CommonController.GetListNearbyLocations(model, Request);
                     PostLocations postLocation;
                     string nearbyPlace = string.Empty;
-                    foreach (KeyValuePair<int,string> kvp in lstNearbyId)
+                    foreach (KeyValuePair<int, string> kvp in lstNearbyId)
                     {
                         postLocation = new PostLocations();
                         postLocation.PostId = postToCreate.Id;
@@ -230,7 +232,7 @@ namespace RentalHouseFinding.Controllers
                         _db.ObjectStateManager.ChangeObjectState(postToCreate, System.Data.EntityState.Modified);
                         _db.SaveChanges();
                     }
-                        
+
                     //Images post
                     PostImages imageToCreate = null;
 
@@ -272,24 +274,26 @@ namespace RentalHouseFinding.Controllers
             }
             ViewBag.CategoryId = new SelectList(Repository.GetAllCategories(), "Id", "Name", model.CategoryId);
             ViewBag.ProvinceId = new SelectList(Repository.GetAllProvinces(), "Id", "Name", model.ProvinceId);
-            ViewBag.DistrictId = new SelectList(Repository.GetAllDistricts().Where(d=>d.ProvinceId == model.ProvinceId), "Id", "Name", model.DistrictId);
+            ViewBag.DistrictId = new SelectList(Repository.GetAllDistricts().Where(d => d.ProvinceId == model.ProvinceId), "Id", "Name", model.DistrictId);
             return View(model);
         }
 
         //
         // GET: /Post/Edit/5
-		[Authorize(Roles = "User, Admin")]
+        [Authorize(Roles = "User, Admin")]
         public ActionResult Edit(int id)
         {
             int userId = CommonModel.GetUserIdByUsername(User.Identity.Name);
-            var postModel = (from p in _db.Posts where (p.Id == id) 
-                                 && (!p.IsDeleted)  && p.UserId == userId select p).FirstOrDefault();
-            if (CommonModel.GetUserIdByUsername(User.Identity.Name) == 1)// Admin logged.
+            var postModel = (from p in _db.Posts
+                             where (p.Id == id)
+                                 && (!p.IsDeleted) && p.UserId == userId
+                             select p).FirstOrDefault();
+            if (User.IsInRole("Admin"))// Admin logged.
             {
                 postModel = (from p in _db.Posts
-                              where (p.Id == id)
-                                  && (!p.IsDeleted)
-                              select p).FirstOrDefault();
+                             where (p.Id == id)
+                                 && (!p.IsDeleted)
+                             select p).FirstOrDefault();
             }
             //Check if the post belongs to current user
             if (postModel == null)
@@ -298,7 +302,7 @@ namespace RentalHouseFinding.Controllers
             }
             ViewBag.CategoryId = new SelectList(Repository.GetAllCategories(), "Id", "Name", postModel.CategoryId);
             ViewBag.ProvinceId = new SelectList(Repository.GetAllProvinces(), "Id", "Name", postModel.District.ProvinceId);
-            ViewBag.DistrictId = new SelectList(Repository.GetAllDistricts().Where(d=>d.ProvinceId == postModel.District.ProvinceId), "Id", "Name", postModel.DistrictId);
+            ViewBag.DistrictId = new SelectList(Repository.GetAllDistricts().Where(d => d.ProvinceId == postModel.District.ProvinceId), "Id", "Name", postModel.DistrictId);
             return View(CommonModel.ConvertPostToPostViewModel(postModel, _noInfo));
         }
 
@@ -307,9 +311,9 @@ namespace RentalHouseFinding.Controllers
         {
             try
             {
-                var post = _db.Posts.Where(p=>p.Id == postId).FirstOrDefault();
+                var post = _db.Posts.Where(p => p.Id == postId).FirstOrDefault();
                 int userId = CommonModel.GetUserIdByUsername(User.Identity.Name);
-                if (post.UserId == userId || userId==1)// User of this post or Admin logged.
+                if (post.UserId == userId || userId == 1)// User of this post or Admin logged.
                 {
                     var postImage = _db.PostImages.Where(p => p.Id == id).FirstOrDefault();
                     postImage.IsDeleted = true;
@@ -345,13 +349,35 @@ namespace RentalHouseFinding.Controllers
         [Authorize(Roles = "User, Admin")]
         public ActionResult Edit(PostViewModel postViewModel, IEnumerable<HttpPostedFileBase> images)
         {
-            
+
             if (ModelState.IsValid)
             {
                 try
                 {
-                    postViewModel = (PostViewModel)CommonModel.TrimObjectProperties(postViewModel); 
+                    postViewModel = (PostViewModel)CommonModel.TrimObjectProperties(postViewModel);
                     var post = (from p in _db.Posts where (p.Id == postViewModel.Id) select p).FirstOrDefault();
+                    bool isPending = false;
+                    int currentPostStatusID = post.StatusId;
+                    TimeSpan keepPendingDay;
+                    DateTime expiredDate = DateTime.Now;
+
+                    if (currentPostStatusID == 2)
+                    {
+                        if (post.EditedDate == null)
+                        {
+                            keepPendingDay = DateTime.Now - post.CreatedDate;
+                        }
+                        else
+                        {
+                            keepPendingDay = DateTime.Now - (DateTime)post.EditedDate;
+                        }
+                        expiredDate = post.ExpiredDate.AddDays(keepPendingDay.Days);
+                    }
+                    else
+                    {
+                        expiredDate = post.ExpiredDate;
+                    }
+
                     if (CommonModel.FilterHasBadContent(postViewModel))
                     {
                         //2 for pending
@@ -359,15 +385,36 @@ namespace RentalHouseFinding.Controllers
                         TempData["MessagePendingPostNew"] = "Bài đăng có chứa những từ không cho phép, chúng tôi sẽ duyệt trước khi đăng lên hệ thống";
                         TempData["Pending"] = true;
                         TempData["Success"] = false;
+                        isPending = true;
                     }
-                    if (CommonModel.GetUserIdByUsername(User.Identity.Name) == 1 && post.UserId != 1)// Admin logged. This post is not Admin's post.
+                    bool pendingToActive = false;
+                    if (isPending)
                     {
-                        // Admin edit post of user. Edited Date not change.
-                        post = CommonModel.ConvertPostViewModelToPost(post, postViewModel, post.CreatedDate, post.EditedDate, post.RenewDate, post.ExpiredDate, _noInfo);
+                        post.StatusId = 2;
                     }
                     else
                     {
-                        post = CommonModel.ConvertPostViewModelToPost(post, postViewModel, post.CreatedDate, DateTime.Now, post.RenewDate, post.ExpiredDate, _noInfo);
+                        if (currentPostStatusID == 2)
+                        {
+                            post.StatusId = 1;
+                            pendingToActive = true;
+                        }
+                        else
+                        {
+                            post.StatusId = currentPostStatusID;
+
+                        }
+                    }
+                    if (User.IsInRole("Admin"))// Admin logged.
+                    {
+                        // Admin edit post of user. Edited Date not change.
+                        post = CommonModel.ConvertPostViewModelToPost(post, postViewModel, post.CreatedDate, post.EditedDate, post.RenewDate, expiredDate, _noInfo);                       
+
+                    }
+                    else
+                    {
+
+                        post = CommonModel.ConvertPostViewModelToPost(post, postViewModel, post.CreatedDate, DateTime.Now, post.RenewDate, expiredDate, _noInfo);
                     }
 
                     Dictionary<int, string> lstNearbyId = CommonController.GetListNearbyLocations(postViewModel, Request);
@@ -405,9 +452,9 @@ namespace RentalHouseFinding.Controllers
                             {
                                 var path = Path.Combine(HttpContext.Server.MapPath("/Content/PostImages/"), postViewModel.Id.ToString());
                                 //Check if image already exists
-                                string pathToCompare = "/Content/PostImages/" 
-                                                        + postViewModel.Id + "/" + Path.GetFileName(image.FileName) ;
-                                var imagesPath = (from i in _db.PostImages 
+                                string pathToCompare = "/Content/PostImages/"
+                                                        + postViewModel.Id + "/" + Path.GetFileName(image.FileName);
+                                var imagesPath = (from i in _db.PostImages
                                                   where (i.Path.Equals(pathToCompare, StringComparison.CurrentCultureIgnoreCase) && !i.IsDeleted)
                                                   select i.Path).ToArray();
                                 if (imagesPath.Count() > 0)
@@ -427,8 +474,18 @@ namespace RentalHouseFinding.Controllers
                             }
                         }
                     }
-                    TempData["MessageSuccessEdit"] = "Thay đổi thông tin thành công";
-                    TempData["Success"] = true;
+                    
+                    if (pendingToActive)
+                    {
+                        TempData["MessageSuccessEdit"] = "Đăng bài thành công, chúng tôi sẽ gửi tin nhắn đến số điện thoại bạn đã cung cấp.";
+                        TempData["Success"] = true;
+                    }                    
+                    else if (!isPending)
+                    {
+                        TempData["MessageSuccessEdit"] = "Thay đổi thông tin thành công";
+                        TempData["Success"] = true;
+                    }
+
                     return RedirectToAction("Details", new { Id = post.Id });
                 }
                 catch (Exception ex)
@@ -438,7 +495,7 @@ namespace RentalHouseFinding.Controllers
             }
             ViewBag.CategoryId = new SelectList(Repository.GetAllCategories(), "Id", "Name", postViewModel.CategoryId);
             ViewBag.ProvinceId = new SelectList(Repository.GetAllProvinces(), "Id", "Name", postViewModel.ProvinceId);
-            ViewBag.DistrictId = new SelectList(Repository.GetAllDistricts().Where(d => d.ProvinceId == postViewModel.ProvinceId) , "Id", "Name", postViewModel.DistrictId);
+            ViewBag.DistrictId = new SelectList(Repository.GetAllDistricts().Where(d => d.ProvinceId == postViewModel.ProvinceId), "Id", "Name", postViewModel.DistrictId);
             return View(postViewModel);
         }
 
@@ -452,13 +509,14 @@ namespace RentalHouseFinding.Controllers
                 int userId = CommonModel.GetUserIdByUsername(User.Identity.Name);
                 var post = (from p in _db.Posts where (p.Id == id) select p).FirstOrDefault();
                 //Check if the post belongs to current user
-                if (post.UserId == userId || userId == 1)
+                if (post.UserId == userId || User.IsInRole("Admin"))
                 {
                     post.IsDeleted = true;
                     _db.ObjectStateManager.ChangeObjectState(post, EntityState.Modified);
                     _db.SaveChanges();
                 }
-                if (userId == 1 && post.UserId != userId)
+                TempData["MessageDeletePost"] = "Xóa thành công!";
+                if (User.IsInRole("Admin"))
                 {
                     return RedirectToAction("Index", "ManagePosts");
                 }
@@ -501,7 +559,7 @@ namespace RentalHouseFinding.Controllers
                     _db.ObjectStateManager.ChangeObjectState(favorite, EntityState.Added);
                 }
                 //If user has added this post to favorite before, set deleted to false
-                else 
+                else
                 {
                     favorite.IsDeleted = false;
                     _db.ObjectStateManager.ChangeObjectState(favorite, EntityState.Modified);
@@ -514,7 +572,7 @@ namespace RentalHouseFinding.Controllers
             {
                 return Json(success, JsonRequestBehavior.AllowGet);
             }
-            
+
         }
 
         [Authorize(Roles = "User, Admin")]
@@ -527,7 +585,8 @@ namespace RentalHouseFinding.Controllers
                 int postId = id;
 
                 //Get favorite from db
-                var favorite = (from f in _db.Favorites where
+                var favorite = (from f in _db.Favorites
+                                where
                                     (f.PostId == postId && f.UserId == userId && !f.IsDeleted)
                                 select f).FirstOrDefault();
 
@@ -536,7 +595,7 @@ namespace RentalHouseFinding.Controllers
                     return Json(success, JsonRequestBehavior.AllowGet);
                 }
                 favorite.IsDeleted = true;
-            
+
                 _db.ObjectStateManager.ChangeObjectState(favorite, EntityState.Modified);
                 _db.SaveChanges();
                 success = true;
