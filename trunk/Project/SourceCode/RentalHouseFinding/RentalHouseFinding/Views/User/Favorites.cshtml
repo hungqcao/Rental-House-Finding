@@ -24,7 +24,9 @@
                                         grid.Column("PostStatus", "Trạng thái"),
                                         grid.Column("AddedDate", "Ngày thêm",
                                         format: (item) => string.Format("{0:yyyy-MM-dd HH:mm:ss}", item.AddedDate)),
-                                        grid.Column(header: "Gỡ", format: item => @Html.ActionLink("Gỡ khỏi danh mục", "", null, new {id = item.ID}))
+                                        grid.Column(header: "Gỡ", format: 
+                                        item => @Html.ActionLink("Gỡ khỏi danh mục", "", null, 
+                                            new {@id = item.ID, @class="remove_favorite"}))
                                 ));
             }
             else
@@ -51,7 +53,7 @@
         $('a[href="#"]').live('click', function (event) {
             event.preventDefault();
         });
-        $('a[href="/user"]').live('click', function (event) {
+        $('a[class="remove_favorite"]').live('click', function (event) {
             event.preventDefault();
             removeFavorite($(this).prop('id'));
             $(this).parent().parent().remove();
