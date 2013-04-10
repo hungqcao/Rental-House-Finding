@@ -56,7 +56,7 @@ namespace RentalHouseFinding.Controllers
                 //ContentSMS =  MS ABCD
                 string code = model.ContentSMS.Split(' ')[1].ToString();
                 var postId = (from p in _db.Posts
-                              where p.Code.Equals(code, StringComparison.CurrentCultureIgnoreCase) && !p.IsDeleted
+                              where p.Code.Equals(code, StringComparison.CurrentCultureIgnoreCase) && !p.IsDeleted && p.StatusId != 2// statusId = 2 is Pending.
                               select p.Id).FirstOrDefault();
                 if (postId != 0)
                 {
@@ -69,6 +69,7 @@ namespace RentalHouseFinding.Controllers
                     string strExpiredDate = Repository.GetAllConfiguration().Where(c => c.Name.Equals(ConstantCommonString.EXPIRED_DATE_AFTER_RENEW, StringComparison.CurrentCultureIgnoreCase)).Select(c => c.Value).FirstOrDefault().ToString();
                     int numberExpiredDate = 0;
                     int.TryParse(strExpiredDate, out numberExpiredDate);
+                    
                     var post = _db.Posts.Where(p => p.Id == postId).FirstOrDefault();
 
                     DateTime currentExpiredDate = post.ExpiredDate;
@@ -82,6 +83,7 @@ namespace RentalHouseFinding.Controllers
                     {
                         post.ExpiredDate = currentExpiredDate.AddDays(numberExpiredDate);
                     }
+                    post.StatusId = 1;// 1 is Active.
                     post.RenewDate = DateTime.Now;
                     _db.ObjectStateManager.ChangeObjectState(post, EntityState.Modified);
                     _db.SaveChanges();

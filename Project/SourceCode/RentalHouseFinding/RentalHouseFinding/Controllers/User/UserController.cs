@@ -106,7 +106,7 @@ namespace RentalHouseFinding.Controllers
             {
                 p.Post.Id,
                 Address = String.Format("{0} {1} {2}",p.Post.NumberAddress,p.Post.District.Name,p.Post.District.Province.Name),
-                p.User.Username,
+                Username = p.Post.UserId != null ? p.Post.User.Name:"Khách" , // != null? p.User.Username: "Khách",
                 p.AddedDate,
                 p.Post.Title,
                 p.Post.RenewDate,

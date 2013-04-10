@@ -97,7 +97,7 @@ namespace RentalHouseFinding.Common
             };
         }
 
-        public static Posts ConvertPostViewModelToPost(Posts post, PostViewModel model, DateTime createdDate, DateTime editedDate, DateTime? renewDate, string noInformation)
+        public static Posts ConvertPostViewModelToPost(Posts post, PostViewModel model, DateTime createdDate, DateTime? editedDate, DateTime? renewDate, DateTime exprideDate, string noInformation)
         {
             if (string.IsNullOrEmpty(model.NumberHouse))
             {
@@ -147,12 +147,13 @@ namespace RentalHouseFinding.Common
             post.PhoneActive = model.PhoneActive;
             post.Price = model.Price;
             post.RenewDate = renewDate;
+            post.ExpiredDate = exprideDate;
             post.Title = model.Title;
             //post.Views = 0;//?
             post.IsDeleted = false;
 
             return post;
-        }
+        }        
 
         public static Dictionary<int, string> GetDictionaryNearybyPlace(int postId)
         {

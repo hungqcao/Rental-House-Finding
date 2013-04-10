@@ -139,7 +139,8 @@ namespace RentalHouseFinding.Controllers.GUI
                         TempData["Pending"] = true;
                         TempData["Success"] = false;
                     }
-                    post = CommonModel.ConvertPostViewModelToPost(post, postViewModel, post.CreatedDate, DateTime.Now, post.RenewDate, _noInfo);
+
+                    post = CommonModel.ConvertPostViewModelToPost(post, postViewModel, post.CreatedDate, DateTime.Now, post.RenewDate,post.ExpiredDate,_noInfo);
                     
 
                     Dictionary<int, string> lstNearbyId = CommonController.GetListNearbyLocations(postViewModel, Request);

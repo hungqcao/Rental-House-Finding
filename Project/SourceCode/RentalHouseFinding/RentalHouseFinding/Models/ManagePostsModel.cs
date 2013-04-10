@@ -38,5 +38,7 @@ namespace RentalHouseFinding.Models
         public DateTime? ExpireDateTo { get; set; }
 
         public WebGrid Grid { get; set; }
+
+        public Boolean IsDelete { get; set; }
     }
 }

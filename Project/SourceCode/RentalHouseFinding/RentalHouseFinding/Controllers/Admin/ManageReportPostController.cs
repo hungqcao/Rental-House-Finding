@@ -126,7 +126,7 @@ namespace RentalHouseFinding.Controllers.Admin
                 try
                 {
                     var post = (from p in _db.Posts where (p.Id == postViewModel.Id) select p).FirstOrDefault();
-                    post = CommonModel.ConvertPostViewModelToPost(post, postViewModel, post.CreatedDate, DateTime.Now, post.RenewDate, _noInfo);
+                    post = CommonModel.ConvertPostViewModelToPost(post, postViewModel, post.CreatedDate, post.EditedDate, post.RenewDate, post.ExpiredDate,_noInfo);
 
                     Dictionary<int, string> lstNearbyId = CommonController.GetListNearbyLocations(postViewModel, Request);
                     PostLocations postLocation;
@@ -209,6 +209,7 @@ namespace RentalHouseFinding.Controllers.Admin
             return View(postViewModel);
         }
 
+
         //
         // GET: /Post/Delete/5
         [Authorize(Roles = "Admin")]
@@ -218,14 +219,12 @@ namespace RentalHouseFinding.Controllers.Admin
             {
                 int userId = CommonModel.GetUserIdByUsername(User.Identity.Name);
                 var post = (from p in _db.Posts where (p.Id == id) select p).FirstOrDefault();
-                //Check if the post belongs to current user
-                if (post.UserId == userId)
-                {
-                    post.IsDeleted = true;
-                    _db.ObjectStateManager.ChangeObjectState(post, EntityState.Modified);
-                    _db.SaveChanges();
-                }
-                TempData["MessageSuccessPostNew"] = "Xóa thành công";
+                
+                post.IsDeleted = true;
+                _db.ObjectStateManager.ChangeObjectState(post, EntityState.Modified);
+                _db.SaveChanges();
+                
+                TempData["MessageSuccessSaveBadPost"] = "Xóa thành công";
                 return RedirectToAction("Index");
             }
             catch (Exception ex)
