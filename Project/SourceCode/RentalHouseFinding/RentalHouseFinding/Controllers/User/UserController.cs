@@ -89,7 +89,7 @@ namespace RentalHouseFinding.Controllers
         }
 
         [Authorize(Roles = "Admin, User")]
-        public ActionResult Favorites(int? page)
+        public ActionResult Favorites(int? page, string sort, string sortdir)
         {
             if (page == null)
             {
@@ -100,18 +100,76 @@ namespace RentalHouseFinding.Controllers
             //Get user's favorite list
             var lstPost = (from f in _db.Favorites
                              where (f.UserId == userId && !f.IsDeleted && !f.Post.IsDeleted)
-                             select f).ToList();            
+                             select f).ToList();
 
             var postViewList = lstPost.Select(p => new
             {
                 p.Post.Id,
-                Address = String.Format("{0} {1} {2}",p.Post.NumberAddress,p.Post.District.Name,p.Post.District.Province.Name),
-                Username = p.Post.UserId != null ? p.Post.User.Name:"Khách" , // != null? p.User.Username: "Khách",
+                Address = String.Format("{0} {1} {2}", p.Post.NumberAddress, p.Post.District.Name, p.Post.District.Province.Name),
+                Username = p.Post.UserId != null ? p.Post.User.Name : "Khách", // != null? p.User.Username: "Khách",
                 p.AddedDate,
                 p.Post.Title,
                 p.Post.RenewDate,
                 PostStatus = p.Post.PostStatus.Name
-            }).OrderByDescending(p => p.AddedDate).Skip(MAX_RECORD_PER_PAGE * ((int)page - 1)).Take(MAX_RECORD_PER_PAGE);
+            });
+
+            //Custom sort
+            if (sortdir == "ASC")
+            {
+                if (sort == "ID")
+                {
+                    postViewList = postViewList.OrderBy(p => p.Id)
+                        .Skip(MAX_RECORD_PER_PAGE * ((int)page - 1)).Take(MAX_RECORD_PER_PAGE);
+                }
+                else if (sort == "Title")
+                {
+                    postViewList = postViewList.OrderBy(p => p.Title)
+                        .Skip(MAX_RECORD_PER_PAGE * ((int)page - 1)).Take(MAX_RECORD_PER_PAGE);
+                }
+                else if (sort == "Address")
+                {
+                    postViewList = postViewList.OrderBy(p => p.Address)
+                        .Skip(MAX_RECORD_PER_PAGE * ((int)page - 1)).Take(MAX_RECORD_PER_PAGE);
+                }
+                else if (sort == "Username")
+                {
+                    postViewList = postViewList.OrderBy(p => p.Username)
+                        .Skip(MAX_RECORD_PER_PAGE * ((int)page - 1)).Take(MAX_RECORD_PER_PAGE);
+                }
+                else if (sort == "AddedDate")
+                {
+                    postViewList = postViewList.OrderBy(p => p.AddedDate)
+                        .Skip(MAX_RECORD_PER_PAGE * ((int)page - 1)).Take(MAX_RECORD_PER_PAGE);
+                }
+            }
+            else
+            {
+                if (sort == "ID")
+                {
+                    postViewList = postViewList.OrderByDescending(p => p.Id)
+                        .Skip(MAX_RECORD_PER_PAGE * ((int)page - 1)).Take(MAX_RECORD_PER_PAGE);
+                }
+                else if (sort == "Title")
+                {
+                    postViewList = postViewList.OrderByDescending(p => p.Title)
+                        .Skip(MAX_RECORD_PER_PAGE * ((int)page - 1)).Take(MAX_RECORD_PER_PAGE);
+                }
+                else if (sort == "Address")
+                {
+                    postViewList = postViewList.OrderByDescending(p => p.Address)
+                        .Skip(MAX_RECORD_PER_PAGE * ((int)page - 1)).Take(MAX_RECORD_PER_PAGE);
+                }
+                else if (sort == "Username")
+                {
+                    postViewList = postViewList.OrderByDescending(p => p.Username)
+                        .Skip(MAX_RECORD_PER_PAGE * ((int)page - 1)).Take(MAX_RECORD_PER_PAGE);
+                }
+                else
+                {
+                    postViewList = postViewList.OrderByDescending(p => p.AddedDate)
+                        .Skip(MAX_RECORD_PER_PAGE * ((int)page - 1)).Take(MAX_RECORD_PER_PAGE);
+                }
+            }
 
             var grid = new WebGrid(ajaxUpdateContainerId: "container-grid", canSort: false);
             grid.Bind(postViewList, autoSortAndPage: false, rowCount: lstPost.Count());
@@ -247,7 +305,7 @@ namespace RentalHouseFinding.Controllers
         }
 
         [Authorize(Roles = "Admin, User")]
-        public ActionResult Payments(int? page, ManagePaymentModel model)
+        public ActionResult Payments(int? page, string sort, string sortdir, ManagePaymentModel model)
         {
             if (page == null)
             {
@@ -274,11 +332,42 @@ namespace RentalHouseFinding.Controllers
                             .DiffDays(p.CreatedDate, model.CreatedDateTo) >= 0));
             }
 
-            IQueryable<Payments> paymentViewList;
-            paymentViewList = (from p in paymentList select p)
-                .OrderByDescending(p => p.CreatedDate)
-                .Skip(MAX_RECORD_PER_PAGE * ((int)page - 1))
-                .Take(MAX_RECORD_PER_PAGE);
+            var paymentViewList = paymentList.Select(p => new
+            {
+                Coce = p.Post.Code,
+                p.CreatedDate,
+                p.PhoneNumber,
+                Title = (from post in _db.Posts 
+                         where (post.Id == p.PostsId && !post.IsDeleted) 
+                         select post.Title)
+            });
+            //Custom sort
+            if (sortdir == "ASC")
+            {
+                if (sort == "PostTitle")
+                {
+                    paymentViewList = paymentViewList.OrderBy(p => p.Title)
+                        .Skip(MAX_RECORD_PER_PAGE * ((int)page - 1)).Take(MAX_RECORD_PER_PAGE);
+                }
+                else if (sort == "CreatedDate")
+                {
+                    paymentViewList = paymentViewList.OrderBy(p => p.CreatedDate)
+                        .Skip(MAX_RECORD_PER_PAGE * ((int)page - 1)).Take(MAX_RECORD_PER_PAGE);
+                }
+            }
+            else
+            {
+                if (sort == "PostTitle")
+                {
+                    paymentViewList = paymentViewList.OrderByDescending(p => p.Title)
+                        .Skip(MAX_RECORD_PER_PAGE * ((int)page - 1)).Take(MAX_RECORD_PER_PAGE);
+                }
+                else
+                {
+                    paymentList = paymentList.OrderByDescending(p => p.CreatedDate)
+                        .Skip(MAX_RECORD_PER_PAGE * ((int)page - 1)).Take(MAX_RECORD_PER_PAGE);
+                }
+            }
             var grid = new WebGrid(ajaxUpdateContainerId: "container-grid",
             canSort: false, rowsPerPage: MAX_RECORD_PER_PAGE);
             grid.Bind(paymentViewList, autoSortAndPage: false, rowCount: paymentList.Count());
