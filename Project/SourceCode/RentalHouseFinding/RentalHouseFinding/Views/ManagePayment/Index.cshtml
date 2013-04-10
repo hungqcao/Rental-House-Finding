@@ -17,7 +17,7 @@
 </script>
 @using (Html.BeginForm("Index", "ManagePayment", FormMethod.Post))
 {
- <div>
+ <div id="paymentDiv">
     <div style=" float:left; margin-top:5px; ">Thời gian @Html.TextBoxFor(model => model.CreatedDateFrom,
                         new { @id = "created_date_from", @placeholder = "từ" })
                 @Html.TextBoxFor(model => model.CreatedDateTo,
@@ -30,7 +30,7 @@
     if (Model != null && Model.Grid.TotalRowCount > 0)
     {
         WebGrid grid = Model.Grid;
-        <span>Có @grid.TotalRowCount giao dịch</span>
+        <span id="adminResultText">Có @grid.TotalRowCount giao dịch</span><br></br>
         @grid.GetHtml(tableStyle: "webGrid", mode: WebGridPagerModes.All,
                             headerStyle: "header",
                             alternatingRowStyle: "alt",

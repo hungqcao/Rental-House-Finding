@@ -8,6 +8,7 @@
 
 @using (Html.BeginForm()) {
     @Html.ValidationSummary(true)
+    <div id="fieldsetAd">
     <fieldset>
 
         @Html.HiddenFor(model => model.Id)
@@ -45,6 +46,7 @@
         </div>
         
     </fieldset>
+    </div>
 }
 
 
