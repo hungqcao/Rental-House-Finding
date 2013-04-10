@@ -174,6 +174,7 @@ namespace RentalHouseFinding.Controllers
             {
                 try
                 {
+                    model = (PostViewModel)CommonModel.TrimObjectProperties(model);                    
                     bool suscess = false;
                     string strExpiredDate = Repository.GetAllConfiguration().Where(c => c.Name.Equals(ConstantCommonString.EXPIRED_DATE, StringComparison.CurrentCultureIgnoreCase)).Select(c => c.Value).FirstOrDefault().ToString();
                     int numberExpiredDate = 0;
@@ -349,6 +350,7 @@ namespace RentalHouseFinding.Controllers
             {
                 try
                 {
+                    postViewModel = (PostViewModel)CommonModel.TrimObjectProperties(postViewModel); 
                     var post = (from p in _db.Posts where (p.Id == postViewModel.Id) select p).FirstOrDefault();
                     if (CommonModel.FilterHasBadContent(postViewModel))
                     {

@@ -121,6 +121,7 @@ namespace RentalHouseFinding.Controllers.GUI
 
             if (ModelState.IsValid)
             {
+                postViewModel = (PostViewModel)CommonModel.TrimObjectProperties(postViewModel);
                 try
                 {
                     if (Session["PostIdToEdit"] == null)

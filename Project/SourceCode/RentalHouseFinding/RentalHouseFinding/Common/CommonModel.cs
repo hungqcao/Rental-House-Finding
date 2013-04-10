@@ -15,27 +15,7 @@ using System.Collections.Generic;
 namespace RentalHouseFinding.Common
 {
     public static class CommonModel
-    {
-        public static string Trim(string input)
-        {
-            while (true)
-            {
-                bool valid = true;
-                for (int i = 0; i < input.Length; i++)
-                {
-                    if (input[i] == ' ' && input[i + 1] == ' ')
-                    {
-                        input.Replace(input[i].ToString(), "");
-                        valid = false;
-                    }
-                }
-                if (valid)
-                {
-                    break;
-                }
-            }
-            return input;
-        }
+    {        
         public static string BuildRegexBadWord()
         {
             using (RentalHouseFindingEntities _db = new RentalHouseFindingEntities()) 
@@ -465,6 +445,22 @@ namespace RentalHouseFinding.Common
                 }
             }	
             return false;
+        }
+
+        public static Object TrimObjectProperties(Object model)
+        {            
+            Type type = model.GetType();
+            IList<PropertyInfo> props = new List<PropertyInfo>(type.GetProperties());
+            foreach (PropertyInfo prop in props)
+            {
+                object propValue = prop.GetValue(model, null);
+                if (propValue != null)
+                {
+                    propValue = Regex.Replace(propValue.ToString(), @"\s+", " ");                    
+                }
+            }
+
+            return model;
         }
 
         public static bool IsOpenIdOrFacebookAccount(int userId)

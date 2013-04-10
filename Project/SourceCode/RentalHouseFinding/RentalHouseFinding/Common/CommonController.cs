@@ -124,7 +124,7 @@ namespace RentalHouseFinding.Common
             if (model.DistrictId == 0)
             {
                 var province = (from p in _db.Provinces where p.Id == model.ProvinceId && !p.IsDeleted select p).FirstOrDefault();
-                centerMap = province.Lat + "," + province.Lon + "|11";
+                centerMap = province.Lat + "," + province.Lon + "|10";
             }
             else
             {

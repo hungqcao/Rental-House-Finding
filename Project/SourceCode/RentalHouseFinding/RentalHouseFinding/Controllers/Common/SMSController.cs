@@ -7,6 +7,7 @@ using RentalHouseFinding.Models;
 using System.Data;
 using RentalHouseFinding.Caching;
 using RentalHouseFinding.Common;
+using System.Text.RegularExpressions;
 
 namespace RentalHouseFinding.Controllers
 {
@@ -39,7 +40,7 @@ namespace RentalHouseFinding.Controllers
         }
         // GET: /SMS/
         public ActionResult SMSActive()
-        {
+        {            
             return View();
         }
         [HttpPost]
@@ -53,8 +54,8 @@ namespace RentalHouseFinding.Controllers
             {
                 //Add to payment table
                 
-                //ContentSMS =  MS ABCD
-                string code = model.ContentSMS.Split(' ')[1].ToString();
+                //ContentSMS =  MS ABCD                
+                string code = !String.IsNullOrEmpty(model.ContentSMS)?model.ContentSMS.Split(' ')[1].ToString():String.Empty;
                 var postId = (from p in _db.Posts
                               where p.Code.Equals(code, StringComparison.CurrentCultureIgnoreCase) && !p.IsDeleted && p.StatusId != 2// statusId = 2 is Pending.
                               select p.Id).FirstOrDefault();
