@@ -60,7 +60,7 @@
                                 "Post",
                                 new { id = @item.PostsId })">@item.PostTitle</a></text>),
                                 grid.Column("CreatedDate", "Ngày giao dịch"),                                
-                                grid.Column("PhoneNumber", "Số điện thoại giao dịch")
+                                grid.Column("PhoneNumber", "Số điện thoại giao dịch", canSort: false) 
                                          ))@Html.Hidden("dir", grid.SortDirection) @Html.Hidden("col", grid.SortColumn);
     }
     else

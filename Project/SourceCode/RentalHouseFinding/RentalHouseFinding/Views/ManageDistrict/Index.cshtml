@@ -5,15 +5,15 @@
 @using (Html.BeginForm("Index", "ManageDistrict", FormMethod.Post))
 {
    <div class="districtDiv">
-    <div id="districtSelect">
-    @Html.DropDownList("ProvinceId",
-        (IEnumerable<SelectListItem>)ViewBag.Provinces,
-            "Chọn Tỉnh/Thành phố", new { @class = "selectAd"})
-</div>
-    <div id="districtSubmit">
+        <div id="districtSelect">
+        @Html.DropDownList("ProvinceId",
+            (IEnumerable<SelectListItem>)ViewBag.Provinces,
+                "Chọn Tỉnh/Thành phố", new { @class = "selectAd"})
+        </div>
+        <div id="districtSubmit">
             <input type="submit" class="searchLink" name="Search" value="Search" />
-            </div>
-            </div>
+        </div>
+    </div>
 }
 <div id="container-grid">
 
@@ -33,6 +33,10 @@
                                                  new { id = @item.ID })">@item.Name</a></text>),
                         grid.Column("Lat", "Kinh độ"),
                         grid.Column("Lon", "Vĩ độ"),
+                        grid.Column(header: "Địa điểm phụ", format: @<text>
+                                                 <a href="@Url.Action("Index", 
+                                                 "ManageLocation", 
+                                                 new { districtId = @item.ID })">Địa điểm phụ</a></text>),
                         grid.Column("Province.Name", "Tỉnh/Thành")
                     ));
         }

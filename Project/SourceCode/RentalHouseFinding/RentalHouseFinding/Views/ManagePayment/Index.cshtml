@@ -3,7 +3,6 @@
     ViewBag.Title = "Quản lí giao dịch";
     Layout = "~/Views/Shared/_AdminLayout.cshtml";
 }
-<script src="@Url.Content("~/Scripts/RHFScripts.js")" type="text/javascript"></script>
 <script src="@Url.Content("~/Scripts/jquery-ui-1.8.11.min.js")" type="text/javascript"></script>
 <link rel="stylesheet" href="http://code.jquery.com/ui/1.10.2/themes/smoothness/jquery-ui.css" />
 <script>
@@ -16,28 +15,26 @@
     });
 </script>
 
-@using (Html.BeginForm("Index", "ManagePayment", FormMethod.Post))
-{
 <div id="container-grid">
 @{
     if (Model != null && Model.Grid.TotalRowCount > 0)
     {
         WebGrid grid = Model.Grid;
-        <span id="adminResultText">Có @grid.TotalRowCount giao dịch</span><br></br>
+        <span id="adminResultText">Có @grid.TotalRowCount giao dịch</span><br/>
         @grid.GetHtml(tableStyle: "webGrid", mode: WebGridPagerModes.All,
                             headerStyle: "header",
                             alternatingRowStyle: "alt",
                             htmlAttributes: new { id = "grid" },
                             columns: grid.Columns(
                                 grid.Column(header: "STT", format: item => item.WebGrid.Rows.IndexOf(item) + 1 + ViewBag.Index),
-                                grid.Column("Id", "Mã giao dịch"),
-                                grid.Column("CreatedDate", "Ngày giao dịch", format: (item) => string.Format("{0:yyyy-MM-dd HH:mm:ss}", item.CreatedDate)),
-                                grid.Column("PhoneNumber", "Số điện thoại giao dịch"),
-                                grid.Column(header: "Mã bài đăng", format: @<text>
+                                grid.Column("Code", "Mã bài đăng", canSort: false),
+                                grid.Column(columnName: "PostTitle", header: "Tên bài đăng", format: @<text>
                                 <a href="@Url.Action("Details",
                                 "Post",
-                                new { id = @item.PostsId })">@item.PostsId</a></text>)
-                            ));
+                                new { id = @item.PostsId })">@item.PostTitle</a></text>),
+                                grid.Column("CreatedDate", "Ngày giao dịch", format: (item) => string.Format("{0:yyyy-MM-dd HH:mm:ss}", item.CreatedDate)),
+                                grid.Column("PhoneNumber", "Số điện thoại giao dịch", canSort: false)
+                                ));
     }
     else
     {

@@ -84,9 +84,7 @@ namespace RentalHouseFinding.Controllers.GUI
                 int postId = (int)Session["PostIdToEdit"];
                 var post = _db.Posts.Where(p => p.Id == postId).FirstOrDefault();
                 var postImage = _db.PostImages.Where(p => p.Id == id).FirstOrDefault();
-                postImage.IsDeleted = true;
-
-                _db.ObjectStateManager.ChangeObjectState(postImage, System.Data.EntityState.Modified);
+                _db.PostImages.DeleteObject(postImage);
                 _db.SaveChanges();
                 return true;
             }
