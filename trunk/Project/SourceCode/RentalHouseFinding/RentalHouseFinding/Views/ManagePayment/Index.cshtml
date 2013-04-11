@@ -10,8 +10,6 @@
         $('a[href="#"]').live('click', function (event) {
             event.preventDefault();
         });
-        $("#created_date_from").datepicker({ dateFormat: 'yy/mm/dd', changeMonth: true, changeYear: true });
-        $("#created_date_to").datepicker({ dateFormat: 'yy/mm/dd', changeMonth: true, changeYear: true });
     });
 </script>
 
@@ -33,7 +31,7 @@
                                 "Post",
                                 new { id = @item.PostsId })">@item.PostTitle</a></text>),
                                 grid.Column("CreatedDate", "Ngày giao dịch", format: (item) => string.Format("{0:yyyy-MM-dd HH:mm:ss}", item.CreatedDate)),
-                                grid.Column("PhoneNumber", "Số điện thoại giao dịch", canSort: false)
+                                grid.Column("PhoneNumber", "Số điện thoại giao dịch")
                                 ));
     }
     else
