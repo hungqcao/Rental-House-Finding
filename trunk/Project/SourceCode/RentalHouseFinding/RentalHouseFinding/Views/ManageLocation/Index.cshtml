@@ -1,0 +1,52 @@
+﻿@{
+    ViewBag.Title = "Quản lí địa điểm phụ";
+    Layout = "~/Views/Shared/_AdminLayout.cshtml";
+}
+<script>
+    $(document).ready(function () {
+        $('a[href="#"]').live('click', function (event) {
+            event.preventDefault();
+        });
+    });
+</script>
+<script src="@Url.Content("~/Scripts/RHFScripts.js")" type="text/javascript"></script>
+@using (Html.BeginForm("Index", "ManageLocation", FormMethod.Post))
+{
+    @Html.DropDownList("ProvinceId",
+        (IEnumerable<SelectListItem>)ViewBag.Provinces,
+            "Chọn Tỉnh/Thành phố", new { @class = "selectAd"})
+    @Html.DropDownList("DistrictId",
+        (IEnumerable<SelectListItem>)ViewBag.Districts,
+            "Chọn Quận/Huyện", new { @class = "selectAd"})<span style="display: none;"></span>
+    <div id="districtSubmit">
+        <input type="submit" class="searchLink" name="Search" value="Search" />
+    </div>
+
+}
+<div id="container-grid">
+@{
+    if (ViewBag.Grid != null && ViewBag.Grid.TotalRowCount > 0)
+    {
+        WebGrid grid = ViewBag.Grid;
+        @grid.GetHtml(tableStyle: "webGrid", mode: WebGridPagerModes.All,
+                            headerStyle: "header",
+                            alternatingRowStyle: "alt",
+                            htmlAttributes: new { id = "grid" },
+                            columns: grid.Columns(
+                                          grid.Column(header: "STT", format: item => item.WebGrid.Rows.IndexOf(item) + 1 + ViewBag.Index),
+                                     grid.Column("ID", "Id"),
+                                     grid.Column(columnName:"Name", header:"Tên", format: @<text>
+                                             <a href="@Url.Action("Edit", 
+                                             "ManageLocation", 
+                                             new { id = @item.ID })">@item.Name</a></text>),
+                                    grid.Column("Lat", "Kinh độ"),
+                                    grid.Column("Lon", "Vĩ độ"),
+                                    grid.Column("District", "Thuộc quận/huyện")
+                                    ));
+    }
+    else
+    {
+        <h2>Không có bài post vi phạm</h2>
+    }
+}
+</div>

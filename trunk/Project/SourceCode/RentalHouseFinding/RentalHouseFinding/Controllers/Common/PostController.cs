@@ -316,9 +316,7 @@ namespace RentalHouseFinding.Controllers
                 if (post.UserId == userId || userId == 1)// User of this post or Admin logged.
                 {
                     var postImage = _db.PostImages.Where(p => p.Id == id).FirstOrDefault();
-                    postImage.IsDeleted = true;
-
-                    _db.ObjectStateManager.ChangeObjectState(postImage, System.Data.EntityState.Modified);
+                    _db.PostImages.DeleteObject(postImage);
                     _db.SaveChanges();
                     return true;
                 }

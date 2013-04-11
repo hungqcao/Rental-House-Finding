@@ -48,8 +48,13 @@ namespace RentalHouseFinding.Controllers.Admin
         // POST: /ManageDistrict/
         [Authorize(Roles = "Admin")]
         [HttpPost]
-        public ViewResult Index(FormCollection form)
+        public ViewResult Index(int? page, FormCollection form)
         {
+            if (page == null)
+            {
+                page = 1;
+            }
+            ViewBag.Index = ((int)page - 1) * MAX_RECORD_PER_PAGE;
             if (form["provinceId"] == null)
             {
                 ViewBag.Provinces = new SelectList(_db.Provinces, "Id", "Name");
