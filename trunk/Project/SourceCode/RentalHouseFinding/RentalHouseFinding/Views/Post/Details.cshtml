@@ -83,13 +83,14 @@
         <div id="popup_wrapper">
             <div class="popup_header">
                 <div class="left">
-                     <span class="type">[@Model.Category]</span><span class="address" style="width:485px;">&nbsp;@Model.NumberHouse @Model.Street | @Model.Price triệu VNĐ
+                     <span class="type">[@Model.Category]</span><span class="address">&nbsp;@Model.NumberHouse @Model.Street | @Model.Price triệu VNĐ
                         | @Model.Area m2</span>
                     @Html.HiddenFor(model => Model.Id)
                     <div class="clear">
                     </div>
                    <span class="shortDesc">@Model.Title</span>
                 </div>
+                <div id="detailButton" class="right">
                     @if (Model.UserId == CommonModel.GetUserIdByUsername(User.Identity.Name) || User.IsInRole("Admin"))
                     {
                         <div id="button-detail" class="right">
@@ -185,6 +186,7 @@
                     <!-- AddThis Button END -->
                 </div>
             </div>
+            </div>
             <div class="clear">
             </div>
             <div class="popup_content">
@@ -195,7 +197,7 @@
                         THÔNG TIN CƠ BẢN</div>
                     <div class="clear">
                     </div>
-                    <span class="blockLeftText" style="width: 100%;"><b>Địa chỉ:</b>&nbsp;@Model.NumberHouse
+                    <span class="blockLeftText"><b>Địa chỉ:</b>&nbsp;@Model.NumberHouse
                         @Model.Street </span>
                     <div class="clear">
                     </div>
@@ -216,7 +218,7 @@
                             <span class="blockLeftText">
                             <b>Giờ đóng cửa:</b>&nbsp;@Model.RestrictHours </span>}
                             <span class="blockLeftText"
-                                style="width: 100%;"><b>Ngày đăng:</b>&nbsp;@Model.CreatedDate</span>
+                                ><b>Ngày đăng:</b>&nbsp;@Model.CreatedDate</span>
                     <span class="blockLeftText" style="margin-top: 10px;"><b>Liên hệ:</b>&nbsp;@Model.NameContact</span>
                     <div class="clear">
                     </div>
@@ -224,14 +226,13 @@
                     @*Check Email*@
                     @if (!string.IsNullOrEmpty(Model.Email))
                     {
-                    <span class="blockLeftText" style="width:380px;"><b>Email:</b>&nbsp;@Model.Email</span>
+                    <span class="blockLeftText"><b>Email:</b>&nbsp;@Model.Email</span>
                     }
                             &nbsp;
                             @* Check Yahoo & Skype*@
                             @if (!string.IsNullOrEmpty(Model.Yahoo) | !string.IsNullOrEmpty(Model.Skype))
                             {
-                                <span >
-                          
+                                <div id="contactIcon">
                             @if (!string.IsNullOrEmpty(Model.Yahoo))
                             {
                                 
@@ -256,7 +257,7 @@
                                 </script>
                             </div>
                             </div>
-                                  }</span>
+                                  }</div>
                             
                             }
 
