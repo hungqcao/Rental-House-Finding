@@ -24,19 +24,6 @@ namespace RentalHouseFinding.Controllers.Admin
                 page = 1;
             }
             IQueryable<Payments> paymentList = _db.Payments;
-
-            if (model.CreatedDateFrom != null)
-            {
-                paymentList = paymentList.Where(p => (EntityFunctions
-                            .DiffDays(p.CreatedDate, model.CreatedDateFrom) <= 0));
-            }
-
-            if (model.CreatedDateTo != null)
-            {
-                paymentList = paymentList.Where(p => (EntityFunctions
-                            .DiffDays(p.CreatedDate, model.CreatedDateTo) >= 0));
-            }
-
             var paymentViewList = paymentList.Select(p => new
             {
                 Code = p.Post.Code,
@@ -47,13 +34,18 @@ namespace RentalHouseFinding.Controllers.Admin
                              select post.Title).FirstOrDefault(),
                 p.PostsId
             });
-
+            
             //Custom sort
             if (sortdir == "ASC")
             {
                 if (sort == "PostTitle")
                 {
                     paymentViewList = paymentViewList.OrderBy(p => p.PostTitle)
+                        .Skip(MAX_RECORD_PER_PAGE * ((int)page - 1)).Take(MAX_RECORD_PER_PAGE);
+                }
+                else if (sort == "PhoneNumber")
+                {
+                    paymentViewList = paymentViewList.OrderBy(p => p.PhoneNumber)
                         .Skip(MAX_RECORD_PER_PAGE * ((int)page - 1)).Take(MAX_RECORD_PER_PAGE);
                 }
                 else if (sort == "CreatedDate")
@@ -67,6 +59,11 @@ namespace RentalHouseFinding.Controllers.Admin
                 if (sort == "PostTitle")
                 {
                     paymentViewList = paymentViewList.OrderByDescending(p => p.PostTitle)
+                        .Skip(MAX_RECORD_PER_PAGE * ((int)page - 1)).Take(MAX_RECORD_PER_PAGE);
+                }
+                else if (sort == "PhoneNumber")
+                {
+                    paymentViewList = paymentViewList.OrderByDescending(p => p.PhoneNumber)
                         .Skip(MAX_RECORD_PER_PAGE * ((int)page - 1)).Take(MAX_RECORD_PER_PAGE);
                 }
                 else
