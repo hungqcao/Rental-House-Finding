@@ -972,9 +972,9 @@ span.field-validation-error
    /* position:absolute;
     left:170px;
     top:431px;*/
-    left: -13px;
     position: relative;
     top: -13px;
+    margin-left:25px;
     }
 /* POPUP */
 #detailContainer
@@ -1024,7 +1024,7 @@ span.field-validation-error
 #popup_wrapper div#addThis
 {
     float: right;
-    margin-right: 14px;
+    margin-top: 10px;
 }
 #popup_wrapper div, #popup_wrapper span {
     display: block;
@@ -1234,7 +1234,7 @@ span.field-validation-error
 }
 .blockInfo .blockLeftText {
     background: url("../../Content/images/round_shape.png") no-repeat transparent 0 4px;
-    width: 240px;
+    width: 100%;
     height: 25px;
     line-height: 20px;
     padding-left: 25px;
@@ -1412,6 +1412,7 @@ input.btn-send-question
     width: 128px;
     height: 30px;
     font-size: 0;
+    cursor:pointer;
 }
 /*Report post*/
 a.selected {
@@ -2462,15 +2463,16 @@ a.button-link:active {
 {
     background: url('../../Content/images/btnEditPost.png');
     cursor:pointer;
-    width:128px;
+    width:78px;
     height:30px;
     font-size:0px;
+    margin-left:40px;
     }
     .button-link_Del
 {
     background: url('../../Content/images/btnDelPost.png');
     cursor:pointer;
-    width:128px;
+    width:78px;
     height:30px;
     font-size:0px;
     }
@@ -2707,4 +2709,14 @@ margin-top:35px;
       padding:10px;
       font-size:15px;
        font-style:italic;
+    }
+    #detailButton
+    {
+        position:relative;
+        display:block;      
+        }
+#contactIcon
+{
+    
+    height:65px;
     }

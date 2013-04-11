@@ -65,6 +65,7 @@
                     </div>
                    <span class="shortDesc">@Model.Title</span>
                 </div>
+                <div id="detailButton" class="right">
                     @if (Model.UserId == CommonModel.GetUserIdByUsername(User.Identity.Name))
                     {
                         <div id="button-detail" class="right">
@@ -146,11 +147,11 @@
                             <div class="clear">
                             </div>
                         </div>
-                        
+                   
                     }
                 <div class="clear">
                 </div>
-                
+    
                 <div id="addThis">
                     <!-- AddThis Button BEGIN -->
                     <div class="addthis_toolbox addthis_default_style">
@@ -161,6 +162,8 @@
                     <script type="text/javascript" src="//s7.addthis.com/js/300/addthis_widget.js#pubid=undefined"></script>
                     <!-- AddThis Button END -->
                 </div>
+                </div>
+
             </div>
             <div class="clear">
             </div>
@@ -172,7 +175,7 @@
                         THÔNG TIN CƠ BẢN</div>
                     <div class="clear">
                     </div>
-                    <span class="blockLeftText" style="width: 100%;"><b>Địa chỉ:</b>&nbsp;@Model.NumberHouse
+                    <span class="blockLeftText"><b>Địa chỉ:</b>&nbsp;@Model.NumberHouse
                         @Model.Street </span>
                     <div class="clear">
                     </div>
@@ -193,7 +196,7 @@
                             <span class="blockLeftText">
                             <b>Giờ đóng cửa:</b>&nbsp;@Model.RestrictHours </span>}
                             <span class="blockLeftText"
-                                style="width: 100%;"><b>Ngày đăng:</b>&nbsp;@Model.CreatedDate</span>
+                                ><b>Ngày đăng:</b>&nbsp;@Model.CreatedDate</span>
                     <span class="blockLeftText" style="margin-top: 10px;"><b>Liên hệ:</b>&nbsp;@Model.NameContact</span>
                     <div class="clear">
                     </div>
@@ -201,27 +204,28 @@
                     @*Check Email*@
                     @if (!string.IsNullOrEmpty(Model.Email))
                     {
-                    <span class="blockLeftText" style="width:380px;"><b>Email:</b>&nbsp;@Model.Email</span>
+                    <span class="blockLeftText"><b>Email:</b>&nbsp;@Model.Email</span>
                     }
                             &nbsp;
                             @* Check Yahoo & Skype*@
                             @if (!string.IsNullOrEmpty(Model.Yahoo) | !string.IsNullOrEmpty(Model.Skype))
                             {
-                                <span >
-                          
+                               
+                           <div id="contactIcon">
                             @if (!string.IsNullOrEmpty(Model.Yahoo))
                             {
-                                
+                             
+                                 
                             <div id="yahoo">
                             <a href="ymsgr:sendIM?@Model.Yahoo">
                                 <img border="0" width="52px" src="http://opi.yahoo.com/online?u=YahooID&m=g&t=14&l=us"></a></div>
-                                
+                              
                             }
                                 
                                   @if (!string.IsNullOrEmpty(Model.Skype))
                                   {
                             <script type="text/javascript" src="//cdn.dev.skype.com/uri/skype-uri.js"></script>
-                            <div id="skype">    
+                               
                             <div id="SkypeButton">
                                 <script type="text/javascript">
                                     Skype.ui({
@@ -232,8 +236,9 @@
                                     });
                                 </script>
                             </div>
-                            </div>
-                                  }</span>
+                            
+                                  }
+                                  </div>
                             
                             }
 
