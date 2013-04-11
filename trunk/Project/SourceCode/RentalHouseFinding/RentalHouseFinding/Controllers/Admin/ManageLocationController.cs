@@ -31,6 +31,34 @@ namespace RentalHouseFinding.Controllers.Admin
             {
                 locations = locations.Where(l => l.DistrictId == (int)districtId);
             }
+            else
+            {
+                if (Session["ProvinceId"] != null
+                    && Session["ProvinceId"].ToString() != "")
+                {
+                    int provinceId = Convert.ToInt32(Session["ProvinceId"]);
+                    if (provinceId > 0)
+                    {
+                        var districtList = (from d in _db.Districts
+                                            where (d.ProvinceId == provinceId)
+                                            select d.Id).ToList();
+                        locations = locations
+                            .Where(l => districtList.Contains(l.DistrictId));
+                    }
+                }
+
+                if (Session["DistrictId"] != null 
+                    && Session["DistrictId"].ToString() != "")
+                {
+                    int sessionDistrictId = Convert.ToInt32(Session["DistrictId"]);
+                    if (sessionDistrictId > 0)
+                    {
+                        locations = locations
+                            .Where(l => l.DistrictId == sessionDistrictId);
+                    }
+                }
+                
+            }
             var locationView = locations.Select(l => new
             { 
                 l.Id,
@@ -42,8 +70,9 @@ namespace RentalHouseFinding.Controllers.Admin
                 l.Lon
             }).OrderBy(l => l.Id)
                 .Skip(MAX_RECORD_PER_PAGE * ((int)page - 1)).Take(MAX_RECORD_PER_PAGE);
-            var grid = new WebGrid(ajaxUpdateContainerId: "container-grid", canSort: false, rowsPerPage: 3);
-            grid.Bind(locationView, autoSortAndPage: false, rowCount: _db.Locations.Count());
+            var grid = new WebGrid(ajaxUpdateContainerId: "container-grid"
+                , canSort: false, rowsPerPage: MAX_RECORD_PER_PAGE);
+            grid.Bind(locationView, autoSortAndPage: false, rowCount: locations.Count());
             ViewBag.Grid = grid;
             return View();
         }
@@ -56,29 +85,29 @@ namespace RentalHouseFinding.Controllers.Admin
             }
             ViewBag.Provinces = new SelectList(_db.Provinces, "Id", "Name", form["ProvinceId"]);
             ViewBag.Districts = new SelectList(_db.Districts, "Id", "Name", form["DistrictId"]);
-            ViewBag.ProvinceId = form["ProvinceId"];
-            ViewBag.DistrictId = form["DistrictId"];
+            
             IQueryable<Locations> locations = _db.Locations;
+
+            if (!String.IsNullOrEmpty(form["ProvinceId"]))
+            {
+                int provinceId = Convert.ToInt32(form["ProvinceId"]);
+                if (provinceId > 0)
+                {
+                    Session["ProvinceId"] = provinceId;
+                    var districtList = (from d in _db.Districts
+                                        where (d.ProvinceId == provinceId)
+                                        select d.Id).ToList();
+                    locations = locations.Where(l => districtList.Contains(l.DistrictId));
+                }
+            }
+
             if (!String.IsNullOrEmpty(form["DistrictId"]))
             {
                 int districtId = Convert.ToInt32(form["DistrictId"]);
                 if (districtId > 0)
                 {
+                    Session["DistrictId"] = districtId;
                     locations = locations.Where(l => l.DistrictId == districtId);
-                }
-            }
-            else
-            {
-                if (!String.IsNullOrEmpty(form["ProvinceId"]))
-                {
-                    int provinceId = Convert.ToInt32(form["ProvinceId"]);
-                    if (provinceId > 0)
-                    {
-                        var districtList = (from d in _db.Districts
-                                            where (d.ProvinceId == provinceId)
-                                            select d.Id).ToList();
-                        locations = locations.Where(l => districtList.Contains(l.DistrictId));
-                    }
                 }
             }
             var locationView = locations.Select(l => new
@@ -94,7 +123,7 @@ namespace RentalHouseFinding.Controllers.Admin
                 .Skip(MAX_RECORD_PER_PAGE * ((int)page - 1)).Take(MAX_RECORD_PER_PAGE);
             var grid = new WebGrid(ajaxUpdateContainerId: "container-grid", 
                 canSort: false, rowsPerPage: MAX_RECORD_PER_PAGE);
-            grid.Bind(locationView, autoSortAndPage: false, rowCount: _db.Locations.Count());
+            grid.Bind(locationView, autoSortAndPage: false, rowCount: locations.Count());
             ViewBag.Grid = grid;
             return View();
         }
