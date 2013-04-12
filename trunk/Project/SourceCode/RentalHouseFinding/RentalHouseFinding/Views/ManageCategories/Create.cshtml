@@ -30,6 +30,15 @@
             @Html.ValidationMessageFor(model => model.Description)
         </div>
         </div>
+         <div style="display:none;" class="rolesManageCheck">
+        <div class="editor-label">
+            @Html.LabelFor(model => model.IsDeleted, "Đã xóa")
+        </div>
+        <div class="editor-field">
+            @Html.EditorFor(model => model.IsDeleted)
+            @Html.ValidationMessageFor(model => model.IsDeleted)
+        </div>
+</div>
           <div class="rolesManageSubmit">
         <p>
             <input type="submit" class="createLink" value="Tạo mới" />
