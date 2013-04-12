@@ -6,7 +6,7 @@
 @foreach (var item in Model)
 {
     <li>
-        <a id = "item-@item.Id" class="infoDetail left fancybox" href="@Url.Content("~/post/detailsbox/" + @item.Id)">
+        <a id = "item-@item.Id" class="infoDetail left fancybox" href="@Url.Content("~/thong-tin-bai-dang/" + @item.Id + "/" + @StringUtil.ToSeoUrl(StringUtil.RemoveSign4VietnameseString(item.Title)))">
             <div class="text left">
                 <span class="address left"><b>@Html.DisplayFor(modelItem => item.NumberHouse) - @Html.DisplayFor(modelItem => item.Street)</b></span>
                 <span class="desc left">@Html.DisplayFor(modelItem => item.Title)</span>
