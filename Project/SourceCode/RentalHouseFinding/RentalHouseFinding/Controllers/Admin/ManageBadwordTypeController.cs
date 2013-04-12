@@ -58,8 +58,16 @@ namespace RentalHouseFinding.Controllers.Admin
         // POST: /ManageBadwordType/Edit/5
         [Authorize(Roles = "Admin")]
         [HttpPost]
-        public ActionResult Edit(BadWordTypes badwordtypes)
+        public ActionResult Edit(BadWordTypes badwordtypes, FormCollection form, int id)
         {
+            if (form["IsDeleted"] != "false")
+            {
+                var tmp = _db.BadWordTypes.Where(bw => bw.Id == id).FirstOrDefault();
+                _db.BadWordTypes.DeleteObject(tmp);
+                _db.SaveChanges();
+                return RedirectToAction("Index");
+            }
+
             if (ModelState.IsValid)
             {
                 _db.BadWordTypes.Attach(badwordtypes);
