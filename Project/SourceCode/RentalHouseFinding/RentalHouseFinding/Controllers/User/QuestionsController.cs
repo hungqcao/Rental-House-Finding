@@ -96,11 +96,17 @@ namespace RentalHouseFinding.Controllers.User
                 _db.SaveChanges();
 
                 string message = string.Empty;
-                if (!(user == null))
+                if (user != null)
                 {
                     string emailTemplate = Repository.GetAllEmailTemplate().Where(e => e.Name.Equals(ConstantEmailTemplate.RECEIVE_QUESTION, StringComparison.CurrentCultureIgnoreCase)).Select(m => m.Template).FirstOrDefault();
                     message = string.Format(emailTemplate, model.Email, model.TitleQuestion, model.ContentQuestion, post.Title);
                     CommonModel.SendEmail(user.Email, message, "Bạn nhận được 1 câu hỏi", 0);
+                }
+                else if (!string.IsNullOrEmpty(post.Contacts.Email))
+                {
+                    string emailTemplate = Repository.GetAllEmailTemplate().Where(e => e.Name.Equals(ConstantEmailTemplate.RECEIVE_QUESTION, StringComparison.CurrentCultureIgnoreCase)).Select(m => m.Template).FirstOrDefault();
+                    message = string.Format(emailTemplate, model.Email, model.TitleQuestion, model.ContentQuestion, post.Title);
+                    CommonModel.SendEmail(post.Contacts.Email, message, "Bạn nhận được 1 câu hỏi", 0);
                 }
 
                 if (user != null)

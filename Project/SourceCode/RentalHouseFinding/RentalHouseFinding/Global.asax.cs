@@ -84,7 +84,7 @@ namespace RentalHouseFinding
             //Post
             routes.MapRoute(
                 "PostDetailbox",
-                "bai-dang-box/{id}/{name}",
+                "thong-tin-bai-dang/{id}/{name}",
                 new { controller = "Post", action = "DetailsBox", name = UrlParameter.Optional },
                 new { id = @"^\d+$" }
             );

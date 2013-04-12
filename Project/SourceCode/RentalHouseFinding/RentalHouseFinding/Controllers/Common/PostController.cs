@@ -100,12 +100,16 @@ namespace RentalHouseFinding.Controllers
         }
 
         [HttpGet]
-        public ActionResult DetailsBox(int id)
+        public ActionResult DetailsBox(int id, string name)
         {
             var post = (from p in _db.Posts where p.Id == id select p).FirstOrDefault();
             if (post == null)
             {
-                return View();
+                return null;
+            }
+            if (!StringUtil.ToSeoUrl(StringUtil.RemoveSign4VietnameseString(post.Title)).Equals(name, StringComparison.CurrentCultureIgnoreCase))
+            {
+                return RedirectToActionPermanent("DetailsBox", new { id = id, name = StringUtil.ToSeoUrl(StringUtil.RemoveSign4VietnameseString(post.Title)) });
             }
             var districtAndProvinceName = Repository.GetAllDistricts().Where(d => d.Id == post.DistrictId).Select(d => new { districtName = d.Name, provinceName = d.Province.Name }).FirstOrDefault();
 
