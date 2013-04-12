@@ -5,56 +5,39 @@
     Layout = "~/Views/Shared/_AdminLayout.cshtml";
 }
 
-<h2>Create</h2>
-
 <script src="@Url.Content("~/Scripts/jquery.validate.min.js")" type="text/javascript"></script>
 <script src="@Url.Content("~/Scripts/jquery.validate.unobtrusive.min.js")" type="text/javascript"></script>
 
 @using (Html.BeginForm()) {
     @Html.ValidationSummary(true)
     <fieldset>
-        <legend>Locations</legend>
-
-        <div class="editor-label">
-            @Html.LabelFor(model => model.Name)
+        <div class="rolesManageTextBox">
+            <div class="editor-label">
+                @Html.LabelFor(model => model.Name)
+            </div>
+            <div class="editor-field">
+                @Html.EditorFor(model => model.Name)
+                @Html.ValidationMessageFor(model => model.Name)
+            </div>
         </div>
-        <div class="editor-field">
-            @Html.EditorFor(model => model.Name)
-            @Html.ValidationMessageFor(model => model.Name)
+        <div class="rolesManageTextBox">
+            <div class="editor-label">
+                @Html.LabelFor(model => model.DistrictId, "District")
+            </div>
+            <div class="editor-field">
+                @Html.DropDownList("DistrictId", String.Empty)
+                @Html.ValidationMessageFor(model => model.DistrictId)
+            </div>
         </div>
-
-        <div class="editor-label">
-            @Html.LabelFor(model => model.DistrictId, "District")
+        <div style="display: none;">
+            <div class="editor-label">
+                @Html.LabelFor(model => model.IsCreatedByUser)
+            </div>
+            <div class="editor-field">
+                @Html.EditorFor(model => model.IsCreatedByUser)
+                @Html.ValidationMessageFor(model => model.IsCreatedByUser)
+            </div>
         </div>
-        <div class="editor-field">
-            @Html.DropDownList("DistrictId", String.Empty)
-            @Html.ValidationMessageFor(model => model.DistrictId)
-        </div>
-
-        <div class="editor-label">
-            @Html.LabelFor(model => model.Lat)
-        </div>
-        <div class="editor-field">
-            @Html.EditorFor(model => model.Lat)
-            @Html.ValidationMessageFor(model => model.Lat)
-        </div>
-
-        <div class="editor-label">
-            @Html.LabelFor(model => model.Lon)
-        </div>
-        <div class="editor-field">
-            @Html.EditorFor(model => model.Lon)
-            @Html.ValidationMessageFor(model => model.Lon)
-        </div>
-
-        <div class="editor-label">
-            @Html.LabelFor(model => model.IsCreatedByUser)
-        </div>
-        <div class="editor-field">
-            @Html.EditorFor(model => model.IsCreatedByUser)
-            @Html.ValidationMessageFor(model => model.IsCreatedByUser)
-        </div>
-
         <p>
             <input type="submit" value="Create" />
         </p>
