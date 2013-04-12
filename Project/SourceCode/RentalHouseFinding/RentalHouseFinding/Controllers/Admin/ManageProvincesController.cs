@@ -18,7 +18,7 @@ namespace RentalHouseFinding.Controllers
         [Authorize(Roles = "Admin")]
         public ViewResult Index()
         {
-            return View(_db.Provinces.ToList());
+            return View(_db.Provinces.Where(p => !p.IsDeleted).ToList());
         }
 
         //

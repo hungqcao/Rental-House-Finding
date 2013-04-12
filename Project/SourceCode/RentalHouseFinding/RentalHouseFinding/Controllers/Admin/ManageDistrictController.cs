@@ -28,7 +28,7 @@ namespace RentalHouseFinding.Controllers.Admin
             if (provinceId == null)
             {
                 ViewBag.Provinces = new SelectList(_db.Provinces, "Id", "Name");
-                var districts = _db.Districts.Include("Province");
+                var districts = _db.Districts.Where(d => !d.IsDeleted).Include("Province");
                 var grid = new WebGrid(districts, ajaxUpdateContainerId: "container-grid");
                 ViewBag.Grid = grid;
                 return View();
@@ -36,7 +36,8 @@ namespace RentalHouseFinding.Controllers.Admin
             else
             {
                 ViewBag.Provinces = new SelectList(_db.Provinces, "Id", "Name", provinceId);
-                var districts = _db.Districts.Where(d => d.ProvinceId == provinceId).Include("Province");
+                var districts = _db.Districts
+                    .Where(d => d.ProvinceId == provinceId && !d.IsDeleted).Include("Province");
                 var grid = new WebGrid(districts, ajaxUpdateContainerId: "container-grid");
                 ViewBag.Grid = grid;
                 return View();
@@ -58,7 +59,7 @@ namespace RentalHouseFinding.Controllers.Admin
             if (form["provinceId"] == null)
             {
                 ViewBag.Provinces = new SelectList(_db.Provinces, "Id", "Name");
-                var districts = _db.Districts.Where( d => !d.IsDeleted).Include("Province");
+                var districts = _db.Districts.Where(d => !d.IsDeleted).Include("Province");
                 var grid = new WebGrid(districts, ajaxUpdateContainerId: "container-grid");
                 ViewBag.Grid = grid;
                 return View();
