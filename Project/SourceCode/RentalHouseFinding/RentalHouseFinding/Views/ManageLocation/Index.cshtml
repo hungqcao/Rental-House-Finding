@@ -12,16 +12,23 @@
 <script src="@Url.Content("~/Scripts/RHFScripts.js")" type="text/javascript"></script>
 @using (Html.BeginForm("Index", "ManageLocation", FormMethod.Post))
 {
+    <fieldset id="fieldsetAd">
+    <div class="districtDiv">
+     <div class="rolesManageTextBox" style="margin-top:14px;">
     @Html.DropDownList("ProvinceId",
         (IEnumerable<SelectListItem>)ViewBag.Provinces,
-            "Chọn Tỉnh/Thành phố", new {@class = "selectAd"})
+            "Tỉnh/Thành phố", new {@class = "selectAd"})
+            </div>
+     <div class="rolesManageTextBox" style="margin-top:14px;">
     @Html.DropDownList("DistrictId",
         (IEnumerable<SelectListItem>)ViewBag.Districts,
             "Chọn Quận/Huyện", new { @class = "selectAd" })<span style="display: none;"></span>
+            </div>
     <div id="districtSubmit">
         <input type="submit" class="searchLink" name="Search" value="Search" />
     </div>
-
+    </div>
+    </fieldset>
 }
 <div id="container-grid">
 @{
