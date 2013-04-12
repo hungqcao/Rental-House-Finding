@@ -119,7 +119,6 @@ INSERT INTO Districts (Name, Lat, Lon, ProvinceId, IsDeleted) VALUES (N'Huyện 
 INSERT INTO Districts (Name, Lat, Lon, ProvinceId, IsDeleted) VALUES (N'Huyện Trà Lĩnh', 22.7903474, 106.32283380000001, 13, 0);
 INSERT INTO Districts (Name, Lat, Lon, ProvinceId, IsDeleted) VALUES (N'Quận Cái Răng', 9.9992392, 105.80435720000003, 14, 0);
 INSERT INTO Districts (Name, Lat, Lon, ProvinceId, IsDeleted) VALUES (N'Quận Ninh Kiều', 10.0280487, 105.76445960000001, 14, 0);
-INSERT INTO Districts (Name, Lat, Lon, ProvinceId, IsDeleted) VALUES (N'Quận Ô Môn', 38.0070587, , 14, 0);
 INSERT INTO Districts (Name, Lat, Lon, ProvinceId, IsDeleted) VALUES (N'Quận Bình Thủy', 10.0679866, 105.7233814, 14, 0);
 INSERT INTO Districts (Name, Lat, Lon, ProvinceId, IsDeleted) VALUES (N'Quận Thốt Nốt', 10.2405338, 105.53368150000006, 14, 0);
 INSERT INTO Districts (Name, Lat, Lon, ProvinceId, IsDeleted) VALUES (N'Huyện Cờ Đỏ', 10.1135304, 105.45367179999994, 14, 0);
