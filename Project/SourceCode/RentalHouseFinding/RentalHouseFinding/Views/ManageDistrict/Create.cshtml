@@ -44,8 +44,17 @@
             @Html.LabelFor(model => model.ProvinceId, "Tỉnh/Thành")
         </div>
         <div class="editor-field">
-            @Html.DropDownList("ProvinceId", String.Empty)
+            @Html.DropDownListFor(model => model.ProvinceId, null, "Tỉnh/Thành", new { @class = "selectAd" })
             @Html.ValidationMessageFor(model => model.ProvinceId)
+        </div>
+</div>
+<div class="rolesManageCheck">
+        <div class="editor-label">
+            @Html.LabelFor(model => model.IsDeleted, "Đã xóa")
+        </div>
+        <div class="editor-field">
+            @Html.EditorFor(model => model.IsDeleted)
+            @Html.ValidationMessageFor(model => model.IsDeleted)
         </div>
 </div>
     <div class="rolesManageSubmit">

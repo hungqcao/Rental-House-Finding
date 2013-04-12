@@ -33,10 +33,10 @@
                                                  new { id = @item.ID })">@item.Name</a></text>),
                         grid.Column("Lat", "Kinh độ"),
                         grid.Column("Lon", "Vĩ độ"),
-                        grid.Column(header: "Địa điểm phụ", format: @<text>
+                        grid.Column(header: "Địa điểm lân cận", format: @<text>
                                                  <a href="@Url.Action("Index", 
                                                  "ManageLocation", 
-                                                 new { districtId = @item.ID })">Địa điểm phụ</a></text>),
+                                                 new { districtId = @item.ID })">Địa điểm lân cận</a></text>),
                         grid.Column("Province.Name", "Tỉnh/Thành")
                     ));
         }
