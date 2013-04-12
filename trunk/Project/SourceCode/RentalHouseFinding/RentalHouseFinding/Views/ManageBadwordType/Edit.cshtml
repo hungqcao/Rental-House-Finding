@@ -9,27 +9,33 @@
 
 @using (Html.BeginForm()) {
     @Html.ValidationSummary(true)
-    <fieldset id="fieldsetAd">
+        <fieldset id="fieldsetAd">
 
-        @Html.HiddenFor(model => model.Id)
-<div class="rolesManageDiv">
-        <div class="editor-label">
-            @Html.LabelFor(model => model.Name, "Loại")
+            @Html.HiddenFor(model => model.Id)
+        <div class="rolesManageDiv">
+                <div class="editor-label">
+                    @Html.LabelFor(model => model.Name, "Loại")
+                </div>
+                <div class="editor-field">
+                    @Html.EditorFor(model => model.Name)
+                    @Html.ValidationMessageFor(model => model.Name)
+                </div>
         </div>
-        <div class="editor-field">
-            @Html.EditorFor(model => model.Name)
-            @Html.ValidationMessageFor(model => model.Name)
+        <div class="rolesManageCheck">
+                <div class="editor-label">
+                    Xóa
+                </div>
+                <div class="editor-field">
+                    @Html.CheckBox("IsDeleted")
+                </div>
         </div>
-</div>
-<div class="rolesManageSubmit">
-        <p>
-            <input type="submit" class="saveChange" value="Lưu" />
-        </p>
+        <div class="rolesManageSubmit">
+            <p>
+                <input type="submit" class="saveChange" value="Lưu" />
+            </p>
         </div>
     </fieldset>
 }
 
-
-
-    <div class="backLink"><a href="../../ManageBadwordtype"><img src="../../Content/images/Back.png" /></a>
-    </div>
+<div class="backLink"><a href="../../ManageBadwordtype"><img src="../../Content/images/Back.png" /></a>
+</div>

@@ -98,8 +98,16 @@ namespace RentalHouseFinding.Controllers.Admin
         // POST: /ManageBadword/Edit/5
         [Authorize(Roles = "Admin")]
         [HttpPost]
-        public ActionResult Edit(BadWords badwords)
+        public ActionResult Edit(BadWords badwords, FormCollection form, int id)
         {
+            if (form["IsDeleted"] != "false")
+            {
+                var tmp = _db.BadWords.Where(bw => bw.Id == id).FirstOrDefault();
+                _db.BadWords.DeleteObject(tmp);
+                _db.SaveChanges();
+                return RedirectToAction("Index");
+            }
+
             if (ModelState.IsValid)
             {
                 _db.BadWords.Attach(badwords);
@@ -110,7 +118,6 @@ namespace RentalHouseFinding.Controllers.Admin
             ViewBag.TypeId = new SelectList(_db.BadWordTypes, "Id", "Name", badwords.TypeId);
             return View(badwords);
         }
-
         protected override void Dispose(bool disposing)
         {
             _db.Dispose();

@@ -32,13 +32,20 @@
             @Html.ValidationMessageFor(model => model.TypeId)
         </div>
 </div>
+<div class="rolesManageCheck">
+        <div class="editor-label">
+            Xóa
+        </div>
+        <div class="editor-field">
+            @Html.CheckBox("IsDeleted")
+        </div>
+</div>
 <div class="rolesManageSubmit">
         <p>
             <input type="submit" class="saveChange" value="Lưu" />
         </p>
         </div>
-    </fieldset>
+</fieldset>
 }
-
-    <div class="backLink"><a href="../../ManageBadword"><img src="../../Content/images/Back.png" /></a>
-    </div></a>
+<div class="backLink"><a href="../../ManageBadword"><img src="../../Content/images/Back.png" /></a>
+</div></a>
