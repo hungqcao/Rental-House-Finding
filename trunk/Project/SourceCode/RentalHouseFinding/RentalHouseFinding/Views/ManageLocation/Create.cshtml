@@ -10,8 +10,8 @@
 
 @using (Html.BeginForm()) {
     @Html.ValidationSummary(true)
-    <fieldset>
-        <div class="rolesManageTextBox">
+    <fieldset id="fieldsetAd">
+        <div class="rolesManageDiv">
             <div class="editor-label">
                 @Html.LabelFor(model => model.Name)
             </div>
@@ -29,7 +29,7 @@
                 @Html.ValidationMessageFor(model => model.DistrictId)
             </div>
         </div>
-        <div style="display: none;">
+        <div class="rolesManageCheck" style="width:120px;margin-left:45px;">
             <div class="editor-label">
                 @Html.LabelFor(model => model.IsCreatedByUser)
             </div>
@@ -38,12 +38,14 @@
                 @Html.ValidationMessageFor(model => model.IsCreatedByUser)
             </div>
         </div>
+        <div class="rolesManageSubmit">
         <p>
-            <input type="submit" value="Create" />
+            <input type="submit" class="createLink" value="Create" />
         </p>
+        </div>
     </fieldset>
 }
 
-<div>
-    @Html.ActionLink("Back to List", "Index")
-</div>
+
+    <div class="backLink"><a href="../../ManageLocation"><img src="../../Content/images/Back.png" /></a>
+    </div>
