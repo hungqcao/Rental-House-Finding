@@ -65,9 +65,7 @@ namespace RentalHouseFinding.Controllers.Admin
                 l.Name,
                 District = (from d in _db.Districts 
                             where (d.Id == l.DistrictId) 
-                            select d.Name).FirstOrDefault(),
-                l.Lat,
-                l.Lon
+                            select d.Name).FirstOrDefault()
             }).OrderBy(l => l.Id)
                 .Skip(MAX_RECORD_PER_PAGE * ((int)page - 1)).Take(MAX_RECORD_PER_PAGE);
             var grid = new WebGrid(ajaxUpdateContainerId: "container-grid"
@@ -116,9 +114,7 @@ namespace RentalHouseFinding.Controllers.Admin
                 l.Name,
                 District = (from d in _db.Districts
                             where (d.Id == l.DistrictId)
-                            select d.Name).FirstOrDefault(),
-                l.Lat,
-                l.Lon
+                            select d.Name).FirstOrDefault()
             }).OrderBy(l => l.Id)
                 .Skip(MAX_RECORD_PER_PAGE * ((int)page - 1)).Take(MAX_RECORD_PER_PAGE);
             var grid = new WebGrid(ajaxUpdateContainerId: "container-grid", 
