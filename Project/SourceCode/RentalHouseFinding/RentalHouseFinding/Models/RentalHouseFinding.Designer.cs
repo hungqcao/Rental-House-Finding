@@ -2456,8 +2456,6 @@ namespace RentalHouseFinding.Models
         /// Create a new Facilities object.
         /// </summary>
         /// <param name="hasInternet">Initial value of the HasInternet property.</param>
-        /// <param name="electricityFee">Initial value of the ElectricityFee property.</param>
-        /// <param name="waterFee">Initial value of the WaterFee property.</param>
         /// <param name="hasTVCable">Initial value of the HasTVCable property.</param>
         /// <param name="hasBed">Initial value of the HasBed property.</param>
         /// <param name="hasWaterHeater">Initial value of the HasWaterHeater property.</param>
@@ -2470,12 +2468,10 @@ namespace RentalHouseFinding.Models
         /// <param name="hasSecurity">Initial value of the HasSecurity property.</param>
         /// <param name="postIdFacilities">Initial value of the PostIdFacilities property.</param>
         /// <param name="facilityTemplateId">Initial value of the FacilityTemplateId property.</param>
-        public static Facilities CreateFacilities(global::System.Boolean hasInternet, global::System.Double electricityFee, global::System.Double waterFee, global::System.Boolean hasTVCable, global::System.Boolean hasBed, global::System.Boolean hasWaterHeater, global::System.Boolean isAllowCooking, global::System.Boolean hasMotorParkingLot, global::System.Boolean hasToilet, global::System.Boolean hasAirConditioner, global::System.Boolean hasGarage, global::System.Boolean isStayWithOwner, global::System.Boolean hasSecurity, global::System.Int32 postIdFacilities, global::System.Int32 facilityTemplateId)
+        public static Facilities CreateFacilities(global::System.Boolean hasInternet, global::System.Boolean hasTVCable, global::System.Boolean hasBed, global::System.Boolean hasWaterHeater, global::System.Boolean isAllowCooking, global::System.Boolean hasMotorParkingLot, global::System.Boolean hasToilet, global::System.Boolean hasAirConditioner, global::System.Boolean hasGarage, global::System.Boolean isStayWithOwner, global::System.Boolean hasSecurity, global::System.Int32 postIdFacilities, global::System.Int32 facilityTemplateId)
         {
             Facilities facilities = new Facilities();
             facilities.HasInternet = hasInternet;
-            facilities.ElectricityFee = electricityFee;
-            facilities.WaterFee = waterFee;
             facilities.HasTVCable = hasTVCable;
             facilities.HasBed = hasBed;
             facilities.HasWaterHeater = hasWaterHeater;
@@ -2521,9 +2517,9 @@ namespace RentalHouseFinding.Models
         /// <summary>
         /// No Metadata Documentation available.
         /// </summary>
-        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=false)]
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=true)]
         [DataMemberAttribute()]
-        public global::System.Double ElectricityFee
+        public Nullable<global::System.Double> ElectricityFee
         {
             get
             {
@@ -2538,16 +2534,16 @@ namespace RentalHouseFinding.Models
                 OnElectricityFeeChanged();
             }
         }
-        private global::System.Double _ElectricityFee;
-        partial void OnElectricityFeeChanging(global::System.Double value);
+        private Nullable<global::System.Double> _ElectricityFee;
+        partial void OnElectricityFeeChanging(Nullable<global::System.Double> value);
         partial void OnElectricityFeeChanged();
     
         /// <summary>
         /// No Metadata Documentation available.
         /// </summary>
-        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=false)]
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=true)]
         [DataMemberAttribute()]
-        public global::System.Double WaterFee
+        public Nullable<global::System.Double> WaterFee
         {
             get
             {
@@ -2562,8 +2558,8 @@ namespace RentalHouseFinding.Models
                 OnWaterFeeChanged();
             }
         }
-        private global::System.Double _WaterFee;
-        partial void OnWaterFeeChanging(global::System.Double value);
+        private Nullable<global::System.Double> _WaterFee;
+        partial void OnWaterFeeChanging(Nullable<global::System.Double> value);
         partial void OnWaterFeeChanged();
     
         /// <summary>
@@ -3020,264 +3016,264 @@ namespace RentalHouseFinding.Models
         /// </summary>
         [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=false)]
         [DataMemberAttribute()]
-        public global::System.Boolean Column1
+        public global::System.Boolean HasAirConditioner
         {
             get
             {
-                return _Column1;
+                return _HasAirConditioner;
             }
             set
             {
-                OnColumn1Changing(value);
-                ReportPropertyChanging("Column1");
-                _Column1 = StructuralObject.SetValidValue(value);
-                ReportPropertyChanged("Column1");
-                OnColumn1Changed();
+                OnHasAirConditionerChanging(value);
+                ReportPropertyChanging("HasAirConditioner");
+                _HasAirConditioner = StructuralObject.SetValidValue(value);
+                ReportPropertyChanged("HasAirConditioner");
+                OnHasAirConditionerChanged();
             }
         }
-        private global::System.Boolean _Column1 = false;
-        partial void OnColumn1Changing(global::System.Boolean value);
-        partial void OnColumn1Changed();
+        private global::System.Boolean _HasAirConditioner = false;
+        partial void OnHasAirConditionerChanging(global::System.Boolean value);
+        partial void OnHasAirConditionerChanged();
     
         /// <summary>
         /// No Metadata Documentation available.
         /// </summary>
         [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=false)]
         [DataMemberAttribute()]
-        public global::System.Boolean Column2
+        public global::System.Boolean HasBed
         {
             get
             {
-                return _Column2;
+                return _HasBed;
             }
             set
             {
-                OnColumn2Changing(value);
-                ReportPropertyChanging("Column2");
-                _Column2 = StructuralObject.SetValidValue(value);
-                ReportPropertyChanged("Column2");
-                OnColumn2Changed();
+                OnHasBedChanging(value);
+                ReportPropertyChanging("HasBed");
+                _HasBed = StructuralObject.SetValidValue(value);
+                ReportPropertyChanged("HasBed");
+                OnHasBedChanged();
             }
         }
-        private global::System.Boolean _Column2 = false;
-        partial void OnColumn2Changing(global::System.Boolean value);
-        partial void OnColumn2Changed();
+        private global::System.Boolean _HasBed = false;
+        partial void OnHasBedChanging(global::System.Boolean value);
+        partial void OnHasBedChanged();
     
         /// <summary>
         /// No Metadata Documentation available.
         /// </summary>
         [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=false)]
         [DataMemberAttribute()]
-        public global::System.Boolean Column3
+        public global::System.Boolean HasGarage
         {
             get
             {
-                return _Column3;
+                return _HasGarage;
             }
             set
             {
-                OnColumn3Changing(value);
-                ReportPropertyChanging("Column3");
-                _Column3 = StructuralObject.SetValidValue(value);
-                ReportPropertyChanged("Column3");
-                OnColumn3Changed();
+                OnHasGarageChanging(value);
+                ReportPropertyChanging("HasGarage");
+                _HasGarage = StructuralObject.SetValidValue(value);
+                ReportPropertyChanged("HasGarage");
+                OnHasGarageChanged();
             }
         }
-        private global::System.Boolean _Column3 = false;
-        partial void OnColumn3Changing(global::System.Boolean value);
-        partial void OnColumn3Changed();
+        private global::System.Boolean _HasGarage = false;
+        partial void OnHasGarageChanging(global::System.Boolean value);
+        partial void OnHasGarageChanged();
     
         /// <summary>
         /// No Metadata Documentation available.
         /// </summary>
         [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=false)]
         [DataMemberAttribute()]
-        public global::System.Boolean Column4
+        public global::System.Boolean HasInternet
         {
             get
             {
-                return _Column4;
+                return _HasInternet;
             }
             set
             {
-                OnColumn4Changing(value);
-                ReportPropertyChanging("Column4");
-                _Column4 = StructuralObject.SetValidValue(value);
-                ReportPropertyChanged("Column4");
-                OnColumn4Changed();
+                OnHasInternetChanging(value);
+                ReportPropertyChanging("HasInternet");
+                _HasInternet = StructuralObject.SetValidValue(value);
+                ReportPropertyChanged("HasInternet");
+                OnHasInternetChanged();
             }
         }
-        private global::System.Boolean _Column4 = false;
-        partial void OnColumn4Changing(global::System.Boolean value);
-        partial void OnColumn4Changed();
+        private global::System.Boolean _HasInternet = false;
+        partial void OnHasInternetChanging(global::System.Boolean value);
+        partial void OnHasInternetChanged();
     
         /// <summary>
         /// No Metadata Documentation available.
         /// </summary>
         [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=false)]
         [DataMemberAttribute()]
-        public global::System.Boolean Column5
+        public global::System.Boolean HasMotorParking
         {
             get
             {
-                return _Column5;
+                return _HasMotorParking;
             }
             set
             {
-                OnColumn5Changing(value);
-                ReportPropertyChanging("Column5");
-                _Column5 = StructuralObject.SetValidValue(value);
-                ReportPropertyChanged("Column5");
-                OnColumn5Changed();
+                OnHasMotorParkingChanging(value);
+                ReportPropertyChanging("HasMotorParking");
+                _HasMotorParking = StructuralObject.SetValidValue(value);
+                ReportPropertyChanged("HasMotorParking");
+                OnHasMotorParkingChanged();
             }
         }
-        private global::System.Boolean _Column5 = false;
-        partial void OnColumn5Changing(global::System.Boolean value);
-        partial void OnColumn5Changed();
+        private global::System.Boolean _HasMotorParking = false;
+        partial void OnHasMotorParkingChanging(global::System.Boolean value);
+        partial void OnHasMotorParkingChanged();
     
         /// <summary>
         /// No Metadata Documentation available.
         /// </summary>
         [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=false)]
         [DataMemberAttribute()]
-        public global::System.Boolean Column6
+        public global::System.Boolean HasSecurity
         {
             get
             {
-                return _Column6;
+                return _HasSecurity;
             }
             set
             {
-                OnColumn6Changing(value);
-                ReportPropertyChanging("Column6");
-                _Column6 = StructuralObject.SetValidValue(value);
-                ReportPropertyChanged("Column6");
-                OnColumn6Changed();
+                OnHasSecurityChanging(value);
+                ReportPropertyChanging("HasSecurity");
+                _HasSecurity = StructuralObject.SetValidValue(value);
+                ReportPropertyChanged("HasSecurity");
+                OnHasSecurityChanged();
             }
         }
-        private global::System.Boolean _Column6 = false;
-        partial void OnColumn6Changing(global::System.Boolean value);
-        partial void OnColumn6Changed();
+        private global::System.Boolean _HasSecurity = false;
+        partial void OnHasSecurityChanging(global::System.Boolean value);
+        partial void OnHasSecurityChanged();
     
         /// <summary>
         /// No Metadata Documentation available.
         /// </summary>
         [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=false)]
         [DataMemberAttribute()]
-        public global::System.Boolean Column7
+        public global::System.Boolean HasToilet
         {
             get
             {
-                return _Column7;
+                return _HasToilet;
             }
             set
             {
-                OnColumn7Changing(value);
-                ReportPropertyChanging("Column7");
-                _Column7 = StructuralObject.SetValidValue(value);
-                ReportPropertyChanged("Column7");
-                OnColumn7Changed();
+                OnHasToiletChanging(value);
+                ReportPropertyChanging("HasToilet");
+                _HasToilet = StructuralObject.SetValidValue(value);
+                ReportPropertyChanged("HasToilet");
+                OnHasToiletChanged();
             }
         }
-        private global::System.Boolean _Column7 = false;
-        partial void OnColumn7Changing(global::System.Boolean value);
-        partial void OnColumn7Changed();
+        private global::System.Boolean _HasToilet = false;
+        partial void OnHasToiletChanging(global::System.Boolean value);
+        partial void OnHasToiletChanged();
     
         /// <summary>
         /// No Metadata Documentation available.
         /// </summary>
         [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=false)]
         [DataMemberAttribute()]
-        public global::System.Boolean Column8
+        public global::System.Boolean HasTVCable
         {
             get
             {
-                return _Column8;
+                return _HasTVCable;
             }
             set
             {
-                OnColumn8Changing(value);
-                ReportPropertyChanging("Column8");
-                _Column8 = StructuralObject.SetValidValue(value);
-                ReportPropertyChanged("Column8");
-                OnColumn8Changed();
+                OnHasTVCableChanging(value);
+                ReportPropertyChanging("HasTVCable");
+                _HasTVCable = StructuralObject.SetValidValue(value);
+                ReportPropertyChanged("HasTVCable");
+                OnHasTVCableChanged();
             }
         }
-        private global::System.Boolean _Column8 = false;
-        partial void OnColumn8Changing(global::System.Boolean value);
-        partial void OnColumn8Changed();
+        private global::System.Boolean _HasTVCable = false;
+        partial void OnHasTVCableChanging(global::System.Boolean value);
+        partial void OnHasTVCableChanged();
     
         /// <summary>
         /// No Metadata Documentation available.
         /// </summary>
         [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=false)]
         [DataMemberAttribute()]
-        public global::System.Boolean Column9
+        public global::System.Boolean HasWaterHeater
         {
             get
             {
-                return _Column9;
+                return _HasWaterHeater;
             }
             set
             {
-                OnColumn9Changing(value);
-                ReportPropertyChanging("Column9");
-                _Column9 = StructuralObject.SetValidValue(value);
-                ReportPropertyChanged("Column9");
-                OnColumn9Changed();
+                OnHasWaterHeaterChanging(value);
+                ReportPropertyChanging("HasWaterHeater");
+                _HasWaterHeater = StructuralObject.SetValidValue(value);
+                ReportPropertyChanged("HasWaterHeater");
+                OnHasWaterHeaterChanged();
             }
         }
-        private global::System.Boolean _Column9 = false;
-        partial void OnColumn9Changing(global::System.Boolean value);
-        partial void OnColumn9Changed();
+        private global::System.Boolean _HasWaterHeater = false;
+        partial void OnHasWaterHeaterChanging(global::System.Boolean value);
+        partial void OnHasWaterHeaterChanged();
     
         /// <summary>
         /// No Metadata Documentation available.
         /// </summary>
         [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=false)]
         [DataMemberAttribute()]
-        public global::System.Boolean Column10
+        public global::System.Boolean IsAllowCooking
         {
             get
             {
-                return _Column10;
+                return _IsAllowCooking;
             }
             set
             {
-                OnColumn10Changing(value);
-                ReportPropertyChanging("Column10");
-                _Column10 = StructuralObject.SetValidValue(value);
-                ReportPropertyChanged("Column10");
-                OnColumn10Changed();
+                OnIsAllowCookingChanging(value);
+                ReportPropertyChanging("IsAllowCooking");
+                _IsAllowCooking = StructuralObject.SetValidValue(value);
+                ReportPropertyChanged("IsAllowCooking");
+                OnIsAllowCookingChanged();
             }
         }
-        private global::System.Boolean _Column10 = false;
-        partial void OnColumn10Changing(global::System.Boolean value);
-        partial void OnColumn10Changed();
+        private global::System.Boolean _IsAllowCooking = false;
+        partial void OnIsAllowCookingChanging(global::System.Boolean value);
+        partial void OnIsAllowCookingChanged();
     
         /// <summary>
         /// No Metadata Documentation available.
         /// </summary>
         [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=false)]
         [DataMemberAttribute()]
-        public global::System.Boolean Column11
+        public global::System.Boolean IsStayWithOwner
         {
             get
             {
-                return _Column11;
+                return _IsStayWithOwner;
             }
             set
             {
-                OnColumn11Changing(value);
-                ReportPropertyChanging("Column11");
-                _Column11 = StructuralObject.SetValidValue(value);
-                ReportPropertyChanged("Column11");
-                OnColumn11Changed();
+                OnIsStayWithOwnerChanging(value);
+                ReportPropertyChanging("IsStayWithOwner");
+                _IsStayWithOwner = StructuralObject.SetValidValue(value);
+                ReportPropertyChanged("IsStayWithOwner");
+                OnIsStayWithOwnerChanged();
             }
         }
-        private global::System.Boolean _Column11 = false;
-        partial void OnColumn11Changing(global::System.Boolean value);
-        partial void OnColumn11Changed();
+        private global::System.Boolean _IsStayWithOwner = false;
+        partial void OnIsStayWithOwnerChanging(global::System.Boolean value);
+        partial void OnIsStayWithOwnerChanged();
 
         #endregion
     
@@ -3650,54 +3646,6 @@ namespace RentalHouseFinding.Models
         private global::System.Int32 _DistrictId;
         partial void OnDistrictIdChanging(global::System.Int32 value);
         partial void OnDistrictIdChanged();
-    
-        /// <summary>
-        /// No Metadata Documentation available.
-        /// </summary>
-        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=true)]
-        [DataMemberAttribute()]
-        public global::System.String Lat
-        {
-            get
-            {
-                return _Lat;
-            }
-            set
-            {
-                OnLatChanging(value);
-                ReportPropertyChanging("Lat");
-                _Lat = StructuralObject.SetValidValue(value, true);
-                ReportPropertyChanged("Lat");
-                OnLatChanged();
-            }
-        }
-        private global::System.String _Lat;
-        partial void OnLatChanging(global::System.String value);
-        partial void OnLatChanged();
-    
-        /// <summary>
-        /// No Metadata Documentation available.
-        /// </summary>
-        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=true)]
-        [DataMemberAttribute()]
-        public global::System.String Lon
-        {
-            get
-            {
-                return _Lon;
-            }
-            set
-            {
-                OnLonChanging(value);
-                ReportPropertyChanging("Lon");
-                _Lon = StructuralObject.SetValidValue(value, true);
-                ReportPropertyChanged("Lon");
-                OnLonChanged();
-            }
-        }
-        private global::System.String _Lon;
-        partial void OnLonChanging(global::System.String value);
-        partial void OnLonChanged();
     
         /// <summary>
         /// No Metadata Documentation available.
