@@ -152,10 +152,10 @@ namespace RentalHouseFinding
             log4net.Config.XmlConfigurator.Configure();
         }
 
-        /// <summary>
-        /// Handle application error on a global level.
-        /// Passes handling off to the ErrorController
-        /// </summary>
+        // <summary>
+        // Handle application error on a global level.
+        // Passes handling off to the ErrorController
+        // </summary>
         protected void Application_Error()
         {
             var exception = Server.GetLastError();

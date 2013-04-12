@@ -11,6 +11,7 @@
 <script type="text/javascript" src="@Url.Content("~/Scripts/jquery-ui-1.8.6.custom.min.js")"></script>
 <script type="text/javascript" src="@Url.Content("~/Scripts/jquery.autoGrowInput.js")"></script>
 <script type="text/javascript" src="@Url.Content("~/Scripts/jquery.tagedit.js")"></script>
+<script type="text/javascript" src="@Url.Content("~/Scripts/ScriptEditPage.js")"></script>
 <script src="@Url.Content("~/Content/js/jquery.screwdefaultbuttonsV2.min.js")" type="text/javascript"></script>
 <link href="@Url.Content("~/Content/css/listbox.css")" rel="stylesheet">
 @*
@@ -249,7 +250,6 @@
                 });
             });
         };
-
     });
 </script>
 <div id="postnew_wrapper">
@@ -428,21 +428,21 @@
                         <label>Giá tiền điện (VNĐ/số)</label>
 
                         <div class="clear"></div>
-                        @Html.TextBoxFor(model => model.ElectricityFee, new { @class = "electricPriceTbx", @Value="0" })
+                        @Html.TextBoxFor(model => model.ElectricityFee, new { @class = "electricPriceTbx" })
                         @Html.ValidationMessageFor(model => model.ElectricityFee)
                     </div>
                     <div class="infoElement">
                         <label>Giá tiền nước (VNĐ/khối) </label>
 
                         <div class="clear"></div>
-                        @Html.TextBoxFor(model => model.WaterFee, new { @class = "electricPriceTbx", @Value = "0" })
+                        @Html.TextBoxFor(model => model.WaterFee, new { @class = "electricPriceTbx" })
                         @Html.ValidationMessageFor(model => model.WaterFee)
                     </div>
                     <div class="infoElement">
                         <label>Giờ đóng cửa, cổng (nếu có)</label>
 
                         <div class="clear"></div>
-                        @Html.TextBoxFor(model => model.RestrictHours, new { @class = "electricPriceTbx", @Value = "0" })
+                        @Html.TextBoxFor(model => model.RestrictHours, new { @class = "electricPriceTbx" })
                         @Html.ValidationMessageFor(model => model.RestrictHours)
                     </div>
                     <div class="clear"></div>

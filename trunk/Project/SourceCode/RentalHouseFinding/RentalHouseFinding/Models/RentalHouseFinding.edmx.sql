@@ -2,7 +2,7 @@
 -- --------------------------------------------------
 -- Entity Designer DDL Script for SQL Server 2005, 2008, and Azure
 -- --------------------------------------------------
--- Date Created: 04/11/2013 05:20:56
+-- Date Created: 04/12/2013 21:49:00
 -- Generated from EDMX file: C:\RentalHouseFinding\Project\SourceCode\RentalHouseFinding\RentalHouseFinding\Models\RentalHouseFinding.edmx
 -- --------------------------------------------------
 
@@ -299,8 +299,8 @@ GO
 -- Creating table 'Facilities'
 CREATE TABLE [dbo].[Facilities] (
     [HasInternet] bit  NOT NULL,
-    [ElectricityFee] float  NOT NULL,
-    [WaterFee] float  NOT NULL,
+    [ElectricityFee] float  NULL,
+    [WaterFee] float  NULL,
     [HasTVCable] bit  NOT NULL,
     [HasBed] bit  NOT NULL,
     [HasWaterHeater] bit  NOT NULL,

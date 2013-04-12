@@ -8,6 +8,19 @@
 <!DOCTYPE html>
 <html>
 <head runat="server">
+    @*For meta tag*@
+    
+    <meta property="og:title" content="@Model.Title" />
+    <meta property="og:description" content="Các thông tin về @Model.Title @Model.NumberHouse @Model.Street @Model.Description" />
+    
+    @if (String.IsNullOrEmpty(Model.ImagesPath))
+    {
+        <meta property="og:image" content="@Url.Content("~/Content/images/thumbSample.png")" />
+    }
+    else
+    {
+        <meta property="og:image" content="@Url.Content(String.Format("~/{0}", @Model.ImagesPath))" />
+    } 
     <script src="@Url.Content("~/Scripts/jquery-1.6.3.min.js")" type="text/javascript"></script>
     <link href="@Url.Content("~/Content/css/reset.css")" rel="stylesheet" type="text/css" />
     <link href="@Url.Content("~/Content/css/Site.css")" rel="stylesheet" type="text/css" />
@@ -66,7 +79,7 @@
                    <span class="shortDesc">@Model.Title</span>
                 </div>
                 <div id="detailButton" class="right">
-                    @if (Model.UserId == CommonModel.GetUserIdByUsername(User.Identity.Name))
+                    @if (Model.UserId == CommonModel.GetUserIdByUsername(User.Identity.Name) || User.IsInRole("Admin"))
                     {
                         <div id="button-detail" class="right">
                             @Html.ActionLink("Chỉnh sửa", "edit", "post", new { id = Model.Id }, new { @class = "button-link_Edit left" })
@@ -182,21 +195,21 @@
                     <span class="blockLeftText"><b>Giá nhà:</b>&nbsp;@Model.Price triệu/tháng</span>
                     <span class="blockLeftText"><b>Diện tích:</b>&nbsp;@Model.Area m2</span> 
                      @* Check Yahoo & Skype*@
-                     @if (Model.ElectricityFee != 0)
+                     @if (Model.ElectricityFee.HasValue)
                      {
                        <span class="blockLeftText"> <b>Giá điện:</b>&nbsp;@Model.ElectricityFee VNĐ/số</span>
                      }
-                     @if (Model.WaterFee != 0)
+                     @if (Model.WaterFee.HasValue)
                      {
                        <span class="blockLeftText"><b>Giá nước:</b>&nbsp;@Model.WaterFee VNĐ/số</span> 
                      }
                            
-                              @if (!Model.RestrictHours.Equals("0"))
-                              {
-                            <span class="blockLeftText">
-                            <b>Giờ đóng cửa:</b>&nbsp;@Model.RestrictHours </span>}
-                            <span class="blockLeftText"
-                                ><b>Ngày đăng:</b>&nbsp;@Model.CreatedDate</span>
+                    @if (!string.IsNullOrEmpty(Model.RestrictHours))
+                    {
+                        <span class="blockLeftText">
+                        <b>Giờ đóng cửa:</b>&nbsp;@Model.RestrictHours </span>
+                    }
+                            <span class="blockLeftText"><b>Ngày đăng:</b>&nbsp;@Model.CreatedDate</span>
                     <span class="blockLeftText" style="margin-top: 10px;"><b>Liên hệ:</b>&nbsp;@Model.NameContact</span>
                     <div class="clear">
                     </div>

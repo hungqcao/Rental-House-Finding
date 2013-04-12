@@ -69,11 +69,11 @@ namespace RentalHouseFinding.Models
 
         [Display(Name = "Giá điện")]
         [Min(0, ErrorMessage = "Giá tiền phải lớn hơn hoặc bằng 0")]
-        public double ElectricityFee { get; set; }
+        public double? ElectricityFee { get; set; }
 
         [Display(Name = "Giá tiền nước")]
         [Min(0, ErrorMessage = "Giá tiền phải lớn hơn hoặc bằng 0")]
-        public double WaterFee { get; set; }
+        public double? WaterFee { get; set; }
 
         [Display(Name = "Có truyền hình cáp?")]
         public Boolean HasTVCable { get; set; }

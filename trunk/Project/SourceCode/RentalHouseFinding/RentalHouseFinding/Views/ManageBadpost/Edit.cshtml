@@ -12,6 +12,7 @@
 <script type="text/javascript" src="@Url.Content("~/Scripts/jquery.autoGrowInput.js")"></script>
 <script type="text/javascript" src="@Url.Content("~/Scripts/jquery.tagedit.js")"></script>
 <script src="@Url.Content("~/Content/js/jquery.screwdefaultbuttonsV2.min.js")" type="text/javascript"></script>
+<script type="text/javascript" src="@Url.Content("~/Scripts/ScriptEditPage.js")"></script>
 <script>
     //for validate number message.
     (function ($) {
@@ -472,7 +473,11 @@
                 <div class="leftContent">
                     <h1>Các địa điểm nổi bật xung quanh</h1>
                     <div class="clear"></div>
-                    <div class="ta_wrapper">
+                    <div id="location-wrapper" class="left" style="margin-right: 10px">
+                        <select id="locations">
+                        </select>
+                    </div>
+                    <div class="ta_wrapper left">
                         @foreach (KeyValuePair<int, string> kvp in Model.lstNearByPlace)
                         {
                             <input id="osSites" type="text" name="tag[@kvp.Key-a]" value="@kvp.Value" class="tag"/>
