@@ -901,7 +901,8 @@ span.field-validation-error
 }
 #listInfo .infoDetail 
 {
-    margin:5px 0 0 18px;
+    border-bottom: 1px solid darkgray;
+    margin:0 0 0 18px;
     display: block;
     float: left;
     padding: 5px 12px;
