@@ -103,6 +103,7 @@ namespace RentalHouseFinding.Controllers
             
             using (FullTextSearchHelper fullTextHelp = new FullTextSearchHelper())
             {
+                int numberOfResult;
                 var suggList = fullTextHelp.FullTextSearchPostWithWeightenScore(catId, 
                                                                                 proId, 
                                                                                 disId, 
@@ -113,7 +114,8 @@ namespace RentalHouseFinding.Controllers
                                                                                 int.Parse(Repository.GetAllConfiguration().Where(c => c.Name.Equals(ConstantColumnNameScoreNormalSearch.NEARBY_COLUMN_SCORE_NAME, StringComparison.CurrentCultureIgnoreCase)).Select(c => c.Value).FirstOrDefault().ToString()),
                                                                                 int.Parse(Repository.GetAllConfiguration().Where(c => c.Name.Equals(ConstantColumnNameScoreNormalSearch.NUMBER_ADDRESS_COLUMN_SCORE_NAME, StringComparison.CurrentCultureIgnoreCase)).Select(c => c.Value).FirstOrDefault().ToString()),
                                                                                 skipNum, 
-                                                                                takeNum);
+                                                                                takeNum,
+                                                                                out numberOfResult);
                 if (suggList != null)
                 {
                     var myData = suggList.Select(a => new SelectListItem()

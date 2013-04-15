@@ -2,7 +2,14 @@
 @{
     this.Layout = null;
 }
-
+<script type="text/javascript">
+    $('.showOnMap').bind('click', function () {
+        var latLon = $(this).attr("id").split("-");
+        window.map.setCenter(new google.maps.LatLng(latLon[0], latLon[1]));
+        window.map.setZoom(16);
+        return false;
+    });
+</script>
 @foreach (var item in Model)
 {
     <li>
@@ -14,15 +21,18 @@
                 <div  class="left"><span class="highlight">@Html.DisplayFor(modelItem => item.Price)</span><span class="hlText">&nbsp;triệu VND</span></div>
                 <div class="right"><span class="highlight">@Html.DisplayFor(modelItem => item.Area)</span><span class="hlText">&nbsp;m2</span></div>
             </div>
-            @if (String.IsNullOrEmpty(item.ImagesPath))
-            {
-                <img class="thumbnail right" src="@Url.Content("~/Content/images/thumbSample.png")" alt="image_sample"/>
-            }
-            else
-            {
-                <img class="thumbnail right" src="@Url.Content(String.Format("~/{0}",item.ImagesPath))" alt="image_sample"/>
-            } 
             
+            <div class="image-thumb left">
+                <span class="showOnMap left" id="@item.Lat-@item.Lon" >Bản đồ</span>
+                @if (String.IsNullOrEmpty(item.ImagesPath))
+                {
+                    <img class="thumbnail right" src="@Url.Content("~/Content/images/thumbSample.png")" alt="image_sample"/>
+                }
+                else
+                {
+                    <img class="thumbnail right" src="@Url.Content(String.Format("~/{0}",item.ImagesPath))" alt="image_sample"/>
+                } 
+            </div>
         </a>
     </li>
 }

@@ -941,7 +941,7 @@ span.field-validation-error
     color:#717171;
 }
 #listInfo .thumbnail {
-    margin: 30px 0px 15px 0px;
+    margin: 15px 0px 15px 0px;
     height: 58px;
     width: 77px;
 }
@@ -1036,11 +1036,15 @@ span.field-validation-error
 }
 #popup_wrapper .popup_header 
 {
-    width: 912px;
+    width: 100%;
     padding: 15px 43px 20px 15px;
-    height:70px;
     border-bottom: 1px solid #BEBEBE;
     border-bottom: 13px solid lightgray;
+}
+#header_detail 
+{
+    width: 700px;
+    margin-right: 20px;
 }
 .popup_header .type {
     color: #f88014;
@@ -1054,7 +1058,6 @@ span.field-validation-error
     color: #3a3a3d;
     font-size: 19px;
     margin-top: 5px;
-    width:550px;
     word-wrap:break-word;
     margin-left:21px;
 }
@@ -1063,9 +1066,9 @@ span.field-validation-error
      color: #3a3a3d;
     font-weight: 700;
     font-size: 24px;
-    width:520px;
     text-align:justify;
     margin-left:5px;
+    width: 535px;
     word-wrap:break-word;
 }
 .popup_header .highlight {
@@ -2542,81 +2545,81 @@ ul.tabs li.active{
 }
 #adminResultText
 {
-margin-bottom:10px;
-color:black;
-font-weight:bold;
+    margin-bottom:10px;
+    color:black;
+    font-weight:bold;
 }
 .createLink
 {
-background: url("../../Content/images/createnew.png") no-repeat transparent 0 0px;
-width:128px;
-height:40px;
-cursor:pointer;
-float:left;
+    background: url("../../Content/images/createnew.png") no-repeat transparent 0 0px;
+    width:128px;
+    height:40px;
+    cursor:pointer;
+    float:left;
 }
 .listDistrict
 {
-background: url("../../Content/images/listdistrict.png") no-repeat transparent 0 0px;
-width:156px;
-height:40px;
-cursor:pointer;
-margin-left:135px;
+    background: url("../../Content/images/listdistrict.png") no-repeat transparent 0 0px;
+    width:156px;
+    height:40px;
+    cursor:pointer;
+    margin-left:135px;
 }
 .listbadword
 {
-background: url("../../Content/images/listbadword.png") no-repeat transparent 0 0px;      
-width:128px;
-height:40px;
-cursor:pointer;
-margin-left:135px;
+    background: url("../../Content/images/listbadword.png") no-repeat transparent 0 0px;      
+    width:128px;
+    height:40px;
+    cursor:pointer;
+    margin-left:135px;
 }
         
 .saveChange
 {
-background: url("../../Content/images/savechange.png") no-repeat transparent 0 0px;
-width:128px;
-height:40px;
-cursor:pointer;
+    background: url("../../Content/images/savechange.png") no-repeat transparent 0 0px;
+    width:128px;
+    height:40px;
+    cursor:pointer;
 }
 .searchLink
 {
-background: url("../../Content/images/timkiem.png") no-repeat transparent 0 0px;
-width:128px;
-height:40px;
-cursor:pointer;
+    background: url("../../Content/images/timkiem.png") no-repeat transparent 0 0px;
+    width:128px;
+    height:40px;
+    cursor:pointer;
 }
 .backLink
 {        
-width:128px;
-height:40px;
-cursor:pointer;
-margin-top:10px;
+    width:128px;
+    height:40px;
+    cursor:pointer;
+    margin-top:10px;
 }
         
 .rolesManageDiv
 {
-width:200px;
-float:left;
+    width:200px;
+    float:left;
 }
             
 .rolesManageCheck
 {
-width:60px;
-float:left;
-margin:3px 0 0 15px;
+    width:60px;
+    float:left;
+    margin:3px 0 0 15px;
 }
                
 .rolesManageTextBox
 {
-width:110px;
-float:left;
-margin:5px 0 0 15px;
+    width:110px;
+    float:left;
+    margin:5px 0 0 15px;
 }
           
 .rolesManageSubmit
 {
-float:left;
-margin-top:35px;
+    float:left;
+    margin-top:35px;
 }
 .districtDiv{              
     width:100%;
@@ -2628,7 +2631,7 @@ margin-top:35px;
     margin-top:14px;
     float:left; 
     margin-right:10px;
-    }
+}
 #districtSubmit
 {
     float:left;
@@ -2660,35 +2663,35 @@ margin-top:35px;
     width: 130px;
     display: block;
     font-size:0px;
-    }
+}
     
-    #theImg
-    {
-        float:right;
-        padding: 4px 0 15px;
-        }
+#theImg
+{
+    float:right;
+    padding: 4px 0 15px;
+}
 #errorPage
 {
     margin: 0 auto;
     width: 670px;
     height:452px;
-    }
+}
     
- .btnActive
- {
-      background: url('../../Content/images/btnActive.png') no-repeat transparent 0 0;
+.btnActive
+{
+    background: url('../../Content/images/btnActive.png') no-repeat transparent 0 0;
     height: 40px;
     width: 130px;
     display: block;
     font-size:0px;
     margin-top:20px;
- }
- #SMSActive
- {
+}
+#SMSActive
+{
    font-size: 14px;
     margin-left: 20px;
     margin-top: 10px;   
-     }
+}
      
  #smsSuccess
  {
@@ -2697,7 +2700,7 @@ margin-top:35px;
      height:291px;
      display:block;
      cursor:pointer;
-     }
+ }
 .NearByWrapper
 {
     margin-top: 30px; 
@@ -2709,18 +2712,31 @@ margin-top:35px;
 {
     width:550px;
     word-wrap:word-break;
-     font-weight:400;
-      padding:10px;
-      font-size:15px;
-       font-style:italic;
-    }
-    #detailButton
-    {
-        position:relative;
-        display:block;      
-        }
+    font-weight:400;
+    padding:10px;
+    font-size:15px;
+    font-style:italic;
+}
+#detailButton
+{
+    position:relative;
+    display:block;      
+}
 #contactIcon
 {
-    
     height:65px;
-    }
+}
+.image-thumb
+{
+    width: 80px;
+}
+span.showOnMap
+{
+    background: url('../../Content/images/location.png') no-repeat transparent 0px 0;
+    height: 16px;
+    width: 40px;
+    padding-left: 20px;
+    color: #717171;
+    margin-left: 20px;
+    margin-top: 10px;
+}

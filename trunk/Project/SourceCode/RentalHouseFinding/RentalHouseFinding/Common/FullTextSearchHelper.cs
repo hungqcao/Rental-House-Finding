@@ -36,16 +36,19 @@ namespace RentalHouseFinding.Common
                                                                                                     int nearbyColumnScore,
                                                                                                     int numberAddressColumnScore,
                                                                                                     int skip, 
-                                                                                                    int take)
+                                                                                                    int take,
+                                                                                                    out int numberOfResult)
         {
             try
             {
-                var listSuggestion = _db.FullTextSearchPostWithWeightenScore(categoryId, provinceId, DistrictId, keyWords, titleColumnScore, descriptionColumnScore, streetColumnScore, nearbyColumnScore, numberAddressColumnScore).Skip(skip).Take(take);
-
-                return listSuggestion.ToList();
+                var listSuggestion = _db.FullTextSearchPostWithWeightenScore(categoryId, provinceId, DistrictId, keyWords, titleColumnScore, descriptionColumnScore, streetColumnScore, nearbyColumnScore, numberAddressColumnScore).ToList();
+                numberOfResult = listSuggestion.Count();
+                var listReturn = listSuggestion.Skip(skip).Take(take);
+                return listReturn.ToList();
             }
             catch (Exception ex)
             {
+                numberOfResult = 0;
                 return null;
             }
         }
@@ -69,7 +72,8 @@ namespace RentalHouseFinding.Common
                                                                 int isStayWithOwnerScore,
                                                                 int hasToiletScore,
                                                                 int skip, 
-                                                                int take)
+                                                                int take,
+                                                                out int numberOfResult)
         {
             try
             {
@@ -106,12 +110,14 @@ namespace RentalHouseFinding.Common
                                                                 hasWaterHeaterScore,
                                                                 isAllowCookingScore,
                                                                 isStayWithOwnerScore,
-                                                                hasToiletScore).Skip(skip).Take(take);
-
-                return listSuggestion.ToList();
+                                                                hasToiletScore).ToList();
+                numberOfResult = listSuggestion.Count();
+                var listReturn = listSuggestion.Skip(skip).Take(take);
+                return listReturn.ToList();
             }
             catch (Exception ex)
             {
+                numberOfResult = 0;
                 return null;
             }
         }

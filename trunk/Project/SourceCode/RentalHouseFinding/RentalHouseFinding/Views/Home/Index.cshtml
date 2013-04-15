@@ -22,7 +22,7 @@
             'transitionIn': 'none',
             'transitionOut': 'none',
             'type': 'iframe'
-        });  
+        });
     }
     function bindMouseHoverMarker(){
         var imageInactive = '@Url.Content("~/Content/images/inactive_marker.png")';
@@ -50,12 +50,6 @@
     }
 
    function initialize() {
-//        var selected = '@ViewBag.SelectedValue';
-//        if (selected == 0) {
-//            $("#DistrictId option").removeAttr('selected');
-//            $("#DistrictId").val(selected).attr('selected', 'selected');
-//            $("#DistrictId").next().text('Quận/Huyện');
-//        }
         var latlon = '@ViewBag.latlon'.split('|')[0];
         var centerMap = new google.maps.LatLng((latlon.split(',')[0]), (latlon.split(',')[1]));
         var zoomMap = '@ViewBag.latlon'.split('|')[1];
@@ -275,8 +269,19 @@
 @section head{
     <script type="text/javascript">
         function UpdateNumberListItem() {
-            var count = $("#ul-result").children().length;
-            $("#numberItem").html("<strong>" + count + "</strong> kết quả");
+            $.ajax({
+                url: 'home/GetNumberOfAllResult',
+                contentType: 'application/html; charset=utf-8',
+                type: 'GET',
+                dataType: 'html'
+            })
+            .success(function (result) {
+                var count = $("#ul-result").children().length;
+                $("#numberItem").html("<strong>" + count + "/" + result + "</strong> kết quả");
+            })
+            .error(function (xhr, status) {
+                xhr.abort();
+            });
         }
         $(document).ready(function () {
             $("#overlay").fadeOut();
