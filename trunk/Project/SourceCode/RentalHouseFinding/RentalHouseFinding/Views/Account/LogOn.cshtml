@@ -68,7 +68,7 @@
 @using (Html.BeginForm())
 {
         <div class="userInfo">
-            <h2>Đăng nhập vào tài khoản 5house.vn của bạn ngay. Nếu bạn quên mật khẩu, vui lòng click vào @Html.ActionLink("đây", "forgotpassword", "account")</h2>
+            <h2>Đăng nhập vào tài khoản 5house.vn của bạn ngay. Nếu bạn quên mật khẩu, vui lòng bấm vào @Html.ActionLink("đây", "forgotpassword", "account")</h2>
             <div class="blockInfo leftBlock requiredField" id="blockEmail">
                 @Html.LabelFor(m => m.UserName)
                 <div class="clear"></div>
@@ -89,7 +89,7 @@
         <div class="clear"></div>
         <div class="notification">
           @*  <img id="infoIcon" src="../../Content/images/login_infoIcon.png"/>*@
-            <span style="margin-top:5px;">@Html.ValidationSummary(true, "Đăng nhập không thành công, xin vui lòng kiểm tra lại thông báo và thử lại.")</span>
+            <span style="margin-top:5px;">@Html.ValidationSummary(true, "Tên tài khoản hoặc mật khẩu không chính xác.Vui lòng kiểm tra lại")</span>
         </div>
         <div class="buttons">
             <span>Lưu đăng nhập</span>

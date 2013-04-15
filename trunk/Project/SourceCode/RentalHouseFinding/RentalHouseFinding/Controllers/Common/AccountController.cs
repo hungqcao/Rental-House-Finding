@@ -238,19 +238,13 @@ namespace RentalHouseFinding.Controllers
         // POST: /Account/LogOn
 
         [HttpPost]
-        public ActionResult LogOn(LogOnModel model, string returnUrl, bool? status)
+        public ActionResult LogOn(LogOnModel model, string returnUrl)
         {
-            if (model.Password != null)
-            {
-                if (status == false || status == null)
-                {
-                    model.Password = GetMD5Hash(model.Password);
-                }
-            }
 
             if (ModelState.IsValid)
            
             {
+                model.Password = GetMD5Hash(model.Password);
                 if (Membership.ValidateUser(model.UserName, model.Password))
                 {
                     var user = (from p in _db.Users where p.Username == model.UserName select new { p.RoleId }).FirstOrDefault();
