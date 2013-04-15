@@ -92,7 +92,7 @@
 
         function SendRepost(mydata) {
             $.ajax({
-                url: "/service/ReportPost",
+                url: "/service/ReportPost?callback=?",
                 type: "POST",
                 data: mydata,
                 error: function () {

@@ -181,7 +181,7 @@
                             <div id="detailButton" class="right">
                                 @if (Model.UserId == CommonModel.GetUserIdByUsername(User.Identity.Name) || User.IsInRole("Admin"))
                                 {
-                                    <div id="button-detail" class="right">
+                                    <div id="button-detail">
                                         @Html.ActionLink("Chỉnh sửa", "edit", "post", new { id = Model.Id }, new { @class = "button-link_Edit left" })
                                         @Html.ActionLink("Xóa", "delete", "post", new { id = Model.Id }, new { @class = "button-link_Del left", @onclick = "return confirm('Bạn có chắc chắn muốn xóa bài này?');" })
                                     </div>

@@ -28,7 +28,7 @@
         var imageInactive = '@Url.Content("~/Content/images/inactive_marker.png")';
         var imageActive = '@Url.Content("~/Content/images/active_marker.png")';
 
-        $("#ul-result li a").mouseover(function () {
+        $("#ul-result li div.fancybox").mouseover(function () {
             var id = $(this).attr('id').split('-')[1];
             if (window.markers1 != null) {
                 for (var key in window.markers1.marker) {
@@ -197,7 +197,7 @@
         bindMouseHoverMarker();
         var source;
         $.ajax({
-            url: 'home/GetSectionSideListPost',
+            url: 'home/GetSectionSideListPost?callback=?',
             contentType: 'application/html; charset=utf-8',
             type: 'GET',
             dataType: 'html',
@@ -208,10 +208,16 @@
         })
         .success(function (result) {
             $('#ul-result').append(result);
-            $("a.fancybox").fancybox({
-                'width': '85%',
-                'height': '100%',
-                'type': 'iframe'
+            $('div.fancybox').bind('click', function () {
+                $.fancybox({
+                    'href': $(this).attr("title"),
+                    'width': '85%',
+                    'height': '100%',
+                    'autoScale': false,
+                    'transitionIn': 'none',
+                    'transitionOut': 'none',
+                    'type': 'iframe'
+                });
             });
             UpdateNumberListItem();
             bindMouseHoverMarker();
@@ -274,7 +280,7 @@
     <script type="text/javascript">
         function UpdateNumberListItem() {
             $.ajax({
-                url: 'home/GetNumberOfAllResult',
+                url: 'home/GetNumberOfAllResult?callback=?',
                 contentType: 'application/html; charset=utf-8',
                 type: 'GET',
                 dataType: 'html'
@@ -295,7 +301,7 @@
                     $("#overlay").fadeIn();
                     // If we're at the bottom, show the overlay and retrieve the next page
                     $.ajax({
-                        url: 'home/GetSectionSideListPost',
+                        url: 'home/GetSectionSideListPost?callback=?',
                         contentType: 'application/html; charset=utf-8',
                         type: 'GET',
                         dataType: 'html',
@@ -306,10 +312,16 @@
                     })
                     .success(function (result) {
                         $('#ul-result').append(result);
-                        $("a.fancybox").fancybox({
-                            'width': '85%',
-                            'height': '100%',
-                            'type': 'iframe'
+                        $('div.fancybox').bind('click', function () {
+                            $.fancybox({
+                                'href': $(this).attr("title"),
+                                'width': '85%',
+                                'height': '100%',
+                                'autoScale': false,
+                                'transitionIn': 'none',
+                                'transitionOut': 'none',
+                                'type': 'iframe'
+                            });
                         });
                         $("#overlay").fadeOut();
                         UpdateNumberListItem();

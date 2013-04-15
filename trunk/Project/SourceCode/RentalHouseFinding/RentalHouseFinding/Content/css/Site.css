@@ -2474,17 +2474,16 @@ a.button-link:active {
     width:78px;
     height:30px;
     font-size:0px;
-    margin-left:40px;
-    }
-    .button-link_Del
+}
+.button-link_Del
 {
     background: url('../../Content/images/btnDelPost.png');
     cursor:pointer;
     width:78px;
     height:30px;
     font-size:0px;
-    }
-    #button-link_Cancel
+}
+#button-link_Cancel
 {
     background: url('../../Content/images/btnCancelEdit.png');
     cursor:pointer;
@@ -2492,9 +2491,9 @@ a.button-link:active {
     height:30px;
     font-size:0px;
     float:right;
-     margin-right: 10px;
+    margin-right: 10px;
     margin-top: 10px;
-    }
+}
 #btnDelete.button-link
 {
     background: red;
@@ -2750,4 +2749,8 @@ span.showOnMap:hover
     color: orange;
     margin-left: 20px;
     margin-top: 10px;
+}
+#button-detail
+{
+    margin-left: 36px;
 }
