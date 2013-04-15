@@ -18,7 +18,7 @@
     function deleteGallery(obj) {
         if (confirm("Bạn có muốn xóa ảnh này không?")) {
             $.ajax({
-                url: ROOT + 'postedit/DeleteImage',
+                url: ROOT + 'postedit/DeleteImage?callback=?',
                 contentType: 'application/html; charset=utf-8',
                 type: 'GET',
                 dataType: 'html',
@@ -42,7 +42,7 @@
 
     function LoadGallery() {
         $.ajax({
-            url: ROOT + 'postedit/ViewImage',
+            url: ROOT + 'postedit/ViewImage?callback=?',
             contentType: 'application/html; charset=utf-8',
             type: 'GET',
             dataType: 'html'

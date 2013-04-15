@@ -60,7 +60,7 @@ $(document).ready(function () {
                 return false;
             }
             $.ajax({
-                url: "service/GetFullTextSuggestion", type: "GET", dataType: "json",
+                url: "service/GetFullTextSuggestion?callback=?", type: "GET", dataType: "json",
                 data: { categoryId: $("#CategoryId option:selected").val(), provinceId: $("#ProvinceId option:selected").val(), districtId: $("#DistrictId option:selected").val(), keyWord: request.term, skip: 0, take: 10 },
                 success: function (data) {
                     response($.map(data, function (item) {

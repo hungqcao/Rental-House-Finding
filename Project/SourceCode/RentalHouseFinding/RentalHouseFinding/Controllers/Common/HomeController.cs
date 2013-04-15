@@ -9,6 +9,7 @@ using RentalHouseFinding.Caching;
 
 namespace RentalHouseFinding.Controllers
 {
+    [OutputCache(NoStore = true, Duration = 0, VaryByParam = "*")]
     public class HomeController : Controller
     {
         private RentalHouseFindingEntities _db = new RentalHouseFindingEntities();

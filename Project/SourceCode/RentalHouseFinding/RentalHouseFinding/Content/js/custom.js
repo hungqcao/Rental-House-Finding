@@ -4,7 +4,7 @@
     if (e.id == 'resultPanel') {
         $('#resultContent').html('<img src="/Content/images/ajax-loader.gif")" />');
         $.ajax({
-            url: '/service/GetAllUserFavorite',
+            url: '/service/GetAllUserFavorite?callback=?',
             contentType: 'application/html; charset=utf-8',
             type: 'GET',
             dataType: 'html'
@@ -47,7 +47,7 @@ function removeFavoriteInList(id) {
             if (success) {
                 $('#resultContent').html('<img src="/Content/images/ajax-loader.gif")" />');
                 $.ajax({
-                    url: '/service/GetAllUserFavorite',
+                    url: '/service/GetAllUserFavorite?callback=?',
                     contentType: 'application/html; charset=utf-8',
                     type: 'GET',
                     dataType: 'html'
@@ -77,7 +77,7 @@ function ComparePost() {
             data += $("input:checkbox:checked")[i].id + "|";
     }
     $.ajax({
-        url: '/service/ComparePost',
+        url: '/service/ComparePost?callback=?',
         contentType: 'application/html; charset=utf-8',
         type: 'GET',
         dataType: 'html',
