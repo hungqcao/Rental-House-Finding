@@ -18,6 +18,7 @@ namespace RentalHouseFinding.Caching
         IEnumerable<EmailTemplate> GetAllEmailTemplate();
         IEnumerable<PostStatuses> GetAllPostStatus();
         IEnumerable<AdvanceSearchScore> GetAllAdvanceSearchScore();
+        IEnumerable<BadWords> GetAllBadWords();
     }
 
     public class CacheRepository : ICacheRepository
@@ -184,6 +185,27 @@ namespace RentalHouseFinding.Caching
             return data;
         }
 
+        public IEnumerable<BadWords> GetAllBadWords()
+        {
+            // First, check the cache
+            IEnumerable<BadWords> data = Cache.Get("BadWords") as IEnumerable<BadWords>;
+
+            // If it's not in the cache, we need to read it from the repository
+            if (data == null)
+            {
+                // Get the repository data
+                data = DataContext.BadWords.ToList();
+
+                if (data.Any())
+                {
+                    // Put this data into the cache for 30 minutes
+                    Cache.Set("BadWords", data, int.Parse(ConfigurationManager.AppSettings["TimeRefreshCache"]));
+                }
+            }
+
+            return data;
+        }
+
         public void ClearCache()
         {
             Cache.Invalidate("districts");
@@ -193,6 +215,7 @@ namespace RentalHouseFinding.Caching
             Cache.Invalidate("EmailTemplate");
             Cache.Invalidate("PostStatus");
             Cache.Invalidate("AdvanceSearchScore");
+            Cache.Invalidate("BadWords");
         }
     }
 }

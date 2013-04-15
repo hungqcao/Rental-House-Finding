@@ -345,13 +345,14 @@
                     </div>
                 <h2>Ảnh, video minh hoạ</h2>
                 <div class="clear"></div>
-                <div class="btnPlus">
+                <div id="uploadFile"  class="btnPlus">
                     <ul id="imageList">
                     </ul>
                     <div class="clear"></div>
-                    <div id="uploadFile">
+                    <div id="field0">
                         <label>Chọn ảnh: </label>
                         <input id="file0" name="images" type="file" />
+                        <a href="javascript:;" onclick="return removeFile();" class="removeImage">Xóa ảnh</a>
                         <a href="javascript:;" onclick="return addFile();" class="addImage">Thêm ảnh</a>
                     </div>
                 </div>

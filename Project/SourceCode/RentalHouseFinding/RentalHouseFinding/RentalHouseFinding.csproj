@@ -295,6 +295,7 @@
     <Content Include="Content\images\listdistrict.png" />
     <Content Include="Content\images\list_icon.png" />
     <Content Include="Content\images\loading.gif" />
+    <Content Include="Content\images\location.png" />
     <Content Include="Content\images\Login.png" />
     <Content Include="Content\images\login_btnDangNhap.png" />
     <Content Include="Content\images\login_fb.png" />
@@ -437,6 +438,8 @@
     <Content Include="Scripts\jquery-1.5.1.js" />
     <Content Include="Scripts\jquery-1.5.1.min.js" />
     <Content Include="Scripts\jquery-1.6.3.min.js" />
+    <Content Include="Scripts\jquery-migrate-1.1.1.js" />
+    <Content Include="Scripts\jquery-migrate-1.1.1.min.js" />
     <Content Include="Scripts\jquery-ui-1.8.11.js" />
     <Content Include="Scripts\jquery-ui-1.8.11.min.js" />
     <Content Include="Scripts\jquery-ui-1.8.6.custom.min.js" />

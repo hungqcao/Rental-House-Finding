@@ -11,6 +11,7 @@ using System.Net.Mail;
 using System.Net;
 using System.Reflection;
 using System.Collections.Generic;
+using RentalHouseFinding.Caching;
 
 namespace RentalHouseFinding.Common
 {
@@ -20,9 +21,10 @@ namespace RentalHouseFinding.Common
         {
             using (RentalHouseFindingEntities _db = new RentalHouseFindingEntities()) 
             {
+                ICacheRepository Repository = new CacheRepository();
                 StringBuilder sb = new StringBuilder();
                 string template = "({0})";
-                var regex = (from b in _db.BadWords select b).ToList();
+                var regex = (from b in Repository.GetAllBadWords() select b).ToList();
                 foreach (var word in regex)
                 {
                     sb.Append(string.Format(template, word.Word)).Append("|");
@@ -426,8 +428,19 @@ namespace RentalHouseFinding.Common
             string regex = CommonModel.BuildRegexBadWord();
 
             Type type = model.GetType();
-
+            
             Match match;
+            if (type.Name.Equals("String"))
+            {
+                match = Regex.Match(model.ToString(), regex, RegexOptions.IgnoreCase);
+
+                if (match.Success)
+                {
+                    return true;
+                }
+                return false;
+            }
+
             IList<PropertyInfo> props = new List<PropertyInfo>(type.GetProperties());
 
             foreach (PropertyInfo prop in props)
