@@ -63,6 +63,10 @@
 
         window.map = new google.maps.Map(document.getElementById('infoMap'),
             mapOptions);
+        // Limit the zoom level
+        google.maps.event.addListener(map, 'zoom_changed', function () {
+            if (map.getZoom() < 8) map.setZoom(8);
+        });
         var i = 0;
         var markers = [];
         window.markers1 = { marker: [] };         
