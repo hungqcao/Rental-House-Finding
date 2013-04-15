@@ -172,6 +172,15 @@ namespace RentalHouseFinding.Controllers
             }
         }
 
+        public int GetNumberOfAllResult()
+        {
+            if (Session["NumberOfAllResult"] != null)
+            {
+                return (int)Session["NumberOfAllResult"];
+            }
+            return 0;
+        }
+
         public ActionResult GetSectionSideListPost(int skipNum, int takeNum)
         {
             ViewBag.CategoryId = new SelectList(Repository.GetAllCategories(), "Id", "Name");
@@ -190,7 +199,7 @@ namespace RentalHouseFinding.Controllers
                     using (FullTextSearchHelper fullTextHelp = new FullTextSearchHelper())
                     {
                         IEnumerable<int> list = new List<int>();
-                        
+                        int numberOfResult = 0;
                         var suggList = fullTextHelp.FullTextSearchPostWithWeightenScore(_modelRequest.CategoryId,
                                                                                 _modelRequest.ProvinceId,
                                                                                 _modelRequest.DistrictId,
@@ -201,7 +210,9 @@ namespace RentalHouseFinding.Controllers
                                                                                 int.Parse(Repository.GetAllConfiguration().Where(c => c.Name.Equals(ConstantColumnNameScoreNormalSearch.NEARBY_COLUMN_SCORE_NAME, StringComparison.CurrentCultureIgnoreCase)).Select(c => c.Value).FirstOrDefault().ToString()),
                                                                                 int.Parse(Repository.GetAllConfiguration().Where(c => c.Name.Equals(ConstantColumnNameScoreNormalSearch.NUMBER_ADDRESS_COLUMN_SCORE_NAME, StringComparison.CurrentCultureIgnoreCase)).Select(c => c.Value).FirstOrDefault().ToString()),
                                                                                 skipNum,
-                                                                                takeNum);
+                                                                                takeNum,
+                                                                                out numberOfResult);
+                        Session["NumberOfAllResult"] = numberOfResult;
                         List<Posts> query = new List<Posts>();
                         if (suggList != null)
                         {
@@ -239,6 +250,7 @@ namespace RentalHouseFinding.Controllers
                     using (FullTextSearchHelper fullTextHelp = new FullTextSearchHelper())
                     {
                         IEnumerable<int> list = new List<int>();
+                        int numberOfResult = 0;
                         var suggList = fullTextHelp.AdvanceSearch(_modelRequest.CategoryId, 
                                                                   _modelRequest.ProvinceId, 
                                                                   _modelRequest.DistrictId, 
@@ -258,7 +270,9 @@ namespace RentalHouseFinding.Controllers
                                                                   _modelRequest.IsStayWithOwnerScore,
                                                                   _modelRequest.HasToiletScore,
                                                                   skipNum, 
-                                                                  takeNum);
+                                                                  takeNum,
+                                                                  out numberOfResult);
+                        Session["NumberOfAllResult"] = numberOfResult;
                         List<Posts> query = new List<Posts>();
                         if (suggList != null)
                         {

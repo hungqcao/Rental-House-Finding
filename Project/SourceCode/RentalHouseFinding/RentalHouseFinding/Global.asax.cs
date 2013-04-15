@@ -26,6 +26,12 @@ namespace RentalHouseFinding
             routes.IgnoreRoute("{resource}.axd/{*pathInfo}");
 
             //Tai khoan
+
+            routes.MapRoute(
+                "UserChangePassword",
+                "tai-khoan/thay-doi-mat-khau",
+                new { controller = "Account", action = "ChangePassword" }
+            );
             routes.MapRoute(
                 "AccountFBUserDetail",
                 "tai-khoan/FacebookUserDetail/",
