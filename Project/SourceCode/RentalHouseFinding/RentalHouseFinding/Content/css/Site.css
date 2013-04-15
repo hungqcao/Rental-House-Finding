@@ -122,7 +122,7 @@ body{
 #header{
 	margin: 10px auto 0px;
     max-width: 1054px;
-	height: 120px;
+	height: 100px;
 	font-family: Calibri, Arial,Helvetica,Sans-Serif;
     font-size: 14px;
 }
@@ -878,8 +878,9 @@ span.field-validation-error
     padding-bottom: 27px;
 }
 #listInfo b {
-    color: #52666e;
+    color: #3a3a3d;
 }
+
 #infoMap {
    /* width: 100%;*/
    width: 708px;
@@ -2737,6 +2738,16 @@ span.showOnMap
     width: 40px;
     padding-left: 20px;
     color: #717171;
+    margin-left: 20px;
+    margin-top: 10px;
+}
+span.showOnMap:hover
+{
+    background: url('../../Content/images/location.png') no-repeat transparent 0px 0;
+    height: 16px;
+    width: 40px;
+    padding-left: 20px;
+    color: orange;
     margin-left: 20px;
     margin-top: 10px;
 }
