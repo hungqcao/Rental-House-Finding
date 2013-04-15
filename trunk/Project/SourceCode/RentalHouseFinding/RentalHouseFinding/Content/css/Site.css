@@ -1063,13 +1063,13 @@ span.field-validation-error
     margin-left:21px;
 }
 .popup_header .address {
-        margin-top: 3px;
-     color: #3a3a3d;
+    margin-top: 3px;
+    color: #3a3a3d;
     font-weight: 700;
     font-size: 24px;
     text-align:justify;
     margin-left:5px;
-    width: 535px;
+    width: 500px;
     word-wrap:break-word;
 }
 .popup_header .highlight {
