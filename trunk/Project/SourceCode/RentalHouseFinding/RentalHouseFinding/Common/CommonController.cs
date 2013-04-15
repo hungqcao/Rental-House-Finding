@@ -46,7 +46,7 @@ namespace RentalHouseFinding.Common
                                 string[] lstValue = Request.Form[i].Trim().Split(',');
                                 foreach (string item in lstValue)
                                 {
-                                    if (!string.IsNullOrEmpty(item))
+                                    if (!string.IsNullOrEmpty(item) && !CommonModel.FilterHasBadContent(item))
                                     {
                                         location = new Locations();
                                         location.DistrictId = model.DistrictId;
@@ -98,24 +98,6 @@ namespace RentalHouseFinding.Common
 
             string strFormD = words.Normalize(NormalizationForm.FormD);
             return regex.Replace(strFormD, String.Empty).Replace('\u0111', 'd').Replace('\u0110', 'D');
-        }
-        public static DateTime ConvertToDateTime(string dateTime)
-        {
-            try
-            {
-                IFormatProvider theCultureInfo = new CultureInfo("en-GB", true);
-
-                DateTime theDateTime = DateTime.Parse(dateTime, theCultureInfo, DateTimeStyles.AssumeLocal);
-
-                //var temp = dateTime.Split(' ');
-                //var dtfi = new DateTimeFormatInfo {ShortDatePattern = "dd-MM-yyyy HH:mm:ss", DateSeparator = "/"};
-                //DateTime objDate = Convert.ToDateTime(temp[0], dtfi);))
-                return theDateTime;
-            }
-            catch (Exception)
-            {
-                return DateTime.Today;
-            }
         }
 
         public static string GetCenterMap(SearchViewModel model)

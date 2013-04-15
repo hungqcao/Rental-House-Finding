@@ -102,7 +102,7 @@ namespace RentalHouseFinding.Controllers
         [HttpGet]
         public ActionResult DetailsBox(int id, string name)
         {
-            var post = (from p in _db.Posts where p.Id == id select p).FirstOrDefault();
+            var post = (from p in _db.Posts where (p.Id == id && !p.IsDeleted) select p).FirstOrDefault();
             if (post == null)
             {
                 return null;
@@ -213,9 +213,9 @@ namespace RentalHouseFinding.Controllers
                         userId = CommonModel.GetUserIdByUsername(User.Identity.Name);
                         postToCreate.UserId = userId;
                     }
+
                     _db.Posts.AddObject(postToCreate);
                     _db.SaveChanges();
-
                     //Nearby places
                     Dictionary<int, string> lstNearbyId = CommonController.GetListNearbyLocations(model, Request);
                     PostLocations postLocation;
@@ -231,16 +231,28 @@ namespace RentalHouseFinding.Controllers
                     }
                     if (!string.IsNullOrEmpty(nearbyPlace))
                     {
-                        nearbyPlace = nearbyPlace.Remove(nearbyPlace.Length - 2);
-                        postToCreate.NearbyPlace = nearbyPlace;
-                        _db.ObjectStateManager.ChangeObjectState(postToCreate, System.Data.EntityState.Modified);
-                        _db.SaveChanges();
+                        if (!CommonModel.FilterHasBadContent(nearbyPlace))
+                        {
+                            nearbyPlace = nearbyPlace.Remove(nearbyPlace.Length - 2);
+                            postToCreate.NearbyPlace = nearbyPlace;
+                            _db.ObjectStateManager.ChangeObjectState(postToCreate, System.Data.EntityState.Modified);
+                            _db.SaveChanges();
+                        }
+                        else
+                        {
+                            postToCreate.StatusId = 2;
+                            TempData["MessagePendingPostNew"] = "Bài đăng có chứa những từ không cho phép, chúng tôi sẽ duyệt trước khi đăng lên hệ thống";
+                            TempData["Pending"] = true;
+                            TempData["Success"] = false;
+                            _db.ObjectStateManager.ChangeObjectState(postToCreate, System.Data.EntityState.Modified);
+                            _db.SaveChanges();
+                        }
                     }
 
                     //Images post
                     PostImages imageToCreate = null;
 
-                    if (!(images.Count() == 0 || images == null))
+                    if (!(images.Count() == 0 || images == null || images.Count() >= 11))
                     {
                         foreach (HttpPostedFileBase image in images)
                         {

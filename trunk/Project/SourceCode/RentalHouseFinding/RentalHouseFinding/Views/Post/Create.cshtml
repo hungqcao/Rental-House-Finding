@@ -402,10 +402,11 @@
                 <label>Hình ảnh minh hoạ</label>
 
                 <div class="clear"></div>
-                <div class="btnPlus">
-                    <div id="uploadFile">
+                <div id="uploadFile" class="btnPlus">
+                    <div id="field0">
                         <label>Chọn ảnh: </label>
                         <input id="file0" name="images" type="file" />
+                        <a href="javascript:;" onclick="return removeFile();" class="removeImage">Xóa ảnh</a>
                         <a href="javascript:;" onclick="return addFile();" class="addImage">Thêm ảnh</a>
                     </div>
                 </div>

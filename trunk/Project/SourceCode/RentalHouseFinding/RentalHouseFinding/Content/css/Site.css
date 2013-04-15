@@ -1037,8 +1037,8 @@ span.field-validation-error
 }
 #popup_wrapper .popup_header 
 {
-    width: 100%;
-    padding: 15px 43px 20px 15px;
+
+    padding: 15px 39px 20px 15px;
     border-bottom: 1px solid #BEBEBE;
     border-bottom: 13px solid lightgray;
 }
@@ -2278,7 +2278,7 @@ textarea#Description {
     height: 35px;
     width: 45px;
     position: absolute;
-    right: 0px;
+    right: 35px;
     top: 0px;
     font-size: 0px;
     margin-top:13px;
@@ -2295,7 +2295,7 @@ textarea#Description {
     font-size: 0px;
     margin-top:13px;
 }
-#uploadFile, .uploadItem
+#uploadFile, .uploadItem, #field0
 {
     position:relative;
     margin-top: 10px;
@@ -2735,7 +2735,7 @@ span.showOnMap
 {
     background: url('../../Content/images/location.png') no-repeat transparent 0px 0;
     height: 16px;
-    width: 40px;
+    width: 45px;
     padding-left: 20px;
     color: #717171;
     margin-left: 20px;
