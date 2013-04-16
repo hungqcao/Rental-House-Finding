@@ -4,8 +4,10 @@
 }
 <script type="text/javascript">
     $(document).ready(function () {
-        $("#grid th")[5].setAttribute('id', '8');
-        $('#8').find('a').prepend('<img id="theImg" src="../../Content/images/down.png" />')
+        if (("#grid th")[5] == 'undefined') {
+            $("#grid th")[5].setAttribute('id', '8');
+            $('#8').find('a').prepend('<img id="theImg" src="../../Content/images/down.png" />')
+        }
     });
 </script>
 <script type="text/javascript">

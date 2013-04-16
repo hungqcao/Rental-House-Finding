@@ -2296,7 +2296,7 @@ textarea#Description {
     height: 35px;
     width: 45px;
     position: absolute;
-    right: 35px;
+    right: 0px;
     top: 0px;
     font-size: 0px;
     margin-top:13px;
@@ -2308,7 +2308,7 @@ textarea#Description {
     height: 35px;
     width: 45px;
     position: absolute;
-    right: 0px;
+    right: 35px;
     top: 0px;
     font-size: 0px;
     margin-top:13px;
