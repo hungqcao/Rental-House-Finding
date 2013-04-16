@@ -37,7 +37,7 @@ namespace RentalHouseFinding.Models
         [Display(Name = "OpenID")]
         public string OpenID { get; set; }
 
-        [Required(ErrorMessage = "xin vui lòng nhập tài khoản")]
+        [Required(ErrorMessage = "Xin vui lòng nhập tài khoản")]
         [Display(Name = "Tên đăng nhập")]
         public string UserName { get; set; }
 

@@ -35,7 +35,7 @@ namespace RentalHouseFinding.Models
         public int DistrictId { get; set; }
 
         [Display(Name = "Địa chỉ cụ thể")]
-        [Required(ErrorMessage = "Vui lòng điền địa chỉ cụ thể")]
+        [Required(ErrorMessage = "Xin vui lòng điền địa chỉ cụ thể")]
         public string NumberHouse { get; set; }
 
         [Display(Name = "Đường phố")]
