@@ -13,8 +13,10 @@
 </script>
 <script>
     $(document).ready(function () {
-        $("#grid th")[3].setAttribute('id', '8');
-        $('#8').find('a').prepend('<img id="theImg" src="../../Content/images/down.png" />')
+        if (("#grid th")[3] == 'undefined') {
+            $("#grid th")[3].setAttribute('id', '8');
+            $('#8').find('a').prepend('<img id="theImg" src="../../Content/images/down.png" />')
+        }
     });
 </script>
 <script type="text/javascript">
