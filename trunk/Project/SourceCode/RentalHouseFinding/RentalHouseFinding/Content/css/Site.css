@@ -157,6 +157,7 @@ body{
 #searchInfo{
 	width:650px;
 	margin:0 auto;
+	margin-top:20px;
 	padding-bottom: 6px;
 }
 #buttonSearch
@@ -2748,20 +2749,20 @@ span.showOnMap
 {
     background: url('../../Content/images/location.png') no-repeat transparent 0px 0;
     height: 16px;
-    width: 45px;
+    width: 47px;
     padding-left: 20px;
     color: #717171;
-    margin-left: 20px;
+    margin-left: 15px;
     margin-top: 10px;
 }
 span.showOnMap:hover
 {
     background: url('../../Content/images/location.png') no-repeat transparent 0px 0;
     height: 16px;
-    width: 40px;
+    width: 47px;
     padding-left: 20px;
     color: orange;
-    margin-left: 20px;
+    margin-left: 15px;
     margin-top: 10px;
 }
 #button-detail
