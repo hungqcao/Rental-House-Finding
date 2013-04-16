@@ -61,14 +61,7 @@ namespace RentalHouseFinding.Controllers.Admin
         [Authorize(Roles = "Admin")]
         public WebGrid getGrid(ManagePostsModel model, int page, string sort, string sortdir)
         {
-            IQueryable<Posts> postList = _db.Posts;
-            if (model.DistrictId != null)
-            {
-                if (model.DistrictId > 0)
-                {
-                    postList = _db.Posts.Where(p => p.DistrictId == model.DistrictId);
-                }
-            }
+            IQueryable<Posts> postList = _db.Posts;            
             if (model.UserId != null)
             {
                 if (model.UserId > 0)
@@ -76,12 +69,22 @@ namespace RentalHouseFinding.Controllers.Admin
                     postList = postList.Where(p => (p.UserId == model.UserId));
                 }
             }
-            if (model.ProvinceId != null && (model.DistrictId == null))
+            if (model.ProvinceId != null && (model.DistrictId == null || model.DistrictId == 0))
             {
                 if (model.ProvinceId > 0)
                 {
-                    var dictricts = (from d in _db.Districts where (d.ProvinceId == model.ProvinceId) select d.Id).ToArray();
-                    postList = postList.Where(p => dictricts.Contains(p.DistrictId));
+                    //var dictricts = (from d in _db.Districts where (d.ProvinceId == model.ProvinceId) select d.Id).ToArray();
+                    postList = postList.Where(p => (p.District.ProvinceId == model.ProvinceId ));
+                }
+
+            }
+
+            if (model.DistrictId != null)
+            {
+                if (model.DistrictId > 0)
+                {
+                    //var dictricts = (from d in _db.Districts where (d.ProvinceId == model.ProvinceId) select d.Id).ToArray();
+                    postList = postList.Where(p => (p.DistrictId == model.DistrictId));
                 }
 
             }
@@ -91,6 +94,14 @@ namespace RentalHouseFinding.Controllers.Admin
                 if (model.StatusId > 0)
                 {
                     postList = postList.Where(p => (p.StatusId == model.StatusId));
+                }
+
+            }
+            if (model.CategoryId != null)
+            {
+                if (model.CategoryId > 0)
+                {
+                    postList = postList.Where(p => (p.CategoryId == model.CategoryId));
                 }
 
             }
@@ -155,9 +166,7 @@ namespace RentalHouseFinding.Controllers.Admin
             var postViewList = postList.Select(p => new
             {
                 ID = p.Id,
-                User = (from usr in _db.Users
-                        where (usr.Id == p.UserId)
-                        select usr.Name).FirstOrDefault(),
+                User = p.User.Username,
                 p.Title,
                 CountRenew = (from pay in _db.Payments
                               where (pay.PostsId == p.Id)
@@ -169,9 +178,7 @@ namespace RentalHouseFinding.Controllers.Admin
                 PostStatus = (from stt in _db.PostStatuses
                               where (stt.Id == p.StatusId)
                               select stt.Name).FirstOrDefault(),
-                Category = (from cat in _db.Categories
-                            where (cat.Id == p.CategoryId)
-                            select cat.Name).FirstOrDefault()
+                Category = p.Category.Name
             });
             //Custom sort
             if (sortdir == "ASC")
