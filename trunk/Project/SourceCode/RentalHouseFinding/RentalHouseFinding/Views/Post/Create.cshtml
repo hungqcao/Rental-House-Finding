@@ -241,7 +241,7 @@
             if (geocoder) {
                 geocoder.geocode({ 'address': address }, function (results, status) {
                     circle.bindTo('center', selectedMarker, 'position');
-                    //circle.setVisible(false);
+                    circle.setVisible(false);
                     var bounds = circle.getBounds();
                     if (status == google.maps.GeocoderStatus.OK) {
                         if (bounds.contains(results[0].geometry.location)) {
