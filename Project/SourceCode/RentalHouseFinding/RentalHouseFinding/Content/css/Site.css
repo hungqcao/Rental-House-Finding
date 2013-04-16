@@ -803,7 +803,7 @@ span.field-validation-error
 #options 
 {
     width: 1054px;
-    overflow:hidden;
+    float: left;
     position: relative;
     margin-bottom: 15px;
 }
