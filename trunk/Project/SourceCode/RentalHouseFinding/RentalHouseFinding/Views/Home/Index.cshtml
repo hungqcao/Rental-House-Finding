@@ -114,6 +114,7 @@
                             animation: google.maps.Animation.DROP
                         });
                         i++;
+                        google.maps.event.addListener(map, 'click', function () { if (ib) { ib.close(); } });
                         google.maps.event.addListener(marker, 'click', (function (marker, i) {
                             return function () {
                                 var valuePost = itemData.Text.split('|');
