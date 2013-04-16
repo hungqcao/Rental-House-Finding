@@ -1162,33 +1162,36 @@ span.field-validation-error
     /*width:400px;*/
     word-wrap:break-word;
     height=100%;
-  
 
-    }
-    .detailDesc
+}
+.detailDesc
 {
     display:block;
     /*width:400px;*/
     word-wrap:break-word;
     height=100%;
   
-      margin-left:58px;
-    }
+    margin-left:58px;
+}
 
-    #Question 
-    {
-        margin-left:58px;
-        }
+#Question 
+{
+    margin-left:58px;
+}
+#Question label
+{
+    font-size: 18px;
+}
 #facilityDes
 {
     position:relative;
     border:1px dashed;
     padding:8px 40px 5px 40px;
-    }
+}
 #facilityDes span
 {
     font-style:italic;
-    }
+}
     
 .topBtnFavorite
 {

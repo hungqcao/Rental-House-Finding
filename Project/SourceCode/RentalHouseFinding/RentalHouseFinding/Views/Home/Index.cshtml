@@ -28,7 +28,7 @@
         var imageInactive = '@Url.Content("~/Content/images/inactive_marker.png")';
         var imageActive = '@Url.Content("~/Content/images/active_marker.png")';
 
-        $("#ul-result li div.fancybox").mouseover(function () {
+        $("#ul-result li a.fancybox").mouseover(function () {
             var id = $(this).attr('id').split('-')[1];
             if (window.markers1 != null) {
                 for (var key in window.markers1.marker) {
@@ -209,16 +209,10 @@
         })
         .success(function (result) {
             $('#ul-result').append(result);
-            $('div.fancybox').bind('click', function () {
-                $.fancybox({
-                    'href': $(this).attr("title"),
-                    'width': '85%',
-                    'height': '100%',
-                    'autoScale': false,
-                    'transitionIn': 'none',
-                    'transitionOut': 'none',
-                    'type': 'iframe'
-                });
+            $("a.fancybox").fancybox({
+                'width': '85%',
+                'height': '100%',
+                'type': 'iframe'
             });
             UpdateNumberListItem();
             bindMouseHoverMarker();
@@ -312,16 +306,10 @@
                     })
                     .success(function (result) {
                         $('#ul-result').append(result);
-                        $('div.fancybox').bind('click', function () {
-                            $.fancybox({
-                                'href': $(this).attr("title"),
-                                'width': '85%',
-                                'height': '100%',
-                                'autoScale': false,
-                                'transitionIn': 'none',
-                                'transitionOut': 'none',
-                                'type': 'iframe'
-                            });
+                        $("a.fancybox").fancybox({
+                            'width': '85%',
+                            'height': '100%',
+                            'type': 'iframe'
                         });
                         $("#overlay").fadeOut();
                         UpdateNumberListItem();
