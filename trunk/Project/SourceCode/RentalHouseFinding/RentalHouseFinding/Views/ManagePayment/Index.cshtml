@@ -66,8 +66,9 @@
                 @Html.TextBoxFor(model => model.CreatedDateTo,
              new { @id = "created_date_to", @placeholder = "Đến" })</td>            
         </tr>
+        <tr> <td><div style="float:left;"><input type="submit" class="searchLink" value="Search" id="search"/></div></td></tr>
         </table>
-    <div style="float:left;"><input type="submit" class="searchLink" value="Search" id="search"/></div>
+    <br />
 }
 
 <div id="container-grid">
@@ -75,7 +76,7 @@
     if (Model != null && Model.Grid.TotalRowCount > 0)
     {
         WebGrid grid = Model.Grid;
-        <span id="adminResultText">Có @grid.TotalRowCount giao dịch</span><br/>
+        <span id="adminResultText">Có @grid.TotalRowCount giao dịch</span><br/> <br />
         @grid.GetHtml(tableStyle: "webGrid", mode: WebGridPagerModes.All,
                             headerStyle: "header",
                             alternatingRowStyle: "alt",
