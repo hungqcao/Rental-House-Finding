@@ -10,8 +10,65 @@
         $('a[href="#"]').live('click', function (event) {
             event.preventDefault();
         });
+        $("#created_date_from").datepicker({ dateFormat: 'yy/mm/dd', changeMonth: true, changeYear: true });
+        $("#created_date_to").datepicker({ dateFormat: 'yy/mm/dd', changeMonth: true, changeYear: true });
+        $("#edited_date_from").datepicker({ dateFormat: 'yy/mm/dd', changeMonth: true, changeYear: true });
+        $("#edited_date_to").datepicker({ dateFormat: 'yy/mm/dd', changeMonth: true, changeYear: true });
+        $("#renewed_date_from").datepicker({ dateFormat: 'yy/mm/dd', changeMonth: true, changeYear: true });
+        $("#renewed_date_to").datepicker({ dateFormat: 'yy/mm/dd', changeMonth: true, changeYear: true });
+        $("#expire_date_from").datepicker({ dateFormat: 'yy/mm/dd', changeMonth: true, changeYear: true });
+        $("#expire_date_to").datepicker({ dateFormat: 'yy/mm/dd', changeMonth: true, changeYear: true });
     });
 </script>
+<script>
+    $(document).ready(function () {
+        $("#grid th")[3].setAttribute('id', '8');
+        $('#8').find('a').prepend('<img id="theImg" src="../../Content/images/down.png" />')
+    });
+</script>
+<script type="text/javascript">
+
+    function setArrows() {
+        var dir = $('#dir').val();
+        var col = $('#col').val();
+        var header = $('th a[href*=' + col + ']');
+        var i = -1;
+        if (col == 'PostTitle') {
+            i = 2;
+        }
+        if (col == 'CreatedDate') {
+            i = 3;
+        }
+        if (col == 'PhoneNumber') {
+            i = 4;
+        }
+        if (dir == 'Ascending') {
+            $("#grid th")[i].setAttribute('id', '8');
+            $('#8').find('a').prepend('<img id="theImg" src="../../Content/images/up.png" />')
+        }
+        if (dir == 'Descending') {
+            $("#grid th")[i].setAttribute('id', '8');
+            $('#8').find('a').prepend('<img id="theImg" src="../../Content/images/down.png" />')
+        }
+    };
+</script>
+@using (Html.BeginForm("Index", "ManagePayment", FormMethod.Post))
+{
+    <table>
+        <tr>
+            <th>
+                Ngày giao dịch
+            </th>            
+        </tr>
+        <tr>
+            <td>@Html.TextBoxFor(model => model.CreatedDateFrom,
+                        new { @id = "created_date_from", @placeholder = "Từ" })<br/>
+                @Html.TextBoxFor(model => model.CreatedDateTo,
+             new { @id = "created_date_to", @placeholder = "Đến" })</td>            
+        </tr>
+        </table>
+    <div style="float:left;"><input type="submit" class="searchLink" value="Search" id="search"/></div>
+}
 
 <div id="container-grid">
 @{
@@ -32,7 +89,7 @@
                                 new { id = @item.PostsId })">@item.PostTitle</a></text>),
                                 grid.Column("CreatedDate", "Ngày giao dịch", format: (item) => string.Format("{0:yyyy-MM-dd HH:mm:ss}", item.CreatedDate)),
                                 grid.Column("PhoneNumber", "Số điện thoại giao dịch")
-                                ));
+                                                                 ))@Html.Hidden("dir", grid.SortDirection) @Html.Hidden("col", grid.SortColumn);
     }
     else
     {
@@ -40,7 +97,7 @@
                     <div class="message-notificationUser message-informationUser">
                         <a class="close" id="btnCloseDiv"></a>
                         <div>
-                            Bạn chưa có giao dịch nào :)
+                            Không có giao dịch nào :)
                         </div>
                     </div>
                 </div>

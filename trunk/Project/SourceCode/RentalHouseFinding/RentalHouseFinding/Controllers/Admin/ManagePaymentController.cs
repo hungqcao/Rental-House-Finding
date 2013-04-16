@@ -29,9 +29,7 @@ namespace RentalHouseFinding.Controllers.Admin
                 Code = p.Post.Code,
                 p.CreatedDate,
                 p.PhoneNumber,
-                PostTitle = (from post in _db.Posts
-                             where (post.Id == p.PostsId)
-                             select post.Title).FirstOrDefault(),
+                PostTitle = p.Post.Title,
                 p.PostsId
             });
             
@@ -73,13 +71,14 @@ namespace RentalHouseFinding.Controllers.Admin
                 }
             }
 
-            var grid = new WebGrid(ajaxUpdateContainerId: "container-grid", 
+            var grid = new WebGrid(ajaxUpdateContainerId: "container-grid",ajaxUpdateCallback: "setArrows", 
                 rowsPerPage: MAX_RECORD_PER_PAGE);
             grid.Bind(paymentViewList, autoSortAndPage: false, rowCount: paymentList.Count());
             model.Grid = grid;
             ViewBag.Index = ((int)page - 1) * MAX_RECORD_PER_PAGE;
             return View(model);
         }
+        
         [HttpPost]
         public ActionResult Index(ManagePaymentModel model)
         {
@@ -102,13 +101,11 @@ namespace RentalHouseFinding.Controllers.Admin
                 Code = p.Post.Code,
                 p.CreatedDate,
                 p.PhoneNumber,
-                PostTitle = (from post in _db.Posts
-                             where (post.Id == p.PostsId)
-                             select post.Title).FirstOrDefault(),
+                PostTitle = p.Post.Title,
                 p.PostsId
             }).OrderByDescending(p => p.CreatedDate).Skip(0).Take(MAX_RECORD_PER_PAGE);
 
-            var grid = new WebGrid(ajaxUpdateContainerId: "container-grid",
+            var grid = new WebGrid(ajaxUpdateContainerId: "container-grid",ajaxUpdateCallback: "setArrows",
             canSort: false, rowsPerPage: MAX_RECORD_PER_PAGE);
             grid.Bind(paymentViewList, autoSortAndPage: false, rowCount: paymentList.Count());
             model.Grid = grid;

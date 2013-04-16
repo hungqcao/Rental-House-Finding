@@ -33,6 +33,9 @@
         if (col == 'PhoneNumber') {
             i = 4;
         }
+        if (col == 'CountRenew') {
+            i = 5;
+        }
         if (dir == 'Ascending') {
             $("#grid th")[i].setAttribute('id', '8');
             $('#8').find('a').prepend('<img id="theImg" src="../../Content/images/up.png" />')
@@ -60,7 +63,8 @@
                                 "Post",
                                 new { id = @item.PostsId })">@item.PostTitle</a></text>),
                                 grid.Column("CreatedDate", "Ngày giao dịch"),                                
-                                grid.Column("PhoneNumber", "Số điện thoại giao dịch", canSort: false) 
+                                grid.Column("PhoneNumber", "Số điện thoại giao dịch", canSort: false),
+                                grid.Column("CountRenew", "Số lần giao dịch") 
                                          ))@Html.Hidden("dir", grid.SortDirection) @Html.Hidden("col", grid.SortColumn);
     }
     else
