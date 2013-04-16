@@ -146,7 +146,7 @@ namespace RentalHouseFinding.Models
         public string StayWithOwner { get; set; }
         public string WaterHeater { get; set; }
         public string Address { get; set; }
-        public string Repost { get; set; }
+        public string Report { get; set; }
         public int? UserId { get; set; }
 
         public string NearByPlace { get; set; }

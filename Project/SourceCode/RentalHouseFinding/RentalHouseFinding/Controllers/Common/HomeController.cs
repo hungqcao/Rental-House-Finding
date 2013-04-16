@@ -6,12 +6,15 @@ using System.Web.Mvc;
 using RentalHouseFinding.Models;
 using RentalHouseFinding.Common;
 using RentalHouseFinding.Caching;
+using log4net;
+using System.Reflection;
 
 namespace RentalHouseFinding.Controllers
 {
     [OutputCache(NoStore = true, Duration = 0, VaryByParam = "*")]
     public class HomeController : Controller
     {
+        private readonly ILog log = LogManager.GetLogger(MethodBase.GetCurrentMethod().DeclaringType);
         private RentalHouseFindingEntities _db = new RentalHouseFindingEntities();
         private string _noInfo;
         public ICacheRepository Repository { get; set; }
@@ -167,8 +170,9 @@ namespace RentalHouseFinding.Controllers
                 }
                 return Json(new { message = "Fail" }, JsonRequestBehavior.AllowGet);
             }
-            catch
+            catch(Exception ex)
             {
+                log.Error(ex.Message);
                 return Json(new { message = "Fail" }, JsonRequestBehavior.AllowGet);
             }
         }
@@ -193,120 +197,129 @@ namespace RentalHouseFinding.Controllers
                 
             if (Session["SearchViewModel"] != null)
             {
-                SearchViewModel _modelRequest = (SearchViewModel)Session["SearchViewModel"];
-                
-                if (_modelRequest.IsNormalSearch)
+                try
                 {
-                    using (FullTextSearchHelper fullTextHelp = new FullTextSearchHelper())
+                    SearchViewModel _modelRequest = (SearchViewModel)Session["SearchViewModel"];
+
+                    if (_modelRequest.IsNormalSearch)
                     {
-                        IEnumerable<int> list = new List<int>();
-                        int numberOfResult = 0;
-                        var suggList = fullTextHelp.FullTextSearchPostWithWeightenScore(_modelRequest.CategoryId,
-                                                                                _modelRequest.ProvinceId,
-                                                                                _modelRequest.DistrictId,
-                                                                                _modelRequest.KeyWord,
-                                                                                int.Parse(Repository.GetAllConfiguration().Where(c => c.Name.Equals(ConstantColumnNameScoreNormalSearch.DESCRIPTION_COLUMN_SCORE_NAME, StringComparison.CurrentCultureIgnoreCase)).Select(c => c.Value).FirstOrDefault().ToString()),
-                                                                                int.Parse(Repository.GetAllConfiguration().Where(c => c.Name.Equals(ConstantColumnNameScoreNormalSearch.TITLE_COLUMN_SCORE_NAME, StringComparison.CurrentCultureIgnoreCase)).Select(c => c.Value).FirstOrDefault().ToString()),
-                                                                                int.Parse(Repository.GetAllConfiguration().Where(c => c.Name.Equals(ConstantColumnNameScoreNormalSearch.STREET_COLUMN_SCORE_NAME, StringComparison.CurrentCultureIgnoreCase)).Select(c => c.Value).FirstOrDefault().ToString()),
-                                                                                int.Parse(Repository.GetAllConfiguration().Where(c => c.Name.Equals(ConstantColumnNameScoreNormalSearch.NEARBY_COLUMN_SCORE_NAME, StringComparison.CurrentCultureIgnoreCase)).Select(c => c.Value).FirstOrDefault().ToString()),
-                                                                                int.Parse(Repository.GetAllConfiguration().Where(c => c.Name.Equals(ConstantColumnNameScoreNormalSearch.NUMBER_ADDRESS_COLUMN_SCORE_NAME, StringComparison.CurrentCultureIgnoreCase)).Select(c => c.Value).FirstOrDefault().ToString()),
-                                                                                skipNum,
-                                                                                takeNum,
-                                                                                out numberOfResult);
-                        Session["NumberOfAllResult"] = numberOfResult;
-                        List<Posts> query = new List<Posts>();
-                        if (suggList != null)
+                        using (FullTextSearchHelper fullTextHelp = new FullTextSearchHelper())
                         {
-                            list = suggList.Select(p => p.Id).ToList();
-                            foreach (int i in list)
+                            IEnumerable<int> list = new List<int>();
+                            int numberOfResult = 0;
+                            var suggList = fullTextHelp.FullTextSearchPostWithWeightenScore(_modelRequest.CategoryId,
+                                                                                    _modelRequest.ProvinceId,
+                                                                                    _modelRequest.DistrictId,
+                                                                                    _modelRequest.KeyWord,
+                                                                                    int.Parse(Repository.GetAllConfiguration().Where(c => c.Name.Equals(ConstantColumnNameScoreNormalSearch.DESCRIPTION_COLUMN_SCORE_NAME, StringComparison.CurrentCultureIgnoreCase)).Select(c => c.Value).FirstOrDefault().ToString()),
+                                                                                    int.Parse(Repository.GetAllConfiguration().Where(c => c.Name.Equals(ConstantColumnNameScoreNormalSearch.TITLE_COLUMN_SCORE_NAME, StringComparison.CurrentCultureIgnoreCase)).Select(c => c.Value).FirstOrDefault().ToString()),
+                                                                                    int.Parse(Repository.GetAllConfiguration().Where(c => c.Name.Equals(ConstantColumnNameScoreNormalSearch.STREET_COLUMN_SCORE_NAME, StringComparison.CurrentCultureIgnoreCase)).Select(c => c.Value).FirstOrDefault().ToString()),
+                                                                                    int.Parse(Repository.GetAllConfiguration().Where(c => c.Name.Equals(ConstantColumnNameScoreNormalSearch.NEARBY_COLUMN_SCORE_NAME, StringComparison.CurrentCultureIgnoreCase)).Select(c => c.Value).FirstOrDefault().ToString()),
+                                                                                    int.Parse(Repository.GetAllConfiguration().Where(c => c.Name.Equals(ConstantColumnNameScoreNormalSearch.NUMBER_ADDRESS_COLUMN_SCORE_NAME, StringComparison.CurrentCultureIgnoreCase)).Select(c => c.Value).FirstOrDefault().ToString()),
+                                                                                    skipNum,
+                                                                                    takeNum,
+                                                                                    out numberOfResult);
+                            Session["NumberOfAllResult"] = numberOfResult;
+                            List<Posts> query = new List<Posts>();
+                            if (suggList != null)
                             {
-                                query.Add((from p in _db.Posts
-                                             where p.Id == i
-                                             select p).FirstOrDefault());
+                                list = suggList.Select(p => p.Id).ToList();
+                                foreach (int i in list)
+                                {
+                                    query.Add((from p in _db.Posts
+                                               where p.Id == i
+                                               select p).FirstOrDefault());
+                                }
                             }
+                            var lstPostViewModel = query.Select(p => CommonModel.ConvertPostToPostViewModel(p, _noInfo));
+                            if (Session["NumberResult"] == null)
+                            {
+                                Session["NumberResult"] = lstPostViewModel.Count();
+                            }
+                            else
+                            {
+                                int result = (int)Session["NumberResult"] + lstPostViewModel.Count();
+                                Session["NumberResult"] = result;
+                            }
+                            if (Session["NumberSkip"] == null)
+                            {
+                                Session["NumberSkip"] = takeNum;
+                            }
+                            else if (lstPostViewModel.Count() > 0)
+                            {
+                                Session["NumberSkip"] = (int)Session["NumberSkip"] + takeNum;
+                            }
+                            return View(lstPostViewModel);
                         }
-                        var lstPostViewModel = query.Select(p => CommonModel.ConvertPostToPostViewModel(p, _noInfo));
-                        if (Session["NumberResult"] == null)
+                    }
+
+                    if (_modelRequest.IsAdvancedSearch)
+                    {
+                        using (FullTextSearchHelper fullTextHelp = new FullTextSearchHelper())
                         {
-                            Session["NumberResult"] = lstPostViewModel.Count();
+                            IEnumerable<int> list = new List<int>();
+                            int numberOfResult = 0;
+                            var suggList = fullTextHelp.AdvanceSearch(_modelRequest.CategoryId,
+                                                                      _modelRequest.ProvinceId,
+                                                                      _modelRequest.DistrictId,
+                                                                      _modelRequest.AreaMax,
+                                                                      _modelRequest.AreaMin,
+                                                                      _modelRequest.PriceMax,
+                                                                      _modelRequest.PriceMin,
+                                                                      _modelRequest.HasAirConditionerScore,
+                                                                      _modelRequest.HasBedScore,
+                                                                      _modelRequest.HasGarageScore,
+                                                                      _modelRequest.HasInternetScore,
+                                                                      _modelRequest.HasMotorParkingScore,
+                                                                      _modelRequest.HasSecurityScore,
+                                                                      _modelRequest.HasTVCableScore,
+                                                                      _modelRequest.HasWaterHeaterScore,
+                                                                      _modelRequest.IsAllowCookingScore,
+                                                                      _modelRequest.IsStayWithOwnerScore,
+                                                                      _modelRequest.HasToiletScore,
+                                                                      skipNum,
+                                                                      takeNum,
+                                                                      out numberOfResult);
+                            Session["NumberOfAllResult"] = numberOfResult;
+                            List<Posts> query = new List<Posts>();
+                            if (suggList != null)
+                            {
+                                list = suggList.Select(p => p.Id).ToList();
+                                foreach (int i in list)
+                                {
+                                    query.Add((from p in _db.Posts
+                                               where p.Id == i
+                                               select p).FirstOrDefault());
+                                }
+                            }
+                            var lstPostViewModel = query.Select(p => CommonModel.ConvertPostToPostViewModel(p, _noInfo));
+                            if (Session["NumberResult"] == null)
+                            {
+                                Session["NumberResult"] = lstPostViewModel.Count();
+                            }
+                            else
+                            {
+                                int result = (int)Session["NumberResult"] + lstPostViewModel.Count();
+                                Session["NumberResult"] = result;
+                            }
+                            if (Session["NumberSkip"] == null)
+                            {
+                                Session["NumberSkip"] = takeNum;
+                            }
+                            else if (lstPostViewModel.Count() > 0)
+                            {
+                                Session["NumberSkip"] = (int)Session["NumberSkip"] + takeNum;
+                            }
+                            return View(lstPostViewModel);
                         }
-                        else
-                        {
-                            int result = (int)Session["NumberResult"] + lstPostViewModel.Count();
-                            Session["NumberResult"] = result;
-                        }
-                        if (Session["NumberSkip"] == null)
-                        {
-                            Session["NumberSkip"] = takeNum;
-                        }else if (lstPostViewModel.Count() > 0)
-                        {
-                            Session["NumberSkip"] = (int)Session["NumberSkip"] + takeNum;
-                        }
-                        return View(lstPostViewModel);
                     }
                 }
-
-                if (_modelRequest.IsAdvancedSearch)
+                catch (Exception ex)
                 {
-                    using (FullTextSearchHelper fullTextHelp = new FullTextSearchHelper())
-                    {
-                        IEnumerable<int> list = new List<int>();
-                        int numberOfResult = 0;
-                        var suggList = fullTextHelp.AdvanceSearch(_modelRequest.CategoryId, 
-                                                                  _modelRequest.ProvinceId, 
-                                                                  _modelRequest.DistrictId, 
-                                                                  _modelRequest.AreaMax,
-                                                                  _modelRequest.AreaMin,
-                                                                  _modelRequest.PriceMax,
-                                                                  _modelRequest.PriceMin,
-                                                                  _modelRequest.HasAirConditionerScore,
-                                                                  _modelRequest.HasBedScore,
-                                                                  _modelRequest.HasGarageScore,
-                                                                  _modelRequest.HasInternetScore,
-                                                                  _modelRequest.HasMotorParkingScore,
-                                                                  _modelRequest.HasSecurityScore,
-                                                                  _modelRequest.HasTVCableScore,
-                                                                  _modelRequest.HasWaterHeaterScore,
-                                                                  _modelRequest.IsAllowCookingScore,
-                                                                  _modelRequest.IsStayWithOwnerScore,
-                                                                  _modelRequest.HasToiletScore,
-                                                                  skipNum, 
-                                                                  takeNum,
-                                                                  out numberOfResult);
-                        Session["NumberOfAllResult"] = numberOfResult;
-                        List<Posts> query = new List<Posts>();
-                        if (suggList != null)
-                        {
-                            list = suggList.Select(p => p.Id).ToList();
-                            foreach (int i in list)
-                            {
-                                query.Add((from p in _db.Posts
-                                           where p.Id == i
-                                           select p).FirstOrDefault());
-                            }
-                        }
-                        var lstPostViewModel = query.Select(p => CommonModel.ConvertPostToPostViewModel(p, _noInfo));
-                        if (Session["NumberResult"] == null)
-                        {
-                            Session["NumberResult"] = lstPostViewModel.Count();
-                        }
-                        else
-                        {
-                            int result = (int)Session["NumberResult"] + lstPostViewModel.Count();
-                            Session["NumberResult"] = result;
-                        }
-                        if (Session["NumberSkip"] == null)
-                        {
-                            Session["NumberSkip"] = takeNum;
-                        }
-                        else if (lstPostViewModel.Count() > 0)
-                        {
-                            Session["NumberSkip"] = (int)Session["NumberSkip"] + takeNum;
-                        }
-                        return View(lstPostViewModel);
-                    }
+                    log.Error(ex.Message);
                 }
             }
+
             return null;
         }
     }

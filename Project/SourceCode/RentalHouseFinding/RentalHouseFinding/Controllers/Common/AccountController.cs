@@ -18,6 +18,8 @@ using System.Net;
 using FBLogin.Models;
 using Recaptcha;
 using RentalHouseFinding.Caching;
+using log4net;
+using System.Reflection;
 
 
 
@@ -25,6 +27,7 @@ namespace RentalHouseFinding.Controllers
 {
     public class AccountController : Controller
     {
+        private readonly ILog log = LogManager.GetLogger(MethodBase.GetCurrentMethod().DeclaringType);
         public ICacheRepository Repository { get; set; }
         public AccountController()
             : this(new CacheRepository())
@@ -38,23 +41,31 @@ namespace RentalHouseFinding.Controllers
 
         public ActionResult FacebookUserDetail(string token, string returnUrl)
         {
-            FacebookClient.SetDefaultHttpWebRequestFactory(uri =>
+            try
             {
-                var request = new HttpWebRequestWrapper((HttpWebRequest)WebRequest.Create(uri));
-                //request.Proxy = new WebProxy("proxy", 8080); // normal .net IWebProxy
-                return request;
-            });
-            if (!String.IsNullOrEmpty(token))
-            {
-                var client = new FacebookClient(token);//Session["accessToken"].ToString());
-                dynamic fbresult = client.Get("me?fields=id,email,first_name,last_name,gender,locale,link,username,timezone,location,picture");
+                FacebookClient.SetDefaultHttpWebRequestFactory(uri =>
+                {
+                    var request = new HttpWebRequestWrapper((HttpWebRequest)WebRequest.Create(uri));
+                    //request.Proxy = new WebProxy("proxy", 8080); // normal .net IWebProxy
+                    return request;
+                });
+                if (!String.IsNullOrEmpty(token))
+                {
+                    var client = new FacebookClient(token);//Session["accessToken"].ToString());
+                    dynamic fbresult = client.Get("me?fields=id,email,first_name,last_name,gender,locale,link,username,timezone,location,picture");
 
-                UserDetailsModel facebookUser = Newtonsoft.Json.JsonConvert.DeserializeObject<UserDetailsModel>(fbresult.ToString());
-                return FBookOrOpenIdLogon(facebookUser,1, returnUrl);
+                    UserDetailsModel facebookUser = Newtonsoft.Json.JsonConvert.DeserializeObject<UserDetailsModel>(fbresult.ToString());
+                    return FBookOrOpenIdLogon(facebookUser, 1, returnUrl);
+                }
+                else
+                {
+                    //fail
+                    return RedirectToAction("LogOn", "Account");
+                }
             }
-            else
+            catch (Exception ex)
             {
-                //fail
+                log.Error(ex.Message);
                 return RedirectToAction("LogOn", "Account");
             }
             
@@ -89,6 +100,7 @@ namespace RentalHouseFinding.Controllers
                     catch (ProtocolException ex)
                     {
                         ViewBag.Message = ex.Message;
+                        log.Error(ex.Message);
                         return View("LogOn");
                     }
                 }
@@ -168,27 +180,35 @@ namespace RentalHouseFinding.Controllers
         }
         public ActionResult FBookOrOpenIdLogon(UserDetailsModel userDetail, int type, string returnUrl)
         {
-            // Attempt to register the user
-            MembershipCreateStatus createStatus;
-            CustomMembershipProvider customMP = new CustomMembershipProvider();
-            customMP.CreateUserForOpenID(userDetail, type, out createStatus);
-            if (createStatus == MembershipCreateStatus.Success ||createStatus == MembershipCreateStatus.DuplicateUserName)
+            try
             {
-                string userName = CommonModel.GetUserNameByOpenId(userDetail.id);
-                FormsAuthentication.SetAuthCookie(userName, false /* createPersistentCookie */);
-                if (Url.IsLocalUrl(returnUrl) && returnUrl.Length > 1 && returnUrl.StartsWith("/")
-                            && !returnUrl.StartsWith("//") && !returnUrl.StartsWith("/\\"))
+                // Attempt to register the user
+                MembershipCreateStatus createStatus;
+                CustomMembershipProvider customMP = new CustomMembershipProvider();
+                customMP.CreateUserForOpenID(userDetail, type, out createStatus);
+                if (createStatus == MembershipCreateStatus.Success || createStatus == MembershipCreateStatus.DuplicateUserName)
                 {
-                    return Redirect(returnUrl);
+                    string userName = CommonModel.GetUserNameByOpenId(userDetail.id);
+                    FormsAuthentication.SetAuthCookie(userName, false /* createPersistentCookie */);
+                    if (Url.IsLocalUrl(returnUrl) && returnUrl.Length > 1 && returnUrl.StartsWith("/")
+                                && !returnUrl.StartsWith("//") && !returnUrl.StartsWith("/\\"))
+                    {
+                        return Redirect(returnUrl);
+                    }
+                    return RedirectToAction("Index", "Search");
                 }
-                return RedirectToAction("Index", "Search");
+                else
+                {
+                    ModelState.AddModelError("", ErrorCodeToString(createStatus));
+                }
             }
-            else
+            catch (Exception ex)
             {
-                ModelState.AddModelError("", ErrorCodeToString(createStatus));
+                log.Error(ex.Message);
             }
-            // If we got this far, something failed, redisplay form
-            return View(userDetail);
+                // If we got this far, something failed, redisplay form
+                return View(userDetail);
+            
         }
 
         // GET: /Account/LogOn
@@ -206,30 +226,38 @@ namespace RentalHouseFinding.Controllers
         [HttpPost]
         public ActionResult ForgotPassword(ForgotPassword model)
         {
-            var user = _db.Users.Where(u => u.Username.Equals(model.Username, StringComparison.CurrentCultureIgnoreCase)).FirstOrDefault();
-            if (user != null)
+            try
             {
-                if (!string.IsNullOrEmpty(user.Email))
+                var user = _db.Users.Where(u => u.Username.Equals(model.Username, StringComparison.CurrentCultureIgnoreCase)).FirstOrDefault();
+                if (user != null)
                 {
-                    string newPassword = StringUtil.RandomStr();
-                    user.Password = GetMD5Hash(newPassword);
-                    _db.ObjectStateManager.ChangeObjectState(user, System.Data.EntityState.Modified);
-                    _db.SaveChanges();
-                    string emailTemplate = Repository.GetAllEmailTemplate().Where(e => e.Name.Equals(ConstantEmailTemplate.RECEIVE_FORGOT_PASSWORD, StringComparison.CurrentCultureIgnoreCase)).Select(m => m.Template).FirstOrDefault();
-                    string subject = Repository.GetAllEmailTemplate().Where(e => e.Name.Equals(ConstantEmailTemplate.SUBJECT_RECEIVE_FORGOT_PASSWORD, StringComparison.CurrentCultureIgnoreCase)).Select(m => m.Template).FirstOrDefault();
-                    string message = string.Format(emailTemplate, model.Username, DateTime.Now.ToString(), newPassword);
-                    CommonModel.SendEmail(user.Email, message, subject, 0);
-                }
-                if (!string.IsNullOrEmpty(user.PhoneNumber))
-                {
+                    if (!string.IsNullOrEmpty(user.Email))
+                    {
+                        string newPassword = StringUtil.RandomStr();
+                        user.Password = GetMD5Hash(newPassword);
+                        _db.ObjectStateManager.ChangeObjectState(user, System.Data.EntityState.Modified);
+                        _db.SaveChanges();
+                        string emailTemplate = Repository.GetAllEmailTemplate().Where(e => e.Name.Equals(ConstantEmailTemplate.RECEIVE_FORGOT_PASSWORD, StringComparison.CurrentCultureIgnoreCase)).Select(m => m.Template).FirstOrDefault();
+                        string subject = Repository.GetAllEmailTemplate().Where(e => e.Name.Equals(ConstantEmailTemplate.SUBJECT_RECEIVE_FORGOT_PASSWORD, StringComparison.CurrentCultureIgnoreCase)).Select(m => m.Template).FirstOrDefault();
+                        string message = string.Format(emailTemplate, model.Username, DateTime.Now.ToString(), newPassword);
+                        CommonModel.SendEmail(user.Email, message, subject, 0);
+                    }
+                    if (!string.IsNullOrEmpty(user.PhoneNumber))
+                    {
 
+                    }
+                    TempData["MessageForgotPassword"] = "Mật khẩu đã được gửi về email của bạn";
+                    return RedirectToAction("LogOn");
                 }
-                TempData["MessageForgotPassword"] = "Mật khẩu đã được gửi về email của bạn";
-                return RedirectToAction("LogOn");
+                else
+                {
+                    ModelState.AddModelError("", "Tài khoản của bạn không tồn tại");
+                    return View(model);
+                }
             }
-            else
+            catch (Exception ex)
             {
-                ModelState.AddModelError("", "Tài khoản của bạn không tồn tại");
+                log.Error(ex.Message);
                 return View(model);
             }
         }
@@ -241,31 +269,37 @@ namespace RentalHouseFinding.Controllers
         public ActionResult LogOn(LogOnModel model, string returnUrl)
         {
 
-            if (ModelState.IsValid)
-           
+            if (ModelState.IsValid)           
             {
-                model.Password = GetMD5Hash(model.Password);
-                if (Membership.ValidateUser(model.UserName, model.Password))
+                try
                 {
-                    var user = (from p in _db.Users where p.Username == model.UserName select new { p.RoleId }).FirstOrDefault();
-                    FormsAuthentication.SetAuthCookie(model.UserName, model.RememberMe);
-                    if (Url.IsLocalUrl(returnUrl) && returnUrl.Length > 1 && returnUrl.StartsWith("/")
-                        && !returnUrl.StartsWith("//") && !returnUrl.StartsWith("/\\"))
+                    model.Password = GetMD5Hash(model.Password);
+                    if (Membership.ValidateUser(model.UserName, model.Password))
                     {
-                        return Redirect(returnUrl);
-                    }
-                    if (user.RoleId == 1)
-                    {
-                        return RedirectToAction("Index", "Admin");
+                        var user = (from p in _db.Users where p.Username == model.UserName select new { p.RoleId }).FirstOrDefault();
+                        FormsAuthentication.SetAuthCookie(model.UserName, model.RememberMe);
+                        if (Url.IsLocalUrl(returnUrl) && returnUrl.Length > 1 && returnUrl.StartsWith("/")
+                            && !returnUrl.StartsWith("//") && !returnUrl.StartsWith("/\\"))
+                        {
+                            return Redirect(returnUrl);
+                        }
+                        if (user.RoleId == 1)
+                        {
+                            return RedirectToAction("Index", "Admin");
+                        }
+                        else
+                        {
+                            return RedirectToAction("Index", "Search");
+                        }
                     }
                     else
                     {
-                        return RedirectToAction("Index", "Search");
+                        ModelState.AddModelError("", "");
                     }
                 }
-                else
+                catch (Exception ex)
                 {
-                    ModelState.AddModelError("", "");
+                    log.Error(ex.Message);                    
                 }
             }
             return View(model);
@@ -306,18 +340,25 @@ namespace RentalHouseFinding.Controllers
 
                 if (ModelState.IsValid)
                 {
-                    // Attempt to register the user
-                    MembershipCreateStatus createStatus;
-                    CustomMembershipProvider customMP = new CustomMembershipProvider();
-                    customMP.CreateUser(model, out createStatus);
-                    if (createStatus == MembershipCreateStatus.Success)
+                    try
                     {
-                        FormsAuthentication.SetAuthCookie(model.UserName, false /* createPersistentCookie */);
-                        return RedirectToAction("Index", "Search");
+                        // Attempt to register the user
+                        MembershipCreateStatus createStatus;
+                        CustomMembershipProvider customMP = new CustomMembershipProvider();
+                        customMP.CreateUser(model, out createStatus);
+                        if (createStatus == MembershipCreateStatus.Success)
+                        {
+                            FormsAuthentication.SetAuthCookie(model.UserName, false /* createPersistentCookie */);
+                            return RedirectToAction("Index", "Search");
+                        }
+                        else
+                        {
+                            ModelState.AddModelError("", ErrorCodeToString(createStatus));
+                        }
                     }
-                    else
+                    catch (Exception ex)
                     {
-                        ModelState.AddModelError("", ErrorCodeToString(createStatus));
+                        log.Error(ex.Message);                        
                     }
                 }
             }
@@ -345,8 +386,7 @@ namespace RentalHouseFinding.Controllers
             string success = "";
             string error = "";
             if (ModelState.IsValid)
-            {
-
+            {                
                 // ChangePassword will throw an exception rather
                 // than return false in certain failure scenarios.
                 bool changePasswordSucceeded;
