@@ -127,11 +127,16 @@ body{
     font-size: 14px;
 }
 #containerLogo{
-	background: url(../../Content/images/logo.png) no-repeat;
-	padding-top: 56px;
+	/*background: url(../../Content/images/logo.png) no-repeat;*/
 }
-#logoText, #slogan{
-	padding-left: 110px;
+#slogan
+{
+	display:block;
+	color: #454545;
+	font-weight:normal;
+}
+#logoText{
+	padding-top: 56px;
 	display:block;
 	color: #454545;
 	font-weight:normal;
@@ -187,6 +192,10 @@ body{
     background: url(../../Content/images/home_province.png) no-repeat;
     left: 215px;
     width: 214px;
+}
+#home-search-area
+{
+    margin-top: 15px;
 }
 #searchInfo #buttonSearch #spCategoryId, #home-search-area #options #spCategoryId
 {
@@ -328,12 +337,15 @@ span.select {
 {
 	float: left;
 	background: url("../../Content/images/bg_txt.png") no-repeat 0 0;
-	width: 100%;
 	height: 36px;
 	line-height: 38px;
 	text-indent: 10px;
 	margin-left: 7px;
 	color: #646464;
+}
+.homeSearch
+{
+	width: 310px;
 }
 #content h3
 {
@@ -788,9 +800,11 @@ span.field-validation-error
     border: none;
 }
 
-#options {
-    position: relative;
+#options 
+{
     width: 1054px;
+    overflow:hidden;
+    position: relative;
     margin-bottom: 15px;
 }
 
