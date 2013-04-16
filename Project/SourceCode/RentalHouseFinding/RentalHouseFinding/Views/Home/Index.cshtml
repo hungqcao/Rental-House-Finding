@@ -240,10 +240,9 @@
         @Html.DropDownListFor(model => model.ProvinceId, null, new { @class = "select" })
         @Html.ValidationMessageFor(model => model.ProvinceId)
         @Html.DropDownListFor(model => model.DistrictId, null, new { @class = "select" })
-        <div class="textbox">
-            @Html.TextBoxFor(model => model.KeyWord, new { @id = "KeyWord", @class = "searchMid", @placeholder = "từ khóa thêm", @style = "width: 312px; font-size: 12px;" })        
-        </div>
-        <input type="submit" id="btnSubmit" value="" />
+        
+        @Html.TextBoxFor(model => model.KeyWord, new { @id = "KeyWord", @class="homeSearch", @placeholder = "từ khóa thêm" })   
+        <input type="submit" id="btnSubmit" class="left" value="" />
     </div>
 }
 </div>
