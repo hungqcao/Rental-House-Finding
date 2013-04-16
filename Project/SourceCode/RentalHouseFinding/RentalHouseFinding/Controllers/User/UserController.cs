@@ -337,6 +337,9 @@ namespace RentalHouseFinding.Controllers
                 p.CreatedDate,
                 p.PhoneNumber,
                 PostTitle = p.Post.Title,
+                CountRenew = (from pay in _db.Payments
+                              where (pay.PostsId == p.PostsId)
+                              select pay.Id).Count(),
                 p.PostsId
             });
             //Custom sort
@@ -357,6 +360,11 @@ namespace RentalHouseFinding.Controllers
                     paymentViewList = paymentViewList.OrderBy(p => p.CreatedDate)
                         .Skip(MAX_RECORD_PER_PAGE * ((int)page - 1)).Take(MAX_RECORD_PER_PAGE);
                 }
+                else if (sort == "CountRenew")
+                {
+                    paymentViewList = paymentViewList.OrderBy(p => p.CountRenew)
+                        .Skip(MAX_RECORD_PER_PAGE * ((int)page - 1)).Take(MAX_RECORD_PER_PAGE);
+                }
             }
             else
             {
@@ -368,6 +376,11 @@ namespace RentalHouseFinding.Controllers
                 if (sort == "PhoneNumber")
                 {
                     paymentViewList = paymentViewList.OrderByDescending(p => p.PostTitle)
+                        .Skip(MAX_RECORD_PER_PAGE * ((int)page - 1)).Take(MAX_RECORD_PER_PAGE);
+                }
+                if (sort == "CountRenew")
+                {
+                    paymentViewList = paymentViewList.OrderByDescending(p => p.CountRenew)
                         .Skip(MAX_RECORD_PER_PAGE * ((int)page - 1)).Take(MAX_RECORD_PER_PAGE);
                 }
                 else

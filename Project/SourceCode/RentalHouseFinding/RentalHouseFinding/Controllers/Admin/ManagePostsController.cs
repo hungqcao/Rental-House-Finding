@@ -170,7 +170,7 @@ namespace RentalHouseFinding.Controllers.Admin
                 p.Title,
                 CountRenew = (from pay in _db.Payments
                               where (pay.PostsId == p.Id)
-                              select p.Id).Count(),
+                              select pay.Id).Count(),
                 p.CreatedDate,
                 p.EditedDate,
                 p.RenewDate,
