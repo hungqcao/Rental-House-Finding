@@ -42,15 +42,22 @@ namespace RentalHouseFinding.Controllers.GUI
         {
             if (ModelState.IsValid)
             {
-                var postEdit = _db.Posts.Where(p => p.Code.Equals(code)).FirstOrDefault();
-                if (postEdit != null)
+                try
                 {
-                    Session["PostIdToEdit"] = postEdit.Id;
-                    return RedirectToAction("Edit", "PostEdit");
+                    var postEdit = _db.Posts.Where(p => p.Code.Equals(code)).FirstOrDefault();
+                    if (postEdit != null)
+                    {
+                        Session["PostIdToEdit"] = postEdit.Id;
+                        return RedirectToAction("Edit", "PostEdit");
+                    }
+                    else
+                    {
+                        ModelState.AddModelError("", "");
+                    }
                 }
-                else
+                catch (Exception ex)
                 {
-                    ModelState.AddModelError("", "");
+                    log.Error(ex.Message);
                 }
             }
             return View();
@@ -58,18 +65,26 @@ namespace RentalHouseFinding.Controllers.GUI
 
         public ActionResult Edit()
         {
-            if (Session["PostIdToEdit"] == null)
+            try
             {
-                return RedirectToAction("Index", "PostEdit");
+                if (Session["PostIdToEdit"] == null)
+                {
+                    return RedirectToAction("Index", "PostEdit");
+                }
+                else
+                {
+                    int postId = (int)Session["PostIdToEdit"];
+                    var post = _db.Posts.Where(p => p.Id == postId).FirstOrDefault();
+                    ViewBag.CategoryId = new SelectList(Repository.GetAllCategories(), "Id", "Name", post.CategoryId);
+                    ViewBag.ProvinceId = new SelectList(Repository.GetAllProvinces(), "Id", "Name", post.District.ProvinceId);
+                    ViewBag.DistrictId = new SelectList(Repository.GetAllDistricts().Where(d => d.ProvinceId == post.District.ProvinceId), "Id", "Name", post.DistrictId);
+                    return View(CommonModel.ConvertPostToPostViewModel(post, _noInfo));
+                }
             }
-            else
+            catch (Exception ex)
             {
-                int postId = (int)Session["PostIdToEdit"];
-                var post = _db.Posts.Where(p => p.Id == postId).FirstOrDefault();
-                ViewBag.CategoryId = new SelectList(Repository.GetAllCategories(), "Id", "Name", post.CategoryId);
-                ViewBag.ProvinceId = new SelectList(Repository.GetAllProvinces(), "Id", "Name", post.District.ProvinceId);
-                ViewBag.DistrictId = new SelectList(Repository.GetAllDistricts().Where(d=>d.ProvinceId == post.District.ProvinceId), "Id", "Name", post.DistrictId);
-                return View(CommonModel.ConvertPostToPostViewModel(post, _noInfo));
+                log.Error(ex.Message);
+                return View();
             }
         }
 
@@ -90,25 +105,33 @@ namespace RentalHouseFinding.Controllers.GUI
             }
             catch (Exception ex)
             {
+                log.Error(ex.Message);
                 return false;
             }
         }
 
         public ActionResult ViewImage()
         {
-            if (Session["PostIdToEdit"] == null)
+            try
             {
-                TempData["MessagePendingPostNew"] = "Phiên làm việc của bạn đã hết, mời bạn đăng nhập lại";
-                TempData["Pending"] = true;
-                TempData["Success"] = false;
-                return RedirectToAction("Index");
+                if (Session["PostIdToEdit"] == null)
+                {
+                    TempData["MessagePendingPostNew"] = "Phiên làm việc của bạn đã hết, mời bạn đăng nhập lại";
+                    TempData["Pending"] = true;
+                    TempData["Success"] = false;
+                    return RedirectToAction("Index");
+                }
+                //Get images
+                int postId = (int)Session["PostIdToEdit"];
+                var images = (from i in _db.PostImages where (i.PostId == postId && !i.IsDeleted) select i);
+                if (images != null)
+                {
+                    ViewBag.Images = images.ToList();
+                }
             }
-            //Get images
-            int postId = (int)Session["PostIdToEdit"];
-            var images = (from i in _db.PostImages where (i.PostId == postId && !i.IsDeleted) select i);
-            if (images != null)
+            catch (Exception ex)
             {
-                ViewBag.Images = images.ToList();
+                log.Error(ex.Message);
             }
             return View();
         }
@@ -281,8 +304,9 @@ namespace RentalHouseFinding.Controllers.GUI
                 TempData["MessageDeletePost"] = "Xóa thành công!";
                 return RedirectToAction("Index");
             }
-            catch
+            catch(Exception ex)
             {
+                log.Error(ex.Message);
                 return View();
             }
         }

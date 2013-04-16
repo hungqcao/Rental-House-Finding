@@ -6,11 +6,14 @@ using System.Web.Mvc;
 using RentalHouseFinding.Models;
 using RentalHouseFinding.Caching;
 using RentalHouseFinding.Common;
+using log4net;
+using System.Reflection;
 
 namespace RentalHouseFinding.Controllers
 {
     public class SearchController : Controller
     {
+        private readonly ILog log = LogManager.GetLogger(MethodBase.GetCurrentMethod().DeclaringType);
         public RentalHouseFindingEntities _db = new RentalHouseFindingEntities();
 
         public ICacheRepository Repository { get; set; }
@@ -26,22 +29,37 @@ namespace RentalHouseFinding.Controllers
 
         public ActionResult Index()
         {
-            ViewBag.CategoryId = new SelectList(Repository.GetAllCategories(), "Id", "Name");
-            ViewBag.ProvinceId = new SelectList(Repository.GetAllProvinces(), "Id", "Name", 2);
-            ViewBag.DistrictId = CommonController.AddDefaultOption(new SelectList(Repository.GetAllDistricts().Where(d => d.ProvinceId == 2), "Id", "Name"), "Quận/Huyện", "0");
+            try
+            {
+                ViewBag.CategoryId = new SelectList(Repository.GetAllCategories(), "Id", "Name");
+                ViewBag.ProvinceId = new SelectList(Repository.GetAllProvinces(), "Id", "Name", 2);
+                ViewBag.DistrictId = CommonController.AddDefaultOption(new SelectList(Repository.GetAllDistricts().Where(d => d.ProvinceId == 2), "Id", "Name"), "Quận/Huyện", "0");
+            }
+            catch (Exception ex)
+            {
+                log.Error(ex.Message);
+            }
+
             return View();
         }
 
         [HttpPost]
         public ActionResult Index(SearchViewModel model)
         {
-            if(model != null)
+            try
             {
-                model.IsAdvancedSearch = false;
-                model.IsNormalSearch = true;
-                model.CenterMap = CommonController.GetCenterMap(model);                
-               
-                Session["SearchViewModel"] = model;
+                if (model != null)
+                {
+                    model.IsAdvancedSearch = false;
+                    model.IsNormalSearch = true;
+                    model.CenterMap = CommonController.GetCenterMap(model);
+
+                    Session["SearchViewModel"] = model;
+                }
+            }
+            catch (Exception ex)
+            {
+                log.Error(ex.Message);
             }
             return RedirectToAction("Index", "Home");
         }

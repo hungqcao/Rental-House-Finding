@@ -49,7 +49,7 @@
             }
             else {
                 var mydata = { postId: $("#Id").val(), resion: $("#txtResion").val() };
-                SendRepost(mydata);
+                SendReport(mydata);
                 deselect();
                 alert("Cảm ơn sự đóng góp của bạn!");                
                 $("#report").addClass("reported");
@@ -90,7 +90,7 @@
         };
 
 
-        function SendRepost(mydata) {
+        function SendReport(mydata) {
             $.ajax({
                 url: "/service/ReportPost?callback=?",
                 type: "POST",

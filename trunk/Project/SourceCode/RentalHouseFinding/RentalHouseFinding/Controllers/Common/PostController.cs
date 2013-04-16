@@ -42,120 +42,136 @@ namespace RentalHouseFinding.Controllers
         [HttpGet]
         public ActionResult Details(int id, string name)
         {
-            var post = (from p in _db.Posts where (p.Id == id && !p.IsDeleted) select p).FirstOrDefault();
-            if (post == null)
+            try
             {
-                return null;
-            }
-            if (!StringUtil.ToSeoUrl(StringUtil.RemoveSign4VietnameseString(post.Title)).Equals(name, StringComparison.CurrentCultureIgnoreCase))
-            {
-                return RedirectToActionPermanent("Details", new { id = id, name = StringUtil.ToSeoUrl(StringUtil.RemoveSign4VietnameseString(post.Title)) });
-            }
-
-            var districtAndProvinceName = Repository.GetAllDistricts().Where(d => d.Id == post.DistrictId).Select(d => new { districtName = d.Name, provinceName = d.Province.Name }).FirstOrDefault();
-
-            ViewBag.Address = districtAndProvinceName.districtName + ", " + districtAndProvinceName.provinceName;
-            ViewBag.Internet = post.Facilities.HasInternet ? "Có" : "Không";
-            ViewBag.AirConditioner = post.Facilities.HasAirConditioner ? "Có" : "Không";
-            ViewBag.Bed = post.Facilities.HasBed ? "Có" : "Không";
-            ViewBag.Gara = post.Facilities.HasGarage ? "Có" : "Không";
-            ViewBag.MotorParkingLot = post.Facilities.HasMotorParkingLot ? "Có" : "Không";
-            ViewBag.Security = post.Facilities.HasSecurity ? "Có" : "Không";
-            ViewBag.Toilet = post.Facilities.HasToilet ? "Có" : "Không";
-            ViewBag.TVCable = post.Facilities.HasTVCable ? "Có" : "Không";
-            ViewBag.WaterHeater = post.Facilities.HasWaterHeater ? "Có" : "Không";
-            ViewBag.AllowCooking = post.Facilities.IsAllowCooking ? "Có" : "Không";
-            ViewBag.StayWithOwner = post.Facilities.IsStayWithOwner ? "Có" : "Không";
-            ViewBag.WaterHeater = post.Facilities.HasWaterHeater ? "Có" : "Không";
-            //Get images
-            var images = (from i in _db.PostImages where (i.PostId == post.Id && !i.IsDeleted) select i);
-            if (images != null)
-            {
-                ViewBag.Images = images.ToList();
-            }
-            //Check if the post is in favorite list
-            if (User.Identity.IsAuthenticated)
-            {
-                int userId = CommonModel.GetUserIdByUsername(User.Identity.Name);
-                var favorite = (from f in _db.Favorites
-                                where
-                                    (f.PostId == post.Id && f.UserId == userId && !f.IsDeleted)
-                                select f).ToList();
-                if (favorite.Count > 0)
+                var post = (from p in _db.Posts where (p.Id == id && !p.IsDeleted) select p).FirstOrDefault();
+                if (post == null)
                 {
-                    ViewBag.RemoveFavorite = true;
+                    return null;
                 }
-                else
+                if (!StringUtil.ToSeoUrl(StringUtil.RemoveSign4VietnameseString(post.Title)).Equals(name, StringComparison.CurrentCultureIgnoreCase))
                 {
-                    ViewBag.RemoveFavorite = false;
+                    return RedirectToActionPermanent("Details", new { id = id, name = StringUtil.ToSeoUrl(StringUtil.RemoveSign4VietnameseString(post.Title)) });
                 }
+
+                var districtAndProvinceName = Repository.GetAllDistricts().Where(d => d.Id == post.DistrictId).Select(d => new { districtName = d.Name, provinceName = d.Province.Name }).FirstOrDefault();
+
+                ViewBag.Address = districtAndProvinceName.districtName + ", " + districtAndProvinceName.provinceName;
+                ViewBag.Internet = post.Facilities.HasInternet ? "Có" : "Không";
+                ViewBag.AirConditioner = post.Facilities.HasAirConditioner ? "Có" : "Không";
+                ViewBag.Bed = post.Facilities.HasBed ? "Có" : "Không";
+                ViewBag.Gara = post.Facilities.HasGarage ? "Có" : "Không";
+                ViewBag.MotorParkingLot = post.Facilities.HasMotorParkingLot ? "Có" : "Không";
+                ViewBag.Security = post.Facilities.HasSecurity ? "Có" : "Không";
+                ViewBag.Toilet = post.Facilities.HasToilet ? "Có" : "Không";
+                ViewBag.TVCable = post.Facilities.HasTVCable ? "Có" : "Không";
+                ViewBag.WaterHeater = post.Facilities.HasWaterHeater ? "Có" : "Không";
+                ViewBag.AllowCooking = post.Facilities.IsAllowCooking ? "Có" : "Không";
+                ViewBag.StayWithOwner = post.Facilities.IsStayWithOwner ? "Có" : "Không";
+                ViewBag.WaterHeater = post.Facilities.HasWaterHeater ? "Có" : "Không";
+                //Get images
+                var images = (from i in _db.PostImages where (i.PostId == post.Id && !i.IsDeleted) select i);
+                if (images != null)
+                {
+                    ViewBag.Images = images.ToList();
+                }
+                //Check if the post is in favorite list
+                if (User.Identity.IsAuthenticated)
+                {
+                    int userId = CommonModel.GetUserIdByUsername(User.Identity.Name);
+                    var favorite = (from f in _db.Favorites
+                                    where
+                                        (f.PostId == post.Id && f.UserId == userId && !f.IsDeleted)
+                                    select f).ToList();
+                    if (favorite.Count > 0)
+                    {
+                        ViewBag.RemoveFavorite = true;
+                    }
+                    else
+                    {
+                        ViewBag.RemoveFavorite = false;
+                    }
+                }
+                TempData["PostID"] = post.Id;
+                TempData["CreatedUserId"] = post.UserId;
+
+                Session["PostID"] = post.Id;
+                Session["CreatedUserId"] = post.UserId;
+
+                return View(CommonModel.ConvertPostToPostViewModel(post, _noInfo));
             }
-            TempData["PostID"] = post.Id;
-            TempData["CreatedUserId"] = post.UserId;
-
-            Session["PostID"] = post.Id;
-            Session["CreatedUserId"] = post.UserId;
-
-            return View(CommonModel.ConvertPostToPostViewModel(post, _noInfo));
+            catch (Exception ex)
+            {
+                log.Error(ex.Message);
+                return View();
+            }
         }
 
         [HttpGet]
         public ActionResult DetailsBox(int id, string name)
         {
-            var post = (from p in _db.Posts where (p.Id == id && !p.IsDeleted) select p).FirstOrDefault();
-            if (post == null)
+            try
             {
-                return null;
-            }
-            if (!StringUtil.ToSeoUrl(StringUtil.RemoveSign4VietnameseString(post.Title)).Equals(name, StringComparison.CurrentCultureIgnoreCase))
-            {
-                return RedirectToActionPermanent("DetailsBox", new { id = id, name = StringUtil.ToSeoUrl(StringUtil.RemoveSign4VietnameseString(post.Title)) });
-            }
-            var districtAndProvinceName = Repository.GetAllDistricts().Where(d => d.Id == post.DistrictId).Select(d => new { districtName = d.Name, provinceName = d.Province.Name }).FirstOrDefault();
-
-            ViewBag.Address = districtAndProvinceName.districtName + ", " + districtAndProvinceName.provinceName;
-            ViewBag.Internet = post.Facilities.HasInternet ? "Có" : "Không";
-            ViewBag.AirConditioner = post.Facilities.HasAirConditioner ? "Có" : "Không";
-            ViewBag.Bed = post.Facilities.HasBed ? "Có" : "Không";
-            ViewBag.Gara = post.Facilities.HasGarage ? "Có" : "Không";
-            ViewBag.MotorParkingLot = post.Facilities.HasMotorParkingLot ? "Có" : "Không";
-            ViewBag.Security = post.Facilities.HasSecurity ? "Có" : "Không";
-            ViewBag.Toilet = post.Facilities.HasToilet ? "Có" : "Không";
-            ViewBag.TVCable = post.Facilities.HasTVCable ? "Có" : "Không";
-            ViewBag.WaterHeater = post.Facilities.HasWaterHeater ? "Có" : "Không";
-            ViewBag.AllowCooking = post.Facilities.IsAllowCooking ? "Có" : "Không";
-            ViewBag.StayWithOwner = post.Facilities.IsStayWithOwner ? "Có" : "Không";
-            ViewBag.WaterHeater = post.Facilities.HasWaterHeater ? "Có" : "Không";
-            //Get images
-            var images = (from i in _db.PostImages where (i.PostId == post.Id && !i.IsDeleted) select i);
-            if (images != null)
-            {
-                ViewBag.Images = images.ToList();
-            }
-            //Check if the post is in favorite list
-            if (User.Identity.IsAuthenticated)
-            {
-                int userId = CommonModel.GetUserIdByUsername(User.Identity.Name);
-                var favorite = (from f in _db.Favorites
-                                where
-                                    (f.PostId == post.Id && f.UserId == userId && !f.IsDeleted)
-                                select f).ToList();
-                if (favorite.Count > 0)
+                var post = (from p in _db.Posts where (p.Id == id && !p.IsDeleted) select p).FirstOrDefault();
+                if (post == null)
                 {
-                    ViewBag.RemoveFavorite = true;
+                    return null;
                 }
-                else
+                if (!StringUtil.ToSeoUrl(StringUtil.RemoveSign4VietnameseString(post.Title)).Equals(name, StringComparison.CurrentCultureIgnoreCase))
                 {
-                    ViewBag.RemoveFavorite = false;
+                    return RedirectToActionPermanent("DetailsBox", new { id = id, name = StringUtil.ToSeoUrl(StringUtil.RemoveSign4VietnameseString(post.Title)) });
                 }
+                var districtAndProvinceName = Repository.GetAllDistricts().Where(d => d.Id == post.DistrictId).Select(d => new { districtName = d.Name, provinceName = d.Province.Name }).FirstOrDefault();
+
+                ViewBag.Address = districtAndProvinceName.districtName + ", " + districtAndProvinceName.provinceName;
+                ViewBag.Internet = post.Facilities.HasInternet ? "Có" : "Không";
+                ViewBag.AirConditioner = post.Facilities.HasAirConditioner ? "Có" : "Không";
+                ViewBag.Bed = post.Facilities.HasBed ? "Có" : "Không";
+                ViewBag.Gara = post.Facilities.HasGarage ? "Có" : "Không";
+                ViewBag.MotorParkingLot = post.Facilities.HasMotorParkingLot ? "Có" : "Không";
+                ViewBag.Security = post.Facilities.HasSecurity ? "Có" : "Không";
+                ViewBag.Toilet = post.Facilities.HasToilet ? "Có" : "Không";
+                ViewBag.TVCable = post.Facilities.HasTVCable ? "Có" : "Không";
+                ViewBag.WaterHeater = post.Facilities.HasWaterHeater ? "Có" : "Không";
+                ViewBag.AllowCooking = post.Facilities.IsAllowCooking ? "Có" : "Không";
+                ViewBag.StayWithOwner = post.Facilities.IsStayWithOwner ? "Có" : "Không";
+                ViewBag.WaterHeater = post.Facilities.HasWaterHeater ? "Có" : "Không";
+                //Get images
+                var images = (from i in _db.PostImages where (i.PostId == post.Id && !i.IsDeleted) select i);
+                if (images != null)
+                {
+                    ViewBag.Images = images.ToList();
+                }
+                //Check if the post is in favorite list
+                if (User.Identity.IsAuthenticated)
+                {
+                    int userId = CommonModel.GetUserIdByUsername(User.Identity.Name);
+                    var favorite = (from f in _db.Favorites
+                                    where
+                                        (f.PostId == post.Id && f.UserId == userId && !f.IsDeleted)
+                                    select f).ToList();
+                    if (favorite.Count > 0)
+                    {
+                        ViewBag.RemoveFavorite = true;
+                    }
+                    else
+                    {
+                        ViewBag.RemoveFavorite = false;
+                    }
+                }
+                TempData["PostID"] = post.Id;
+                TempData["CreatedUserId"] = post.UserId;
+
+                Session["PostID"] = post.Id;
+                Session["CreatedUserId"] = post.UserId;
+
+                return View(CommonModel.ConvertPostToPostViewModel(post, _noInfo));
             }
-            TempData["PostID"] = post.Id;
-            TempData["CreatedUserId"] = post.UserId;
-
-            Session["PostID"] = post.Id;
-            Session["CreatedUserId"] = post.UserId;
-
-            return View(CommonModel.ConvertPostToPostViewModel(post, _noInfo));
+            catch (Exception ex)
+            {
+                log.Error(ex.Message);
+                return View();
+            }
         }
 
         //
@@ -163,10 +179,17 @@ namespace RentalHouseFinding.Controllers
 
         public ActionResult Create()
         {
-            ViewBag.CategoryId = new SelectList(Repository.GetAllCategories(), "Id", "Name");
-            //2 for Ha noi
-            ViewBag.ProvinceId = new SelectList(Repository.GetAllProvinces(), "Id", "Name", 2);
-            ViewBag.DistrictId = CommonController.AddDefaultOption(new SelectList(Repository.GetAllDistricts().Where(d => d.ProvinceId == 2), "Id", "Name"), "Quận huyện", "0");
+            try
+            {
+                ViewBag.CategoryId = new SelectList(Repository.GetAllCategories(), "Id", "Name");
+                //2 for Ha noi
+                ViewBag.ProvinceId = new SelectList(Repository.GetAllProvinces(), "Id", "Name", 2);
+                ViewBag.DistrictId = CommonController.AddDefaultOption(new SelectList(Repository.GetAllDistricts().Where(d => d.ProvinceId == 2), "Id", "Name"), "Quận huyện", "0");
+            }
+            catch (Exception ex)
+            {
+                log.Error(ex.Message);             
+            }
             return View();
         }
 
@@ -282,7 +305,7 @@ namespace RentalHouseFinding.Controllers
                 catch (Exception ex)
                 {
                     ModelState.AddModelError("", ex.InnerException);
-
+                    log.Error(ex.Message);
                     ViewBag.CategoryId = new SelectList(Repository.GetAllCategories(), "Id", "Name", model.CategoryId);
                     ViewBag.ProvinceId = new SelectList(Repository.GetAllProvinces(), "Id", "Name", model.ProvinceId);
                     ViewBag.DistrictId = new SelectList(Repository.GetAllDistricts().Where(d => d.ProvinceId == model.ProvinceId), "Id", "Name", model.DistrictId);
@@ -299,27 +322,35 @@ namespace RentalHouseFinding.Controllers
         [Authorize(Roles = "User, Admin")]
         public ActionResult Edit(int id)
         {
-            int userId = CommonModel.GetUserIdByUsername(User.Identity.Name);
-            var postModel = (from p in _db.Posts
-                             where (p.Id == id)
-                                 && (!p.IsDeleted) && p.UserId == userId
-                             select p).FirstOrDefault();
-            if (User.IsInRole("Admin"))// Admin logged.
+            try
             {
-                postModel = (from p in _db.Posts
-                             where (p.Id == id)
-                                 && (!p.IsDeleted)
-                             select p).FirstOrDefault();
+                int userId = CommonModel.GetUserIdByUsername(User.Identity.Name);
+                var postModel = (from p in _db.Posts
+                                 where (p.Id == id)
+                                     && (!p.IsDeleted) && p.UserId == userId
+                                 select p).FirstOrDefault();
+                if (User.IsInRole("Admin"))// Admin logged.
+                {
+                    postModel = (from p in _db.Posts
+                                 where (p.Id == id)
+                                     && (!p.IsDeleted)
+                                 select p).FirstOrDefault();
+                }
+                //Check if the post belongs to current user
+                if (postModel == null)
+                {
+                    return RedirectToAction("Index", "Search");
+                }
+                ViewBag.CategoryId = new SelectList(Repository.GetAllCategories(), "Id", "Name", postModel.CategoryId);
+                ViewBag.ProvinceId = new SelectList(Repository.GetAllProvinces(), "Id", "Name", postModel.District.ProvinceId);
+                ViewBag.DistrictId = new SelectList(Repository.GetAllDistricts().Where(d => d.ProvinceId == postModel.District.ProvinceId), "Id", "Name", postModel.DistrictId);
+                return View(CommonModel.ConvertPostToPostViewModel(postModel, _noInfo));
             }
-            //Check if the post belongs to current user
-            if (postModel == null)
+            catch (Exception ex)
             {
-                return RedirectToAction("Index", "Search");
+                log.Error(ex.Message);
+                return View();
             }
-            ViewBag.CategoryId = new SelectList(Repository.GetAllCategories(), "Id", "Name", postModel.CategoryId);
-            ViewBag.ProvinceId = new SelectList(Repository.GetAllProvinces(), "Id", "Name", postModel.District.ProvinceId);
-            ViewBag.DistrictId = new SelectList(Repository.GetAllDistricts().Where(d => d.ProvinceId == postModel.District.ProvinceId), "Id", "Name", postModel.DistrictId);
-            return View(CommonModel.ConvertPostToPostViewModel(postModel, _noInfo));
         }
 
         [Authorize(Roles = "User, Admin")]
@@ -348,10 +379,17 @@ namespace RentalHouseFinding.Controllers
         public ActionResult ViewImage(int id)
         {
             //Get images
-            var images = (from i in _db.PostImages where (i.PostId == id && !i.IsDeleted) select i);
-            if (images != null)
+            try
             {
-                ViewBag.Images = images.ToList();
+                var images = (from i in _db.PostImages where (i.PostId == id && !i.IsDeleted) select i);
+                if (images != null)
+                {
+                    ViewBag.Images = images.ToList();
+                }
+            }
+            catch (Exception ex)
+            {
+                log.Error(ex.Message);
             }
             return View();
         }
@@ -505,6 +543,7 @@ namespace RentalHouseFinding.Controllers
                 catch (Exception ex)
                 {
                     ModelState.AddModelError("", ex.InnerException);
+                    log.Error(ex.Message);
                 }
             }
             ViewBag.CategoryId = new SelectList(Repository.GetAllCategories(), "Id", "Name", postViewModel.CategoryId);
@@ -539,9 +578,10 @@ namespace RentalHouseFinding.Controllers
                     return RedirectToAction("Posts", "User");
                 }
             }
-            catch
+            catch (Exception ex)
             {
                 //Error
+                log.Error(ex.Message);
                 return RedirectToAction("Posts", "User");
             }
         }
@@ -582,8 +622,9 @@ namespace RentalHouseFinding.Controllers
                 success = true;
                 return Json(success, JsonRequestBehavior.AllowGet);
             }
-            catch
+            catch (Exception ex)
             {
+                log.Error(ex.Message);
                 return Json(success, JsonRequestBehavior.AllowGet);
             }
 
@@ -615,8 +656,9 @@ namespace RentalHouseFinding.Controllers
                 success = true;
                 return Json(success, JsonRequestBehavior.AllowGet);
             }
-            catch
+            catch (Exception ex)
             {
+                log.Error(ex.Message);
                 return Json(success, JsonRequestBehavior.AllowGet);
             }
         }

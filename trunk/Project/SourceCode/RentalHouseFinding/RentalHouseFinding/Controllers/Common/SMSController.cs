@@ -52,47 +52,53 @@ namespace RentalHouseFinding.Controllers
             Payments payment = new Payments();
             if (ModelState.IsValid)
             {
-                //Add to payment table
-                
-                //ContentSMS =  MS ABCD                
-                string code = !String.IsNullOrEmpty(model.ContentSMS)?model.ContentSMS.Split(' ')[1].ToString():String.Empty;
-                var postId = (from p in _db.Posts
-                              where p.Code.Equals(code, StringComparison.CurrentCultureIgnoreCase) && !p.IsDeleted && p.StatusId != 2// statusId = 2 is Pending.
-                              select p.Id).FirstOrDefault();
-                if (postId != 0)
+                try
                 {
-                    payment.PhoneNumber = model.PhoneNumber;
-                    payment.PostsId = postId;
-                    payment.CreatedDate = DateTime.Now;
-                    _db.AddToPayments(payment);
-                    _db.SaveChanges();
-                    //Update Post table
-                    string strExpiredDate = Repository.GetAllConfiguration().Where(c => c.Name.Equals(ConstantCommonString.EXPIRED_DATE_AFTER_RENEW, StringComparison.CurrentCultureIgnoreCase)).Select(c => c.Value).FirstOrDefault().ToString();
-                    int numberExpiredDate = 0;
-                    int.TryParse(strExpiredDate, out numberExpiredDate);
-                    
-                    var post = _db.Posts.Where(p => p.Id == postId).FirstOrDefault();
+                    //Add to payment table
 
-                    DateTime currentExpiredDate = post.ExpiredDate;
-                    //Check current ExpriedDate.
-                    if (DateTime.Compare(currentExpiredDate, DateTime.Now) <= 0)
+                    //ContentSMS =  MS ABCD                
+                    string code = !String.IsNullOrEmpty(model.ContentSMS) ? model.ContentSMS.Split(' ')[1].ToString() : String.Empty;
+                    var postId = (from p in _db.Posts
+                                  where p.Code.Equals(code, StringComparison.CurrentCultureIgnoreCase) && !p.IsDeleted && p.StatusId != 2// statusId = 2 is Pending.
+                                  select p.Id).FirstOrDefault();
+                    if (postId != 0)
                     {
-                        // currently after SMSActive added 15days.
-                        post.ExpiredDate = DateTime.Now.AddDays(numberExpiredDate);
+                        payment.PhoneNumber = model.PhoneNumber;
+                        payment.PostsId = postId;
+                        payment.CreatedDate = DateTime.Now;
+                        _db.AddToPayments(payment);
+                        _db.SaveChanges();
+                        //Update Post table
+                        string strExpiredDate = Repository.GetAllConfiguration().Where(c => c.Name.Equals(ConstantCommonString.EXPIRED_DATE_AFTER_RENEW, StringComparison.CurrentCultureIgnoreCase)).Select(c => c.Value).FirstOrDefault().ToString();
+                        int numberExpiredDate = 0;
+                        int.TryParse(strExpiredDate, out numberExpiredDate);
+
+                        var post = _db.Posts.Where(p => p.Id == postId).FirstOrDefault();
+
+                        DateTime currentExpiredDate = post.ExpiredDate;
+                        //Check current ExpriedDate.
+                        if (DateTime.Compare(currentExpiredDate, DateTime.Now) <= 0)
+                        {
+                            // currently after SMSActive added 15days.
+                            post.ExpiredDate = DateTime.Now.AddDays(numberExpiredDate);
+                        }
+                        else
+                        {
+                            post.ExpiredDate = currentExpiredDate.AddDays(numberExpiredDate);
+                        }
+                        post.StatusId = 1;// 1 is Active.
+                        post.RenewDate = DateTime.Now;
+                        _db.ObjectStateManager.ChangeObjectState(post, EntityState.Modified);
+                        _db.SaveChanges();
+                        return RedirectToAction("Index");
                     }
                     else
                     {
-                        post.ExpiredDate = currentExpiredDate.AddDays(numberExpiredDate);
+                        return RedirectToAction("Index", "Sai cú pháp hoặc mã tin không đúng.");
                     }
-                    post.StatusId = 1;// 1 is Active.
-                    post.RenewDate = DateTime.Now;
-                    _db.ObjectStateManager.ChangeObjectState(post, EntityState.Modified);
-                    _db.SaveChanges();
-                    return RedirectToAction("Index");
                 }
-                else
-                {
-                    return RedirectToAction("Index","Sai cú pháp hoặc mã tin không đúng.");
+                catch (Exception ex)
+                {                                        
                 }
             }       
             

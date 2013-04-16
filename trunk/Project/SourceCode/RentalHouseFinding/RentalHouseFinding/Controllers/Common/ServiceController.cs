@@ -8,11 +8,14 @@ using System.Net;
 using System.IO;
 using RentalHouseFinding.Common;
 using RentalHouseFinding.Caching;
+using log4net;
+using System.Reflection;
 
 namespace RentalHouseFinding.Controllers
 {
     public class ServiceController : Controller
     {
+        private readonly ILog log = LogManager.GetLogger(MethodBase.GetCurrentMethod().DeclaringType);
         RentalHouseFindingEntities _db = new RentalHouseFindingEntities();
 
         public ICacheRepository Repository { get; set; }
@@ -29,20 +32,28 @@ namespace RentalHouseFinding.Controllers
         [AcceptVerbs(HttpVerbs.Get)]
         public JsonResult GetDistrictList(string id)
         {
-            if (!string.IsNullOrEmpty(id))
+            try
             {
-                int idPro = Convert.ToInt32(id);
-                var districts = Repository.GetAllDistricts().Where(d => d.ProvinceId == idPro).ToList();
-                var myData = districts.Select(a => new SelectListItem()
+                if (!string.IsNullOrEmpty(id))
                 {
-                    Text = a.Name,
-                    Value = a.Id.ToString(),
-                });
+                    int idPro = Convert.ToInt32(id);
+                    var districts = Repository.GetAllDistricts().Where(d => d.ProvinceId == idPro).ToList();
+                    var myData = districts.Select(a => new SelectListItem()
+                    {
+                        Text = a.Name,
+                        Value = a.Id.ToString(),
+                    });
 
-                return Json(myData, JsonRequestBehavior.AllowGet);
+                    return Json(myData, JsonRequestBehavior.AllowGet);
+                }
+                else
+                {
+                    return Json(new { message = "Fail" }, JsonRequestBehavior.AllowGet);
+                }
             }
-            else
+            catch (Exception ex)
             {
+                log.Error(ex.Message);
                 return Json(new { message = "Fail" }, JsonRequestBehavior.AllowGet);
             }
         }
@@ -56,31 +67,38 @@ namespace RentalHouseFinding.Controllers
         [AcceptVerbs(HttpVerbs.Get)]
         public JsonResult GetLatLon(string id, string type)
         {
-            if (!string.IsNullOrEmpty(id))
+            try
             {
-                int idPost = Convert.ToInt32(id);
-                if (type.Equals("province"))
+                if (!string.IsNullOrEmpty(id))
                 {
-                    var provinces = Repository.GetAllProvinces().Where(d => d.Id == idPost).ToList();
-                    var myData = provinces.Select(a => new SelectListItem()
+                    int idPost = Convert.ToInt32(id);
+                    if (type.Equals("province"))
                     {
-                        Text = a.Name,
-                        Value = a.Lat + ";" + a.Lon,
-                    });
+                        var provinces = Repository.GetAllProvinces().Where(d => d.Id == idPost).ToList();
+                        var myData = provinces.Select(a => new SelectListItem()
+                        {
+                            Text = a.Name,
+                            Value = a.Lat + ";" + a.Lon,
+                        });
 
-                    return Json(myData, JsonRequestBehavior.AllowGet);
-                }
-                else if (type.Equals("district"))
-                {
-                    var districts = Repository.GetAllDistricts().Where(d => d.Id == idPost).ToList();
-                    var myData = districts.Select(a => new SelectListItem()
+                        return Json(myData, JsonRequestBehavior.AllowGet);
+                    }
+                    else if (type.Equals("district"))
                     {
-                        Text = a.Name,
-                        Value = a.Lat + ";" + a.Lon,
-                    });
+                        var districts = Repository.GetAllDistricts().Where(d => d.Id == idPost).ToList();
+                        var myData = districts.Select(a => new SelectListItem()
+                        {
+                            Text = a.Name,
+                            Value = a.Lat + ";" + a.Lon,
+                        });
 
-                    return Json(myData, JsonRequestBehavior.AllowGet);
+                        return Json(myData, JsonRequestBehavior.AllowGet);
+                    }
                 }
+            }
+            catch (Exception ex)
+            {
+                log.Error(ex.Message);             
             }
             return Json(new { message = "Fail" }, JsonRequestBehavior.AllowGet);
         }
@@ -100,32 +118,39 @@ namespace RentalHouseFinding.Controllers
             int.TryParse(skip, out skipNum);
             int.TryParse(take, out takeNum);
 
-            
-            using (FullTextSearchHelper fullTextHelp = new FullTextSearchHelper())
+            try
             {
-                int numberOfResult;
-                var suggList = fullTextHelp.FullTextSearchPostWithWeightenScore(catId, 
-                                                                                proId, 
-                                                                                disId, 
-                                                                                keyword, 
-                                                                                int.Parse(Repository.GetAllConfiguration().Where( c => c.Name.Equals(ConstantColumnNameScoreNormalSearch.DESCRIPTION_COLUMN_SCORE_NAME, StringComparison.CurrentCultureIgnoreCase)).Select(c => c.Value).FirstOrDefault().ToString()),
-                                                                                int.Parse(Repository.GetAllConfiguration().Where(c => c.Name.Equals(ConstantColumnNameScoreNormalSearch.TITLE_COLUMN_SCORE_NAME, StringComparison.CurrentCultureIgnoreCase)).Select(c => c.Value).FirstOrDefault().ToString()),
-                                                                                int.Parse(Repository.GetAllConfiguration().Where(c => c.Name.Equals(ConstantColumnNameScoreNormalSearch.STREET_COLUMN_SCORE_NAME, StringComparison.CurrentCultureIgnoreCase)).Select(c => c.Value).FirstOrDefault().ToString()),
-                                                                                int.Parse(Repository.GetAllConfiguration().Where(c => c.Name.Equals(ConstantColumnNameScoreNormalSearch.NEARBY_COLUMN_SCORE_NAME, StringComparison.CurrentCultureIgnoreCase)).Select(c => c.Value).FirstOrDefault().ToString()),
-                                                                                int.Parse(Repository.GetAllConfiguration().Where(c => c.Name.Equals(ConstantColumnNameScoreNormalSearch.NUMBER_ADDRESS_COLUMN_SCORE_NAME, StringComparison.CurrentCultureIgnoreCase)).Select(c => c.Value).FirstOrDefault().ToString()),
-                                                                                skipNum, 
-                                                                                takeNum,
-                                                                                out numberOfResult);
-                if (suggList != null)
-                {
-                    var myData = suggList.Select(a => new SelectListItem()
-                    {
-                        Text = a.Title,
-                        Value = a.Id.ToString(),
-                    });
 
-                    return Json(myData, JsonRequestBehavior.AllowGet);
+                using (FullTextSearchHelper fullTextHelp = new FullTextSearchHelper())
+                {
+                    int numberOfResult;
+                    var suggList = fullTextHelp.FullTextSearchPostWithWeightenScore(catId,
+                                                                                    proId,
+                                                                                    disId,
+                                                                                    keyword,
+                                                                                    int.Parse(Repository.GetAllConfiguration().Where(c => c.Name.Equals(ConstantColumnNameScoreNormalSearch.DESCRIPTION_COLUMN_SCORE_NAME, StringComparison.CurrentCultureIgnoreCase)).Select(c => c.Value).FirstOrDefault().ToString()),
+                                                                                    int.Parse(Repository.GetAllConfiguration().Where(c => c.Name.Equals(ConstantColumnNameScoreNormalSearch.TITLE_COLUMN_SCORE_NAME, StringComparison.CurrentCultureIgnoreCase)).Select(c => c.Value).FirstOrDefault().ToString()),
+                                                                                    int.Parse(Repository.GetAllConfiguration().Where(c => c.Name.Equals(ConstantColumnNameScoreNormalSearch.STREET_COLUMN_SCORE_NAME, StringComparison.CurrentCultureIgnoreCase)).Select(c => c.Value).FirstOrDefault().ToString()),
+                                                                                    int.Parse(Repository.GetAllConfiguration().Where(c => c.Name.Equals(ConstantColumnNameScoreNormalSearch.NEARBY_COLUMN_SCORE_NAME, StringComparison.CurrentCultureIgnoreCase)).Select(c => c.Value).FirstOrDefault().ToString()),
+                                                                                    int.Parse(Repository.GetAllConfiguration().Where(c => c.Name.Equals(ConstantColumnNameScoreNormalSearch.NUMBER_ADDRESS_COLUMN_SCORE_NAME, StringComparison.CurrentCultureIgnoreCase)).Select(c => c.Value).FirstOrDefault().ToString()),
+                                                                                    skipNum,
+                                                                                    takeNum,
+                                                                                    out numberOfResult);
+                    if (suggList != null)
+                    {
+                        var myData = suggList.Select(a => new SelectListItem()
+                        {
+                            Text = a.Title,
+                            Value = a.Id.ToString(),
+                        });
+
+                        return Json(myData, JsonRequestBehavior.AllowGet);
+                    }
                 }
+            }
+            catch (Exception ex)
+            {
+                log.Error(ex.Message);             
             }
             return Json(new { message = "Fail" }, JsonRequestBehavior.AllowGet);
         }
@@ -144,8 +169,9 @@ namespace RentalHouseFinding.Controllers
 
                 return Json(myData, JsonRequestBehavior.AllowGet);
             }
-            catch
+            catch(Exception ex)
             {
+                log.Error(ex.Message);
                 return Json(new { message = "Fail" });
             }
         }
@@ -164,8 +190,9 @@ namespace RentalHouseFinding.Controllers
 
                 return Json(myData, JsonRequestBehavior.AllowGet);
             }
-            catch
+            catch(Exception ex)
             {
+                log.Error(ex.Message);
                 return Json(new { message = "Fail" });
             }
         }
@@ -235,24 +262,31 @@ namespace RentalHouseFinding.Controllers
         [Authorize(Roles = "User, Admin")]
         public bool ReportPost(string postId, string resion)
         {
-            RentalHouseFindingEntities _db = new RentalHouseFindingEntities();
-            int userid = CommonModel.GetUserIdByUsername(User.Identity.Name);
-            if (userid != -1)
+            try
             {
-                ReportedPosts repost = new ReportedPosts();
-                repost.PostId = Int32.Parse(postId);
-                repost.ReportedBy = userid;
-                repost.Reason = resion;
-                repost.ReportedDate = DateTime.Now;
-                repost.IsIgnored = false;
-                _db.AddToReportedPosts(repost);
-                _db.SaveChanges();
-                //Send email to Mod
-                //CommonModel.SendEmail("Vietvh01388@fpt.edu.vn", String.Format("PostId = {0} bị {1} repost ", postId, User.Identity.Name), 0);
-                return true;
+                int userid = CommonModel.GetUserIdByUsername(User.Identity.Name);
+                if (userid != -1)
+                {
+                    ReportedPosts report = new ReportedPosts();
+                    report.PostId = Int32.Parse(postId);
+                    report.ReportedBy = userid;
+                    report.Reason = resion;
+                    report.ReportedDate = DateTime.Now;
+                    report.IsIgnored = false;
+                    _db.AddToReportedPosts(report);
+                    _db.SaveChanges();
+                    //Send email to Mod
+                    //CommonModel.SendEmail("Vietvh01388@fpt.edu.vn", String.Format("PostId = {0} bị {1} report ", postId, User.Identity.Name), 0);
+                    return true;
+                }
+                else
+                {
+                    return false;
+                }
             }
-            else
+            catch (Exception ex)
             {
+                log.Error(ex.Message);
                 return false;
             }
 
