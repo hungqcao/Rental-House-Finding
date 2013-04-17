@@ -21,7 +21,7 @@ namespace RentalHouseFinding.Models
 
 
         [Required(ErrorMessage = "Xin vui lòng nhập mật khẩu mới")]
-        [StringLength(100, ErrorMessage = @"{0} phải có ít nhất {2} kí tự. Vui lòng nhập lại.", MinimumLength = 8)]
+        [StringLength(100, ErrorMessage = @"{0} phải có ít nhất {2} ký tự. Vui lòng nhập lại.", MinimumLength = 8)]
         [DataType(DataType.Password)]
         [Display(Name = "Mật khẩu mới")]
         public string NewPassword { get; set; }

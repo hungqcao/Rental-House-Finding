@@ -102,8 +102,8 @@
 
     <div id="regisPanel" class="login-regis">
         <div class="title">
-            <h1>Đăng kí</h1>
-            <h2>Bạn nên đăng kí để có những tiện ích hỗ trợ tốt nhất.</h2>
+            <h1>Đăng ký</h1>
+            <h2>Bạn nên đăng ký để có những tiện ích hỗ trợ tốt nhất.</h2>
         </div>
         <div class="clear"></div>
         <form action="@Url.Content("~/Account/")Authenticate?ReturnUrl=@HttpUtility.UrlEncode(Request.QueryString["ReturnUrl"])" method="post" id="openid_form">
@@ -123,7 +123,7 @@
         <div class="clear"></div>
     @using (Html.BeginForm()) {
         <div class="userInfo">
-            <h2>Đăng kí tài khoản 5house.vn chỉ với 1 bước đơn giản</h2>
+            <h2>Đăng ký tài khoản 5house.vn chỉ với 1 bước đơn giản</h2>
             <div class="blockInfo leftBlock requiredField" id="blockName">
                 @Html.LabelFor(m => m.UserName)
                 <div class="clear"></div>
