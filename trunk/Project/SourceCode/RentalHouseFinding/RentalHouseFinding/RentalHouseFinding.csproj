@@ -167,6 +167,13 @@
   <ItemGroup>
     <Content Include="Content\admin_page\gradient.png" />
     <Content Include="Content\admin_style.css" />
+    <Content Include="Content\chosen\chosen-sprite%402x.png" />
+    <Content Include="Content\chosen\chosen-sprite.png" />
+    <Content Include="Content\chosen\chosen.css" />
+    <Content Include="Content\chosen\chosen.jquery.js" />
+    <Content Include="Content\chosen\chosen.jquery.min.js" />
+    <Content Include="Content\chosen\chosen.proto.js" />
+    <Content Include="Content\chosen\chosen.proto.min.js" />
     <Content Include="Content\css\base.css" />
     <Content Include="Content\css\basic.png" />
     <Content Include="Content\css\bottom.css" />
@@ -510,7 +517,6 @@
       <SubType>Code</SubType>
     </Content>
     <Content Include="Views\PostEdit\Index.cshtml" />
-    <Content Include="Views\Post\Confirm.cshtml" />
     <Content Include="Views\Post\Create.cshtml">
       <SubType>Code</SubType>
     </Content>

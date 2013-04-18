@@ -141,7 +141,8 @@
                 value: '',
                 text: 'Quận/Huyện'
             }));
-            select.next().text('Quận/Huyện');
+
+            select.removeClass("chzn-done");
             $.getJSON("@baseUri.ToString()" + "service/GetDistrictList", { id: idPro },
                 function (myData) {
                     $.each(myData, function (index, itemData) {
@@ -152,6 +153,10 @@
                             }));
                         }
                     });
+                    if (select.next().hasClass("chzn-container")) {
+                        select.next().remove();
+                    }
+                    $(".chzn-select").chosen();
                 });
             $.getJSON("@baseUri.ToString()" + "service/GetLatLon", { id: idPro, type: "province" },
                 function (myData) {
@@ -189,6 +194,7 @@
                     }
 
                 });
+
             });
 
             //for locations
@@ -326,7 +332,6 @@
             value: '',
             text: 'Quận/Huyện'
         }));
-        //$("#DistrictId").next().text('Quận/Huyện');
         if (idPro != 0) {
             $.getJSON("service/GetDistrictList", { id: idPro },
             function (myData) {
@@ -345,6 +350,10 @@
                         }));
                     }
                 });
+                if (select.next().hasClass("chzn-container")) {
+                    select.next().remove();
+                }
+                $(".chzn-select").chosen();
             });
         };
     });
@@ -371,7 +380,7 @@
                     <label>Loại tin đăng</label>
 
                     <div class="clear"></div>
-                    @Html.DropDownListFor(model => model.CategoryId, null, new { @class = "select" })
+                    @Html.DropDownListFor(model => model.CategoryId, null, new { @class = "chzn-select" })
                     @Html.ValidationMessageFor(model => model.CategoryId)
                 </div>
                 <div class="infoElement infoTitle requiredField">
@@ -386,7 +395,7 @@
                     <label>Tỉnh, thành phố</label>
 
                     <div class="clear"></div>
-                    @Html.DropDownListFor(model => model.ProvinceId, null, new { @class = "select city" })
+                    @Html.DropDownListFor(model => model.ProvinceId, null, new { @class = "chzn-select city" })
                     @Html.ValidationMessageFor(model => model.ProvinceId)
                 </div>
                 <div class="infoElement">
@@ -394,20 +403,20 @@
 
                     <div class="clear"></div>
                     @Html.DropDownListFor(model => model.DistrictId, null,
-                        new { id = "DistrictId", @class = "select city" })
+             new { id = "DistrictId", @class = "chzn-select city" })
                     @Html.ValidationMessageFor(model => model.DistrictId)
                 </div>
                 <div class="clear"></div>
                 <div class="infoElement requiredField">
                     <label>Đường, phố</label>
-
+                    <span class="example">Ví dụ: Nguyễn Chí Thanh</span>
                     <div class="clear"></div>
                     @Html.TextBoxFor(model => model.Street, new { @class = "tbx" })
                     @Html.ValidationMessageFor(model => model.Street)
                 </div>
                 <div class="infoElement requiredField">
                     <label>Ngách, số nhà</label>
-
+                    <span class="example">Ví dụ: Số 3 Ngõ 110</span>
                     <div class="clear"></div>
                     @Html.TextBoxFor(model => model.NumberHouse, new { @class = "tbx" })
                     @Html.ValidationMessageFor(model => model.NumberHouse)
@@ -629,23 +638,23 @@
 @section head{
     <script type="text/javascript">
         $(document).ready(function () {
-            $('select.select').each(function () {
-                var title = $(this).attr('title');
-                var id = $(this).attr('id');
-                if ($('option:selected', this).val() != '') {
-                    title = $('option:selected', this).text();
-                } else {
-                    $('option:selected', this).val('0');
-                    title = $('option:selected', this).val('0').text();
-                }
-                $(this)
-                .css({ 'opacity': 0 })
-                .after('<span class="select" id="sp' + id + '">' + title + '</span>')
-                .change(function () {
-                    val = $('option:selected', this).text();
-                    $(this).next().text(val);
-                })
-            });
+//            $('select.select').each(function () {
+//                var title = $(this).attr('title');
+//                var id = $(this).attr('id');
+//                if ($('option:selected', this).val() != '') {
+//                    title = $('option:selected', this).text();
+//                } else {
+//                    $('option:selected', this).val('0');
+//                    title = $('option:selected', this).val('0').text();
+//                }
+//                $(this)
+//                .css({ 'opacity': 0 })
+//                .after('<span class="select" id="sp' + id + '">' + title + '</span>')
+//                .change(function () {
+//                    val = $('option:selected', this).text();
+//                    $(this).next().text(val);
+//                })
+//            });
         });
 
         function toggleP2() {
