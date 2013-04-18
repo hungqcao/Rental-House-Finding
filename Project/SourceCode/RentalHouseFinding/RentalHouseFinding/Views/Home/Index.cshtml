@@ -75,22 +75,24 @@
 
         var scriptInfobox = document.createElement('script');
         scriptInfobox.type = 'text/javascript';
+        scriptInfobox.async = true;
         scriptInfobox.src = '@Url.Content("~/Content/js/infobox.js")';
-
         document.body.appendChild(scriptInfobox);
+
         var scriptOverlap = document.createElement('script');
         scriptOverlap.type = 'text/javascript';
+        scriptOverlap.async = true;
         scriptOverlap.src = '@Url.Content("~/Content/js/oms.min.js")';
+        document.body.appendChild(scriptOverlap);
 
-        document.body.appendChild(scriptOverlap);        
-        
-        $.getJSON("home/GetLatLonFromResult",
+        setTimeout(function () {
+            $.getJSON("home/GetLatLonFromResult",
             function (myData) {
                 source = myData;
                 var oms = new OverlappingMarkerSpiderfier(window.map,
         { markersWontMove: true, markersWontHide: true });
 
-                
+
                 var markerImg = new google.maps.MarkerImage(imageInactive);
                 var altMarkerImg = new google.maps.MarkerImage(imageActive);
                 var ib = new InfoBox();
@@ -170,6 +172,7 @@
                 });
 
             });
+        }, 500);
     }
 
     function loadScript() {
@@ -177,7 +180,6 @@
         script.type = 'text/javascript';
         script.src = 'https://maps.googleapis.com/maps/api/js?v=3.exp&sensor=false&' +
             'callback=initialize';
-
         document.body.appendChild(script);
     }
 
@@ -194,6 +196,7 @@
 
 <script type="text/javascript">
     $(document).ready(function () {
+        $("#overlayResult").fadeIn();
         loadScript();
         bindMouseHoverMarker();
         var source;
@@ -216,6 +219,7 @@
             });
             UpdateNumberListItem();
             bindMouseHoverMarker();
+            $("#overlayResult").fadeOut();
         })
         .error(function (xhr, status) {
             xhr.abort();
@@ -229,11 +233,11 @@
     <div class="clear"></div>
     <div id="options">
         <div id="btnShowList" onclick="toggle_visibility('listInfo');" class="btnShowListClicked"></div>
-        @Html.DropDownListFor(model => model.CategoryId, null, new { @class = "select" })
+        @Html.DropDownListFor(model => model.CategoryId, null, new { @class = "chzn-select" })
         @Html.ValidationMessageFor(model => model.CategoryId)
-        @Html.DropDownListFor(model => model.ProvinceId, null, new { @class = "select" })
+        @Html.DropDownListFor(model => model.ProvinceId, null, new { @class = "chzn-select" })
         @Html.ValidationMessageFor(model => model.ProvinceId)
-        @Html.DropDownListFor(model => model.DistrictId, null, new { @class = "select" })
+        @Html.DropDownListFor(model => model.DistrictId, null, new { @class = "chzn-select" })
         
         @Html.TextBoxFor(model => model.KeyWord, new { @id = "KeyWord", @class="homeSearch", @placeholder = "từ khóa thêm" })   
         <input type="submit" id="btnSubmit" class="left" value="" />
@@ -249,6 +253,9 @@
     <div class="clear"></div> 
     <div id="wrapperDiv" class="scroll-pane">
         <div id="mainDiv">
+            <div id="overlayResult" style="margin: 0 auto;width:34px;">
+               <img src="@Url.Content("~/Content/images/ajax-loader.gif")" />
+            </div>
             <ul id="ul-result">
             </ul>
         </div>
@@ -320,23 +327,23 @@
                     });
                 }
             });
-            $('select.select').each(function () {
-                var title = $(this).attr('title');
-                var id = $(this).attr('id');
-                if ($('option:selected', this).val() != '') {
-                    title = $('option:selected', this).text();
-                } else {
-                    $('option:selected', this).val('0');
-                    title = $('option:selected', this).val('0').text();
-                }
-                $(this)
-                .css({ 'opacity': 0 })
-                .after('<span class="select" id="sp' + id + '">' + title + '</span>')
-                .change(function () {
-                    val = $('option:selected', this).text();
-                    $(this).next().text(val);
-                })
-            });
+//            $('select.select').each(function () {
+//                var title = $(this).attr('title');
+//                var id = $(this).attr('id');
+//                if ($('option:selected', this).val() != '') {
+//                    title = $('option:selected', this).text();
+//                } else {
+//                    $('option:selected', this).val('0');
+//                    title = $('option:selected', this).val('0').text();
+//                }
+//                $(this)
+//                .css({ 'opacity': 0 })
+//                .after('<span class="select" id="sp' + id + '">' + title + '</span>')
+//                .change(function () {
+//                    val = $('option:selected', this).text();
+//                    $(this).next().text(val);
+//                })
+//            });
 
         });
         </script>

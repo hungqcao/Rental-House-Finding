@@ -60,13 +60,13 @@
             <div class="helloLine searchLine"></div>
         </div>
         <div class="clear"></div>
-        <h1 style="margin-top: 20px;">Bạn đã hiểu rất rõ nhu cầu tìm kiếm của mình? Hãy bắt đầu ngay:</h1>
+        <h1>Bạn đã hiểu rất rõ nhu cầu tìm kiếm của mình? Hãy bắt đầu ngay:</h1>
         <h1 class="blockTitle">1. Thông tin cơ bản</h1>
         <div class="clear"></div>
         <div class="basicInfo">
-            @Html.DropDownListFor(model => model.CategoryId, null, new { @class = "select", @id = "ddlOptions" })
-            @Html.DropDownListFor(model => model.ProvinceId, null, new { @id = "ddlCity", @class="select"})
-            @Html.DropDownListFor(model => model.DistrictId, null, new { id = "ddlDistrict", @class = "select" })
+            @Html.DropDownListFor(model => model.CategoryId, null, new { @class = "chzn-select" })
+            @Html.DropDownListFor(model => model.ProvinceId, null, new { @class = "chzn-select" })
+            @Html.DropDownListFor(model => model.DistrictId, null, new { @class = "chzn-select" })
             <div class="clear"></div>
             <div id ="Price" class="field ">
                 <span>Giá tiền (triệu VND/tháng)</span>
@@ -160,6 +160,8 @@
 @section head{
     <script type="text/javascript">
         $(document).ready(function () {
+
+            $(".chzn-select").chosen();
             $('select.select').each(function () {
                 var title = $(this).attr('title');
                 var id = $(this).attr('id');

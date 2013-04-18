@@ -4,7 +4,7 @@
 }
 <script>
     $(document).ready(function () {
-        if(("#grid th")[4] == 'undefined'){
+        if ($("#grid th")[4] != null) {
             $("#grid th")[4].setAttribute('id', '8');
             $('#8').find('a').prepend('<img id="theImg" src="../../Content/images/down.png" />')
         }

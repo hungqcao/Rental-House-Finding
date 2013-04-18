@@ -1,48 +1,64 @@
 ﻿//HungCQ
 $(document).ready(function () {
     //For page postback
-    var idPro = $("#ddlCity option:selected").val();
-    var select = $("#ddlDistrict");
+    var idPro = $("#ProvinceId option:selected").val();
+    var idDis = $("#DistrictId option:selected").val();
+    var select = $("#DistrictId");
     select.empty();
     select.append($('<option/>', {
         value: '0',
         text: 'Quận/Huyện'
     }));
-    select.val('0');
-    select.next().text('Quận/Huyện');
+
+    select.removeClass("chzn-done");
     if (idPro != 0) {
         $.getJSON("service/GetDistrictList", { id: idPro },
-                function (myData) {
-                    $.each(myData, function (index, itemData) {
-                        if (itemData.Text.length != 0) {
-                            select.append($('<option/>', {
-                                value: itemData.Value,
-                                text: itemData.Text
-                            }));
-                        }
-                    });
+            function (myData) {
+                $.each(myData, function (index, itemData) {
+                    if (itemData.Text.length != 0 && itemData.Value != idDis) {
+                        select.append($('<option/>', {
+                            value: itemData.Value,
+                            text: itemData.Text
+                        }));
+                    }
+                    if (itemData.Text.length != 0 && itemData.Value == idDis) {
+                        select.append($('<option/>', {
+                            value: itemData.Value,
+                            text: itemData.Text,
+                            selected: 'selected'
+                        }));
+                    }
                 });
+                if (select.next().hasClass("chzn-container")) {
+                    select.next().remove();
+                }
+                $(".chzn-select").chosen();
+            });
+
     };
-    $("#ddlCity").change(function () {
-        var idPro = $("#ddlCity option:selected").val();
-        var select = $("#ddlDistrict");
+    $("#ProvinceId").change(function () {
+        var idPro = $("#ProvinceId option:selected").val();
+        var select = $("#DistrictId");
         select.empty();
         select.append($('<option/>', {
             value: '0',
             text: 'Quận/Huyện'
         }));
-        $("#ddlDistrict").val("0");
-        select.next().text('Quận/Huyện');
+        select.removeClass("chzn-done");
         $.getJSON("service/GetDistrictList", { id: idPro },
         function (myData) {
             $.each(myData, function (index, itemData) {
-                if (itemData.Text.length != 0) {
+                if (itemData.Text.lenght != 0) {
                     select.append($('<option/>', {
                         value: itemData.Value,
                         text: itemData.Text
                     }));
                 }
             });
+            if (select.next().hasClass("chzn-container")) {
+                select.next().remove();
+            }
+            $(".chzn-select").chosen();
         });
     });
 

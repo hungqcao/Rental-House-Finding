@@ -9,8 +9,8 @@ $(document).ready(function () {
         value: '0',
         text: 'Quận/Huyện'
     }));
-    
-    //select.next().text('Quận/Huyện');
+
+    select.removeClass("chzn-done");
     if (idPro != 0) {
         $.getJSON("service/GetDistrictList", { id: idPro },
             function (myData) {
@@ -29,7 +29,12 @@ $(document).ready(function () {
                         }));
                     }
                 });
+                if (select.next().hasClass("chzn-container")) {
+                    select.next().remove();
+                }
+                $(".chzn-select").chosen();
             });
+
     };
     $("#ProvinceId").change(function () {
         var idPro = $("#ProvinceId option:selected").val();
@@ -39,7 +44,7 @@ $(document).ready(function () {
             value: '0',
             text: 'Quận/Huyện'
         }));
-        select.next().text('Quận/Huyện');
+        select.removeClass("chzn-done");
         $.getJSON("service/GetDistrictList", { id: idPro },
         function (myData) {
             $.each(myData, function (index, itemData) {
@@ -50,7 +55,13 @@ $(document).ready(function () {
                     }));
                 }
             });
+
+            if (select.next().hasClass("chzn-container")) {
+                select.next().remove();
+            }
+            $(".chzn-select").chosen();
         });
+
     });
 
     $("#KeyWord").autocomplete({

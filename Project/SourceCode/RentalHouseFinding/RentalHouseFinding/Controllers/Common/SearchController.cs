@@ -31,7 +31,7 @@ namespace RentalHouseFinding.Controllers
         {
             try
             {
-                ViewBag.CategoryId = new SelectList(Repository.GetAllCategories(), "Id", "Name");
+                ViewBag.CategoryId = new SelectList(Repository.GetAllCategories(), "Id", "Name", 1);
                 ViewBag.ProvinceId = new SelectList(Repository.GetAllProvinces(), "Id", "Name", 2);
                 ViewBag.DistrictId = CommonController.AddDefaultOption(new SelectList(Repository.GetAllDistricts().Where(d => d.ProvinceId == 2), "Id", "Name"), "Quận/Huyện", "0");
             }
