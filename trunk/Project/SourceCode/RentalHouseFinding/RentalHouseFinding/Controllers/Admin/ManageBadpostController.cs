@@ -19,7 +19,7 @@ namespace RentalHouseFinding.Controllers.Admin
     {
         private readonly ILog log = LogManager.GetLogger(MethodBase.GetCurrentMethod().DeclaringType);
         private RentalHouseFindingEntities _db = new RentalHouseFindingEntities();
-        private const int MAX_RECORD_PER_PAGE = 15;
+        private const int MAX_RECORD_PER_PAGE = DefaultValue.MAX_RECORD_PER_PAGE;
 
         private string _noInfo;
 
@@ -44,7 +44,9 @@ namespace RentalHouseFinding.Controllers.Admin
             {
                 page = 1;
             }
-            var postsList = (from p in _db.Posts where (p.StatusId == 2 && !p.IsDeleted) select p);
+            var postsList = (from p in _db.Posts 
+                             where (p.StatusId == StatusConstant.PENDING && !p.IsDeleted) 
+                             select p);
 
             var postViewList = postsList.Select(p => new
             {
@@ -55,9 +57,7 @@ namespace RentalHouseFinding.Controllers.Admin
                 p.EditedDate,
                 p.RenewDate,
                 p.ExpiredDate,
-                PostStatus = (from stt in _db.PostStatuses
-                              where (stt.Id == p.StatusId)
-                              select stt.Name).FirstOrDefault()
+                PostStatus = p.PostStatus.Name
             }).OrderBy(p => p.ID).Skip(MAX_RECORD_PER_PAGE * ((int)page - 1)).Take(MAX_RECORD_PER_PAGE);
 
             var grid = new WebGrid(ajaxUpdateContainerId: "container-grid",
@@ -90,9 +90,7 @@ namespace RentalHouseFinding.Controllers.Admin
                 if (post != null)
                 {
                     var postImage = _db.PostImages.Where(p => p.Id == id).FirstOrDefault();
-                    postImage.IsDeleted = true;
-
-                    _db.ObjectStateManager.ChangeObjectState(postImage, System.Data.EntityState.Modified);
+                    //ChungNT - delete image in disk
                     _db.SaveChanges();
                     return true;
                 }
@@ -132,10 +130,12 @@ namespace RentalHouseFinding.Controllers.Admin
                     postViewModel = (PostViewModel)CommonModel.TrimObjectProperties(postViewModel);
                     var post = (from p in _db.Posts where (p.Id == postViewModel.Id) select p).FirstOrDefault();
                     int currentPostStatusID = post.StatusId;
+
+                    //Để đảm bảo số ngày active của người dùng ko bị mất khi bài post bị pending
                     TimeSpan keepPendingDay;
                     DateTime expiredDate = DateTime.Now;
 
-                    if (currentPostStatusID == 2)
+                    if (currentPostStatusID == StatusConstant.PENDING)
                     {
                         if (post.EditedDate == null)
                         {
@@ -153,7 +153,7 @@ namespace RentalHouseFinding.Controllers.Admin
                     }
                     post = CommonModel.ConvertPostViewModelToPost(post, postViewModel, post.CreatedDate, DateTime.Now, post.RenewDate, expiredDate, _noInfo);
 
-                    post.StatusId = 1;
+                    post.StatusId = StatusConstant.ACTIVATED;
 
                     Dictionary<int, string> lstNearbyId = CommonController.GetListNearbyLocations(postViewModel, Request);
                     PostLocations postLocation;
@@ -188,9 +188,9 @@ namespace RentalHouseFinding.Controllers.Admin
                         {
                             if (image != null && image.ContentLength > 0)
                             {
-                                var path = Path.Combine(HttpContext.Server.MapPath("/Content/PostImages/"), postViewModel.Id.ToString());
+                                var path = Path.Combine(HttpContext.Server.MapPath(DefaultValue.PATH_IMAGES), postViewModel.Id.ToString());
                                 //Check if image already exists
-                                string pathToCompare = "/Content/PostImages/"
+                                string pathToCompare = DefaultValue.PATH_IMAGES
                                                         + postViewModel.Id + "/" + Path.GetFileName(image.FileName);
                                 var imagesPath = (from i in _db.PostImages
                                                   where (i.Path.Equals(pathToCompare, StringComparison.CurrentCultureIgnoreCase))
@@ -204,7 +204,7 @@ namespace RentalHouseFinding.Controllers.Admin
                                 image.SaveAs(filePath);
                                 imageToCreate = new PostImages();
                                 imageToCreate.PostId = postViewModel.Id;
-                                imageToCreate.Path = "/Content/PostImages/" + postViewModel.Id.ToString() + "/" + Path.GetFileName(image.FileName);
+                                imageToCreate.Path = DefaultValue.PATH_IMAGES + postViewModel.Id.ToString() + "/" + Path.GetFileName(image.FileName);
                                 imageToCreate.IsDeleted = false;
 
                                 _db.PostImages.AddObject(imageToCreate);

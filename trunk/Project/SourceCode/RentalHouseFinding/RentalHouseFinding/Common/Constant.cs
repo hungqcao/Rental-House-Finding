@@ -41,4 +41,30 @@ namespace RentalHouseFinding.Common
         public const string WELCOME_OPENID = "WelcomeOpenId";
         public const string SUBJECT_WELCOME_OPENID = "SubjectWelcomeOpenId";
     }
+
+    public static class DefaultValue
+    {
+        public const int MAX_RECORD_PER_PAGE = 15;
+        public const string PATH_IMAGES = "/Content/PostImages/";
+    }
+
+    public static class StatusConstant
+    {
+        public const int ACTIVATED = 1;
+        public const int PENDING = 2;
+        public const int EXPIRED = 3;
+    }
+
+    public static class ProvinceConstant
+    {
+        public const int HA_NOI = 2;
+        public const int HAI_PHONG = 1;
+        public const int HO_CHI_MINH = 3;
+    }
+
+    public static class CategoryConstant
+    {
+        public const int PHONG_TRO = 2;
+    }
+
 }

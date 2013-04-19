@@ -46,7 +46,6 @@ namespace RentalHouseFinding.Controllers
                 FacebookClient.SetDefaultHttpWebRequestFactory(uri =>
                 {
                     var request = new HttpWebRequestWrapper((HttpWebRequest)WebRequest.Create(uri));
-                    //request.Proxy = new WebProxy("proxy", 8080); // normal .net IWebProxy
                     return request;
                 });
                 if (!String.IsNullOrEmpty(token))
@@ -231,20 +230,26 @@ namespace RentalHouseFinding.Controllers
                 var user = _db.Users.Where(u => u.Username.Equals(model.Username, StringComparison.CurrentCultureIgnoreCase)).FirstOrDefault();
                 if (user != null)
                 {
+                    string newPassword = StringUtil.RandomStr();
                     if (!string.IsNullOrEmpty(user.Email))
                     {
-                        string newPassword = StringUtil.RandomStr();
-                        user.Password = GetMD5Hash(newPassword);
+                        user.Password = CommonController.GetMD5Hash(newPassword);
                         _db.ObjectStateManager.ChangeObjectState(user, System.Data.EntityState.Modified);
                         _db.SaveChanges();
-                        string emailTemplate = Repository.GetAllEmailTemplate().Where(e => e.Name.Equals(ConstantEmailTemplate.RECEIVE_FORGOT_PASSWORD, StringComparison.CurrentCultureIgnoreCase)).Select(m => m.Template).FirstOrDefault();
-                        string subject = Repository.GetAllEmailTemplate().Where(e => e.Name.Equals(ConstantEmailTemplate.SUBJECT_RECEIVE_FORGOT_PASSWORD, StringComparison.CurrentCultureIgnoreCase)).Select(m => m.Template).FirstOrDefault();
+                        string emailTemplate = Repository.GetAllEmailTemplate()
+                                                .Where(e => e.Name.Equals(ConstantEmailTemplate.RECEIVE_FORGOT_PASSWORD,
+                                                    StringComparison.CurrentCultureIgnoreCase))
+                                                    .Select(m => m.Template).FirstOrDefault();
+                        string subject = Repository.GetAllEmailTemplate()
+                                                .Where(e => e.Name.Equals(ConstantEmailTemplate.SUBJECT_RECEIVE_FORGOT_PASSWORD, 
+                                                    StringComparison.CurrentCultureIgnoreCase))
+                                                    .Select(m => m.Template).FirstOrDefault();
                         string message = string.Format(emailTemplate, model.Username, DateTime.Now.ToString(), newPassword);
                         CommonModel.SendEmail(user.Email, message, subject, 0);
                     }
                     if (!string.IsNullOrEmpty(user.PhoneNumber))
                     {
-
+                        CommonController.SendSMS(user.PhoneNumber, string.Format("Mat khau cua ban la: {0}", newPassword));
                     }
                     TempData["MessageForgotPassword"] = "Mật khẩu đã được gửi về email của bạn";
                     return RedirectToAction("LogOn");
@@ -273,7 +278,7 @@ namespace RentalHouseFinding.Controllers
             {
                 try
                 {
-                    model.Password = GetMD5Hash(model.Password);
+                    model.Password = CommonController.GetMD5Hash(model.Password);
                     if (Membership.ValidateUser(model.UserName, model.Password))
                     {
                         var user = (from p in _db.Users where p.Username == model.UserName select new { p.RoleId }).FirstOrDefault();
@@ -336,8 +341,6 @@ namespace RentalHouseFinding.Controllers
             }
             else
             {
-
-
                 if (ModelState.IsValid)
                 {
                     try
@@ -362,8 +365,6 @@ namespace RentalHouseFinding.Controllers
                     }
                 }
             }
-
-            // If we got this far, something failed, redisplay form
             return View(model);
         }
 
@@ -444,17 +445,6 @@ namespace RentalHouseFinding.Controllers
         public ActionResult ChangePasswordSuccess()
         {
             return View();
-        }
-        public string GetMD5Hash(string value)
-        {
-            MD5 md5Hasher = MD5.Create();
-            byte[] data = md5Hasher.ComputeHash(Encoding.Default.GetBytes(value));
-            var sBuilder = new StringBuilder();
-            for (int i = 0; i < data.Length; i++)
-            {
-                sBuilder.Append(data[i].ToString("x2"));
-            }
-            return sBuilder.ToString();
         }
 
         public CaptchaImageResult ShowCaptchaImage()
