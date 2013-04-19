@@ -13,6 +13,8 @@
 <script type="text/javascript" src="@Url.Content("~/Scripts/jquery.tagedit.js")"></script>
 <script src="@Url.Content("~/Content/js/jquery.screwdefaultbuttonsV2.min.js")" type="text/javascript"></script>
 <script type="text/javascript" src="@Url.Content("~/Scripts/ScriptEditPage.js")"></script>
+<link href="@Url.Content("~/Content/css/listbox.css")" rel="stylesheet">
+<script src="@Url.Content("~/Content/js/listbox.js")"></script>
 <script>
     //for validate number message.
     (function ($) {
@@ -474,8 +476,9 @@
                         </div>
                     </div>
                 </div>
-                <div class="leftContent">
-                    <h1>Các địa điểm nổi bật xung quanh</h1>
+                <div class="leftContent NearByWrapper">
+                    <h1 style="width:562px;">Các địa điểm nổi bật xung quanh</h1>
+                    <div class="NearByDes">* Ghi chú: Bạn hãy chọn địa điểm tương ứng hoặc gõ địa điểm bạn muốn vào ô bên phải.<br /> Mỗi địa điểm cách nhau bằng nút Enter.</div>
                     <div class="clear"></div>
                     <div id="location-wrapper" class="left" style="margin-right: 10px">
                         <select id="locations">

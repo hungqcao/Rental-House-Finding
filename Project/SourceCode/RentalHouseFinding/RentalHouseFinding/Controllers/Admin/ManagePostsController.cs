@@ -8,12 +8,13 @@ using System.Web.Helpers;
 using System.Web.Routing;
 using System.Collections;
 using System.Data.Objects;
+using RentalHouseFinding.Common;
 
 namespace RentalHouseFinding.Controllers.Admin
 {
     public class ManagePostsController : Controller
     {
-        private const int MAX_RECORD_PER_PAGE = 15;
+        private const int MAX_RECORD_PER_PAGE = DefaultValue.MAX_RECORD_PER_PAGE;
         private readonly static RentalHouseFindingEntities _db = new RentalHouseFindingEntities();
 
         //
@@ -73,7 +74,6 @@ namespace RentalHouseFinding.Controllers.Admin
             {
                 if (model.ProvinceId > 0)
                 {
-                    //var dictricts = (from d in _db.Districts where (d.ProvinceId == model.ProvinceId) select d.Id).ToArray();
                     postList = postList.Where(p => (p.District.ProvinceId == model.ProvinceId ));
                 }
 
@@ -83,7 +83,6 @@ namespace RentalHouseFinding.Controllers.Admin
             {
                 if (model.DistrictId > 0)
                 {
-                    //var dictricts = (from d in _db.Districts where (d.ProvinceId == model.ProvinceId) select d.Id).ToArray();
                     postList = postList.Where(p => (p.DistrictId == model.DistrictId));
                 }
 
@@ -161,8 +160,7 @@ namespace RentalHouseFinding.Controllers.Admin
             {
                 postList = postList.Where(p => !p.IsDeleted);
             }
-            ////check isDelete
-            //postList = postList.Where(p => !p.IsDeleted);
+
             var postViewList = postList.Select(p => new
             {
                 ID = p.Id,
@@ -175,9 +173,7 @@ namespace RentalHouseFinding.Controllers.Admin
                 p.EditedDate,
                 p.RenewDate,
                 p.ExpiredDate,
-                PostStatus = (from stt in _db.PostStatuses
-                              where (stt.Id == p.StatusId)
-                              select stt.Name).FirstOrDefault(),
+                PostStatus = p.PostStatus.Name,
                 Category = p.Category.Name
             });
             //Custom sort

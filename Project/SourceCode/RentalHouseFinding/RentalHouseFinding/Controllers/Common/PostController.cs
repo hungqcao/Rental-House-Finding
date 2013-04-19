@@ -56,19 +56,6 @@ namespace RentalHouseFinding.Controllers
 
                 var districtAndProvinceName = Repository.GetAllDistricts().Where(d => d.Id == post.DistrictId).Select(d => new { districtName = d.Name, provinceName = d.Province.Name }).FirstOrDefault();
 
-                ViewBag.Address = districtAndProvinceName.districtName + ", " + districtAndProvinceName.provinceName;
-                ViewBag.Internet = post.Facilities.HasInternet ? "Có" : "Không";
-                ViewBag.AirConditioner = post.Facilities.HasAirConditioner ? "Có" : "Không";
-                ViewBag.Bed = post.Facilities.HasBed ? "Có" : "Không";
-                ViewBag.Gara = post.Facilities.HasGarage ? "Có" : "Không";
-                ViewBag.MotorParkingLot = post.Facilities.HasMotorParkingLot ? "Có" : "Không";
-                ViewBag.Security = post.Facilities.HasSecurity ? "Có" : "Không";
-                ViewBag.Toilet = post.Facilities.HasToilet ? "Có" : "Không";
-                ViewBag.TVCable = post.Facilities.HasTVCable ? "Có" : "Không";
-                ViewBag.WaterHeater = post.Facilities.HasWaterHeater ? "Có" : "Không";
-                ViewBag.AllowCooking = post.Facilities.IsAllowCooking ? "Có" : "Không";
-                ViewBag.StayWithOwner = post.Facilities.IsStayWithOwner ? "Có" : "Không";
-                ViewBag.WaterHeater = post.Facilities.HasWaterHeater ? "Có" : "Không";
                 //Get images
                 var images = (from i in _db.PostImages where (i.PostId == post.Id && !i.IsDeleted) select i);
                 if (images != null)
@@ -123,19 +110,6 @@ namespace RentalHouseFinding.Controllers
                 }
                 var districtAndProvinceName = Repository.GetAllDistricts().Where(d => d.Id == post.DistrictId).Select(d => new { districtName = d.Name, provinceName = d.Province.Name }).FirstOrDefault();
 
-                ViewBag.Address = districtAndProvinceName.districtName + ", " + districtAndProvinceName.provinceName;
-                ViewBag.Internet = post.Facilities.HasInternet ? "Có" : "Không";
-                ViewBag.AirConditioner = post.Facilities.HasAirConditioner ? "Có" : "Không";
-                ViewBag.Bed = post.Facilities.HasBed ? "Có" : "Không";
-                ViewBag.Gara = post.Facilities.HasGarage ? "Có" : "Không";
-                ViewBag.MotorParkingLot = post.Facilities.HasMotorParkingLot ? "Có" : "Không";
-                ViewBag.Security = post.Facilities.HasSecurity ? "Có" : "Không";
-                ViewBag.Toilet = post.Facilities.HasToilet ? "Có" : "Không";
-                ViewBag.TVCable = post.Facilities.HasTVCable ? "Có" : "Không";
-                ViewBag.WaterHeater = post.Facilities.HasWaterHeater ? "Có" : "Không";
-                ViewBag.AllowCooking = post.Facilities.IsAllowCooking ? "Có" : "Không";
-                ViewBag.StayWithOwner = post.Facilities.IsStayWithOwner ? "Có" : "Không";
-                ViewBag.WaterHeater = post.Facilities.HasWaterHeater ? "Có" : "Không";
                 //Get images
                 var images = (from i in _db.PostImages where (i.PostId == post.Id && !i.IsDeleted) select i);
                 if (images != null)
@@ -181,14 +155,13 @@ namespace RentalHouseFinding.Controllers
         {
             try
             {
-                ViewBag.CategoryId = new SelectList(Repository.GetAllCategories(), "Id", "Name", 1);
-                //2 for Ha noi
-                ViewBag.ProvinceId = new SelectList(Repository.GetAllProvinces(), "Id", "Name", 2);
-                ViewBag.DistrictId = CommonController.AddDefaultOption(new SelectList(Repository.GetAllDistricts().Where(d => d.ProvinceId == 2), "Id", "Name"), "Quận huyện", "0");
+                ViewBag.CategoryId = new SelectList(Repository.GetAllCategories(), "Id", "Name", CategoryConstant.PHONG_TRO);
+                ViewBag.ProvinceId = new SelectList(Repository.GetAllProvinces(), "Id", "Name", ProvinceConstant.HA_NOI);
+                ViewBag.DistrictId = CommonController.AddDefaultOption(new SelectList(Repository.GetAllDistricts().Where(d => d.ProvinceId == ProvinceConstant.HA_NOI), "Id", "Name"), "Quận huyện", "0");
             }
             catch (Exception ex)
             {
-                log.Error(ex.Message);             
+                log.Error(ex.Message);
             }
             return View();
         }
@@ -214,16 +187,14 @@ namespace RentalHouseFinding.Controllers
 
                     if (CommonModel.FilterHasBadContent(model))
                     {
-                        //2 for pending
-                        postToCreate.StatusId = 2;
+                        postToCreate.StatusId = StatusConstant.PENDING;
                         TempData["MessagePendingPostNew"] = "Bài đăng có chứa những từ không cho phép, chúng tôi sẽ duyệt trước khi đăng lên hệ thống";
                         TempData["Pending"] = true;
                         TempData["Success"] = false;
                     }
                     else
                     {
-                        //1 for submitted
-                        postToCreate.StatusId = 1;
+                        postToCreate.StatusId = StatusConstant.ACTIVATED;
                         TempData["MessageSuccessPostNew"] = "Đăng bài thành công, chúng tôi sẽ gửi tin nhắn đến số điện thoại bạn đã cung cấp";
                         TempData["Success"] = true;
                         suscess = true;
@@ -239,6 +210,7 @@ namespace RentalHouseFinding.Controllers
 
                     _db.Posts.AddObject(postToCreate);
                     _db.SaveChanges();
+
                     //Nearby places
                     Dictionary<int, string> lstNearbyId = CommonController.GetListNearbyLocations(model, Request);
                     PostLocations postLocation;
@@ -263,7 +235,7 @@ namespace RentalHouseFinding.Controllers
                         }
                         else
                         {
-                            postToCreate.StatusId = 2;
+                            postToCreate.StatusId = StatusConstant.PENDING;
                             TempData["MessagePendingPostNew"] = "Bài đăng có chứa những từ không cho phép, chúng tôi sẽ duyệt trước khi đăng lên hệ thống";
                             TempData["Pending"] = true;
                             TempData["Success"] = false;
@@ -413,7 +385,7 @@ namespace RentalHouseFinding.Controllers
                     TimeSpan keepPendingDay;
                     DateTime expiredDate = DateTime.Now;
 
-                    if (currentPostStatusID == 2)
+                    if (currentPostStatusID == StatusConstant.PENDING)
                     {
                         if (post.EditedDate == null)
                         {
@@ -432,8 +404,7 @@ namespace RentalHouseFinding.Controllers
 
                     if (CommonModel.FilterHasBadContent(postViewModel))
                     {
-                        //2 for pending
-                        post.StatusId = 2;
+                        post.StatusId = StatusConstant.PENDING;
                         TempData["MessagePendingPostNew"] = "Bài đăng có chứa những từ không cho phép, chúng tôi sẽ duyệt trước khi đăng lên hệ thống";
                         TempData["Pending"] = true;
                         TempData["Success"] = false;
@@ -442,13 +413,13 @@ namespace RentalHouseFinding.Controllers
                     bool pendingToActive = false;
                     if (isPending)
                     {
-                        post.StatusId = 2;
+                        post.StatusId = StatusConstant.PENDING;
                     }
                     else
                     {
-                        if (currentPostStatusID == 2)
+                        if (currentPostStatusID == StatusConstant.PENDING)
                         {
-                            post.StatusId = 1;
+                            post.StatusId = StatusConstant.ACTIVATED;
                             pendingToActive = true;
                         }
                         else
@@ -460,12 +431,10 @@ namespace RentalHouseFinding.Controllers
                     if (User.IsInRole("Admin"))// Admin logged.
                     {
                         // Admin edit post of user. Edited Date not change.
-                        post = CommonModel.ConvertPostViewModelToPost(post, postViewModel, post.CreatedDate, post.EditedDate, post.RenewDate, expiredDate, _noInfo);                       
-
+                        post = CommonModel.ConvertPostViewModelToPost(post, postViewModel, post.CreatedDate, post.EditedDate, post.RenewDate, expiredDate, _noInfo);
                     }
                     else
                     {
-
                         post = CommonModel.ConvertPostViewModelToPost(post, postViewModel, post.CreatedDate, DateTime.Now, post.RenewDate, expiredDate, _noInfo);
                     }
 
@@ -526,12 +495,12 @@ namespace RentalHouseFinding.Controllers
                             }
                         }
                     }
-                    
+
                     if (pendingToActive)
                     {
                         TempData["MessageSuccessEdit"] = "Đăng bài thành công, chúng tôi sẽ gửi tin nhắn đến số điện thoại bạn đã cung cấp.";
                         TempData["Success"] = true;
-                    }                    
+                    }
                     else if (!isPending)
                     {
                         TempData["MessageSuccessEdit"] = "Thay đổi thông tin thành công";

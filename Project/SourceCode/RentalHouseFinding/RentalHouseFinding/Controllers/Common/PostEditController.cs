@@ -158,7 +158,7 @@ namespace RentalHouseFinding.Controllers.GUI
                     TimeSpan keepPendingDay;
                     DateTime expiredDate = DateTime.Now;
 
-                    if (currentPostStatusID == 2)
+                    if (currentPostStatusID == StatusConstant.PENDING)
                     {
                         if (post.EditedDate == null)
                         {
@@ -176,8 +176,7 @@ namespace RentalHouseFinding.Controllers.GUI
                     }
                     if (CommonModel.FilterHasBadContent(postViewModel))
                     {
-                        //2 for pending
-                        post.StatusId = 2;
+                        post.StatusId = StatusConstant.PENDING;
                         TempData["MessagePendingPostNew"] = "Bài đăng có chứa những từ không cho phép, chúng tôi sẽ duyệt trước khi đăng lên hệ thống";
                         TempData["Pending"] = true;
                         TempData["Success"] = false;
@@ -186,13 +185,13 @@ namespace RentalHouseFinding.Controllers.GUI
                     bool pendingToActive = false;
                     if (isPending)
                     {
-                        post.StatusId = 2;
+                        post.StatusId = StatusConstant.PENDING;
                     }
                     else
                     {
-                        if (currentPostStatusID == 2)
+                        if (currentPostStatusID == StatusConstant.PENDING)
                         {
-                            post.StatusId = 1;
+                            post.StatusId = StatusConstant.ACTIVATED;
                             pendingToActive = true;
                         }
                         else

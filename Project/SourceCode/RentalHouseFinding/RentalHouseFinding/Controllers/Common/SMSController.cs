@@ -13,7 +13,8 @@ namespace RentalHouseFinding.Controllers
 {
     public class SMSController : Controller
     {
-        
+
+        RentalHouseFindingEntities _db = new RentalHouseFindingEntities();
         private string _noInfo;
 
         public ICacheRepository Repository { get; set; }
@@ -31,9 +32,6 @@ namespace RentalHouseFinding.Controllers
         
         //
         // GET: /SMS/
-
-
-
         public ActionResult Index()
         {
             return View();
@@ -46,16 +44,11 @@ namespace RentalHouseFinding.Controllers
         [HttpPost]
         public ActionResult SMSActive(SMSModel model)
         {
-            RentalHouseFindingEntities _db = new RentalHouseFindingEntities();
-            
-            
             Payments payment = new Payments();
             if (ModelState.IsValid)
             {
                 try
                 {
-                    //Add to payment table
-
                     //ContentSMS =  MS ABCD                
                     string code = !String.IsNullOrEmpty(model.ContentSMS) ? model.ContentSMS.Split(' ')[1].ToString() : String.Empty;
                     var postId = (from p in _db.Posts

@@ -28,9 +28,9 @@ namespace RentalHouseFinding.Controllers
         public ActionResult Index()
         {
             ViewBag.Score = new SelectList(Repository.GetAllAdvanceSearchScore(), "Score", "Name");
-            ViewBag.CategoryId = new SelectList(Repository.GetAllCategories(), "Id", "Name", 1);
-            ViewBag.ProvinceId = new SelectList(Repository.GetAllProvinces(), "Id", "Name", 2);
-            ViewBag.DistrictId = CommonController.AddDefaultOption(new SelectList(Repository.GetAllDistricts().Where(d => d.ProvinceId == 2), "Id", "Name"), "Quận/Huyện", "0");
+            ViewBag.CategoryId = new SelectList(Repository.GetAllCategories(), "Id", "Name", CategoryConstant.PHONG_TRO);
+            ViewBag.ProvinceId = new SelectList(Repository.GetAllProvinces(), "Id", "Name", ProvinceConstant.HA_NOI);
+            ViewBag.DistrictId = CommonController.AddDefaultOption(new SelectList(Repository.GetAllDistricts().Where(d => d.ProvinceId == ProvinceConstant.HA_NOI), "Id", "Name"), "Quận/Huyện", "0");
 
             return View();
         }
