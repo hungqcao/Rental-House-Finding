@@ -18,7 +18,7 @@ namespace RentalHouseFinding.Controllers.Admin
     {
         private readonly ILog log = LogManager.GetLogger(MethodBase.GetCurrentMethod().DeclaringType);
         private RentalHouseFindingEntities _db = new RentalHouseFindingEntities();
-        private const int MAX_RECORD_PER_PAGE = 15;
+        private const int MAX_RECORD_PER_PAGE = DefaultValue.MAX_RECORD_PER_PAGE;
 
         private string _noInfo;
 
@@ -51,7 +51,8 @@ namespace RentalHouseFinding.Controllers.Admin
                 p.PostId,
                 p.Post.Title,
                 p.Reason,
-                p.User.Username,
+                ReportedBy = String.IsNullOrEmpty(p.User.Name) ? p.User.Username : p.User.Name,
+                CreatedBy = String.IsNullOrEmpty(p.Post.User.Name) ? p.Post.User.Username : p.Post.User.Name,
                 p.ReportedDate
             }).OrderBy(p => p.ID).Skip(MAX_RECORD_PER_PAGE * ((int)page - 1)).Take(MAX_RECORD_PER_PAGE);
 
