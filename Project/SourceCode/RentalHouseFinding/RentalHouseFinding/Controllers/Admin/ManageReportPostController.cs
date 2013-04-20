@@ -55,11 +55,10 @@ namespace RentalHouseFinding.Controllers.Admin
                 p.ReportedDate
             }).OrderBy(p => p.ID).Skip(MAX_RECORD_PER_PAGE * ((int)page - 1)).Take(MAX_RECORD_PER_PAGE);
 
-            var grid = new WebGrid(ajaxUpdateContainerId: "container-grid",
-            canSort: false, rowsPerPage: MAX_RECORD_PER_PAGE);
-            grid.Bind(postViewList, autoSortAndPage: false, rowCount: postsList.Count());
+            ViewBag.List = postViewList.ToList();
+            ViewBag.RowCount = postViewList.Count();
+            ViewBag.TotalRowCount = postsList.Count();
             ViewBag.Index = ((int)page - 1) * MAX_RECORD_PER_PAGE;
-            ViewBag.Grid = grid;
             return View();
         }
 
@@ -88,8 +87,14 @@ namespace RentalHouseFinding.Controllers.Admin
                     var postImage = _db.PostImages.Where(p => p.Id == id).FirstOrDefault();
                     postImage.IsDeleted = true;
 
-                    _db.ObjectStateManager.ChangeObjectState(postImage, System.Data.EntityState.Modified);
+                    //Delete in Db
+                    postImage.IsDeleted = true;
+                    _db.ObjectStateManager.ChangeObjectState(postImage, EntityState.Modified);
                     _db.SaveChanges();
+
+                    //Delete File
+                    System.IO.File.Delete(HttpContext.Server.MapPath(postImage.Path));
+
                     return true;
                 }
                 return false;
@@ -162,9 +167,9 @@ namespace RentalHouseFinding.Controllers.Admin
                         {
                             if (image != null && image.ContentLength > 0)
                             {
-                                var path = Path.Combine(HttpContext.Server.MapPath("/Content/PostImages/"), postViewModel.Id.ToString());
+                                var path = Path.Combine(HttpContext.Server.MapPath(DefaultValue.PATH_IMAGES), postViewModel.Id.ToString());
                                 //Check if image already exists
-                                string pathToCompare = "/Content/PostImages/"
+                                string pathToCompare = DefaultValue.PATH_IMAGES
                                                         + postViewModel.Id + "/" + Path.GetFileName(image.FileName);
                                 var imagesPath = (from i in _db.PostImages
                                                   where (i.Path.Equals(pathToCompare, StringComparison.CurrentCultureIgnoreCase))
@@ -178,7 +183,7 @@ namespace RentalHouseFinding.Controllers.Admin
                                 image.SaveAs(filePath);
                                 imageToCreate = new PostImages();
                                 imageToCreate.PostId = postViewModel.Id;
-                                imageToCreate.Path = "/Content/PostImages/" + postViewModel.Id.ToString() + "/" + Path.GetFileName(image.FileName);
+                                imageToCreate.Path = DefaultValue.PATH_IMAGES + postViewModel.Id.ToString() + "/" + Path.GetFileName(image.FileName);
                                 imageToCreate.IsDeleted = false;
 
                                 _db.PostImages.AddObject(imageToCreate);

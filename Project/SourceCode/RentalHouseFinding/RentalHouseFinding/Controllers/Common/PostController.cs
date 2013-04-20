@@ -29,7 +29,10 @@ namespace RentalHouseFinding.Controllers
         public PostController(ICacheRepository repository)
         {
             this.Repository = repository;
-            this._noInfo = Repository.GetAllConfiguration().Where(c => c.Name.Equals(ConstantCommonString.NONE_INFORMATION, StringComparison.CurrentCultureIgnoreCase)).Select(c => c.Value).FirstOrDefault().ToString();
+            this._noInfo = Repository.GetAllConfiguration()
+                .Where(c => c.Name.Equals(ConstantCommonString.NONE_INFORMATION, 
+                    StringComparison.CurrentCultureIgnoreCase))
+                .Select(c => c.Value).FirstOrDefault().ToString();
         }
 
         public ActionResult Index()
@@ -253,13 +256,13 @@ namespace RentalHouseFinding.Controllers
                         {
                             if (image != null && image.ContentLength > 0)
                             {
-                                var path = Path.Combine(HttpContext.Server.MapPath("/Content/PostImages/"), postToCreate.Id.ToString());
+                                var path = Path.Combine(HttpContext.Server.MapPath(DefaultValue.PATH_IMAGES), postToCreate.Id.ToString());
                                 Directory.CreateDirectory(path);
                                 string filePath = Path.Combine(path, Path.GetFileName(image.FileName));
                                 image.SaveAs(filePath);
                                 imageToCreate = new PostImages();
                                 imageToCreate.PostId = postToCreate.Id;
-                                imageToCreate.Path = "/Content/PostImages/" + postToCreate.Id.ToString() + "/" + Path.GetFileName(image.FileName);
+                                imageToCreate.Path = DefaultValue.PATH_IMAGES + postToCreate.Id.ToString() + "/" + Path.GetFileName(image.FileName);
                                 imageToCreate.IsDeleted = false;
 
                                 _db.PostImages.AddObject(imageToCreate);
@@ -335,8 +338,14 @@ namespace RentalHouseFinding.Controllers
                 if (post.UserId == userId || userId == 1)// User of this post or Admin logged.
                 {
                     var postImage = _db.PostImages.Where(p => p.Id == id).FirstOrDefault();
-                    _db.PostImages.DeleteObject(postImage);
+                    //Delete in Db
+                    postImage.IsDeleted = true;
+                    _db.ObjectStateManager.ChangeObjectState(postImage, EntityState.Modified);
                     _db.SaveChanges();
+
+                    //Delete File
+                    System.IO.File.Delete(HttpContext.Server.MapPath(postImage.Path));
+
                     return true;
                 }
                 return false;
@@ -471,9 +480,10 @@ namespace RentalHouseFinding.Controllers
                         {
                             if (image != null && image.ContentLength > 0)
                             {
-                                var path = Path.Combine(HttpContext.Server.MapPath("/Content/PostImages/"), postViewModel.Id.ToString());
+                                
+                                var path = Path.Combine(HttpContext.Server.MapPath(DefaultValue.PATH_IMAGES), postViewModel.Id.ToString());
                                 //Check if image already exists
-                                string pathToCompare = "/Content/PostImages/"
+                                string pathToCompare = DefaultValue.PATH_IMAGES
                                                         + postViewModel.Id + "/" + Path.GetFileName(image.FileName);
                                 var imagesPath = (from i in _db.PostImages
                                                   where (i.Path.Equals(pathToCompare, StringComparison.CurrentCultureIgnoreCase) && !i.IsDeleted)
@@ -487,7 +497,7 @@ namespace RentalHouseFinding.Controllers
                                 image.SaveAs(filePath);
                                 imageToCreate = new PostImages();
                                 imageToCreate.PostId = postViewModel.Id;
-                                imageToCreate.Path = "/Content/PostImages/" + postViewModel.Id.ToString() + "/" + Path.GetFileName(image.FileName);
+                                imageToCreate.Path = DefaultValue.PATH_IMAGES + postViewModel.Id.ToString() + "/" + Path.GetFileName(image.FileName);
                                 imageToCreate.IsDeleted = false;
 
                                 _db.PostImages.AddObject(imageToCreate);
