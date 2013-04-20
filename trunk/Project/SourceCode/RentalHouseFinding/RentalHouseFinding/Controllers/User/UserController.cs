@@ -169,10 +169,9 @@ namespace RentalHouseFinding.Controllers
                         .Skip(MAX_RECORD_PER_PAGE * ((int)page - 1)).Take(MAX_RECORD_PER_PAGE);
                 }
             }
-
-            var grid = new WebGrid(ajaxUpdateContainerId: "container-grid", ajaxUpdateCallback: "setArrows", canSort: true);
-            grid.Bind(postViewList, autoSortAndPage: false, rowCount: lstPost.Count());
-            ViewBag.Grid = grid;
+            ViewBag.List = postViewList.ToList();
+            ViewBag.RowCount = postViewList.Count();
+            ViewBag.TotalRowCount = lstPost.Count();
             ViewBag.Index = ((int)page - 1) * MAX_RECORD_PER_PAGE;
 
             return View();
@@ -306,9 +305,9 @@ namespace RentalHouseFinding.Controllers
                         .Skip(MAX_RECORD_PER_PAGE * ((int)page - 1)).Take(MAX_RECORD_PER_PAGE);
                 }
             }
-            var grid = new WebGrid(ajaxUpdateContainerId: "container-grid", ajaxUpdateCallback: "setArrows", canSort: true);
-            grid.Bind(postViewList, autoSortAndPage: false, rowCount: postList.Count());
-            ViewBag.Grid = grid;
+            ViewBag.List = postViewList.ToList();
+            ViewBag.RowCount = postViewList.Count();
+            ViewBag.TotalRowCount = postList.Count();
             ViewBag.Index = ((int)page - 1) * MAX_RECORD_PER_PAGE;
             return View();
         }
@@ -376,9 +375,9 @@ namespace RentalHouseFinding.Controllers
                         .Skip(MAX_RECORD_PER_PAGE * ((int)page - 1)).Take(MAX_RECORD_PER_PAGE);
                 }
             }
-            var grid = new WebGrid(ajaxUpdateContainerId: "container-grid",ajaxUpdateCallback: "setArrows",  canSort: true);
-            grid.Bind(paymentViewList, autoSortAndPage: false, rowCount: paymentList.Count());
-            ViewBag.Grid = grid;
+            ViewBag.List = paymentViewList.ToList();
+            ViewBag.RowCount = paymentViewList.Count();
+            ViewBag.TotalRowCount = paymentList.Count();
             ViewBag.Index = ((int)page - 1) * MAX_RECORD_PER_PAGE;
             return View();
         }

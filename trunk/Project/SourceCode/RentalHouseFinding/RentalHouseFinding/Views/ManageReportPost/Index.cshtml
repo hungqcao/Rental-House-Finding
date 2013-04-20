@@ -16,9 +16,10 @@
 </div>
 <div id="container-grid">
 @{
-    if (ViewBag.Grid != null && ViewBag.Grid.TotalRowCount > 0)
+    if (ViewBag.List != null && ViewBag.RowCount > 0)
     {
-        WebGrid grid = ViewBag.Grid;
+        WebGrid grid = new WebGrid(ajaxUpdateContainerId: "container-grid", ajaxUpdateCallback: "setArrows", canSort: true);
+        grid.Bind(ViewBag.List, autoSortAndPage: false, rowCount: ViewBag.TotalRowCount);
         @grid.GetHtml(tableStyle: "webGrid", mode: WebGridPagerModes.All,
                             headerStyle: "header",
                             alternatingRowStyle: "alt",

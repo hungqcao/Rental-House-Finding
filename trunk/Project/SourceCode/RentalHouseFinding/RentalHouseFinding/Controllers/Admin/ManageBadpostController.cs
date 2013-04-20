@@ -60,11 +60,10 @@ namespace RentalHouseFinding.Controllers.Admin
                 PostStatus = p.PostStatus.Name
             }).OrderBy(p => p.ID).Skip(MAX_RECORD_PER_PAGE * ((int)page - 1)).Take(MAX_RECORD_PER_PAGE);
 
-            var grid = new WebGrid(ajaxUpdateContainerId: "container-grid",
-            canSort: false, rowsPerPage: MAX_RECORD_PER_PAGE);
-            grid.Bind(postViewList, autoSortAndPage: false, rowCount: postsList.Count());
+            ViewBag.List = postViewList.ToList();
+            ViewBag.RowCount = postViewList.Count();
+            ViewBag.TotalRowCount = postsList.Count();
             ViewBag.Index = ((int)page - 1) * MAX_RECORD_PER_PAGE;
-            ViewBag.Grid = grid;
             return View();
         }
 
@@ -90,7 +89,13 @@ namespace RentalHouseFinding.Controllers.Admin
                 if (post != null)
                 {
                     var postImage = _db.PostImages.Where(p => p.Id == id).FirstOrDefault();
-                    //ChungNT - delete image in disk
+                    //Delete in Db
+                    postImage.IsDeleted = true;
+                    _db.ObjectStateManager.ChangeObjectState(postImage, EntityState.Modified);
+                    _db.SaveChanges();
+
+                    //Delete File
+                    System.IO.File.Delete(HttpContext.Server.MapPath(postImage.Path));
                     _db.SaveChanges();
                     return true;
                 }
