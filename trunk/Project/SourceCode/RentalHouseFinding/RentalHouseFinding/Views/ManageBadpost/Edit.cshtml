@@ -422,7 +422,7 @@
                     <div class="clear"></div>
                 </div>
                 <div class="clear"></div>
-                <div class="leftContent" style="margin-right: 144px;">
+                <div class="leftContent">
                     <h1>Các dịch vụ & tiện ích</h1>
                     <div class="clear"></div>
                     <div class="partCol">
@@ -436,7 +436,7 @@
                         </div>
                         <div class="part">
                             @Html.CheckBoxFor(model => model.IsAllowCooking, new { @class = "styledCheckbox" })
-                            <span>Cho phép nấu ăn</span>
+                            <span>Nấu ăn trong phòng</span>
                         </div>
                         <div class="part">
                             @Html.CheckBoxFor(model => model.HasWaterHeater, new { @class = "styledCheckbox" })
@@ -459,7 +459,7 @@
                         </div>
                         <div class="part">
                             @Html.CheckBoxFor(model => model.IsStayWithOwner, new { @class = "styledCheckbox" })
-                            <span>Chung chủ</span>
+                            <span>Ở cùng chủ nhà</span>
                         </div>
                         <div class="part">
                             @Html.CheckBoxFor(model => model.HasGarage, new { @class = "styledCheckbox" })

@@ -230,6 +230,13 @@ namespace RentalHouseFinding.Controllers.GUI
                     {
                         nearbyPlace = nearbyPlace.Remove(nearbyPlace.Length - 2);
                         post.NearbyPlace = nearbyPlace;
+                        if (CommonModel.FilterHasBadContent(nearbyPlace))
+                        {
+                            post.StatusId = StatusConstant.PENDING;
+                            TempData["MessagePendingPostNew"] = "Bài đăng có chứa những từ không cho phép, chúng tôi sẽ duyệt trước khi đăng lên hệ thống";
+                            TempData["Pending"] = true;
+                            TempData["Success"] = false;
+                        }
                     }
 
                     _db.ObjectStateManager.ChangeObjectState(post, EntityState.Modified);
@@ -276,6 +283,8 @@ namespace RentalHouseFinding.Controllers.GUI
                         TempData["MessageSuccessEdit"] = "Thay đổi thông tin thành công";
                         TempData["Success"] = true;
                     }
+
+                    Session["PostIdToEdit"] = null;
                     return RedirectToAction("Index");
                 }
                 catch (Exception ex)
@@ -288,6 +297,12 @@ namespace RentalHouseFinding.Controllers.GUI
             ViewBag.ProvinceId = new SelectList(Repository.GetAllProvinces(), "Id", "Name", postViewModel.ProvinceId);
             ViewBag.DistrictId = new SelectList(Repository.GetAllDistricts().Where(d => d.ProvinceId == postViewModel.ProvinceId) , "Id", "Name", postViewModel.DistrictId);
             return View(postViewModel);
+        }
+
+        public ActionResult LogOut()
+        {
+            Session["PostIdToEdit"] = null;
+            return RedirectToAction("Index");
         }
 
         public ActionResult Delete()
@@ -307,6 +322,8 @@ namespace RentalHouseFinding.Controllers.GUI
                 _db.ObjectStateManager.ChangeObjectState(post, EntityState.Modified);
                 _db.SaveChanges();
                 TempData["MessageDeletePost"] = "Xóa thành công!";
+
+                Session["PostIdToEdit"] = null;
                 return RedirectToAction("Index");
             }
             catch(Exception ex)

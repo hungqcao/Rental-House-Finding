@@ -198,7 +198,6 @@
             });
 
             //for locations
-            var idDis = $("#DistrictId option:selected").val();
             var select = $("#locations");
             select.empty();
             $.getJSON("@baseUri.ToString()" + "service/GetLocationWithDistrictId", { id: idDis },
@@ -572,7 +571,7 @@
                         </div>
                         <div class="part">
                             @Html.CheckBoxFor(model => model.IsAllowCooking, new { @class = "styledCheckbox" })
-                            <span>Cho phép nấu ăn</span>
+                            <span>Nấu ăn trong phòng</span>
                         </div>
                         <div class="part">
                             @Html.CheckBoxFor(model => model.HasWaterHeater, new { @class = "styledCheckbox" })
@@ -597,7 +596,7 @@
                         </div>
                         <div class="part">
                             @Html.CheckBoxFor(model => model.IsStayWithOwner, new { @class = "styledCheckbox" })
-                            <span>Chung chủ</span>
+                            <span>Ở cùng chủ nhà</span>
                         </div>
                         <div class="part">
                             @Html.CheckBoxFor(model => model.HasGarage, new { @class = "styledCheckbox" })

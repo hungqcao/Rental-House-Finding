@@ -30,7 +30,7 @@
                                      grid.Column("Username", "Người báo cáo"),
                                      grid.Column(header:"Tiều đề bài đăng", format: @<text>
                                              <a href="@Url.Action("edit", 
-                                             "managereportpost", 
+                                             "managereportpost",
                                              new { id = @item.PostId, reportId = @item.ID })">@item.Title</a></text>),
                                     grid.Column("Reason", "Lý do"),
                                     grid.Column("ReportedDate", "Ngày tạo", format: (item) => string.Format("{0:yyyy-MM-dd HH:mm:ss}", item.ReportedDate))

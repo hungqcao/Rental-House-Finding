@@ -13,6 +13,8 @@
 <script type="text/javascript" src="@Url.Content("~/Scripts/jquery.tagedit.js")"></script>
 <script type="text/javascript" src="@Url.Content("~/Scripts/ScriptEditPage.js")"></script>
 <script src="@Url.Content("~/Content/js/jquery.screwdefaultbuttonsV2.min.js")" type="text/javascript"></script>
+<link href="@Url.Content("~/Content/css/listbox.css")" rel="stylesheet">
+<script src="@Url.Content("~/Content/js/listbox.js")"></script>
 
 <script type="text/javascript">
     function deleteGallery(obj) {
@@ -229,7 +231,6 @@
             });
 
             //for locations
-            var idDis = $("#DistrictId option:selected").val();
             var select = $("#locations");
             select.empty();
             $.getJSON("@baseUri.ToString()" + "service/GetLocationWithDistrictId", { id: idDis },
@@ -535,7 +536,7 @@
                     <div class="clear"></div>
                 </div>
                 <div class="clear"></div>
-                <div class="leftContent" style="margin-right: 144px;">
+                <div class="leftContent">
                     <h1>Các dịch vụ & tiện ích</h1>
                     <div class="clear"></div>
                     <div class="partCol">
@@ -549,7 +550,7 @@
                         </div>
                         <div class="part">
                             @Html.CheckBoxFor(model => model.IsAllowCooking, new { @class = "styledCheckbox" })
-                            <span>Cho phép nấu ăn</span>
+                            <span>Nấu ăn trong phòng</span>
                         </div>
                         <div class="part">
                             @Html.CheckBoxFor(model => model.HasWaterHeater, new { @class = "styledCheckbox" })
@@ -572,7 +573,7 @@
                         </div>
                         <div class="part">
                             @Html.CheckBoxFor(model => model.IsStayWithOwner, new { @class = "styledCheckbox" })
-                            <span>Chung chủ</span>
+                            <span>Ở cùng chủ nhà</span>
                         </div>
                         <div class="part">
                             @Html.CheckBoxFor(model => model.HasGarage, new { @class = "styledCheckbox" })
@@ -611,6 +612,8 @@
             </div>
         <input id="btnSaveInfo" type="submit" class="button-link right" value="Chấp nhận"/>
         <a id="btnDelete" href="/postedit/delete/@Model.Id" onclick=" return confirm('Bạn có chắc chắn muốn xóa bài viết này?');" class="button-link right">Xóa</a>
+        
+        <div id="button-link_Cancel"><a href="/postedit/logout" onclick=" return confirm('Bạn có chắc chắn muốn thoát phiên làm việc này?');"><img src="../../Content/images/btnCancelEdit.png" /></a></div>
         <div class="clear"></div>
     </div>
 }
