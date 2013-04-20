@@ -155,6 +155,13 @@ namespace RentalHouseFinding.Controllers.Admin
                     {
                         nearbyPlace = nearbyPlace.Remove(nearbyPlace.Length - 2);
                         post.NearbyPlace = nearbyPlace;
+                        if (CommonModel.FilterHasBadContent(nearbyPlace))
+                        {
+                            post.StatusId = StatusConstant.PENDING;
+                            TempData["MessagePendingPostNew"] = "Bài đăng có chứa những từ không cho phép, chúng tôi sẽ duyệt trước khi đăng lên hệ thống";
+                            TempData["Pending"] = true;
+                            TempData["Success"] = false;
+                        }
                     }
 
                     _db.ObjectStateManager.ChangeObjectState(post, EntityState.Modified);

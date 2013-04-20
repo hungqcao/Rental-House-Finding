@@ -229,22 +229,17 @@ namespace RentalHouseFinding.Controllers
                     }
                     if (!string.IsNullOrEmpty(nearbyPlace))
                     {
-                        if (!CommonModel.FilterHasBadContent(nearbyPlace))
-                        {
-                            nearbyPlace = nearbyPlace.Remove(nearbyPlace.Length - 2);
-                            postToCreate.NearbyPlace = nearbyPlace;
-                            _db.ObjectStateManager.ChangeObjectState(postToCreate, System.Data.EntityState.Modified);
-                            _db.SaveChanges();
-                        }
-                        else
+                        nearbyPlace = nearbyPlace.Remove(nearbyPlace.Length - 2);
+                        postToCreate.NearbyPlace = nearbyPlace;
+                        if (CommonModel.FilterHasBadContent(nearbyPlace))
                         {
                             postToCreate.StatusId = StatusConstant.PENDING;
                             TempData["MessagePendingPostNew"] = "Bài đăng có chứa những từ không cho phép, chúng tôi sẽ duyệt trước khi đăng lên hệ thống";
                             TempData["Pending"] = true;
                             TempData["Success"] = false;
-                            _db.ObjectStateManager.ChangeObjectState(postToCreate, System.Data.EntityState.Modified);
-                            _db.SaveChanges();
                         }
+                        _db.ObjectStateManager.ChangeObjectState(postToCreate, System.Data.EntityState.Modified);
+                        _db.SaveChanges();
                     }
 
                     //Images post
@@ -447,6 +442,7 @@ namespace RentalHouseFinding.Controllers
                         post = CommonModel.ConvertPostViewModelToPost(post, postViewModel, post.CreatedDate, DateTime.Now, post.RenewDate, expiredDate, _noInfo);
                     }
 
+                    //Nearbyplace
                     Dictionary<int, string> lstNearbyId = CommonController.GetListNearbyLocations(postViewModel, Request);
                     PostLocations postLocation;
                     string nearbyPlace = string.Empty;
@@ -468,9 +464,15 @@ namespace RentalHouseFinding.Controllers
                     {
                         nearbyPlace = nearbyPlace.Remove(nearbyPlace.Length - 2);
                         post.NearbyPlace = nearbyPlace;
+                        if (CommonModel.FilterHasBadContent(nearbyPlace))
+                        {
+                            post.StatusId = StatusConstant.PENDING;
+                            TempData["MessagePendingPostNew"] = "Bài đăng có chứa những từ không cho phép, chúng tôi sẽ duyệt trước khi đăng lên hệ thống";
+                            TempData["Pending"] = true;
+                            TempData["Success"] = false;
+                        }
                     }
-
-                    _db.ObjectStateManager.ChangeObjectState(post, EntityState.Modified);
+                    _db.ObjectStateManager.ChangeObjectState(post, System.Data.EntityState.Modified);
                     _db.SaveChanges();
 
                     PostImages imageToCreate = null;
