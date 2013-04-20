@@ -51,7 +51,7 @@ namespace RentalHouseFinding.Controllers.Admin
             var postViewList = postsList.Select(p => new
             {
                 ID = p.Id,
-                p.UserId,
+                Username = String.IsNullOrEmpty(p.User.Name) ? p.User.Username : p.User.Name,
                 p.Title,
                 p.CreatedDate,
                 p.EditedDate,
@@ -96,7 +96,6 @@ namespace RentalHouseFinding.Controllers.Admin
 
                     //Delete File
                     System.IO.File.Delete(HttpContext.Server.MapPath(postImage.Path));
-                    _db.SaveChanges();
                     return true;
                 }
                 return false;

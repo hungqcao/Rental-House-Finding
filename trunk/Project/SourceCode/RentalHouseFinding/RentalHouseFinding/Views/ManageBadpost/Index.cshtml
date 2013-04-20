@@ -26,14 +26,13 @@
                             htmlAttributes: new { id = "grid" },
                             columns: grid.Columns(
                                           grid.Column(header: "STT", format: item => item.WebGrid.Rows.IndexOf(item) + 1 + ViewBag.Index),
-                                     grid.Column("ID", "Id"),
-                                     grid.Column("UserId", "Mã người dùng"),
+                                                    grid.Column("Username", "Người đăng", format: (item) => String.IsNullOrEmpty(item.UserName) ? "Khách" : item.UserName),
                                      grid.Column(header:"Tiều đề", format: @<text>
                                              <a href="@Url.Action("edit", 
                                              "managebadpost", 
-                                             new { id = @item.ID })">@item.Title</a></text>),
-                                    grid.Column("PostStatus", "Trạng thái"),
-                                    grid.Column("CreatedDate", "Ngày tạo", format: (item) => string.Format("{0:yyyy-MM-dd HH:mm:ss}", item.CreatedDate))
+                                             new { id = @item.ID })">@item.Title</a></text>),                                    
+                                    grid.Column("CreatedDate", "Ngày tạo", format: (item) => string.Format("{0:yyyy-MM-dd HH:mm:ss}", item.CreatedDate)),
+                                    grid.Column("EditedDate", "Ngày sửa")
                                     ));
     }
     else

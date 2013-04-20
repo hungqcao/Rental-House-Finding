@@ -164,7 +164,7 @@ namespace RentalHouseFinding.Controllers.Admin
             var postViewList = postList.Select(p => new
             {
                 ID = p.Id,
-                User = p.User.Username,
+                User = String.IsNullOrEmpty(p.User.Name) ? p.User.Username : p.User.Name,
                 p.Title,
                 CountRenew = (from pay in _db.Payments
                               where (pay.PostsId == p.Id)
