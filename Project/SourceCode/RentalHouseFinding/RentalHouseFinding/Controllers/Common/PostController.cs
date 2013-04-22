@@ -274,7 +274,6 @@ namespace RentalHouseFinding.Controllers
                 }
                 catch (Exception ex)
                 {
-                    ModelState.AddModelError("", ex.InnerException);
                     log.Error(ex.Message);
                     ViewBag.CategoryId = new SelectList(Repository.GetAllCategories(), "Id", "Name", model.CategoryId);
                     ViewBag.ProvinceId = new SelectList(Repository.GetAllProvinces(), "Id", "Name", model.ProvinceId);
@@ -339,7 +338,10 @@ namespace RentalHouseFinding.Controllers
                     _db.SaveChanges();
 
                     //Delete File
-                    System.IO.File.Delete(HttpContext.Server.MapPath(postImage.Path));
+                    if (System.IO.File.Exists(HttpContext.Server.MapPath(postImage.Path)))
+                    {
+                        System.IO.File.Delete(HttpContext.Server.MapPath(postImage.Path));
+                    }
 
                     return true;
                 }
