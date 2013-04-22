@@ -2834,3 +2834,12 @@ span.example
 {
     right: 8px;
 }
+#btnEditPost
+{
+    background: url('../../Content/images/btnEditPost.png');
+    display:block;
+    width: 78px;
+    height:30px;
+    cursor:pointer;
+    margin-right:100px;
+    }
