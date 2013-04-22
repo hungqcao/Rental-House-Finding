@@ -121,44 +121,47 @@ namespace RentalHouseFinding.Common
         {
             try
             {
-                //phoneNumber = phoneNumber.Remove(0, 1);            
-                //string URLString = "http://api.gateway160.com/client/sendmessage";
-                ////string[] param = new string[] { "MyAccount", "key", "16472876789", "US", Url.Encode("Hello world"), "0" };
-                //string account = "5house";
-                //string apiKey = "3c06b70f-b76d-4def-8ecb-719993faad20";
-                //string countryCode = "VN";            
-                //string postData = string.Format("accountName={0}&key={1}&phoneNumber={2}&countryCode={3}&message={4}&isUnicode={5}",account,apiKey,phoneNumber,countryCode,message,"0");
-                //byte[] byteArray = Encoding.UTF8.GetBytes(postData);
+                phoneNumber = phoneNumber.Remove(0, 1);
+                string URLString = "http://api.gateway160.com/client/sendmessage";
+                //string[] param = new string[] { "MyAccount", "key", "16472876789", "US", Url.Encode("Hello world"), "0" };
+                string account = "5house";
+                string apiKey = "3c06b70f-b76d-4def-8ecb-719993faad20";
+                // ACOUNT BACKUP
+                //string account = "5house1";
+                //string apiKey = "7f107807-0a52-4231-bf7b-675a0f4c4482";
 
-                //HttpWebRequest request = (HttpWebRequest)WebRequest.Create(URLString);
-                //request.Method = "post";
-                //request.ContentType = "application/x-www-form-urlencoded";
-                //Stream dataStream = request.GetRequestStream();
-                //dataStream.Write(byteArray, 0, byteArray.Length);
-                //dataStream.Close();
+                string countryCode = "VN";
+                string postData = string.Format("accountName={0}&key={1}&phoneNumber={2}&countryCode={3}&message={4}&isUnicode={5}", account, apiKey, phoneNumber, countryCode, message, "0");
+                byte[] byteArray = Encoding.UTF8.GetBytes(postData);
 
-                //HttpWebResponse response = (HttpWebResponse)request.GetResponse();
+                HttpWebRequest request = (HttpWebRequest)WebRequest.Create(URLString);
+                request.Method = "post";
+                request.ContentType = "application/x-www-form-urlencoded";
+                Stream dataStream = request.GetRequestStream();
+                dataStream.Write(byteArray, 0, byteArray.Length);
+                dataStream.Close();
 
-                //if (HttpStatusCode.OK == response.StatusCode)
-                //{
-                //    Stream receiveStream = response.GetResponseStream();
-                //    StreamReader sr = new StreamReader(receiveStream);
-                //    string output = sr.ReadLine();
-                //    response.Close();
+                HttpWebResponse response = (HttpWebResponse)request.GetResponse();
 
-                //    if (output == "1")
-                //    {
-                //        return true;
-                //    }
+                if (HttpStatusCode.OK == response.StatusCode)
+                {
+                    Stream receiveStream = response.GetResponseStream();
+                    StreamReader sr = new StreamReader(receiveStream);
+                    string output = sr.ReadLine();
+                    response.Close();
 
-                //    //error  (check the response code from the chart above)
-                //    return false;
-                //}
-                //else
-                //{
-                //    return false;
-                //}
-                return true;
+                    if (output == "1")
+                    {
+                        return true;
+                    }
+
+                    //error  (check the response code from the chart above)
+                    return false;
+                }
+                else
+                {
+                    return false;
+                }
             }
             catch
             {

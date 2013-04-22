@@ -197,8 +197,7 @@ namespace RentalHouseFinding.Controllers.GUI
                         TempData["Pending"] = true;
                         TempData["Success"] = false;
                         isPending = true;
-                    }
-                    bool pendingToActive = false;
+                    }                    
                     if (isPending)
                     {
                         post.StatusId = StatusConstant.PENDING;
@@ -207,8 +206,7 @@ namespace RentalHouseFinding.Controllers.GUI
                     {
                         if (currentPostStatusID == StatusConstant.PENDING)
                         {
-                            post.StatusId = StatusConstant.ACTIVATED;
-                            pendingToActive = true;
+                            post.StatusId = StatusConstant.ACTIVATED;                            
                         }
                         else
                         {
@@ -283,14 +281,9 @@ namespace RentalHouseFinding.Controllers.GUI
                             }
                         }
                     }
-                    if (pendingToActive)
+                   if (!isPending)
                     {
-                        TempData["MessageSuccessEdit"] = "Đăng bài thành công, chúng tôi sẽ gửi tin nhắn đến số điện thoại bạn đã cung cấp.";
-                        TempData["Success"] = true;
-                    }
-                    else if (!isPending)
-                    {
-                        TempData["MessageSuccessEdit"] = "Thay đổi thông tin thành công";
+                        TempData["MessageSuccessEdit"] = "Thay đổi thông tin thành công.";
                         TempData["Success"] = true;
                     }
 

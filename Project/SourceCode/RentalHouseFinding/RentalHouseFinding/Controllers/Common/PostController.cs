@@ -191,6 +191,7 @@ namespace RentalHouseFinding.Controllers
                 {
                     model = (PostViewModel)CommonModel.TrimObjectProperties(model);
                     bool suscess = false;
+                    bool isPending = false;
                     string strExpiredDate = Repository.GetAllConfiguration().Where(c => c.Name.Equals(ConstantCommonString.EXPIRED_DATE, StringComparison.CurrentCultureIgnoreCase)).Select(c => c.Value).FirstOrDefault().ToString();
                     int numberExpiredDate = 0;
                     int.TryParse(strExpiredDate, out numberExpiredDate);
@@ -204,6 +205,7 @@ namespace RentalHouseFinding.Controllers
                         TempData["MessagePendingPostNew"] = "Bài đăng có chứa những từ không cho phép, chúng tôi sẽ duyệt trước khi đăng lên hệ thống";
                         TempData["Pending"] = true;
                         TempData["Success"] = false;
+                        isPending = true;
                     }
                     else
                     {
@@ -278,7 +280,12 @@ namespace RentalHouseFinding.Controllers
                     if (suscess)
                     {
                         //Send SMS RenewCode.
-                        CommonController.SendSMS(postToCreate.PhoneActive, String.Format("Ban da dang bai thanh cong.Ma kich hoat cua ban la: {0}", postToCreate.Code));
+                        CommonController.SendSMS(postToCreate.PhoneActive, String.Format("Dang tin thanh cong! Ma tin : {0} . De gia han soan tin : MS {1} gui 8730. De sua bai truy cap: www.5house.us/sua", postToCreate.Code, postToCreate.Code));
+                    }
+                    if (isPending)
+                    {
+                        //Send SMS RenewCode.
+                        CommonController.SendSMS(postToCreate.PhoneActive, String.Format("Bai cua ban dang cho kiem duyet! Ma tin : {0} . De gia han soan tin : MS {1} gui 8730. De sua bai truy cap: www.5house.us/sua", postToCreate.Code, postToCreate.Code));
                     }
                     return RedirectToAction("Details", "Post", new { id = postToCreate.Id });
                 }
@@ -433,8 +440,7 @@ namespace RentalHouseFinding.Controllers
                         TempData["Pending"] = true;
                         TempData["Success"] = false;
                         isPending = true;
-                    }
-                    bool pendingToActive = false;
+                    }                    
                     if (isPending)
                     {
                         post.StatusId = StatusConstant.PENDING;
@@ -443,8 +449,7 @@ namespace RentalHouseFinding.Controllers
                     {
                         if (currentPostStatusID == StatusConstant.PENDING)
                         {
-                            post.StatusId = StatusConstant.ACTIVATED;
-                            pendingToActive = true;
+                            post.StatusId = StatusConstant.ACTIVATED;                            
                         }
                         else
                         {
@@ -527,15 +532,9 @@ namespace RentalHouseFinding.Controllers
                             }
                         }
                     }
-
-                    if (pendingToActive)
+                    if (!isPending)
                     {
-                        TempData["MessageSuccessEdit"] = "Đăng bài thành công, chúng tôi sẽ gửi tin nhắn đến số điện thoại bạn đã cung cấp.";
-                        TempData["Success"] = true;
-                    }
-                    else if (!isPending)
-                    {
-                        TempData["MessageSuccessEdit"] = "Thay đổi thông tin thành công";
+                        TempData["MessageSuccessEdit"] = "Thay đổi thông tin thành công.";
                         TempData["Success"] = true;
                     }
 
@@ -572,6 +571,7 @@ namespace RentalHouseFinding.Controllers
                 TempData["MessageDeletePost"] = "Xóa thành công!";
                 if (User.IsInRole("Admin"))
                 {
+                    CommonController.SendSMS(post.PhoneActive, String.Format("Bai dang voi ma tin \"{0}\" cua ban co chua noi dung sai pham da bi xoa boi Admin.", post.Code));
                     return RedirectToAction("Index", "ManagePosts");
                 }
                 else
