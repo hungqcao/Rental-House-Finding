@@ -106,7 +106,10 @@ namespace RentalHouseFinding.Controllers.GUI
                 _db.SaveChanges();
 
                 //Delete File
-                System.IO.File.Delete(HttpContext.Server.MapPath(postImage.Path));
+                if (System.IO.File.Exists(HttpContext.Server.MapPath(postImage.Path)))
+                {
+                    System.IO.File.Delete(HttpContext.Server.MapPath(postImage.Path));
+                }
                 return true;
             }
             catch (Exception ex)
