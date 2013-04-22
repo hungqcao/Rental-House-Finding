@@ -129,7 +129,7 @@ namespace RentalHouseFinding.Controllers.Admin
         [Authorize(Roles = "Admin")]
         public ActionResult Edit(PostViewModel postViewModel, IEnumerable<HttpPostedFileBase> images)
         {
-            if (images.Count() > 10)
+            if (images != null && images.Count() > 10)
             {
                 ModelState.AddModelError("", "Số lượng ảnh vượt quá 10");
                 ViewBag.CategoryId = new SelectList(Repository.GetAllCategories(), "Id", "Name", postViewModel.CategoryId);
