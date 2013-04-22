@@ -478,7 +478,7 @@ namespace RentalHouseFinding.Controllers
                     _db.SaveChanges();
 
                     PostImages imageToCreate = null;
-                    if (!(images.Count() == 0 || images == null))
+                    if (!(images == null || images.Count() == 0))
                     {
                         foreach (HttpPostedFileBase image in images)
                         {
