@@ -129,7 +129,14 @@ namespace RentalHouseFinding.Controllers.Admin
         [Authorize(Roles = "Admin")]
         public ActionResult Edit(PostViewModel postViewModel, IEnumerable<HttpPostedFileBase> images)
         {
-
+            if (images.Count() > 10)
+            {
+                ModelState.AddModelError("", "Số lượng ảnh vượt quá 10");
+                ViewBag.CategoryId = new SelectList(Repository.GetAllCategories(), "Id", "Name", postViewModel.CategoryId);
+                ViewBag.ProvinceId = new SelectList(Repository.GetAllProvinces(), "Id", "Name", postViewModel.ProvinceId);
+                ViewBag.DistrictId = new SelectList(Repository.GetAllDistricts().Where(d => d.ProvinceId == postViewModel.ProvinceId), "Id", "Name", postViewModel.DistrictId);
+                return View(postViewModel);
+            }
             if (ModelState.IsValid)
             {
                 try
@@ -172,7 +179,7 @@ namespace RentalHouseFinding.Controllers.Admin
                     _db.SaveChanges();
 
                     PostImages imageToCreate = null;
-                    if (!(images.Count() == 0 || images == null))
+                    if (!(images == null || images.Count() == 0 || images.Count() > 10))
                     {
                         foreach (HttpPostedFileBase image in images)
                         {
