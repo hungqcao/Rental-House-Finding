@@ -189,14 +189,7 @@ namespace RentalHouseFinding.Controllers.Admin
                     if (!string.IsNullOrEmpty(nearbyPlace))
                     {
                         nearbyPlace = nearbyPlace.Remove(nearbyPlace.Length - 2);
-                        post.NearbyPlace = nearbyPlace;
-                        if (CommonModel.FilterHasBadContent(nearbyPlace))
-                        {
-                            post.StatusId = StatusConstant.PENDING;
-                            TempData["MessagePendingPostNew"] = "Bài đăng có chứa những từ không cho phép, chúng tôi sẽ duyệt trước khi đăng lên hệ thống";
-                            TempData["Pending"] = true;
-                            TempData["Success"] = false;
-                        }
+                        post.NearbyPlace = nearbyPlace;                        
                     }
 
                     _db.ObjectStateManager.ChangeObjectState(post, EntityState.Modified);
@@ -235,7 +228,7 @@ namespace RentalHouseFinding.Controllers.Admin
                     }
                     TempData["MessageSuccessSaveBadPost"] = "Duyệt bài thành công";
                     //send sms to phone active.
-                    CommonController.SendSMS(post.PhoneActive,String.Format("Bai cua ban da duoc Admin duyet. Ma kich hoat cua ban la :{0}",post.Code));
+                    //CommonController.SendSMS(post.PhoneActive,String.Format("Bai cua ban da duoc Admin duyet. Ma kich hoat cua ban la :{0}",post.Code));
                     return RedirectToAction("Index");
                 }
                 catch (Exception ex)
@@ -261,8 +254,20 @@ namespace RentalHouseFinding.Controllers.Admin
                 post.IsDeleted = true;
                 _db.ObjectStateManager.ChangeObjectState(post, EntityState.Modified);
                 _db.SaveChanges();
-
                 TempData["MessageSuccessSaveBadPost"] = "Xóa thành công!";
+                if (post.UserId != null)
+                {
+                    UserLogs log = new UserLogs();
+                    log.UserId = (int)post.UserId;
+                    log.Message = String.Format("Bài đăng với tiêu đề \"{0}\" của bạn đã bị xóa bởi Admin.", post.Title);
+                    log.IsRead = false;
+                    log.CreatedDate = DateTime.Now;
+                    _db.UserLogs.AddObject(log);
+                    _db.SaveChanges();
+                }
+                //Send SMS thong bao.
+                CommonController.SendSMS(post.PhoneActive, String.Format("Bai dang voi ma tin \"{0}\" cua ban co chua noi dung sai pham da bi xoa boi Admin.", post.Code));
+                
                 return RedirectToAction("Index");
             }
             catch (Exception ex)

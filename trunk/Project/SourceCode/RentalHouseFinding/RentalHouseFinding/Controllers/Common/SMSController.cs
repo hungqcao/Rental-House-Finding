@@ -83,6 +83,8 @@ namespace RentalHouseFinding.Controllers
                         post.RenewDate = DateTime.Now;
                         _db.ObjectStateManager.ChangeObjectState(post, EntityState.Modified);
                         _db.SaveChanges();
+
+                       // CommonController.SendSMS(post.PhoneActive, String.Format("Gia han thanh cong! Tin dang da duoc gia han them {0} ngay.", numberExpiredDate));
                         return RedirectToAction("Index");
                     }
                     else

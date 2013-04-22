@@ -209,7 +209,7 @@ namespace RentalHouseFinding.Controllers.Admin
                             }
                         }
                     }
-                    TempData["MessageSuccessSaveBadPost"] = "Thay đổi thông tin thành công";
+                    TempData["MessageSuccessSaveBadPost"] = "Thay đổi thông tin thành công.";
                     int reportId = (int)TempData["ReportId"];
                     var reportPost = (from rp in _db.ReportedPosts
                                       where (rp.Id == reportId)
@@ -241,7 +241,7 @@ namespace RentalHouseFinding.Controllers.Admin
         {
             try
             {
-                int userId = CommonModel.GetUserIdByUsername(User.Identity.Name);
+                //int userId = CommonModel.GetUserIdByUsername(User.Identity.Name);
                 var post = (from p in _db.Posts where (p.Id == id) select p).FirstOrDefault();
                 
                 post.IsDeleted = true;
@@ -249,6 +249,17 @@ namespace RentalHouseFinding.Controllers.Admin
                 _db.SaveChanges();
 
                 TempData["MessageSuccessSaveBadPost"] = "Xóa thành công!";
+                CommonController.SendSMS(post.PhoneActive, String.Format("Bai dang voi ma tin \"{0}\" cua ban co chua noi dung sai pham da bi xoa boi Admin.", post.Code));
+                if (post.UserId != null)
+                {
+                    UserLogs log = new UserLogs();
+                    log.UserId = (int)post.UserId;
+                    log.Message = String.Format("Bài đăng với tiêu đề \"{0}\" của bạn đã bị xóa bởi Admin.",post.Title);
+                    log.IsRead = false;
+                    log.CreatedDate = DateTime.Now;
+                    _db.UserLogs.AddObject(log);
+                    _db.SaveChanges();
+                }
                 return RedirectToAction("Index");
             }
             catch (Exception ex)

@@ -17,6 +17,7 @@ namespace RentalHouseFinding.Models
 
         [Required(ErrorMessage = "Xin vui lòng nhập nội dung theo cú pháp: MS Mã tin")]        
         [Display(Name = "Nội dung")]
+        [RegularExpression("MS\\s\\w{4}", ErrorMessage = "Sai cú pháp,xin vui lòng nhập lại")]
         public string ContentSMS { get; set; }
         
     }
