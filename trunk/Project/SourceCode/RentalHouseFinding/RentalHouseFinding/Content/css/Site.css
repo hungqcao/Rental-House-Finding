@@ -513,16 +513,22 @@ span.select {
     height: 832px;
 }
 #userPanel {
-    background: url("../../Content/images/user_panel.png") no-repeat transparent -22px 0;
+    background: url("../../Content/images/user_panel.png") no-repeat transparent 0px 0;
     width: 462px;
     height: 607px;
-    margin:0 auto;
+    margin: 0 auto;
 }
 #userInfoPage
 {
-    padding-left: 47px;
-    padding-top: 92px;
-    }
+    width: 323px;
+    margin: 0 auto;
+    padding-top: 100px;
+}
+#user-edit-button
+{
+    width: 265px;
+    margin: 0 auto;
+}
 div.textbox
 {
     height: 37px;
@@ -1188,6 +1194,11 @@ span.field-validation-error
 {
     font-size: 18px;
 }
+.txtListAnswer
+{
+    font-weight:bold;
+    margin-bottom: 10px;
+}
 #facilityDes
 {
     position:relative;
@@ -1651,7 +1662,7 @@ textarea#Description {
     margin-top: 3px;
 }
 .infoElement {
-    margin-top: 25px;
+    margin-top: 40px;
 }
 #postnew_wrapper .content input 
 {
@@ -2207,8 +2218,8 @@ textarea#Description {
     line-height: 1.5em;
 }
 .message-information {
-    background: #dbe3ff url('../images/information.png');
-    border-color: #a2b4ee;
+    background: #FFB2B2 url('../images/delete.png');
+    border-color: #FF0000;
     color: #585b66;
     font-size:14px;
     width:966px;
@@ -2343,6 +2354,10 @@ ul {
 {
     margin: 5px;
 }
+#imageList
+{
+    margin: 10px 0px 20px 0px;
+}
 #imageList img.delete
 {
     background: url("../../Content/images/bg_transparent.png") repeat scroll 0 0 transparent;
@@ -2463,7 +2478,17 @@ a.remove-fav-item-list
     border-radius: 5px;
     margin-top:5px;
 }
-
+#btnDelete
+{
+    background: url("../../Content/images/delete-post.png") no-repeat transparent 0px 0px;
+    height: 47px;
+    width: 144px;
+    cursor: pointer;
+    float: right;
+    display: block;
+    margin: 10px 16px 10px 0;
+    font-size: 0;
+}
 #btnDelete.button-link {
     background: #F88014;
     color: #FFF;

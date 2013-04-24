@@ -495,6 +495,8 @@ namespace RentalHouseFinding.Controllers
                             TempData["MessagePendingPostNew"] = "Bài đăng có chứa những từ không cho phép, chúng tôi sẽ duyệt trước khi đăng lên hệ thống";
                             TempData["Pending"] = true;
                             TempData["Success"] = false;
+                            isPending = true;
+                            post.StatusId = StatusConstant.PENDING;
                         }
                     }
                     _db.ObjectStateManager.ChangeObjectState(post, System.Data.EntityState.Modified);

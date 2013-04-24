@@ -84,14 +84,15 @@
         </div>
     </div>
     <div class="clear"></div>
-    
-    <div class="blockInfo">
-        <div class="clear"></div>
-        @Html.ActionLink("Trang User","Index", "User", null, new { @id ="userBtnCancel"})
-    </div>
-      <div class="blockInfo">
-        <div class="clear"></div>
-        <input type="submit" class="saveChange" value=""/>
+    <div id="user-edit-button">
+        <div class="blockInfo">
+            <div class="clear"></div>
+            @Html.ActionLink("Trang User","Index", "User", null, new { @id ="userBtnCancel"})
+        </div>
+          <div class="blockInfo">
+            <div class="clear"></div>
+            <input type="submit" class="saveChange" value=""/>
+        </div>
     </div>
     </div>
 }

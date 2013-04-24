@@ -9,17 +9,18 @@
     <div class="helloLine"></div>
 </div>
 <div class="clear"></div>
-<div id="message-sv" style="width:320px; margin: 0 auto;">
     @if (TempData["MessageSuccessEdit"] != null)
     {
-        <div class="message-notification success">
-            <a class="close" id="btnCloseDiv"></a>
-            <div>
-                @TempData["MessageSuccessEdit"]
+        <div id="message-sv" style="width:320px; margin: 0 auto;">
+            <div class="message-notification success">
+                <a class="close" id="btnCloseDiv"></a>
+                <div>
+                    @TempData["MessageSuccessEdit"]
+                </div>
             </div>
         </div>
     }
-    @if (TempData["Success"] != null)
+    @*@if (TempData["Success"] != null)
     {
         if ((bool)TempData["Success"] && TempData["Success"] != null)
         {
@@ -30,28 +31,29 @@
                 </div>
             </div>
         }
-    }
+    }*@
     @if (TempData["Pending"] != null)
     {
         if ((bool)TempData["Pending"])
         {
-            <div class="message-notification message-information">
-                <a class="close" id="btnCloseDiv"></a>
-                <div>
-                    @TempData["MessagePendingPostNew"]
+            <div id="message-sv" style=" width: 960px; margin: 0 auto;">
+                <div class="message-notification message-information">
+                    <a class="close" id="btnCloseDiv"></a>
+                    <div>
+                        @TempData["MessagePendingPostNew"]
+                    </div>
                 </div>
             </div>
         }
     }
-</div>
 <div class="login-regis" id="loginPanel">
-@using (Html.BeginForm("Index","PostEdit",FormMethod.Post,new{@style="padding:70px"}))
+@using (Html.BeginForm("Index", "PostEdit", FormMethod.Post, new { @style = "padding:70px" }))
 {
     <div class="userInfo" style="width: 320px;margin: 0 auto;">
         <h2>Xin vui lòng nhập mã tin đăng chúng tôi cung cấp cho bạn để chỉnh sửa bài viết</h2>
         <div class="clear"></div>
         <div class="blockInfo" style="margin-top:30px">
-            <input type="text" id="code" name="code" class="tbxRegister" />
+            <input type="password" id="code" name="code" class="tbxRegister"/>
         </div>
         <div class="clear"></div>
     </div>

@@ -244,6 +244,8 @@ namespace RentalHouseFinding.Controllers.GUI
                             TempData["MessagePendingPostNew"] = "Bài đăng có chứa những từ không cho phép, chúng tôi sẽ duyệt trước khi đăng lên hệ thống";
                             TempData["Pending"] = true;
                             TempData["Success"] = false;
+                            isPending = true;
+                            post.StatusId = StatusConstant.PENDING;
                         }
                     }
 
@@ -284,7 +286,8 @@ namespace RentalHouseFinding.Controllers.GUI
                    if (!isPending)
                     {
                         TempData["MessageSuccessEdit"] = "Thay đổi thông tin thành công.";
-                        TempData["Success"] = true;
+                        TempData["Success"] = true; 
+                        TempData["Pending"] = false;
                     }
 
                     Session["PostIdToEdit"] = null;

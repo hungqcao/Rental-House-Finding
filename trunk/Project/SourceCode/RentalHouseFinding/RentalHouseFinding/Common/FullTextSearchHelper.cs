@@ -28,7 +28,7 @@ namespace RentalHouseFinding.Common
 
         public List<FullTextSearchPostWithWeightenScore_Result> FullTextSearchPostWithWeightenScore(int categoryId,
                                                                                                     int provinceId, 
-                                                                                                    int DistrictId, 
+                                                                                                    int districtId, 
                                                                                                     string keyWords, 
                                                                                                     int descriptionColumnScore,
                                                                                                     int titleColumnScore,
@@ -41,7 +41,15 @@ namespace RentalHouseFinding.Common
         {
             try
             {
-                var listSuggestion = _db.FullTextSearchPostWithWeightenScore(categoryId, provinceId, DistrictId, keyWords, titleColumnScore, descriptionColumnScore, streetColumnScore, nearbyColumnScore, numberAddressColumnScore).ToList();
+                var listSuggestion = _db.FullTextSearchPostWithWeightenScore(categoryId, 
+                                                                            provinceId, 
+                                                                            districtId, 
+                                                                            keyWords, 
+                                                                            titleColumnScore, 
+                                                                            descriptionColumnScore, 
+                                                                            streetColumnScore, 
+                                                                            nearbyColumnScore,
+                                                                            numberAddressColumnScore).ToList();
                 numberOfResult = listSuggestion.Count();
                 var listReturn = listSuggestion.Skip(skip).Take(take);
                 return listReturn.ToList();
@@ -55,7 +63,7 @@ namespace RentalHouseFinding.Common
 
         public List<AdvancedSearchFacility_Result> AdvanceSearch(int categoryId, 
                                                                 int provinceId, 
-                                                                int DistrictId, 
+                                                                int districtId, 
                                                                 double? areaMax,
                                                                 double? areaMin,
                                                                 double? priceMax,
@@ -93,24 +101,25 @@ namespace RentalHouseFinding.Common
                 {
                     priceMin = 0;
                 }
-                var listSuggestion = _db.AdvancedSearchFacilities(categoryId, 
-                                                                provinceId, 
-                                                                DistrictId, 
-                                                                areaMax, 
-                                                                areaMin, 
-                                                                priceMax, 
-                                                                priceMin, 
-                                                                hasAirConditionerScore,
-                                                                hasBedScore,
-                                                                hasGarageScore,
-                                                                hasInternetScore,
-                                                                hasMotorParkingLotScore,
-                                                                hasSecurityScore,
-                                                                hasTVCableScore,
-                                                                hasWaterHeaterScore,
-                                                                isAllowCookingScore,
-                                                                isStayWithOwnerScore,
-                                                                hasToiletScore).ToList();
+                var listSuggestion = _db.AdvancedSearchFacilities(categoryId,
+                                            provinceId,
+                                            districtId,
+                                            areaMax,
+                                            areaMin,
+                                            priceMax,
+                                            priceMin,
+                                            hasAirConditionerScore,
+                                            hasBedScore,
+                                            hasGarageScore,
+                                            hasInternetScore,
+                                            hasMotorParkingLotScore,
+                                            hasSecurityScore,
+                                            hasToiletScore,
+                                            hasTVCableScore,
+                                            hasWaterHeaterScore,
+                                            isAllowCookingScore,
+                                            isStayWithOwnerScore).ToList(); 
+                
                 numberOfResult = listSuggestion.Count();
                 var listReturn = listSuggestion.Skip(skip).Take(take);
                 return listReturn.ToList();
@@ -124,7 +133,7 @@ namespace RentalHouseFinding.Common
 
         public List<FullTextSearchPostWithWeightenScore_Result> FullTextSearchPostWithWeightenScoreTakeAll(int categoryId,
                                                                                                     int provinceId,
-                                                                                                    int DistrictId,
+                                                                                                    int districtId,
                                                                                                     string keyWords,
                                                                                                     int descriptionColumnScore,
                                                                                                     int titleColumnScore,
@@ -134,7 +143,15 @@ namespace RentalHouseFinding.Common
         {
             try
             {
-                var listSuggestion = _db.FullTextSearchPostWithWeightenScore(categoryId, provinceId, DistrictId, keyWords, titleColumnScore, descriptionColumnScore, streetColumnScore, nearbyColumnScore, numberAddressColumnScore);
+                var listSuggestion = _db.FullTextSearchPostWithWeightenScore(categoryId, 
+                                                                            provinceId, 
+                                                                            districtId, 
+                                                                            keyWords, 
+                                                                            titleColumnScore, 
+                                                                            descriptionColumnScore, 
+                                                                            streetColumnScore, 
+                                                                            nearbyColumnScore, 
+                                                                            numberAddressColumnScore);
 
                 return listSuggestion.ToList();
             }
@@ -194,11 +211,11 @@ namespace RentalHouseFinding.Common
                                                                 hasInternetScore,
                                                                 hasMotorParkingLotScore,
                                                                 hasSecurityScore,
+                                                                hasToiletScore,
                                                                 hasTVCableScore,
                                                                 hasWaterHeaterScore,
                                                                 isAllowCookingScore,
-                                                                isStayWithOwnerScore,
-                                                                hasToiletScore);
+                                                                isStayWithOwnerScore);
 
                 return listSuggestion.ToList();
             }

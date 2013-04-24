@@ -121,6 +121,7 @@ namespace RentalHouseFinding.Common
         {
             try
             {
+                return true;
                 phoneNumber = phoneNumber.Remove(0, 1);
                 string URLString = "http://api.gateway160.com/client/sendmessage";
                 //string[] param = new string[] { "MyAccount", "key", "16472876789", "US", Url.Encode("Hello world"), "0" };

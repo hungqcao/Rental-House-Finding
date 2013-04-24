@@ -256,7 +256,6 @@
             });
 
             //for locations
-            var idDis = $("#DistrictId option:selected").val();
             var select = $("#locations");
             select.empty();
             $.getJSON("@baseUri.ToString()" + "service/GetLocationWithDistrictId", { id: idDis },
@@ -443,7 +442,7 @@
                 </div>
                 <div class="clear"></div>
                 <div class="infoElement requireField">
-                  <label>Giá tiền (triệu VND/tháng)</label>
+                  <label>Giá tiền (triệu VNĐ/tháng)</label>
                     <div class="clear"></div>
                     @Html.TextBoxFor(model => model.Price, new { @class = "tbx" })
                     @Html.ValidationMessageFor(model => model.Price)
@@ -529,7 +528,7 @@
                     <div class="clear"></div>
                     <div id="field0">
                         <label>Chọn ảnh: </label>
-                        <input id="file0" name="images" type="file" />
+                        <input id="file0" name="images" type="file" accept=".PNG,.TXT,.JPG,.BMP"/>
                         <a href="javascript:;" onclick="return removeFile();" class="removeImage">Xóa ảnh</a>
                         <a href="javascript:;" onclick="return addFile();" class="addImage">Thêm ảnh</a>
                     </div>

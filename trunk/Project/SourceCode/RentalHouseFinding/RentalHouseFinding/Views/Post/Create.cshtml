@@ -422,7 +422,7 @@
                 </div>
                 <div class="clear"></div>
                 <div class="infoElement requiredField">
-                    <label>Giá tiền (triệu VND/tháng)</label>
+                    <label>Giá tiền (triệu VNĐ/tháng)</label>
                     <div class="clear"></div>
                     @Html.TextBoxFor(model => model.Price, new { @class = "tbx" })
                     @Html.ValidationMessageFor(model => model.Price)
@@ -512,7 +512,7 @@
                 <div id="uploadFile" class="btnPlus">
                     <div id="field0">
                         <label>Chọn ảnh: </label>
-                        <input id="file0" name="images" type="file" />
+                        <input id="file0" name="images" type="file" accept=".PNG,.TXT,.JPG,.BMP"/>
                         <a href="javascript:;" onclick="return addFile();" class="addImage">Thêm ảnh</a>
                         <a href="javascript:;" onclick="return removeFile();" class="removeImage">Xóa ảnh</a>
                     </div>
@@ -637,23 +637,6 @@
 @section head{
     <script type="text/javascript">
         $(document).ready(function () {
-//            $('select.select').each(function () {
-//                var title = $(this).attr('title');
-//                var id = $(this).attr('id');
-//                if ($('option:selected', this).val() != '') {
-//                    title = $('option:selected', this).text();
-//                } else {
-//                    $('option:selected', this).val('0');
-//                    title = $('option:selected', this).val('0').text();
-//                }
-//                $(this)
-//                .css({ 'opacity': 0 })
-//                .after('<span class="select" id="sp' + id + '">' + title + '</span>')
-//                .change(function () {
-//                    val = $('option:selected', this).text();
-//                    $(this).next().text(val);
-//                })
-//            });
         });
 
         function toggleP2() {

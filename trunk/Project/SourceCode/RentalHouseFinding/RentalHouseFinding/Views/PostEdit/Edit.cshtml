@@ -412,7 +412,7 @@
                 </div>
                 <div class="clear"></div>
                 <div class="infoElement requireField">
-                    <h2>Giá tiền (triệu VND/tháng)</h2>
+                    <h2>Giá tiền (triệu VNĐ/tháng)</h2>
                     <div class="clear"></div>
                     @Html.TextBoxFor(model => model.Price, new { @class = "tbx" })
                     @Html.ValidationMessageFor(model => model.Price)
@@ -487,7 +487,7 @@
                             @Html.ValidationMessageFor(model => model.Lon)
                         </div>
                     </div>
-                <h2>Ảnh, video minh hoạ</h2>
+                <h2>Ảnh minh hoạ</h2>
                 <div class="clear"></div>
                 <div id="uploadFile"  class="btnPlus">
                     <ul id="imageList">
@@ -495,7 +495,7 @@
                     <div class="clear"></div>
                     <div id="field0">
                         <label>Chọn ảnh: </label>
-                        <input id="file0" name="images" type="file" />
+                        <input id="file0" name="images" type="file" accept=".PNG,.TXT,.JPG,.BMP"/>
                         <a href="javascript:;" onclick="return removeFile();" class="removeImage">Xóa ảnh</a>
                         <a href="javascript:;" onclick="return addFile();" class="addImage">Thêm ảnh</a>
                     </div>
@@ -611,7 +611,7 @@
                 <div class="clear"></div>
             </div>
         <input id="btnSaveInfo" type="submit" class="button-link right" value="Chấp nhận"/>
-        <a id="btnDelete" href="/postedit/delete/@Model.Id" onclick=" return confirm('Bạn có chắc chắn muốn xóa bài viết này?');" class="button-link right">Xóa</a>
+        <a id="btnDelete" href="/postedit/delete/@Model.Id" onclick=" return confirm('Bạn có chắc chắn muốn xóa bài viết này?');" class="right">Xóa</a>
         
         <div id="button-link_Cancel"><a href="/postedit/logout" onclick=" return confirm('Bạn có chắc chắn muốn thoát phiên làm việc này?');"><img src="../../Content/images/btnCancelEdit.png" /></a></div>
         <div class="clear"></div>

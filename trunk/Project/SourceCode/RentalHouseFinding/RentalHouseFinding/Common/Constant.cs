@@ -64,7 +64,7 @@ namespace RentalHouseFinding.Common
 
     public static class CategoryConstant
     {
-        public const int PHONG_TRO = 2;
+        public const int PHONG_TRO = 1;
     }
 
 }
