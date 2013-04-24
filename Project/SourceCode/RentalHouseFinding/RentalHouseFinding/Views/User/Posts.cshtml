@@ -61,53 +61,51 @@
         </div>
     }
 </div>
-<fieldset>
-    <div id="container-grid">
-        @{            
-            if (ViewBag.List != null && ViewBag.RowCount > 0)
-            {
-                WebGrid grid = new WebGrid(ajaxUpdateContainerId: "container-grid", ajaxUpdateCallback: "setArrows", canSort: true);
-                grid.Bind(ViewBag.List, autoSortAndPage: false, rowCount: ViewBag.TotalRowCount);
-                @grid.GetHtml(tableStyle: "", mode: WebGridPagerModes.All,
-                                headerStyle: "header",
-                                alternatingRowStyle: "alt",
-                                htmlAttributes: new { id = "grid" },
-                                columns: grid.Columns(
-                                        grid.Column(header: "STT", format: item => item.WebGrid.Rows.IndexOf(item) + 1 + ViewBag.Index),
-                                        grid.Column("Code", "Mã bài", canSort: false),
-                                        grid.Column(columnName: "Title", header: "Tiêu đề", format: @<text>
-                                        <a href="@Url.Action("Details", "Post",
-                                        new { id = @item.ID })">@item.Title</a></text>),
-                                        grid.Column("PostStatus", "Trạng thái"),
-                                        grid.Column("CreatedDate", "Ngày tạo",
-                                            format: (item) => string.Format("{0:yyyy-MM-dd HH:mm:ss}", item.CreatedDate)),
-                                        grid.Column("EditedDate", "Lần sửa cuối",
-                                        format: (item) => item.EditedDate == null ? "" : string.Format("{0:yyyy-MM-dd HH:mm:ss}", item.EditedDate)),
-                                        grid.Column("RenewDate", "Lần gia hạn cuối",
-                                            format: (item) => item.RenewDate == null ? "" : string.Format("{0:yyyy-MM-dd HH:mm:ss}", item.RenewDate)),
-                                        grid.Column("ExpiredDate", "Ngày hết hạn",
-                                            format: (item) => string.Format("{0:yyyy-MM-dd HH:mm:ss}", item.ExpiredDate)),
-                                        grid.Column("CountRenew", "Số lần đã gia hạn")
+<div id="container-grid">
+    @{            
+        if (ViewBag.List != null && ViewBag.RowCount > 0)
+        {
+            WebGrid grid = new WebGrid(ajaxUpdateContainerId: "container-grid", ajaxUpdateCallback: "setArrows", canSort: true);
+            grid.Bind(ViewBag.List, autoSortAndPage: false, rowCount: ViewBag.TotalRowCount);
+            @grid.GetHtml(tableStyle: "", mode: WebGridPagerModes.All,
+                            headerStyle: "header",
+                            alternatingRowStyle: "alt",
+                            htmlAttributes: new { id = "grid" },
+                            columns: grid.Columns(
+                                    grid.Column(header: "STT", format: item => item.WebGrid.Rows.IndexOf(item) + 1 + ViewBag.Index),
+                                    grid.Column("Code", "Mã bài", canSort: false),
+                                    grid.Column(columnName: "Title", header: "Tiêu đề", format: @<text>
+                                    <a href="@Url.Action("Details", "Post",
+                                    new { id = @item.ID })">@item.Title</a></text>),
+                                    grid.Column("PostStatus", "Trạng thái"),
+                                    grid.Column("CreatedDate", "Ngày tạo",
+                                        format: (item) => string.Format("{0:yyyy-MM-dd HH:mm:ss}", item.CreatedDate)),
+                                    grid.Column("EditedDate", "Lần sửa cuối",
+                                    format: (item) => item.EditedDate == null ? "" : string.Format("{0:yyyy-MM-dd HH:mm:ss}", item.EditedDate)),
+                                    grid.Column("RenewDate", "Lần gia hạn cuối",
+                                        format: (item) => item.RenewDate == null ? "" : string.Format("{0:yyyy-MM-dd HH:mm:ss}", item.RenewDate)),
+                                    grid.Column("ExpiredDate", "Ngày hết hạn",
+                                        format: (item) => string.Format("{0:yyyy-MM-dd HH:mm:ss}", item.ExpiredDate)),
+                                    grid.Column("CountRenew", "Số lần đã gia hạn")
 
-                                                 ))@Html.Hidden("dir", grid.SortDirection) @Html.Hidden("col", grid.SortColumn)
-            }
-            else
-            {
-                <div id="message-sv" style="width:1005px; margin: 0 auto;">
-                    <div class="message-notificationUser message-informationUser">
-                        <a class="close" id="btnCloseDiv"></a>
-                        <div>
-                            Bạn chưa có bài đăng nào :)
-                        </div>
+                                                ))@Html.Hidden("dir", grid.SortDirection) @Html.Hidden("col", grid.SortColumn)
+        }
+        else
+        {
+            <div id="message-sv" style="width:1005px; margin: 0 auto;">
+                <div class="message-notificationUser message-informationUser">
+                    <a class="close" id="btnCloseDiv"></a>
+                    <div>
+                        Bạn chưa có bài đăng nào :)
                     </div>
                 </div>
-            }
-    
+            </div>
         }
-        <br/>
-        <br/>
-    </div>
-</fieldset>
+    
+    }
+    <br/>
+    <br/>
+</div>
 
 <script type="text/javascript" >
     $(document).ready(function () {

@@ -11,6 +11,10 @@
 {
     margin-right: 0px;
 }
+ul.chzn-results li.active-result
+{
+    color: Black;
+}
 /* @group Base */
 .chzn-container {
   font-size: 13px;

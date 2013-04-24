@@ -299,11 +299,11 @@
                                 <span class="blockLeftText"><b>Diện tích:</b>&nbsp;@Model.Area m2</span> @* Check Yahoo & Skype*@
                                 @if (Model.ElectricityFee.HasValue)
                                 {
-                                    <span class="blockLeftText"><b>Giá điện:</b>&nbsp;@Model.ElectricityFee VNĐ/số</span>
+                                    <span class="blockLeftText"><b>Giá điện:</b>&nbsp;@Model.ElectricityFee.Value.ToString("#,##0.##") VNĐ/số</span>
                                 }
                                 @if (Model.WaterFee.HasValue)
                                 {
-                                    <span class="blockLeftText"><b>Giá nước:</b>&nbsp;@Model.WaterFee VNĐ/số</span> 
+                                    <span class="blockLeftText"><b>Giá nước:</b>&nbsp;@Model.WaterFee.Value.ToString("#,##0.##") VNĐ/số</span> 
                                 }
                                 @if (!string.IsNullOrEmpty(Model.RestrictHours))
                                 {
