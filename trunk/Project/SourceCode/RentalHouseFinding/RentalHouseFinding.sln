@@ -5,7 +5,16 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RentalHouseFinding", "Renta
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RentalHouseFinding.Tests", "RentalHouseFinding.Tests\RentalHouseFinding.Tests.csproj", "{0FE3FCA6-D9B1-4566-AD0B-B216AEE5F9D7}"
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{BC65A15C-2BE5-4AF3-86C4-2C33041DDF10}"
+	ProjectSection(SolutionItems) = preProject
+		RentalHouseFinding.testsettings = RentalHouseFinding.testsettings
+		RentalHouseFinding.vsmdi = RentalHouseFinding.vsmdi
+	EndProjectSection
+EndProject
 Global
+	GlobalSection(TestCaseManagementSettings) = postSolution
+		CategoryFile = RentalHouseFinding.vsmdi
+	EndGlobalSection
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
 		Release|Any CPU = Release|Any CPU
