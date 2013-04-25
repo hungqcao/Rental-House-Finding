@@ -65,7 +65,7 @@
     @{            
         if (ViewBag.List != null && ViewBag.RowCount > 0)
         {
-            WebGrid grid = new WebGrid(ajaxUpdateContainerId: "container-grid", ajaxUpdateCallback: "setArrows", canSort: true);
+            WebGrid grid = new WebGrid(ajaxUpdateContainerId: "container-grid", ajaxUpdateCallback: "setArrows", canSort: true, rowsPerPage: 15);
             grid.Bind(ViewBag.List, autoSortAndPage: false, rowCount: ViewBag.TotalRowCount);
             @grid.GetHtml(tableStyle: "", mode: WebGridPagerModes.All,
                             headerStyle: "header",
