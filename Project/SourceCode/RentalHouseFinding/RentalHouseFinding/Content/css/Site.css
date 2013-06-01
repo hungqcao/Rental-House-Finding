@@ -660,6 +660,10 @@ span.field-validation-error
     display: block;
     float: left;
 }
+#loginPanel.post-edit .notification
+{
+    margin: 0px 0 0 115px;
+}
 .login-regis #infoIcon {
     display: block;
     float: left;
@@ -1424,7 +1428,7 @@ div.title-ques-input input
     -moz-border-radius: 7px;
     border-radius: 7px;
     padding: 5px;
-
+    font-size: 16px;
 }
 div.content-ques-input textarea, textarea#txtResion
 {
@@ -1442,6 +1446,7 @@ div.content-ques-input textarea, textarea#txtResion
     margin-left:120px;
     margin-top:-20px;
     font-family:Calibri,Arial,Helvetica,Sans-Serif;
+    font-size: 16px;
 }
 input.btn-send-question
 {
@@ -1631,6 +1636,8 @@ textarea#Description {
     resize: none;
     border: none;
     height: 79px;
+    font-family:Calibri,Arial,Helvetica,Sans-Serif;
+    font-size: 16px;
 }
 #postnew_wrapper div.content #CategoryId, #postnew_wrapper div.content #spCategoryId {
     width: 133px !important;

@@ -97,6 +97,7 @@
     <Compile Include="Caching\DefaultCacheProvider.cs" />
     <Compile Include="Caching\ICacheRepository.cs" />
     <Compile Include="Common\Constant.cs" />
+    <Compile Include="Common\ImageUltility.cs" />
     <Compile Include="Controllers\Admin\CreateFacilityTemplateController.cs" />
     <Compile Include="Controllers\Admin\ManageBadpostController.cs" />
     <Compile Include="Controllers\Admin\ManageBadwordController.cs" />
@@ -255,6 +256,8 @@
     <Content Include="Content\images\CapchaTxt.png" />
     <Content Include="Content\images\createnew.png" />
     <Content Include="Content\images\cross_grey_small.png" />
+    <Content Include="Content\images\delete-post.png" />
+    <Content Include="Content\images\delete.png" />
     <Content Include="Content\images\detail_banner.png" />
     <Content Include="Content\images\detail_BasicInfo.png" />
     <Content Include="Content\images\detail_footer.png" />

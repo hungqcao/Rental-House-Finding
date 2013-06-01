@@ -20,18 +20,17 @@
             </div>
         </div>
     }
-    @*@if (TempData["Success"] != null)
+    @if (TempData["MessageDeletePost"] != null)
     {
-        if ((bool)TempData["Success"] && TempData["Success"] != null)
-        {
+        <div id="message-sv" style="width:320px; margin: 0 auto;">
             <div class="message-notification success">
                 <a class="close" id="btnCloseDiv"></a>
                 <div>
-                    @TempData["MessageSuccessPostNew"]
+                    @TempData["MessageDeletePost"]
                 </div>
             </div>
-        }
-    }*@
+        </div>
+    }
     @if (TempData["Pending"] != null)
     {
         if ((bool)TempData["Pending"])
@@ -46,7 +45,7 @@
             </div>
         }
     }
-<div class="login-regis" id="loginPanel">
+<div class="login-regis post-edit" id="loginPanel">
 @using (Html.BeginForm("Index", "PostEdit", FormMethod.Post, new { @style = "padding:70px" }))
 {
     <div class="userInfo" style="width: 320px;margin: 0 auto;">
@@ -60,7 +59,7 @@
     <div class="clear"></div>
     <div class="notification">
        
-        <span style="width: 300px">@Html.ValidationSummary(true, "Mã tin không đúng, xin vui lòng kiểm tra lại thông báo và thử lại.")</span>
+        <span style="width: 300px">@Html.ValidationSummary(true, "Mã tin không đúng hoặc bài viết không tồn tại, xin vui lòng liên hệ ban quản trị để được hỗ trợ.")</span>
     </div>
     <div class="buttons">
         <input type="submit" id="btnEditPost" value=""/>

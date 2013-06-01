@@ -123,9 +123,8 @@ namespace RentalHouseFinding
 
             routes.MapRoute(
                 "PostEditForGuestEditPage",
-                "sua/{id}/{name}",
-                new { controller = "PostEdit", action = "Edit", name = UrlParameter.Optional },
-                new { id = @"^\d+$" }
+                "sua/trang-chinh",
+                new { controller = "PostEdit", action = "Edit" }
             );
 
             //End post
