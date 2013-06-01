@@ -48,7 +48,8 @@ namespace RentalHouseFinding.Controllers
                     ViewBag.DistrictId = new SelectList(Repository.GetAllDistricts().Where(d => d.ProvinceId == ((SearchViewModel)(Session["SearchViewModel"])).ProvinceId), "Id", "Name", SelectedValue);
                 }
                 ViewBag.latlon = ((SearchViewModel)(Session["SearchViewModel"])).CenterMap;
-                
+                ViewBag.KeyWordText = ((SearchViewModel)(Session["SearchViewModel"])).KeyWord;
+
                 Session["NumberSkip"] = null;
                 Session["NumberResult"] = null;
                 return View();

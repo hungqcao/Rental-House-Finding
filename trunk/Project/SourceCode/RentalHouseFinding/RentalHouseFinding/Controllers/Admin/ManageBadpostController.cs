@@ -142,7 +142,7 @@ namespace RentalHouseFinding.Controllers.Admin
                 try
                 {
                     postViewModel = (PostViewModel)CommonModel.TrimObjectProperties(postViewModel);
-                    var post = (from p in _db.Posts where (p.Id == postViewModel.Id) select p).FirstOrDefault();
+                    var post = (from p in _db.Posts where (p.Id == postViewModel.Id && !p.IsDeleted) select p).FirstOrDefault();
                     int currentPostStatusID = post.StatusId;
 
                     //Để đảm bảo số ngày active của người dùng ko bị mất khi bài post bị pending

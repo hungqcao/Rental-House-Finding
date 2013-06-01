@@ -121,15 +121,17 @@ namespace RentalHouseFinding.Common
         {
             try
             {
-                return true;
                 phoneNumber = phoneNumber.Remove(0, 1);
                 string URLString = "http://api.gateway160.com/client/sendmessage";
                 //string[] param = new string[] { "MyAccount", "key", "16472876789", "US", Url.Encode("Hello world"), "0" };
-                string account = "5house";
-                string apiKey = "3c06b70f-b76d-4def-8ecb-719993faad20";
+                //string account = "5house";
+                //string apiKey = "3c06b70f-b76d-4def-8ecb-719993faad20";
                 // ACOUNT BACKUP
                 //string account = "5house1";
                 //string apiKey = "7f107807-0a52-4231-bf7b-675a0f4c4482";
+
+                string account = "mrblackrose";
+                string apiKey = "dbfc43f2-0b99-4b77-8d71-cba49ae82c0e";
 
                 string countryCode = "VN";
                 string postData = string.Format("accountName={0}&key={1}&phoneNumber={2}&countryCode={3}&message={4}&isUnicode={5}", account, apiKey, phoneNumber, countryCode, message, "0");

@@ -239,7 +239,7 @@
         @Html.ValidationMessageFor(model => model.ProvinceId)
         @Html.DropDownListFor(model => model.DistrictId, null, new { @class = "chzn-select" })
         
-        @Html.TextBoxFor(model => model.KeyWord, new { @id = "KeyWord", @class="homeSearch", @placeholder = "từ khóa thêm" })   
+        @Html.TextBoxFor(model => model.KeyWord, new { @id = "KeyWord", @class="homeSearch", @placeholder = "từ khóa thêm", @Value = ViewBag.KeyWordText })   
         <input type="submit" id="btnSubmit" class="left" value="" />
     </div>
 }

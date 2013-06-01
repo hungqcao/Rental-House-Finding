@@ -44,7 +44,7 @@ namespace RentalHouseFinding.Controllers.GUI
             {
                 try
                 {
-                    var postEdit = _db.Posts.Where(p => p.Code.Equals(code)).FirstOrDefault();
+                    var postEdit = _db.Posts.Where(p => p.Code.Equals(code) && !p.IsDeleted).FirstOrDefault();
                     if (postEdit != null)
                     {
                         Session["PostIdToEdit"] = postEdit.Id;
@@ -74,7 +74,7 @@ namespace RentalHouseFinding.Controllers.GUI
                 else
                 {
                     int postId = (int)Session["PostIdToEdit"];
-                    var post = _db.Posts.Where(p => p.Id == postId).FirstOrDefault();
+                    var post = _db.Posts.Where(p => p.Id == postId && !p.IsDeleted).FirstOrDefault();
                     ViewBag.CategoryId = new SelectList(Repository.GetAllCategories(), "Id", "Name", post.CategoryId);
                     ViewBag.ProvinceId = new SelectList(Repository.GetAllProvinces(), "Id", "Name", post.District.ProvinceId);
                     ViewBag.DistrictId = new SelectList(Repository.GetAllDistricts().Where(d => d.ProvinceId == post.District.ProvinceId), "Id", "Name", post.DistrictId);
@@ -168,7 +168,7 @@ namespace RentalHouseFinding.Controllers.GUI
                         TempData["Success"] = false;
                         return RedirectToAction("Index");
                     }
-                    var post = (from p in _db.Posts where (p.Id == postViewModel.Id) select p).FirstOrDefault();
+                    var post = (from p in _db.Posts where (p.Id == postViewModel.Id && !p.IsDeleted) select p).FirstOrDefault();
                     bool isPending = false;
                     int currentPostStatusID = post.StatusId;
                     TimeSpan keepPendingDay;

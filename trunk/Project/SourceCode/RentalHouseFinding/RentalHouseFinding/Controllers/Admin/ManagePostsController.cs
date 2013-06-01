@@ -23,11 +23,11 @@ namespace RentalHouseFinding.Controllers.Admin
         public ActionResult Index(int? page, string sort, string sortdir, ManagePostsModel model)
         {
             //Init/Retain filter values
-            ViewBag.Provinces = new SelectList(_db.Provinces, "Id", "Name", model.ProvinceId);
-            ViewBag.Districts = new SelectList(_db.Districts, "Id", "Name", model.DistrictId);
-            ViewBag.Users = new SelectList(_db.Users, "Id", "Username", model.UserId);
-            ViewBag.Categories = new SelectList(_db.Categories, "Id", "Name", model.CategoryId);
-            ViewBag.Statuses = new SelectList(_db.PostStatuses, "Id", "Name", model.StatusId);
+            ViewBag.Provinces = new SelectList(_db.Provinces.Where(p => !p.IsDeleted), "Id", "Name", model.ProvinceId);
+            ViewBag.Districts = new SelectList(_db.Districts.Where(p => !p.IsDeleted), "Id", "Name", model.DistrictId);
+            ViewBag.Users = new SelectList(_db.Users.Where(p => !p.IsDeleted), "Id", "Username", model.UserId);
+            ViewBag.Categories = new SelectList(_db.Categories.Where(p => !p.IsDeleted), "Id", "Name", model.CategoryId);
+            ViewBag.Statuses = new SelectList(_db.PostStatuses.Where(p=>!p.IsDeleted), "Id", "Name", model.StatusId);
 
             if (page == null)
             {
@@ -47,11 +47,11 @@ namespace RentalHouseFinding.Controllers.Admin
         public ActionResult Index(ManagePostsModel model)
         {
             //Retain filter values
-            ViewBag.Provinces = new SelectList(_db.Provinces, "Id", "Name", model.ProvinceId);
-            ViewBag.Districts = new SelectList(_db.Districts, "Id", "Name", model.DistrictId);
-            ViewBag.Users = new SelectList(_db.Users, "Id", "Username", model.UserId);
-            ViewBag.Categories = new SelectList(_db.Categories, "Id", "Name", model.CategoryId);
-            ViewBag.Statuses = new SelectList(_db.PostStatuses, "Id", "Name", model.StatusId);
+            ViewBag.Provinces = new SelectList(_db.Provinces.Where(p => !p.IsDeleted), "Id", "Name", model.ProvinceId);
+            ViewBag.Districts = new SelectList(_db.Districts.Where(p => !p.IsDeleted), "Id", "Name", model.DistrictId);
+            ViewBag.Users = new SelectList(_db.Users.Where(p => !p.IsDeleted), "Id", "Username", model.UserId);
+            ViewBag.Categories = new SelectList(_db.Categories.Where(p => !p.IsDeleted), "Id", "Name", model.CategoryId);
+            ViewBag.Statuses = new SelectList(_db.PostStatuses.Where(p => !p.IsDeleted), "Id", "Name", model.StatusId);
 
             ViewBag.Index = 0;
             model.Grid = getGrid(model, 1, "CreatedDate", "ASC");
